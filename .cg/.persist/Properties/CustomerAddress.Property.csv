@@ -1,0 +1,6 @@
+﻿TypeDeclarationContextName,DataView,Name,Enabled,Expression,ProcessStatus,PropertyGroupKey,PropertyKnownName,DefaultOrder,PropertyType,DefaultValue,IsNullable,IsDbGenerated,PropertyCategory,EntityReferenceSimplePath,IsForeignKey,SourcePropertyName,ForeignKeyPropertyCategory,OnUIWhenDisplay,OnUIWhenEdit,OnUIWhenCreate,OnUIWhenSummary,QuickFilter
+CustomerAddress,,CustomerID,True,,FromDefault,,Unknown,0,SystemInt32,,False,False,Identifier,\CustomerID,True,,Ancestor,Display,Editor,Editor,Display,False
+CustomerAddress,,AddressID,True,,FromDefault,,Unknown,100,SystemInt32,,False,False,Identifier,\AddressID,True,,Ancestor,Display,Editor,Editor,Display,False
+CustomerAddress,,AddressType,True,,FromDefault,,Unknown,200,SystemString,,False,False,Unknown,,False,,NotForeignKey,Display,Editor,Editor,Display,False
+CustomerAddress,,rowguid,True,,FromDefault,,RowGuid,300,SystemGuid,,False,False,Unknown,,False,,NotForeignKey,Display,Display,None,Display,False
+CustomerAddress,,ModifiedDate,True,,FromDefault,,Unknown,400,SystemDateTime,,False,False,Unknown,,False,,NotForeignKey,Display,Editor,Editor,Display,False

@@ -1,0 +1,4 @@
+﻿TABLE_SCHEMA,TABLE_NAME,EntityReferenceSimpleFullPath,PKTypeDeclarationContextName,DuplicateIDPropertyFullPath,IsLeftJoin,InLinqJoin,IDInCriteria,IDInDefaultDataView,UniqueConstraintInDefaultDataView,PropertiesInDefaultDataView,CreatedDate
+SalesLT,SalesOrderHeader,\BillToAddressID,Address,,False,True,True,True,True,,8/21/2022 12:00:00 AM
+SalesLT,SalesOrderHeader,\ShipToAddressID,Address,,False,True,True,True,True,,8/21/2022 12:00:00 AM
+SalesLT,SalesOrderHeader,\CustomerID,Customer,,False,True,True,True,True,,8/21/2022 12:00:00 AM

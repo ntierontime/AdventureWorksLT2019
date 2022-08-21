@@ -1,0 +1,36 @@
+{
+  "name": "AdventureWorksLT2019Model.ProductCategory",
+  "dataViewCollection": [],
+  "criteriaCollection": [],
+  "queryCollection": [],
+  "queryResultCollection": [],
+  "entityReferenceResultForPersistAliasCollection": [
+    {
+      "foreignKeySetting": null,
+      "tablE_SCHEMA": "SalesLT",
+      "tablE_NAME": "ProductCategory",
+      "entityReferenceSimpleFullPath": "\\ParentProductCategoryID",
+      "result": "Parent",
+      "isTop": true,
+      "pkTypeFullName": "AdventureWorksLT2019Model.ProductCategory",
+      "pkPropertyName": "ProductCategoryID",
+      "key": "AdventureWorksLT2019Model.ProductCategory",
+      "fkPropertyName": "ParentProductCategoryID",
+      "key1": "FK_ProductCategory_ProductCategory_ParentProductCategoryID_ProductCategoryID",
+      "key2": "t",
+      "propertyName_Origin_InThisType": "ParentProductCategoryID",
+      "childEntityReferenceSimpleFullPath": null,
+      "bottomChildTypeName": "ProductCategory",
+      "bottomChildEntityReferenceSimpleFullPath": "\\ParentProductCategoryID",
+      "entityReferenceFullPath": "\\AdventureWorksLT2019Model.ProductCategory.ParentProductCategoryID",
+      "entityReferenceForeignKeyPath": "\\FK_ProductCategory_ProductCategory_ParentProductCategoryID_ProductCategoryID",
+      "entityReferenceResultType": "DownTree",
+      "isJoinFromPKToFK": false,
+      "defaultOrder": 1,
+      "fkTypeFullNameOnTheOtherSide": null,
+      "createdDate": "0001-01-01T00:00:00"
+    }
+  ],
+  "entityReferenceResultForPersistAliasCollectionOfBridged": null,
+  "entityReferenceResultForPersistAliasCollectionOfCrossJoined": null
+}

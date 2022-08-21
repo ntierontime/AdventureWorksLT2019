@@ -1,0 +1,6 @@
+﻿TypeDeclarationContextName,DataView,Name,Enabled,Expression,ProcessStatus,PropertyGroupKey,PropertyKnownName,DefaultOrder,PropertyType,DefaultValue,IsNullable,IsDbGenerated,PropertyCategory,EntityReferenceSimplePath,IsForeignKey,SourcePropertyName,ForeignKeyPropertyCategory,OnUIWhenDisplay,OnUIWhenEdit,OnUIWhenCreate,OnUIWhenSummary,QuickFilter
+ProductModelProductDescription,,ProductModelID,True,,FromDefault,,Unknown,0,SystemInt32,,False,False,Identifier,\ProductModelID,True,,Ancestor,Display,Editor,Editor,Display,False
+ProductModelProductDescription,,ProductDescriptionID,True,,FromDefault,,Unknown,100,SystemInt32,,False,False,Identifier,\ProductDescriptionID,True,,Ancestor,Display,Editor,Editor,Display,False
+ProductModelProductDescription,,Culture,True,,FromDefault,,Unknown,200,SystemString,,False,False,Identifier,,False,,NotForeignKey,Display,Editor,Editor,Display,False
+ProductModelProductDescription,,rowguid,True,,FromDefault,,RowGuid,300,SystemGuid,,False,False,Unknown,,False,,NotForeignKey,Display,Display,None,Display,False
+ProductModelProductDescription,,ModifiedDate,True,,FromDefault,,Unknown,400,SystemDateTime,,False,False,Unknown,,False,,NotForeignKey,Display,Editor,Editor,Display,False
