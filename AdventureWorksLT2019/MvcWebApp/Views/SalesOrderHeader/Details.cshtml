@@ -1,0 +1,142 @@
+@using Framework.Models;
+@using AdventureWorksLT2019.Models.Definitions;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.Resx;
+@model MvcItemViewModel<SalesOrderHeaderDataModel.DefaultView>
+@inject SelectListHelper selectListHelper;
+@inject IUIStrings localizor;
+@{
+    ViewData["Title"] = localizor.Get("Details");
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h1>@localizor.Get("Details")</h1>
+                <h4>@localizor.Get("SalesOrderHeader")</h4>
+            </div>
+            @if (Model.Status != System.Net.HttpStatusCode.OK)
+            {
+                <div class="card-body">
+                    <div class="text-danger">@Model.StatusMessage</div>
+                </div>
+            }
+            else
+            {
+                <div class="card-body">
+                    <div class="form-group">
+                        <label asp-for="Model!.SalesOrderID" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.SalesOrderID))"></label>
+                        @Html.DisplayFor(m=>m.Model!.SalesOrderID)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.RevisionNumber" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.RevisionNumber))"></label>
+                        @Html.DisplayFor(m=>m.Model!.RevisionNumber)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.OrderDate" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.OrderDate))"></label>
+                        @Html.DisplayFor(m=>m.Model!.OrderDate)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.DueDate" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.DueDate))"></label>
+                        @Html.DisplayFor(m=>m.Model!.DueDate)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ShipDate" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.ShipDate))"></label>
+                        @Html.DisplayFor(m=>m.Model!.ShipDate)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.Status" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.Status))"></label>
+                        @Html.DisplayFor(m=>m.Model!.Status)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.OnlineOrderFlag" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.OnlineOrderFlag))"></label>
+                        @Html.DisplayFor(m=>m.Model!.OnlineOrderFlag)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.SalesOrderNumber" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.SalesOrderNumber))"></label>
+                        @Html.DisplayFor(m=>m.Model!.SalesOrderNumber)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.PurchaseOrderNumber" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.PurchaseOrderNumber))"></label>
+                        @Html.DisplayFor(m=>m.Model!.PurchaseOrderNumber)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.AccountNumber" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.AccountNumber))"></label>
+                        @Html.DisplayFor(m=>m.Model!.AccountNumber)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.CustomerID" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.CustomerID))"></label>
+                        <a asp-area="" asp-controller="Customer" asp-action="Dashboard" asp-route-customerid="@Model!.Model!.CustomerID">@Model!.Model!.Customer_Name</a>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ShipToAddressID" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.ShipToAddressID))"></label>
+                        <a asp-area="" asp-controller="Address" asp-action="Dashboard" asp-route-addressid="@Model!.Model!.ShipToAddressID">@Model!.Model!.ShipTo_Name</a>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.BillToAddressID" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.BillToAddressID))"></label>
+                        <a asp-area="" asp-controller="Address" asp-action="Dashboard" asp-route-addressid="@Model!.Model!.BillToAddressID">@Model!.Model!.BillTo_Name</a>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ShipMethod" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.ShipMethod))"></label>
+                        @Html.DisplayFor(m=>m.Model!.ShipMethod)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.CreditCardApprovalCode" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.CreditCardApprovalCode))"></label>
+                        @Html.DisplayFor(m=>m.Model!.CreditCardApprovalCode)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.SubTotal" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.SubTotal))"></label>
+                        @Html.DisplayFor(m=>m.Model!.SubTotal)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.TaxAmt" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.TaxAmt))"></label>
+                        @Html.DisplayFor(m=>m.Model!.TaxAmt)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.Freight" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.Freight))"></label>
+                        @Html.DisplayFor(m=>m.Model!.Freight)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.TotalDue" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.TotalDue))"></label>
+                        @Html.DisplayFor(m=>m.Model!.TotalDue)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.Comment" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.Comment))"></label>
+                        @Html.DisplayFor(m=>m.Model!.Comment)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.rowguid" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.rowguid))"></label>
+                        @Html.DisplayFor(m=>m.Model!.rowguid)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ModifiedDate" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.ModifiedDate))"></label>
+                        @Html.DisplayFor(m=>m.Model!.ModifiedDate)
+                    </div>
+                </div>
+            }
+            <div class="card-footer">
+                <div class="btn-group" role="group" aria-label="...">
+                    <a asp-area="" asp-controller="SalesOrderHeader" asp-action="Details" asp-route-salesorderid="@Model!.Model!.SalesOrderID" class="btn btn-secondary" role="button" title="@localizor.Get("Refresh")">
+                        <i class="fa-solid fa-refresh"></i><span class="nt-submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Refresh")</span>
+                    </a>
+                    @if (Model!.UIItemFeatures.PrimayEditViewContainer == CrudViewContainers.StandaloneView)
+                    {
+                        <a asp-area="" asp-controller="SalesOrderHeader" asp-action="Edit" asp-route-salesorderid="@Model!.Model!.SalesOrderID" class="btn btn-default" role="button" title="@localizor.Get("Edit")">
+                            <i class="fa fa-edit"></i><span class="nt-submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Edit")</span>
+                        </a>
+                    }
+                    @if (Model!.UIItemFeatures.PrimayDeleteViewContainer == CrudViewContainers.StandaloneView)
+                    {
+                        <a asp-area="" asp-controller="SalesOrderHeader" asp-action="Delete" asp-route-salesorderid="@Model!.Model!.SalesOrderID" class="btn btn-default" role="button" title="@localizor.Get("Delete")">
+                            <i class="fa fa-trash"></i><span class="nt-submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Delete")</span>
+                        </a>
+                    }
+                    <a asp-area="" asp-controller="SalesOrderHeader" asp-action="Index" class="btn btn-secondary" role="button" title="@localizor.Get("Back_to_List")">
+                        <i class="fa-solid fa-arrow-left"></i><span class="submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline">@localizor.Get("Back_to_List")</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

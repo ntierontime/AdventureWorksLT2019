@@ -1,0 +1,3 @@
+﻿TABLE_SCHEMA,TABLE_NAME,Enabled,DeepFKType,Order,PropertyNameInDashboardVM,BaseTableName,MasterTableName,ForeignKeyTableName,EntityReferenceSimpleFullPath,EntityReferenceName,CachingOption,IsRequired,IsATab,InXamarinFormsVM,FuntionDashboardName,InBaseTableFuntionDashboard,InWizard,WizardOrder
+SalesLT,CustomerAddress,False,AncestorTable,1,Address,,,,\AddressID,,UpdateCacheWhenViewLoaded,False,False,False,MoreDetails,False,False,0
+SalesLT,CustomerAddress,False,AncestorTable,2,Customer,,,,\CustomerID,,UpdateCacheWhenViewLoaded,False,False,False,MoreDetails,False,False,0

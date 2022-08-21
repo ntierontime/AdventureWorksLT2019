@@ -1,0 +1,117 @@
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@using AdventureWorksLT2019.Resx;
+@using Framework.Models;
+@model CustomerCompositeModel;
+@inject ViewFeaturesManager viewFeatureManager;
+@inject DashboardViewModelHelper dashboardViewModelHelper;
+@inject MvcItemViewModelHelper mvcItemViewModelHelper;
+@inject IUIStrings localizor;
+@{
+    ViewData["Title"] = localizor.Get("Dashboard");
+    var routeId = Model.__Master__.CustomerID;
+    var masterVM = await dashboardViewModelHelper.GetCustomerMvcItemViewModel(Model.__Master__, Model.Get(CustomerCompositeModel.__DataOptions__.__Master__));
+}
+<div class="row">
+    <div class="col-12 col-md-8 nopadding">
+        <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="lists-tab" data-bs-toggle="tab" data-bs-target="#lists" type="button" role="tab" aria-controls="lists" aria-selected="true"><i class="fa fa-list me-2"></i>@localizor.Get("Tab_Lists")</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="dashboardTabContent">
+            <div class="tab-pane fade show active" id="lists" role="tabpanel" aria-labelledby="lists-tab">
+                <div class="accordion" id="listsPanels">
+                    @if (Model!.Responses.ContainsKey(CustomerCompositeModel.__DataOptions__.CustomerAddresses_Via_CustomerID))
+                    {
+                        var vm = await dashboardViewModelHelper.GetCustomerAddressPagedSearchViewModel(new CustomerAddressAdvancedQuery { CustomerID = Model.__Master__.CustomerID }, Model.CustomerAddresses_Via_CustomerID, Model.Get(CustomerCompositeModel.__DataOptions__.CustomerAddresses_Via_CustomerID));
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="panelsStayOpen-heading-customerAddresses_Via_CustomerID">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-customerAddresses_Via_CustomerID" aria-expanded="true" aria-controls="panelsStayOpen-customerAddresses_Via_CustomerID">
+                                    @localizor.Get("Section_CustomerAddresses_Via_CustomerID")
+                                </button>
+                            </h2>
+                            <div id="panelsStayOpen-collapse-customerAddresses_Via_CustomerID" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-heading-customerAddresses_Via_CustomerID">
+                                <form id="@vm.UIListSetting.UIListFeatures.SearchFormId" method="post" class="nt-ajax-partial-load-post-formdata"
+                                    data-nt-partial-url="@Url.Action("AjaxLoadItems", "CustomerAddress")"
+                                    data-nt-updatetarget="#@vm.UIListSetting.UIListFeatures.ListWrapperId">
+                                    <input type="hidden" value="@vm.Query.PageIndex" class="nt-page-index" name="PageIndex" />
+                                    <input type="hidden" value="@vm.Query.PageSize" class="nt-page-size" name="PageSize" />
+                                    <input type="hidden" value="@vm.Query.OrderBys" class="nt-order-by" name="OrderBys" />
+                                    <input type="hidden" value="@vm.Query.PaginationOption" class="nt-pagination-option-field" name="PaginationOption" />
+                                    <input type="hidden" value="@vm.UIListSetting.UIParams.AdvancedQuery" class="nt-advanced-query" name="AdvancedQuery" />
+                                    <input type="hidden" value="@vm.UIListSetting.UIParams.PagedViewOption" class="nt-paged-view-option-field" name="PagedViewOption" />
+                                    <input type="hidden" value="@vm.UIListSetting.UIParams.Template" class="nt-template-field" name="Template" />
+                                    <!--this is the __Master__ Identifier-->
+                                    <input type="hidden" value="@Model.__Master__.CustomerID" name="CustomerID" />
+                                </form>
+                                <div class="accordion-body p-0">
+                                    @await Html.PartialAsync("~/Views/CustomerAddress/_ListViewsContainer.cshtml",vm)
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (Model!.Responses.ContainsKey(CustomerCompositeModel.__DataOptions__.SalesOrderHeaders_Via_CustomerID))
+                    {
+                        var vm = await dashboardViewModelHelper.GetSalesOrderHeaderPagedSearchViewModel(new SalesOrderHeaderAdvancedQuery { CustomerID = Model.__Master__.CustomerID }, Model.SalesOrderHeaders_Via_CustomerID, Model.Get(CustomerCompositeModel.__DataOptions__.SalesOrderHeaders_Via_CustomerID));
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="panelsStayOpen-heading-salesOrderHeaders_Via_CustomerID">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-salesOrderHeaders_Via_CustomerID" aria-expanded="true" aria-controls="panelsStayOpen-salesOrderHeaders_Via_CustomerID">
+                                    @localizor.Get("Section_SalesOrderHeaders_Via_CustomerID")
+                                </button>
+                            </h2>
+                            <div id="panelsStayOpen-collapse-salesOrderHeaders_Via_CustomerID" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-heading-salesOrderHeaders_Via_CustomerID">
+                                <form id="@vm.UIListSetting.UIListFeatures.SearchFormId" method="post" class="nt-ajax-partial-load-post-formdata"
+                                    data-nt-partial-url="@Url.Action("AjaxLoadItems", "SalesOrderHeader")"
+                                    data-nt-updatetarget="#@vm.UIListSetting.UIListFeatures.ListWrapperId">
+                                    <input type="hidden" value="@vm.Query.PageIndex" class="nt-page-index" name="PageIndex" />
+                                    <input type="hidden" value="@vm.Query.PageSize" class="nt-page-size" name="PageSize" />
+                                    <input type="hidden" value="@vm.Query.OrderBys" class="nt-order-by" name="OrderBys" />
+                                    <input type="hidden" value="@vm.Query.PaginationOption" class="nt-pagination-option-field" name="PaginationOption" />
+                                    <input type="hidden" value="@vm.UIListSetting.UIParams.AdvancedQuery" class="nt-advanced-query" name="AdvancedQuery" />
+                                    <input type="hidden" value="@vm.UIListSetting.UIParams.PagedViewOption" class="nt-paged-view-option-field" name="PagedViewOption" />
+                                    <input type="hidden" value="@vm.UIListSetting.UIParams.Template" class="nt-template-field" name="Template" />
+                                    <!--this is the __Master__ Identifier-->
+                                    <input type="hidden" value="@Model.__Master__.CustomerID" name="CustomerID" />
+                                </form>
+                                <div class="accordion-body p-0">
+                                    @await Html.PartialAsync("~/Views/SalesOrderHeader/_ListViewsContainer.cshtml",vm)
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-3">
+        <!-- CustomerCompositeModel.__DataOptions__.__Master__ -->
+        <div class="nt-list-wrapper"
+             id="master"
+             data-nt-bs-modalsize="Large"
+             data-nt-loaditem-url="@Url.Action("AjaxLoadItem", "Customer")"
+             data-nt-createitem-url="@Url.Action("AjaxCreate", "Customer")"
+             data-nt-updateitem-url="@Url.Action("AjaxEdit", "Customer")"
+             data-nt-deleteitem-url="@Url.Action("AjaxDelete", "Customer")">
+            <div class="nt-listitem" data-nt-route-id="@routeId">
+                @await Html.PartialAsync("~/Views/Customer/_TileDetailsItem.cshtml", masterVM)
+            </div>
+        </div>
+        <!-- CustomerCompositeModel.__DataOptions__.__Master__ -->
+    </div>
+</div>
+<partial name="~/Views/Shared/_CrudActionDialog.cshtml" />
+<partial name="~/Views/Shared/_SimpleActionConfirmationDialog.cshtml" />
+@section Scripts
+    {
+    <script>
+        const searchFormId_CustomerAddresses_Via_CustomerID = "CustomerAddresses_Via_CustomerIDSearchForm";
+        const listWrapperId_CustomerAddresses_Via_CustomerID = "CustomerAddresses_Via_CustomerIDListWrapper";
+        const searchFormId_SalesOrderHeaders_Via_CustomerID = "SalesOrderHeaders_Via_CustomerIDSearchForm";
+        const listWrapperId_SalesOrderHeaders_Via_CustomerID = "SalesOrderHeaders_Via_CustomerIDListWrapper";
+        $(document).ready($(function () {
+            documentReadyForSearchList(searchFormId_CustomerAddresses_Via_CustomerID, listWrapperId_CustomerAddresses_Via_CustomerID);
+            documentReadyForSearchList(searchFormId_SalesOrderHeaders_Via_CustomerID, listWrapperId_SalesOrderHeaders_Via_CustomerID);
+        }))
+    </script>
+}

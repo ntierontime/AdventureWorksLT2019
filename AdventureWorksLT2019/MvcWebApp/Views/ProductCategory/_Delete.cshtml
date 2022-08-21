@@ -1,0 +1,41 @@
+@using Framework.Models;
+@using AdventureWorksLT2019.Models.Definitions;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.Resx;
+@model MvcItemViewModel<ProductCategoryDataModel.DefaultView>
+@inject SelectListHelper selectListHelper;
+@inject IUIStrings localizor;
+@{
+    var format_Please_Select = localizor.Get("Format_Please_Select");
+}
+@if (Model.Status != System.Net.HttpStatusCode.OK)
+{
+    <div class="row">
+        <div class="text-danger">@Model.StatusMessage</div>
+    </div>
+}
+else
+{
+    <input class="hidden-modal-title" value="@Model!.Model!.Name" type="hidden" />
+    <div class="form-group">
+        <label asp-for="Model!.ProductCategoryID" class="control-label" for="@Model!.HtmlId(nameof(ProductCategoryDataModel.DefaultView.ProductCategoryID))"></label>
+        @Html.DisplayFor(m=>m.Model!.ProductCategoryID)
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.ParentProductCategoryID" class="control-label" for="@Model!.HtmlId(nameof(ProductCategoryDataModel.DefaultView.ParentProductCategoryID))"></label>
+        <a asp-area="" asp-controller="ProductCategory" asp-action="Dashboard" asp-route-productcategoryid="@Model!.Model!.ParentProductCategoryID">@Model!.Model!.Parent_Name</a>
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.Name" class="control-label" for="@Model!.HtmlId(nameof(ProductCategoryDataModel.DefaultView.Name))"></label>
+        @Html.DisplayFor(m=>m.Model!.Name)
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.rowguid" class="control-label" for="@Model!.HtmlId(nameof(ProductCategoryDataModel.DefaultView.rowguid))"></label>
+        @Html.DisplayFor(m=>m.Model!.rowguid)
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.ModifiedDate" class="control-label" for="@Model!.HtmlId(nameof(ProductCategoryDataModel.DefaultView.ModifiedDate))"></label>
+        @Html.DisplayFor(m=>m.Model!.ModifiedDate)
+    </div>
+}

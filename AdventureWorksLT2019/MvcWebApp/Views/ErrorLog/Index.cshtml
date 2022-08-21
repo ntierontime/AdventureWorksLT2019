@@ -1,0 +1,107 @@
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.Resx;
+@using Framework.Models;
+@using AdventureWorksLT2019.Models.Definitions;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@model PagedSearchViewModel<ErrorLogAdvancedQuery, ErrorLogDataModel[]>
+@inject IHttpContextAccessor Accessor
+@inject SelectListHelper selectListHelper;
+@inject IUIStrings localizor;
+@{
+    ViewData["Title"] = @localizor.Get("Search") + " " + localizor.Get("ErrorLog");
+    var format_All = localizor.Get("Format_All");
+    string currentView = string.Empty;
+    if (Accessor.HttpContext != null)
+    {
+        currentView = Accessor.HttpContext.Request.Query["PagedViewOption"];
+    }
+    if (string.IsNullOrEmpty(currentView))
+    {
+        currentView = (Model.UIListSetting.UIParams.PagedViewOption ?? PagedViewOptions.EditableTable).ToString();
+    }
+}
+<form id="@Model!.UIListSetting.UIListFeatures.SearchFormId" method="post" class="nt-ajax-partial-load-post-formdata"
+    data-nt-partial-url="@Url.Action("AjaxLoadItems", "ErrorLog")"
+    data-nt-updatetarget="#@Model!.UIListSetting.UIListFeatures.ListWrapperId">
+    <input type="hidden" asp-for="Query.PageIndex" class="nt-page-index" />
+    <input type="hidden" asp-for="Query.PageSize" class="nt-page-size" />
+    <input type="hidden" asp-for="Query.OrderBys" class="nt-order-by" />
+    <input type="hidden" asp-for="Query.PaginationOption" class="nt-pagination-option-field" />
+    <input type="hidden" asp-for="UIListSetting.UIParams.AdvancedQuery" class="nt-advanced-query" iname="AdvancedQuery" />
+    <input type="hidden" asp-for="UIListSetting.UIParams.PagedViewOption" class="nt-paged-view-option-field" value="@currentView" name="PagedViewOption" />
+    <input type="hidden" asp-for="UIListSetting.UIParams.Template" class="nt-template-field" name="Template" />
+    <div class="d-flex justify-content-between pt-1">
+        <div>
+            <span class="h5"><a class="nav-link text-dark" asp-area="" asp-controller="ErrorLog" asp-action="Index">you are working on <strong>@localizor.Get("ErrorLog")</strong></a></span>
+        </div>
+        <button class="btn btn-primary me-1 ms-1" role="button" type="submit" title="@localizor.Get("Search")">
+            <i class="fa fa-search"></i>
+            @localizor.Get("Search")
+        </button>
+    </div>
+    <hr class="mt-1" />
+    <div class="input-group">
+        <select asp-for="Query.TextSearchType" asp-items="@selectListHelper.GetSelectList(Model!.TextSearchTypeList)" class="input-group-text text-start">
+        </select>
+        <input asp-for="Query.TextSearch" class="form-control" placeholder="@localizor.Get("SearchTextDescription")" aria-label="@localizor.Get("SearchTextDescription")" />
+    </div>
+    <div class="row pt-1">
+        <div class="col-lg-6">
+            <div class="input-group">
+                <label class="input-group-text">@localizor.Get("ErrorTimeRange")</label>
+                <select asp-for="Query.ErrorTimeRange" asp-items="@selectListHelper.GetSelectList(Model!.OtherDropDownLists[nameof(ErrorLogAdvancedQuery.ErrorTimeRange)])" class="form-control form-select nt-datetime-predefinedrange"></select>
+                <input asp-for="Query.ErrorTimeRangeLower" class="form-control" readonly />
+                <input asp-for="Query.ErrorTimeRangeUpper" class="form-control" readonly />
+            </div>
+        </div>
+    </div>
+    <div class="row pt-1">
+        <div class="col-md-6">
+            <div class="input-group">
+                <label class="input-group-text">@localizor.Get("UserName")</label>
+                <select asp-for="Query.UserNameSearchType" asp-items="@selectListHelper.GetSelectList(Model!.TextSearchTypeList)" class="input-group-text text-start">
+                </select>
+                <input asp-for="Query.UserName" class="form-control" placeholder="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("UserName"))" aria-label="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("UserName"))" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="input-group">
+                <label class="input-group-text">@localizor.Get("ErrorProcedure")</label>
+                <select asp-for="Query.ErrorProcedureSearchType" asp-items="@selectListHelper.GetSelectList(Model!.TextSearchTypeList)" class="input-group-text text-start">
+                </select>
+                <input asp-for="Query.ErrorProcedure" class="form-control" placeholder="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("ErrorProcedure"))" aria-label="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("ErrorProcedure"))" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="input-group">
+                <label class="input-group-text">@localizor.Get("ErrorMessage")</label>
+                <select asp-for="Query.ErrorMessageSearchType" asp-items="@selectListHelper.GetSelectList(Model!.TextSearchTypeList)" class="input-group-text text-start">
+                </select>
+                <input asp-for="Query.ErrorMessage" class="form-control" placeholder="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("ErrorMessage"))" aria-label="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("ErrorMessage"))" />
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between pt-1">
+        <div>
+            <span class="h5"><a class="nav-link text-dark" asp-area="" asp-controller="ErrorLog" asp-action="Index">you are working on <strong>@localizor.Get("ErrorLog")</strong></a></span>
+        </div>
+        <button class="btn btn-primary me-1 ms-1" role="button" type="submit" title="@localizor.Get("Search")">
+            <i class="fa fa-search"></i>
+            @localizor.Get("Search")
+        </button>
+    </div>
+</form>
+<hr class="mt-1" />
+@await Html.PartialAsync("~/Views/ErrorLog/_ListViewsContainer.cshtml", Model)
+<partial name="~/Views/Shared/_CrudActionDialog.cshtml" />
+<partial name="~/Views/Shared/_SimpleActionConfirmationDialog.cshtml" />
+@section Scripts
+{
+    <script>
+        const searchFormId = "@Model.UIListSetting.UIListFeatures.SearchFormId";
+        const listWrapperId = "@Model.UIListSetting.UIListFeatures.ListWrapperId";
+        $(document).ready($(function() {
+            documentReadyForSearchList(searchFormId, listWrapperId);
+        }))
+    </script>
+}

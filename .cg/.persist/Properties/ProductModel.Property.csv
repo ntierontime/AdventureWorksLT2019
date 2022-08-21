@@ -4,3 +4,5 @@ ProductModel,,Name,True,,FromDefault,,Name,100,SystemString,,False,False,Unknown
 ProductModel,,CatalogDescription,True,,FromDefault,,Unknown,200,Xml,,True,False,Unknown,,False,,NotForeignKey,Display,Editor,Editor,Display,False
 ProductModel,,rowguid,True,,FromDefault,,RowGuid,300,SystemGuid,,False,False,Unknown,,False,,NotForeignKey,Display,Display,None,Display,False
 ProductModel,,ModifiedDate,True,,FromDefault,,Unknown,400,SystemDateTime,,False,False,Unknown,,False,,NotForeignKey,Display,Editor,Editor,Display,False
+AdventureWorksLT2019Model.ProductModel,NameValuePair,Name,True,(SystemString)Name=Name~Name,FromDefault,nTierCraft.CodeGen.Settings.DataViewProjectionColumnSetting,Unknown,1,SystemString,"",False,False,Name,,False,Name,NotForeignKey,Display,Display,Display,Display,False
+AdventureWorksLT2019Model.ProductModel,NameValuePair,Value,True,(SystemString)Value=ProductModelID.ToString(),FromDefault,nTierCraft.CodeGen.Settings.DataViewProjectionColumnSetting,Unknown,20000,SystemString,"",False,False,Unknown,,False,ProductModelID.ToString(),NotForeignKey,Display,Display,Display,Display,False

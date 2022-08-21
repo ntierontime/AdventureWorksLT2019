@@ -1,0 +1,43 @@
+@using Framework.Models;
+@using AdventureWorksLT2019.Resx;
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Options
+@inject IUIStrings localizor;
+@model PaginationResponse
+@if (Model.PaginationOption == PaginationOptions.LoadMore)
+{
+    <button class="btn btn-primary btn-nt-load-more page-link w-100@(Model.EnableLastAndNext ? "" : " disabled")"
+        data-nt-pageindex="@(Model.PageIndex + 1)"
+        onclick="pageLinkClicked(this)">
+        <i class="fa-solid fa-angles-down"></i>
+        @localizor.Get("More")
+    </button>
+}
+else if (Model.PaginationOption == PaginationOptions.Paged)
+{
+    <ul class="pagination pagination-sm">
+        <li class="@(Model.EnableFirstAndPrevious ? "page-item" : "page-item disabled" )"><button class="page-link" data-nt-pageindex="1" onclick="pageLinkClicked(this);"><i class="fa-solid fa-angles-left"></i></button></li>
+        <li class="@(Model.EnableFirstAndPrevious ? "page-item" : "page-item disabled" )"><button class="page-link" data-nt-pageindex="@(Model.PageIndex - 1)" onclick="pageLinkClicked(this);"><i class="fa-solid fa-angle-left"></i></button></li>
+        @if (Model.ThreeDotPreCurrent)
+        {
+            <li class="page-item">...</li>
+        }
+        @foreach (var pageItem in Model.PreCurrent)
+        {
+            <li class="page-item"><button class="page-link" data-nt-pageindex="@pageItem" onclick="pageLinkClicked(this);">@pageItem</button></li>
+        }
+        <li class="page-item active"><button class="page-link" data-nt-pageindex="@(Model.PageIndex)" onclick="pageLinkClicked(this);">@(Model.PageIndex)</button></li>
+        @foreach (var pageItem in Model.PostCurrent)
+        {
+            <li class="page-item"><button class="page-link" data-nt-pageindex="@pageItem" onclick="pageLinkClicked(this);">@pageItem</button></li>
+        }
+        @if (Model.ThreeDotPostCurrent)
+        {
+            <li class="page-item">...</li>
+        }
+        <li class="@(Model.EnableLastAndNext ? "page-item" : "page-item disabled" )"><button class="page-link" data-nt-pageindex="@(Model.PageIndex + 1)" onclick="pageLinkClicked(this);"><i class="fa-solid fa-angle-right"></i></button></li>
+        <li class="@(Model.EnableLastAndNext? "page-item" : "page-item disabled" )"><button class="page-link" data-nt-pageindex="@Model.LastPageIndex" onclick="pageLinkClicked(this);"><i class="fa-solid fa-angles-right"></i></button></li>
+    </ul>
+}

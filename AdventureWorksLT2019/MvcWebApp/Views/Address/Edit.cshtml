@@ -1,0 +1,91 @@
+@using AdventureWorksLT2019.Models.Definitions;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.Resx;
+@model MvcItemViewModel<AddressDataModel>
+@inject SelectListHelper selectListHelper;
+@inject IUIStrings localizor;
+@{
+    ViewData["Title"] = localizor.Get("Edit");
+    var format_Please_Select = localizor.Get("Format_Please_Select");
+}
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit">
+            <div class="card">
+                <div class="card-header">
+                    <h1>@localizor.Get("Edit")</h1>
+                    <h4>@localizor.Get("ElmahError")</h4>
+                </div>
+                @if (Model.Status != System.Net.HttpStatusCode.OK)
+                {
+                    <div class="card-body">
+                        <div class="text-danger">@Model.StatusMessage</div>
+                    </div>
+                }
+                <div class="card-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Model!.AddressID" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.AddressID))"></label>
+                        <input asp-for="Model!.AddressID" readonly class="form-control " id="@Model!.HtmlId(nameof(AddressDataModel.AddressID))" name="@Model!.HtmlName(nameof(AddressDataModel.AddressID))" data-nt-value="@Model!.Model!.AddressID"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.AddressLine1" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.AddressLine1))"></label>
+                        <input asp-for="Model!.AddressLine1" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(AddressDataModel.AddressLine1))" name="@Model!.HtmlName(nameof(AddressDataModel.AddressLine1))" data-nt-value="@Model!.Model!.AddressLine1"/>
+                        <span asp-validation-for="Model!.AddressLine1" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(AddressDataModel.AddressLine1))"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.AddressLine2" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.AddressLine2))"></label>
+                        <input asp-for="Model!.AddressLine2" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(AddressDataModel.AddressLine2))" name="@Model!.HtmlName(nameof(AddressDataModel.AddressLine2))" data-nt-value="@Model!.Model!.AddressLine2"/>
+                        <span asp-validation-for="Model!.AddressLine2" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(AddressDataModel.AddressLine2))"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.City" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.City))"></label>
+                        <input asp-for="Model!.City" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(AddressDataModel.City))" name="@Model!.HtmlName(nameof(AddressDataModel.City))" data-nt-value="@Model!.Model!.City"/>
+                        <span asp-validation-for="Model!.City" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(AddressDataModel.City))"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.StateProvince" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.StateProvince))"></label>
+                        <input asp-for="Model!.StateProvince" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(AddressDataModel.StateProvince))" name="@Model!.HtmlName(nameof(AddressDataModel.StateProvince))" data-nt-value="@Model!.Model!.StateProvince"/>
+                        <span asp-validation-for="Model!.StateProvince" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(AddressDataModel.StateProvince))"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.CountryRegion" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.CountryRegion))"></label>
+                        <input asp-for="Model!.CountryRegion" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(AddressDataModel.CountryRegion))" name="@Model!.HtmlName(nameof(AddressDataModel.CountryRegion))" data-nt-value="@Model!.Model!.CountryRegion"/>
+                        <span asp-validation-for="Model!.CountryRegion" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(AddressDataModel.CountryRegion))"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.PostalCode" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.PostalCode))"></label>
+                        <input asp-for="Model!.PostalCode" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(AddressDataModel.PostalCode))" name="@Model!.HtmlName(nameof(AddressDataModel.PostalCode))" data-nt-value="@Model!.Model!.PostalCode"/>
+                        <span asp-validation-for="Model!.PostalCode" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(AddressDataModel.PostalCode))"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.rowguid" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.rowguid))"></label>
+                        <input asp-for="Model!.rowguid" readonly class="form-control " id="@Model!.HtmlId(nameof(AddressDataModel.rowguid))" name="@Model!.HtmlName(nameof(AddressDataModel.rowguid))" data-nt-value="@Model!.Model!.rowguid"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ModifiedDate" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.ModifiedDate))"></label>
+                        <input asp-for="Model!.ModifiedDate" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(AddressDataModel.ModifiedDate))" name="@Model!.HtmlName(nameof(AddressDataModel.ModifiedDate))" data-nt-value="@Model!.Model!.ModifiedDate"/>
+                        <span asp-validation-for="Model!.ModifiedDate" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(AddressDataModel.ModifiedDate))"></span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button class="btn btn-primary" role="button" type="submit">
+                            <i class="fa-solid fa-check-circle"></i><span class="nt-submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Save")</span>
+                        </button>
+                        <a asp-area="" asp-controller="Address" asp-action="Edit" asp-route-addressid="@Model!.Model!.AddressID" class="btn btn-secondary" role="button" title="@localizor.Get("Refresh")">
+                            <i class="fa-solid fa-refresh"></i><span class="nt-submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Refresh")</span>
+                        </a>
+                        <a asp-area="" asp-controller="Address" asp-action="Index" class="btn btn-secondary" role="button" title="@localizor.Get("Back_to_List")">
+                            <i class="fa-solid fa-arrow-left"></i><span class="submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline">@localizor.Get("Back_to_List")</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

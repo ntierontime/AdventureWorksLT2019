@@ -1,0 +1,9 @@
+﻿TypeDeclarationContextName,Query,QueryUnitGroup,QueryPropertyName,Enabled,ProcessStatus,QueryUnitSettingType,TargetTypeDeclarationFullName,TargetEntityKey,TargetPropertyName,TargetPropertyType,FKPropertyName,EntityReferenceSimpleFullPath,TargetPropertyFullPath,PredicateKnownType
+AdventureWorksLT2019Model.Address,AdvancedQuery,DateTimeRange,ModifiedDateRange,True,FromDefault,Range,AdventureWorksLT2019Model.Address,t,ModifiedDate,SystemDateTime,,,,Range
+AdventureWorksLT2019Model.Address,AdvancedQuery,StringQuery,AddressLine1,True,FromDefault,StringQuery,AdventureWorksLT2019Model.Address,t,AddressLine1,SystemString,,,,Contains
+AdventureWorksLT2019Model.Address,AdvancedQuery,StringQuery,AddressLine2,True,FromDefault,StringQuery,AdventureWorksLT2019Model.Address,t,AddressLine2,SystemString,,,,Contains
+AdventureWorksLT2019Model.Address,AdvancedQuery,StringQuery,City,True,FromDefault,StringQuery,AdventureWorksLT2019Model.Address,t,City,SystemString,,,,Contains
+AdventureWorksLT2019Model.Address,AdvancedQuery,StringQuery,StateProvince,True,FromDefault,StringQuery,AdventureWorksLT2019Model.Address,t,StateProvince,SystemString,,,,Contains
+AdventureWorksLT2019Model.Address,AdvancedQuery,StringQuery,CountryRegion,True,FromDefault,StringQuery,AdventureWorksLT2019Model.Address,t,CountryRegion,SystemString,,,,Contains
+AdventureWorksLT2019Model.Address,AdvancedQuery,StringQuery,PostalCode,True,FromDefault,StringQuery,AdventureWorksLT2019Model.Address,t,PostalCode,SystemString,,,,Contains
+AdventureWorksLT2019Model.Address,Identifier,Identifier,AddressID,True,FromDefault,Identifier,AdventureWorksLT2019Model.Address,t,AddressID,SystemInt32,,,,Equals

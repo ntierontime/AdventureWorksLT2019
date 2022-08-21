@@ -14,3 +14,5 @@ Customer,,PasswordHash,True,,FromDefault,,Unknown,1100,SystemString,,False,False
 Customer,,PasswordSalt,True,,FromDefault,,Unknown,1200,SystemString,,False,False,Unknown,,False,,NotForeignKey,Display,Editor,Editor,Display,False
 Customer,,rowguid,True,,FromDefault,,RowGuid,1300,SystemGuid,,False,False,Unknown,,False,,NotForeignKey,Display,Display,None,Display,False
 Customer,,ModifiedDate,True,,FromDefault,,Unknown,1400,SystemDateTime,,False,False,Unknown,,False,,NotForeignKey,Display,Editor,Editor,Display,False
+AdventureWorksLT2019Model.Customer,NameValuePair,Value,True,(SystemString)Value=CustomerID.ToString(),FromDefault,nTierCraft.CodeGen.Settings.DataViewProjectionColumnSetting,Unknown,20000,SystemString,"",False,False,Unknown,,False,CustomerID.ToString(),NotForeignKey,Display,Display,Display,Display,False
+AdventureWorksLT2019Model.Customer,NameValuePair,Name,True,(SystemString)Name=Title~Name,FromDefault,nTierCraft.CodeGen.Settings.DataViewProjectionColumnSetting,Unknown,20001,SystemString,"",False,False,Name,,False,Title,NotForeignKey,Display,Display,Display,Display,False

@@ -1,0 +1,140 @@
+@using Framework.Models;
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.Resx;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@using AdventureWorksLT2019.Models.Definitions;
+@model MvcItemViewModel<SalesOrderHeaderDataModel.DefaultView>
+@inject SelectListHelper selectListHelper;
+@inject IUIStrings localizor;
+@{
+    var format_Please_Select = localizor.Get("Format_Please_Select");
+}
+@if (Model!.UIItemFeatures.ShowListBulkSelectCheckbox)
+{
+    <td class="pt-0 pb-0 nt-list-bulk-select" style="width: 1% !important;">
+    </td>
+}
+@if (Model!.UIItemFeatures.ShowItemButtons)
+{
+    <td class="p-0" style="width: 1% !important;">
+    <div class="btn-group btn-group-nt-action-save">
+        <button type="button" class="btn btn-secondary btn-nt-action-cancel" data-nt-action="@HttpMethods.Put">
+            <i class="fa-solid fa-circle-xmark"></i>
+        </button>
+        <button type="button" class="btn btn-primary btn-nt-action" data-nt-action="@HttpMethods.Put"
+            data-nt-container="@CrudViewContainers.Inline.ToString()"
+            data-nt-template="@ViewItemTemplateNames.Edit.ToString()">
+            <i class="fa-solid fa-check-circle"></i>
+        </button>
+    </div>
+    </td>
+}
+<td class="form-group p-0">
+    <input asp-for="Model!.SalesOrderID" readonly class="form-control " id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.SalesOrderID))" name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.SalesOrderID))" data-nt-value="@Model!.Model!.SalesOrderID"/>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.RevisionNumber" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.RevisionNumber))" name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.RevisionNumber))" data-nt-value="@Model!.Model!.RevisionNumber"/>
+    <span asp-validation-for="Model!.RevisionNumber" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.RevisionNumber))"></span>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.OrderDate" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.OrderDate))" name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.OrderDate))" data-nt-value="@Model!.Model!.OrderDate"/>
+    <span asp-validation-for="Model!.OrderDate" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.OrderDate))"></span>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.DueDate" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.DueDate))" name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.DueDate))" data-nt-value="@Model!.Model!.DueDate"/>
+    <span asp-validation-for="Model!.DueDate" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.DueDate))"></span>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.ShipDate" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.ShipDate))" name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.ShipDate))" data-nt-value="@Model!.Model!.ShipDate"/>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.Status" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.Status))" name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.Status))" data-nt-value="@Model!.Model!.Status"/>
+    <span asp-validation-for="Model!.Status" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.Status))"></span>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.OnlineOrderFlag" type="checkbox" class="form-check-input nt-form-check ms-1" id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.OnlineOrderFlag))" name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.OnlineOrderFlag))" data-nt-value="@Model!.Model!.OnlineOrderFlag"/>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.SalesOrderNumber" readonly class="form-control " id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.SalesOrderNumber))" name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.SalesOrderNumber))" data-nt-value="@Model!.Model!.SalesOrderNumber"/>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.PurchaseOrderNumber" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.PurchaseOrderNumber))" name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.PurchaseOrderNumber))" data-nt-value="@Model!.Model!.PurchaseOrderNumber"/>
+    <span asp-validation-for="Model!.PurchaseOrderNumber" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.PurchaseOrderNumber))"></span>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.AccountNumber" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.AccountNumber))" name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.AccountNumber))" data-nt-value="@Model!.Model!.AccountNumber"/>
+    <span asp-validation-for="Model!.AccountNumber" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.AccountNumber))"></span>
+</td>
+<td class="form-group p-0">
+    <select asp-for="Model!.CustomerID" class="form-control form-select nt-form-data" asp-items="@selectListHelper.GetSelectList(Model?.TopLevelDropDownListsFromDatabase?[TopLevelDropDownLists.Customer.ToString()])"
+        data-nt-value="@Model!.Model!.CustomerID" id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.CustomerID))"  name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.CustomerID))">
+    </select>
+</td>
+<td class="form-group p-0">
+    <select asp-for="Model!.ShipToAddressID" class="form-control form-select nt-form-data" asp-items="@selectListHelper.GetSelectList(Model?.TopLevelDropDownListsFromDatabase?[TopLevelDropDownLists.Address.ToString()])"
+        data-nt-value="@Model!.Model!.ShipToAddressID" id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.ShipToAddressID))"  name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.ShipToAddressID))">
+    </select>
+</td>
+<td class="form-group p-0">
+    <select asp-for="Model!.BillToAddressID" class="form-control form-select nt-form-data" asp-items="@selectListHelper.GetSelectList(Model?.TopLevelDropDownListsFromDatabase?[TopLevelDropDownLists.Address.ToString()])"
+        data-nt-value="@Model!.Model!.BillToAddressID" id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.BillToAddressID))"  name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.BillToAddressID))">
+    </select>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.ShipMethod" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.ShipMethod))" name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.ShipMethod))" data-nt-value="@Model!.Model!.ShipMethod"/>
+    <span asp-validation-for="Model!.ShipMethod" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.ShipMethod))"></span>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.CreditCardApprovalCode" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.CreditCardApprovalCode))" name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.CreditCardApprovalCode))" data-nt-value="@Model!.Model!.CreditCardApprovalCode"/>
+    <span asp-validation-for="Model!.CreditCardApprovalCode" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.CreditCardApprovalCode))"></span>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.SubTotal" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.SubTotal))" name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.SubTotal))" data-nt-value="@Model!.Model!.SubTotal"/>
+    <span asp-validation-for="Model!.SubTotal" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.SubTotal))"></span>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.TaxAmt" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.TaxAmt))" name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.TaxAmt))" data-nt-value="@Model!.Model!.TaxAmt"/>
+    <span asp-validation-for="Model!.TaxAmt" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.TaxAmt))"></span>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.Freight" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.Freight))" name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.Freight))" data-nt-value="@Model!.Model!.Freight"/>
+    <span asp-validation-for="Model!.Freight" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.Freight))"></span>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.TotalDue" readonly class="form-control " id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.TotalDue))" name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.TotalDue))" data-nt-value="@Model!.Model!.TotalDue"/>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.Comment" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.Comment))" name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.Comment))" data-nt-value="@Model!.Model!.Comment"/>
+    <span asp-validation-for="Model!.Comment" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.Comment))"></span>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.rowguid" readonly class="form-control " id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.rowguid))" name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.rowguid))" data-nt-value="@Model!.Model!.rowguid"/>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.ModifiedDate" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.ModifiedDate))" name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.ModifiedDate))" data-nt-value="@Model!.Model!.ModifiedDate"/>
+    <span asp-validation-for="Model!.ModifiedDate" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.ModifiedDate))"></span>
+</td>
+@if (Model!.UIItemFeatures.ShowItemUIStatus)
+{
+    <td class="form-group nt-item-status text-center" style="width: 1% !important;">
+        @if (Model!.Model!.ItemUIStatus______ == ItemUIStatus.NoChange)
+        {
+                <i class="fa-solid fa-circle-notch text-success"></i>
+        }
+        else if (Model!.Model!.ItemUIStatus______ == ItemUIStatus.Updated) // Usually: will be changed by JQuery
+        {
+                <i class="fa-solid fa-circle text-danger"></i>
+        }
+        else // ItemUIStatus.New
+        {
+                    <i class="fa-solid fa-circle text-danger"></i>
+        }
+        <input asp-for="Model!.ItemUIStatus______" class="form-control" data-nt-value="@Model!.Model!.ItemUIStatus______" id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.ItemUIStatus______))" name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.ItemUIStatus______))" type="hidden" />
+    </td>
+}
+@if (Model!.UIItemFeatures.ShowEditableListDeleteSelect)
+{
+    <td class="form-group nt-editablelist-delete-select text-center" style="width: 1% !important;">
+        <input asp-for="Model!.IsDeleted______" class="form-check-input nt-form-check ms-1" type="checkbox"  id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.IsDeleted______))" name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.IsDeleted______))" data-nt-value="@Model!.Model!.IsDeleted______"/>
+    </td>
+}

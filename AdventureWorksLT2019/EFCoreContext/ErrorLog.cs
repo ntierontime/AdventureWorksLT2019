@@ -1,0 +1,33 @@
+using System;
+using System.Collections.Generic;
+using NetTopologySuite.Geometries;
+
+namespace AdventureWorksLT2019.EFCoreContext
+{
+    public partial class ErrorLog
+    {
+        public ErrorLog()
+        {
+
+        }
+        public int ErrorLogID { get; set; }
+
+        public System.DateTime ErrorTime { get; set; }
+
+        public string UserName { get; set; } = null!;
+
+        public int ErrorNumber { get; set; }
+
+        public int? ErrorSeverity { get; set; }
+
+        public int? ErrorState { get; set; }
+
+        public string? ErrorProcedure { get; set; }
+
+        public int? ErrorLine { get; set; }
+
+        public string ErrorMessage { get; set; } = null!;
+
+    }
+}
+

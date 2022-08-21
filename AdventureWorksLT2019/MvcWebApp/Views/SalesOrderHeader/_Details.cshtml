@@ -1,0 +1,109 @@
+@using Framework.Models;
+@using AdventureWorksLT2019.Models.Definitions;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.Resx;
+@model MvcItemViewModel<SalesOrderHeaderDataModel.DefaultView>
+@inject SelectListHelper selectListHelper;
+@inject IUIStrings localizor;
+@{
+    var format_Please_Select = localizor.Get("Format_Please_Select");
+}
+@if (Model.Status != System.Net.HttpStatusCode.OK)
+{
+    <div class="row">
+        <div class="text-danger">@Model.StatusMessage</div>
+    </div>
+}
+else
+{
+    <input class="hidden-modal-title" value="@Model!.Model!.SalesOrderNumber" type="hidden" />
+    <div class="form-group">
+        <label asp-for="Model!.SalesOrderID" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.SalesOrderID))"></label>
+        @Html.DisplayFor(m=>m.Model!.SalesOrderID)
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.RevisionNumber" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.RevisionNumber))"></label>
+        @Html.DisplayFor(m=>m.Model!.RevisionNumber)
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.OrderDate" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.OrderDate))"></label>
+        @Html.DisplayFor(m=>m.Model!.OrderDate)
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.DueDate" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.DueDate))"></label>
+        @Html.DisplayFor(m=>m.Model!.DueDate)
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.ShipDate" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.ShipDate))"></label>
+        @Html.DisplayFor(m=>m.Model!.ShipDate)
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.Status" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.Status))"></label>
+        @Html.DisplayFor(m=>m.Model!.Status)
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.OnlineOrderFlag" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.OnlineOrderFlag))"></label>
+        @Html.DisplayFor(m=>m.Model!.OnlineOrderFlag)
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.SalesOrderNumber" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.SalesOrderNumber))"></label>
+        @Html.DisplayFor(m=>m.Model!.SalesOrderNumber)
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.PurchaseOrderNumber" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.PurchaseOrderNumber))"></label>
+        @Html.DisplayFor(m=>m.Model!.PurchaseOrderNumber)
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.AccountNumber" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.AccountNumber))"></label>
+        @Html.DisplayFor(m=>m.Model!.AccountNumber)
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.CustomerID" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.CustomerID))"></label>
+        <a asp-area="" asp-controller="Customer" asp-action="Dashboard" asp-route-customerid="@Model!.Model!.CustomerID">@Model!.Model!.Customer_Name</a>
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.ShipToAddressID" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.ShipToAddressID))"></label>
+        <a asp-area="" asp-controller="Address" asp-action="Dashboard" asp-route-addressid="@Model!.Model!.ShipToAddressID">@Model!.Model!.ShipTo_Name</a>
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.BillToAddressID" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.BillToAddressID))"></label>
+        <a asp-area="" asp-controller="Address" asp-action="Dashboard" asp-route-addressid="@Model!.Model!.BillToAddressID">@Model!.Model!.BillTo_Name</a>
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.ShipMethod" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.ShipMethod))"></label>
+        @Html.DisplayFor(m=>m.Model!.ShipMethod)
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.CreditCardApprovalCode" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.CreditCardApprovalCode))"></label>
+        @Html.DisplayFor(m=>m.Model!.CreditCardApprovalCode)
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.SubTotal" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.SubTotal))"></label>
+        @Html.DisplayFor(m=>m.Model!.SubTotal)
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.TaxAmt" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.TaxAmt))"></label>
+        @Html.DisplayFor(m=>m.Model!.TaxAmt)
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.Freight" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.Freight))"></label>
+        @Html.DisplayFor(m=>m.Model!.Freight)
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.TotalDue" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.TotalDue))"></label>
+        @Html.DisplayFor(m=>m.Model!.TotalDue)
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.Comment" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.Comment))"></label>
+        @Html.DisplayFor(m=>m.Model!.Comment)
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.rowguid" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.rowguid))"></label>
+        @Html.DisplayFor(m=>m.Model!.rowguid)
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.ModifiedDate" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.ModifiedDate))"></label>
+        @Html.DisplayFor(m=>m.Model!.ModifiedDate)
+    </div>
+}

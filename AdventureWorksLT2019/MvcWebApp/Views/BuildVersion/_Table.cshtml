@@ -1,0 +1,86 @@
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.Resx;
+@using Framework.Models;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@model PagedViewModel<BuildVersionDataModel[]>
+@inject IUIStrings localizor;
+<!--for EditableList "Create New" for now, can copy to Tiles -->
+<input type="hidden" class="nt-list-count" value="@Model!.Result!.ResponseBody!.Count()" />
+<div class="table-responsive p-0">
+    <form>
+    <table class="table table-hover table-bordered table-striped align-middle">
+        <thead class="table-dark">
+            <tr class="pt-0 pb-0">
+                @if (Model!.UIListSetting.ShowListBulkActionRelated(true))
+                {
+                    <th class="p-0" style="width: 1% !important;"></th>
+                }
+                @if (Model!.UIListSetting.ShowItemButtons())
+                {
+                    <th class="p-0" style="width: 1% !important;"></th>
+                }
+                <th class="pt-0 pb-0">@localizor.Get("SystemInformationID")</th>
+                <th class="pt-0 pb-0">@localizor.Get("Database_Version")</th>
+                <th class="pt-0 pb-0">@localizor.Get("VersionDate")</th>
+                <th class="pt-0 pb-0">@localizor.Get("ModifiedDate")</th>
+                @if (Model!.UIListSetting.ShowItemUIStatus())
+                {
+                    <th style="width: 1% !important;"></th>
+                }
+                @if (Model!.UIListSetting.ShowEditableListDeleteSelect())
+                {
+                    <th class="text-center" style="width: 1% !important;"><i class="fa-solid fa-trash"></i></th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Result != null && Model.Result.Status == System.Net.HttpStatusCode.OK && Model.Result.ResponseBody != null)
+            {
+                for (var i = 0; i < Model.Result.ResponseBody.Length; i++)
+                {
+                    @await Html.PartialAsync("~/Views/BuildVersion/_TableItemTr.cshtml",
+                        new MvcItemViewModel<BuildVersionDataModel>
+                        {
+                            UIItemFeatures = Model.UIListSetting.GetUIItemFeatures(),
+                            Status = System.Net.HttpStatusCode.OK,
+                            StatusMessage = Model.Result.StatusMessage,
+                            Template = Model!.UIListSetting.UIParams.PagedViewOption != PagedViewOptions.EditableTable ? ViewItemTemplateNames.Details.ToString() : ViewItemTemplateNames.Edit.ToString(),
+                            IndexInArray = i,
+                            Model = Model.Result.ResponseBody[i],
+                            TopLevelDropDownListsFromDatabase = Model.TopLevelDropDownListsFromDatabase,
+                        })
+                }
+            }
+            else if (Model != null && Model.Result != null)
+            {
+                <tr>
+                    <td colspan="50">
+                        <div class="text-danger">@Model.Result.StatusMessage</div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+            <!--only for inline editing-->
+            <tfoot>
+                @if (Model!.UIListSetting == null || Model!.UIListSetting.CanGotoCreate(@CrudViewContainers.Inline))
+                {
+                    <tr class="pt-0 pb-0 nt-listitem nt-new">
+                        <td class="nt-createnew-button-container" colspan="100">
+                        <button type="button" class="btn btn-primary btn-nt-inline-editing w-100 h-100" title="@localizor.Get("Create_New")"
+                            data-nt-action="@HttpMethods.Post"
+                            data-nt-route-id="@(default(byte) + "/" + default(System.DateTime) + "/" + default(System.DateTime))"
+                            data-nt-container="@CrudViewContainers.Inline.ToString()"
+                            data-nt-template="@ViewItemTemplateNames.Create.ToString()">
+                            <i class="fa fa-plus"></i><span class="submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Create_New")</span>
+                        </button>
+                        </td>
+                    </tr>
+                }
+            </tfoot>
+    </table>
+    </form>
+    @if (Model != null && Model!.UIListSetting!.UIListFeatures.HasPagination && Model.Result != null && Model.Result.Pagination != null)
+    {
+        @await Html.PartialAsync("~/Views/Shared/_Pagination.cshtml", Model.Result.Pagination)
+    }
+</div>

@@ -1,12 +1,128 @@
 {
   "name": "AdventureWorksLT2019Model.SalesOrderHeader",
-  "dataViewCollection": [],
-  "criteriaCollection": [],
-  "queryCollection": [],
-  "queryResultCollection": [],
+  "dataViewCollection": [
+    {
+      "key": "NameValuePair",
+      "dataViewKnownCategory": 4,
+      "isGroupByResult": false,
+      "defaultOrderByPropertyName": null
+    },
+    {
+      "key": "DefaultView",
+      "dataViewKnownCategory": 1,
+      "isGroupByResult": false,
+      "defaultOrderByPropertyName": null
+    }
+  ],
+  "criteriaCollection": [
+    {
+      "key": "Identifier",
+      "description": "Query by Identifier/UniqueConstraint/CompositeIdentifier",
+      "sourceTypeFullName": "AdventureWorksLT2019Model.SalesOrderHeader",
+      "queries": [
+        {
+          "key": "",
+          "value": "Identifier"
+        }
+      ]
+    },
+    {
+      "key": "AdvancedQuery",
+      "description": "Query by EntityReference, String, Bool, Order By DateTime",
+      "sourceTypeFullName": "AdventureWorksLT2019Model.SalesOrderHeader",
+      "queries": [
+        {
+          "key": "",
+          "value": "AdvancedQuery"
+        }
+      ]
+    }
+  ],
+  "queryCollection": [
+    {
+      "key": "Identifier",
+      "dataQueryPerQueryKnownKey": 1,
+      "sourceTypeDeclarationFullName": "AdventureWorksLT2019Model.SalesOrderHeader",
+      "conditionOperator": 1,
+      "hasStringContainsDataQueryPerQueryUnitSettingForAll": false,
+      "queryUnitGroups": [
+        {
+          "key": "Identifier",
+          "dataQueryPerQueryUnitSettingType": 1,
+          "outterConditionOperator": 0,
+          "conditionOperator": 0,
+          "name": "Query by Identifier"
+        }
+      ]
+    },
+    {
+      "key": "AdvancedQuery",
+      "dataQueryPerQueryKnownKey": 2,
+      "sourceTypeDeclarationFullName": "AdventureWorksLT2019Model.SalesOrderHeader",
+      "conditionOperator": 0,
+      "hasStringContainsDataQueryPerQueryUnitSettingForAll": false,
+      "queryUnitGroups": [
+        {
+          "key": "EntityReference",
+          "dataQueryPerQueryUnitSettingType": 5,
+          "outterConditionOperator": 0,
+          "conditionOperator": 0,
+          "name": "Query by EntityReference"
+        },
+        {
+          "key": "BooleanRange",
+          "dataQueryPerQueryUnitSettingType": 6,
+          "outterConditionOperator": 0,
+          "conditionOperator": 0,
+          "name": "Query by Boolean"
+        },
+        {
+          "key": "DateTimeRange",
+          "dataQueryPerQueryUnitSettingType": 6,
+          "outterConditionOperator": 0,
+          "conditionOperator": 0,
+          "name": "Query by DateTime Range"
+        },
+        {
+          "key": "StringQuery",
+          "dataQueryPerQueryUnitSettingType": 7,
+          "outterConditionOperator": 0,
+          "conditionOperator": 0,
+          "name": "Query by String Contains,StartsWith, EndsWith"
+        }
+      ]
+    }
+  ],
+  "queryResultCollection": [
+    {
+      "key": "Search",
+      "criteriaKey": "AdvancedQuery",
+      "dataViewKey": "",
+      "orderBys": ""
+    },
+    {
+      "key": "GetCodeList",
+      "criteriaKey": "AdvancedQuery",
+      "dataViewKey": "NameValuePair",
+      "orderBys": ""
+    }
+  ],
   "entityReferenceResultForPersistAliasCollection": [
     {
-      "foreignKeySetting": null,
+      "foreignKeySetting": {
+        "tablE_SCHEMA": "SalesLT",
+        "tablE_NAME": "SalesOrderHeader",
+        "entityReferenceSimpleFullPath": "\\BillToAddressID",
+        "pkTypeDeclarationContextName": "Address",
+        "duplicateIDPropertyFullPath": null,
+        "isLeftJoin": false,
+        "inLinqJoin": true,
+        "idInCriteria": true,
+        "idInDefaultDataView": true,
+        "uniqueConstraintInDefaultDataView": true,
+        "propertiesInDefaultDataView": null,
+        "createdDate": "2022-08-21T00:00:00"
+      },
       "tablE_SCHEMA": "SalesLT",
       "tablE_NAME": "SalesOrderHeader",
       "entityReferenceSimpleFullPath": "\\BillToAddressID",
@@ -31,7 +147,20 @@
       "createdDate": "0001-01-01T00:00:00"
     },
     {
-      "foreignKeySetting": null,
+      "foreignKeySetting": {
+        "tablE_SCHEMA": "SalesLT",
+        "tablE_NAME": "SalesOrderHeader",
+        "entityReferenceSimpleFullPath": "\\ShipToAddressID",
+        "pkTypeDeclarationContextName": "Address",
+        "duplicateIDPropertyFullPath": null,
+        "isLeftJoin": false,
+        "inLinqJoin": true,
+        "idInCriteria": true,
+        "idInDefaultDataView": true,
+        "uniqueConstraintInDefaultDataView": true,
+        "propertiesInDefaultDataView": null,
+        "createdDate": "2022-08-21T00:00:00"
+      },
       "tablE_SCHEMA": "SalesLT",
       "tablE_NAME": "SalesOrderHeader",
       "entityReferenceSimpleFullPath": "\\ShipToAddressID",
@@ -56,7 +185,20 @@
       "createdDate": "0001-01-01T00:00:00"
     },
     {
-      "foreignKeySetting": null,
+      "foreignKeySetting": {
+        "tablE_SCHEMA": "SalesLT",
+        "tablE_NAME": "SalesOrderHeader",
+        "entityReferenceSimpleFullPath": "\\CustomerID",
+        "pkTypeDeclarationContextName": "Customer",
+        "duplicateIDPropertyFullPath": null,
+        "isLeftJoin": false,
+        "inLinqJoin": true,
+        "idInCriteria": true,
+        "idInDefaultDataView": true,
+        "uniqueConstraintInDefaultDataView": true,
+        "propertiesInDefaultDataView": null,
+        "createdDate": "2022-08-21T00:00:00"
+      },
       "tablE_SCHEMA": "SalesLT",
       "tablE_NAME": "SalesOrderHeader",
       "entityReferenceSimpleFullPath": "\\CustomerID",

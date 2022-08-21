@@ -1,0 +1,100 @@
+@using Framework.Models;
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.Resx;
+@model MvcItemViewModel<ProductDataModel.DefaultView>
+@inject IUIStrings localizor;
+@if (Model!.UIItemFeatures.ShowListBulkSelectCheckbox)
+{
+    <td class="pt-0 pb-0 nt-list-bulk-select" style="width: 1% !important;">
+    </td>
+}
+@if (Model!.UIItemFeatures.ShowItemButtons)
+{
+    <td class="p-0" style="width: 1% !important;">
+    <div class="btn-group btn-group-nt-action-save">
+        <button type="button" class="btn btn-secondary btn-nt-action-cancel" data-nt-action="@HttpMethods.Delete">
+            <i class="fa-solid fa-circle-xmark"></i><span class="submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Cancel")</span>
+        </button>
+        <button type="button" class="btn btn-primary btn-nt-action" data-nt-action="@HttpMethods.Delete"
+            data-nt-container="@CrudViewContainers.Inline.ToString()"
+            data-nt-template="@ViewItemTemplateNames.Delete.ToString()">
+            <i class="fa-solid fa-check-circle"></i><span class="submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Delete")</span>
+        </button>
+    </div>
+    </td>
+}
+<td class="pt-0 pb-0">
+    @Html.DisplayFor(m=>m.Model!.ProductID)
+</td>
+<td class="pt-0 pb-0">
+    @Html.DisplayFor(m=>m.Model!.Name)
+</td>
+<td class="pt-0 pb-0">
+    @Html.DisplayFor(m=>m.Model!.ProductNumber)
+</td>
+<td class="pt-0 pb-0">
+    @Html.DisplayFor(m=>m.Model!.Color)
+</td>
+<td class="pt-0 pb-0">
+    @Html.DisplayFor(m=>m.Model!.StandardCost)
+</td>
+<td class="pt-0 pb-0">
+    @Html.DisplayFor(m=>m.Model!.ListPrice)
+</td>
+<td class="pt-0 pb-0">
+    @Html.DisplayFor(m=>m.Model!.Size)
+</td>
+<td class="pt-0 pb-0">
+    @Html.DisplayFor(m=>m.Model!.Weight)
+</td>
+<td class="pt-0 pb-0">
+    <a asp-area="" asp-controller="ProductCategory" asp-action="Dashboard" asp-route-productcategoryid="@Model!.Model!.ProductCategoryID">@Model!.Model!.ProductCategory_Name</a>
+</td>
+<td class="pt-0 pb-0">
+    <a asp-area="" asp-controller="ProductModel" asp-action="Dashboard" asp-route-productmodelid="@Model!.Model!.ProductModelID">@Model!.Model!.ProductModel_Name</a>
+</td>
+<td class="pt-0 pb-0">
+    @Html.DisplayFor(m=>m.Model!.SellStartDate)
+</td>
+<td class="pt-0 pb-0">
+    @Html.DisplayFor(m=>m.Model!.SellEndDate)
+</td>
+<td class="pt-0 pb-0">
+    @Html.DisplayFor(m=>m.Model!.DiscontinuedDate)
+</td>
+<td class="pt-0 pb-0">
+    @Html.DisplayFor(m=>m.Model!.ThumbNailPhoto)
+</td>
+<td class="pt-0 pb-0">
+    @Html.DisplayFor(m=>m.Model!.ThumbnailPhotoFileName)
+</td>
+<td class="pt-0 pb-0">
+    @Html.DisplayFor(m=>m.Model!.rowguid)
+</td>
+<td class="pt-0 pb-0">
+    @Html.DisplayFor(m=>m.Model!.ModifiedDate)
+</td>
+@if (Model!.UIItemFeatures.ShowItemUIStatus)
+{
+    <td class="form-group nt-item-status text-center" style="width: 1% !important;">
+        @if (Model!.Model!.ItemUIStatus______ == ItemUIStatus.NoChange)
+        {
+                <i class="fa-solid fa-circle-notch text-success"></i>
+        }
+        else if (Model!.Model!.ItemUIStatus______ == ItemUIStatus.Updated) // Usually: will be changed by JQuery
+        {
+                <i class="fa-solid fa-circle text-danger"></i>
+        }
+        else // ItemUIStatus.New
+        {
+                    <i class="fa-solid fa-circle text-danger"></i>
+        }
+        <input asp-for="Model!.ItemUIStatus______" class="form-control" data-nt-value="@Model!.Model!.ItemUIStatus______" id="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.ItemUIStatus______))" name="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.ItemUIStatus______))" type="hidden" />
+    </td>
+}
+@if (Model!.UIItemFeatures.ShowEditableListDeleteSelect)
+{
+    <td class="form-group nt-editablelist-delete-select text-center" style="width: 1% !important;">
+        <input asp-for="Model!.IsDeleted______" class="form-check-input nt-form-check ms-1" type="checkbox"  id="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.IsDeleted______))" name="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.IsDeleted______))" data-nt-value="@Model!.Model!.IsDeleted______"/>
+    </td>
+}

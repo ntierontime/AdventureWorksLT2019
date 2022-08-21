@@ -1,2 +1,2 @@
 ﻿OriginalInput,UseTypeFullName,RootNamespace,SolutionName,SubRootFolder,SwaggerRootFolder,CodeVersion,StartPort,ExcludedTables,CompanyName,EmailDomainName,ConnectionStringName,DatabaseSever,DatabaseName
-D:\Test4\WhatEverII\trunk\Projects\AdventureWorksLT2019\DB\Edmx\AdventureWorksLT2019.edmx,False,AdventureWorksLT2019,AdventureWorksLT2019,AdventureWorksLT2019,APIs,1.0.0.0,7100,aspnet_*;__RefactorLog;__MigrationHistory,AdventureWorksLT2019,url,AdventureWorksLT2019,,AdventureWorksLT2019
+D:\Test4\WhatEverII\trunk\Projects\AdventureWorksLT2019\DB\Edmx\AdventureWorksLT2019.edmx,False,AdventureWorksLT2019,AdventureWorksLT2019,AdventureWorksLT2019,APIs,1.0.0.0,7800,aspnet_*;__RefactorLog;__MigrationHistory,AdventureWorksLT2019,url,AdventureWorksLT2019,,AdventureWorksLT2019

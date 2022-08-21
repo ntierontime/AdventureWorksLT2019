@@ -1,0 +1,23 @@
+@using AdventureWorksLT2019.Resx;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@using Framework.Models;
+@using AdventureWorksLT2019.Models;
+@model MvcItemViewModel<ProductCategoryDataModel.DefaultView>
+@inject IUIStrings localizor;
+@{
+    var routeId = Model.Model?.ProductCategoryID;
+}
+<tr class="pt-0 pb-0 nt-listitem@(Model.IsCurrentItem ? " nt-created border-warning border-3": "")" data-nt-route-id="@routeId">
+    @if (Model.Template == ViewItemTemplateNames.Details.ToString())
+    {
+        @await Html.PartialAsync("~/Views/ProductCategory/_TableDetailsItem.cshtml", Model)
+    }
+    else if (Model.Template == ViewItemTemplateNames.Edit.ToString())
+    {
+        @await Html.PartialAsync("~/Views/ProductCategory/_TableEditItem.cshtml", Model)
+    }
+    else if (Model.Template == ViewItemTemplateNames.Create.ToString())
+    {
+        @await Html.PartialAsync("~/Views/ProductCategory/_TableCreateItem.cshtml", Model)
+    }
+</tr>

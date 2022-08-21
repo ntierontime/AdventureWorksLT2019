@@ -1,9 +1,99 @@
 {
   "name": "AdventureWorksLT2019Model.Customer",
-  "dataViewCollection": [],
-  "criteriaCollection": [],
-  "queryCollection": [],
-  "queryResultCollection": [],
+  "dataViewCollection": [
+    {
+      "key": "NameValuePair",
+      "dataViewKnownCategory": 4,
+      "isGroupByResult": false,
+      "defaultOrderByPropertyName": null
+    }
+  ],
+  "criteriaCollection": [
+    {
+      "key": "Identifier",
+      "description": "Query by Identifier/UniqueConstraint/CompositeIdentifier",
+      "sourceTypeFullName": "AdventureWorksLT2019Model.Customer",
+      "queries": [
+        {
+          "key": "",
+          "value": "Identifier"
+        }
+      ]
+    },
+    {
+      "key": "AdvancedQuery",
+      "description": "Query by EntityReference, String, Bool, Order By DateTime",
+      "sourceTypeFullName": "AdventureWorksLT2019Model.Customer",
+      "queries": [
+        {
+          "key": "",
+          "value": "AdvancedQuery"
+        }
+      ]
+    }
+  ],
+  "queryCollection": [
+    {
+      "key": "Identifier",
+      "dataQueryPerQueryKnownKey": 1,
+      "sourceTypeDeclarationFullName": "AdventureWorksLT2019Model.Customer",
+      "conditionOperator": 1,
+      "hasStringContainsDataQueryPerQueryUnitSettingForAll": false,
+      "queryUnitGroups": [
+        {
+          "key": "Identifier",
+          "dataQueryPerQueryUnitSettingType": 1,
+          "outterConditionOperator": 0,
+          "conditionOperator": 0,
+          "name": "Query by Identifier"
+        }
+      ]
+    },
+    {
+      "key": "AdvancedQuery",
+      "dataQueryPerQueryKnownKey": 2,
+      "sourceTypeDeclarationFullName": "AdventureWorksLT2019Model.Customer",
+      "conditionOperator": 0,
+      "hasStringContainsDataQueryPerQueryUnitSettingForAll": false,
+      "queryUnitGroups": [
+        {
+          "key": "BooleanRange",
+          "dataQueryPerQueryUnitSettingType": 6,
+          "outterConditionOperator": 0,
+          "conditionOperator": 0,
+          "name": "Query by Boolean"
+        },
+        {
+          "key": "DateTimeRange",
+          "dataQueryPerQueryUnitSettingType": 6,
+          "outterConditionOperator": 0,
+          "conditionOperator": 0,
+          "name": "Query by DateTime Range"
+        },
+        {
+          "key": "StringQuery",
+          "dataQueryPerQueryUnitSettingType": 7,
+          "outterConditionOperator": 0,
+          "conditionOperator": 0,
+          "name": "Query by String Contains,StartsWith, EndsWith"
+        }
+      ]
+    }
+  ],
+  "queryResultCollection": [
+    {
+      "key": "Search",
+      "criteriaKey": "AdvancedQuery",
+      "dataViewKey": "",
+      "orderBys": ""
+    },
+    {
+      "key": "GetCodeList",
+      "criteriaKey": "AdvancedQuery",
+      "dataViewKey": "NameValuePair",
+      "orderBys": ""
+    }
+  ],
   "entityReferenceResultForPersistAliasCollection": [],
   "entityReferenceResultForPersistAliasCollectionOfBridged": null,
   "entityReferenceResultForPersistAliasCollectionOfCrossJoined": null

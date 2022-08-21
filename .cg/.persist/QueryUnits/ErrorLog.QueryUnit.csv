@@ -1,0 +1,6 @@
+﻿TypeDeclarationContextName,Query,QueryUnitGroup,QueryPropertyName,Enabled,ProcessStatus,QueryUnitSettingType,TargetTypeDeclarationFullName,TargetEntityKey,TargetPropertyName,TargetPropertyType,FKPropertyName,EntityReferenceSimpleFullPath,TargetPropertyFullPath,PredicateKnownType
+AdventureWorksLT2019Model.ErrorLog,AdvancedQuery,DateTimeRange,ErrorTimeRange,True,FromDefault,Range,AdventureWorksLT2019Model.ErrorLog,t,ErrorTime,SystemDateTime,,,,Range
+AdventureWorksLT2019Model.ErrorLog,AdvancedQuery,StringQuery,UserName,True,FromDefault,StringQuery,AdventureWorksLT2019Model.ErrorLog,t,UserName,SystemString,,,,Contains
+AdventureWorksLT2019Model.ErrorLog,AdvancedQuery,StringQuery,ErrorProcedure,True,FromDefault,StringQuery,AdventureWorksLT2019Model.ErrorLog,t,ErrorProcedure,SystemString,,,,Contains
+AdventureWorksLT2019Model.ErrorLog,AdvancedQuery,StringQuery,ErrorMessage,True,FromDefault,StringQuery,AdventureWorksLT2019Model.ErrorLog,t,ErrorMessage,SystemString,,,,Contains
+AdventureWorksLT2019Model.ErrorLog,Identifier,Identifier,ErrorLogID,True,FromDefault,Identifier,AdventureWorksLT2019Model.ErrorLog,t,ErrorLogID,SystemInt32,,,,Equals

@@ -1,0 +1,87 @@
+@using Framework.Models;
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.Resx;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@using AdventureWorksLT2019.Models.Definitions;
+@model MvcItemViewModel<AddressDataModel>
+@inject SelectListHelper selectListHelper;
+@inject IUIStrings localizor;
+@{
+    var format_Please_Select = localizor.Get("Format_Please_Select");
+}
+@if (Model!.UIItemFeatures.ShowListBulkSelectCheckbox)
+{
+    <td class="pt-0 pb-0 nt-list-bulk-select" style="width: 1% !important;">
+    </td>
+}
+@if (Model!.UIItemFeatures.ShowItemButtons)
+{
+    <td class="p-0" style="width: 1% !important;">
+    <div class="btn-group btn-group-nt-action-save">
+        <button type="button" class="btn btn-secondary btn-nt-action-cancel" data-nt-action="@HttpMethods.Post">
+            <i class="fa-solid fa-circle-xmark"></i><span class="submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Cancel")</span>
+        </button>
+        <button type="button" class="btn btn-primary btn-nt-action" data-nt-action="@HttpMethods.Post"
+            data-nt-container="@CrudViewContainers.Inline.ToString()"
+            data-nt-template="@ViewItemTemplateNames.Create.ToString()">
+            <i class="fa-solid fa-check-circle"></i><span class="submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Save")</span>
+        </button>
+    </div>
+    </td>
+}
+<td class="form-group p-0">
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.AddressLine1" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(AddressDataModel.AddressLine1))" name="@Model!.HtmlName(nameof(AddressDataModel.AddressLine1))" data-nt-value="@Model!.Model!.AddressLine1"/>
+    <span asp-validation-for="Model!.AddressLine1" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(AddressDataModel.AddressLine1))"></span>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.AddressLine2" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(AddressDataModel.AddressLine2))" name="@Model!.HtmlName(nameof(AddressDataModel.AddressLine2))" data-nt-value="@Model!.Model!.AddressLine2"/>
+    <span asp-validation-for="Model!.AddressLine2" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(AddressDataModel.AddressLine2))"></span>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.City" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(AddressDataModel.City))" name="@Model!.HtmlName(nameof(AddressDataModel.City))" data-nt-value="@Model!.Model!.City"/>
+    <span asp-validation-for="Model!.City" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(AddressDataModel.City))"></span>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.StateProvince" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(AddressDataModel.StateProvince))" name="@Model!.HtmlName(nameof(AddressDataModel.StateProvince))" data-nt-value="@Model!.Model!.StateProvince"/>
+    <span asp-validation-for="Model!.StateProvince" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(AddressDataModel.StateProvince))"></span>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.CountryRegion" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(AddressDataModel.CountryRegion))" name="@Model!.HtmlName(nameof(AddressDataModel.CountryRegion))" data-nt-value="@Model!.Model!.CountryRegion"/>
+    <span asp-validation-for="Model!.CountryRegion" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(AddressDataModel.CountryRegion))"></span>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.PostalCode" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(AddressDataModel.PostalCode))" name="@Model!.HtmlName(nameof(AddressDataModel.PostalCode))" data-nt-value="@Model!.Model!.PostalCode"/>
+    <span asp-validation-for="Model!.PostalCode" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(AddressDataModel.PostalCode))"></span>
+</td>
+<td class="form-group p-0">
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.ModifiedDate" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(AddressDataModel.ModifiedDate))" name="@Model!.HtmlName(nameof(AddressDataModel.ModifiedDate))" data-nt-value="@Model!.Model!.ModifiedDate"/>
+    <span asp-validation-for="Model!.ModifiedDate" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(AddressDataModel.ModifiedDate))"></span>
+</td>
+@if (Model!.UIItemFeatures.ShowItemUIStatus)
+{
+    <td class="form-group nt-item-status text-center" style="width: 1% !important;">
+        @if (Model!.Model!.ItemUIStatus______ == ItemUIStatus.NoChange)
+        {
+                <i class="fa-solid fa-circle-notch text-success"></i>
+        }
+        else if (Model!.Model!.ItemUIStatus______ == ItemUIStatus.Updated) // Usually: will be changed by JQuery
+        {
+                <i class="fa-solid fa-circle text-danger"></i>
+        }
+        else // ItemUIStatus.New
+        {
+                    <i class="fa-solid fa-circle text-danger"></i>
+        }
+        <input asp-for="Model!.ItemUIStatus______" class="form-control" data-nt-value="@Model!.Model!.ItemUIStatus______" id="@Model!.HtmlId(nameof(AddressDataModel.ItemUIStatus______))" name="@Model!.HtmlName(nameof(AddressDataModel.ItemUIStatus______))" type="hidden" />
+    </td>
+}
+@if (Model!.UIItemFeatures.ShowEditableListDeleteSelect)
+{
+    <td class="form-group nt-editablelist-delete-select text-center" style="width: 1% !important;">
+        <input asp-for="Model!.IsDeleted______" class="form-check-input nt-form-check ms-1" type="checkbox"  id="@Model!.HtmlId(nameof(AddressDataModel.IsDeleted______))" name="@Model!.HtmlName(nameof(AddressDataModel.IsDeleted______))" data-nt-value="@Model!.Model!.IsDeleted______"/>
+    </td>
+}

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk" >
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+<ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="6.0.5" />
+</ItemGroup>
+<ItemGroup>
+    <ProjectReference Include="..\EFCoreContext\AdventureWorksLT2019.EFCoreContext.csproj" />
+    <ProjectReference Include="..\EFCoreRepositories\AdventureWorksLT2019.EFCoreRepositories.csproj" />
+    <ProjectReference Include="..\..\Frameworks\Framework\Framework.csproj" />
+    <ProjectReference Include="..\Models\AdventureWorksLT2019.Models.csproj" />
+    <ProjectReference Include="..\RepositoryContracts\AdventureWorksLT2019.RepositoryContracts.csproj" />
+    <ProjectReference Include="..\Resx\AdventureWorksLT2019.Resx.csproj" />
+    <ProjectReference Include="..\ServiceContracts\AdventureWorksLT2019.ServiceContracts.csproj" />
+    <ProjectReference Include="..\Services\AdventureWorksLT2019.Services.csproj" />
+</ItemGroup>
+
+</Project>

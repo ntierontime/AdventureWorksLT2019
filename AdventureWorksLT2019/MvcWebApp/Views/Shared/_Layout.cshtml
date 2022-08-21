@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - AdventureWorksLT2019</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AdventureWorksLT2019</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <partial name="_NavbarRight" />
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="searchpagelist" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Search Page List
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="searchpagelist">
+                                <li><a class="nav-link text-light" asp-area="" asp-controller="Address" asp-action="Index">Address Index</a></li>
+                                <li><a class="nav-link text-light" asp-area="" asp-controller="BuildVersion" asp-action="Index">BuildVersion Index</a></li>
+                                <li><a class="nav-link text-light" asp-area="" asp-controller="Customer" asp-action="Index">Customer Index</a></li>
+                                <li><a class="nav-link text-light" asp-area="" asp-controller="CustomerAddress" asp-action="Index">CustomerAddress Index</a></li>
+                                <li><a class="nav-link text-light" asp-area="" asp-controller="ErrorLog" asp-action="Index">ErrorLog Index</a></li>
+                                <li><a class="nav-link text-light" asp-area="" asp-controller="Product" asp-action="Index">Product Index</a></li>
+                                <li><a class="nav-link text-light" asp-area="" asp-controller="ProductCategory" asp-action="Index">ProductCategory Index</a></li>
+                                <li><a class="nav-link text-light" asp-area="" asp-controller="ProductDescription" asp-action="Index">ProductDescription Index</a></li>
+                                <li><a class="nav-link text-light" asp-area="" asp-controller="ProductModel" asp-action="Index">ProductModel Index</a></li>
+                                <li><a class="nav-link text-light" asp-area="" asp-controller="ProductModelProductDescription" asp-action="Index">ProductModelProductDescription Index</a></li>
+                                <li><a class="nav-link text-light" asp-area="" asp-controller="SalesOrderDetail" asp-action="Index">SalesOrderDetail Index</a></li>
+                                <li><a class="nav-link text-light" asp-area="" asp-controller="SalesOrderHeader" asp-action="Index">SalesOrderHeader Index</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="createformlist" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Create Form List
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="createformlist">
+                                <li><a class="nav-link text-light" asp-area="" asp-controller="Address" asp-action="Create">Create Address</a></li>
+                                <li><a class="nav-link text-light" asp-area="" asp-controller="BuildVersion" asp-action="Create">Create BuildVersion</a></li>
+                                <li><a class="nav-link text-light" asp-area="" asp-controller="Customer" asp-action="Create">Create Customer</a></li>
+                                <li><a class="nav-link text-light" asp-area="" asp-controller="CustomerAddress" asp-action="Create">Create CustomerAddress</a></li>
+                                <li><a class="nav-link text-light" asp-area="" asp-controller="ErrorLog" asp-action="Create">Create ErrorLog</a></li>
+                                <li><a class="nav-link text-light" asp-area="" asp-controller="Product" asp-action="Create">Create Product</a></li>
+                                <li><a class="nav-link text-light" asp-area="" asp-controller="ProductCategory" asp-action="Create">Create ProductCategory</a></li>
+                                <li><a class="nav-link text-light" asp-area="" asp-controller="ProductDescription" asp-action="Create">Create ProductDescription</a></li>
+                                <li><a class="nav-link text-light" asp-area="" asp-controller="ProductModel" asp-action="Create">Create ProductModel</a></li>
+                                <li><a class="nav-link text-light" asp-area="" asp-controller="ProductModelProductDescription" asp-action="Create">Create ProductModelProductDescription</a></li>
+                                <li><a class="nav-link text-light" asp-area="" asp-controller="SalesOrderDetail" asp-action="Create">Create SalesOrderDetail</a></li>
+                                <li><a class="nav-link text-light" asp-area="" asp-controller="SalesOrderHeader" asp-action="Create">Create SalesOrderHeader</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            @RenderBody()
+            <partial name="~/Views/Shared/_FullScreenLoading.cshtml" />
+        </main>
+    </div>
+    <footer class="border-top footer text-muted">
+        <div class="container-fluid">
+            &copy; 2022 - AdventureWorksLT2019 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/moment.js/moment.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/font-awesome//js/all.js"></script>
+    <script src="~/js/DDLCascading.js" asp-append-version="true"></script>
+    <script src="~/js/PredefinedDateTimeRange.js" asp-append-version="true"></script>
+    <script src="~/js/PaginationAndOrderBy.js" asp-append-version="true"></script>
+    <script src="~/js/AjaxLoadItemsSubmit.js" asp-append-version="true"></script>
+    <script src="~/js/PagedViewOption.js" asp-append-version="true"></script>
+    <script src="~/js/CrudActionDialog.js" asp-append-version="true"></script>
+    <script src="~/js/InlineEditing.js" asp-append-version="true"></script>
+    <script src="~/js/BulkSelection.js" asp-append-version="true"></script>
+    <script src="~/js/SimpleActionConfirmationDialog.js" asp-append-version="true"></script>
+    <script src="~/js/BulkActions.js" asp-append-version="true"></script>
+    <script src="~/js/MultiItemsEditing.js" asp-append-version="true"></script>
+    <script src="~/js/SingletonMessagePopup.js" asp-append-version="true"></script>
+    <script src="~/js/FullScreenLoading.js" asp-append-version="true"></script>
+    <script src="~/js/DetectFormDataChanged.js" asp-append-version="true"></script>
+    <script src="~/js/DocumentReady.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

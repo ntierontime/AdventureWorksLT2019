@@ -1,0 +1,198 @@
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.Resx;
+@using Framework.Models;
+@using AdventureWorksLT2019.Models.Definitions;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@model PagedSearchViewModel<CustomerAdvancedQuery, CustomerDataModel[]>
+@inject IHttpContextAccessor Accessor
+@inject SelectListHelper selectListHelper;
+@inject IUIStrings localizor;
+@{
+    ViewData["Title"] = @localizor.Get("Search") + " " + localizor.Get("Customer");
+    var format_All = localizor.Get("Format_All");
+    string currentView = string.Empty;
+    if (Accessor.HttpContext != null)
+    {
+        currentView = Accessor.HttpContext.Request.Query["PagedViewOption"];
+    }
+    if (string.IsNullOrEmpty(currentView))
+    {
+        currentView = (Model.UIListSetting.UIParams.PagedViewOption ?? PagedViewOptions.EditableTable).ToString();
+    }
+}
+<form id="@Model!.UIListSetting.UIListFeatures.SearchFormId" method="post" class="nt-ajax-partial-load-post-formdata"
+    data-nt-partial-url="@Url.Action("AjaxLoadItems", "Customer")"
+    data-nt-updatetarget="#@Model!.UIListSetting.UIListFeatures.ListWrapperId">
+    <input type="hidden" asp-for="Query.PageIndex" class="nt-page-index" />
+    <input type="hidden" asp-for="Query.PageSize" class="nt-page-size" />
+    <input type="hidden" asp-for="Query.OrderBys" class="nt-order-by" />
+    <input type="hidden" asp-for="Query.PaginationOption" class="nt-pagination-option-field" />
+    <input type="hidden" asp-for="UIListSetting.UIParams.AdvancedQuery" class="nt-advanced-query" iname="AdvancedQuery" />
+    <input type="hidden" asp-for="UIListSetting.UIParams.PagedViewOption" class="nt-paged-view-option-field" value="@currentView" name="PagedViewOption" />
+    <input type="hidden" asp-for="UIListSetting.UIParams.Template" class="nt-template-field" name="Template" />
+    <div class="d-flex justify-content-between pt-1">
+        <div>
+            <span class="h5"><a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Index">you are working on <strong>@localizor.Get("Customer")</strong></a></span>
+        </div>
+        <a class="btn btn-secondary nt-advanced-search-button" role="button" title="@localizor.Get("AdvancedSearch")" data-bs-toggle="collapse" data-bs-target=".nt-advanced-search-field" aria-expanded="@(Model!.UIListSetting.UIParams.AdvancedQuery.ToString().ToLower())" aria-controls="advancedsearch-seperator advancedsearch-text advancedsearch-bool" data-updatetarget="#advancedQueryH">
+            <i class="fa-solid fa-circle-chevron-up advanced-search-expanded"></i>
+            <span class="advanced-search-expanded">@localizor.Get("HideAdvancedSearch")</span>
+            <i class="fa-solid fa-circle-chevron-down advanced-search-collapsed"></i>
+            <span class="advanced-search-collapsed">@localizor.Get("ShowAdvancedSearch")</span>
+        </a>
+        <button class="btn btn-primary me-1 ms-1" role="button" type="submit" title="@localizor.Get("Search")">
+            <i class="fa fa-search"></i>
+            @localizor.Get("Search")
+        </button>
+    </div>
+    <hr class="mt-1" />
+    <div class="input-group">
+        <select asp-for="Query.TextSearchType" asp-items="@selectListHelper.GetSelectList(Model!.TextSearchTypeList)" class="input-group-text text-start">
+        </select>
+        <input asp-for="Query.TextSearch" class="form-control" placeholder="@localizor.Get("SearchTextDescription")" aria-label="@localizor.Get("SearchTextDescription")" />
+    </div>
+    <div class="row pt-1">
+        <div class="col-lg-6">
+            <div class="input-group">
+                <label class="input-group-text">@localizor.Get("ModifiedDateRange")</label>
+                <select asp-for="Query.ModifiedDateRange" asp-items="@selectListHelper.GetSelectList(Model!.OtherDropDownLists[nameof(CustomerAdvancedQuery.ModifiedDateRange)])" class="form-control form-select nt-datetime-predefinedrange"></select>
+                <input asp-for="Query.ModifiedDateRangeLower" class="form-control" readonly />
+                <input asp-for="Query.ModifiedDateRangeUpper" class="form-control" readonly />
+            </div>
+        </div>
+    </div>
+    <div class="collapse nt-advanced-search-field pt-3 pb-3" id="advancedsearch-seperator">
+        <div style="width: 100%; height: 15px; border-bottom: 1px solid black; text-align: center">
+            <span class="bg-light ps-4 pe-4">
+                @localizor.Get("AdvancedSearch")<!--Padding is optional-->
+            </span>
+        </div>
+    </div>
+    <div class="row pt-1 collapse advanced-search-field" id="advancedsearch-text">
+        <div class="col-md-6">
+            <div class="input-group">
+                <label class="input-group-text">@localizor.Get("Title")</label>
+                <select asp-for="Query.TitleSearchType" asp-items="@selectListHelper.GetSelectList(Model!.TextSearchTypeList)" class="input-group-text text-start">
+                </select>
+                <input asp-for="Query.Title" class="form-control" placeholder="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("Title"))" aria-label="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("Title"))" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="input-group">
+                <label class="input-group-text">@localizor.Get("FirstName")</label>
+                <select asp-for="Query.FirstNameSearchType" asp-items="@selectListHelper.GetSelectList(Model!.TextSearchTypeList)" class="input-group-text text-start">
+                </select>
+                <input asp-for="Query.FirstName" class="form-control" placeholder="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("FirstName"))" aria-label="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("FirstName"))" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="input-group">
+                <label class="input-group-text">@localizor.Get("MiddleName")</label>
+                <select asp-for="Query.MiddleNameSearchType" asp-items="@selectListHelper.GetSelectList(Model!.TextSearchTypeList)" class="input-group-text text-start">
+                </select>
+                <input asp-for="Query.MiddleName" class="form-control" placeholder="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("MiddleName"))" aria-label="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("MiddleName"))" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="input-group">
+                <label class="input-group-text">@localizor.Get("LastName")</label>
+                <select asp-for="Query.LastNameSearchType" asp-items="@selectListHelper.GetSelectList(Model!.TextSearchTypeList)" class="input-group-text text-start">
+                </select>
+                <input asp-for="Query.LastName" class="form-control" placeholder="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("LastName"))" aria-label="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("LastName"))" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="input-group">
+                <label class="input-group-text">@localizor.Get("Suffix")</label>
+                <select asp-for="Query.SuffixSearchType" asp-items="@selectListHelper.GetSelectList(Model!.TextSearchTypeList)" class="input-group-text text-start">
+                </select>
+                <input asp-for="Query.Suffix" class="form-control" placeholder="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("Suffix"))" aria-label="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("Suffix"))" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="input-group">
+                <label class="input-group-text">@localizor.Get("CompanyName")</label>
+                <select asp-for="Query.CompanyNameSearchType" asp-items="@selectListHelper.GetSelectList(Model!.TextSearchTypeList)" class="input-group-text text-start">
+                </select>
+                <input asp-for="Query.CompanyName" class="form-control" placeholder="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("CompanyName"))" aria-label="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("CompanyName"))" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="input-group">
+                <label class="input-group-text">@localizor.Get("SalesPerson")</label>
+                <select asp-for="Query.SalesPersonSearchType" asp-items="@selectListHelper.GetSelectList(Model!.TextSearchTypeList)" class="input-group-text text-start">
+                </select>
+                <input asp-for="Query.SalesPerson" class="form-control" placeholder="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("SalesPerson"))" aria-label="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("SalesPerson"))" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="input-group">
+                <label class="input-group-text">@localizor.Get("EmailAddress")</label>
+                <select asp-for="Query.EmailAddressSearchType" asp-items="@selectListHelper.GetSelectList(Model!.TextSearchTypeList)" class="input-group-text text-start">
+                </select>
+                <input asp-for="Query.EmailAddress" class="form-control" placeholder="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("EmailAddress"))" aria-label="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("EmailAddress"))" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="input-group">
+                <label class="input-group-text">@localizor.Get("Phone")</label>
+                <select asp-for="Query.PhoneSearchType" asp-items="@selectListHelper.GetSelectList(Model!.TextSearchTypeList)" class="input-group-text text-start">
+                </select>
+                <input asp-for="Query.Phone" class="form-control" placeholder="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("Phone"))" aria-label="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("Phone"))" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="input-group">
+                <label class="input-group-text">@localizor.Get("PasswordHash")</label>
+                <select asp-for="Query.PasswordHashSearchType" asp-items="@selectListHelper.GetSelectList(Model!.TextSearchTypeList)" class="input-group-text text-start">
+                </select>
+                <input asp-for="Query.PasswordHash" class="form-control" placeholder="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("PasswordHash"))" aria-label="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("PasswordHash"))" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="input-group">
+                <label class="input-group-text">@localizor.Get("PasswordSalt")</label>
+                <select asp-for="Query.PasswordSaltSearchType" asp-items="@selectListHelper.GetSelectList(Model!.TextSearchTypeList)" class="input-group-text text-start">
+                </select>
+                <input asp-for="Query.PasswordSalt" class="form-control" placeholder="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("PasswordSalt"))" aria-label="@string.Format(@localizor.Get("Format_SearchTextDescription"), @localizor.Get("PasswordSalt"))" />
+            </div>
+        </div>
+    </div>
+    <div class="row pt-1 collapse advanced-search-field" id="advancedsearch-bool">
+        <div class="col-md-3">
+            <div class="input-group">
+                <label class="input-group-text">@localizor.Get("NameStyle")</label>
+                <select asp-for="Query.NameStyle" asp-items="@selectListHelper.GetSelectList(Model!.OtherDropDownLists[nameof(CustomerAdvancedQuery.NameStyle)])" class="form-control form-select datetime-boolean"></select>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between pt-1">
+        <div>
+            <span class="h5"><a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Index">you are working on <strong>@localizor.Get("Customer")</strong></a></span>
+        </div>
+        <a class="btn btn-secondary nt-advanced-search-button" role="button" title="@localizor.Get("AdvancedSearch")" data-bs-toggle="collapse" data-bs-target=".nt-advanced-search-field" aria-expanded="@(Model!.UIListSetting.UIParams.AdvancedQuery.ToString().ToLower())" aria-controls="advancedsearch-seperator advancedsearch-text advancedsearch-bool" data-updatetarget="#advancedQueryH">
+            <i class="fa-solid fa-circle-chevron-up advanced-search-expanded"></i>
+            <span class="advanced-search-expanded">@localizor.Get("HideAdvancedSearch")</span>
+            <i class="fa-solid fa-circle-chevron-down advanced-search-collapsed"></i>
+            <span class="advanced-search-collapsed">@localizor.Get("ShowAdvancedSearch")</span>
+        </a>
+        <button class="btn btn-primary me-1 ms-1" role="button" type="submit" title="@localizor.Get("Search")">
+            <i class="fa fa-search"></i>
+            @localizor.Get("Search")
+        </button>
+    </div>
+</form>
+<hr class="mt-1" />
+@await Html.PartialAsync("~/Views/Customer/_ListViewsContainer.cshtml", Model)
+<partial name="~/Views/Shared/_CrudActionDialog.cshtml" />
+<partial name="~/Views/Shared/_SimpleActionConfirmationDialog.cshtml" />
+@section Scripts
+{
+    <script>
+        const searchFormId = "@Model.UIListSetting.UIListFeatures.SearchFormId";
+        const listWrapperId = "@Model.UIListSetting.UIListFeatures.ListWrapperId";
+        $(document).ready($(function() {
+            documentReadyForSearchList(searchFormId, listWrapperId);
+        }))
+    </script>
+}

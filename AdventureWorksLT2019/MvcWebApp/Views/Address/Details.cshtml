@@ -1,0 +1,90 @@
+@using Framework.Models;
+@using AdventureWorksLT2019.Models.Definitions;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.Resx;
+@model MvcItemViewModel<AddressDataModel>
+@inject SelectListHelper selectListHelper;
+@inject IUIStrings localizor;
+@{
+    ViewData["Title"] = localizor.Get("Details");
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h1>@localizor.Get("Details")</h1>
+                <h4>@localizor.Get("Address")</h4>
+            </div>
+            @if (Model.Status != System.Net.HttpStatusCode.OK)
+            {
+                <div class="card-body">
+                    <div class="text-danger">@Model.StatusMessage</div>
+                </div>
+            }
+            else
+            {
+                <div class="card-body">
+                    <div class="form-group">
+                        <label asp-for="Model!.AddressID" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.AddressID))"></label>
+                        @Html.DisplayFor(m=>m.Model!.AddressID)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.AddressLine1" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.AddressLine1))"></label>
+                        @Html.DisplayFor(m=>m.Model!.AddressLine1)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.AddressLine2" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.AddressLine2))"></label>
+                        @Html.DisplayFor(m=>m.Model!.AddressLine2)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.City" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.City))"></label>
+                        @Html.DisplayFor(m=>m.Model!.City)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.StateProvince" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.StateProvince))"></label>
+                        @Html.DisplayFor(m=>m.Model!.StateProvince)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.CountryRegion" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.CountryRegion))"></label>
+                        @Html.DisplayFor(m=>m.Model!.CountryRegion)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.PostalCode" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.PostalCode))"></label>
+                        @Html.DisplayFor(m=>m.Model!.PostalCode)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.rowguid" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.rowguid))"></label>
+                        @Html.DisplayFor(m=>m.Model!.rowguid)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ModifiedDate" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.ModifiedDate))"></label>
+                        @Html.DisplayFor(m=>m.Model!.ModifiedDate)
+                    </div>
+                </div>
+            }
+            <div class="card-footer">
+                <div class="btn-group" role="group" aria-label="...">
+                    <a asp-area="" asp-controller="Address" asp-action="Details" asp-route-addressid="@Model!.Model!.AddressID" class="btn btn-secondary" role="button" title="@localizor.Get("Refresh")">
+                        <i class="fa-solid fa-refresh"></i><span class="nt-submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Refresh")</span>
+                    </a>
+                    @if (Model!.UIItemFeatures.PrimayEditViewContainer == CrudViewContainers.StandaloneView)
+                    {
+                        <a asp-area="" asp-controller="Address" asp-action="Edit" asp-route-addressid="@Model!.Model!.AddressID" class="btn btn-default" role="button" title="@localizor.Get("Edit")">
+                            <i class="fa fa-edit"></i><span class="nt-submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Edit")</span>
+                        </a>
+                    }
+                    @if (Model!.UIItemFeatures.PrimayDeleteViewContainer == CrudViewContainers.StandaloneView)
+                    {
+                        <a asp-area="" asp-controller="Address" asp-action="Delete" asp-route-addressid="@Model!.Model!.AddressID" class="btn btn-default" role="button" title="@localizor.Get("Delete")">
+                            <i class="fa fa-trash"></i><span class="nt-submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Delete")</span>
+                        </a>
+                    }
+                    <a asp-area="" asp-controller="Address" asp-action="Index" class="btn btn-secondary" role="button" title="@localizor.Get("Back_to_List")">
+                        <i class="fa-solid fa-arrow-left"></i><span class="submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline">@localizor.Get("Back_to_List")</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

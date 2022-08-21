@@ -1,0 +1,69 @@
+@using AdventureWorksLT2019.Resx;
+@*this partial view can be loaded only on page level, to attach proper event handlers*@
+@*only one CrudActionDialog instance is allowed on the same page*@
+@inject IUIStrings localizor;
+<div class="modal fade" id="crudActionDialog" tabindex="-1" aria-labelledby="crudActionDialogLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="crudActionDialogLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body nt-status">
+            </div>
+            <div class="modal-body nt-modal-body">
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <div class="btn-group btn-group-nt-action-pagination">
+                    <button type="button" class="btn btn-nt-pagination" data-nt-pagination="PREV" title="@localizor.Get("Previous")">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <button type="button" class="btn btn-nt-pagination" data-nt-pagination="NEXT" title="@localizor.Get("Next")">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="form-check btn-group btn-group-nt-action-createanotherone">
+                    <input class="form-check-input" type="checkbox" name="createAnotherOne" id="createAnotherOne" value="option1">
+                    <label class="form-check-label" for="createAnotherOne">
+                        @localizor.Get("CreateAnotherOne")
+                    </label>
+                </div>
+                <div class="btn-group btn-group-nt-action-save">
+                    <div>
+                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">
+                            <i class="fa-solid fa-circle-xmark"></i><span class="ms-1 submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline">@localizor.Get("Close")</span>
+                        </button>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-primary btn-nt-action">
+                            <i class="fa-solid fa-check-circle"></i><span class="ms-1 submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline">@localizor.Get("Save")</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="btn-group btn-group-nt-action-delete">
+                    <div>
+                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">
+                            <i class="fa-solid fa-circle-xmark"></i><span class="ms-1 submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline">@localizor.Get("Close")</span>
+                        </button>
+                    </div>
+                    <form>
+                        <button type="button" class="btn btn-primary btn-nt-action">
+                            <i class="fa fa-trash"></i><span class="ms-1 submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline">@localizor.Get("Delete")</span>
+                        </button>
+                    </form>
+                </div>
+                <div class="btn-group btn-group-nt-action-details">
+                    <div>
+                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">
+                            <i class="fa-solid fa-circle-xmark"></i><span class="ms-1 submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline">@localizor.Get("Close")</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*@section Scripts {
+    <script type="text/javascript" src="~/js/CrudActionDialog.js"></script>
+}
+*@

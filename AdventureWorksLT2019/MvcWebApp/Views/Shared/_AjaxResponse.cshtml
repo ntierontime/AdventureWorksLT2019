@@ -1,0 +1,42 @@
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@using AdventureWorksLT2019.Resx;
+@inject IUIStrings localizor;
+@model AjaxResponseViewModel
+@{
+    // This is the seperator between partial views, javascript is using the same string to split response into sections.
+    const string htmlSeperator = "===---------===";
+}
+@if(Model.Status == System.Net.HttpStatusCode.OK)
+{
+    <h5 class="text-success">@localizor.Get("HttpStatusCodeOKMessage")</h5>
+}
+else if(Model.Status == System.Net.HttpStatusCode.NotFound)
+{
+    <h5 class="text-danger">@localizor.Get("HttpStatusCodeNotFoundMessage")</h5>
+}
+else if(Model.Status == System.Net.HttpStatusCode.BadRequest)
+{
+    <h5 class="text-danger">@localizor.Get("HttpStatusCodeBadRequestMessage")</h5>
+}
+else //if(Model.Status == System.Net.HttpStatusCode.InternalServerError)
+{
+    <h5 class="text-danger">@localizor.Get("HttpStatusCode.InternalServerErrorMessage")</h5>
+}
+@if (Model.ShowMessage && !string.IsNullOrEmpty(Model.Message))
+{
+    <span class="text-info">@Model.Message</span>
+}
+@if (Model.ShowRequestId)
+{
+    <p>
+        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+    </p>
+}
+@if(Model.PartialViews != null)
+{
+    foreach(var partialView in Model.PartialViews)
+    {
+@htmlSeperator
+@await Html.PartialAsync(partialView.Item1, partialView.Item2)
+    }
+}

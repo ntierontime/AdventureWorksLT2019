@@ -1,12 +1,114 @@
 {
   "name": "AdventureWorksLT2019Model.SalesOrderDetail",
-  "dataViewCollection": [],
-  "criteriaCollection": [],
-  "queryCollection": [],
-  "queryResultCollection": [],
+  "dataViewCollection": [
+    {
+      "key": "NameValuePair",
+      "dataViewKnownCategory": 4,
+      "isGroupByResult": false,
+      "defaultOrderByPropertyName": null
+    },
+    {
+      "key": "DefaultView",
+      "dataViewKnownCategory": 1,
+      "isGroupByResult": false,
+      "defaultOrderByPropertyName": null
+    }
+  ],
+  "criteriaCollection": [
+    {
+      "key": "Identifier",
+      "description": "Query by Identifier/UniqueConstraint/CompositeIdentifier",
+      "sourceTypeFullName": "AdventureWorksLT2019Model.SalesOrderDetail",
+      "queries": [
+        {
+          "key": "",
+          "value": "Identifier"
+        }
+      ]
+    },
+    {
+      "key": "AdvancedQuery",
+      "description": "Query by EntityReference, String, Bool, Order By DateTime",
+      "sourceTypeFullName": "AdventureWorksLT2019Model.SalesOrderDetail",
+      "queries": [
+        {
+          "key": "",
+          "value": "AdvancedQuery"
+        }
+      ]
+    }
+  ],
+  "queryCollection": [
+    {
+      "key": "Identifier",
+      "dataQueryPerQueryKnownKey": 1,
+      "sourceTypeDeclarationFullName": "AdventureWorksLT2019Model.SalesOrderDetail",
+      "conditionOperator": 1,
+      "hasStringContainsDataQueryPerQueryUnitSettingForAll": false,
+      "queryUnitGroups": [
+        {
+          "key": "Identifier",
+          "dataQueryPerQueryUnitSettingType": 1,
+          "outterConditionOperator": 0,
+          "conditionOperator": 0,
+          "name": "Query by Identifier"
+        }
+      ]
+    },
+    {
+      "key": "AdvancedQuery",
+      "dataQueryPerQueryKnownKey": 2,
+      "sourceTypeDeclarationFullName": "AdventureWorksLT2019Model.SalesOrderDetail",
+      "conditionOperator": 0,
+      "hasStringContainsDataQueryPerQueryUnitSettingForAll": false,
+      "queryUnitGroups": [
+        {
+          "key": "EntityReference",
+          "dataQueryPerQueryUnitSettingType": 5,
+          "outterConditionOperator": 0,
+          "conditionOperator": 0,
+          "name": "Query by EntityReference"
+        },
+        {
+          "key": "DateTimeRange",
+          "dataQueryPerQueryUnitSettingType": 6,
+          "outterConditionOperator": 0,
+          "conditionOperator": 0,
+          "name": "Query by DateTime Range"
+        }
+      ]
+    }
+  ],
+  "queryResultCollection": [
+    {
+      "key": "Search",
+      "criteriaKey": "AdvancedQuery",
+      "dataViewKey": "",
+      "orderBys": ""
+    },
+    {
+      "key": "GetCodeList",
+      "criteriaKey": "AdvancedQuery",
+      "dataViewKey": "NameValuePair",
+      "orderBys": ""
+    }
+  ],
   "entityReferenceResultForPersistAliasCollection": [
     {
-      "foreignKeySetting": null,
+      "foreignKeySetting": {
+        "tablE_SCHEMA": "SalesLT",
+        "tablE_NAME": "SalesOrderDetail",
+        "entityReferenceSimpleFullPath": "\\ProductID",
+        "pkTypeDeclarationContextName": "Product",
+        "duplicateIDPropertyFullPath": null,
+        "isLeftJoin": false,
+        "inLinqJoin": true,
+        "idInCriteria": true,
+        "idInDefaultDataView": true,
+        "uniqueConstraintInDefaultDataView": true,
+        "propertiesInDefaultDataView": null,
+        "createdDate": "2022-08-21T00:00:00"
+      },
       "tablE_SCHEMA": "SalesLT",
       "tablE_NAME": "SalesOrderDetail",
       "entityReferenceSimpleFullPath": "\\ProductID",
@@ -31,7 +133,20 @@
       "createdDate": "0001-01-01T00:00:00"
     },
     {
-      "foreignKeySetting": null,
+      "foreignKeySetting": {
+        "tablE_SCHEMA": "SalesLT",
+        "tablE_NAME": "SalesOrderDetail",
+        "entityReferenceSimpleFullPath": "\\ProductID\\ProductCategoryID",
+        "pkTypeDeclarationContextName": "ProductCategory",
+        "duplicateIDPropertyFullPath": null,
+        "isLeftJoin": false,
+        "inLinqJoin": true,
+        "idInCriteria": true,
+        "idInDefaultDataView": false,
+        "uniqueConstraintInDefaultDataView": true,
+        "propertiesInDefaultDataView": null,
+        "createdDate": "2022-08-21T00:00:00"
+      },
       "tablE_SCHEMA": "SalesLT",
       "tablE_NAME": "SalesOrderDetail",
       "entityReferenceSimpleFullPath": "\\ProductID\\ProductCategoryID",
@@ -56,7 +171,20 @@
       "createdDate": "0001-01-01T00:00:00"
     },
     {
-      "foreignKeySetting": null,
+      "foreignKeySetting": {
+        "tablE_SCHEMA": "SalesLT",
+        "tablE_NAME": "SalesOrderDetail",
+        "entityReferenceSimpleFullPath": "\\ProductID\\ProductCategoryID\\ParentProductCategoryID",
+        "pkTypeDeclarationContextName": "ProductCategory",
+        "duplicateIDPropertyFullPath": null,
+        "isLeftJoin": false,
+        "inLinqJoin": true,
+        "idInCriteria": true,
+        "idInDefaultDataView": false,
+        "uniqueConstraintInDefaultDataView": true,
+        "propertiesInDefaultDataView": null,
+        "createdDate": "2022-08-21T00:00:00"
+      },
       "tablE_SCHEMA": "SalesLT",
       "tablE_NAME": "SalesOrderDetail",
       "entityReferenceSimpleFullPath": "\\ProductID\\ProductCategoryID\\ParentProductCategoryID",
@@ -81,7 +209,20 @@
       "createdDate": "0001-01-01T00:00:00"
     },
     {
-      "foreignKeySetting": null,
+      "foreignKeySetting": {
+        "tablE_SCHEMA": "SalesLT",
+        "tablE_NAME": "SalesOrderDetail",
+        "entityReferenceSimpleFullPath": "\\ProductID\\ProductModelID",
+        "pkTypeDeclarationContextName": "ProductModel",
+        "duplicateIDPropertyFullPath": null,
+        "isLeftJoin": false,
+        "inLinqJoin": true,
+        "idInCriteria": true,
+        "idInDefaultDataView": false,
+        "uniqueConstraintInDefaultDataView": true,
+        "propertiesInDefaultDataView": null,
+        "createdDate": "2022-08-21T00:00:00"
+      },
       "tablE_SCHEMA": "SalesLT",
       "tablE_NAME": "SalesOrderDetail",
       "entityReferenceSimpleFullPath": "\\ProductID\\ProductModelID",
@@ -106,7 +247,20 @@
       "createdDate": "0001-01-01T00:00:00"
     },
     {
-      "foreignKeySetting": null,
+      "foreignKeySetting": {
+        "tablE_SCHEMA": "SalesLT",
+        "tablE_NAME": "SalesOrderDetail",
+        "entityReferenceSimpleFullPath": "\\SalesOrderID",
+        "pkTypeDeclarationContextName": "SalesOrderHeader",
+        "duplicateIDPropertyFullPath": null,
+        "isLeftJoin": false,
+        "inLinqJoin": true,
+        "idInCriteria": true,
+        "idInDefaultDataView": true,
+        "uniqueConstraintInDefaultDataView": true,
+        "propertiesInDefaultDataView": null,
+        "createdDate": "2022-08-21T00:00:00"
+      },
       "tablE_SCHEMA": "SalesLT",
       "tablE_NAME": "SalesOrderDetail",
       "entityReferenceSimpleFullPath": "\\SalesOrderID",
@@ -131,7 +285,20 @@
       "createdDate": "0001-01-01T00:00:00"
     },
     {
-      "foreignKeySetting": null,
+      "foreignKeySetting": {
+        "tablE_SCHEMA": "SalesLT",
+        "tablE_NAME": "SalesOrderDetail",
+        "entityReferenceSimpleFullPath": "\\SalesOrderID\\BillToAddressID",
+        "pkTypeDeclarationContextName": "Address",
+        "duplicateIDPropertyFullPath": null,
+        "isLeftJoin": false,
+        "inLinqJoin": true,
+        "idInCriteria": true,
+        "idInDefaultDataView": false,
+        "uniqueConstraintInDefaultDataView": true,
+        "propertiesInDefaultDataView": null,
+        "createdDate": "2022-08-21T00:00:00"
+      },
       "tablE_SCHEMA": "SalesLT",
       "tablE_NAME": "SalesOrderDetail",
       "entityReferenceSimpleFullPath": "\\SalesOrderID\\BillToAddressID",
@@ -156,7 +323,20 @@
       "createdDate": "0001-01-01T00:00:00"
     },
     {
-      "foreignKeySetting": null,
+      "foreignKeySetting": {
+        "tablE_SCHEMA": "SalesLT",
+        "tablE_NAME": "SalesOrderDetail",
+        "entityReferenceSimpleFullPath": "\\SalesOrderID\\ShipToAddressID",
+        "pkTypeDeclarationContextName": "Address",
+        "duplicateIDPropertyFullPath": null,
+        "isLeftJoin": false,
+        "inLinqJoin": true,
+        "idInCriteria": true,
+        "idInDefaultDataView": false,
+        "uniqueConstraintInDefaultDataView": true,
+        "propertiesInDefaultDataView": null,
+        "createdDate": "2022-08-21T00:00:00"
+      },
       "tablE_SCHEMA": "SalesLT",
       "tablE_NAME": "SalesOrderDetail",
       "entityReferenceSimpleFullPath": "\\SalesOrderID\\ShipToAddressID",
@@ -181,7 +361,20 @@
       "createdDate": "0001-01-01T00:00:00"
     },
     {
-      "foreignKeySetting": null,
+      "foreignKeySetting": {
+        "tablE_SCHEMA": "SalesLT",
+        "tablE_NAME": "SalesOrderDetail",
+        "entityReferenceSimpleFullPath": "\\SalesOrderID\\CustomerID",
+        "pkTypeDeclarationContextName": "Customer",
+        "duplicateIDPropertyFullPath": null,
+        "isLeftJoin": false,
+        "inLinqJoin": true,
+        "idInCriteria": true,
+        "idInDefaultDataView": false,
+        "uniqueConstraintInDefaultDataView": true,
+        "propertiesInDefaultDataView": null,
+        "createdDate": "2022-08-21T00:00:00"
+      },
       "tablE_SCHEMA": "SalesLT",
       "tablE_NAME": "SalesOrderDetail",
       "entityReferenceSimpleFullPath": "\\SalesOrderID\\CustomerID",

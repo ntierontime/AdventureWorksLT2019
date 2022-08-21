@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Web" >
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>286dc1a8-62a9-4f19-8420-4f60966a2f6b</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+<ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
+    <PackageReference Include="XiaoYang.EntityFrameworkCore.Bulk.SqlServer" Version="6.0.29" />
+</ItemGroup>
+<ItemGroup>
+    <ProjectReference Include="..\EFCoreContext\AdventureWorksLT2019.EFCoreContext.csproj" />
+    <ProjectReference Include="..\EFCoreRepositories\AdventureWorksLT2019.EFCoreRepositories.csproj" />
+    <ProjectReference Include="..\..\Frameworks\Framework\Framework.csproj" />
+    <ProjectReference Include="..\Models\AdventureWorksLT2019.Models.csproj" />
+    <ProjectReference Include="..\RepositoryContracts\AdventureWorksLT2019.RepositoryContracts.csproj" />
+    <ProjectReference Include="..\Resx\AdventureWorksLT2019.Resx.csproj" />
+    <ProjectReference Include="..\ServiceContracts\AdventureWorksLT2019.ServiceContracts.csproj" />
+    <ProjectReference Include="..\Services\AdventureWorksLT2019.Services.csproj" />
+    <ProjectReference Include="..\WebApiControllers\AdventureWorksLT2019.WebApiControllers.csproj" />
+</ItemGroup>
+
+</Project>

@@ -1,0 +1,11 @@
+@using AdventureWorksLT2019.Resx;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@using AdventureWorksLT2019.Models;
+@model MvcItemViewModel<ProductModelDataModel>
+@inject IUIStrings localizor;
+@{
+    var routeId = Model.Model?.ProductModelID;
+}
+<div class="d-flex align-items-stretch col-sm-12 col-md-6 col-lg-4 col-xl-3 p-1 nt-listitem@(Model.IsCurrentItem ? " nt-created": "")" data-nt-route-id="@routeId">
+    @await Html.PartialAsync("~/Views/ProductModel/_TileDetailsItem.cshtml", Model)
+</div>

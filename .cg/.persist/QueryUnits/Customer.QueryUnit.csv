@@ -1,0 +1,15 @@
+﻿TypeDeclarationContextName,Query,QueryUnitGroup,QueryPropertyName,Enabled,ProcessStatus,QueryUnitSettingType,TargetTypeDeclarationFullName,TargetEntityKey,TargetPropertyName,TargetPropertyType,FKPropertyName,EntityReferenceSimpleFullPath,TargetPropertyFullPath,PredicateKnownType
+AdventureWorksLT2019Model.Customer,AdvancedQuery,BooleanRange,NameStyle,True,FromDefault,Range,AdventureWorksLT2019Model.Customer,t,NameStyle,SystemBoolean,,,,Equals
+AdventureWorksLT2019Model.Customer,AdvancedQuery,DateTimeRange,ModifiedDateRange,True,FromDefault,Range,AdventureWorksLT2019Model.Customer,t,ModifiedDate,SystemDateTime,,,,Range
+AdventureWorksLT2019Model.Customer,AdvancedQuery,StringQuery,Title,True,FromDefault,StringQuery,AdventureWorksLT2019Model.Customer,t,Title,SystemString,,,,Contains
+AdventureWorksLT2019Model.Customer,AdvancedQuery,StringQuery,FirstName,True,FromDefault,StringQuery,AdventureWorksLT2019Model.Customer,t,FirstName,SystemString,,,,Contains
+AdventureWorksLT2019Model.Customer,AdvancedQuery,StringQuery,MiddleName,True,FromDefault,StringQuery,AdventureWorksLT2019Model.Customer,t,MiddleName,SystemString,,,,Contains
+AdventureWorksLT2019Model.Customer,AdvancedQuery,StringQuery,LastName,True,FromDefault,StringQuery,AdventureWorksLT2019Model.Customer,t,LastName,SystemString,,,,Contains
+AdventureWorksLT2019Model.Customer,AdvancedQuery,StringQuery,Suffix,True,FromDefault,StringQuery,AdventureWorksLT2019Model.Customer,t,Suffix,SystemString,,,,Contains
+AdventureWorksLT2019Model.Customer,AdvancedQuery,StringQuery,CompanyName,True,FromDefault,StringQuery,AdventureWorksLT2019Model.Customer,t,CompanyName,SystemString,,,,Contains
+AdventureWorksLT2019Model.Customer,AdvancedQuery,StringQuery,SalesPerson,True,FromDefault,StringQuery,AdventureWorksLT2019Model.Customer,t,SalesPerson,SystemString,,,,Contains
+AdventureWorksLT2019Model.Customer,AdvancedQuery,StringQuery,EmailAddress,True,FromDefault,StringQuery,AdventureWorksLT2019Model.Customer,t,EmailAddress,SystemString,,,,Contains
+AdventureWorksLT2019Model.Customer,AdvancedQuery,StringQuery,Phone,True,FromDefault,StringQuery,AdventureWorksLT2019Model.Customer,t,Phone,SystemString,,,,Contains
+AdventureWorksLT2019Model.Customer,AdvancedQuery,StringQuery,PasswordHash,True,FromDefault,StringQuery,AdventureWorksLT2019Model.Customer,t,PasswordHash,SystemString,,,,Contains
+AdventureWorksLT2019Model.Customer,AdvancedQuery,StringQuery,PasswordSalt,True,FromDefault,StringQuery,AdventureWorksLT2019Model.Customer,t,PasswordSalt,SystemString,,,,Contains
+AdventureWorksLT2019Model.Customer,Identifier,Identifier,CustomerID,True,FromDefault,Identifier,AdventureWorksLT2019Model.Customer,t,CustomerID,SystemInt32,,,,Equals

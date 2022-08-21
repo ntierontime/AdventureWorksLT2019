@@ -1,0 +1,67 @@
+@using AdventureWorksLT2019.Models.Definitions;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.Resx;
+@model MvcItemViewModel<BuildVersionDataModel>
+@inject SelectListHelper selectListHelper;
+@inject IUIStrings localizor;
+@{
+    ViewData["Title"] = localizor.Get("Edit");
+    var format_Please_Select = localizor.Get("Format_Please_Select");
+}
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit">
+            <div class="card">
+                <div class="card-header">
+                    <h1>@localizor.Get("Edit")</h1>
+                    <h4>@localizor.Get("ElmahError")</h4>
+                </div>
+                @if (Model.Status != System.Net.HttpStatusCode.OK)
+                {
+                    <div class="card-body">
+                        <div class="text-danger">@Model.StatusMessage</div>
+                    </div>
+                }
+                <div class="card-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Model!.SystemInformationID" class="control-label" for="@Model!.HtmlId(nameof(BuildVersionDataModel.SystemInformationID))"></label>
+                        <input asp-for="Model!.SystemInformationID" readonly class="form-control " id="@Model!.HtmlId(nameof(BuildVersionDataModel.SystemInformationID))" name="@Model!.HtmlName(nameof(BuildVersionDataModel.SystemInformationID))" data-nt-value="@Model!.Model!.SystemInformationID"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.Database_Version" class="control-label" for="@Model!.HtmlId(nameof(BuildVersionDataModel.Database_Version))"></label>
+                        <input asp-for="Model!.Database_Version" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(BuildVersionDataModel.Database_Version))" name="@Model!.HtmlName(nameof(BuildVersionDataModel.Database_Version))" data-nt-value="@Model!.Model!.Database_Version"/>
+                        <span asp-validation-for="Model!.Database_Version" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(BuildVersionDataModel.Database_Version))"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.VersionDate" class="control-label" for="@Model!.HtmlId(nameof(BuildVersionDataModel.VersionDate))"></label>
+                        <input asp-for="Model!.VersionDate" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(BuildVersionDataModel.VersionDate))" name="@Model!.HtmlName(nameof(BuildVersionDataModel.VersionDate))" data-nt-value="@Model!.Model!.VersionDate"/>
+                        <span asp-validation-for="Model!.VersionDate" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(BuildVersionDataModel.VersionDate))"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ModifiedDate" class="control-label" for="@Model!.HtmlId(nameof(BuildVersionDataModel.ModifiedDate))"></label>
+                        <input asp-for="Model!.ModifiedDate" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(BuildVersionDataModel.ModifiedDate))" name="@Model!.HtmlName(nameof(BuildVersionDataModel.ModifiedDate))" data-nt-value="@Model!.Model!.ModifiedDate"/>
+                        <span asp-validation-for="Model!.ModifiedDate" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(BuildVersionDataModel.ModifiedDate))"></span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button class="btn btn-primary" role="button" type="submit">
+                            <i class="fa-solid fa-check-circle"></i><span class="nt-submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Save")</span>
+                        </button>
+                        <a asp-area="" asp-controller="BuildVersion" asp-action="Edit" asp-route-systeminformationid="@Model!.Model!.SystemInformationID" asp-route-versiondate="@Model!.Model!.VersionDate" asp-route-modifieddate="@Model!.Model!.ModifiedDate" class="btn btn-secondary" role="button" title="@localizor.Get("Refresh")">
+                            <i class="fa-solid fa-refresh"></i><span class="nt-submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Refresh")</span>
+                        </a>
+                        <a asp-area="" asp-controller="BuildVersion" asp-action="Index" class="btn btn-secondary" role="button" title="@localizor.Get("Back_to_List")">
+                            <i class="fa-solid fa-arrow-left"></i><span class="submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline">@localizor.Get("Back_to_List")</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
