@@ -8,55 +8,37 @@
  * .nt-order-by
  * 
  */
-$(document).ready($(function () {
-    $(".nt-page-size-submit").change(function (e) {
-        $($(this).closest(".nt-list-wrapper").data("nt-submittarget")).find(".nt-page-size").val(e.target.value);
-        $($(this).closest(".nt-list-wrapper").data("nt-submittarget")).submit();
+function attatchPageSizeChangedUsingDropDown(selector) {
+    $(selector).click(function (e) {
+        const self = e.currentTarget;
+        const theListWrapper = $(self).closest(".nt-list-wrapper");
+        const theForm = $($(theListWrapper).data("nt-submittarget"));
+        $(theForm).find(".nt-page-size").val($(self).data("nt-page-size"));
+        $(self).closest(".dropdown-menu").find(".nt-page-size-item .fa-check").hide();
+        $(self).find(".fa-check").show();
+        ajaxLoadItemsSubmit($(theForm));
     });
-}));
-$(document).ready($(function () {
-    $(".nt-order-by-submit").change(function (e) {
-        $($(this).closest(".nt-list-wrapper").data("nt-submittarget")).find(".nt-order-by").val(e.target.value);
-        $($(this).closest(".nt-list-wrapper").data("nt-submittarget")).submit();
+}
+
+function attatchOrderByChangedUsingDropDown(selector) {
+    $(selector).click(function (e) {
+        const self = e.currentTarget;
+        const theListWrapper = $(self).closest(".nt-list-wrapper");
+        const theForm = $($(theListWrapper).data("nt-submittarget"));
+        $(theForm).find(".nt-order-by").val($(self).data("nt-order-by"));
+        $(self).closest(".dropdown-menu").find(".nt-order-by-item .fa-check").hide();
+        $(self).find(".fa-check").show();
+        ajaxLoadItemsSubmit($(theForm));
     });
-}));
+}
 // 3.End Pagination and OrderBy
 
-function pageLinkClicked(self) {
-    const theForm = $($(self).closest(".nt-list-wrapper").data("nt-submittarget"));
-    $(theForm).find(".nt-page-index").val($(self).data("nt-pageindex"));
-    const url = $(theForm).data("nt-partial-url");
-    const updateTarget = $($(theForm).data("nt-updatetarget")).find(".nt-list-container-submit");
-    var formData = new FormData($(theForm)[0]);
-    const pagedViewOption = $(theForm).children(".nt-paged-view-option-field").val();
-    const pageIndex = $(theForm).children(".nt-page-index").val();
-    $.ajax({
-        type: "POST",
-        url: url,
-        data: formData,
-        async: false,
-        processData: false,
-        contentType: false,
-        dataType: "html",
-        success: function (response) {
-            const toAppend = $(response);
-            if (pagedViewOption !== "Tiles" || pageIndex == 1) {
-                $(updateTarget).html(toAppend);
-            }
-            else {
-                $(updateTarget).children(".btn-nt-load-more").remove()
-                $(updateTarget).append(toAppend);
-            }
-            attachInlineEditingLaunchButtonClickEvent($(toAppend).find(".btn-nt-inline-editing"));
-            attachIndividualSelectCheckboxClickEventHandler($(toAppend).find(".nt-list-bulk-select .form-check-input"));
-            //console.log("success", response);
-        },
-        failure: function (response) {
-            // console.log("failure", response);
-        },
-        error: function (response) {
-            // console.log("error", response);
-        }
+function attatchPageLinkClicked(selector) {
+    $(selector).click(function (e) {
+        const self = e.currentTarget;
+        const theListWrapper = $(self).closest(".nt-list-wrapper");
+        const theForm = $($(theListWrapper).data("nt-submittarget"));
+        $(theForm).find(".nt-page-index").val($(self).data("nt-pageindex"));
+        ajaxLoadItemsSubmit($(theForm));
     });
-    return false;
 }

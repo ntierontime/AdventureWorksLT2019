@@ -15,29 +15,37 @@
         @localizor.Get("More")
     </button>
 }
-else if (Model.PaginationOption == PaginationOptions.Paged)
+else if (Model.PaginationOption == PaginationOptions.ItemRangeAndLeftRightButtons)
+{
+    <ul class="pagination pagination-sm justify-content-center">
+        <li class="@(Model.EnableFirstAndPrevious ? "page-item" : "page-item disabled" )"><button class="page-link" data-nt-pageindex="@(Model.PageIndex - 1)"><i class="fa-solid fa-angle-left"></i></button></li>
+        <li><span>@Model.StartIndex - @Model.EndIndex</span></li>
+        <li class="@(Model.EnableLastAndNext ? "page-item" : "page-item disabled" )"><button class="page-link" data-nt-pageindex="@(Model.PageIndex + 1)"><i class="fa-solid fa-angle-right"></i></button></li>
+    </ul>
+}
+else if (Model.PaginationOption == PaginationOptions.PageIndexesAndAllButtons)
 {
     <ul class="pagination pagination-sm">
-        <li class="@(Model.EnableFirstAndPrevious ? "page-item" : "page-item disabled" )"><button class="page-link" data-nt-pageindex="1" onclick="pageLinkClicked(this);"><i class="fa-solid fa-angles-left"></i></button></li>
-        <li class="@(Model.EnableFirstAndPrevious ? "page-item" : "page-item disabled" )"><button class="page-link" data-nt-pageindex="@(Model.PageIndex - 1)" onclick="pageLinkClicked(this);"><i class="fa-solid fa-angle-left"></i></button></li>
+        <li class="@(Model.EnableFirstAndPrevious ? "page-item" : "page-item disabled" )"><button class="page-link" data-nt-pageindex="1"><i class="fa-solid fa-angles-left"></i></button></li>
+        <li class="@(Model.EnableFirstAndPrevious ? "page-item" : "page-item disabled" )"><button class="page-link" data-nt-pageindex="@(Model.PageIndex - 1)"><i class="fa-solid fa-angle-left"></i></button></li>
         @if (Model.ThreeDotPreCurrent)
         {
             <li class="page-item">...</li>
         }
         @foreach (var pageItem in Model.PreCurrent)
         {
-            <li class="page-item"><button class="page-link" data-nt-pageindex="@pageItem" onclick="pageLinkClicked(this);">@pageItem</button></li>
+            <li class="page-item"><button class="page-link" data-nt-pageindex="@pageItem">@pageItem</button></li>
         }
-        <li class="page-item active"><button class="page-link" data-nt-pageindex="@(Model.PageIndex)" onclick="pageLinkClicked(this);">@(Model.PageIndex)</button></li>
+        <li class="page-item active"><button class="page-link" data-nt-pageindex="@(Model.PageIndex)">@(Model.PageIndex)</button></li>
         @foreach (var pageItem in Model.PostCurrent)
         {
-            <li class="page-item"><button class="page-link" data-nt-pageindex="@pageItem" onclick="pageLinkClicked(this);">@pageItem</button></li>
+            <li class="page-item"><button class="page-link" data-nt-pageindex="@pageItem">@pageItem</button></li>
         }
         @if (Model.ThreeDotPostCurrent)
         {
             <li class="page-item">...</li>
         }
-        <li class="@(Model.EnableLastAndNext ? "page-item" : "page-item disabled" )"><button class="page-link" data-nt-pageindex="@(Model.PageIndex + 1)" onclick="pageLinkClicked(this);"><i class="fa-solid fa-angle-right"></i></button></li>
-        <li class="@(Model.EnableLastAndNext? "page-item" : "page-item disabled" )"><button class="page-link" data-nt-pageindex="@Model.LastPageIndex" onclick="pageLinkClicked(this);"><i class="fa-solid fa-angles-right"></i></button></li>
+        <li class="@(Model.EnableLastAndNext ? "page-item" : "page-item disabled" )"><button class="page-link" data-nt-pageindex="@(Model.PageIndex + 1)"><i class="fa-solid fa-angle-right"></i></button></li>
+        <li class="@(Model.EnableLastAndNext? "page-item" : "page-item disabled" )"><button class="page-link" data-nt-pageindex="@Model.LastPageIndex"><i class="fa-solid fa-angles-right"></i></button></li>
     </ul>
 }

@@ -35,11 +35,12 @@
  * table tbody
  */
 
-$(document).ready(function () {
-    attachBulkSelectStatusClickEventHandler(".nt-bulk-select-filter .btn-nt-bulk-select-status");
-    attachIndividualSelectCheckboxClickEventHandler(".nt-list-wrapper .nt-listitem .nt-list-bulk-select .form-check-input");
-    attachQuickSelectClickEventHandler(".nt-bulk-select-filter .nt-quick-bulk-select");
-});
+function resetBulkSelectStatus(parentSelector) {
+    const bulkSelectStatus = $(parentSelector).find(".nt-bulk-select-filter .btn-nt-bulk-select-status");
+    bulkSelectStatus.data("nt-bulk-select-status", "None")
+    bulkSelectStatus.html('<i class="fa-regular fa-square"></i>');
+    toggleBulkActionButtons(parentSelector);
+}
 
 function attachBulkSelectStatusClickEventHandler(selector) {
     $(selector).click(function (e) {
@@ -101,7 +102,6 @@ function setStatusDataAndIcon(parentselector) {
         bulkSelectStatus.html('<i class="fa-regular fa-square-minus"></i>');
     }
  }
-
 
 function toggleListItemBackground(parentselector) {
     $(parentselector).find(".nt-listitem:not(.nt-new) .nt-list-bulk-select .form-check-input:checked").closest(".nt-listitem").addClass("bg-info");

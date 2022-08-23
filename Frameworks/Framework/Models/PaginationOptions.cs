@@ -3,7 +3,8 @@ namespace Framework.Models
     public enum PaginationOptions
     {
         NoPagination,
-        Paged,
+        PageIndexesAndAllButtons,
+        ItemRangeAndLeftRightButtons,
         LoadMore
     }
 }

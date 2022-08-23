@@ -32,6 +32,15 @@ function attachAjaxLoadItemsSubmit(selector) {
     });
 }
 
+function attachEventHandlersWhenAjaxLoadItemsSubmitSuccess(toAppend, updateTarget) {
+    attachInlineEditingLaunchButtonClickEvent($(toAppend).find(".btn-nt-inline-editing"));
+    attachIndividualSelectCheckboxClickEventHandler($(toAppend).find(".nt-list-bulk-select .form-check-input"));
+    attachFormDataChanged($(toAppend).find("form"));
+    attachMultiItemsDeleteCheckboxEvent($(toAppend).find("form"));
+    attatchPageLinkClicked($(toAppend).find(".page-link"));
+    resetBulkSelectStatus($(updateTarget).closest(".nt-list-wrapper"));
+}
+
 function ajaxLoadItemsSubmit(theForm) {
     const url = $(theForm).data("nt-partial-url");
     const updateTarget = $($(theForm).data("nt-updatetarget")).find(".nt-list-container-submit");
@@ -55,10 +64,8 @@ function ajaxLoadItemsSubmit(theForm) {
                 $(updateTarget).children(".btn-nt-load-more").remove();
                 $(updateTarget).append(toAppend);
             }
-            attachInlineEditingLaunchButtonClickEvent($(toAppend).find(".btn-nt-inline-editing"));
-            attachIndividualSelectCheckboxClickEventHandler($(toAppend).find(".nt-list-bulk-select .form-check-input"));
-            attachFormDataChanged($(toAppend).find("form"));
-            attachMultiItemsDeleteCheckboxEvent($(toAppend).find("form"));
+            attachEventHandlersWhenAjaxLoadItemsSubmitSuccess(toAppend, updateTarget);
+
             setTimeout(() => {
                 bootstrap.Modal.getOrCreateInstance(document.getElementById('fullScreenLoading')).hide();
             }, 1000);
@@ -77,4 +84,5 @@ function ajaxLoadItemsSubmit(theForm) {
         }
     });
 }
+
 // 5.end form ajax-submit

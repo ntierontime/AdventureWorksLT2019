@@ -34,7 +34,11 @@ function pageViewOptionsClickedEventHandler(sourceButton) {
 
     // 2. update paged-view-option
     $(submitTarget).find(".nt-paged-view-option-field").val(pagedViewOption); // List-Pagination, Tiles-More, Slideshow-NoPagination
-    ajaxLoadItemsSubmit($($(sourceButton).closest(".nt-list-wrapper").data("nt-submittarget")));
+
+    // 3. reset pageIndex to 1
+    $(submitTarget).find(".nt-page-index").val(1); 
+
+    ajaxLoadItemsSubmit($(submitTarget));
     // console.log($(location));
     // Update QueryString - view with data-nt-value attribute
     let queryParams = new URLSearchParams(window.location.search);

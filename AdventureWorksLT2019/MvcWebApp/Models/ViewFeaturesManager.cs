@@ -40,7 +40,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             if (original == PaginationOptions.NoPagination)
                 return PaginationOptions.NoPagination;
             else if (pagedViewOption == PagedViewOptions.Table || pagedViewOption == PagedViewOptions.EditableTable)
-                return PaginationOptions.Paged;
+                return PaginationOptions.PageIndexesAndAllButtons;
             return original;
         }
 

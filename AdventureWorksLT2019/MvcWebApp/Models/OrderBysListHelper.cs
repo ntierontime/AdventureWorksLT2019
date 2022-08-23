@@ -15,8 +15,8 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         public List<NameValuePair> GetBuildVersionOrderBys()
         {
             return new List<NameValuePair>(new[] {
-                new NameValuePair { Name = string.Format("{0} A-Z", _localizor.Get("VersionDate")), Value = "VersionDate~ASC" },
-                new NameValuePair { Name = string.Format("{0} Z-A", _localizor.Get("VersionDate")), Value = "VersionDate~DESC" },
+                new NameValuePair { Name = string.Format("{0} a-Z <i class='fa-solid fa-down-long pe-1'></i>", _localizor.Get("VersionDate")), Value = "VersionDate~ASC" },
+                new NameValuePair { Name = string.Format("{0} a-Z <i class='fa-solid fa-up-long pe-1'></i>", _localizor.Get("VersionDate")), Value = "VersionDate~DESC" },
             });
         }
         public string GetDefaultBuildVersionOrderBys()
@@ -27,8 +27,8 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         public List<NameValuePair> GetErrorLogOrderBys()
         {
             return new List<NameValuePair>(new[] {
-                new NameValuePair { Name = string.Format("{0} A-Z", _localizor.Get("ErrorTime")), Value = "ErrorTime~ASC" },
-                new NameValuePair { Name = string.Format("{0} Z-A", _localizor.Get("ErrorTime")), Value = "ErrorTime~DESC" },
+                new NameValuePair { Name = string.Format("{0} a-Z <i class='fa-solid fa-down-long pe-1'></i>", _localizor.Get("ErrorTime")), Value = "ErrorTime~ASC" },
+                new NameValuePair { Name = string.Format("{0} a-Z <i class='fa-solid fa-up-long pe-1'></i>", _localizor.Get("ErrorTime")), Value = "ErrorTime~DESC" },
             });
         }
         public string GetDefaultErrorLogOrderBys()
@@ -39,8 +39,8 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         public List<NameValuePair> GetAddressOrderBys()
         {
             return new List<NameValuePair>(new[] {
-                new NameValuePair { Name = string.Format("{0} A-Z", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~ASC" },
-                new NameValuePair { Name = string.Format("{0} Z-A", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~DESC" },
+                new NameValuePair { Name = string.Format("{0} a-Z <i class='fa-solid fa-down-long pe-1'></i>", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~ASC" },
+                new NameValuePair { Name = string.Format("{0} a-Z <i class='fa-solid fa-up-long pe-1'></i>", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~DESC" },
             });
         }
         public string GetDefaultAddressOrderBys()
@@ -51,8 +51,8 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         public List<NameValuePair> GetCustomerOrderBys()
         {
             return new List<NameValuePair>(new[] {
-                new NameValuePair { Name = string.Format("{0} A-Z", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~ASC" },
-                new NameValuePair { Name = string.Format("{0} Z-A", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~DESC" },
+                new NameValuePair { Name = string.Format("{0} a-Z <i class='fa-solid fa-down-long pe-1'></i>", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~ASC" },
+                new NameValuePair { Name = string.Format("{0} a-Z <i class='fa-solid fa-up-long pe-1'></i>", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~DESC" },
             });
         }
         public string GetDefaultCustomerOrderBys()
@@ -63,8 +63,8 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         public List<NameValuePair> GetCustomerAddressOrderBys()
         {
             return new List<NameValuePair>(new[] {
-                new NameValuePair { Name = string.Format("{0} A-Z", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~ASC" },
-                new NameValuePair { Name = string.Format("{0} Z-A", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~DESC" },
+                new NameValuePair { Name = string.Format("{0} a-Z <i class='fa-solid fa-down-long pe-1'></i>", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~ASC" },
+                new NameValuePair { Name = string.Format("{0} a-Z <i class='fa-solid fa-up-long pe-1'></i>", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~DESC" },
             });
         }
         public string GetDefaultCustomerAddressOrderBys()
@@ -75,8 +75,8 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         public List<NameValuePair> GetProductOrderBys()
         {
             return new List<NameValuePair>(new[] {
-                new NameValuePair { Name = string.Format("{0} A-Z", _localizor.Get("SellStartDate")), Value = "SellStartDate~ASC" },
-                new NameValuePair { Name = string.Format("{0} Z-A", _localizor.Get("SellStartDate")), Value = "SellStartDate~DESC" },
+                new NameValuePair { Name = string.Format("{0} a-Z <i class='fa-solid fa-down-long pe-1'></i>", _localizor.Get("SellStartDate")), Value = "SellStartDate~ASC" },
+                new NameValuePair { Name = string.Format("{0} a-Z <i class='fa-solid fa-up-long pe-1'></i>", _localizor.Get("SellStartDate")), Value = "SellStartDate~DESC" },
             });
         }
         public string GetDefaultProductOrderBys()
@@ -87,8 +87,8 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         public List<NameValuePair> GetProductCategoryOrderBys()
         {
             return new List<NameValuePair>(new[] {
-                new NameValuePair { Name = string.Format("{0} A-Z", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~ASC" },
-                new NameValuePair { Name = string.Format("{0} Z-A", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~DESC" },
+                new NameValuePair { Name = string.Format("{0} a-Z <i class='fa-solid fa-down-long pe-1'></i>", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~ASC" },
+                new NameValuePair { Name = string.Format("{0} a-Z <i class='fa-solid fa-up-long pe-1'></i>", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~DESC" },
             });
         }
         public string GetDefaultProductCategoryOrderBys()
@@ -99,8 +99,8 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         public List<NameValuePair> GetProductDescriptionOrderBys()
         {
             return new List<NameValuePair>(new[] {
-                new NameValuePair { Name = string.Format("{0} A-Z", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~ASC" },
-                new NameValuePair { Name = string.Format("{0} Z-A", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~DESC" },
+                new NameValuePair { Name = string.Format("{0} a-Z <i class='fa-solid fa-down-long pe-1'></i>", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~ASC" },
+                new NameValuePair { Name = string.Format("{0} a-Z <i class='fa-solid fa-up-long pe-1'></i>", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~DESC" },
             });
         }
         public string GetDefaultProductDescriptionOrderBys()
@@ -111,8 +111,8 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         public List<NameValuePair> GetProductModelOrderBys()
         {
             return new List<NameValuePair>(new[] {
-                new NameValuePair { Name = string.Format("{0} A-Z", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~ASC" },
-                new NameValuePair { Name = string.Format("{0} Z-A", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~DESC" },
+                new NameValuePair { Name = string.Format("{0} a-Z <i class='fa-solid fa-down-long pe-1'></i>", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~ASC" },
+                new NameValuePair { Name = string.Format("{0} a-Z <i class='fa-solid fa-up-long pe-1'></i>", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~DESC" },
             });
         }
         public string GetDefaultProductModelOrderBys()
@@ -123,8 +123,8 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         public List<NameValuePair> GetProductModelProductDescriptionOrderBys()
         {
             return new List<NameValuePair>(new[] {
-                new NameValuePair { Name = string.Format("{0} A-Z", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~ASC" },
-                new NameValuePair { Name = string.Format("{0} Z-A", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~DESC" },
+                new NameValuePair { Name = string.Format("{0} a-Z <i class='fa-solid fa-down-long pe-1'></i>", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~ASC" },
+                new NameValuePair { Name = string.Format("{0} a-Z <i class='fa-solid fa-up-long pe-1'></i>", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~DESC" },
             });
         }
         public string GetDefaultProductModelProductDescriptionOrderBys()
@@ -135,8 +135,8 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         public List<NameValuePair> GetSalesOrderDetailOrderBys()
         {
             return new List<NameValuePair>(new[] {
-                new NameValuePair { Name = string.Format("{0} A-Z", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~ASC" },
-                new NameValuePair { Name = string.Format("{0} Z-A", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~DESC" },
+                new NameValuePair { Name = string.Format("{0} a-Z <i class='fa-solid fa-down-long pe-1'></i>", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~ASC" },
+                new NameValuePair { Name = string.Format("{0} a-Z <i class='fa-solid fa-up-long pe-1'></i>", _localizor.Get("ModifiedDate")), Value = "ModifiedDate~DESC" },
             });
         }
         public string GetDefaultSalesOrderDetailOrderBys()
@@ -147,8 +147,8 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         public List<NameValuePair> GetSalesOrderHeaderOrderBys()
         {
             return new List<NameValuePair>(new[] {
-                new NameValuePair { Name = string.Format("{0} A-Z", _localizor.Get("OrderDate")), Value = "OrderDate~ASC" },
-                new NameValuePair { Name = string.Format("{0} Z-A", _localizor.Get("OrderDate")), Value = "OrderDate~DESC" },
+                new NameValuePair { Name = string.Format("{0} a-Z <i class='fa-solid fa-down-long pe-1'></i>", _localizor.Get("OrderDate")), Value = "OrderDate~ASC" },
+                new NameValuePair { Name = string.Format("{0} a-Z <i class='fa-solid fa-up-long pe-1'></i>", _localizor.Get("OrderDate")), Value = "OrderDate~DESC" },
             });
         }
         public string GetDefaultSalesOrderHeaderOrderBys()

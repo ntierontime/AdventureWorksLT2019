@@ -19,11 +19,46 @@
     data-nt-bulk-delete-url="@Url.Action("AjaxBulkDelete", "ErrorLog")"
     data-nt-multiitems-submit-url="@Url.Action("AjaxMultiItemsCUDSubmit", "ErrorLog")">
     <div class="card-header">
+        @if (Model!.UIListSetting == null || Model!.UIListSetting.UIListFeatures.HasPageSizeList || Model!.UIListSetting.UIListFeatures.HasOrderByList)
+        {
+            <div class="btn-group float-end mt-1 ms-3 me-3 nt-page-size-and-order-by">
+                <button class="btn btn-default dropdown-toggle" type="button" id="ddlPageSizeAndOrderBy@Model!.UIListSetting.UIListFeatures.ListWrapperId" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+                    <i class="fa-solid fa-sliders"></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="ddlPageSizeAndOrderBy@Model!.UIListSetting.UIListFeatures.ListWrapperId">
+                    @if (Model!.UIListSetting == null || Model.UIListSetting.UIListFeatures.HasOrderByList)
+                    {
+                        foreach (var orderBy in Model.OrderByList)
+                        {
+                            <li class="nt-order-by-item ps-2" data-nt-page-size="@orderBy.Value" style="min-width: 200px;">
+                                <div class="clearfix">
+                                    <i class="fa-solid fa-check pe-2 float-start" @Html.Raw(orderBy.Value == Model.Query.OrderBys ? "" : "style='display:none'")></i>
+                                    <span class="float-end pe-2">@Html.Raw(orderBy.Name)</span>
+                                </div>
+                            </li>
+                        }
+                    }
+                    <li class="dropdown-divider" />
+                    @if (Model!.UIListSetting == null || Model.UIListSetting.UIListFeatures.HasPageSizeList)
+                    {
+                        foreach (var pageSize in Model.PageSizeList)
+                        {
+                            <li class="nt-page-size-item ps-2" data-nt-page-size="@pageSize.Value" style="min-width: 200px;">
+                                <div class="clearfix">
+                                    <i class="fa-solid fa-check pe-2 float-start" @Html.Raw(pageSize.Value == Model.Query.PageSize.ToString() ? "" : "style='display:none'")></i>
+                                    <span class="float-end pe-2">@Html.Raw(pageSize.Name)</span>
+                                </div>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        }
         <div class="btn-group float-end mt-1" role="group" aria-label="View Options">
-            <input type="radio" class="btn-check nt-radio-pagedviewoption" name="btnradio" id="btnradio-List" autocomplete="off"
+            <input type="radio" class="btn-check nt-radio-pagedviewoption" name="btnradio" id="btnradio-Table" autocomplete="off"
                 data-bs-toggle="modal" data-bs-target="#fullScreenLoading"
-                data-nt-value="Table" data-nt-paginationoptionupdatevalue="Paged" @(Model!.UIListSetting.UIParams.PagedViewOption==PagedViewOptions.Table ? "checked": "")>
-            <label class="btn btn-outline-primary" for="btnradio-List" title="List" aria-label="List"><i class="fa-solid fa-table-list"></i></label>
+                data-nt-value="Table" data-nt-paginationoptionupdatevalue="PageIndexesAndAllButtons" @(Model!.UIListSetting.UIParams.PagedViewOption==PagedViewOptions.Table ? "checked": "")>
+            <label class="btn btn-outline-primary" for="btnradio-Table" title="Table" aria-label="Table"><i class="fa-solid fa-table-list"></i></label>
             <input type="radio" class="btn-check nt-radio-pagedviewoption" name="btnradio" id="btnradio-Tiles" autocomplete="off"
                 data-bs-toggle="modal" data-bs-target="#fullScreenLoading"
                 data-nt-value="Tiles" data-nt-paginationoptionupdatevalue="LoadMore" @(Model!.UIListSetting.UIParams.PagedViewOption==PagedViewOptions.Tiles ? "checked": "")>
@@ -34,7 +69,7 @@
             <label class="btn btn-outline-primary" for="btnradio-SlideShow" title="SlideShow" aria-label="SlideShow"><i class="fa-solid fa-circle-play"></i></label>
             <input type="radio" class="btn-check nt-radio-pagedviewoption" name="btnradio" id="btnradio-EditableTable" autocomplete="off"
                 data-bs-toggle="modal" data-bs-target="#fullScreenLoading"
-                data-nt-value="EditableTable" data-nt-paginationoptionupdatevalue="Paged" @(Model!.UIListSetting.UIParams.PagedViewOption == PagedViewOptions.EditableTable ? "checked": "")>
+                data-nt-value="EditableTable" data-nt-paginationoptionupdatevalue="PageIndexesAndAllButtons" @(Model!.UIListSetting.UIParams.PagedViewOption == PagedViewOptions.EditableTable ? "checked": "")>
             <label class="btn btn-outline-primary" for="btnradio-EditableTable" title="EditableTable" aria-label="EditableTable"><i class="fa-solid fa-pen-ruler"></i></label>
         </div>
         @if (Model!.UIListSetting == null || Model!.UIListSetting.UIListFeatures.HasPageSizeList || Model!.UIListSetting.UIListFeatures.HasOrderByList)
