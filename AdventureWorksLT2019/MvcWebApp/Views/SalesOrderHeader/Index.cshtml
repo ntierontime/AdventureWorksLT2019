@@ -34,7 +34,7 @@
         <div>
             <span class="h5"><a class="nav-link text-dark" asp-area="" asp-controller="SalesOrderHeader" asp-action="Index">you are working on <strong>@localizor.Get("SalesOrderHeader")</strong></a></span>
         </div>
-        <a class="btn btn-secondary nt-advanced-search-button" role="button" title="@localizor.Get("AdvancedSearch")" data-bs-toggle="collapse" data-bs-target=".nt-advanced-search-field" aria-expanded="@(Model!.UIListSetting.UIParams.AdvancedQuery.ToString().ToLower())" aria-controls="advancedsearch-seperator advancedsearch-select advancedsearch-text advancedsearch-bool" data-updatetarget="#advancedQueryH">
+        <a class="btn btn-secondary nt-advanced-search-button" role="button" title="@localizor.Get("AdvancedSearch")" data-bs-toggle="collapse" data-bs-target=".nt-advanced-search-field" aria-expanded="@(Model!.UIListSetting.UIParams.AdvancedQuery.ToString().ToLower())" aria-controls="advancedsearch-seperator advancedsearch-text advancedsearch-bool" data-updatetarget="#advancedQueryH">
             <i class="fa-solid fa-circle-chevron-up advanced-search-expanded"></i>
             <span class="advanced-search-expanded">@localizor.Get("HideAdvancedSearch")</span>
             <i class="fa-solid fa-circle-chevron-down advanced-search-collapsed"></i>
@@ -90,32 +90,6 @@
             <span class="bg-light ps-4 pe-4">
                 @localizor.Get("AdvancedSearch")<!--Padding is optional-->
             </span>
-        </div>
-    </div>
-    <div class="row pt-1 collapse advanced-search-field" id="advancedsearch-select">
-        <div class="col-md-6 col-lg-4 col-xl-3">
-            <div class="input-group">
-                <label class="input-group-text">@localizor.Get("Address")</label>
-                <select asp-for="Query.ShipToAddressID" class="form-control form-select" asp-items="@selectListHelper.GetSelectList(Model?.TopLevelDropDownListsFromDatabase?[TopLevelDropDownLists.Address.ToString()])">
-                    <option value="" selected>@string.Format(format_All, localizor.Get("Address"))</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-4 col-xl-3">
-            <div class="input-group">
-                <label class="input-group-text">@localizor.Get("Customer")</label>
-                <select asp-for="Query.CustomerID" class="form-control form-select" asp-items="@selectListHelper.GetSelectList(Model?.TopLevelDropDownListsFromDatabase?[TopLevelDropDownLists.Customer.ToString()])">
-                    <option value="" selected>@string.Format(format_All, localizor.Get("Customer"))</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-4 col-xl-3">
-            <div class="input-group">
-                <label class="input-group-text">@localizor.Get("Address")</label>
-                <select asp-for="Query.BillToAddressID" class="form-control form-select" asp-items="@selectListHelper.GetSelectList(Model?.TopLevelDropDownListsFromDatabase?[TopLevelDropDownLists.Address.ToString()])">
-                    <option value="" selected>@string.Format(format_All, localizor.Get("Address"))</option>
-                </select>
-            </div>
         </div>
     </div>
     <div class="row pt-1 collapse advanced-search-field" id="advancedsearch-text">
@@ -180,7 +154,7 @@
         <div>
             <span class="h5"><a class="nav-link text-dark" asp-area="" asp-controller="SalesOrderHeader" asp-action="Index">you are working on <strong>@localizor.Get("SalesOrderHeader")</strong></a></span>
         </div>
-        <a class="btn btn-secondary nt-advanced-search-button" role="button" title="@localizor.Get("AdvancedSearch")" data-bs-toggle="collapse" data-bs-target=".nt-advanced-search-field" aria-expanded="@(Model!.UIListSetting.UIParams.AdvancedQuery.ToString().ToLower())" aria-controls="advancedsearch-seperator advancedsearch-select advancedsearch-text advancedsearch-bool" data-updatetarget="#advancedQueryH">
+        <a class="btn btn-secondary nt-advanced-search-button" role="button" title="@localizor.Get("AdvancedSearch")" data-bs-toggle="collapse" data-bs-target=".nt-advanced-search-field" aria-expanded="@(Model!.UIListSetting.UIParams.AdvancedQuery.ToString().ToLower())" aria-controls="advancedsearch-seperator advancedsearch-text advancedsearch-bool" data-updatetarget="#advancedQueryH">
             <i class="fa-solid fa-circle-chevron-up advanced-search-expanded"></i>
             <span class="advanced-search-expanded">@localizor.Get("HideAdvancedSearch")</span>
             <i class="fa-solid fa-circle-chevron-down advanced-search-collapsed"></i>

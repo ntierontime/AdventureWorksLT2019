@@ -56,24 +56,6 @@
         </div>
     </div>
     <div class="row pt-1">
-        <div class="col-md-6 col-lg-4 col-xl-3">
-            <div class="input-group">
-                <label class="input-group-text">@localizor.Get("Customer")</label>
-                <select asp-for="Query.CustomerID" class="form-control form-select" asp-items="@selectListHelper.GetSelectList(Model?.TopLevelDropDownListsFromDatabase?[TopLevelDropDownLists.Customer.ToString()])">
-                    <option value="" selected>@string.Format(format_All, localizor.Get("Customer"))</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-4 col-xl-3">
-            <div class="input-group">
-                <label class="input-group-text">@localizor.Get("Address")</label>
-                <select asp-for="Query.AddressID" class="form-control form-select" asp-items="@selectListHelper.GetSelectList(Model?.TopLevelDropDownListsFromDatabase?[TopLevelDropDownLists.Address.ToString()])">
-                    <option value="" selected>@string.Format(format_All, localizor.Get("Address"))</option>
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="row pt-1">
         <div class="col-md-6">
             <div class="input-group">
                 <label class="input-group-text">@localizor.Get("AddressType")</label>

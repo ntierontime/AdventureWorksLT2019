@@ -56,24 +56,6 @@
         </div>
     </div>
     <div class="row pt-1">
-        <div class="col-md-6 col-lg-4 col-xl-3">
-            <div class="input-group">
-                <label class="input-group-text">@localizor.Get("ProductModel")</label>
-                <select asp-for="Query.ProductModelID" class="form-control form-select" asp-items="@selectListHelper.GetSelectList(Model?.TopLevelDropDownListsFromDatabase?[TopLevelDropDownLists.ProductModel.ToString()])">
-                    <option value="" selected>@string.Format(format_All, localizor.Get("ProductModel"))</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-4 col-xl-3">
-            <div class="input-group">
-                <label class="input-group-text">@localizor.Get("ProductDescription")</label>
-                <select asp-for="Query.ProductDescriptionID" class="form-control form-select" asp-items="@selectListHelper.GetSelectList(Model?.TopLevelDropDownListsFromDatabase?[TopLevelDropDownLists.ProductDescription.ToString()])">
-                    <option value="" selected>@string.Format(format_All, localizor.Get("ProductDescription"))</option>
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="row pt-1">
         <div class="col-md-6">
             <div class="input-group">
                 <label class="input-group-text">@localizor.Get("Culture")</label>
