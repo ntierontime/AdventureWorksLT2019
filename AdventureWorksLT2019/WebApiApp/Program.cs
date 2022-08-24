@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using System.Text.Json.Serialization;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,9 +33,21 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 
 builder.Services.AddSingleton<AdventureWorksLT2019.Resx.IUIStrings, AdventureWorksLT2019.Resx.UIStrings>();
 
-builder.Services.AddControllers();
+builder.Services
+    .AddControllers()
+    .AddJsonOptions(options =>
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.ConfigureSwaggerGen((Action<SwaggerGenOptions>)(options =>
+{
+    options.CustomSchemaIds((Func<Type, string>)(x =>
+    {
+        return GetSwaggerCustomizedSchemaId(x);
+    }));
+}));
 builder.Services.AddSwaggerGen();
 
 // 1.1. IoC Repositories
@@ -85,4 +99,21 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+static string GetSwaggerCustomizedSchemaId(Type x)
+{
+    if (x == typeof(Framework.Models.PagedResponse<AdventureWorksLT2019.Models.CustomerDataModel[]>))
+    {
+        return "AdventureWorksLT2019.Models.CustomerPagedResponse";
+    }
+    if (x == typeof(Framework.Models.BatchActionViewModel<AdventureWorksLT2019.Models.CustomerIdentifier, AdventureWorksLT2019.Models.CustomerDataModel>))
+    {
+        return "AdventureWorksLT2019.Models.CustomerBatchActionViewModel";
+    }
+    if (x == typeof(AdventureWorksLT2019.Models.CustomerAddressDataModel.DefaultView))
+    {
+        return "AdventureWorksLT2019.Models.CustomerAddressDataModelDefaultView";
+    }
+    return x?.FullName;
+}
 

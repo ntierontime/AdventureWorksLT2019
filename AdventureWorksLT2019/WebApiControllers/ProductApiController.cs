@@ -44,6 +44,30 @@ namespace AdventureWorksLT2019.WebApiControllers
             return Ok(serviceResponse);
         }
 
+        // [Authorize]
+        [HttpPut]
+        public async Task<ActionResult<ProductDataModel.DefaultView>> Put(ProductIdentifier id, ProductDataModel input)
+        {
+            var serviceResponse = await _thisService.Update(id, input);
+            return ReturnResultOnlyActionResult(serviceResponse);
+        }
+
+        // [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<ProductDataModel.DefaultView>> Get(ProductIdentifier id)
+        {
+            var serviceResponse = await _thisService.Get(id);
+            return ReturnResultOnlyActionResult(serviceResponse);
+        }
+
+        // [Authorize]
+        [HttpPost]
+        public async Task<ActionResult<ProductDataModel.DefaultView>> Post(ProductDataModel input)
+        {
+            var serviceResponse = await _thisService.Create(input);
+            return ReturnResultOnlyActionResult(serviceResponse);
+        }
+
         /*
         // [Authorize]
         [HttpGet, ActionName("HeartBeat")]

@@ -352,6 +352,146 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
                 return PartialView("~/Views/Shared/_AjaxResponse.cshtml", new AjaxResponseViewModel { Status = System.Net.HttpStatusCode.OK, RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
             return PartialView("~/Views/Shared/_AjaxResponse.cshtml", new AjaxResponseViewModel { Status = result.Status, Message = result.StatusMessage, RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [Route("[controller]/[action]/{CustomerID}")] // Primary
+        //[HttpGet, ActionName("Edit")]
+        // GET: Customer/Edit/{CustomerID}
+        public async Task<IActionResult> Edit([FromRoute]CustomerIdentifier id)
+        {
+            if (!id.CustomerID.HasValue)
+            {
+                var itemViewModel1 = new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<CustomerDataModel>
+                {
+                    Status = System.Net.HttpStatusCode.NotFound,
+                    StatusMessage = "Not Found",
+                    Template = ViewItemTemplateNames.Edit.ToString(),
+                };
+                return View(itemViewModel1);
+            }
+
+            var result = await _thisService.Get(id);
+            var itemViewModel = new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<CustomerDataModel>
+            {
+                Status = result.Status,
+                StatusMessage = result.StatusMessage,
+                Template = ViewItemTemplateNames.Edit.ToString(),
+
+                Model = result.ResponseBody
+            };
+            return View(itemViewModel);
+        }
+
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+
+        [Route("[controller]/[action]/{CustomerID}")] // Primary
+        // POST: Customer/Edit/{CustomerID}
+        public async Task<IActionResult> Edit(
+            [FromRoute]CustomerIdentifier id,
+            [Bind("CustomerID,NameStyle,Title,FirstName,MiddleName,LastName,Suffix,CompanyName,SalesPerson,EmailAddress,Phone,PasswordHash,PasswordSalt,ModifiedDate")] CustomerDataModel input)
+        {
+            if (!id.CustomerID.HasValue ||
+                id.CustomerID.HasValue && id.CustomerID != input.CustomerID)
+            {
+                var itemViewModel1 = new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<CustomerDataModel>
+                {
+                    Status = System.Net.HttpStatusCode.NotFound,
+                    StatusMessage = "Not Found",
+                    Template = ViewItemTemplateNames.Edit.ToString(),
+
+                    Model = input, // should GetbyId again and merge content not in postback
+                };
+                return View(itemViewModel1);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                var itemViewModel1 = new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<CustomerDataModel>
+                {
+                    Status = System.Net.HttpStatusCode.BadRequest,
+                    StatusMessage = "Bad Request",
+                    Template = ViewItemTemplateNames.Edit.ToString(),
+
+                    Model = input, // should GetbyId again and merge content not in postback
+                };
+                return View(itemViewModel1);
+            }
+
+            var result = await _thisService.Update(id, input);
+            var itemViewModel = new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<CustomerDataModel>
+            {
+                Status = result.Status,
+                StatusMessage = result.StatusMessage,
+                Template = ViewItemTemplateNames.Edit.ToString(),
+
+                Model = result.ResponseBody,
+            };
+            return View(itemViewModel);
+        }
+
+        [Route("[controller]/[action]/{CustomerID}")] // Primary
+        // GET: Customer/Details/{CustomerID}
+        public async Task<IActionResult> Details([FromRoute]CustomerIdentifier id)
+        {
+            var result = await _thisService.Get(id);
+            var itemViewModel = new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<CustomerDataModel>
+            {
+                Status = result.Status,
+                StatusMessage = result.StatusMessage,
+                Template = ViewItemTemplateNames.Details.ToString(),
+                Model = result.ResponseBody,
+            };
+            return View(itemViewModel);
+        }
+
+        // GET: Customer/Create
+        public async Task<IActionResult> Create()
+        {
+            var itemViewModel = await Task.FromResult(new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<CustomerDataModel>
+            {
+                Status = System.Net.HttpStatusCode.OK,
+                Template = ViewItemTemplateNames.Create.ToString(),
+                Model = _thisService.GetDefault(),
+
+            });
+
+            return View(itemViewModel);
+        }
+
+        // POST: Customer/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(
+            [Bind("NameStyle,Title,FirstName,MiddleName,LastName,Suffix,CompanyName,SalesPerson,EmailAddress,Phone,PasswordHash,PasswordSalt,ModifiedDate")] CustomerDataModel input)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _thisService.Create(input);
+                var itemViewModel = new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<CustomerDataModel>
+                {
+                    Status = result.Status,
+                    StatusMessage = result.StatusMessage,
+                    Template = ViewItemTemplateNames.Create.ToString(),
+                    Model = result.ResponseBody,
+
+                };
+                return View(itemViewModel);
+            }
+
+            var itemViewModel1 = new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<CustomerDataModel>
+            {
+                Status = System.Net.HttpStatusCode.BadRequest,
+                StatusMessage = "Bad Request",
+                Template = ViewItemTemplateNames.Create.ToString(),
+                Model = input, // should GetbyId again and merge content not in postback
+
+            };
+            return View(itemViewModel1);
+        }
     }
 }
 

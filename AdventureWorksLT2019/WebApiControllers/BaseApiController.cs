@@ -9,7 +9,7 @@ namespace AdventureWorksLT2019.WebApiControllers
 {
     public class BaseApiController: Controller
     {
-        public ActionResult ReturnWithoutBodyActionResult(Response serviceResponse)
+        protected ActionResult ReturnWithoutBodyActionResult(Response serviceResponse)
         {
             if (serviceResponse.Status == HttpStatusCode.OK)
                 return Ok();
@@ -22,7 +22,7 @@ namespace AdventureWorksLT2019.WebApiControllers
             return StatusCode((int)serviceResponse.Status);
         }
 
-        public ActionResult<T> ReturnResultOnlyActionResult<T>(Response<T> serviceResponse)
+        protected ActionResult<T> ReturnResultOnlyActionResult<T>(Response<T> serviceResponse)
         {
             if (serviceResponse.Status == HttpStatusCode.OK)
                 return Ok(serviceResponse.ResponseBody);
@@ -35,7 +35,7 @@ namespace AdventureWorksLT2019.WebApiControllers
             return StatusCode((int)serviceResponse.Status);
         }
 
-        public ActionResult<Response<T>> ReturnActionResult<T>(Response<T> serviceResponse)
+        protected ActionResult<Response<T>> ReturnActionResult<T>(Response<T> serviceResponse)
         {
             if (serviceResponse.Status == HttpStatusCode.OK)
                 return Ok(serviceResponse);
@@ -48,7 +48,7 @@ namespace AdventureWorksLT2019.WebApiControllers
             return StatusCode((int)serviceResponse.Status);
         }
 
-        public ActionResult<PagedResponse<T>> ReturnActionResult<T>(PagedResponse<T> serviceResponse)
+        protected ActionResult<PagedResponse<T>> ReturnActionResult<T>(PagedResponse<T> serviceResponse)
         {
             if (serviceResponse.Status == HttpStatusCode.OK)
                 return Ok(serviceResponse);

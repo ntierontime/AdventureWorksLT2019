@@ -52,6 +52,30 @@ namespace AdventureWorksLT2019.WebApiControllers
             return ReturnActionResult(serviceResponse);
         }
 
+        // [Authorize]
+        [HttpPut]
+        public async Task<ActionResult<CustomerDataModel>> Put(CustomerIdentifier id, CustomerDataModel input)
+        {
+            var serviceResponse = await _thisService.Update(id, input);
+            return ReturnResultOnlyActionResult(serviceResponse);
+        }
+
+        // [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<CustomerDataModel>> Get(CustomerIdentifier id)
+        {
+            var serviceResponse = await _thisService.Get(id);
+            return ReturnResultOnlyActionResult(serviceResponse);
+        }
+
+        // [Authorize]
+        [HttpPost]
+        public async Task<ActionResult<CustomerDataModel>> Post(CustomerDataModel input)
+        {
+            var serviceResponse = await _thisService.Create(input);
+            return ReturnResultOnlyActionResult(serviceResponse);
+        }
+
         /*
         // [Authorize]
         [HttpGet, ActionName("HeartBeat")]

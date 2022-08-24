@@ -92,6 +92,146 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
             return PartialView("~/Views/ErrorLog/_SlideShow.cshtml", pagedViewModel);
 
         }
+
+        [Route("[controller]/[action]/{ErrorLogID}")] // Primary
+        //[HttpGet, ActionName("Edit")]
+        // GET: ErrorLog/Edit/{ErrorLogID}
+        public async Task<IActionResult> Edit([FromRoute]ErrorLogIdentifier id)
+        {
+            if (!id.ErrorLogID.HasValue)
+            {
+                var itemViewModel1 = new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<ErrorLogDataModel>
+                {
+                    Status = System.Net.HttpStatusCode.NotFound,
+                    StatusMessage = "Not Found",
+                    Template = ViewItemTemplateNames.Edit.ToString(),
+                };
+                return View(itemViewModel1);
+            }
+
+            var result = await _thisService.Get(id);
+            var itemViewModel = new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<ErrorLogDataModel>
+            {
+                Status = result.Status,
+                StatusMessage = result.StatusMessage,
+                Template = ViewItemTemplateNames.Edit.ToString(),
+
+                Model = result.ResponseBody
+            };
+            return View(itemViewModel);
+        }
+
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+
+        [Route("[controller]/[action]/{ErrorLogID}")] // Primary
+        // POST: ErrorLog/Edit/{ErrorLogID}
+        public async Task<IActionResult> Edit(
+            [FromRoute]ErrorLogIdentifier id,
+            [Bind("ErrorLogID,ErrorTime,UserName,ErrorNumber,ErrorSeverity,ErrorState,ErrorProcedure,ErrorLine,ErrorMessage")] ErrorLogDataModel input)
+        {
+            if (!id.ErrorLogID.HasValue ||
+                id.ErrorLogID.HasValue && id.ErrorLogID != input.ErrorLogID)
+            {
+                var itemViewModel1 = new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<ErrorLogDataModel>
+                {
+                    Status = System.Net.HttpStatusCode.NotFound,
+                    StatusMessage = "Not Found",
+                    Template = ViewItemTemplateNames.Edit.ToString(),
+
+                    Model = input, // should GetbyId again and merge content not in postback
+                };
+                return View(itemViewModel1);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                var itemViewModel1 = new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<ErrorLogDataModel>
+                {
+                    Status = System.Net.HttpStatusCode.BadRequest,
+                    StatusMessage = "Bad Request",
+                    Template = ViewItemTemplateNames.Edit.ToString(),
+
+                    Model = input, // should GetbyId again and merge content not in postback
+                };
+                return View(itemViewModel1);
+            }
+
+            var result = await _thisService.Update(id, input);
+            var itemViewModel = new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<ErrorLogDataModel>
+            {
+                Status = result.Status,
+                StatusMessage = result.StatusMessage,
+                Template = ViewItemTemplateNames.Edit.ToString(),
+
+                Model = result.ResponseBody,
+            };
+            return View(itemViewModel);
+        }
+
+        [Route("[controller]/[action]/{ErrorLogID}")] // Primary
+        // GET: ErrorLog/Details/{ErrorLogID}
+        public async Task<IActionResult> Details([FromRoute]ErrorLogIdentifier id)
+        {
+            var result = await _thisService.Get(id);
+            var itemViewModel = new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<ErrorLogDataModel>
+            {
+                Status = result.Status,
+                StatusMessage = result.StatusMessage,
+                Template = ViewItemTemplateNames.Details.ToString(),
+                Model = result.ResponseBody,
+            };
+            return View(itemViewModel);
+        }
+
+        // GET: ErrorLog/Create
+        public async Task<IActionResult> Create()
+        {
+            var itemViewModel = await Task.FromResult(new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<ErrorLogDataModel>
+            {
+                Status = System.Net.HttpStatusCode.OK,
+                Template = ViewItemTemplateNames.Create.ToString(),
+                Model = _thisService.GetDefault(),
+
+            });
+
+            return View(itemViewModel);
+        }
+
+        // POST: ErrorLog/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(
+            [Bind("ErrorTime,UserName,ErrorNumber,ErrorSeverity,ErrorState,ErrorProcedure,ErrorLine,ErrorMessage")] ErrorLogDataModel input)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _thisService.Create(input);
+                var itemViewModel = new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<ErrorLogDataModel>
+                {
+                    Status = result.Status,
+                    StatusMessage = result.StatusMessage,
+                    Template = ViewItemTemplateNames.Create.ToString(),
+                    Model = result.ResponseBody,
+
+                };
+                return View(itemViewModel);
+            }
+
+            var itemViewModel1 = new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<ErrorLogDataModel>
+            {
+                Status = System.Net.HttpStatusCode.BadRequest,
+                StatusMessage = "Bad Request",
+                Template = ViewItemTemplateNames.Create.ToString(),
+                Model = input, // should GetbyId again and merge content not in postback
+
+            };
+            return View(itemViewModel1);
+        }
     }
 }
 
