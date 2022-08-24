@@ -11,12 +11,7 @@ namespace AdventureWorksLT2019.ServiceContracts
         Task<CustomerCompositeModel> GetCompositeModel(
             CustomerIdentifier id, CustomerCompositeModel.__DataOptions__[]? dataOptions = null);
 
-        Task<Response> BulkDelete(List<CustomerIdentifier> ids);
-
         Task<PagedResponse<CustomerDataModel[]>> BulkUpdate(BatchActionViewModel<CustomerIdentifier, CustomerDataModel> data);
-
-        Task<Response<MultiItemsCUDModel<CustomerIdentifier, CustomerDataModel>>> MultiItemsCUD(
-            MultiItemsCUDModel<CustomerIdentifier, CustomerDataModel> input);
 
         Task<Response<CustomerDataModel>> Update(CustomerIdentifier id, CustomerDataModel input);
 
@@ -24,11 +19,6 @@ namespace AdventureWorksLT2019.ServiceContracts
 
         Task<Response<CustomerDataModel>> Create(CustomerDataModel input);
         CustomerDataModel GetDefault();
-
-        Task<Response> Delete(CustomerIdentifier id);
-
-        Task<PagedResponse<NameValuePair[]>> GetCodeList(
-            CustomerAdvancedQuery query);
     }
 }
 

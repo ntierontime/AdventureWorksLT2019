@@ -37,68 +37,11 @@ namespace AdventureWorksLT2019.WebApiControllers
         }
 
         // [Authorize]
-        [HttpGet]
-        public async Task<ActionResult<SalesOrderHeaderCompositeModel>> GetCompositeModel(SalesOrderHeaderIdentifier id)
-        {
-            var serviceResponse = await _thisService.GetCompositeModel(id, null);
-            return Ok(serviceResponse);
-        }
-
-        // [Authorize]
-        [HttpDelete]
-        public async Task<ActionResult> BulkDelete(List<SalesOrderHeaderIdentifier> ids)
-        {
-            var serviceResponse = await _thisService.BulkDelete(ids);
-            return ReturnWithoutBodyActionResult(serviceResponse);
-        }
-
-        // [Authorize]
         [HttpPut]
         public async Task<ActionResult<PagedResponse<SalesOrderHeaderDataModel.DefaultView[]>>> BulkUpdate(BatchActionViewModel<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView> data)
         {
             var serviceResponse = await _thisService.BulkUpdate(data);
             return ReturnActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [HttpPut]
-        public async Task<ActionResult<Response<MultiItemsCUDModel<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView>>>> MultiItemsCUD(
-            MultiItemsCUDModel<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView> input)
-        {
-            var serviceResponse = await _thisService.MultiItemsCUD(input);
-            return ReturnActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [HttpPost]
-        public async Task<ActionResult<SalesOrderHeaderDataModel.DefaultView>> Post(SalesOrderHeaderIdentifier id, SalesOrderHeaderDataModel input)
-        {
-            var serviceResponse = await _thisService.Update(id, input);
-            return ReturnResultOnlyActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [HttpGet]
-        public async Task<ActionResult<SalesOrderHeaderDataModel.DefaultView>> Get(SalesOrderHeaderIdentifier id)
-        {
-            var serviceResponse = await _thisService.Get(id);
-            return ReturnResultOnlyActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [HttpPut]
-        public async Task<ActionResult<SalesOrderHeaderDataModel.DefaultView>> Put(SalesOrderHeaderDataModel input)
-        {
-            var serviceResponse = await _thisService.Create(input);
-            return ReturnResultOnlyActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [HttpDelete]
-        public async Task<ActionResult> Delete(SalesOrderHeaderIdentifier id)
-        {
-            var serviceResponse = await _thisService.Delete(id);
-            return ReturnWithoutBodyActionResult(serviceResponse);
         }
 
         /*

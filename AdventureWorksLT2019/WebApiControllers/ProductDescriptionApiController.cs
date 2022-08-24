@@ -36,63 +36,6 @@ namespace AdventureWorksLT2019.WebApiControllers
             return ReturnActionResult(serviceResponse);
         }
 
-        // [Authorize]
-        [HttpGet]
-        public async Task<ActionResult<ProductDescriptionCompositeModel>> GetCompositeModel(ProductDescriptionIdentifier id)
-        {
-            var serviceResponse = await _thisService.GetCompositeModel(id, null);
-            return Ok(serviceResponse);
-        }
-
-        // [Authorize]
-        [HttpDelete]
-        public async Task<ActionResult> BulkDelete(List<ProductDescriptionIdentifier> ids)
-        {
-            var serviceResponse = await _thisService.BulkDelete(ids);
-            return ReturnWithoutBodyActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [HttpPut]
-        public async Task<ActionResult<Response<MultiItemsCUDModel<ProductDescriptionIdentifier, ProductDescriptionDataModel>>>> MultiItemsCUD(
-            MultiItemsCUDModel<ProductDescriptionIdentifier, ProductDescriptionDataModel> input)
-        {
-            var serviceResponse = await _thisService.MultiItemsCUD(input);
-            return ReturnActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [HttpPost]
-        public async Task<ActionResult<ProductDescriptionDataModel>> Post(ProductDescriptionIdentifier id, ProductDescriptionDataModel input)
-        {
-            var serviceResponse = await _thisService.Update(id, input);
-            return ReturnResultOnlyActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [HttpGet]
-        public async Task<ActionResult<ProductDescriptionDataModel>> Get(ProductDescriptionIdentifier id)
-        {
-            var serviceResponse = await _thisService.Get(id);
-            return ReturnResultOnlyActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [HttpPut]
-        public async Task<ActionResult<ProductDescriptionDataModel>> Put(ProductDescriptionDataModel input)
-        {
-            var serviceResponse = await _thisService.Create(input);
-            return ReturnResultOnlyActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [HttpDelete]
-        public async Task<ActionResult> Delete(ProductDescriptionIdentifier id)
-        {
-            var serviceResponse = await _thisService.Delete(id);
-            return ReturnWithoutBodyActionResult(serviceResponse);
-        }
-
         /*
         // [Authorize]
         [HttpGet, ActionName("HeartBeat")]

@@ -32,69 +32,9 @@ namespace AdventureWorksLT2019.Services
             return await _thisRepository.Search(query);
         }
 
-        public async Task<SalesOrderHeaderCompositeModel> GetCompositeModel(SalesOrderHeaderIdentifier id, SalesOrderHeaderCompositeModel.__DataOptions__[]? dataOptions = null)
-        {
-            var masterResponse = await this._thisRepository.Get(id);
-            if (masterResponse.Status != HttpStatusCode.OK || masterResponse.ResponseBody == null)
-            {
-                var failedResponse = new SalesOrderHeaderCompositeModel();
-                failedResponse.Responses.Add(SalesOrderHeaderCompositeModel.__DataOptions__.__Master__, new Response { Status = masterResponse.Status, StatusMessage = masterResponse.StatusMessage });
-                return failedResponse;
-            }
-
-            var successResponse = new SalesOrderHeaderCompositeModel { __Master__ = masterResponse.ResponseBody };
-            var responses = new ConcurrentDictionary<SalesOrderHeaderCompositeModel.__DataOptions__, Response>();
-            responses.TryAdd(SalesOrderHeaderCompositeModel.__DataOptions__.__Master__, new Response { Status = HttpStatusCode.OK });
-
-            var tasks = new List<Task>();
-
-            // 4. ListTable = 4,
-
-            if (dataOptions == null || dataOptions.Contains(SalesOrderHeaderCompositeModel.__DataOptions__.SalesOrderDetails_Via_SalesOrderID))
-            {
-                tasks.Add(Task.Run(async () =>
-                {
-                    using (var scope = _serviceScopeFactor.CreateScope())
-                    {
-                        var _salesOrderDetailRepository = scope.ServiceProvider.GetRequiredService<ISalesOrderDetailRepository>();
-                        var query = new SalesOrderDetailAdvancedQuery { SalesOrderID = id.SalesOrderID, PageIndex = 1, PageSize = 5, OrderBys="ModifiedDate~DESC" };
-                        var response = await _salesOrderDetailRepository.Search(query);
-                        responses.TryAdd(SalesOrderHeaderCompositeModel.__DataOptions__.SalesOrderDetails_Via_SalesOrderID, new Response { Status = response.Status, StatusMessage = response.StatusMessage });
-                        if (response.Status == HttpStatusCode.OK)
-                        {
-                            successResponse.SalesOrderDetails_Via_SalesOrderID = response.ResponseBody;
-                        }
-                    }
-                }));
-            }
-
-            if (tasks.Count > 0)
-            {
-                Task t = Task.WhenAll(tasks.ToArray());
-                try
-                {
-                    await t;
-                }
-                catch { }
-            }
-            successResponse.Responses = new Dictionary<SalesOrderHeaderCompositeModel.__DataOptions__, Response>(responses);
-            return successResponse;
-        }
-
-        public async Task<Response> BulkDelete(List<SalesOrderHeaderIdentifier> ids)
-        {
-            return await _thisRepository.BulkDelete(ids);
-        }
-
         public async Task<PagedResponse<SalesOrderHeaderDataModel.DefaultView[]>> BulkUpdate(BatchActionViewModel<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView> data)
         {
             return await _thisRepository.BulkUpdate(data);
-        }
-
-        public async Task<Response<MultiItemsCUDModel<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView>>> MultiItemsCUD(
-            MultiItemsCUDModel<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView> input)
-        {
-            return await _thisRepository.MultiItemsCUD(input);
         }
 
         public async Task<Response<SalesOrderHeaderDataModel.DefaultView>> Update(SalesOrderHeaderIdentifier id, SalesOrderHeaderDataModel input)
@@ -116,17 +56,6 @@ namespace AdventureWorksLT2019.Services
         {
             // TODO: please set default value here
             return new SalesOrderHeaderDataModel.DefaultView { ItemUIStatus______ = ItemUIStatus.New };
-        }
-
-        public async Task<Response> Delete(SalesOrderHeaderIdentifier id)
-        {
-            return await _thisRepository.Delete(id);
-        }
-
-        public async Task<PagedResponse<NameValuePair[]>> GetCodeList(
-            SalesOrderHeaderAdvancedQuery query)
-        {
-            return await _thisRepository.GetCodeList(query);
         }
     }
 }

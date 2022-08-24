@@ -25,6 +25,13 @@ $(document).ready($(function () {
  * .btn-nt-load-more
  *
  */
+function attachListRefreshButtonClickEvent(selector) {
+    $(selector).click(function (e) {
+        let button = e.currentTarget;
+        const submitTarget = $(button).closest(".nt-list-wrapper").data("nt-submittarget");
+        ajaxLoadItemsSubmit($(submitTarget))
+    });
+}
 
 function attachAjaxLoadItemsSubmit(selector) {
     $(selector).submit(function (e) {

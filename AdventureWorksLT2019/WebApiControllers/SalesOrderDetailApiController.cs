@@ -36,63 +36,6 @@ namespace AdventureWorksLT2019.WebApiControllers
             return ReturnActionResult(serviceResponse);
         }
 
-        // [Authorize]
-        [HttpGet]
-        public async Task<ActionResult<SalesOrderDetailCompositeModel>> GetCompositeModel(SalesOrderDetailIdentifier id)
-        {
-            var serviceResponse = await _thisService.GetCompositeModel(id, null);
-            return Ok(serviceResponse);
-        }
-
-        // [Authorize]
-        [HttpDelete]
-        public async Task<ActionResult> BulkDelete(List<SalesOrderDetailIdentifier> ids)
-        {
-            var serviceResponse = await _thisService.BulkDelete(ids);
-            return ReturnWithoutBodyActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [HttpPut]
-        public async Task<ActionResult<Response<MultiItemsCUDModel<SalesOrderDetailIdentifier, SalesOrderDetailDataModel.DefaultView>>>> MultiItemsCUD(
-            MultiItemsCUDModel<SalesOrderDetailIdentifier, SalesOrderDetailDataModel.DefaultView> input)
-        {
-            var serviceResponse = await _thisService.MultiItemsCUD(input);
-            return ReturnActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [HttpPost]
-        public async Task<ActionResult<SalesOrderDetailDataModel.DefaultView>> Post(SalesOrderDetailIdentifier id, SalesOrderDetailDataModel input)
-        {
-            var serviceResponse = await _thisService.Update(id, input);
-            return ReturnResultOnlyActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [HttpGet]
-        public async Task<ActionResult<SalesOrderDetailDataModel.DefaultView>> Get(SalesOrderDetailIdentifier id)
-        {
-            var serviceResponse = await _thisService.Get(id);
-            return ReturnResultOnlyActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [HttpPut]
-        public async Task<ActionResult<SalesOrderDetailDataModel.DefaultView>> Put(SalesOrderDetailDataModel input)
-        {
-            var serviceResponse = await _thisService.Create(input);
-            return ReturnResultOnlyActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [HttpDelete]
-        public async Task<ActionResult> Delete(SalesOrderDetailIdentifier id)
-        {
-            var serviceResponse = await _thisService.Delete(id);
-            return ReturnWithoutBodyActionResult(serviceResponse);
-        }
-
         /*
         // [Authorize]
         [HttpGet, ActionName("HeartBeat")]

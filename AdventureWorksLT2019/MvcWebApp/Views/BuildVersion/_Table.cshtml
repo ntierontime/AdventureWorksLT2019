@@ -11,10 +11,6 @@
     <table class="table table-hover table-bordered table-striped align-middle">
         <thead class="table-dark">
             <tr class="pt-0 pb-0">
-                @if (Model!.UIListSetting.ShowListBulkActionRelated(true))
-                {
-                    <th class="p-0" style="width: 1% !important;"></th>
-                }
                 @if (Model!.UIListSetting.ShowItemButtons())
                 {
                     <th class="p-0" style="width: 1% !important;"></th>
@@ -60,23 +56,6 @@
                 </tr>
             }
         </tbody>
-            <!--only for inline editing-->
-            <tfoot>
-                @if (Model!.UIListSetting == null || Model!.UIListSetting.CanGotoCreate(@CrudViewContainers.Inline))
-                {
-                    <tr class="pt-0 pb-0 nt-listitem nt-new">
-                        <td class="nt-createnew-button-container" colspan="100">
-                        <button type="button" class="btn btn-primary btn-nt-inline-editing w-100 h-100" title="@localizor.Get("Create_New")"
-                            data-nt-action="@HttpMethods.Post"
-                            data-nt-route-id="@(default(byte) + "/" + default(System.DateTime) + "/" + default(System.DateTime))"
-                            data-nt-container="@CrudViewContainers.Inline.ToString()"
-                            data-nt-template="@ViewItemTemplateNames.Create.ToString()">
-                            <i class="fa fa-plus"></i><span class="submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Create_New")</span>
-                        </button>
-                        </td>
-                    </tr>
-                }
-            </tfoot>
     </table>
     </form>
     @if (Model != null && Model!.UIListSetting!.UIListFeatures.HasPagination && Model.Result != null && Model.Result.Pagination != null)

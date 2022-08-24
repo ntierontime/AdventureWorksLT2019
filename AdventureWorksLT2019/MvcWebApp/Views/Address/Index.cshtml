@@ -17,7 +17,7 @@
     }
     if (string.IsNullOrEmpty(currentView))
     {
-        currentView = (Model.UIListSetting.UIParams.PagedViewOption ?? PagedViewOptions.EditableTable).ToString();
+        currentView = (Model.UIListSetting.UIParams.PagedViewOption ?? PagedViewOptions.Table).ToString();
     }
 }
 <form id="@Model!.UIListSetting.UIListFeatures.SearchFormId" method="post" class="nt-ajax-partial-load-post-formdata"

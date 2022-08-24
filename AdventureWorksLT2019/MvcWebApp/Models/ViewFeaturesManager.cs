@@ -84,23 +84,20 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     ListWrapperId = key + "ListWrapper",
                     SearchFormId = key + "SearchForm",
 
-                    PrimaryPagedViewOption = PagedViewOptions.EditableTable,
+                    PrimaryPagedViewOption = PagedViewOptions.Table,
 
-                    PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                    PrimayDeleteViewContainer = CrudViewContainers.Dialog,
+                    PrimayCreateViewContainer = CrudViewContainers.None,
+                    PrimayDeleteViewContainer = CrudViewContainers.None,
                     PrimayDetailsViewContainer = CrudViewContainers.Dialog,
-                    PrimayEditViewContainer = CrudViewContainers.Dialog,
+                    PrimayEditViewContainer = CrudViewContainers.None,
 
-                    CanGotoDashboard = true,
-                    CanBulkDelete = true,
+                    CanGotoDashboard = false,
+                    CanBulkDelete = false,
                     CanBulkActions = false,
 
                     AvailableListViews = new List<PagedViewOptions>
                     {
-                        PagedViewOptions.Table,
-                        PagedViewOptions.Tiles,
-                        PagedViewOptions.SlideShow,
-                        PagedViewOptions.EditableTable
+                        PagedViewOptions.Table
                     },
                 },
             };
@@ -138,23 +135,20 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     ListWrapperId = key + "ListWrapper",
                     SearchFormId = key + "SearchForm",
 
-                    PrimaryPagedViewOption = PagedViewOptions.EditableTable,
+                    PrimaryPagedViewOption = PagedViewOptions.Table,
 
                     PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                    PrimayDeleteViewContainer = CrudViewContainers.Dialog,
+                    PrimayDeleteViewContainer = CrudViewContainers.None,
                     PrimayDetailsViewContainer = CrudViewContainers.Dialog,
                     PrimayEditViewContainer = CrudViewContainers.Dialog,
 
-                    CanGotoDashboard = true,
-                    CanBulkDelete = true,
+                    CanGotoDashboard = false,
+                    CanBulkDelete = false,
                     CanBulkActions = false,
 
                     AvailableListViews = new List<PagedViewOptions>
                     {
-                        PagedViewOptions.Table,
-                        PagedViewOptions.Tiles,
-                        PagedViewOptions.SlideShow,
-                        PagedViewOptions.EditableTable
+                        PagedViewOptions.Table
                     },
                 },
             };
@@ -192,23 +186,20 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     ListWrapperId = key + "ListWrapper",
                     SearchFormId = key + "SearchForm",
 
-                    PrimaryPagedViewOption = PagedViewOptions.EditableTable,
+                    PrimaryPagedViewOption = PagedViewOptions.Table,
 
                     PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                    PrimayDeleteViewContainer = CrudViewContainers.Dialog,
+                    PrimayDeleteViewContainer = CrudViewContainers.None,
                     PrimayDetailsViewContainer = CrudViewContainers.Dialog,
                     PrimayEditViewContainer = CrudViewContainers.Dialog,
 
-                    CanGotoDashboard = true,
-                    CanBulkDelete = true,
+                    CanGotoDashboard = false,
+                    CanBulkDelete = false,
                     CanBulkActions = false,
 
                     AvailableListViews = new List<PagedViewOptions>
                     {
-                        PagedViewOptions.Table,
-                        PagedViewOptions.Tiles,
-                        PagedViewOptions.SlideShow,
-                        PagedViewOptions.EditableTable
+                        PagedViewOptions.Table
                     },
                 },
             };
@@ -246,23 +237,20 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     ListWrapperId = key + "ListWrapper",
                     SearchFormId = key + "SearchForm",
 
-                    PrimaryPagedViewOption = PagedViewOptions.EditableTable,
+                    PrimaryPagedViewOption = PagedViewOptions.Table,
 
                     PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                    PrimayDeleteViewContainer = CrudViewContainers.Dialog,
+                    PrimayDeleteViewContainer = CrudViewContainers.None,
                     PrimayDetailsViewContainer = CrudViewContainers.Dialog,
                     PrimayEditViewContainer = CrudViewContainers.Dialog,
 
                     CanGotoDashboard = true,
-                    CanBulkDelete = true,
+                    CanBulkDelete = false,
                     CanBulkActions = true,
 
                     AvailableListViews = new List<PagedViewOptions>
                     {
-                        PagedViewOptions.Table,
-                        PagedViewOptions.Tiles,
-                        PagedViewOptions.SlideShow,
-                        PagedViewOptions.EditableTable
+                        PagedViewOptions.Table
                     },
                 },
             };
@@ -300,23 +288,20 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     ListWrapperId = key + "ListWrapper",
                     SearchFormId = key + "SearchForm",
 
-                    PrimaryPagedViewOption = PagedViewOptions.Card,
+                    PrimaryPagedViewOption = PagedViewOptions.Table,
 
-                    PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                    PrimayDeleteViewContainer = CrudViewContainers.Dialog,
+                    PrimayCreateViewContainer = CrudViewContainers.None,
+                    PrimayDeleteViewContainer = CrudViewContainers.None,
                     PrimayDetailsViewContainer = CrudViewContainers.Dialog,
-                    PrimayEditViewContainer = CrudViewContainers.Dialog,
+                    PrimayEditViewContainer = CrudViewContainers.None,
 
-                    CanGotoDashboard = true,
-                    CanBulkDelete = true,
+                    CanGotoDashboard = false,
+                    CanBulkDelete = false,
                     CanBulkActions = false,
 
                     AvailableListViews = new List<PagedViewOptions>
                     {
-                        PagedViewOptions.Table,
-                        PagedViewOptions.Tiles,
-                        PagedViewOptions.SlideShow,
-                        PagedViewOptions.EditableTable
+                        PagedViewOptions.Table
                     },
                 },
             };
@@ -354,23 +339,20 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     ListWrapperId = key + "ListWrapper",
                     SearchFormId = key + "SearchForm",
 
-                    PrimaryPagedViewOption = PagedViewOptions.Card,
+                    PrimaryPagedViewOption = PagedViewOptions.Table,
 
                     PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                    PrimayDeleteViewContainer = CrudViewContainers.Dialog,
+                    PrimayDeleteViewContainer = CrudViewContainers.None,
                     PrimayDetailsViewContainer = CrudViewContainers.Dialog,
                     PrimayEditViewContainer = CrudViewContainers.Dialog,
 
                     CanGotoDashboard = true,
-                    CanBulkDelete = true,
+                    CanBulkDelete = false,
                     CanBulkActions = false,
 
                     AvailableListViews = new List<PagedViewOptions>
                     {
-                        PagedViewOptions.Table,
-                        PagedViewOptions.Tiles,
-                        PagedViewOptions.SlideShow,
-                        PagedViewOptions.EditableTable
+                        PagedViewOptions.Table
                     },
                 },
             };
@@ -408,23 +390,20 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     ListWrapperId = key + "ListWrapper",
                     SearchFormId = key + "SearchForm",
 
-                    PrimaryPagedViewOption = PagedViewOptions.Card,
+                    PrimaryPagedViewOption = PagedViewOptions.Table,
 
-                    PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                    PrimayDeleteViewContainer = CrudViewContainers.Dialog,
-                    PrimayDetailsViewContainer = CrudViewContainers.Dialog,
-                    PrimayEditViewContainer = CrudViewContainers.Dialog,
+                    PrimayCreateViewContainer = CrudViewContainers.Inline,
+                    PrimayDeleteViewContainer = CrudViewContainers.None,
+                    PrimayDetailsViewContainer = CrudViewContainers.Inline,
+                    PrimayEditViewContainer = CrudViewContainers.Inline,
 
-                    CanGotoDashboard = true,
-                    CanBulkDelete = true,
+                    CanGotoDashboard = false,
+                    CanBulkDelete = false,
                     CanBulkActions = false,
 
                     AvailableListViews = new List<PagedViewOptions>
                     {
-                        PagedViewOptions.Table,
-                        PagedViewOptions.Tiles,
-                        PagedViewOptions.SlideShow,
-                        PagedViewOptions.EditableTable
+                        PagedViewOptions.Table
                     },
                 },
             };
@@ -462,23 +441,20 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     ListWrapperId = key + "ListWrapper",
                     SearchFormId = key + "SearchForm",
 
-                    PrimaryPagedViewOption = PagedViewOptions.EditableTable,
+                    PrimaryPagedViewOption = PagedViewOptions.Table,
 
-                    PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                    PrimayDeleteViewContainer = CrudViewContainers.Dialog,
-                    PrimayDetailsViewContainer = CrudViewContainers.Dialog,
-                    PrimayEditViewContainer = CrudViewContainers.Dialog,
+                    PrimayCreateViewContainer = CrudViewContainers.Inline,
+                    PrimayDeleteViewContainer = CrudViewContainers.None,
+                    PrimayDetailsViewContainer = CrudViewContainers.Inline,
+                    PrimayEditViewContainer = CrudViewContainers.Inline,
 
-                    CanGotoDashboard = true,
-                    CanBulkDelete = true,
+                    CanGotoDashboard = false,
+                    CanBulkDelete = false,
                     CanBulkActions = false,
 
                     AvailableListViews = new List<PagedViewOptions>
                     {
-                        PagedViewOptions.Table,
-                        PagedViewOptions.Tiles,
-                        PagedViewOptions.SlideShow,
-                        PagedViewOptions.EditableTable
+                        PagedViewOptions.Table
                     },
                 },
             };
@@ -516,23 +492,20 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     ListWrapperId = key + "ListWrapper",
                     SearchFormId = key + "SearchForm",
 
-                    PrimaryPagedViewOption = PagedViewOptions.EditableTable,
+                    PrimaryPagedViewOption = PagedViewOptions.Table,
 
-                    PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                    PrimayDeleteViewContainer = CrudViewContainers.Dialog,
-                    PrimayDetailsViewContainer = CrudViewContainers.Dialog,
-                    PrimayEditViewContainer = CrudViewContainers.Dialog,
+                    PrimayCreateViewContainer = CrudViewContainers.Inline,
+                    PrimayDeleteViewContainer = CrudViewContainers.None,
+                    PrimayDetailsViewContainer = CrudViewContainers.Inline,
+                    PrimayEditViewContainer = CrudViewContainers.Inline,
 
-                    CanGotoDashboard = true,
-                    CanBulkDelete = true,
+                    CanGotoDashboard = false,
+                    CanBulkDelete = false,
                     CanBulkActions = false,
 
                     AvailableListViews = new List<PagedViewOptions>
                     {
-                        PagedViewOptions.Table,
-                        PagedViewOptions.Tiles,
-                        PagedViewOptions.SlideShow,
-                        PagedViewOptions.EditableTable
+                        PagedViewOptions.Table
                     },
                 },
             };
@@ -570,23 +543,20 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     ListWrapperId = key + "ListWrapper",
                     SearchFormId = key + "SearchForm",
 
-                    PrimaryPagedViewOption = PagedViewOptions.Card,
+                    PrimaryPagedViewOption = PagedViewOptions.Table,
 
-                    PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                    PrimayDeleteViewContainer = CrudViewContainers.Dialog,
+                    PrimayCreateViewContainer = CrudViewContainers.None,
+                    PrimayDeleteViewContainer = CrudViewContainers.None,
                     PrimayDetailsViewContainer = CrudViewContainers.Dialog,
-                    PrimayEditViewContainer = CrudViewContainers.Dialog,
+                    PrimayEditViewContainer = CrudViewContainers.None,
 
-                    CanGotoDashboard = true,
-                    CanBulkDelete = true,
+                    CanGotoDashboard = false,
+                    CanBulkDelete = false,
                     CanBulkActions = false,
 
                     AvailableListViews = new List<PagedViewOptions>
                     {
-                        PagedViewOptions.Table,
-                        PagedViewOptions.Tiles,
-                        PagedViewOptions.SlideShow,
-                        PagedViewOptions.EditableTable
+                        PagedViewOptions.Table
                     },
                 },
             };
@@ -624,23 +594,20 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     ListWrapperId = key + "ListWrapper",
                     SearchFormId = key + "SearchForm",
 
-                    PrimaryPagedViewOption = PagedViewOptions.Card,
+                    PrimaryPagedViewOption = PagedViewOptions.Table,
 
-                    PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                    PrimayDeleteViewContainer = CrudViewContainers.Dialog,
+                    PrimayCreateViewContainer = CrudViewContainers.None,
+                    PrimayDeleteViewContainer = CrudViewContainers.None,
                     PrimayDetailsViewContainer = CrudViewContainers.Dialog,
-                    PrimayEditViewContainer = CrudViewContainers.Dialog,
+                    PrimayEditViewContainer = CrudViewContainers.None,
 
-                    CanGotoDashboard = true,
-                    CanBulkDelete = true,
+                    CanGotoDashboard = false,
+                    CanBulkDelete = false,
                     CanBulkActions = false,
 
                     AvailableListViews = new List<PagedViewOptions>
                     {
-                        PagedViewOptions.Table,
-                        PagedViewOptions.Tiles,
-                        PagedViewOptions.SlideShow,
-                        PagedViewOptions.EditableTable
+                        PagedViewOptions.Table
                     },
                 },
             };
@@ -678,23 +645,20 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     ListWrapperId = key + "ListWrapper",
                     SearchFormId = key + "SearchForm",
 
-                    PrimaryPagedViewOption = PagedViewOptions.Card,
+                    PrimaryPagedViewOption = PagedViewOptions.Table,
 
                     PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                    PrimayDeleteViewContainer = CrudViewContainers.Dialog,
+                    PrimayDeleteViewContainer = CrudViewContainers.None,
                     PrimayDetailsViewContainer = CrudViewContainers.Dialog,
                     PrimayEditViewContainer = CrudViewContainers.Dialog,
 
-                    CanGotoDashboard = true,
-                    CanBulkDelete = true,
+                    CanGotoDashboard = false,
+                    CanBulkDelete = false,
                     CanBulkActions = true,
 
                     AvailableListViews = new List<PagedViewOptions>
                     {
-                        PagedViewOptions.Table,
-                        PagedViewOptions.Tiles,
-                        PagedViewOptions.SlideShow,
-                        PagedViewOptions.EditableTable
+                        PagedViewOptions.Table
                     },
                 },
             };

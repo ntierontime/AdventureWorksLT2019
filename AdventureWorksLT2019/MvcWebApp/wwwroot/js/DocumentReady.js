@@ -36,11 +36,3 @@ function documentReadyForPopups(f, s, c) {
         attachCrudActionDialogPaginationEventHandler();
     }
 }
-
-function attachListRefreshButtonClickEvent(selector) {
-    $(selector).click(function (e) {
-        let button = e.currentTarget;
-        const submitTarget = $(button).closest(".nt-list-wrapper").data("nt-submittarget");
-        ajaxLoadItemsSubmit($(submitTarget))
-    });
-}

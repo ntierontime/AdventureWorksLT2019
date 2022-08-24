@@ -32,46 +32,6 @@ namespace AdventureWorksLT2019.Services
             return await _thisRepository.Search(query);
         }
 
-        public async Task<ErrorLogCompositeModel> GetCompositeModel(ErrorLogIdentifier id, ErrorLogCompositeModel.__DataOptions__[]? dataOptions = null)
-        {
-            var masterResponse = await this._thisRepository.Get(id);
-            if (masterResponse.Status != HttpStatusCode.OK || masterResponse.ResponseBody == null)
-            {
-                var failedResponse = new ErrorLogCompositeModel();
-                failedResponse.Responses.Add(ErrorLogCompositeModel.__DataOptions__.__Master__, new Response { Status = masterResponse.Status, StatusMessage = masterResponse.StatusMessage });
-                return failedResponse;
-            }
-
-            var successResponse = new ErrorLogCompositeModel { __Master__ = masterResponse.ResponseBody };
-            var responses = new ConcurrentDictionary<ErrorLogCompositeModel.__DataOptions__, Response>();
-            responses.TryAdd(ErrorLogCompositeModel.__DataOptions__.__Master__, new Response { Status = HttpStatusCode.OK });
-
-            var tasks = new List<Task>();
-
-            if (tasks.Count > 0)
-            {
-                Task t = Task.WhenAll(tasks.ToArray());
-                try
-                {
-                    await t;
-                }
-                catch { }
-            }
-            successResponse.Responses = new Dictionary<ErrorLogCompositeModel.__DataOptions__, Response>(responses);
-            return successResponse;
-        }
-
-        public async Task<Response> BulkDelete(List<ErrorLogIdentifier> ids)
-        {
-            return await _thisRepository.BulkDelete(ids);
-        }
-
-        public async Task<Response<MultiItemsCUDModel<ErrorLogIdentifier, ErrorLogDataModel>>> MultiItemsCUD(
-            MultiItemsCUDModel<ErrorLogIdentifier, ErrorLogDataModel> input)
-        {
-            return await _thisRepository.MultiItemsCUD(input);
-        }
-
         public async Task<Response<ErrorLogDataModel>> Update(ErrorLogIdentifier id, ErrorLogDataModel input)
         {
             return await _thisRepository.Update(id, input);
@@ -91,17 +51,6 @@ namespace AdventureWorksLT2019.Services
         {
             // TODO: please set default value here
             return new ErrorLogDataModel { ItemUIStatus______ = ItemUIStatus.New };
-        }
-
-        public async Task<Response> Delete(ErrorLogIdentifier id)
-        {
-            return await _thisRepository.Delete(id);
-        }
-
-        public async Task<PagedResponse<NameValuePair[]>> GetCodeList(
-            ErrorLogAdvancedQuery query)
-        {
-            return await _thisRepository.GetCodeList(query);
         }
     }
 }

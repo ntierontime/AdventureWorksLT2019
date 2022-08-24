@@ -3,12 +3,6 @@
 @using AdventureWorksLT2019.Resx;
 @model MvcItemViewModel<ProductModelDataModel>
 @inject IUIStrings localizor;
-@if (Model!.UIItemFeatures.ShowListBulkSelectCheckbox)
-{
-    <td class="pt-0 pb-0 nt-list-bulk-select" style="width: 1% !important;">
-        <input class="form-check-input ms-1" type="checkbox" value="">
-    </td>
-}
 @if (Model!.UIItemFeatures.ShowItemButtons)
 {
     <td class="p-0" style="width: 1% !important;">
@@ -17,42 +11,6 @@
         <ul class="dropdown-menu border-0 bg-light m-0 p-0">
             <li class="d-inline-block">
                 <div class="btn-group" role="group" aria-label="Menu group">
-                    @if(Model!.UIItemFeatures.CanGotoDashboard)
-                    {
-                        <a asp-area="" asp-controller="ProductModel" asp-action="Dashboard" asp-route-productmodelid="@Model!.Model!.ProductModelID" class="btn btn-default" role="button" title="@localizor.Get("Dashboard")">
-                            <i class="fa-solid fa-folder-tree"></i>
-                        </a>
-                    }
-                    @if (Model!.UIItemFeatures.PrimayDetailsViewContainer == CrudViewContainers.StandaloneView)
-                    {
-                        <a asp-area="" asp-controller="ProductModel" asp-action="Details" asp-route-productmodelid="@Model!.Model!.ProductModelID" class="btn btn-default" role="button" title="@localizor.Get("Details")">
-                            <i class="fa fa-briefcase"></i>
-                        </a>
-                    }
-                    @if (Model!.UIItemFeatures.PrimayDetailsViewContainer == CrudViewContainers.Dialog)
-                    {
-                        <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#crudActionDialog" title="@localizor.Get("Details")"
-                            data-nt-action="@HttpMethods.Get"
-                            data-nt-container="@CrudViewContainers.Dialog.ToString()"
-                            data-nt-template="@ViewItemTemplateNames.Details.ToString()">
-                            <i class="fa fa-briefcase"></i>
-                        </button>
-                    }
-                    @if (Model!.UIItemFeatures.PrimayEditViewContainer == CrudViewContainers.StandaloneView)
-                    {
-                        <a asp-area="" asp-controller="ProductModel" asp-action="Edit" asp-route-productmodelid="@Model!.Model!.ProductModelID" class="btn btn-default" role="button" title="@localizor.Get("Edit")">
-                            <i class="fa fa-edit"></i>
-                        </a>
-                    }
-                    @if (Model!.UIItemFeatures.PrimayEditViewContainer == CrudViewContainers.Dialog)
-                    {
-                        <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#crudActionDialog" title="@localizor.Get("Edit")"
-                            data-nt-action="@HttpMethods.Put"
-                            data-nt-container="@CrudViewContainers.Dialog.ToString()"
-                            data-nt-template="@ViewItemTemplateNames.Edit.ToString()">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                    }
                     @if (Model!.UIItemFeatures.PrimayEditViewContainer == CrudViewContainers.Inline)
                     {
                         <button type="button" class="btn btn-default btn-nt-inline-editing" title="@localizor.Get("Edit")"
@@ -60,30 +18,6 @@
                             data-nt-container="@CrudViewContainers.Inline.ToString()"
                             data-nt-template="@ViewItemTemplateNames.Edit.ToString()">
                             <i class="fa fa-edit"></i>
-                        </button>
-                    }
-                    @if (Model!.UIItemFeatures.PrimayDeleteViewContainer == CrudViewContainers.StandaloneView)
-                    {
-                        <a asp-area="" asp-controller="ProductModel" asp-action="Delete" asp-route-productmodelid="@Model!.Model!.ProductModelID" class="btn btn-default" role="button" title="@localizor.Get("Delete")">
-                            <i class="fa fa-trash"></i>
-                        </a>
-                    }
-                    @if (Model!.UIItemFeatures.PrimayDeleteViewContainer == CrudViewContainers.Dialog)
-                    {
-                        <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#crudActionDialog" title="@localizor.Get("Delete")"
-                            data-nt-action="@HttpMethods.Delete"
-                            data-nt-container="@CrudViewContainers.Dialog.ToString()"
-                            data-nt-template="@ViewItemTemplateNames.Delete.ToString()">
-                            <i class="fa fa-trash"></i>
-                        </button>
-                    }
-                    @if (Model!.UIItemFeatures.PrimayDeleteViewContainer == @CrudViewContainers.Inline)
-                    {
-                        <button type="button" class="btn btn-default btn-nt-inline-editing" title="@localizor.Get("Delete")"
-                            data-nt-action="@HttpMethods.Delete"
-                            data-nt-container="@CrudViewContainers.Inline.ToString()"
-                            data-nt-template="@ViewItemTemplateNames.Delete.ToString()">
-                            <i class="fa fa-trash"></i>
                         </button>
                     }
                 </div>

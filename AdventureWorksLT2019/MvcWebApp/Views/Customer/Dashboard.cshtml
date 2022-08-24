@@ -91,8 +91,7 @@
              data-nt-bs-modalsize="Large"
              data-nt-loaditem-url="@Url.Action("AjaxLoadItem", "Customer")"
              data-nt-createitem-url="@Url.Action("AjaxCreate", "Customer")"
-             data-nt-updateitem-url="@Url.Action("AjaxEdit", "Customer")"
-             data-nt-deleteitem-url="@Url.Action("AjaxDelete", "Customer")">
+             data-nt-updateitem-url="@Url.Action("AjaxEdit", "Customer")">
             <div class="nt-listitem" data-nt-route-id="@routeId">
                 @await Html.PartialAsync("~/Views/Customer/_TileDetailsItem.cshtml", masterVM)
             </div>
