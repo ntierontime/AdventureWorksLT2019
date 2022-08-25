@@ -45,16 +45,18 @@ namespace AdventureWorksLT2019.WebApiControllers
         }
 
         // [Authorize]
+        [Route("{SalesOrderID}")]
         [HttpPut]
-        public async Task<ActionResult<SalesOrderHeaderDataModel.DefaultView>> Put(SalesOrderHeaderIdentifier id, SalesOrderHeaderDataModel input)
+        public async Task<ActionResult<SalesOrderHeaderDataModel.DefaultView>> Put([FromRoute]SalesOrderHeaderIdentifier id, [FromBody]SalesOrderHeaderDataModel input)
         {
             var serviceResponse = await _thisService.Update(id, input);
             return ReturnResultOnlyActionResult(serviceResponse);
         }
 
         // [Authorize]
+        [Route("{SalesOrderID}")]
         [HttpGet]
-        public async Task<ActionResult<SalesOrderHeaderDataModel.DefaultView>> Get(SalesOrderHeaderIdentifier id)
+        public async Task<ActionResult<SalesOrderHeaderDataModel.DefaultView>> Get([FromRoute]SalesOrderHeaderIdentifier id)
         {
             var serviceResponse = await _thisService.Get(id);
             return ReturnResultOnlyActionResult(serviceResponse);

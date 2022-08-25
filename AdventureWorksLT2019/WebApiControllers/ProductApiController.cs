@@ -37,6 +37,7 @@ namespace AdventureWorksLT2019.WebApiControllers
         }
 
         // [Authorize]
+        [Route("{ProductID}")]
         [HttpGet]
         public async Task<ActionResult<ProductCompositeModel>> GetCompositeModel(ProductIdentifier id)
         {
@@ -45,16 +46,18 @@ namespace AdventureWorksLT2019.WebApiControllers
         }
 
         // [Authorize]
+        [Route("{ProductID}")]
         [HttpPut]
-        public async Task<ActionResult<ProductDataModel.DefaultView>> Put(ProductIdentifier id, ProductDataModel input)
+        public async Task<ActionResult<ProductDataModel.DefaultView>> Put([FromRoute]ProductIdentifier id, [FromBody]ProductDataModel input)
         {
             var serviceResponse = await _thisService.Update(id, input);
             return ReturnResultOnlyActionResult(serviceResponse);
         }
 
         // [Authorize]
+        [Route("{ProductID}")]
         [HttpGet]
-        public async Task<ActionResult<ProductDataModel.DefaultView>> Get(ProductIdentifier id)
+        public async Task<ActionResult<ProductDataModel.DefaultView>> Get([FromRoute]ProductIdentifier id)
         {
             var serviceResponse = await _thisService.Get(id);
             return ReturnResultOnlyActionResult(serviceResponse);

@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using System.Text.Json.Serialization;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using Framework.Models;
+using AdventureWorksLT2019.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -102,18 +104,109 @@ app.Run();
 
 static string GetSwaggerCustomizedSchemaId(Type x)
 {
-    if (x == typeof(Framework.Models.PagedResponse<AdventureWorksLT2019.Models.CustomerDataModel[]>))
-    {
-        return "AdventureWorksLT2019.Models.CustomerPagedResponse";
-    }
-    if (x == typeof(Framework.Models.BatchActionViewModel<AdventureWorksLT2019.Models.CustomerIdentifier, AdventureWorksLT2019.Models.CustomerDataModel>))
-    {
-        return "AdventureWorksLT2019.Models.CustomerBatchActionViewModel";
-    }
-    if (x == typeof(AdventureWorksLT2019.Models.CustomerAddressDataModel.DefaultView))
-    {
-        return "AdventureWorksLT2019.Models.CustomerAddressDataModelDefaultView";
-    }
+        // 1. Customized DefaultView SchemaIds
+
+        if (x == typeof(CustomerAddressDataModel.DefaultView))
+        {
+            return "AdventureWorksLT2019.Models.CustomerAddressDataModelDefaultView";
+        }
+
+        if (x == typeof(ProductDataModel.DefaultView))
+        {
+            return "AdventureWorksLT2019.Models.ProductDataModelDefaultView";
+        }
+
+        if (x == typeof(ProductCategoryDataModel.DefaultView))
+        {
+            return "AdventureWorksLT2019.Models.ProductCategoryDataModelDefaultView";
+        }
+
+        if (x == typeof(ProductModelProductDescriptionDataModel.DefaultView))
+        {
+            return "AdventureWorksLT2019.Models.ProductModelProductDescriptionDataModelDefaultView";
+        }
+
+        if (x == typeof(SalesOrderDetailDataModel.DefaultView))
+        {
+            return "AdventureWorksLT2019.Models.SalesOrderDetailDataModelDefaultView";
+        }
+
+        if (x == typeof(SalesOrderHeaderDataModel.DefaultView))
+        {
+            return "AdventureWorksLT2019.Models.SalesOrderHeaderDataModelDefaultView";
+        }
+        // 2. Customized PagedResponse SchemaIds
+
+        if (x == typeof(PagedResponse<BuildVersionDataModel[]>))
+        {
+            return "AdventureWorksLT2019.Models.BuildVersionPagedResponse";
+        }
+
+        if (x == typeof(PagedResponse<ErrorLogDataModel[]>))
+        {
+            return "AdventureWorksLT2019.Models.ErrorLogPagedResponse";
+        }
+
+        if (x == typeof(PagedResponse<AddressDataModel[]>))
+        {
+            return "AdventureWorksLT2019.Models.AddressPagedResponse";
+        }
+
+        if (x == typeof(PagedResponse<CustomerDataModel[]>))
+        {
+            return "AdventureWorksLT2019.Models.CustomerPagedResponse";
+        }
+
+        if (x == typeof(PagedResponse<CustomerAddressDataModel.DefaultView[]>))
+        {
+            return "AdventureWorksLT2019.Models.CustomerAddressPagedResponse";
+        }
+
+        if (x == typeof(PagedResponse<ProductDataModel.DefaultView[]>))
+        {
+            return "AdventureWorksLT2019.Models.ProductPagedResponse";
+        }
+
+        if (x == typeof(PagedResponse<ProductCategoryDataModel.DefaultView[]>))
+        {
+            return "AdventureWorksLT2019.Models.ProductCategoryPagedResponse";
+        }
+
+        if (x == typeof(PagedResponse<ProductDescriptionDataModel[]>))
+        {
+            return "AdventureWorksLT2019.Models.ProductDescriptionPagedResponse";
+        }
+
+        if (x == typeof(PagedResponse<ProductModelDataModel[]>))
+        {
+            return "AdventureWorksLT2019.Models.ProductModelPagedResponse";
+        }
+
+        if (x == typeof(PagedResponse<ProductModelProductDescriptionDataModel.DefaultView[]>))
+        {
+            return "AdventureWorksLT2019.Models.ProductModelProductDescriptionPagedResponse";
+        }
+
+        if (x == typeof(PagedResponse<SalesOrderDetailDataModel.DefaultView[]>))
+        {
+            return "AdventureWorksLT2019.Models.SalesOrderDetailPagedResponse";
+        }
+
+        if (x == typeof(PagedResponse<SalesOrderHeaderDataModel.DefaultView[]>))
+        {
+            return "AdventureWorksLT2019.Models.SalesOrderHeaderPagedResponse";
+        }
+        // 3. Customized BulkActionDynamicParamsRequests SchemaIds
+
+        if (x == typeof(BatchActionViewModel<CustomerIdentifier, CustomerDataModel>))
+        {
+            return "AdventureWorksLT2019.Models.CustomerBulkActionDynamicParamsRequest";
+        }
+
+        if (x == typeof(BatchActionViewModel<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView>))
+        {
+            return "AdventureWorksLT2019.Models.SalesOrderHeaderBulkActionDynamicParamsRequest";
+        }
     return x?.FullName;
 }
 

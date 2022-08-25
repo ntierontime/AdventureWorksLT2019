@@ -37,16 +37,18 @@ namespace AdventureWorksLT2019.WebApiControllers
         }
 
         // [Authorize]
+        [Route("{ErrorLogID}")]
         [HttpPut]
-        public async Task<ActionResult<ErrorLogDataModel>> Put(ErrorLogIdentifier id, ErrorLogDataModel input)
+        public async Task<ActionResult<ErrorLogDataModel>> Put([FromRoute]ErrorLogIdentifier id, [FromBody]ErrorLogDataModel input)
         {
             var serviceResponse = await _thisService.Update(id, input);
             return ReturnResultOnlyActionResult(serviceResponse);
         }
 
         // [Authorize]
+        [Route("{ErrorLogID}")]
         [HttpGet]
-        public async Task<ActionResult<ErrorLogDataModel>> Get(ErrorLogIdentifier id)
+        public async Task<ActionResult<ErrorLogDataModel>> Get([FromRoute]ErrorLogIdentifier id)
         {
             var serviceResponse = await _thisService.Get(id);
             return ReturnResultOnlyActionResult(serviceResponse);
