@@ -2,6 +2,8 @@ using AdventureWorksLT2019.RepositoryContracts;
 using AdventureWorksLT2019.EFCoreRepositories;
 using AdventureWorksLT2019.ServiceContracts;
 using AdventureWorksLT2019.Services;
+using AdventureWorksLT2019.Models;
+using Framework.Models;
 using AdventureWorksLT2019.EFCoreContext;
 using System.Configuration;
 using System.Globalization;
@@ -11,8 +13,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using System.Text.Json.Serialization;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using Framework.Models;
-using AdventureWorksLT2019.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

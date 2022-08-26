@@ -19,23 +19,25 @@ else
 {
     <input class="hidden-modal-title" value="@Model!.Model!.AddressType" type="hidden" />
     <div class="form-group">
-        <label asp-for="Model!.CustomerID" class="control-label" for="@Model!.HtmlId(nameof(CustomerAddressDataModel.DefaultView.CustomerID))"></label>
+        <label asp-for="Model!.CustomerID" class="control-label" for="@Model!.HtmlId(nameof(CustomerAddressDataModel.DefaultView.CustomerID))"></label>    <div class="form-control" readonly>
         <a asp-area="" asp-controller="Customer" asp-action="Dashboard" asp-route-customerid="@Model!.Model!.CustomerID">@Model!.Model!.Customer_Name</a>
     </div>
+    </div>
     <div class="form-group">
-        <label asp-for="Model!.AddressID" class="control-label" for="@Model!.HtmlId(nameof(CustomerAddressDataModel.DefaultView.AddressID))"></label>
+        <label asp-for="Model!.AddressID" class="control-label" for="@Model!.HtmlId(nameof(CustomerAddressDataModel.DefaultView.AddressID))"></label>    <div class="form-control" readonly>
         <a asp-area="" asp-controller="Address" asp-action="Dashboard" asp-route-addressid="@Model!.Model!.AddressID">@Model!.Model!.Address_Name</a>
+    </div>
     </div>
     <div class="form-group">
         <label asp-for="Model!.AddressType" class="control-label" for="@Model!.HtmlId(nameof(CustomerAddressDataModel.DefaultView.AddressType))"></label>
-        @Html.DisplayFor(m=>m.Model!.AddressType)
+        <input asp-for="Model!.AddressType" readonly class="form-control " id="@Model!.HtmlId(nameof(CustomerAddressDataModel.DefaultView.AddressType))" name="@Model!.HtmlName(nameof(CustomerAddressDataModel.DefaultView.AddressType))" data-nt-value="@Model!.Model!.AddressType"/>
     </div>
     <div class="form-group">
         <label asp-for="Model!.rowguid" class="control-label" for="@Model!.HtmlId(nameof(CustomerAddressDataModel.DefaultView.rowguid))"></label>
-        @Html.DisplayFor(m=>m.Model!.rowguid)
+        <input asp-for="Model!.rowguid" readonly class="form-control " id="@Model!.HtmlId(nameof(CustomerAddressDataModel.DefaultView.rowguid))" name="@Model!.HtmlName(nameof(CustomerAddressDataModel.DefaultView.rowguid))" data-nt-value="@Model!.Model!.rowguid"/>
     </div>
     <div class="form-group">
         <label asp-for="Model!.ModifiedDate" class="control-label" for="@Model!.HtmlId(nameof(CustomerAddressDataModel.DefaultView.ModifiedDate))"></label>
-        @Html.DisplayFor(m=>m.Model!.ModifiedDate)
+        <input asp-for="Model!.ModifiedDate" readonly class="form-control " id="@Model!.HtmlId(nameof(CustomerAddressDataModel.DefaultView.ModifiedDate))" name="@Model!.HtmlName(nameof(CustomerAddressDataModel.DefaultView.ModifiedDate))" data-nt-value="@Model!.Model!.ModifiedDate"/>
     </div>
 }

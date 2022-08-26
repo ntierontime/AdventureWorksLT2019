@@ -19,39 +19,41 @@ else
 {
     <input class="hidden-modal-title" value="@Model!.Model!.Product_Name" type="hidden" />
     <div class="form-group">
-        <label asp-for="Model!.SalesOrderID" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.SalesOrderID))"></label>
+        <label asp-for="Model!.SalesOrderID" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.SalesOrderID))"></label>    <div class="form-control" readonly>
         <a asp-area="" asp-controller="SalesOrderHeader" asp-action="Dashboard" asp-route-salesorderid="@Model!.Model!.SalesOrderID">@Model!.Model!.SalesOrderHeader_Name</a>
+    </div>
     </div>
     <div class="form-group">
         <label asp-for="Model!.SalesOrderDetailID" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.SalesOrderDetailID))"></label>
-        @Html.DisplayFor(m=>m.Model!.SalesOrderDetailID)
+        <input asp-for="Model!.SalesOrderDetailID" readonly class="form-control " id="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.SalesOrderDetailID))" name="@Model!.HtmlName(nameof(SalesOrderDetailDataModel.DefaultView.SalesOrderDetailID))" data-nt-value="@Model!.Model!.SalesOrderDetailID"/>
     </div>
     <div class="form-group">
         <label asp-for="Model!.OrderQty" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.OrderQty))"></label>
-        @Html.DisplayFor(m=>m.Model!.OrderQty)
+        <input asp-for="Model!.OrderQty" readonly class="form-control " id="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.OrderQty))" name="@Model!.HtmlName(nameof(SalesOrderDetailDataModel.DefaultView.OrderQty))" data-nt-value="@Model!.Model!.OrderQty"/>
     </div>
     <div class="form-group">
-        <label asp-for="Model!.ProductID" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.ProductID))"></label>
+        <label asp-for="Model!.ProductID" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.ProductID))"></label>    <div class="form-control" readonly>
         <a asp-area="" asp-controller="Product" asp-action="Dashboard" asp-route-productid="@Model!.Model!.ProductID">@Model!.Model!.Product_Name</a>
+    </div>
     </div>
     <div class="form-group">
         <label asp-for="Model!.UnitPrice" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.UnitPrice))"></label>
-        @Html.DisplayFor(m=>m.Model!.UnitPrice)
+        <input asp-for="Model!.UnitPrice" readonly class="form-control " id="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.UnitPrice))" name="@Model!.HtmlName(nameof(SalesOrderDetailDataModel.DefaultView.UnitPrice))" data-nt-value="@Model!.Model!.UnitPrice"/>
     </div>
     <div class="form-group">
         <label asp-for="Model!.UnitPriceDiscount" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.UnitPriceDiscount))"></label>
-        @Html.DisplayFor(m=>m.Model!.UnitPriceDiscount)
+        <input asp-for="Model!.UnitPriceDiscount" readonly class="form-control " id="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.UnitPriceDiscount))" name="@Model!.HtmlName(nameof(SalesOrderDetailDataModel.DefaultView.UnitPriceDiscount))" data-nt-value="@Model!.Model!.UnitPriceDiscount"/>
     </div>
     <div class="form-group">
         <label asp-for="Model!.LineTotal" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.LineTotal))"></label>
-        @Html.DisplayFor(m=>m.Model!.LineTotal)
+        <input asp-for="Model!.LineTotal" readonly class="form-control " id="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.LineTotal))" name="@Model!.HtmlName(nameof(SalesOrderDetailDataModel.DefaultView.LineTotal))" data-nt-value="@Model!.Model!.LineTotal"/>
     </div>
     <div class="form-group">
         <label asp-for="Model!.rowguid" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.rowguid))"></label>
-        @Html.DisplayFor(m=>m.Model!.rowguid)
+        <input asp-for="Model!.rowguid" readonly class="form-control " id="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.rowguid))" name="@Model!.HtmlName(nameof(SalesOrderDetailDataModel.DefaultView.rowguid))" data-nt-value="@Model!.Model!.rowguid"/>
     </div>
     <div class="form-group">
         <label asp-for="Model!.ModifiedDate" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.ModifiedDate))"></label>
-        @Html.DisplayFor(m=>m.Model!.ModifiedDate)
+        <input asp-for="Model!.ModifiedDate" readonly class="form-control " id="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.ModifiedDate))" name="@Model!.HtmlName(nameof(SalesOrderDetailDataModel.DefaultView.ModifiedDate))" data-nt-value="@Model!.Model!.ModifiedDate"/>
     </div>
 }

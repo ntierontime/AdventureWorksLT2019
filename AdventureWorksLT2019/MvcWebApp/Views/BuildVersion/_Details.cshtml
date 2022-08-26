@@ -20,18 +20,18 @@ else
     <input class="hidden-modal-title" value="@Model!.Model!.Database_Version" type="hidden" />
     <div class="form-group">
         <label asp-for="Model!.SystemInformationID" class="control-label" for="@Model!.HtmlId(nameof(BuildVersionDataModel.SystemInformationID))"></label>
-        @Html.DisplayFor(m=>m.Model!.SystemInformationID)
+        <input asp-for="Model!.SystemInformationID" readonly class="form-control " id="@Model!.HtmlId(nameof(BuildVersionDataModel.SystemInformationID))" name="@Model!.HtmlName(nameof(BuildVersionDataModel.SystemInformationID))" data-nt-value="@Model!.Model!.SystemInformationID"/>
     </div>
     <div class="form-group">
         <label asp-for="Model!.Database_Version" class="control-label" for="@Model!.HtmlId(nameof(BuildVersionDataModel.Database_Version))"></label>
-        @Html.DisplayFor(m=>m.Model!.Database_Version)
+        <input asp-for="Model!.Database_Version" readonly class="form-control " id="@Model!.HtmlId(nameof(BuildVersionDataModel.Database_Version))" name="@Model!.HtmlName(nameof(BuildVersionDataModel.Database_Version))" data-nt-value="@Model!.Model!.Database_Version"/>
     </div>
     <div class="form-group">
         <label asp-for="Model!.VersionDate" class="control-label" for="@Model!.HtmlId(nameof(BuildVersionDataModel.VersionDate))"></label>
-        @Html.DisplayFor(m=>m.Model!.VersionDate)
+        <input asp-for="Model!.VersionDate" readonly class="form-control " id="@Model!.HtmlId(nameof(BuildVersionDataModel.VersionDate))" name="@Model!.HtmlName(nameof(BuildVersionDataModel.VersionDate))" data-nt-value="@Model!.Model!.VersionDate"/>
     </div>
     <div class="form-group">
         <label asp-for="Model!.ModifiedDate" class="control-label" for="@Model!.HtmlId(nameof(BuildVersionDataModel.ModifiedDate))"></label>
-        @Html.DisplayFor(m=>m.Model!.ModifiedDate)
+        <input asp-for="Model!.ModifiedDate" readonly class="form-control " id="@Model!.HtmlId(nameof(BuildVersionDataModel.ModifiedDate))" name="@Model!.HtmlName(nameof(BuildVersionDataModel.ModifiedDate))" data-nt-value="@Model!.Model!.ModifiedDate"/>
     </div>
 }

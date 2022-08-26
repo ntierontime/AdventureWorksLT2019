@@ -14,6 +14,7 @@ function attatchPageSizeChangedUsingDropDown(selector) {
         const theListWrapper = $(self).closest(".nt-list-wrapper");
         const theForm = $($(theListWrapper).data("nt-submittarget"));
         $(theForm).find(".nt-page-size").val($(self).data("nt-page-size"));
+        $(theForm).find(".nt-page-index").val(1);
         $(self).closest(".dropdown-menu").find(".nt-page-size-item .fa-check").hide();
         $(self).find(".fa-check").show();
         ajaxLoadItemsSubmit($(theForm));
@@ -26,6 +27,7 @@ function attatchOrderByChangedUsingDropDown(selector) {
         const theListWrapper = $(self).closest(".nt-list-wrapper");
         const theForm = $($(theListWrapper).data("nt-submittarget"));
         $(theForm).find(".nt-order-by").val($(self).data("nt-order-by"));
+        $(theForm).find(".nt-page-index").val(1);
         $(self).closest(".dropdown-menu").find(".nt-order-by-item .fa-check").hide();
         $(self).find(".fa-check").show();
         ajaxLoadItemsSubmit($(theForm));

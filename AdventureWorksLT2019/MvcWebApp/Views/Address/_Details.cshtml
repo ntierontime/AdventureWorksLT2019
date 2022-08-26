@@ -20,38 +20,38 @@ else
     <input class="hidden-modal-title" value="@Model!.Model!.AddressLine1" type="hidden" />
     <div class="form-group">
         <label asp-for="Model!.AddressID" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.AddressID))"></label>
-        @Html.DisplayFor(m=>m.Model!.AddressID)
+        <input asp-for="Model!.AddressID" readonly class="form-control " id="@Model!.HtmlId(nameof(AddressDataModel.AddressID))" name="@Model!.HtmlName(nameof(AddressDataModel.AddressID))" data-nt-value="@Model!.Model!.AddressID"/>
     </div>
     <div class="form-group">
         <label asp-for="Model!.AddressLine1" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.AddressLine1))"></label>
-        @Html.DisplayFor(m=>m.Model!.AddressLine1)
+        <input asp-for="Model!.AddressLine1" readonly class="form-control " id="@Model!.HtmlId(nameof(AddressDataModel.AddressLine1))" name="@Model!.HtmlName(nameof(AddressDataModel.AddressLine1))" data-nt-value="@Model!.Model!.AddressLine1"/>
     </div>
     <div class="form-group">
         <label asp-for="Model!.AddressLine2" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.AddressLine2))"></label>
-        @Html.DisplayFor(m=>m.Model!.AddressLine2)
+        <input asp-for="Model!.AddressLine2" readonly class="form-control " id="@Model!.HtmlId(nameof(AddressDataModel.AddressLine2))" name="@Model!.HtmlName(nameof(AddressDataModel.AddressLine2))" data-nt-value="@Model!.Model!.AddressLine2"/>
     </div>
     <div class="form-group">
         <label asp-for="Model!.City" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.City))"></label>
-        @Html.DisplayFor(m=>m.Model!.City)
+        <input asp-for="Model!.City" readonly class="form-control " id="@Model!.HtmlId(nameof(AddressDataModel.City))" name="@Model!.HtmlName(nameof(AddressDataModel.City))" data-nt-value="@Model!.Model!.City"/>
     </div>
     <div class="form-group">
         <label asp-for="Model!.StateProvince" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.StateProvince))"></label>
-        @Html.DisplayFor(m=>m.Model!.StateProvince)
+        <input asp-for="Model!.StateProvince" readonly class="form-control " id="@Model!.HtmlId(nameof(AddressDataModel.StateProvince))" name="@Model!.HtmlName(nameof(AddressDataModel.StateProvince))" data-nt-value="@Model!.Model!.StateProvince"/>
     </div>
     <div class="form-group">
         <label asp-for="Model!.CountryRegion" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.CountryRegion))"></label>
-        @Html.DisplayFor(m=>m.Model!.CountryRegion)
+        <input asp-for="Model!.CountryRegion" readonly class="form-control " id="@Model!.HtmlId(nameof(AddressDataModel.CountryRegion))" name="@Model!.HtmlName(nameof(AddressDataModel.CountryRegion))" data-nt-value="@Model!.Model!.CountryRegion"/>
     </div>
     <div class="form-group">
         <label asp-for="Model!.PostalCode" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.PostalCode))"></label>
-        @Html.DisplayFor(m=>m.Model!.PostalCode)
+        <input asp-for="Model!.PostalCode" readonly class="form-control " id="@Model!.HtmlId(nameof(AddressDataModel.PostalCode))" name="@Model!.HtmlName(nameof(AddressDataModel.PostalCode))" data-nt-value="@Model!.Model!.PostalCode"/>
     </div>
     <div class="form-group">
         <label asp-for="Model!.rowguid" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.rowguid))"></label>
-        @Html.DisplayFor(m=>m.Model!.rowguid)
+        <input asp-for="Model!.rowguid" readonly class="form-control " id="@Model!.HtmlId(nameof(AddressDataModel.rowguid))" name="@Model!.HtmlName(nameof(AddressDataModel.rowguid))" data-nt-value="@Model!.Model!.rowguid"/>
     </div>
     <div class="form-group">
         <label asp-for="Model!.ModifiedDate" class="control-label" for="@Model!.HtmlId(nameof(AddressDataModel.ModifiedDate))"></label>
-        @Html.DisplayFor(m=>m.Model!.ModifiedDate)
+        <input asp-for="Model!.ModifiedDate" readonly class="form-control " id="@Model!.HtmlId(nameof(AddressDataModel.ModifiedDate))" name="@Model!.HtmlName(nameof(AddressDataModel.ModifiedDate))" data-nt-value="@Model!.Model!.ModifiedDate"/>
     </div>
 }
