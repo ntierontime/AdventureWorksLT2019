@@ -29,7 +29,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
 
         public async Task<MvcItemViewModel<BuildVersionDataModel>> GetBuildVersionMvcItemViewModel(
             UIParams uiParams,
-            Response response,
+            Response<PaginationResponse> response,
             BuildVersionDataModel responseBody)
         {
             var result = await Task.FromResult(new MvcItemViewModel<BuildVersionDataModel>
@@ -37,7 +37,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Model = responseBody,
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
-                Template = uiParams.Template.HasValue ? uiParams.Template.ToString() : ViewItemTemplateNames.Details.ToString(),
+                Template = uiParams.Template ?? ViewItemTemplateNames.Details.ToString(),
                 UIItemFeatures = _viewFeaturesManager.GetBuildVersionUIItemFeatures(),
             });
 
@@ -46,7 +46,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
 
         public async Task<MvcItemViewModel<ErrorLogDataModel>> GetErrorLogMvcItemViewModel(
             UIParams uiParams,
-            Response response,
+            Response<PaginationResponse> response,
             ErrorLogDataModel responseBody)
         {
             var result = await Task.FromResult(new MvcItemViewModel<ErrorLogDataModel>
@@ -54,7 +54,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Model = responseBody,
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
-                Template = uiParams.Template.HasValue ? uiParams.Template.ToString() : ViewItemTemplateNames.Details.ToString(),
+                Template = uiParams.Template ?? ViewItemTemplateNames.Details.ToString(),
                 UIItemFeatures = _viewFeaturesManager.GetErrorLogUIItemFeatures(),
             });
 
@@ -63,7 +63,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
 
         public async Task<MvcItemViewModel<AddressDataModel>> GetAddressMvcItemViewModel(
             UIParams uiParams,
-            Response response,
+            Response<PaginationResponse> response,
             AddressDataModel responseBody)
         {
             var result = await Task.FromResult(new MvcItemViewModel<AddressDataModel>
@@ -71,7 +71,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Model = responseBody,
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
-                Template = uiParams.Template.HasValue ? uiParams.Template.ToString() : ViewItemTemplateNames.Details.ToString(),
+                Template = uiParams.Template ?? ViewItemTemplateNames.Details.ToString(),
                 UIItemFeatures = _viewFeaturesManager.GetAddressUIItemFeatures(),
             });
 
@@ -80,7 +80,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
 
         public async Task<MvcItemViewModel<CustomerDataModel>> GetCustomerMvcItemViewModel(
             UIParams uiParams,
-            Response response,
+            Response<PaginationResponse> response,
             CustomerDataModel responseBody)
         {
             var result = await Task.FromResult(new MvcItemViewModel<CustomerDataModel>
@@ -88,8 +88,8 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Model = responseBody,
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
-                Template = uiParams.Template.HasValue ? uiParams.Template.ToString() : ViewItemTemplateNames.Details.ToString(),
-                UIItemFeatures = _viewFeaturesManager.GetCustomerUIItemFeatures(),
+                Template = uiParams.Template ?? ViewItemTemplateNames.Details.ToString(),
+                UIItemFeatures = _viewFeaturesManager.GetCustomerUIItemFeatures(uiParams.PagedViewOption ?? PagedViewOptions.Table),
             });
 
             return result;
@@ -97,7 +97,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
 
         public async Task<MvcItemViewModel<CustomerAddressDataModel.DefaultView>> GetCustomerAddressMvcItemViewModel(
             UIParams uiParams,
-            Response response,
+            Response<PaginationResponse> response,
             CustomerAddressDataModel.DefaultView responseBody,
             bool loadTopLevelDropDownListsFromDatabase,
             Dictionary<string, List<NameValuePair>>? topLevelDropDownListsFromDatabase)
@@ -107,7 +107,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Model = responseBody,
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
-                Template = uiParams.Template.HasValue ? uiParams.Template.ToString() : ViewItemTemplateNames.Details.ToString(),
+                Template = uiParams.Template ?? ViewItemTemplateNames.Details.ToString(),
                 UIItemFeatures = _viewFeaturesManager.GetCustomerAddressUIItemFeatures(),
             });
 
@@ -121,7 +121,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
 
         public async Task<MvcItemViewModel<ProductDataModel.DefaultView>> GetProductMvcItemViewModel(
             UIParams uiParams,
-            Response response,
+            Response<PaginationResponse> response,
             ProductDataModel.DefaultView responseBody,
             bool loadTopLevelDropDownListsFromDatabase,
             Dictionary<string, List<NameValuePair>>? topLevelDropDownListsFromDatabase)
@@ -131,7 +131,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Model = responseBody,
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
-                Template = uiParams.Template.HasValue ? uiParams.Template.ToString() : ViewItemTemplateNames.Details.ToString(),
+                Template = uiParams.Template ?? ViewItemTemplateNames.Details.ToString(),
                 UIItemFeatures = _viewFeaturesManager.GetProductUIItemFeatures(),
             });
 
@@ -145,7 +145,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
 
         public async Task<MvcItemViewModel<ProductCategoryDataModel.DefaultView>> GetProductCategoryMvcItemViewModel(
             UIParams uiParams,
-            Response response,
+            Response<PaginationResponse> response,
             ProductCategoryDataModel.DefaultView responseBody,
             bool loadTopLevelDropDownListsFromDatabase,
             Dictionary<string, List<NameValuePair>>? topLevelDropDownListsFromDatabase)
@@ -155,7 +155,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Model = responseBody,
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
-                Template = uiParams.Template.HasValue ? uiParams.Template.ToString() : ViewItemTemplateNames.Details.ToString(),
+                Template = uiParams.Template ?? ViewItemTemplateNames.Details.ToString(),
                 UIItemFeatures = _viewFeaturesManager.GetProductCategoryUIItemFeatures(),
             });
 
@@ -169,7 +169,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
 
         public async Task<MvcItemViewModel<ProductDescriptionDataModel>> GetProductDescriptionMvcItemViewModel(
             UIParams uiParams,
-            Response response,
+            Response<PaginationResponse> response,
             ProductDescriptionDataModel responseBody)
         {
             var result = await Task.FromResult(new MvcItemViewModel<ProductDescriptionDataModel>
@@ -177,7 +177,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Model = responseBody,
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
-                Template = uiParams.Template.HasValue ? uiParams.Template.ToString() : ViewItemTemplateNames.Details.ToString(),
+                Template = uiParams.Template ?? ViewItemTemplateNames.Details.ToString(),
                 UIItemFeatures = _viewFeaturesManager.GetProductDescriptionUIItemFeatures(),
             });
 
@@ -186,7 +186,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
 
         public async Task<MvcItemViewModel<ProductModelDataModel>> GetProductModelMvcItemViewModel(
             UIParams uiParams,
-            Response response,
+            Response<PaginationResponse> response,
             ProductModelDataModel responseBody)
         {
             var result = await Task.FromResult(new MvcItemViewModel<ProductModelDataModel>
@@ -194,7 +194,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Model = responseBody,
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
-                Template = uiParams.Template.HasValue ? uiParams.Template.ToString() : ViewItemTemplateNames.Details.ToString(),
+                Template = uiParams.Template ?? ViewItemTemplateNames.Details.ToString(),
                 UIItemFeatures = _viewFeaturesManager.GetProductModelUIItemFeatures(),
             });
 
@@ -203,7 +203,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
 
         public async Task<MvcItemViewModel<ProductModelProductDescriptionDataModel.DefaultView>> GetProductModelProductDescriptionMvcItemViewModel(
             UIParams uiParams,
-            Response response,
+            Response<PaginationResponse> response,
             ProductModelProductDescriptionDataModel.DefaultView responseBody,
             bool loadTopLevelDropDownListsFromDatabase,
             Dictionary<string, List<NameValuePair>>? topLevelDropDownListsFromDatabase)
@@ -213,7 +213,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Model = responseBody,
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
-                Template = uiParams.Template.HasValue ? uiParams.Template.ToString() : ViewItemTemplateNames.Details.ToString(),
+                Template = uiParams.Template ?? ViewItemTemplateNames.Details.ToString(),
                 UIItemFeatures = _viewFeaturesManager.GetProductModelProductDescriptionUIItemFeatures(),
             });
 
@@ -227,7 +227,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
 
         public async Task<MvcItemViewModel<SalesOrderDetailDataModel.DefaultView>> GetSalesOrderDetailMvcItemViewModel(
             UIParams uiParams,
-            Response response,
+            Response<PaginationResponse> response,
             SalesOrderDetailDataModel.DefaultView responseBody,
             bool loadTopLevelDropDownListsFromDatabase,
             Dictionary<string, List<NameValuePair>>? topLevelDropDownListsFromDatabase)
@@ -237,7 +237,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Model = responseBody,
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
-                Template = uiParams.Template.HasValue ? uiParams.Template.ToString() : ViewItemTemplateNames.Details.ToString(),
+                Template = uiParams.Template ?? ViewItemTemplateNames.Details.ToString(),
                 UIItemFeatures = _viewFeaturesManager.GetSalesOrderDetailUIItemFeatures(),
             });
 
@@ -251,7 +251,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
 
         public async Task<MvcItemViewModel<SalesOrderHeaderDataModel.DefaultView>> GetSalesOrderHeaderMvcItemViewModel(
             UIParams uiParams,
-            Response response,
+            Response<PaginationResponse> response,
             SalesOrderHeaderDataModel.DefaultView responseBody,
             bool loadTopLevelDropDownListsFromDatabase,
             Dictionary<string, List<NameValuePair>>? topLevelDropDownListsFromDatabase)
@@ -261,8 +261,8 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Model = responseBody,
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
-                Template = uiParams.Template.HasValue ? uiParams.Template.ToString() : ViewItemTemplateNames.Details.ToString(),
-                UIItemFeatures = _viewFeaturesManager.GetSalesOrderHeaderUIItemFeatures(),
+                Template = uiParams.Template ?? ViewItemTemplateNames.Details.ToString(),
+                UIItemFeatures = _viewFeaturesManager.GetSalesOrderHeaderUIItemFeatures(uiParams.PagedViewOption ?? PagedViewOptions.Table),
             });
 
             if(loadTopLevelDropDownListsFromDatabase && (topLevelDropDownListsFromDatabase == null || !topLevelDropDownListsFromDatabase.Any()))

@@ -17,7 +17,7 @@
 }
 else
 {
-    <input class="hidden-modal-title" value="@Model!.Model!.Product_Name" type="hidden" />
+    <input class="nt-hidden-modal-title" value="@Model!.Model!.Product_Name" type="hidden" />
     <div class="form-group">
         <label asp-for="Model!.SalesOrderID" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.SalesOrderID))"></label>    <div class="form-control" readonly>
         <a asp-area="" asp-controller="SalesOrderHeader" asp-action="Dashboard" asp-route-salesorderid="@Model!.Model!.SalesOrderID">@Model!.Model!.SalesOrderHeader_Name</a>

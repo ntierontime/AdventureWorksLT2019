@@ -75,7 +75,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
                 Result = result,
             };
 
-            if(uiParams.Template == ViewItemTemplateNames.Create || uiParams.Template == ViewItemTemplateNames.Edit)
+            if(uiParams.Template == ViewItemTemplateNames.Create.ToString() || uiParams.Template == ViewItemTemplateNames.Edit.ToString())
             {
             }
 
@@ -98,19 +98,37 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
         // GET: Customer/Dashboard/{CustomerID}
         public async Task<IActionResult> Dashboard([FromRoute]CustomerIdentifier id)
         {
-            var result = await _thisService.GetCompositeModel(id);
+            var listItemRequests = new Dictionary<CustomerCompositeModel.__DataOptions__, CompositeListItemRequest>();
+
+            listItemRequests.Add(CustomerCompositeModel.__DataOptions__.CustomerAddresses_Via_CustomerID,
+                new CompositeListItemRequest()
+                {
+                    PageSize = 10,
+                    OrderBys = _orderBysListHelper.GetDefaultCustomerAddressOrderBys(),
+                    PaginationOption = PaginationOptions.PageIndexesAndAllButtons,
+                });
+
+            listItemRequests.Add(CustomerCompositeModel.__DataOptions__.SalesOrderHeaders_Via_CustomerID,
+                new CompositeListItemRequest()
+                {
+                    PageSize = 10,
+                    OrderBys = _orderBysListHelper.GetDefaultSalesOrderHeaderOrderBys(),
+                    PaginationOption = PaginationOptions.PageIndexesAndAllButtons,
+                });
+
+            var result = await _thisService.GetCompositeModel(id, listItemRequests);
 
             result.UIParamsList.Add(
                 CustomerCompositeModel.__DataOptions__.__Master__,
-                new UIParams { PagedViewOption = PagedViewOptions.Card, Template = ViewItemTemplateNames.Details });
+                new UIParams { PagedViewOption = PagedViewOptions.Card, Template = ViewItemTemplateNames.Details.ToString() });
 
             result.UIParamsList.Add(
                 CustomerCompositeModel.__DataOptions__.CustomerAddresses_Via_CustomerID,
-                new UIParams { PagedViewOption = PagedViewOptions.Table, Template = ViewItemTemplateNames.Details });
+                new UIParams { PagedViewOption = PagedViewOptions.Table, Template = ViewItemTemplateNames.Details.ToString() });
 
             result.UIParamsList.Add(
                 CustomerCompositeModel.__DataOptions__.SalesOrderHeaders_Via_CustomerID,
-                new UIParams { PagedViewOption = PagedViewOptions.Table, Template = ViewItemTemplateNames.Details });
+                new UIParams { PagedViewOption = PagedViewOptions.Table, Template = ViewItemTemplateNames.Details.ToString() });
 
             return View(result);
         }
@@ -139,7 +157,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
 
             var itemViewModel = new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<CustomerDataModel>
             {
-                UIItemFeatures = _viewFeatureManager.GetCustomerUIItemFeatures(),
+                UIItemFeatures = _viewFeatureManager.GetCustomerUIItemFeatures(view),
                 Status = System.Net.HttpStatusCode.OK,
                 Template = template,
                 IsCurrentItem = true,
@@ -203,6 +221,8 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
                                 PartialViews = new List<Tuple<string, object>> {
                                 new Tuple<string, object>("~/Views/Customer/_TableItemTr.cshtml",
                                     new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<CustomerDataModel>{
+                                        UIItemFeatures = _viewFeatureManager.GetCustomerUIItemFeatures(view),
+                                        Status = System.Net.HttpStatusCode.OK,
                                         Template = ViewItemTemplateNames.Details.ToString(),
                                         IsCurrentItem = true,
                                         Model = result.ResponseBody!
@@ -221,6 +241,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
                                     new Tuple<string, object>("~/Views/Customer/_Tile.cshtml",
                                         new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<CustomerDataModel>
                                         {
+                                            UIItemFeatures = _viewFeatureManager.GetCustomerUIItemFeatures(view),
                                             Status = System.Net.HttpStatusCode.OK,
                                             Template = ViewItemTemplateNames.Details.ToString(),
                                             IsCurrentItem = true,
@@ -273,6 +294,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
                                 new Tuple<string, object>("~/Views/Customer/_TableDetailsItem.cshtml",
                                     new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<CustomerDataModel>
                                     {
+                                        UIItemFeatures = _viewFeatureManager.GetCustomerUIItemFeatures(view),
                                         Status = System.Net.HttpStatusCode.OK,
                                         Template = ViewItemTemplateNames.Details.ToString(),
                                         IsCurrentItem = true,
@@ -292,6 +314,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
                                 new Tuple<string, object>("~/Views/Customer/_TileDetailsItem.cshtml",
                                     new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<CustomerDataModel>
                                     {
+                                        UIItemFeatures = _viewFeatureManager.GetCustomerUIItemFeatures(view),
                                         Status = System.Net.HttpStatusCode.OK,
                                         Template = ViewItemTemplateNames.Details.ToString(),
                                         IsCurrentItem = true,

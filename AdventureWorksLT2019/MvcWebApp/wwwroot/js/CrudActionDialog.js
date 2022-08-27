@@ -54,13 +54,6 @@
  * 2.3. in ajax response html
  * .nt-hidden-modal-title, server side render modal title to a hidden field, will set to .modal-title 
  */
-
-$(document).ready(function () {
-    attachCrudActionDialog();
-    attachCrudActionDialogActionEventHandler();
-    attachCrudActionDialogPaginationEventHandler();
-});
-
 function attachCrudActionDialog() {
     let crudActionDialog = document.getElementById('crudActionDialog');
 
@@ -174,7 +167,7 @@ function attachCrudActionDialogActionEventHandler() {
 }
 
 function closeCrudActionDialog() {
-    //if (view == "List") {
+    //if (view == "Table") {
     //    $(".nt-listitem").removeClass("nt-current border-info border-5");
     //}
     //else { // Tiles
@@ -222,7 +215,9 @@ function ajaxLoadItemWhenCrudActionDialog(loadItemUrl, view, container, template
             let modalBody = $("#crudActionDialog .nt-modal-body");
             if (action == "PUT" || action == "POST") // wrap with <form>..</form> Edit or Create
             {
-                modalBody.html("<form>" + response + "</form>");
+                const toAppend = "<form>" + response + "</form>";
+                modalBody.html(toAppend);
+                attachFormDataChanged(modalBody);
             }
             else { // DELETE, <form>...</form> wrapped around .nt-btn-action-delete
                 modalBody.html(response);
@@ -263,7 +258,7 @@ function ajaxPostbackWhenCrudActionDialog(postbackurl, formData, self, view, loa
             if (action === "PUT") { // EDIT 
                 if (actionSuccess) {
                     // Mark as .nt-updated .border-success .border-4. will be deleted when Dialog/Modal closed
-                    if (view == "List") {
+                    if (view == "Table") {
                         $(".nt-listitem.nt-current").removeClass("border-info border-5");
                         $(".nt-listitem.nt-current").addClass("nt-updated border-success border-4");
                     }
@@ -284,7 +279,7 @@ function ajaxPostbackWhenCrudActionDialog(postbackurl, formData, self, view, loa
             else if (action === "POST") { // Create
                 // .nt-created .border-warning .border-4 added in the response
                 if (splitResponse.length > 1) {
-                    if (view === "List") { // html table
+                    if (view === "Table") { // html table
                         let theBody = $($("#crudActionDialog").data("nt-list-wrapper-id") + " tbody");
                         theBody.prepend(splitResponse[1]);
                     }
@@ -303,7 +298,7 @@ function ajaxPostbackWhenCrudActionDialog(postbackurl, formData, self, view, loa
             else if (action === "DELETE") {
                 if (actionSuccess) {
                     // Mark as .nt-deleted .border-danger .border-5. will be deleted when Dialog/Modal closed
-                    if (view == "List") {
+                    if (view == "Table") {
                         $(".nt-listitem.nt-current").addClass("nt-deleted border-danger border-3");
                     }
                     else { // Tiles
@@ -333,7 +328,7 @@ function initializeCrudActionDialog(button, action, view, container, template, l
     $(".nt-list-wrapper").removeClass("nt-current");
     if (action != "POST") { // set .nt-current when not Create
         $(button).closest(".nt-listitem").addClass("nt-current");
-        if (view == "List") {
+        if (view == "Table") {
             $(button).closest(".nt-listitem").addClass("border-info border-5");
         }
         else { // Tiles
@@ -383,4 +378,5 @@ function initializeCrudActionDialog(button, action, view, container, template, l
         $("#crudActionDialog .modal-footer .btn-group-nt-action-pagination").show();
     }
     $("#crudActionDialog .modal-footer .btn-group").removeAttr("disabled");
+    $("#crudActionDialog .modal-footer .btn-group .btn").removeAttr("disabled");
 }

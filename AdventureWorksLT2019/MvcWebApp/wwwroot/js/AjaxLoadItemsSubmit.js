@@ -35,6 +35,7 @@ function attachListRefreshButtonClickEvent(selector) {
 
 function attachAjaxLoadItemsSubmit(selector) {
     $(selector).submit(function (e) {
+        $(this).find(".nt-page-index").val(1);
         ajaxLoadItemsSubmit(this);
     });
 }

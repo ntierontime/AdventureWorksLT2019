@@ -67,7 +67,7 @@ namespace AdventureWorksLT2019.Models
         [Display(Name = "ModifiedDate", ResourceType = typeof(UIStrings))]
         [DataType(DataType.DateTime)]
         [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="ModifiedDate_is_required")]
-        public System.DateTime ModifiedDate { get; set; }
+        public System.DateTime ModifiedDate { get; set; } = DateTime.Now;
 
     }
 }

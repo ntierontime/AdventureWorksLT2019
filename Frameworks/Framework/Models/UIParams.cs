@@ -8,7 +8,7 @@ namespace Framework.Models
         public bool AdvancedQuery { get; set; } = false;
         public int IndexInArray { get; set; }
         public PagedViewOptions? PagedViewOption { get; set; } = PagedViewOptions.Table;
-        public ViewItemTemplateNames? Template { get; set; } = ViewItemTemplateNames.Details;
+        public string Template { get; set; } = ViewItemTemplateNames.Details.ToString();
     }
 }
 

@@ -32,19 +32,22 @@ namespace AdventureWorksLT2019.Services
             return await _thisRepository.Search(query);
         }
 
-        public async Task<CustomerCompositeModel> GetCompositeModel(CustomerIdentifier id, CustomerCompositeModel.__DataOptions__[]? dataOptions = null)
+        public async Task<CustomerCompositeModel> GetCompositeModel(
+            CustomerIdentifier id,
+            Dictionary<CustomerCompositeModel.__DataOptions__, CompositeListItemRequest> listItemRequest,
+            CustomerCompositeModel.__DataOptions__[]? dataOptions = null)
         {
             var masterResponse = await this._thisRepository.Get(id);
             if (masterResponse.Status != HttpStatusCode.OK || masterResponse.ResponseBody == null)
             {
                 var failedResponse = new CustomerCompositeModel();
-                failedResponse.Responses.Add(CustomerCompositeModel.__DataOptions__.__Master__, new Response { Status = masterResponse.Status, StatusMessage = masterResponse.StatusMessage });
+                failedResponse.Responses.Add(CustomerCompositeModel.__DataOptions__.__Master__, new Response<PaginationResponse> { Status = masterResponse.Status, StatusMessage = masterResponse.StatusMessage });
                 return failedResponse;
             }
 
             var successResponse = new CustomerCompositeModel { __Master__ = masterResponse.ResponseBody };
-            var responses = new ConcurrentDictionary<CustomerCompositeModel.__DataOptions__, Response>();
-            responses.TryAdd(CustomerCompositeModel.__DataOptions__.__Master__, new Response { Status = HttpStatusCode.OK });
+            var responses = new ConcurrentDictionary<CustomerCompositeModel.__DataOptions__, Response<PaginationResponse>>();
+            responses.TryAdd(CustomerCompositeModel.__DataOptions__.__Master__, new Response<PaginationResponse> { Status = HttpStatusCode.OK });
 
             var tasks = new List<Task>();
 
@@ -57,9 +60,16 @@ namespace AdventureWorksLT2019.Services
                     using (var scope = _serviceScopeFactor.CreateScope())
                     {
                         var _customerAddressRepository = scope.ServiceProvider.GetRequiredService<ICustomerAddressRepository>();
-                        var query = new CustomerAddressAdvancedQuery { CustomerID = id.CustomerID, PageIndex = 1, PageSize = 5, OrderBys="ModifiedDate~DESC" };
+                        var query = new CustomerAddressAdvancedQuery
+                        {
+                            CustomerID = id.CustomerID,
+                            PageIndex = 1,
+                            PageSize = listItemRequest[CustomerCompositeModel.__DataOptions__.CustomerAddresses_Via_CustomerID].PageSize,
+                            OrderBys= listItemRequest[CustomerCompositeModel.__DataOptions__.CustomerAddresses_Via_CustomerID].OrderBys,
+                            PaginationOption = listItemRequest[CustomerCompositeModel.__DataOptions__.CustomerAddresses_Via_CustomerID].PaginationOption,
+                        };
                         var response = await _customerAddressRepository.Search(query);
-                        responses.TryAdd(CustomerCompositeModel.__DataOptions__.CustomerAddresses_Via_CustomerID, new Response { Status = response.Status, StatusMessage = response.StatusMessage });
+                        responses.TryAdd(CustomerCompositeModel.__DataOptions__.CustomerAddresses_Via_CustomerID, new Response<PaginationResponse> { Status = response.Status, StatusMessage = response.StatusMessage, ResponseBody = response.Pagination });
                         if (response.Status == HttpStatusCode.OK)
                         {
                             successResponse.CustomerAddresses_Via_CustomerID = response.ResponseBody;
@@ -75,9 +85,16 @@ namespace AdventureWorksLT2019.Services
                     using (var scope = _serviceScopeFactor.CreateScope())
                     {
                         var _salesOrderHeaderRepository = scope.ServiceProvider.GetRequiredService<ISalesOrderHeaderRepository>();
-                        var query = new SalesOrderHeaderAdvancedQuery { CustomerID = id.CustomerID, PageIndex = 1, PageSize = 5, OrderBys="OrderDate~DESC" };
+                        var query = new SalesOrderHeaderAdvancedQuery
+                        {
+                            CustomerID = id.CustomerID,
+                            PageIndex = 1,
+                            PageSize = listItemRequest[CustomerCompositeModel.__DataOptions__.SalesOrderHeaders_Via_CustomerID].PageSize,
+                            OrderBys= listItemRequest[CustomerCompositeModel.__DataOptions__.SalesOrderHeaders_Via_CustomerID].OrderBys,
+                            PaginationOption = listItemRequest[CustomerCompositeModel.__DataOptions__.SalesOrderHeaders_Via_CustomerID].PaginationOption,
+                        };
                         var response = await _salesOrderHeaderRepository.Search(query);
-                        responses.TryAdd(CustomerCompositeModel.__DataOptions__.SalesOrderHeaders_Via_CustomerID, new Response { Status = response.Status, StatusMessage = response.StatusMessage });
+                        responses.TryAdd(CustomerCompositeModel.__DataOptions__.SalesOrderHeaders_Via_CustomerID, new Response<PaginationResponse> { Status = response.Status, StatusMessage = response.StatusMessage, ResponseBody = response.Pagination });
                         if (response.Status == HttpStatusCode.OK)
                         {
                             successResponse.SalesOrderHeaders_Via_CustomerID = response.ResponseBody;
@@ -95,7 +112,7 @@ namespace AdventureWorksLT2019.Services
                 }
                 catch { }
             }
-            successResponse.Responses = new Dictionary<CustomerCompositeModel.__DataOptions__, Response>(responses);
+            successResponse.Responses = new Dictionary<CustomerCompositeModel.__DataOptions__, Response<PaginationResponse>>(responses);
             return successResponse;
         }
 

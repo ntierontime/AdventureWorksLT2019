@@ -9,7 +9,9 @@ namespace AdventureWorksLT2019.ServiceContracts
             ProductAdvancedQuery query);
 
         Task<ProductCompositeModel> GetCompositeModel(
-            ProductIdentifier id, ProductCompositeModel.__DataOptions__[]? dataOptions = null);
+            ProductIdentifier id,
+            Dictionary<ProductCompositeModel.__DataOptions__, CompositeListItemRequest> listItemRequest,
+            ProductCompositeModel.__DataOptions__[]? dataOptions = null);
 
         Task<Response<ProductDataModel.DefaultView>> Update(ProductIdentifier id, ProductDataModel input);
 

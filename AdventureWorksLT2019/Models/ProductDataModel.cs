@@ -48,7 +48,7 @@ namespace AdventureWorksLT2019.Models
         [Display(Name = "SellStartDate", ResourceType = typeof(UIStrings))]
         [DataType(DataType.DateTime)]
         [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="SellStartDate_is_required")]
-        public System.DateTime SellStartDate { get; set; }
+        public System.DateTime SellStartDate { get; set; } = DateTime.Now;
 
         [Display(Name = "SellEndDate", ResourceType = typeof(UIStrings))]
         [DataType(DataType.DateTime)]
@@ -72,7 +72,7 @@ namespace AdventureWorksLT2019.Models
         [Display(Name = "ModifiedDate", ResourceType = typeof(UIStrings))]
         [DataType(DataType.DateTime)]
         [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="ModifiedDate_is_required")]
-        public System.DateTime ModifiedDate { get; set; }
+        public System.DateTime ModifiedDate { get; set; } = DateTime.Now;
 
         public partial class DefaultView: ProductDataModel
         {

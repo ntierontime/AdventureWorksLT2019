@@ -17,15 +17,16 @@
 }
 else if (Model.PaginationOption == PaginationOptions.ItemRangeAndLeftRightButtons)
 {
-    <ul class="pagination pagination-sm justify-content-center">
-        <li class="@(Model.EnableFirstAndPrevious ? "page-item" : "page-item disabled" )"><button class="page-link" data-nt-pageindex="@(Model.PageIndex - 1)"><i class="fa-solid fa-angle-left"></i></button></li>
-        <li><span>@Model.StartIndex - @Model.EndIndex</span></li>
-        <li class="@(Model.EnableLastAndNext ? "page-item" : "page-item disabled" )"><button class="page-link" data-nt-pageindex="@(Model.PageIndex + 1)"><i class="fa-solid fa-angle-right"></i></button></li>
-    </ul>
+    <div class="btn-group float-end me-2" role="group" aria-label="First group">
+        <button type="button" data-nt-pageindex="@(Model.PageIndex - 1)" class="btn btn-default page-link border-0 @(Model.EnableFirstAndPrevious ? "page-item" : "page-item disabled")"><i class="fa-solid fa-angle-left"></i></button>
+        <div type="button" class="btn btn-default">@Model.StartIndex - @Model.EndIndex</div>
+        <button type="button" data-nt-pageindex="@(Model.PageIndex + 1)" class="btn btn-default page-link border-0 @(Model.EnableLastAndNext ? "page-item" : "page-item disabled")"><i class="fa-solid fa-angle-right"></i></button>
+    </div>
 }
 else if (Model.PaginationOption == PaginationOptions.PageIndexesAndAllButtons)
 {
     <ul class="pagination pagination-sm">
+        <li class="page-item me-4">@Model.StartIndex - @Model.EndIndex</li>
         <li class="@(Model.EnableFirstAndPrevious ? "page-item" : "page-item disabled" )"><button class="page-link" data-nt-pageindex="1"><i class="fa-solid fa-angles-left"></i></button></li>
         <li class="@(Model.EnableFirstAndPrevious ? "page-item" : "page-item disabled" )"><button class="page-link" data-nt-pageindex="@(Model.PageIndex - 1)"><i class="fa-solid fa-angle-left"></i></button></li>
         @if (Model.ThreeDotPreCurrent)

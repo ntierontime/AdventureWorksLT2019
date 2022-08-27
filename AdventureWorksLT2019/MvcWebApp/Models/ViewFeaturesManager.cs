@@ -27,11 +27,11 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             }
             if (uiParams.PagedViewOption == PagedViewOptions.EditableTable)
             {
-                uiParams.Template = ViewItemTemplateNames.Edit;
+                uiParams.Template = ViewItemTemplateNames.Edit.ToString();
             }
-            else if(!uiParams.Template.HasValue)
+            else if(string.IsNullOrEmpty(uiParams.Template))
             {
-                uiParams.Template = ViewItemTemplateNames.Delete;
+                uiParams.Template = ViewItemTemplateNames.Delete.ToString();
             }
         }
 
@@ -51,8 +51,8 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 AdvancedQuery = false, //
                 PagedViewOption = defaultPagedViewOption,
                 Template = defaultPagedViewOption == PagedViewOptions.EditableTable
-                        ? ViewItemTemplateNames.Edit
-                        : ViewItemTemplateNames.Details,
+                        ? ViewItemTemplateNames.Edit.ToString()
+                        : ViewItemTemplateNames.Details.ToString(),
             };
         }
 
@@ -60,10 +60,10 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         {
             var result = new UIItemFeatures
             {
-                PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                PrimayDeleteViewContainer = CrudViewContainers.Dialog,
+                PrimayCreateViewContainer = CrudViewContainers.None,
+                PrimayDeleteViewContainer = CrudViewContainers.None,
                 PrimayDetailsViewContainer = CrudViewContainers.Dialog,
-                PrimayEditViewContainer = CrudViewContainers.Dialog,
+                PrimayEditViewContainer = CrudViewContainers.None,
 
                 ShowItemButtons = true,
                 CanGotoDashboard = false,
@@ -112,7 +112,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             var result = new UIItemFeatures
             {
                 PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                PrimayDeleteViewContainer = CrudViewContainers.Dialog,
+                PrimayDeleteViewContainer = CrudViewContainers.None,
                 PrimayDetailsViewContainer = CrudViewContainers.Dialog,
                 PrimayEditViewContainer = CrudViewContainers.Dialog,
 
@@ -163,7 +163,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             var result = new UIItemFeatures
             {
                 PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                PrimayDeleteViewContainer = CrudViewContainers.Dialog,
+                PrimayDeleteViewContainer = CrudViewContainers.None,
                 PrimayDetailsViewContainer = CrudViewContainers.Dialog,
                 PrimayEditViewContainer = CrudViewContainers.Dialog,
 
@@ -209,17 +209,18 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             return result;
         }
 
-        public UIItemFeatures GetCustomerUIItemFeatures()
+        public UIItemFeatures GetCustomerUIItemFeatures(PagedViewOptions pagedViewOptionForBulkSelectCheckBox)
         {
             var result = new UIItemFeatures
             {
                 PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                PrimayDeleteViewContainer = CrudViewContainers.Dialog,
+                PrimayDeleteViewContainer = CrudViewContainers.None,
                 PrimayDetailsViewContainer = CrudViewContainers.Dialog,
                 PrimayEditViewContainer = CrudViewContainers.Dialog,
 
+                ShowListBulkSelectCheckbox = pagedViewOptionForBulkSelectCheckBox != PagedViewOptions.Card,
                 ShowItemButtons = true,
-                CanGotoDashboard = false,
+                CanGotoDashboard = true,
             };
 
             return result;
@@ -264,10 +265,10 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         {
             var result = new UIItemFeatures
             {
-                PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                PrimayDeleteViewContainer = CrudViewContainers.Dialog,
+                PrimayCreateViewContainer = CrudViewContainers.None,
+                PrimayDeleteViewContainer = CrudViewContainers.None,
                 PrimayDetailsViewContainer = CrudViewContainers.Dialog,
-                PrimayEditViewContainer = CrudViewContainers.Dialog,
+                PrimayEditViewContainer = CrudViewContainers.None,
 
                 ShowItemButtons = true,
                 CanGotoDashboard = false,
@@ -316,12 +317,12 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             var result = new UIItemFeatures
             {
                 PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                PrimayDeleteViewContainer = CrudViewContainers.Dialog,
+                PrimayDeleteViewContainer = CrudViewContainers.None,
                 PrimayDetailsViewContainer = CrudViewContainers.Dialog,
                 PrimayEditViewContainer = CrudViewContainers.Dialog,
 
                 ShowItemButtons = true,
-                CanGotoDashboard = false,
+                CanGotoDashboard = true,
             };
 
             return result;
@@ -366,10 +367,10 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         {
             var result = new UIItemFeatures
             {
-                PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                PrimayDeleteViewContainer = CrudViewContainers.Dialog,
-                PrimayDetailsViewContainer = CrudViewContainers.Dialog,
-                PrimayEditViewContainer = CrudViewContainers.Dialog,
+                PrimayCreateViewContainer = CrudViewContainers.Inline,
+                PrimayDeleteViewContainer = CrudViewContainers.None,
+                PrimayDetailsViewContainer = CrudViewContainers.Inline,
+                PrimayEditViewContainer = CrudViewContainers.Inline,
 
                 ShowItemButtons = true,
                 CanGotoDashboard = false,
@@ -417,10 +418,10 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         {
             var result = new UIItemFeatures
             {
-                PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                PrimayDeleteViewContainer = CrudViewContainers.Dialog,
-                PrimayDetailsViewContainer = CrudViewContainers.Dialog,
-                PrimayEditViewContainer = CrudViewContainers.Dialog,
+                PrimayCreateViewContainer = CrudViewContainers.Inline,
+                PrimayDeleteViewContainer = CrudViewContainers.None,
+                PrimayDetailsViewContainer = CrudViewContainers.Inline,
+                PrimayEditViewContainer = CrudViewContainers.Inline,
 
                 ShowItemButtons = true,
                 CanGotoDashboard = false,
@@ -468,10 +469,10 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         {
             var result = new UIItemFeatures
             {
-                PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                PrimayDeleteViewContainer = CrudViewContainers.Dialog,
-                PrimayDetailsViewContainer = CrudViewContainers.Dialog,
-                PrimayEditViewContainer = CrudViewContainers.Dialog,
+                PrimayCreateViewContainer = CrudViewContainers.Inline,
+                PrimayDeleteViewContainer = CrudViewContainers.None,
+                PrimayDetailsViewContainer = CrudViewContainers.Inline,
+                PrimayEditViewContainer = CrudViewContainers.Inline,
 
                 ShowItemButtons = true,
                 CanGotoDashboard = false,
@@ -519,10 +520,10 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         {
             var result = new UIItemFeatures
             {
-                PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                PrimayDeleteViewContainer = CrudViewContainers.Dialog,
+                PrimayCreateViewContainer = CrudViewContainers.None,
+                PrimayDeleteViewContainer = CrudViewContainers.None,
                 PrimayDetailsViewContainer = CrudViewContainers.Dialog,
-                PrimayEditViewContainer = CrudViewContainers.Dialog,
+                PrimayEditViewContainer = CrudViewContainers.None,
 
                 ShowItemButtons = true,
                 CanGotoDashboard = false,
@@ -570,10 +571,10 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         {
             var result = new UIItemFeatures
             {
-                PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                PrimayDeleteViewContainer = CrudViewContainers.Dialog,
+                PrimayCreateViewContainer = CrudViewContainers.None,
+                PrimayDeleteViewContainer = CrudViewContainers.None,
                 PrimayDetailsViewContainer = CrudViewContainers.Dialog,
-                PrimayEditViewContainer = CrudViewContainers.Dialog,
+                PrimayEditViewContainer = CrudViewContainers.None,
 
                 ShowItemButtons = true,
                 CanGotoDashboard = false,
@@ -617,15 +618,16 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             return result;
         }
 
-        public UIItemFeatures GetSalesOrderHeaderUIItemFeatures()
+        public UIItemFeatures GetSalesOrderHeaderUIItemFeatures(PagedViewOptions pagedViewOptionForBulkSelectCheckBox)
         {
             var result = new UIItemFeatures
             {
                 PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                PrimayDeleteViewContainer = CrudViewContainers.Dialog,
+                PrimayDeleteViewContainer = CrudViewContainers.None,
                 PrimayDetailsViewContainer = CrudViewContainers.Dialog,
                 PrimayEditViewContainer = CrudViewContainers.Dialog,
 
+                ShowListBulkSelectCheckbox = pagedViewOptionForBulkSelectCheckBox != PagedViewOptions.Card,
                 ShowItemButtons = true,
                 CanGotoDashboard = false,
             };

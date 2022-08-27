@@ -8,7 +8,7 @@ namespace Framework.Models
         public UIListSettingModel UIListSetting { get; set; } = null!;
 
         public TMaster __Master__ { get; set; } = null!;
-        public Dictionary<TPropertyEnum, Response> Responses { get; set; } = new Dictionary<TPropertyEnum, Response>();
+        public Dictionary<TPropertyEnum, Response<PaginationResponse>> Responses { get; set; } = new Dictionary<TPropertyEnum, Response<PaginationResponse>>();
         // this is for Mvc for now, wil be populated in Mvc Controller
         public Dictionary<TPropertyEnum, UIParams> UIParamsList { get; set; } = new Dictionary<TPropertyEnum, UIParams>();
 

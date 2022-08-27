@@ -33,7 +33,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             string key,
             UIParams uiParams,
             BuildVersionAdvancedQuery query,
-            Response response,
+            Response<PaginationResponse> response,
             BuildVersionDataModel[]? responseBody,
             bool loadSearchRelatedDropDownLists,
             bool loadTopLevelDropDownListsFromDatabase)
@@ -86,7 +86,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             string key,
             UIParams uiParams,
             ErrorLogAdvancedQuery query,
-            Response response,
+            Response<PaginationResponse> response,
             ErrorLogDataModel[]? responseBody,
             bool loadSearchRelatedDropDownLists,
             bool loadTopLevelDropDownListsFromDatabase)
@@ -138,7 +138,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             string key,
             UIParams uiParams,
             AddressAdvancedQuery query,
-            Response response,
+            Response<PaginationResponse> response,
             AddressDataModel[]? responseBody,
             bool loadSearchRelatedDropDownLists,
             bool loadTopLevelDropDownListsFromDatabase)
@@ -190,7 +190,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             string key,
             UIParams uiParams,
             CustomerAdvancedQuery query,
-            Response response,
+            Response<PaginationResponse> response,
             CustomerDataModel[]? responseBody,
             bool loadSearchRelatedDropDownLists,
             bool loadTopLevelDropDownListsFromDatabase)
@@ -243,7 +243,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             string key,
             UIParams uiParams,
             CustomerAddressAdvancedQuery query,
-            Response response,
+            Response<PaginationResponse> response,
             CustomerAddressDataModel.DefaultView[]? responseBody,
             bool loadSearchRelatedDropDownLists,
             bool loadTopLevelDropDownListsFromDatabase)
@@ -299,7 +299,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             string key,
             UIParams uiParams,
             ProductAdvancedQuery query,
-            Response response,
+            Response<PaginationResponse> response,
             ProductDataModel.DefaultView[]? responseBody,
             bool loadSearchRelatedDropDownLists,
             bool loadTopLevelDropDownListsFromDatabase)
@@ -358,7 +358,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             string key,
             UIParams uiParams,
             ProductCategoryAdvancedQuery query,
-            Response response,
+            Response<PaginationResponse> response,
             ProductCategoryDataModel.DefaultView[]? responseBody,
             bool loadSearchRelatedDropDownLists,
             bool loadTopLevelDropDownListsFromDatabase)
@@ -414,7 +414,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             string key,
             UIParams uiParams,
             ProductDescriptionAdvancedQuery query,
-            Response response,
+            Response<PaginationResponse> response,
             ProductDescriptionDataModel[]? responseBody,
             bool loadSearchRelatedDropDownLists,
             bool loadTopLevelDropDownListsFromDatabase)
@@ -466,7 +466,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             string key,
             UIParams uiParams,
             ProductModelAdvancedQuery query,
-            Response response,
+            Response<PaginationResponse> response,
             ProductModelDataModel[]? responseBody,
             bool loadSearchRelatedDropDownLists,
             bool loadTopLevelDropDownListsFromDatabase)
@@ -518,7 +518,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             string key,
             UIParams uiParams,
             ProductModelProductDescriptionAdvancedQuery query,
-            Response response,
+            Response<PaginationResponse> response,
             ProductModelProductDescriptionDataModel.DefaultView[]? responseBody,
             bool loadSearchRelatedDropDownLists,
             bool loadTopLevelDropDownListsFromDatabase)
@@ -574,7 +574,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             string key,
             UIParams uiParams,
             SalesOrderDetailAdvancedQuery query,
-            Response response,
+            Response<PaginationResponse> response,
             SalesOrderDetailDataModel.DefaultView[]? responseBody,
             bool loadSearchRelatedDropDownLists,
             bool loadTopLevelDropDownListsFromDatabase)
@@ -630,7 +630,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             string key,
             UIParams uiParams,
             SalesOrderHeaderAdvancedQuery query,
-            Response response,
+            Response<PaginationResponse> response,
             SalesOrderHeaderDataModel.DefaultView[]? responseBody,
             bool loadSearchRelatedDropDownLists,
             bool loadTopLevelDropDownListsFromDatabase)

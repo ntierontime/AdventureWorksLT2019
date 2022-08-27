@@ -1,8 +1,6 @@
 ﻿
-function attachFormDataChanged(theForm) {
-    const origFormData = $(theForm).serialize();
-
-    $(theForm).on('keyup change paste', 'input.nt-form-data, select.nt-form-data, textarea.nt-form-data', function () {
+function attachFormDataChanged(theWrapper) {
+    $(theWrapper).on('keyup change paste', 'input.nt-form-data, select.nt-form-data, textarea.nt-form-data', function () {
         const self = this;
         const itemStatusField = $(self).closest(".nt-listitem").find(".nt-item-status input");
         const currentItemStatus = $(itemStatusField).val(); 
@@ -26,7 +24,7 @@ function attachFormDataChanged(theForm) {
         enableSaveButton($(self).closest(".nt-list-wrapper"), formDataChanged);
     });
 
-    $(theForm).on('keyup change paste', 'input.nt-form-check', function () {
+    $(theWrapper).on('keyup change paste', 'input.nt-form-check', function () {
         const self = this;
         const itemStatusField = $(self).closest(".nt-listitem").find(".nt-item-status input");
         const currentItemStatus = $(itemStatusField).val();

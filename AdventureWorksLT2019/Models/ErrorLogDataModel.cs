@@ -15,7 +15,7 @@ namespace AdventureWorksLT2019.Models
         [Display(Name = "ErrorTime", ResourceType = typeof(UIStrings))]
         [DataType(DataType.DateTime)]
         [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="ErrorTime_is_required")]
-        public System.DateTime ErrorTime { get; set; }
+        public System.DateTime ErrorTime { get; set; } = DateTime.Now;
 
         [Display(Name = "UserName", ResourceType = typeof(UIStrings))]
         [StringLength(128, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_UserName_should_be_1_to_128", MinimumLength = 1)]

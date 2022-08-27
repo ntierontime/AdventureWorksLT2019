@@ -75,7 +75,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
                 Result = result,
             };
 
-            if(uiParams.Template == ViewItemTemplateNames.Create || uiParams.Template == ViewItemTemplateNames.Edit)
+            if(uiParams.Template == ViewItemTemplateNames.Create.ToString() || uiParams.Template == ViewItemTemplateNames.Edit.ToString())
             {                pagedViewModel.TopLevelDropDownListsFromDatabase = await _dropDownListService.GetProductTopLevelDropDownListsFromDatabase();
             }
 
@@ -98,19 +98,29 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
         // GET: Product/Dashboard/{ProductID}
         public async Task<IActionResult> Dashboard([FromRoute]ProductIdentifier id)
         {
-            var result = await _thisService.GetCompositeModel(id);
+            var listItemRequests = new Dictionary<ProductCompositeModel.__DataOptions__, CompositeListItemRequest>();
+
+            listItemRequests.Add(ProductCompositeModel.__DataOptions__.SalesOrderDetails_Via_ProductID,
+                new CompositeListItemRequest()
+                {
+                    PageSize = 10,
+                    OrderBys = _orderBysListHelper.GetDefaultSalesOrderDetailOrderBys(),
+                    PaginationOption = PaginationOptions.PageIndexesAndAllButtons,
+                });
+
+            var result = await _thisService.GetCompositeModel(id, listItemRequests);
 
             result.UIParamsList.Add(
                 ProductCompositeModel.__DataOptions__.__Master__,
-                new UIParams { PagedViewOption = PagedViewOptions.Card, Template = ViewItemTemplateNames.Details });
+                new UIParams { PagedViewOption = PagedViewOptions.Card, Template = ViewItemTemplateNames.Details.ToString() });
 
             result.UIParamsList.Add(
                 ProductCompositeModel.__DataOptions__.SalesOrderDetails_Via_ProductID,
-                new UIParams { PagedViewOption = PagedViewOptions.Table, Template = ViewItemTemplateNames.Details });
+                new UIParams { PagedViewOption = PagedViewOptions.Table, Template = ViewItemTemplateNames.Details.ToString() });
 
             result.UIParamsList.Add(
                 ProductCompositeModel.__DataOptions__.ProductCategory,
-                new UIParams { PagedViewOption = PagedViewOptions.Card, Template = ViewItemTemplateNames.Details });
+                new UIParams { PagedViewOption = PagedViewOptions.Card, Template = ViewItemTemplateNames.Details.ToString() });
 
             return View(result);
         }
@@ -203,6 +213,8 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
                                 PartialViews = new List<Tuple<string, object>> {
                                 new Tuple<string, object>("~/Views/Product/_TableItemTr.cshtml",
                                     new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<ProductDataModel.DefaultView>{
+                                        UIItemFeatures = _viewFeatureManager.GetProductUIItemFeatures(),
+                                        Status = System.Net.HttpStatusCode.OK,
                                         Template = ViewItemTemplateNames.Details.ToString(),
                                         IsCurrentItem = true,
                                         Model = result.ResponseBody!
@@ -221,6 +233,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
                                     new Tuple<string, object>("~/Views/Product/_Tile.cshtml",
                                         new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<ProductDataModel.DefaultView>
                                         {
+                                            UIItemFeatures = _viewFeatureManager.GetProductUIItemFeatures(),
                                             Status = System.Net.HttpStatusCode.OK,
                                             Template = ViewItemTemplateNames.Details.ToString(),
                                             IsCurrentItem = true,
@@ -273,6 +286,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
                                 new Tuple<string, object>("~/Views/Product/_TableDetailsItem.cshtml",
                                     new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<ProductDataModel.DefaultView>
                                     {
+                                        UIItemFeatures = _viewFeatureManager.GetProductUIItemFeatures(),
                                         Status = System.Net.HttpStatusCode.OK,
                                         Template = ViewItemTemplateNames.Details.ToString(),
                                         IsCurrentItem = true,
@@ -292,6 +306,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
                                 new Tuple<string, object>("~/Views/Product/_TileDetailsItem.cshtml",
                                     new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<ProductDataModel.DefaultView>
                                     {
+                                        UIItemFeatures = _viewFeatureManager.GetProductUIItemFeatures(),
                                         Status = System.Net.HttpStatusCode.OK,
                                         Template = ViewItemTemplateNames.Details.ToString(),
                                         IsCurrentItem = true,

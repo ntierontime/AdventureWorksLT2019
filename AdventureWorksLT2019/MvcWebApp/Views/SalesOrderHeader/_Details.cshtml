@@ -17,7 +17,7 @@
 }
 else
 {
-    <input class="hidden-modal-title" value="@Model!.Model!.SalesOrderNumber" type="hidden" />
+    <input class="nt-hidden-modal-title" value="@Model!.Model!.SalesOrderNumber" type="hidden" />
     <div class="form-group">
         <label asp-for="Model!.SalesOrderID" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.SalesOrderID))"></label>
         <input asp-for="Model!.SalesOrderID" readonly class="form-control " id="@Model!.HtmlId(nameof(SalesOrderHeaderDataModel.DefaultView.SalesOrderID))" name="@Model!.HtmlName(nameof(SalesOrderHeaderDataModel.DefaultView.SalesOrderID))" data-nt-value="@Model!.Model!.SalesOrderID"/>

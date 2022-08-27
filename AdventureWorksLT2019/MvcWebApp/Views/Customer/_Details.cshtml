@@ -17,7 +17,7 @@
 }
 else
 {
-    <input class="hidden-modal-title" value="@Model!.Model!.Title" type="hidden" />
+    <input class="nt-hidden-modal-title" value="@Model!.Model!.Title" type="hidden" />
     <div class="form-group">
         <label asp-for="Model!.CustomerID" class="control-label" for="@Model!.HtmlId(nameof(CustomerDataModel.CustomerID))"></label>
         <input asp-for="Model!.CustomerID" readonly class="form-control " id="@Model!.HtmlId(nameof(CustomerDataModel.CustomerID))" name="@Model!.HtmlName(nameof(CustomerDataModel.CustomerID))" data-nt-value="@Model!.Model!.CustomerID"/>

@@ -75,7 +75,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
                 Result = result,
             };
 
-            if(uiParams.Template == ViewItemTemplateNames.Create || uiParams.Template == ViewItemTemplateNames.Edit)
+            if(uiParams.Template == ViewItemTemplateNames.Create.ToString() || uiParams.Template == ViewItemTemplateNames.Edit.ToString())
             {                pagedViewModel.TopLevelDropDownListsFromDatabase = await _dropDownListService.GetProductCategoryTopLevelDropDownListsFromDatabase();
             }
 
@@ -181,6 +181,8 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
                                 PartialViews = new List<Tuple<string, object>> {
                                 new Tuple<string, object>("~/Views/ProductCategory/_TableItemTr.cshtml",
                                     new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<ProductCategoryDataModel.DefaultView>{
+                                        UIItemFeatures = _viewFeatureManager.GetProductCategoryUIItemFeatures(),
+                                        Status = System.Net.HttpStatusCode.OK,
                                         Template = ViewItemTemplateNames.Details.ToString(),
                                         IsCurrentItem = true,
                                         Model = result.ResponseBody!
@@ -199,6 +201,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
                                     new Tuple<string, object>("~/Views/ProductCategory/_Tile.cshtml",
                                         new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<ProductCategoryDataModel.DefaultView>
                                         {
+                                            UIItemFeatures = _viewFeatureManager.GetProductCategoryUIItemFeatures(),
                                             Status = System.Net.HttpStatusCode.OK,
                                             Template = ViewItemTemplateNames.Details.ToString(),
                                             IsCurrentItem = true,
@@ -251,6 +254,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
                                 new Tuple<string, object>("~/Views/ProductCategory/_TableDetailsItem.cshtml",
                                     new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<ProductCategoryDataModel.DefaultView>
                                     {
+                                        UIItemFeatures = _viewFeatureManager.GetProductCategoryUIItemFeatures(),
                                         Status = System.Net.HttpStatusCode.OK,
                                         Template = ViewItemTemplateNames.Details.ToString(),
                                         IsCurrentItem = true,
@@ -270,6 +274,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
                                 new Tuple<string, object>("~/Views/ProductCategory/_TileDetailsItem.cshtml",
                                     new AdventureWorksLT2019.MvcWebApp.Models.MvcItemViewModel<ProductCategoryDataModel.DefaultView>
                                     {
+                                        UIItemFeatures = _viewFeatureManager.GetProductCategoryUIItemFeatures(),
                                         Status = System.Net.HttpStatusCode.OK,
                                         Template = ViewItemTemplateNames.Details.ToString(),
                                         IsCurrentItem = true,

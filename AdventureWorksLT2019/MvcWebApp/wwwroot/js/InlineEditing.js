@@ -322,10 +322,12 @@ function ajaxLoadItemInlineEditing(loadItemUrl, currentListItem, view, container
                     // Create, if not "EditableTable", keep the current, .nt-createnew-button-container, <td> when List, which contains the Create <button>
                     $(currentListItem).find(".nt-createnew-button-container").hide();
                     currentListItem.prepend(responseHtml);
+                    attachFormDataChanged(responseHtml);
                 }
             }
             else if (action == "PUT") {
                 currentListItem.html(responseHtml);
+                attachFormDataChanged(responseHtml);
             }
             else if (action == "DELETE") { // DELETE, <form>...</form> wrapped around .nt-btn-action-delete
                 currentListItem.html(responseHtml);
@@ -335,7 +337,7 @@ function ajaxLoadItemInlineEditing(loadItemUrl, currentListItem, view, container
             }
 
             if (action != "GET") {
-                if (view === "List") {// In HtmlTable
+                if (view === "Table") {// In HtmlTable
                     attachInlineEditingActionButtonClickEvent_InTable();
                 }
                 else { // In Tiles

@@ -17,7 +17,7 @@
 }
 else
 {
-    <input class="hidden-modal-title" value="@Model!.Model!.AddressType" type="hidden" />
+    <input class="nt-hidden-modal-title" value="@Model!.Model!.AddressType" type="hidden" />
     <div class="form-group">
         <label asp-for="Model!.CustomerID" class="control-label" for="@Model!.HtmlId(nameof(CustomerAddressDataModel.DefaultView.CustomerID))"></label>    <div class="form-control" readonly>
         <a asp-area="" asp-controller="Customer" asp-action="Dashboard" asp-route-customerid="@Model!.Model!.CustomerID">@Model!.Model!.Customer_Name</a>

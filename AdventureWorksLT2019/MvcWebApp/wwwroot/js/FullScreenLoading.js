@@ -23,10 +23,6 @@
  * 2.3. in ajax response html
  * 
  */
-$(document).ready(function () {
-    attachFullScreenLoading();
-})
-
 function attachFullScreenLoading() {
     let fullScreenLoadingEl = document.getElementById('fullScreenLoading');
 

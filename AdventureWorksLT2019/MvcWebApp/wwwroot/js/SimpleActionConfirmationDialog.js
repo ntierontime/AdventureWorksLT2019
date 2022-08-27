@@ -23,10 +23,6 @@
  * 2.3. in ajax response html
  * 
  */
-$(document).ready(function () {
-    attachSimpleActionConfirmationDialog();
-})
-
 function attachSimpleActionConfirmationDialog() {
     let simpleActionConfirmationDialog = document.getElementById('simpleActionConfirmationDialog');
 

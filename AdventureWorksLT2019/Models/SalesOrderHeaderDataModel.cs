@@ -19,12 +19,12 @@ namespace AdventureWorksLT2019.Models
         [Display(Name = "OrderDate", ResourceType = typeof(UIStrings))]
         [DataType(DataType.DateTime)]
         [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="OrderDate_is_required")]
-        public System.DateTime OrderDate { get; set; }
+        public System.DateTime OrderDate { get; set; } = DateTime.Now;
 
         [Display(Name = "DueDate", ResourceType = typeof(UIStrings))]
         [DataType(DataType.DateTime)]
         [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="DueDate_is_required")]
-        public System.DateTime DueDate { get; set; }
+        public System.DateTime DueDate { get; set; } = DateTime.Now;
 
         [Display(Name = "ShipDate", ResourceType = typeof(UIStrings))]
         [DataType(DataType.DateTime)]
@@ -94,7 +94,7 @@ namespace AdventureWorksLT2019.Models
         [Display(Name = "ModifiedDate", ResourceType = typeof(UIStrings))]
         [DataType(DataType.DateTime)]
         [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="ModifiedDate_is_required")]
-        public System.DateTime ModifiedDate { get; set; }
+        public System.DateTime ModifiedDate { get; set; } = DateTime.Now;
 
         public partial class DefaultView: SalesOrderHeaderDataModel
         {

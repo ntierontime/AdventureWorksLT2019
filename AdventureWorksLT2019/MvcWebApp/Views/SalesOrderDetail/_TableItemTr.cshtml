@@ -8,16 +8,5 @@
     var routeId = Model.Model?.SalesOrderID + "/" + Model.Model?.SalesOrderDetailID;
 }
 <tr class="pt-0 pb-0 nt-listitem@(Model.IsCurrentItem ? " nt-created border-warning border-3": "")" data-nt-route-id="@routeId">
-    @if (Model.Template == ViewItemTemplateNames.Details.ToString())
-    {
-        @await Html.PartialAsync("~/Views/SalesOrderDetail/_TableDetailsItem.cshtml", Model)
-    }
-    else if (Model.Template == ViewItemTemplateNames.Edit.ToString())
-    {
-        @await Html.PartialAsync("~/Views/SalesOrderDetail/_TableEditItem.cshtml", Model)
-    }
-    else if (Model.Template == ViewItemTemplateNames.Create.ToString())
-    {
-        @await Html.PartialAsync("~/Views/SalesOrderDetail/_TableCreateItem.cshtml", Model)
-    }
+    @await Html.PartialAsync($"~/Views/SalesOrderDetail/_Table{Model.Template}Item.cshtml", Model)
 </tr>

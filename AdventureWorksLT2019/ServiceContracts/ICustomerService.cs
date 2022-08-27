@@ -9,7 +9,9 @@ namespace AdventureWorksLT2019.ServiceContracts
             CustomerAdvancedQuery query);
 
         Task<CustomerCompositeModel> GetCompositeModel(
-            CustomerIdentifier id, CustomerCompositeModel.__DataOptions__[]? dataOptions = null);
+            CustomerIdentifier id,
+            Dictionary<CustomerCompositeModel.__DataOptions__, CompositeListItemRequest> listItemRequest,
+            CustomerCompositeModel.__DataOptions__[]? dataOptions = null);
 
         Task<PagedResponse<CustomerDataModel[]>> BulkUpdate(BatchActionViewModel<CustomerIdentifier, CustomerDataModel> data);
 
