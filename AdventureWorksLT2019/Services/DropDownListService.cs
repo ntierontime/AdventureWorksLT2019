@@ -100,6 +100,74 @@ namespace AdventureWorksLT2019.Services
 
             var tasks = new List<Task>();
 
+            if (options == null || options.Any(t => t == TopLevelDropDownLists.BuildVersion))
+            {
+                tasks.Add(Task.Run(async () =>
+                {
+                    using (var scope = _serviceScopeFactory.CreateScope())
+                    {
+                        var buildVersionRepository = scope.ServiceProvider.GetRequiredService<IBuildVersionRepository>();
+
+                        var oneList = await buildVersionRepository.GetCodeList(new BuildVersionAdvancedQuery { PageIndex = 1, PageSize = 10000 });
+                        if (oneList.Status == HttpStatusCode.OK)
+                        {
+                            dropDownLists.TryAdd(TopLevelDropDownLists.BuildVersion.ToString(), oneList?.ResponseBody?.ToList() ?? new List<NameValuePair>());
+                        }
+                    }
+                }));
+            }
+
+            if (options == null || options.Any(t => t == TopLevelDropDownLists.ErrorLog))
+            {
+                tasks.Add(Task.Run(async () =>
+                {
+                    using (var scope = _serviceScopeFactory.CreateScope())
+                    {
+                        var errorLogRepository = scope.ServiceProvider.GetRequiredService<IErrorLogRepository>();
+
+                        var oneList = await errorLogRepository.GetCodeList(new ErrorLogAdvancedQuery { PageIndex = 1, PageSize = 10000 });
+                        if (oneList.Status == HttpStatusCode.OK)
+                        {
+                            dropDownLists.TryAdd(TopLevelDropDownLists.ErrorLog.ToString(), oneList?.ResponseBody?.ToList() ?? new List<NameValuePair>());
+                        }
+                    }
+                }));
+            }
+
+            if (options == null || options.Any(t => t == TopLevelDropDownLists.Address))
+            {
+                tasks.Add(Task.Run(async () =>
+                {
+                    using (var scope = _serviceScopeFactory.CreateScope())
+                    {
+                        var addressRepository = scope.ServiceProvider.GetRequiredService<IAddressRepository>();
+
+                        var oneList = await addressRepository.GetCodeList(new AddressAdvancedQuery { PageIndex = 1, PageSize = 10000 });
+                        if (oneList.Status == HttpStatusCode.OK)
+                        {
+                            dropDownLists.TryAdd(TopLevelDropDownLists.Address.ToString(), oneList?.ResponseBody?.ToList() ?? new List<NameValuePair>());
+                        }
+                    }
+                }));
+            }
+
+            if (options == null || options.Any(t => t == TopLevelDropDownLists.Customer))
+            {
+                tasks.Add(Task.Run(async () =>
+                {
+                    using (var scope = _serviceScopeFactory.CreateScope())
+                    {
+                        var customerRepository = scope.ServiceProvider.GetRequiredService<ICustomerRepository>();
+
+                        var oneList = await customerRepository.GetCodeList(new CustomerAdvancedQuery { PageIndex = 1, PageSize = 10000 });
+                        if (oneList.Status == HttpStatusCode.OK)
+                        {
+                            dropDownLists.TryAdd(TopLevelDropDownLists.Customer.ToString(), oneList?.ResponseBody?.ToList() ?? new List<NameValuePair>());
+                        }
+                    }
+                }));
+            }
+
             if (options == null || options.Any(t => t == TopLevelDropDownLists.ProductDescription))
             {
                 tasks.Add(Task.Run(async () =>

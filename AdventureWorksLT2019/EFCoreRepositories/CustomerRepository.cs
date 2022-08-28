@@ -173,6 +173,25 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             return queryable;
         }
 
+        public async Task<Response> BulkDelete(List<CustomerIdentifier> ids)
+        {
+            try
+            {
+                var queryable = GetIQueryableByPrimaryIdentifierList(ids);
+                var result = await queryable.BatchDeleteAsync();
+
+                return await Task<Response>.FromResult(
+                    new Response
+                    {
+                        Status = HttpStatusCode.OK,
+                    });
+            }
+            catch (Exception ex)
+            {
+                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
         public async Task<PagedResponse<CustomerDataModel[]>> BulkUpdate(
             BatchActionViewModel<CustomerIdentifier, CustomerDataModel> data)
         {
@@ -238,6 +257,158 @@ private IQueryable<CustomerDataModel> GetIQueryableAsBulkUpdateResponse(
                 };
 
             return queryable;
+        }
+
+        public async Task<Response<MultiItemsCUDModel<CustomerIdentifier, CustomerDataModel>>> MultiItemsCUD(
+            MultiItemsCUDModel<CustomerIdentifier, CustomerDataModel> input)
+        {
+            // 1. DeleteItems, return if Failed
+            if (input.DeleteItems != null)
+            {
+                var responseOfDeleteItems = await this.BulkDelete(input.DeleteItems);
+                if (responseOfDeleteItems != null && responseOfDeleteItems.Status != HttpStatusCode.OK)
+                {
+                    return new Response<MultiItemsCUDModel<CustomerIdentifier, CustomerDataModel>> { Status = responseOfDeleteItems.Status, StatusMessage = "Deletion Failed. " + responseOfDeleteItems.StatusMessage };
+                }
+            }
+
+            // 2. return OK, if no more NewItems and UpdateItems
+            if (!(input.NewItems != null && input.NewItems.Count > 0 ||
+                input.UpdateItems != null && input.UpdateItems.Count > 0))
+            {
+                return new Response<MultiItemsCUDModel<CustomerIdentifier, CustomerDataModel>> { Status = HttpStatusCode.OK };
+            }
+
+            // 3. NewItems and UpdateItems
+            try
+            {
+                // 3.1.1. NewItems if any
+                List<Customer> newEFItems = new List<Customer>();
+                if (input.NewItems != null && input.NewItems.Count > 0)
+                {
+                    foreach (var item in input.NewItems)
+                    {
+                        var toInsert = new Customer
+                        {
+                            NameStyle = item.NameStyle,
+                            Title = item.Title,
+                            FirstName = item.FirstName,
+                            MiddleName = item.MiddleName,
+                            LastName = item.LastName,
+                            Suffix = item.Suffix,
+                            CompanyName = item.CompanyName,
+                            SalesPerson = item.SalesPerson,
+                            EmailAddress = item.EmailAddress,
+                            Phone = item.Phone,
+                            PasswordHash = item.PasswordHash,
+                            PasswordSalt = item.PasswordSalt,
+                            ModifiedDate = item.ModifiedDate,
+                        };
+                        _dbcontext.Customer.Add(toInsert);
+                        newEFItems.Add(toInsert);
+                    }
+                }
+
+                // 3.1.2. UpdateItems if any
+                if (input.UpdateItems != null && input.UpdateItems.Count > 0)
+                {
+                    foreach (var item in input.UpdateItems)
+                    {
+                        var existing =
+                            (from t in _dbcontext.Customer
+                             where
+
+                             t.CustomerID == item.CustomerID
+                             select t).SingleOrDefault();
+
+                        if (existing != null)
+                        {
+                            // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
+                existing.NameStyle = item.NameStyle;
+                existing.Title = item.Title;
+                existing.FirstName = item.FirstName;
+                existing.MiddleName = item.MiddleName;
+                existing.LastName = item.LastName;
+                existing.Suffix = item.Suffix;
+                existing.CompanyName = item.CompanyName;
+                existing.SalesPerson = item.SalesPerson;
+                existing.EmailAddress = item.EmailAddress;
+                existing.Phone = item.Phone;
+                existing.PasswordHash = item.PasswordHash;
+                existing.PasswordSalt = item.PasswordSalt;
+                existing.ModifiedDate = item.ModifiedDate;
+                        }
+                    }
+                }
+                await _dbcontext.SaveChangesAsync();
+
+                // 3.2 Load Response
+                var identifierListToloadResponseItems = new List<int>();
+
+                if (input.NewItems != null && input.NewItems.Count > 0)
+                {
+                    identifierListToloadResponseItems.AddRange(
+                        from t in newEFItems
+                        select t.CustomerID);
+                }
+                if (input.UpdateItems != null && input.UpdateItems.Count > 0)
+                {
+                    identifierListToloadResponseItems.AddRange(
+                        from t in input.UpdateItems
+                        select t.CustomerID);
+                }
+
+                var responseBodyWithNewAndUpdatedItems =
+                    (from t in _dbcontext.Customer
+                    where identifierListToloadResponseItems.Contains(t.CustomerID)
+
+                    select new CustomerDataModel
+                    {
+
+                        CustomerID = t.CustomerID,
+                        NameStyle = t.NameStyle,
+                        Title = t.Title,
+                        FirstName = t.FirstName,
+                        MiddleName = t.MiddleName,
+                        LastName = t.LastName,
+                        Suffix = t.Suffix,
+                        CompanyName = t.CompanyName,
+                        SalesPerson = t.SalesPerson,
+                        EmailAddress = t.EmailAddress,
+                        Phone = t.Phone,
+                        PasswordHash = t.PasswordHash,
+                        PasswordSalt = t.PasswordSalt,
+                        rowguid = t.rowguid,
+                        ModifiedDate = t.ModifiedDate,
+
+                    }).ToList();
+
+                // 3.3. Final Response
+                var response = new Response<MultiItemsCUDModel<CustomerIdentifier, CustomerDataModel>>
+                {
+                    Status = HttpStatusCode.OK,
+                    ResponseBody = new MultiItemsCUDModel<CustomerIdentifier, CustomerDataModel>
+                    {
+                        NewItems =
+                            input.NewItems != null && input.NewItems.Count > 0
+                                ? responseBodyWithNewAndUpdatedItems.Where(t => newEFItems.Any(t1 => t1.CustomerID == t.CustomerID)).ToList()
+                                : null,
+                        UpdateItems =
+                            input.UpdateItems != null && input.UpdateItems.Count > 0
+                                ? responseBodyWithNewAndUpdatedItems.Where(t => input.UpdateItems.Any(t1 => t1.CustomerID == t.CustomerID)).ToList()
+                                : null,
+                    }
+                };
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(new Response<MultiItemsCUDModel<CustomerIdentifier, CustomerDataModel>>
+                {
+                    Status = HttpStatusCode.InternalServerError,
+                    StatusMessage = "Create And/Or Update Failed. " + ex.Message
+                });
+            }
         }
 
         public async Task<Response<CustomerDataModel>> Update(CustomerIdentifier id, CustomerDataModel input)
@@ -405,6 +576,164 @@ private IQueryable<CustomerDataModel> GetIQueryableAsBulkUpdateResponse(
             catch (Exception ex)
             {
                 return await Task<Response<CustomerDataModel>>.FromResult(new Response<CustomerDataModel> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
+        public async Task<Response> Delete(CustomerIdentifier id)
+        {
+            if (id == null)
+                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.BadRequest });
+
+            try
+            {
+                var existing =
+                    (from t in _dbcontext.Customer
+                     where
+
+                    t.CustomerID == id.CustomerID
+                     select t).SingleOrDefault();
+
+                if (existing == null)
+                    return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.NotFound });
+
+                _dbcontext.Customer.Remove(existing);
+                await _dbcontext.SaveChangesAsync();
+
+                return await Task<Response>.FromResult(
+                    new Response
+                    {
+                        Status = HttpStatusCode.OK,
+                    });
+            }
+            catch (Exception ex)
+            {
+                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
+        private IQueryable<NameValuePair> GetCodeListQuery(
+            CustomerAdvancedQuery query, bool withPagingAndOrderBy)
+        {
+
+            var queryable =
+                from t in _dbcontext.Customer
+
+                where
+
+                    (string.IsNullOrEmpty(query.TextSearch) ||
+                        query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.Title!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.FirstName!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.MiddleName!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.LastName!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.Suffix!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.CompanyName!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.SalesPerson!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.EmailAddress!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.Phone!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.PasswordHash!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.PasswordSalt!, "%" + query.TextSearch + "%")) ||
+                        query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.Title!, query.TextSearch + "%") || EF.Functions.Like(t.FirstName!, query.TextSearch + "%") || EF.Functions.Like(t.MiddleName!, query.TextSearch + "%") || EF.Functions.Like(t.LastName!, query.TextSearch + "%") || EF.Functions.Like(t.Suffix!, query.TextSearch + "%") || EF.Functions.Like(t.CompanyName!, query.TextSearch + "%") || EF.Functions.Like(t.SalesPerson!, query.TextSearch + "%") || EF.Functions.Like(t.EmailAddress!, query.TextSearch + "%") || EF.Functions.Like(t.Phone!, query.TextSearch + "%") || EF.Functions.Like(t.PasswordHash!, query.TextSearch + "%") || EF.Functions.Like(t.PasswordSalt!, query.TextSearch + "%")) ||
+                        query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.Title!, "%" + query.TextSearch) || EF.Functions.Like(t.FirstName!, "%" + query.TextSearch) || EF.Functions.Like(t.MiddleName!, "%" + query.TextSearch) || EF.Functions.Like(t.LastName!, "%" + query.TextSearch) || EF.Functions.Like(t.Suffix!, "%" + query.TextSearch) || EF.Functions.Like(t.CompanyName!, "%" + query.TextSearch) || EF.Functions.Like(t.SalesPerson!, "%" + query.TextSearch) || EF.Functions.Like(t.EmailAddress!, "%" + query.TextSearch) || EF.Functions.Like(t.Phone!, "%" + query.TextSearch) || EF.Functions.Like(t.PasswordHash!, "%" + query.TextSearch) || EF.Functions.Like(t.PasswordSalt!, "%" + query.TextSearch)))
+                    &&
+
+                    (!query.NameStyle.HasValue || t.NameStyle == query.NameStyle)
+                    &&
+
+                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))
+                    &&
+
+                    (string.IsNullOrEmpty(query.Title) ||
+                            query.TitleSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Title!, "%" + query.Title + "%") ||
+                            query.TitleSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Title!, query.Title + "%") ||
+                            query.TitleSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Title!, "%" + query.Title))
+                    &&
+                    (string.IsNullOrEmpty(query.FirstName) ||
+                            query.FirstNameSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.FirstName!, "%" + query.FirstName + "%") ||
+                            query.FirstNameSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.FirstName!, query.FirstName + "%") ||
+                            query.FirstNameSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.FirstName!, "%" + query.FirstName))
+                    &&
+                    (string.IsNullOrEmpty(query.MiddleName) ||
+                            query.MiddleNameSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.MiddleName!, "%" + query.MiddleName + "%") ||
+                            query.MiddleNameSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.MiddleName!, query.MiddleName + "%") ||
+                            query.MiddleNameSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.MiddleName!, "%" + query.MiddleName))
+                    &&
+                    (string.IsNullOrEmpty(query.LastName) ||
+                            query.LastNameSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.LastName!, "%" + query.LastName + "%") ||
+                            query.LastNameSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.LastName!, query.LastName + "%") ||
+                            query.LastNameSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.LastName!, "%" + query.LastName))
+                    &&
+                    (string.IsNullOrEmpty(query.Suffix) ||
+                            query.SuffixSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Suffix!, "%" + query.Suffix + "%") ||
+                            query.SuffixSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Suffix!, query.Suffix + "%") ||
+                            query.SuffixSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Suffix!, "%" + query.Suffix))
+                    &&
+                    (string.IsNullOrEmpty(query.CompanyName) ||
+                            query.CompanyNameSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.CompanyName!, "%" + query.CompanyName + "%") ||
+                            query.CompanyNameSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.CompanyName!, query.CompanyName + "%") ||
+                            query.CompanyNameSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.CompanyName!, "%" + query.CompanyName))
+                    &&
+                    (string.IsNullOrEmpty(query.SalesPerson) ||
+                            query.SalesPersonSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.SalesPerson!, "%" + query.SalesPerson + "%") ||
+                            query.SalesPersonSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.SalesPerson!, query.SalesPerson + "%") ||
+                            query.SalesPersonSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.SalesPerson!, "%" + query.SalesPerson))
+                    &&
+                    (string.IsNullOrEmpty(query.EmailAddress) ||
+                            query.EmailAddressSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.EmailAddress!, "%" + query.EmailAddress + "%") ||
+                            query.EmailAddressSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.EmailAddress!, query.EmailAddress + "%") ||
+                            query.EmailAddressSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.EmailAddress!, "%" + query.EmailAddress))
+                    &&
+                    (string.IsNullOrEmpty(query.Phone) ||
+                            query.PhoneSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Phone!, "%" + query.Phone + "%") ||
+                            query.PhoneSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Phone!, query.Phone + "%") ||
+                            query.PhoneSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Phone!, "%" + query.Phone))
+                    &&
+                    (string.IsNullOrEmpty(query.PasswordHash) ||
+                            query.PasswordHashSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.PasswordHash!, "%" + query.PasswordHash + "%") ||
+                            query.PasswordHashSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.PasswordHash!, query.PasswordHash + "%") ||
+                            query.PasswordHashSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.PasswordHash!, "%" + query.PasswordHash))
+                    &&
+                    (string.IsNullOrEmpty(query.PasswordSalt) ||
+                            query.PasswordSaltSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.PasswordSalt!, "%" + query.PasswordSalt + "%") ||
+                            query.PasswordSaltSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.PasswordSalt!, query.PasswordSalt + "%") ||
+                            query.PasswordSaltSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.PasswordSalt!, "%" + query.PasswordSalt))
+
+                select new NameValuePair
+                {
+
+                        Value = t.CustomerID.ToString(),
+                        Name = t.Title,
+                };
+
+            // 1. Without Paging And OrderBy
+            if (!withPagingAndOrderBy)
+                return queryable;
+
+            // 2. With Paging And OrderBy
+            var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
+            if (orderBys.Any())
+            {
+                queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
+            }
+
+            queryable = queryable.Skip((query.PageIndex - 1) * query.PageSize).Take(query.PageSize);
+
+            return queryable;
+        }
+
+        public async Task<PagedResponse<NameValuePair[]>> GetCodeList(
+            CustomerAdvancedQuery query)
+        {
+            try
+            {
+                var queryableOfTotalCount = GetCodeListQuery(query, false);
+                var totalCount = queryableOfTotalCount.Count();
+
+                var queryable = GetCodeListQuery(query, true);
+                var result = await queryable.ToDynamicArrayAsync<NameValuePair>();
+                return new PagedResponse<NameValuePair[]>
+                {
+                    Status = HttpStatusCode.OK,
+                    Pagination = new PaginationResponse (totalCount, result?.Length ?? 0, query.PageIndex, query.PageSize, query.PaginationOption),
+                    ResponseBody = result,
+                };
+            }
+            catch (Exception ex)
+            {
+                return await Task<PagedResponse<NameValuePair[]>>.FromResult(new PagedResponse<NameValuePair[]>
+                {
+                    Status = HttpStatusCode.InternalServerError,
+                    StatusMessage = ex.Message
+                });
             }
         }
 

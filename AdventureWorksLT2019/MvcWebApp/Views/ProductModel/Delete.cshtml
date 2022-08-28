@@ -1,0 +1,65 @@
+@using AdventureWorksLT2019.Models.Definitions;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.Resx;
+@model MvcItemViewModel<ProductModelDataModel>
+@inject SelectListHelper selectListHelper;
+@inject IUIStrings localizor;
+@{
+    ViewData["Title"] = localizor.Get("Delete");
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h1>@localizor.Get("Delete")</h1>
+                <h4>@localizor.Get("ProductModel")</h4>
+                <h3>@localizor.Get("Are_you_sure_you_want_to_delete_this_")</h3>
+            </div>
+            @if (Model.Status != System.Net.HttpStatusCode.OK)
+            {
+                <div class="card-body">
+                    <div class="text-danger">@Model.StatusMessage</div>
+                </div>
+            }
+            <div class="card-body">
+                <div class="form-group">
+                    <label asp-for="Model!.ProductModelID" class="control-label" for="@Model!.HtmlId(nameof(ProductModelDataModel.ProductModelID))"></label>
+                    <input asp-for="Model!.ProductModelID" readonly class="form-control " id="@Model!.HtmlId(nameof(ProductModelDataModel.ProductModelID))" name="@Model!.HtmlName(nameof(ProductModelDataModel.ProductModelID))" data-nt-value="@Model!.Model!.ProductModelID"/>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Model!.Name" class="control-label" for="@Model!.HtmlId(nameof(ProductModelDataModel.Name))"></label>
+                    <input asp-for="Model!.Name" readonly class="form-control " id="@Model!.HtmlId(nameof(ProductModelDataModel.Name))" name="@Model!.HtmlName(nameof(ProductModelDataModel.Name))" data-nt-value="@Model!.Model!.Name"/>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Model!.CatalogDescription" class="control-label" for="@Model!.HtmlId(nameof(ProductModelDataModel.CatalogDescription))"></label>
+                    <input asp-for="Model!.CatalogDescription" readonly class="form-control " id="@Model!.HtmlId(nameof(ProductModelDataModel.CatalogDescription))" name="@Model!.HtmlName(nameof(ProductModelDataModel.CatalogDescription))" data-nt-value="@Model!.Model!.CatalogDescription"/>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Model!.rowguid" class="control-label" for="@Model!.HtmlId(nameof(ProductModelDataModel.rowguid))"></label>
+                    <input asp-for="Model!.rowguid" readonly class="form-control " id="@Model!.HtmlId(nameof(ProductModelDataModel.rowguid))" name="@Model!.HtmlName(nameof(ProductModelDataModel.rowguid))" data-nt-value="@Model!.Model!.rowguid"/>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Model!.ModifiedDate" class="control-label" for="@Model!.HtmlId(nameof(ProductModelDataModel.ModifiedDate))"></label>
+                    <input asp-for="Model!.ModifiedDate" readonly class="form-control " id="@Model!.HtmlId(nameof(ProductModelDataModel.ModifiedDate))" name="@Model!.HtmlName(nameof(ProductModelDataModel.ModifiedDate))" data-nt-value="@Model!.Model!.ModifiedDate"/>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="btn-group" role="group" aria-label="...">
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="Model!.ProductModelID" id="@Model.HtmlId(nameof(ProductModelDataModel.ProductModelID))" name="@Model.HtmlName(nameof(ProductModelDataModel.ProductModelID))"/>
+                        <button class="btn btn-primary" role="button" type="submit" title="@localizor.Get("Delete")">
+                            <span class="fa-solid fa-trash"></span><span class="nt-submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Delete")</span>
+                        </button>
+                    </form>
+                    <a asp-area="" asp-controller="ProductModel" asp-action="Create" class="btn btn-secondary" role="button" title="@localizor.Get("Reset")">
+                        <i class="fa-solid fa-refresh"></i><span class="nt-submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Reset")</span>
+                    </a>
+                    <a asp-area="" asp-controller="ProductModel" asp-action="Index" class="btn btn-secondary" role="button" title="@localizor.Get("Back_to_List")">
+                        <i class="fa-solid fa-arrow-left"></i><span class="submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline">@localizor.Get("Back_to_List")</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

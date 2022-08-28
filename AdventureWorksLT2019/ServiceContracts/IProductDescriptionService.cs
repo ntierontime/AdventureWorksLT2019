@@ -8,6 +8,16 @@ namespace AdventureWorksLT2019.ServiceContracts
         Task<PagedResponse<ProductDescriptionDataModel[]>> Search(
             ProductDescriptionAdvancedQuery query);
 
+        Task<ProductDescriptionCompositeModel> GetCompositeModel(
+            ProductDescriptionIdentifier id,
+            Dictionary<ProductDescriptionCompositeModel.__DataOptions__, CompositeListItemRequest> listItemRequest,
+            ProductDescriptionCompositeModel.__DataOptions__[]? dataOptions = null);
+
+        Task<Response> BulkDelete(List<ProductDescriptionIdentifier> ids);
+
+        Task<Response<MultiItemsCUDModel<ProductDescriptionIdentifier, ProductDescriptionDataModel>>> MultiItemsCUD(
+            MultiItemsCUDModel<ProductDescriptionIdentifier, ProductDescriptionDataModel> input);
+
         Task<Response<ProductDescriptionDataModel>> Update(ProductDescriptionIdentifier id, ProductDescriptionDataModel input);
 
         Task<Response<ProductDescriptionDataModel>> Get(ProductDescriptionIdentifier id);

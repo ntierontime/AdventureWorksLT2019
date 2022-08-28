@@ -1,0 +1,84 @@
+@using AdventureWorksLT2019.Models.Definitions;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.Resx;
+@model MvcItemViewModel<SalesOrderDetailDataModel.DefaultView>
+@inject SelectListHelper selectListHelper;
+@inject IUIStrings localizor;
+@{
+    ViewData["Title"] = localizor.Get("Delete");
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h1>@localizor.Get("Delete")</h1>
+                <h4>@localizor.Get("SalesOrderDetail")</h4>
+                <h3>@localizor.Get("Are_you_sure_you_want_to_delete_this_")</h3>
+            </div>
+            @if (Model.Status != System.Net.HttpStatusCode.OK)
+            {
+                <div class="card-body">
+                    <div class="text-danger">@Model.StatusMessage</div>
+                </div>
+            }
+            <div class="card-body">
+                <div class="form-group">
+                    <label asp-for="Model!.SalesOrderID" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.SalesOrderID))"></label>                <div class="form-control" readonly>
+                    <a asp-area="" asp-controller="SalesOrderHeader" asp-action="Dashboard" asp-route-salesorderid="@Model!.Model!.SalesOrderID">@Model!.Model!.SalesOrderHeader_Name</a>
+                </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Model!.SalesOrderDetailID" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.SalesOrderDetailID))"></label>
+                    <input asp-for="Model!.SalesOrderDetailID" readonly class="form-control " id="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.SalesOrderDetailID))" name="@Model!.HtmlName(nameof(SalesOrderDetailDataModel.DefaultView.SalesOrderDetailID))" data-nt-value="@Model!.Model!.SalesOrderDetailID"/>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Model!.OrderQty" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.OrderQty))"></label>
+                    <input asp-for="Model!.OrderQty" readonly class="form-control " id="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.OrderQty))" name="@Model!.HtmlName(nameof(SalesOrderDetailDataModel.DefaultView.OrderQty))" data-nt-value="@Model!.Model!.OrderQty"/>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Model!.ProductID" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.ProductID))"></label>                <div class="form-control" readonly>
+                    <a asp-area="" asp-controller="Product" asp-action="Dashboard" asp-route-productid="@Model!.Model!.ProductID">@Model!.Model!.Product_Name</a>
+                </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Model!.UnitPrice" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.UnitPrice))"></label>
+                    <input asp-for="Model!.UnitPrice" readonly class="form-control " id="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.UnitPrice))" name="@Model!.HtmlName(nameof(SalesOrderDetailDataModel.DefaultView.UnitPrice))" data-nt-value="@Model!.Model!.UnitPrice"/>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Model!.UnitPriceDiscount" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.UnitPriceDiscount))"></label>
+                    <input asp-for="Model!.UnitPriceDiscount" readonly class="form-control " id="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.UnitPriceDiscount))" name="@Model!.HtmlName(nameof(SalesOrderDetailDataModel.DefaultView.UnitPriceDiscount))" data-nt-value="@Model!.Model!.UnitPriceDiscount"/>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Model!.LineTotal" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.LineTotal))"></label>
+                    <input asp-for="Model!.LineTotal" readonly class="form-control " id="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.LineTotal))" name="@Model!.HtmlName(nameof(SalesOrderDetailDataModel.DefaultView.LineTotal))" data-nt-value="@Model!.Model!.LineTotal"/>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Model!.rowguid" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.rowguid))"></label>
+                    <input asp-for="Model!.rowguid" readonly class="form-control " id="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.rowguid))" name="@Model!.HtmlName(nameof(SalesOrderDetailDataModel.DefaultView.rowguid))" data-nt-value="@Model!.Model!.rowguid"/>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Model!.ModifiedDate" class="control-label" for="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.ModifiedDate))"></label>
+                    <input asp-for="Model!.ModifiedDate" readonly class="form-control " id="@Model!.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.ModifiedDate))" name="@Model!.HtmlName(nameof(SalesOrderDetailDataModel.DefaultView.ModifiedDate))" data-nt-value="@Model!.Model!.ModifiedDate"/>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="btn-group" role="group" aria-label="...">
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="Model!.SalesOrderID" id="@Model.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.SalesOrderID))" name="@Model.HtmlName(nameof(SalesOrderDetailDataModel.DefaultView.SalesOrderID))"/>
+                        <input type="hidden" asp-for="Model!.SalesOrderDetailID" id="@Model.HtmlId(nameof(SalesOrderDetailDataModel.DefaultView.SalesOrderDetailID))" name="@Model.HtmlName(nameof(SalesOrderDetailDataModel.DefaultView.SalesOrderDetailID))"/>
+                        <button class="btn btn-primary" role="button" type="submit" title="@localizor.Get("Delete")">
+                            <span class="fa-solid fa-trash"></span><span class="nt-submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Delete")</span>
+                        </button>
+                    </form>
+                    <a asp-area="" asp-controller="SalesOrderDetail" asp-action="Create" class="btn btn-secondary" role="button" title="@localizor.Get("Reset")">
+                        <i class="fa-solid fa-refresh"></i><span class="nt-submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Reset")</span>
+                    </a>
+                    <a asp-area="" asp-controller="SalesOrderDetail" asp-action="Index" class="btn btn-secondary" role="button" title="@localizor.Get("Back_to_List")">
+                        <i class="fa-solid fa-arrow-left"></i><span class="submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline">@localizor.Get("Back_to_List")</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

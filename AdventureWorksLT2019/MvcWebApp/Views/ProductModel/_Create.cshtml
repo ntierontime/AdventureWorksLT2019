@@ -1,0 +1,36 @@
+@using Framework.Models;
+@using AdventureWorksLT2019.Models.Definitions;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.Resx;
+@model MvcItemViewModel<ProductModelDataModel>
+@inject SelectListHelper selectListHelper;
+@inject IUIStrings localizor;
+@{
+    var format_Please_Select = localizor.Get("Format_Please_Select");
+}
+@if (Model.Status != System.Net.HttpStatusCode.OK)
+{
+    <div class="row">
+        <div class="text-danger">@Model.StatusMessage</div>
+    </div>
+}
+else
+{
+    <input class="nt-hidden-modal-title" value="@Model!.Model!.Name" type="hidden" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Model!.Name" class="control-label" for="@Model!.HtmlId(nameof(ProductModelDataModel.Name))"></label>
+        <input asp-for="Model!.Name" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ProductModelDataModel.Name))" name="@Model!.HtmlName(nameof(ProductModelDataModel.Name))" data-nt-value="@Model!.Model!.Name"/>
+        <span asp-validation-for="Model!.Name" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(ProductModelDataModel.Name))"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.CatalogDescription" class="control-label" for="@Model!.HtmlId(nameof(ProductModelDataModel.CatalogDescription))"></label>
+        <input asp-for="Model!.CatalogDescription" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ProductModelDataModel.CatalogDescription))" name="@Model!.HtmlName(nameof(ProductModelDataModel.CatalogDescription))" data-nt-value="@Model!.Model!.CatalogDescription"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.ModifiedDate" class="control-label" for="@Model!.HtmlId(nameof(ProductModelDataModel.ModifiedDate))"></label>
+        <input asp-for="Model!.ModifiedDate" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ProductModelDataModel.ModifiedDate))" name="@Model!.HtmlName(nameof(ProductModelDataModel.ModifiedDate))" data-nt-value="@Model!.Model!.ModifiedDate"/>
+        <span asp-validation-for="Model!.ModifiedDate" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(ProductModelDataModel.ModifiedDate))"></span>
+    </div>
+}

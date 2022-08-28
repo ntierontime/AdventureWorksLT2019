@@ -8,7 +8,21 @@ namespace AdventureWorksLT2019.RepositoryContracts
         Task<PagedResponse<BuildVersionDataModel[]>> Search(
             BuildVersionAdvancedQuery query);
 
+        Task<Response> BulkDelete(List<BuildVersionIdentifier> ids);
+
+        Task<Response<MultiItemsCUDModel<BuildVersionIdentifier, BuildVersionDataModel>>> MultiItemsCUD(
+            MultiItemsCUDModel<BuildVersionIdentifier, BuildVersionDataModel> input);
+
+        Task<Response<BuildVersionDataModel>> Update(BuildVersionIdentifier id, BuildVersionDataModel input);
+
         Task<Response<BuildVersionDataModel>> Get(BuildVersionIdentifier id);
+
+        Task<Response<BuildVersionDataModel>> Create(BuildVersionDataModel input);
+
+        Task<Response> Delete(BuildVersionIdentifier id);
+
+        Task<PagedResponse<NameValuePair[]>> GetCodeList(
+            BuildVersionAdvancedQuery query);
     }
 }
 

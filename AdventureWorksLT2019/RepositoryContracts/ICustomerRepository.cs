@@ -8,13 +8,23 @@ namespace AdventureWorksLT2019.RepositoryContracts
         Task<PagedResponse<CustomerDataModel[]>> Search(
             CustomerAdvancedQuery query);
 
+        Task<Response> BulkDelete(List<CustomerIdentifier> ids);
+
         Task<PagedResponse<CustomerDataModel[]>> BulkUpdate(BatchActionViewModel<CustomerIdentifier, CustomerDataModel> data);
+
+        Task<Response<MultiItemsCUDModel<CustomerIdentifier, CustomerDataModel>>> MultiItemsCUD(
+            MultiItemsCUDModel<CustomerIdentifier, CustomerDataModel> input);
 
         Task<Response<CustomerDataModel>> Update(CustomerIdentifier id, CustomerDataModel input);
 
         Task<Response<CustomerDataModel>> Get(CustomerIdentifier id);
 
         Task<Response<CustomerDataModel>> Create(CustomerDataModel input);
+
+        Task<Response> Delete(CustomerIdentifier id);
+
+        Task<PagedResponse<NameValuePair[]>> GetCodeList(
+            CustomerAdvancedQuery query);
     }
 }
 

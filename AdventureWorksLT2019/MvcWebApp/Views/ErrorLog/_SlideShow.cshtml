@@ -1,0 +1,42 @@
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.Resx;
+@using Framework.Models;
+@model PagedViewModel<ErrorLogDataModel[]>
+@inject IUIStrings localizor;
+@if (Model != null && Model.Result != null && Model.Result.Status == System.Net.HttpStatusCode.OK && Model.Result.ResponseBody != null)
+{
+    <!-- Carousel -->
+    <div id="slideshow-errorlog" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        <!-- Indicators/dots -->
+        <div class="carousel-indicators">
+            @for (var i = 0; i < Model.Result.ResponseBody.Length; i++)
+            {
+                <button type="button" data-bs-target="#slideshow-errorlog" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")"></button>
+            }
+        </div>
+        <!-- The slideshow/carousel -->
+        <div class="carousel-inner">
+            @for (var i = 0; i < Model.Result.ResponseBody.Length; i++)
+            {
+                <div class="carousel-item@(i == 0 ? " active" : "")">
+                    <img src="images/Background@(i.ToString("d2")).png" alt="@Model.Result.ResponseBody[i].UserName" class="d-block w-100">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 class="card-title">@Model.Result.ResponseBody[i].UserName</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@Model.Result.ResponseBody[i].UserName</h6>
+                        <p class="card-text">@Model.Result.ResponseBody[i].UserName</p>
+                        <a asp-area="" asp-controller="ErrorLog" asp-action="Dashboard" asp-route-errorlogid="@Model.Result.ResponseBody![i].ErrorLogID" title="@Model.Result.ResponseBody[i].UserName">
+                             @Model.Result.ResponseBody[i].UserName
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+        <!-- Left and right controls/icons -->
+        <button class="carousel-control-prev text-black" type="button" data-bs-target="#slideshow-errorlog" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon text-black"></span>
+        </button>
+        <button class="carousel-control-next text-black" type="button" data-bs-target="#slideshow-errorlog" data-bs-slide="next">
+            <span class="carousel-control-next-icon text-black"></span>
+        </button>
+    </div>
+}

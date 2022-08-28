@@ -37,6 +37,23 @@ namespace AdventureWorksLT2019.WebApiControllers
         }
 
         // [Authorize]
+        [Route("{SalesOrderID}")]
+        [HttpGet]
+        public async Task<ActionResult<SalesOrderHeaderCompositeModel>> GetCompositeModel(SalesOrderHeaderIdentifier id)
+        {
+            var serviceResponse = await _thisService.GetCompositeModel(id, null);
+            return Ok(serviceResponse);
+        }
+
+        // [Authorize]
+        [HttpDelete]
+        public async Task<ActionResult> BulkDelete(List<SalesOrderHeaderIdentifier> ids)
+        {
+            var serviceResponse = await _thisService.BulkDelete(ids);
+            return ReturnWithoutBodyActionResult(serviceResponse);
+        }
+
+        // [Authorize]
         [HttpPut]
         public async Task<ActionResult<PagedResponse<SalesOrderHeaderDataModel.DefaultView[]>>> BulkUpdate(BatchActionViewModel<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView> data)
         {
@@ -68,6 +85,15 @@ namespace AdventureWorksLT2019.WebApiControllers
         {
             var serviceResponse = await _thisService.Create(input);
             return ReturnResultOnlyActionResult(serviceResponse);
+        }
+
+        // [Authorize]
+        [Route("{SalesOrderID}")]
+        [HttpDelete]
+        public async Task<ActionResult> Delete([FromRoute]SalesOrderHeaderIdentifier id)
+        {
+            var serviceResponse = await _thisService.Delete(id);
+            return ReturnWithoutBodyActionResult(serviceResponse);
         }
 
         /*

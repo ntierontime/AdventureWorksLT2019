@@ -8,6 +8,11 @@ namespace AdventureWorksLT2019.RepositoryContracts
         Task<PagedResponse<ProductDescriptionDataModel[]>> Search(
             ProductDescriptionAdvancedQuery query);
 
+        Task<Response> BulkDelete(List<ProductDescriptionIdentifier> ids);
+
+        Task<Response<MultiItemsCUDModel<ProductDescriptionIdentifier, ProductDescriptionDataModel>>> MultiItemsCUD(
+            MultiItemsCUDModel<ProductDescriptionIdentifier, ProductDescriptionDataModel> input);
+
         Task<Response<ProductDescriptionDataModel>> Update(ProductDescriptionIdentifier id, ProductDescriptionDataModel input);
 
         Task<Response<ProductDescriptionDataModel>> Get(ProductDescriptionIdentifier id);

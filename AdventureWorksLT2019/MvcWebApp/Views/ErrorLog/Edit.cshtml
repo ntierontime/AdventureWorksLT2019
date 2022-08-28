@@ -1,0 +1,89 @@
+@using AdventureWorksLT2019.Models.Definitions;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.Resx;
+@model MvcItemViewModel<ErrorLogDataModel>
+@inject SelectListHelper selectListHelper;
+@inject IUIStrings localizor;
+@{
+    ViewData["Title"] = localizor.Get("Edit");
+    var format_Please_Select = localizor.Get("Format_Please_Select");
+}
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit">
+            <div class="card">
+                <div class="card-header">
+                    <h1>@localizor.Get("Edit")</h1>
+                    <h4>@localizor.Get("ElmahError")</h4>
+                </div>
+                @if (Model.Status != System.Net.HttpStatusCode.OK)
+                {
+                    <div class="card-body">
+                        <div class="text-danger">@Model.StatusMessage</div>
+                    </div>
+                }
+                <div class="card-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ErrorLogID" class="control-label" for="@Model!.HtmlId(nameof(ErrorLogDataModel.ErrorLogID))"></label>
+                        <input asp-for="Model!.ErrorLogID" readonly class="form-control " id="@Model!.HtmlId(nameof(ErrorLogDataModel.ErrorLogID))" name="@Model!.HtmlName(nameof(ErrorLogDataModel.ErrorLogID))" data-nt-value="@Model!.Model!.ErrorLogID"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ErrorTime" class="control-label" for="@Model!.HtmlId(nameof(ErrorLogDataModel.ErrorTime))"></label>
+                        <input asp-for="Model!.ErrorTime" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ErrorLogDataModel.ErrorTime))" name="@Model!.HtmlName(nameof(ErrorLogDataModel.ErrorTime))" data-nt-value="@Model!.Model!.ErrorTime"/>
+                        <span asp-validation-for="Model!.ErrorTime" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(ErrorLogDataModel.ErrorTime))"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.UserName" class="control-label" for="@Model!.HtmlId(nameof(ErrorLogDataModel.UserName))"></label>
+                        <input asp-for="Model!.UserName" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ErrorLogDataModel.UserName))" name="@Model!.HtmlName(nameof(ErrorLogDataModel.UserName))" data-nt-value="@Model!.Model!.UserName"/>
+                        <span asp-validation-for="Model!.UserName" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(ErrorLogDataModel.UserName))"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ErrorNumber" class="control-label" for="@Model!.HtmlId(nameof(ErrorLogDataModel.ErrorNumber))"></label>
+                        <input asp-for="Model!.ErrorNumber" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ErrorLogDataModel.ErrorNumber))" name="@Model!.HtmlName(nameof(ErrorLogDataModel.ErrorNumber))" data-nt-value="@Model!.Model!.ErrorNumber"/>
+                        <span asp-validation-for="Model!.ErrorNumber" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(ErrorLogDataModel.ErrorNumber))"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ErrorSeverity" class="control-label" for="@Model!.HtmlId(nameof(ErrorLogDataModel.ErrorSeverity))"></label>
+                        <input asp-for="Model!.ErrorSeverity" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ErrorLogDataModel.ErrorSeverity))" name="@Model!.HtmlName(nameof(ErrorLogDataModel.ErrorSeverity))" data-nt-value="@Model!.Model!.ErrorSeverity"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ErrorState" class="control-label" for="@Model!.HtmlId(nameof(ErrorLogDataModel.ErrorState))"></label>
+                        <input asp-for="Model!.ErrorState" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ErrorLogDataModel.ErrorState))" name="@Model!.HtmlName(nameof(ErrorLogDataModel.ErrorState))" data-nt-value="@Model!.Model!.ErrorState"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ErrorProcedure" class="control-label" for="@Model!.HtmlId(nameof(ErrorLogDataModel.ErrorProcedure))"></label>
+                        <input asp-for="Model!.ErrorProcedure" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ErrorLogDataModel.ErrorProcedure))" name="@Model!.HtmlName(nameof(ErrorLogDataModel.ErrorProcedure))" data-nt-value="@Model!.Model!.ErrorProcedure"/>
+                        <span asp-validation-for="Model!.ErrorProcedure" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(ErrorLogDataModel.ErrorProcedure))"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ErrorLine" class="control-label" for="@Model!.HtmlId(nameof(ErrorLogDataModel.ErrorLine))"></label>
+                        <input asp-for="Model!.ErrorLine" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ErrorLogDataModel.ErrorLine))" name="@Model!.HtmlName(nameof(ErrorLogDataModel.ErrorLine))" data-nt-value="@Model!.Model!.ErrorLine"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ErrorMessage" class="control-label" for="@Model!.HtmlId(nameof(ErrorLogDataModel.ErrorMessage))"></label>
+                        <input asp-for="Model!.ErrorMessage" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ErrorLogDataModel.ErrorMessage))" name="@Model!.HtmlName(nameof(ErrorLogDataModel.ErrorMessage))" data-nt-value="@Model!.Model!.ErrorMessage"/>
+                        <span asp-validation-for="Model!.ErrorMessage" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(ErrorLogDataModel.ErrorMessage))"></span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button class="btn btn-primary" role="button" type="submit">
+                            <i class="fa-solid fa-check-circle"></i><span class="nt-submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Save")</span>
+                        </button>
+                        <a asp-area="" asp-controller="ErrorLog" asp-action="Edit" asp-route-errorlogid="@Model!.Model!.ErrorLogID" class="btn btn-secondary" role="button" title="@localizor.Get("Refresh")">
+                            <i class="fa-solid fa-refresh"></i><span class="nt-submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Refresh")</span>
+                        </a>
+                        <a asp-area="" asp-controller="ErrorLog" asp-action="Index" class="btn btn-secondary" role="button" title="@localizor.Get("Back_to_List")">
+                            <i class="fa-solid fa-arrow-left"></i><span class="submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline">@localizor.Get("Back_to_List")</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,114 @@
+@using Framework.Models;
+@using AdventureWorksLT2019.Models.Definitions;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.Resx;
+@model MvcItemViewModel<CustomerDataModel>
+@inject SelectListHelper selectListHelper;
+@inject IUIStrings localizor;
+@{
+    ViewData["Title"] = localizor.Get("Details");
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h1>@localizor.Get("Details")</h1>
+                <h4>@localizor.Get("Customer")</h4>
+            </div>
+            @if (Model.Status != System.Net.HttpStatusCode.OK)
+            {
+                <div class="card-body">
+                    <div class="text-danger">@Model.StatusMessage</div>
+                </div>
+            }
+            else
+            {
+                <div class="card-body">
+                    <div class="form-group">
+                        <label asp-for="Model!.CustomerID" class="control-label" for="@Model!.HtmlId(nameof(CustomerDataModel.CustomerID))"></label>
+                        <input asp-for="Model!.CustomerID" readonly class="form-control " id="@Model!.HtmlId(nameof(CustomerDataModel.CustomerID))" name="@Model!.HtmlName(nameof(CustomerDataModel.CustomerID))" data-nt-value="@Model!.Model!.CustomerID"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.NameStyle" class="control-label" for="@Model!.HtmlId(nameof(CustomerDataModel.NameStyle))"></label>
+                        @Html.DisplayFor(m=>m.Model!.NameStyle)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.Title" class="control-label" for="@Model!.HtmlId(nameof(CustomerDataModel.Title))"></label>
+                        <input asp-for="Model!.Title" readonly class="form-control " id="@Model!.HtmlId(nameof(CustomerDataModel.Title))" name="@Model!.HtmlName(nameof(CustomerDataModel.Title))" data-nt-value="@Model!.Model!.Title"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.FirstName" class="control-label" for="@Model!.HtmlId(nameof(CustomerDataModel.FirstName))"></label>
+                        <input asp-for="Model!.FirstName" readonly class="form-control " id="@Model!.HtmlId(nameof(CustomerDataModel.FirstName))" name="@Model!.HtmlName(nameof(CustomerDataModel.FirstName))" data-nt-value="@Model!.Model!.FirstName"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.MiddleName" class="control-label" for="@Model!.HtmlId(nameof(CustomerDataModel.MiddleName))"></label>
+                        <input asp-for="Model!.MiddleName" readonly class="form-control " id="@Model!.HtmlId(nameof(CustomerDataModel.MiddleName))" name="@Model!.HtmlName(nameof(CustomerDataModel.MiddleName))" data-nt-value="@Model!.Model!.MiddleName"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.LastName" class="control-label" for="@Model!.HtmlId(nameof(CustomerDataModel.LastName))"></label>
+                        <input asp-for="Model!.LastName" readonly class="form-control " id="@Model!.HtmlId(nameof(CustomerDataModel.LastName))" name="@Model!.HtmlName(nameof(CustomerDataModel.LastName))" data-nt-value="@Model!.Model!.LastName"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.Suffix" class="control-label" for="@Model!.HtmlId(nameof(CustomerDataModel.Suffix))"></label>
+                        <input asp-for="Model!.Suffix" readonly class="form-control " id="@Model!.HtmlId(nameof(CustomerDataModel.Suffix))" name="@Model!.HtmlName(nameof(CustomerDataModel.Suffix))" data-nt-value="@Model!.Model!.Suffix"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.CompanyName" class="control-label" for="@Model!.HtmlId(nameof(CustomerDataModel.CompanyName))"></label>
+                        <input asp-for="Model!.CompanyName" readonly class="form-control " id="@Model!.HtmlId(nameof(CustomerDataModel.CompanyName))" name="@Model!.HtmlName(nameof(CustomerDataModel.CompanyName))" data-nt-value="@Model!.Model!.CompanyName"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.SalesPerson" class="control-label" for="@Model!.HtmlId(nameof(CustomerDataModel.SalesPerson))"></label>
+                        <input asp-for="Model!.SalesPerson" readonly class="form-control " id="@Model!.HtmlId(nameof(CustomerDataModel.SalesPerson))" name="@Model!.HtmlName(nameof(CustomerDataModel.SalesPerson))" data-nt-value="@Model!.Model!.SalesPerson"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.EmailAddress" class="control-label" for="@Model!.HtmlId(nameof(CustomerDataModel.EmailAddress))"></label>
+                        <input asp-for="Model!.EmailAddress" readonly class="form-control " id="@Model!.HtmlId(nameof(CustomerDataModel.EmailAddress))" name="@Model!.HtmlName(nameof(CustomerDataModel.EmailAddress))" data-nt-value="@Model!.Model!.EmailAddress"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.Phone" class="control-label" for="@Model!.HtmlId(nameof(CustomerDataModel.Phone))"></label>
+                        <input asp-for="Model!.Phone" readonly class="form-control " id="@Model!.HtmlId(nameof(CustomerDataModel.Phone))" name="@Model!.HtmlName(nameof(CustomerDataModel.Phone))" data-nt-value="@Model!.Model!.Phone"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.PasswordHash" class="control-label" for="@Model!.HtmlId(nameof(CustomerDataModel.PasswordHash))"></label>
+                        <input asp-for="Model!.PasswordHash" readonly class="form-control " id="@Model!.HtmlId(nameof(CustomerDataModel.PasswordHash))" name="@Model!.HtmlName(nameof(CustomerDataModel.PasswordHash))" data-nt-value="@Model!.Model!.PasswordHash"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.PasswordSalt" class="control-label" for="@Model!.HtmlId(nameof(CustomerDataModel.PasswordSalt))"></label>
+                        <input asp-for="Model!.PasswordSalt" readonly class="form-control " id="@Model!.HtmlId(nameof(CustomerDataModel.PasswordSalt))" name="@Model!.HtmlName(nameof(CustomerDataModel.PasswordSalt))" data-nt-value="@Model!.Model!.PasswordSalt"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.rowguid" class="control-label" for="@Model!.HtmlId(nameof(CustomerDataModel.rowguid))"></label>
+                        <input asp-for="Model!.rowguid" readonly class="form-control " id="@Model!.HtmlId(nameof(CustomerDataModel.rowguid))" name="@Model!.HtmlName(nameof(CustomerDataModel.rowguid))" data-nt-value="@Model!.Model!.rowguid"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ModifiedDate" class="control-label" for="@Model!.HtmlId(nameof(CustomerDataModel.ModifiedDate))"></label>
+                        <input asp-for="Model!.ModifiedDate" readonly class="form-control " id="@Model!.HtmlId(nameof(CustomerDataModel.ModifiedDate))" name="@Model!.HtmlName(nameof(CustomerDataModel.ModifiedDate))" data-nt-value="@Model!.Model!.ModifiedDate"/>
+                    </div>
+                </div>
+            }
+            <div class="card-footer">
+                <div class="btn-group" role="group" aria-label="...">
+                    <a asp-area="" asp-controller="Customer" asp-action="Details" asp-route-customerid="@Model!.Model!.CustomerID" class="btn btn-secondary" role="button" title="@localizor.Get("Refresh")">
+                        <i class="fa-solid fa-refresh"></i><span class="nt-submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Refresh")</span>
+                    </a>
+                    @if (Model!.UIItemFeatures.PrimayEditViewContainer == CrudViewContainers.StandaloneView)
+                    {
+                        <a asp-area="" asp-controller="Customer" asp-action="Edit" asp-route-customerid="@Model!.Model!.CustomerID" class="btn btn-default" role="button" title="@localizor.Get("Edit")">
+                            <i class="fa fa-edit"></i><span class="nt-submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Edit")</span>
+                        </a>
+                    }
+                    @if (Model!.UIItemFeatures.PrimayDeleteViewContainer == CrudViewContainers.StandaloneView)
+                    {
+                        <a asp-area="" asp-controller="Customer" asp-action="Delete" asp-route-customerid="@Model!.Model!.CustomerID" class="btn btn-default" role="button" title="@localizor.Get("Delete")">
+                            <i class="fa fa-trash"></i><span class="nt-submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Delete")</span>
+                        </a>
+                    }
+                    <a asp-area="" asp-controller="Customer" asp-action="Index" class="btn btn-secondary" role="button" title="@localizor.Get("Back_to_List")">
+                        <i class="fa-solid fa-arrow-left"></i><span class="submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline">@localizor.Get("Back_to_List")</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

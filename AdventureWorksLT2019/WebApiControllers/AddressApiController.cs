@@ -38,6 +38,23 @@ namespace AdventureWorksLT2019.WebApiControllers
 
         // [Authorize]
         [Route("{AddressID}")]
+        [HttpGet]
+        public async Task<ActionResult<AddressCompositeModel>> GetCompositeModel(AddressIdentifier id)
+        {
+            var serviceResponse = await _thisService.GetCompositeModel(id, null);
+            return Ok(serviceResponse);
+        }
+
+        // [Authorize]
+        [HttpDelete]
+        public async Task<ActionResult> BulkDelete(List<AddressIdentifier> ids)
+        {
+            var serviceResponse = await _thisService.BulkDelete(ids);
+            return ReturnWithoutBodyActionResult(serviceResponse);
+        }
+
+        // [Authorize]
+        [Route("{AddressID}")]
         [HttpPut]
         public async Task<ActionResult<AddressDataModel>> Put([FromRoute]AddressIdentifier id, [FromBody]AddressDataModel input)
         {
@@ -60,6 +77,15 @@ namespace AdventureWorksLT2019.WebApiControllers
         {
             var serviceResponse = await _thisService.Create(input);
             return ReturnResultOnlyActionResult(serviceResponse);
+        }
+
+        // [Authorize]
+        [Route("{AddressID}")]
+        [HttpDelete]
+        public async Task<ActionResult> Delete([FromRoute]AddressIdentifier id)
+        {
+            var serviceResponse = await _thisService.Delete(id);
+            return ReturnWithoutBodyActionResult(serviceResponse);
         }
 
         /*
