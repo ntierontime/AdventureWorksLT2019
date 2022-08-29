@@ -168,5 +168,8 @@ namespace Framework.Helpers
             return sb.ToString();
         }
     }
+    public class GeoHelperSinglton : Singleton<GeoHelper>
+    {
+    }
 }
 

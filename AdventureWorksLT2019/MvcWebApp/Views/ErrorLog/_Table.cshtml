@@ -11,6 +11,10 @@
     <table class="table table-hover table-bordered table-striped align-middle">
         <thead class="table-dark">
             <tr class="pt-0 pb-0">
+                @if (Model!.UIListSetting.ShowListBulkActionRelated(true))
+                {
+                    <th class="p-0" style="width: 1% !important;"></th>
+                }
                 @if (Model!.UIListSetting.ShowItemButtons())
                 {
                     <th class="p-0" style="width: 1% !important;"></th>

@@ -39,6 +39,23 @@ namespace AdventureWorksLT2019.WebApiControllers
 
         // [Authorize]
         [Route("{ErrorLogID}")]
+        [HttpGet]
+        public async Task<ActionResult<ErrorLogCompositeModel>> GetCompositeModel(ErrorLogIdentifier id)
+        {
+            var serviceResponse = await _thisService.GetCompositeModel(id, null);
+            return Ok(serviceResponse);
+        }
+
+        // [Authorize]
+        [HttpDelete]
+        public async Task<ActionResult> BulkDelete(List<ErrorLogIdentifier> ids)
+        {
+            var serviceResponse = await _thisService.BulkDelete(ids);
+            return ReturnWithoutBodyActionResult(serviceResponse);
+        }
+
+        // [Authorize]
+        [Route("{ErrorLogID}")]
         [HttpPut]
         public async Task<ActionResult<ErrorLogDataModel>> Put([FromRoute]ErrorLogIdentifier id, [FromBody]ErrorLogDataModel input)
         {
@@ -61,6 +78,15 @@ namespace AdventureWorksLT2019.WebApiControllers
         {
             var serviceResponse = await _thisService.Create(input);
             return ReturnResultOnlyActionResult(serviceResponse);
+        }
+
+        // [Authorize]
+        [Route("{ErrorLogID}")]
+        [HttpDelete]
+        public async Task<ActionResult> Delete([FromRoute]ErrorLogIdentifier id)
+        {
+            var serviceResponse = await _thisService.Delete(id);
+            return ReturnWithoutBodyActionResult(serviceResponse);
         }
 
         /*
