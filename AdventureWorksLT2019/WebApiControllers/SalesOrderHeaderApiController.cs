@@ -1,4 +1,5 @@
 using AdventureWorksLT2019.ServiceContracts;
+using Framework.Mvc;
 using AdventureWorksLT2019.Models;
 using Framework.Models;
 
@@ -29,7 +30,7 @@ namespace AdventureWorksLT2019.WebApiControllers
         // [Authorize]
         [HttpGet]
         [HttpPost]
-        public async Task<ActionResult<PagedResponse<SalesOrderHeaderDataModel.DefaultView[]>>> Search(
+        public async Task<ActionResult<ListResponse<SalesOrderHeaderDataModel.DefaultView[]>>> Search(
             SalesOrderHeaderAdvancedQuery query)
         {
             var serviceResponse = await _thisService.Search(query);
@@ -37,25 +38,8 @@ namespace AdventureWorksLT2019.WebApiControllers
         }
 
         // [Authorize]
-        [Route("{SalesOrderID}")]
-        [HttpGet]
-        public async Task<ActionResult<SalesOrderHeaderCompositeModel>> GetCompositeModel(SalesOrderHeaderIdentifier id)
-        {
-            var serviceResponse = await _thisService.GetCompositeModel(id, null);
-            return Ok(serviceResponse);
-        }
-
-        // [Authorize]
-        [HttpDelete]
-        public async Task<ActionResult> BulkDelete(List<SalesOrderHeaderIdentifier> ids)
-        {
-            var serviceResponse = await _thisService.BulkDelete(ids);
-            return ReturnWithoutBodyActionResult(serviceResponse);
-        }
-
-        // [Authorize]
         [HttpPut]
-        public async Task<ActionResult<PagedResponse<SalesOrderHeaderDataModel.DefaultView[]>>> BulkUpdate(BatchActionViewModel<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView> data)
+        public async Task<ActionResult<ListResponse<SalesOrderHeaderDataModel.DefaultView[]>>> BulkUpdate(BatchActionRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView> data)
         {
             var serviceResponse = await _thisService.BulkUpdate(data);
             return ReturnActionResult(serviceResponse);
@@ -85,15 +69,6 @@ namespace AdventureWorksLT2019.WebApiControllers
         {
             var serviceResponse = await _thisService.Create(input);
             return ReturnResultOnlyActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [Route("{SalesOrderID}")]
-        [HttpDelete]
-        public async Task<ActionResult> Delete([FromRoute]SalesOrderHeaderIdentifier id)
-        {
-            var serviceResponse = await _thisService.Delete(id);
-            return ReturnWithoutBodyActionResult(serviceResponse);
         }
 
         /*

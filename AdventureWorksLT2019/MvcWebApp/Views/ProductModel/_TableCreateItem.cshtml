@@ -2,17 +2,13 @@
 @using AdventureWorksLT2019.Models;
 @using AdventureWorksLT2019.Resx;
 @using AdventureWorksLT2019.MvcWebApp.Models;
+@using Framework.Mvc.Models;
 @using AdventureWorksLT2019.Models.Definitions;
 @model MvcItemViewModel<ProductModelDataModel>
 @inject SelectListHelper selectListHelper;
 @inject IUIStrings localizor;
 @{
     var format_Please_Select = localizor.Get("Format_Please_Select");
-}
-@if (Model!.UIItemFeatures.ShowListBulkSelectCheckbox)
-{
-    <td class="pt-0 pb-0 nt-list-bulk-select" style="width: 1% !important;">
-    </td>
 }
 @if (Model!.UIItemFeatures.ShowItemButtons)
 {
@@ -23,7 +19,7 @@
         </button>
         <button type="button" class="btn btn-primary btn-nt-action" data-nt-action="@HttpMethods.Post"
             data-nt-container="@CrudViewContainers.Inline.ToString()"
-            data-nt-template="@ViewItemTemplateNames.Create.ToString()">
+            data-nt-template="@ViewItemTemplates.Create.ToString()">
             <i class="fa-solid fa-check-circle"></i><span class="submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Save")</span>
         </button>
     </div>

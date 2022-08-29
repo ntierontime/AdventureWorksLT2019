@@ -5,13 +5,8 @@ namespace AdventureWorksLT2019.RepositoryContracts
     public interface IProductDescriptionRepository
     {
 
-        Task<PagedResponse<ProductDescriptionDataModel[]>> Search(
+        Task<ListResponse<ProductDescriptionDataModel[]>> Search(
             ProductDescriptionAdvancedQuery query);
-
-        Task<Response> BulkDelete(List<ProductDescriptionIdentifier> ids);
-
-        Task<Response<MultiItemsCUDModel<ProductDescriptionIdentifier, ProductDescriptionDataModel>>> MultiItemsCUD(
-            MultiItemsCUDModel<ProductDescriptionIdentifier, ProductDescriptionDataModel> input);
 
         Task<Response<ProductDescriptionDataModel>> Update(ProductDescriptionIdentifier id, ProductDescriptionDataModel input);
 
@@ -21,7 +16,7 @@ namespace AdventureWorksLT2019.RepositoryContracts
 
         Task<Response> Delete(ProductDescriptionIdentifier id);
 
-        Task<PagedResponse<NameValuePair[]>> GetCodeList(
+        Task<ListResponse<NameValuePair[]>> GetCodeList(
             ProductDescriptionAdvancedQuery query);
     }
 }

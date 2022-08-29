@@ -5,18 +5,8 @@ namespace AdventureWorksLT2019.ServiceContracts
     public interface IProductModelService
     {
 
-        Task<PagedResponse<ProductModelDataModel[]>> Search(
+        Task<ListResponse<ProductModelDataModel[]>> Search(
             ProductModelAdvancedQuery query);
-
-        Task<ProductModelCompositeModel> GetCompositeModel(
-            ProductModelIdentifier id,
-            Dictionary<ProductModelCompositeModel.__DataOptions__, CompositeListItemRequest> listItemRequest,
-            ProductModelCompositeModel.__DataOptions__[]? dataOptions = null);
-
-        Task<Response> BulkDelete(List<ProductModelIdentifier> ids);
-
-        Task<Response<MultiItemsCUDModel<ProductModelIdentifier, ProductModelDataModel>>> MultiItemsCUD(
-            MultiItemsCUDModel<ProductModelIdentifier, ProductModelDataModel> input);
 
         Task<Response<ProductModelDataModel>> Update(ProductModelIdentifier id, ProductModelDataModel input);
 
@@ -27,7 +17,7 @@ namespace AdventureWorksLT2019.ServiceContracts
 
         Task<Response> Delete(ProductModelIdentifier id);
 
-        Task<PagedResponse<NameValuePair[]>> GetCodeList(
+        Task<ListResponse<NameValuePair[]>> GetCodeList(
             ProductModelAdvancedQuery query);
     }
 }

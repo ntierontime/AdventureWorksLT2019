@@ -9,7 +9,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
 </ItemGroup>
 <ItemGroup>
-    <ProjectReference Include="..\..\Frameworks\Framework\Framework.csproj" />
+    <ProjectReference Include="..\..\Shared\Framework\Framework.csproj" />
     <ProjectReference Include="..\Models\AdventureWorksLT2019.Models.csproj" />
     <ProjectReference Include="..\RepositoryContracts\AdventureWorksLT2019.RepositoryContracts.csproj" />
     <ProjectReference Include="..\Resx\AdventureWorksLT2019.Resx.csproj" />

@@ -26,7 +26,7 @@ namespace AdventureWorksLT2019.Services
             _logger = logger;
         }
 
-        public async Task<PagedResponse<CustomerDataModel[]>> Search(
+        public async Task<ListResponse<CustomerDataModel[]>> Search(
             CustomerAdvancedQuery query)
         {
             return await _thisRepository.Search(query);
@@ -116,20 +116,9 @@ namespace AdventureWorksLT2019.Services
             return successResponse;
         }
 
-        public async Task<Response> BulkDelete(List<CustomerIdentifier> ids)
-        {
-            return await _thisRepository.BulkDelete(ids);
-        }
-
-        public async Task<PagedResponse<CustomerDataModel[]>> BulkUpdate(BatchActionViewModel<CustomerIdentifier, CustomerDataModel> data)
+        public async Task<ListResponse<CustomerDataModel[]>> BulkUpdate(BatchActionRequest<CustomerIdentifier, CustomerDataModel> data)
         {
             return await _thisRepository.BulkUpdate(data);
-        }
-
-        public async Task<Response<MultiItemsCUDModel<CustomerIdentifier, CustomerDataModel>>> MultiItemsCUD(
-            MultiItemsCUDModel<CustomerIdentifier, CustomerDataModel> input)
-        {
-            return await _thisRepository.MultiItemsCUD(input);
         }
 
         public async Task<Response<CustomerDataModel>> Update(CustomerIdentifier id, CustomerDataModel input)
@@ -151,17 +140,6 @@ namespace AdventureWorksLT2019.Services
         {
             // TODO: please set default value here
             return new CustomerDataModel { ItemUIStatus______ = ItemUIStatus.New };
-        }
-
-        public async Task<Response> Delete(CustomerIdentifier id)
-        {
-            return await _thisRepository.Delete(id);
-        }
-
-        public async Task<PagedResponse<NameValuePair[]>> GetCodeList(
-            CustomerAdvancedQuery query)
-        {
-            return await _thisRepository.GetCodeList(query);
         }
     }
 }

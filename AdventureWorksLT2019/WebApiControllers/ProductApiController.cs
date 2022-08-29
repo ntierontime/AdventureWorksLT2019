@@ -1,4 +1,5 @@
 using AdventureWorksLT2019.ServiceContracts;
+using Framework.Mvc;
 using AdventureWorksLT2019.Models;
 using Framework.Models;
 
@@ -29,7 +30,7 @@ namespace AdventureWorksLT2019.WebApiControllers
         // [Authorize]
         [HttpGet]
         [HttpPost]
-        public async Task<ActionResult<PagedResponse<ProductDataModel.DefaultView[]>>> Search(
+        public async Task<ActionResult<ListResponse<ProductDataModel.DefaultView[]>>> Search(
             ProductAdvancedQuery query)
         {
             var serviceResponse = await _thisService.Search(query);
@@ -43,14 +44,6 @@ namespace AdventureWorksLT2019.WebApiControllers
         {
             var serviceResponse = await _thisService.GetCompositeModel(id, null);
             return Ok(serviceResponse);
-        }
-
-        // [Authorize]
-        [HttpDelete]
-        public async Task<ActionResult> BulkDelete(List<ProductIdentifier> ids)
-        {
-            var serviceResponse = await _thisService.BulkDelete(ids);
-            return ReturnWithoutBodyActionResult(serviceResponse);
         }
 
         // [Authorize]
@@ -77,15 +70,6 @@ namespace AdventureWorksLT2019.WebApiControllers
         {
             var serviceResponse = await _thisService.Create(input);
             return ReturnResultOnlyActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [Route("{ProductID}")]
-        [HttpDelete]
-        public async Task<ActionResult> Delete([FromRoute]ProductIdentifier id)
-        {
-            var serviceResponse = await _thisService.Delete(id);
-            return ReturnWithoutBodyActionResult(serviceResponse);
         }
 
         /*

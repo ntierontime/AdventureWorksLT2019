@@ -5,26 +5,16 @@ namespace AdventureWorksLT2019.RepositoryContracts
     public interface ISalesOrderHeaderRepository
     {
 
-        Task<PagedResponse<SalesOrderHeaderDataModel.DefaultView[]>> Search(
+        Task<ListResponse<SalesOrderHeaderDataModel.DefaultView[]>> Search(
             SalesOrderHeaderAdvancedQuery query);
 
-        Task<Response> BulkDelete(List<SalesOrderHeaderIdentifier> ids);
-
-        Task<PagedResponse<SalesOrderHeaderDataModel.DefaultView[]>> BulkUpdate(BatchActionViewModel<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView> data);
-
-        Task<Response<MultiItemsCUDModel<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView>>> MultiItemsCUD(
-            MultiItemsCUDModel<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView> input);
+        Task<ListResponse<SalesOrderHeaderDataModel.DefaultView[]>> BulkUpdate(BatchActionRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView> data);
 
         Task<Response<SalesOrderHeaderDataModel.DefaultView>> Update(SalesOrderHeaderIdentifier id, SalesOrderHeaderDataModel input);
 
         Task<Response<SalesOrderHeaderDataModel.DefaultView>> Get(SalesOrderHeaderIdentifier id);
 
         Task<Response<SalesOrderHeaderDataModel.DefaultView>> Create(SalesOrderHeaderDataModel input);
-
-        Task<Response> Delete(SalesOrderHeaderIdentifier id);
-
-        Task<PagedResponse<NameValuePair[]>> GetCodeList(
-            SalesOrderHeaderAdvancedQuery query);
     }
 }
 

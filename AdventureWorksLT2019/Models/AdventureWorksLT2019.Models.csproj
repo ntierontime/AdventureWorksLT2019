@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 <ItemGroup>
-    <ProjectReference Include="..\..\Frameworks\Framework\Framework.csproj" />
+    <ProjectReference Include="..\..\Shared\Framework\Framework.csproj" />
     <ProjectReference Include="..\Resx\AdventureWorksLT2019.Resx.csproj" />
 </ItemGroup>
 

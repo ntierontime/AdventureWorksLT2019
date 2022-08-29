@@ -18,7 +18,8 @@
 <ItemGroup>
     <ProjectReference Include="..\EFCoreContext\AdventureWorksLT2019.EFCoreContext.csproj" />
     <ProjectReference Include="..\EFCoreRepositories\AdventureWorksLT2019.EFCoreRepositories.csproj" />
-    <ProjectReference Include="..\..\Frameworks\Framework\Framework.csproj" />
+    <ProjectReference Include="..\..\Shared\Framework\Framework.csproj" />
+    <ProjectReference Include="..\..\Shared\Framework.Mvc\Framework.Mvc.csproj" />
     <ProjectReference Include="..\Models\AdventureWorksLT2019.Models.csproj" />
     <ProjectReference Include="..\RepositoryContracts\AdventureWorksLT2019.RepositoryContracts.csproj" />
     <ProjectReference Include="..\Resx\AdventureWorksLT2019.Resx.csproj" />

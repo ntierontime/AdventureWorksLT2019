@@ -1,4 +1,5 @@
 using AdventureWorksLT2019.ServiceContracts;
+using Framework.Mvc;
 using AdventureWorksLT2019.Models;
 using Framework.Models;
 
@@ -29,7 +30,7 @@ namespace AdventureWorksLT2019.WebApiControllers
         // [Authorize]
         [HttpGet]
         [HttpPost]
-        public async Task<ActionResult<PagedResponse<CustomerDataModel[]>>> Search(
+        public async Task<ActionResult<ListResponse<CustomerDataModel[]>>> Search(
             CustomerAdvancedQuery query)
         {
             var serviceResponse = await _thisService.Search(query);
@@ -46,16 +47,8 @@ namespace AdventureWorksLT2019.WebApiControllers
         }
 
         // [Authorize]
-        [HttpDelete]
-        public async Task<ActionResult> BulkDelete(List<CustomerIdentifier> ids)
-        {
-            var serviceResponse = await _thisService.BulkDelete(ids);
-            return ReturnWithoutBodyActionResult(serviceResponse);
-        }
-
-        // [Authorize]
         [HttpPut]
-        public async Task<ActionResult<PagedResponse<CustomerDataModel[]>>> BulkUpdate(BatchActionViewModel<CustomerIdentifier, CustomerDataModel> data)
+        public async Task<ActionResult<ListResponse<CustomerDataModel[]>>> BulkUpdate(BatchActionRequest<CustomerIdentifier, CustomerDataModel> data)
         {
             var serviceResponse = await _thisService.BulkUpdate(data);
             return ReturnActionResult(serviceResponse);
@@ -85,15 +78,6 @@ namespace AdventureWorksLT2019.WebApiControllers
         {
             var serviceResponse = await _thisService.Create(input);
             return ReturnResultOnlyActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [Route("{CustomerID}")]
-        [HttpDelete]
-        public async Task<ActionResult> Delete([FromRoute]CustomerIdentifier id)
-        {
-            var serviceResponse = await _thisService.Delete(id);
-            return ReturnWithoutBodyActionResult(serviceResponse);
         }
 
         /*

@@ -19,40 +19,40 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             _logger = logger;
         }
 
-        public void DefaultUIParamsIfNeeds(UIParams uiParams, PagedViewOptions defaultPagedViewOption)
+        public void DefaultUIParamsIfNeeds(UIParams uiParams, ListViewOptions defaultPagedViewOption)
         {
             if (!uiParams.PagedViewOption.HasValue)
             {
                 uiParams.PagedViewOption = defaultPagedViewOption;
             }
-            if (uiParams.PagedViewOption == PagedViewOptions.EditableTable)
+            if (uiParams.PagedViewOption == ListViewOptions.EditableTable)
             {
-                uiParams.Template = ViewItemTemplateNames.Edit.ToString();
+                uiParams.Template = ViewItemTemplates.Edit.ToString();
             }
             else if(string.IsNullOrEmpty(uiParams.Template))
             {
-                uiParams.Template = ViewItemTemplateNames.Delete.ToString();
+                uiParams.Template = ViewItemTemplates.Delete.ToString();
             }
         }
 
-        public PaginationOptions HardCodePaginationOption(PagedViewOptions pagedViewOption, PaginationOptions original)
+        public PaginationOptions HardCodePaginationOption(ListViewOptions pagedViewOption, PaginationOptions original)
         {
             if (original == PaginationOptions.NoPagination)
                 return PaginationOptions.NoPagination;
-            else if (pagedViewOption == PagedViewOptions.Table || pagedViewOption == PagedViewOptions.EditableTable)
+            else if (pagedViewOption == ListViewOptions.Table || pagedViewOption == ListViewOptions.EditableTable)
                 return PaginationOptions.PageIndexesAndAllButtons;
             return original;
         }
 
-        private static UIParams DefaultUIParams(PagedViewOptions defaultPagedViewOption)
+        private static UIParams DefaultUIParams(ListViewOptions defaultPagedViewOption)
         {
             return new UIParams
             {
                 AdvancedQuery = false, //
                 PagedViewOption = defaultPagedViewOption,
-                Template = defaultPagedViewOption == PagedViewOptions.EditableTable
-                        ? ViewItemTemplateNames.Edit.ToString()
-                        : ViewItemTemplateNames.Details.ToString(),
+                Template = defaultPagedViewOption == ListViewOptions.EditableTable
+                        ? ViewItemTemplates.Edit.ToString()
+                        : ViewItemTemplates.Details.ToString(),
             };
         }
 
@@ -84,7 +84,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     ListWrapperId = key + "ListWrapper",
                     SearchFormId = key + "SearchForm",
 
-                    PrimaryPagedViewOption = PagedViewOptions.Table,
+                    PrimaryPagedViewOption = ListViewOptions.Table,
 
                     PrimayCreateViewContainer = CrudViewContainers.None,
                     PrimayDeleteViewContainer = CrudViewContainers.None,
@@ -95,15 +95,15 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     CanBulkDelete = false,
                     CanBulkActions = false,
 
-                    AvailableListViews = new List<PagedViewOptions>
+                    AvailableListViews = new List<ListViewOptions>
                     {
-                        PagedViewOptions.Table
+                        ListViewOptions.Table
                     },
                 },
             };
 
             result.UIParams = uiParams ?? DefaultUIParams(result.UIListFeatures.PrimaryPagedViewOption);
-            result.UIListFeatures.IsArrayBinding = result.UIParams.PagedViewOption == PagedViewOptions.EditableTable;
+            result.UIListFeatures.IsArrayBinding = result.UIParams.PagedViewOption == ListViewOptions.EditableTable;
             return result;
         }
 
@@ -135,7 +135,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     ListWrapperId = key + "ListWrapper",
                     SearchFormId = key + "SearchForm",
 
-                    PrimaryPagedViewOption = PagedViewOptions.Table,
+                    PrimaryPagedViewOption = ListViewOptions.Table,
 
                     PrimayCreateViewContainer = CrudViewContainers.Dialog,
                     PrimayDeleteViewContainer = CrudViewContainers.None,
@@ -146,15 +146,15 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     CanBulkDelete = false,
                     CanBulkActions = false,
 
-                    AvailableListViews = new List<PagedViewOptions>
+                    AvailableListViews = new List<ListViewOptions>
                     {
-                        PagedViewOptions.Table
+                        ListViewOptions.Table
                     },
                 },
             };
 
             result.UIParams = uiParams ?? DefaultUIParams(result.UIListFeatures.PrimaryPagedViewOption);
-            result.UIListFeatures.IsArrayBinding = result.UIParams.PagedViewOption == PagedViewOptions.EditableTable;
+            result.UIListFeatures.IsArrayBinding = result.UIParams.PagedViewOption == ListViewOptions.EditableTable;
             return result;
         }
 
@@ -186,7 +186,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     ListWrapperId = key + "ListWrapper",
                     SearchFormId = key + "SearchForm",
 
-                    PrimaryPagedViewOption = PagedViewOptions.Table,
+                    PrimaryPagedViewOption = ListViewOptions.Table,
 
                     PrimayCreateViewContainer = CrudViewContainers.Dialog,
                     PrimayDeleteViewContainer = CrudViewContainers.None,
@@ -197,19 +197,19 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     CanBulkDelete = false,
                     CanBulkActions = false,
 
-                    AvailableListViews = new List<PagedViewOptions>
+                    AvailableListViews = new List<ListViewOptions>
                     {
-                        PagedViewOptions.Table
+                        ListViewOptions.Table
                     },
                 },
             };
 
             result.UIParams = uiParams ?? DefaultUIParams(result.UIListFeatures.PrimaryPagedViewOption);
-            result.UIListFeatures.IsArrayBinding = result.UIParams.PagedViewOption == PagedViewOptions.EditableTable;
+            result.UIListFeatures.IsArrayBinding = result.UIParams.PagedViewOption == ListViewOptions.EditableTable;
             return result;
         }
 
-        public UIItemFeatures GetCustomerUIItemFeatures(PagedViewOptions pagedViewOptionForBulkSelectCheckBox)
+        public UIItemFeatures GetCustomerUIItemFeatures(ListViewOptions pagedViewOptionForBulkSelectCheckBox)
         {
             var result = new UIItemFeatures
             {
@@ -218,7 +218,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 PrimayDetailsViewContainer = CrudViewContainers.Dialog,
                 PrimayEditViewContainer = CrudViewContainers.Dialog,
 
-                ShowListBulkSelectCheckbox = pagedViewOptionForBulkSelectCheckBox != PagedViewOptions.Card,
+                ShowListBulkSelectCheckbox = pagedViewOptionForBulkSelectCheckBox != ListViewOptions.Card,
                 ShowItemButtons = true,
                 CanGotoDashboard = true,
             };
@@ -238,7 +238,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     ListWrapperId = key + "ListWrapper",
                     SearchFormId = key + "SearchForm",
 
-                    PrimaryPagedViewOption = PagedViewOptions.Table,
+                    PrimaryPagedViewOption = ListViewOptions.Table,
 
                     PrimayCreateViewContainer = CrudViewContainers.Dialog,
                     PrimayDeleteViewContainer = CrudViewContainers.None,
@@ -249,15 +249,15 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     CanBulkDelete = false,
                     CanBulkActions = true,
 
-                    AvailableListViews = new List<PagedViewOptions>
+                    AvailableListViews = new List<ListViewOptions>
                     {
-                        PagedViewOptions.Table
+                        ListViewOptions.Table
                     },
                 },
             };
 
             result.UIParams = uiParams ?? DefaultUIParams(result.UIListFeatures.PrimaryPagedViewOption);
-            result.UIListFeatures.IsArrayBinding = result.UIParams.PagedViewOption == PagedViewOptions.EditableTable;
+            result.UIListFeatures.IsArrayBinding = result.UIParams.PagedViewOption == ListViewOptions.EditableTable;
             return result;
         }
 
@@ -289,7 +289,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     ListWrapperId = key + "ListWrapper",
                     SearchFormId = key + "SearchForm",
 
-                    PrimaryPagedViewOption = PagedViewOptions.Table,
+                    PrimaryPagedViewOption = ListViewOptions.Table,
 
                     PrimayCreateViewContainer = CrudViewContainers.None,
                     PrimayDeleteViewContainer = CrudViewContainers.None,
@@ -300,15 +300,15 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     CanBulkDelete = false,
                     CanBulkActions = false,
 
-                    AvailableListViews = new List<PagedViewOptions>
+                    AvailableListViews = new List<ListViewOptions>
                     {
-                        PagedViewOptions.Table
+                        ListViewOptions.Table
                     },
                 },
             };
 
             result.UIParams = uiParams ?? DefaultUIParams(result.UIListFeatures.PrimaryPagedViewOption);
-            result.UIListFeatures.IsArrayBinding = result.UIParams.PagedViewOption == PagedViewOptions.EditableTable;
+            result.UIListFeatures.IsArrayBinding = result.UIParams.PagedViewOption == ListViewOptions.EditableTable;
             return result;
         }
 
@@ -340,7 +340,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     ListWrapperId = key + "ListWrapper",
                     SearchFormId = key + "SearchForm",
 
-                    PrimaryPagedViewOption = PagedViewOptions.Table,
+                    PrimaryPagedViewOption = ListViewOptions.Table,
 
                     PrimayCreateViewContainer = CrudViewContainers.Dialog,
                     PrimayDeleteViewContainer = CrudViewContainers.None,
@@ -351,15 +351,15 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     CanBulkDelete = false,
                     CanBulkActions = false,
 
-                    AvailableListViews = new List<PagedViewOptions>
+                    AvailableListViews = new List<ListViewOptions>
                     {
-                        PagedViewOptions.Table
+                        ListViewOptions.Table
                     },
                 },
             };
 
             result.UIParams = uiParams ?? DefaultUIParams(result.UIListFeatures.PrimaryPagedViewOption);
-            result.UIListFeatures.IsArrayBinding = result.UIParams.PagedViewOption == PagedViewOptions.EditableTable;
+            result.UIListFeatures.IsArrayBinding = result.UIParams.PagedViewOption == ListViewOptions.EditableTable;
             return result;
         }
 
@@ -391,7 +391,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     ListWrapperId = key + "ListWrapper",
                     SearchFormId = key + "SearchForm",
 
-                    PrimaryPagedViewOption = PagedViewOptions.Table,
+                    PrimaryPagedViewOption = ListViewOptions.Table,
 
                     PrimayCreateViewContainer = CrudViewContainers.Inline,
                     PrimayDeleteViewContainer = CrudViewContainers.None,
@@ -402,15 +402,15 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     CanBulkDelete = false,
                     CanBulkActions = false,
 
-                    AvailableListViews = new List<PagedViewOptions>
+                    AvailableListViews = new List<ListViewOptions>
                     {
-                        PagedViewOptions.Table
+                        ListViewOptions.Table
                     },
                 },
             };
 
             result.UIParams = uiParams ?? DefaultUIParams(result.UIListFeatures.PrimaryPagedViewOption);
-            result.UIListFeatures.IsArrayBinding = result.UIParams.PagedViewOption == PagedViewOptions.EditableTable;
+            result.UIListFeatures.IsArrayBinding = result.UIParams.PagedViewOption == ListViewOptions.EditableTable;
             return result;
         }
 
@@ -442,7 +442,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     ListWrapperId = key + "ListWrapper",
                     SearchFormId = key + "SearchForm",
 
-                    PrimaryPagedViewOption = PagedViewOptions.Table,
+                    PrimaryPagedViewOption = ListViewOptions.Table,
 
                     PrimayCreateViewContainer = CrudViewContainers.Inline,
                     PrimayDeleteViewContainer = CrudViewContainers.None,
@@ -453,15 +453,15 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     CanBulkDelete = false,
                     CanBulkActions = false,
 
-                    AvailableListViews = new List<PagedViewOptions>
+                    AvailableListViews = new List<ListViewOptions>
                     {
-                        PagedViewOptions.Table
+                        ListViewOptions.Table
                     },
                 },
             };
 
             result.UIParams = uiParams ?? DefaultUIParams(result.UIListFeatures.PrimaryPagedViewOption);
-            result.UIListFeatures.IsArrayBinding = result.UIParams.PagedViewOption == PagedViewOptions.EditableTable;
+            result.UIListFeatures.IsArrayBinding = result.UIParams.PagedViewOption == ListViewOptions.EditableTable;
             return result;
         }
 
@@ -493,7 +493,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     ListWrapperId = key + "ListWrapper",
                     SearchFormId = key + "SearchForm",
 
-                    PrimaryPagedViewOption = PagedViewOptions.Table,
+                    PrimaryPagedViewOption = ListViewOptions.Table,
 
                     PrimayCreateViewContainer = CrudViewContainers.Inline,
                     PrimayDeleteViewContainer = CrudViewContainers.None,
@@ -504,15 +504,15 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     CanBulkDelete = false,
                     CanBulkActions = false,
 
-                    AvailableListViews = new List<PagedViewOptions>
+                    AvailableListViews = new List<ListViewOptions>
                     {
-                        PagedViewOptions.Table
+                        ListViewOptions.Table
                     },
                 },
             };
 
             result.UIParams = uiParams ?? DefaultUIParams(result.UIListFeatures.PrimaryPagedViewOption);
-            result.UIListFeatures.IsArrayBinding = result.UIParams.PagedViewOption == PagedViewOptions.EditableTable;
+            result.UIListFeatures.IsArrayBinding = result.UIParams.PagedViewOption == ListViewOptions.EditableTable;
             return result;
         }
 
@@ -544,7 +544,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     ListWrapperId = key + "ListWrapper",
                     SearchFormId = key + "SearchForm",
 
-                    PrimaryPagedViewOption = PagedViewOptions.Table,
+                    PrimaryPagedViewOption = ListViewOptions.Table,
 
                     PrimayCreateViewContainer = CrudViewContainers.None,
                     PrimayDeleteViewContainer = CrudViewContainers.None,
@@ -555,15 +555,15 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     CanBulkDelete = false,
                     CanBulkActions = false,
 
-                    AvailableListViews = new List<PagedViewOptions>
+                    AvailableListViews = new List<ListViewOptions>
                     {
-                        PagedViewOptions.Table
+                        ListViewOptions.Table
                     },
                 },
             };
 
             result.UIParams = uiParams ?? DefaultUIParams(result.UIListFeatures.PrimaryPagedViewOption);
-            result.UIListFeatures.IsArrayBinding = result.UIParams.PagedViewOption == PagedViewOptions.EditableTable;
+            result.UIListFeatures.IsArrayBinding = result.UIParams.PagedViewOption == ListViewOptions.EditableTable;
             return result;
         }
 
@@ -595,7 +595,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     ListWrapperId = key + "ListWrapper",
                     SearchFormId = key + "SearchForm",
 
-                    PrimaryPagedViewOption = PagedViewOptions.Table,
+                    PrimaryPagedViewOption = ListViewOptions.Table,
 
                     PrimayCreateViewContainer = CrudViewContainers.None,
                     PrimayDeleteViewContainer = CrudViewContainers.None,
@@ -606,19 +606,19 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     CanBulkDelete = false,
                     CanBulkActions = false,
 
-                    AvailableListViews = new List<PagedViewOptions>
+                    AvailableListViews = new List<ListViewOptions>
                     {
-                        PagedViewOptions.Table
+                        ListViewOptions.Table
                     },
                 },
             };
 
             result.UIParams = uiParams ?? DefaultUIParams(result.UIListFeatures.PrimaryPagedViewOption);
-            result.UIListFeatures.IsArrayBinding = result.UIParams.PagedViewOption == PagedViewOptions.EditableTable;
+            result.UIListFeatures.IsArrayBinding = result.UIParams.PagedViewOption == ListViewOptions.EditableTable;
             return result;
         }
 
-        public UIItemFeatures GetSalesOrderHeaderUIItemFeatures(PagedViewOptions pagedViewOptionForBulkSelectCheckBox)
+        public UIItemFeatures GetSalesOrderHeaderUIItemFeatures(ListViewOptions pagedViewOptionForBulkSelectCheckBox)
         {
             var result = new UIItemFeatures
             {
@@ -627,7 +627,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 PrimayDetailsViewContainer = CrudViewContainers.Dialog,
                 PrimayEditViewContainer = CrudViewContainers.Dialog,
 
-                ShowListBulkSelectCheckbox = pagedViewOptionForBulkSelectCheckBox != PagedViewOptions.Card,
+                ShowListBulkSelectCheckbox = pagedViewOptionForBulkSelectCheckBox != ListViewOptions.Card,
                 ShowItemButtons = true,
                 CanGotoDashboard = false,
             };
@@ -647,7 +647,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     ListWrapperId = key + "ListWrapper",
                     SearchFormId = key + "SearchForm",
 
-                    PrimaryPagedViewOption = PagedViewOptions.Table,
+                    PrimaryPagedViewOption = ListViewOptions.Table,
 
                     PrimayCreateViewContainer = CrudViewContainers.Dialog,
                     PrimayDeleteViewContainer = CrudViewContainers.None,
@@ -658,15 +658,15 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     CanBulkDelete = false,
                     CanBulkActions = true,
 
-                    AvailableListViews = new List<PagedViewOptions>
+                    AvailableListViews = new List<ListViewOptions>
                     {
-                        PagedViewOptions.Table
+                        ListViewOptions.Table
                     },
                 },
             };
 
             result.UIParams = uiParams ?? DefaultUIParams(result.UIListFeatures.PrimaryPagedViewOption);
-            result.UIListFeatures.IsArrayBinding = result.UIParams.PagedViewOption == PagedViewOptions.EditableTable;
+            result.UIListFeatures.IsArrayBinding = result.UIParams.PagedViewOption == ListViewOptions.EditableTable;
             return result;
         }
     }

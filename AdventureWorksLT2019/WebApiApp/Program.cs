@@ -137,73 +137,73 @@ static string GetSwaggerCustomizedSchemaId(Type x)
         }
         // 2. Customized PagedResponse SchemaIds
 
-        if (x == typeof(PagedResponse<BuildVersionDataModel[]>))
+        if (x == typeof(ListResponse<BuildVersionDataModel[]>))
         {
-            return "AdventureWorksLT2019.Models.BuildVersionPagedResponse";
+            return "AdventureWorksLT2019.Models.BuildVersionListResponse";
         }
 
-        if (x == typeof(PagedResponse<ErrorLogDataModel[]>))
+        if (x == typeof(ListResponse<ErrorLogDataModel[]>))
         {
-            return "AdventureWorksLT2019.Models.ErrorLogPagedResponse";
+            return "AdventureWorksLT2019.Models.ErrorLogListResponse";
         }
 
-        if (x == typeof(PagedResponse<AddressDataModel[]>))
+        if (x == typeof(ListResponse<AddressDataModel[]>))
         {
-            return "AdventureWorksLT2019.Models.AddressPagedResponse";
+            return "AdventureWorksLT2019.Models.AddressListResponse";
         }
 
-        if (x == typeof(PagedResponse<CustomerDataModel[]>))
+        if (x == typeof(ListResponse<CustomerDataModel[]>))
         {
-            return "AdventureWorksLT2019.Models.CustomerPagedResponse";
+            return "AdventureWorksLT2019.Models.CustomerListResponse";
         }
 
-        if (x == typeof(PagedResponse<CustomerAddressDataModel.DefaultView[]>))
+        if (x == typeof(ListResponse<CustomerAddressDataModel.DefaultView[]>))
         {
-            return "AdventureWorksLT2019.Models.CustomerAddressPagedResponse";
+            return "AdventureWorksLT2019.Models.CustomerAddressListResponse";
         }
 
-        if (x == typeof(PagedResponse<ProductDataModel.DefaultView[]>))
+        if (x == typeof(ListResponse<ProductDataModel.DefaultView[]>))
         {
-            return "AdventureWorksLT2019.Models.ProductPagedResponse";
+            return "AdventureWorksLT2019.Models.ProductListResponse";
         }
 
-        if (x == typeof(PagedResponse<ProductCategoryDataModel.DefaultView[]>))
+        if (x == typeof(ListResponse<ProductCategoryDataModel.DefaultView[]>))
         {
-            return "AdventureWorksLT2019.Models.ProductCategoryPagedResponse";
+            return "AdventureWorksLT2019.Models.ProductCategoryListResponse";
         }
 
-        if (x == typeof(PagedResponse<ProductDescriptionDataModel[]>))
+        if (x == typeof(ListResponse<ProductDescriptionDataModel[]>))
         {
-            return "AdventureWorksLT2019.Models.ProductDescriptionPagedResponse";
+            return "AdventureWorksLT2019.Models.ProductDescriptionListResponse";
         }
 
-        if (x == typeof(PagedResponse<ProductModelDataModel[]>))
+        if (x == typeof(ListResponse<ProductModelDataModel[]>))
         {
-            return "AdventureWorksLT2019.Models.ProductModelPagedResponse";
+            return "AdventureWorksLT2019.Models.ProductModelListResponse";
         }
 
-        if (x == typeof(PagedResponse<ProductModelProductDescriptionDataModel.DefaultView[]>))
+        if (x == typeof(ListResponse<ProductModelProductDescriptionDataModel.DefaultView[]>))
         {
-            return "AdventureWorksLT2019.Models.ProductModelProductDescriptionPagedResponse";
+            return "AdventureWorksLT2019.Models.ProductModelProductDescriptionListResponse";
         }
 
-        if (x == typeof(PagedResponse<SalesOrderDetailDataModel.DefaultView[]>))
+        if (x == typeof(ListResponse<SalesOrderDetailDataModel.DefaultView[]>))
         {
-            return "AdventureWorksLT2019.Models.SalesOrderDetailPagedResponse";
+            return "AdventureWorksLT2019.Models.SalesOrderDetailListResponse";
         }
 
-        if (x == typeof(PagedResponse<SalesOrderHeaderDataModel.DefaultView[]>))
+        if (x == typeof(ListResponse<SalesOrderHeaderDataModel.DefaultView[]>))
         {
-            return "AdventureWorksLT2019.Models.SalesOrderHeaderPagedResponse";
+            return "AdventureWorksLT2019.Models.SalesOrderHeaderListResponse";
         }
         // 3. Customized BulkActionDynamicParamsRequests SchemaIds
 
-        if (x == typeof(BatchActionViewModel<CustomerIdentifier, CustomerDataModel>))
+        if (x == typeof(BatchActionRequest<CustomerIdentifier, CustomerDataModel>))
         {
             return "AdventureWorksLT2019.Models.CustomerBulkActionDynamicParamsRequest";
         }
 
-        if (x == typeof(BatchActionViewModel<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView>))
+        if (x == typeof(BatchActionRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView>))
         {
             return "AdventureWorksLT2019.Models.SalesOrderHeaderBulkActionDynamicParamsRequest";
         }

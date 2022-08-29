@@ -1,4 +1,4 @@
-using AdventureWorksLT2019.MvcWebApp.Models;
+using Framework.Models;
 
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;

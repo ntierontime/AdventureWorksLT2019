@@ -19,12 +19,12 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
 
                 HasBulkDelete = true,
                 BulkActions = null,
-                AvailableListViewFeatures = new Dictionary<PagedViewOptions, ViewItemTemplateNames[]>
+                AvailableListViewFeatures = new Dictionary<ListViewOptions, ViewItemTemplates[]>
                 {
-                    { PagedViewOptions.Table, new ViewItemTemplateNames[] { ViewItemTemplateNames.Create, ViewItemTemplateNames.Delete, ViewItemTemplateNames.Details, ViewItemTemplateNames.Edit } },
-                    { PagedViewOptions.Tiles, new ViewItemTemplateNames[] { ViewItemTemplateNames.Create, ViewItemTemplateNames.Delete, ViewItemTemplateNames.Details, ViewItemTemplateNames.Edit } },
-                    { PagedViewOptions.SlideShow, new ViewItemTemplateNames[] { ViewItemTemplateNames.Details } },
-                    { PagedViewOptions.EditableTable, new ViewItemTemplateNames[] { ViewItemTemplateNames.Create, ViewItemTemplateNames.Edit } },
+                    { ListViewOptions.Table, new ViewItemTemplates[] { ViewItemTemplates.Create, ViewItemTemplates.Delete, ViewItemTemplates.Details, ViewItemTemplates.Edit } },
+                    { ListViewOptions.Tiles, new ViewItemTemplates[] { ViewItemTemplates.Create, ViewItemTemplates.Delete, ViewItemTemplates.Details, ViewItemTemplates.Edit } },
+                    { ListViewOptions.SlideShow, new ViewItemTemplates[] { ViewItemTemplates.Details } },
+                    { ListViewOptions.EditableTable, new ViewItemTemplates[] { ViewItemTemplates.Create, ViewItemTemplates.Edit } },
                 },
             };
         }

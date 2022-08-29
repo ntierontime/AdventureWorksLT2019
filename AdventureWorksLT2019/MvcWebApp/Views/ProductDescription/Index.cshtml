@@ -1,9 +1,10 @@
 @using AdventureWorksLT2019.Models;
 @using AdventureWorksLT2019.Resx;
+@using Framework.Mvc.Models;
 @using Framework.Models;
 @using AdventureWorksLT2019.Models.Definitions;
 @using AdventureWorksLT2019.MvcWebApp.Models;
-@model PagedSearchViewModel<ProductDescriptionAdvancedQuery, ProductDescriptionDataModel[]>
+@model ListSearchViewModel<ProductDescriptionAdvancedQuery, ProductDescriptionDataModel[]>
 @inject IHttpContextAccessor Accessor
 @inject SelectListHelper selectListHelper;
 @inject IUIStrings localizor;
@@ -17,7 +18,7 @@
     }
     if (string.IsNullOrEmpty(currentView))
     {
-        currentView = (Model.UIListSetting.UIParams.PagedViewOption ?? PagedViewOptions.Table).ToString();
+        currentView = (Model.UIListSetting.UIParams.PagedViewOption ?? ListViewOptions.Table).ToString();
     }
 }
 <form id="@Model!.UIListSetting.UIListFeatures.SearchFormId" method="post" class="nt-ajax-partial-load-post-formdata"

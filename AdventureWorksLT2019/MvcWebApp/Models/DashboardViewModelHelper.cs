@@ -1,5 +1,6 @@
 using AdventureWorksLT2019.ServiceContracts;
 using Framework.Models;
+using Framework.Mvc.Models;
 using AdventureWorksLT2019.Models;
 using AdventureWorksLT2019.Resx;
 namespace AdventureWorksLT2019.MvcWebApp.Models
@@ -10,7 +11,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         private readonly SelectListHelper _selectListHelper;
         private readonly ViewFeaturesManager _viewFeaturesManager;
         private readonly MvcItemViewModelHelper _mvcItemViewModelHelper;
-        private readonly PagedSearchViewModelHelper _pagedSearchViewModelHelper;
+        private readonly ListSearchViewModelHelper _pagedSearchViewModelHelper;
         private readonly IUIStrings _localizor;
         private readonly ILogger<DashboardViewModelHelper> _logger;
 
@@ -19,7 +20,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             SelectListHelper selectListHelper,
             ViewFeaturesManager viewFeaturesManager,
             MvcItemViewModelHelper mvcItemViewModelHelper,
-            PagedSearchViewModelHelper pagedSearchViewModelHelper,
+            ListSearchViewModelHelper pagedSearchViewModelHelper,
             IUIStrings localizor,
             ILogger<DashboardViewModelHelper> logger)
         {
@@ -38,7 +39,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         {
             return await _mvcItemViewModelHelper.GetBuildVersionMvcItemViewModel(compositeItem.UIParams, compositeItem.Response, responseBody);
         }
-        public async Task<PagedSearchViewModel<BuildVersionAdvancedQuery, BuildVersionDataModel[]>> GetBuildVersionPagedSearchViewModel(
+        public async Task<ListSearchViewModel<BuildVersionAdvancedQuery, BuildVersionDataModel[]>> GetBuildVersionPagedSearchViewModel(
             BuildVersionAdvancedQuery query,
             BuildVersionDataModel[]? responseBody,
             CompositeItemModel compositeItem)
@@ -52,7 +53,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         {
             return await _mvcItemViewModelHelper.GetErrorLogMvcItemViewModel(compositeItem.UIParams, compositeItem.Response, responseBody);
         }
-        public async Task<PagedSearchViewModel<ErrorLogAdvancedQuery, ErrorLogDataModel[]>> GetErrorLogPagedSearchViewModel(
+        public async Task<ListSearchViewModel<ErrorLogAdvancedQuery, ErrorLogDataModel[]>> GetErrorLogPagedSearchViewModel(
             ErrorLogAdvancedQuery query,
             ErrorLogDataModel[]? responseBody,
             CompositeItemModel compositeItem)
@@ -66,7 +67,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         {
             return await _mvcItemViewModelHelper.GetAddressMvcItemViewModel(compositeItem.UIParams, compositeItem.Response, responseBody);
         }
-        public async Task<PagedSearchViewModel<AddressAdvancedQuery, AddressDataModel[]>> GetAddressPagedSearchViewModel(
+        public async Task<ListSearchViewModel<AddressAdvancedQuery, AddressDataModel[]>> GetAddressPagedSearchViewModel(
             AddressAdvancedQuery query,
             AddressDataModel[]? responseBody,
             CompositeItemModel compositeItem)
@@ -80,7 +81,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         {
             return await _mvcItemViewModelHelper.GetCustomerMvcItemViewModel(compositeItem.UIParams, compositeItem.Response, responseBody);
         }
-        public async Task<PagedSearchViewModel<CustomerAdvancedQuery, CustomerDataModel[]>> GetCustomerPagedSearchViewModel(
+        public async Task<ListSearchViewModel<CustomerAdvancedQuery, CustomerDataModel[]>> GetCustomerPagedSearchViewModel(
             CustomerAdvancedQuery query,
             CustomerDataModel[]? responseBody,
             CompositeItemModel compositeItem)
@@ -96,7 +97,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         {
             return await _mvcItemViewModelHelper.GetCustomerAddressMvcItemViewModel(compositeItem.UIParams, compositeItem.Response, responseBody, loadTopLevelDropDownListsFromDatabase, topLevelDropDownListsFromDatabase);
         }
-        public async Task<PagedSearchViewModel<CustomerAddressAdvancedQuery, CustomerAddressDataModel.DefaultView[]>> GetCustomerAddressPagedSearchViewModel(
+        public async Task<ListSearchViewModel<CustomerAddressAdvancedQuery, CustomerAddressDataModel.DefaultView[]>> GetCustomerAddressPagedSearchViewModel(
             CustomerAddressAdvancedQuery query,
             CustomerAddressDataModel.DefaultView[]? responseBody,
             CompositeItemModel compositeItem)
@@ -112,7 +113,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         {
             return await _mvcItemViewModelHelper.GetProductMvcItemViewModel(compositeItem.UIParams, compositeItem.Response, responseBody, loadTopLevelDropDownListsFromDatabase, topLevelDropDownListsFromDatabase);
         }
-        public async Task<PagedSearchViewModel<ProductAdvancedQuery, ProductDataModel.DefaultView[]>> GetProductPagedSearchViewModel(
+        public async Task<ListSearchViewModel<ProductAdvancedQuery, ProductDataModel.DefaultView[]>> GetProductPagedSearchViewModel(
             ProductAdvancedQuery query,
             ProductDataModel.DefaultView[]? responseBody,
             CompositeItemModel compositeItem)
@@ -128,7 +129,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         {
             return await _mvcItemViewModelHelper.GetProductCategoryMvcItemViewModel(compositeItem.UIParams, compositeItem.Response, responseBody, loadTopLevelDropDownListsFromDatabase, topLevelDropDownListsFromDatabase);
         }
-        public async Task<PagedSearchViewModel<ProductCategoryAdvancedQuery, ProductCategoryDataModel.DefaultView[]>> GetProductCategoryPagedSearchViewModel(
+        public async Task<ListSearchViewModel<ProductCategoryAdvancedQuery, ProductCategoryDataModel.DefaultView[]>> GetProductCategoryPagedSearchViewModel(
             ProductCategoryAdvancedQuery query,
             ProductCategoryDataModel.DefaultView[]? responseBody,
             CompositeItemModel compositeItem)
@@ -142,7 +143,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         {
             return await _mvcItemViewModelHelper.GetProductDescriptionMvcItemViewModel(compositeItem.UIParams, compositeItem.Response, responseBody);
         }
-        public async Task<PagedSearchViewModel<ProductDescriptionAdvancedQuery, ProductDescriptionDataModel[]>> GetProductDescriptionPagedSearchViewModel(
+        public async Task<ListSearchViewModel<ProductDescriptionAdvancedQuery, ProductDescriptionDataModel[]>> GetProductDescriptionPagedSearchViewModel(
             ProductDescriptionAdvancedQuery query,
             ProductDescriptionDataModel[]? responseBody,
             CompositeItemModel compositeItem)
@@ -156,7 +157,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         {
             return await _mvcItemViewModelHelper.GetProductModelMvcItemViewModel(compositeItem.UIParams, compositeItem.Response, responseBody);
         }
-        public async Task<PagedSearchViewModel<ProductModelAdvancedQuery, ProductModelDataModel[]>> GetProductModelPagedSearchViewModel(
+        public async Task<ListSearchViewModel<ProductModelAdvancedQuery, ProductModelDataModel[]>> GetProductModelPagedSearchViewModel(
             ProductModelAdvancedQuery query,
             ProductModelDataModel[]? responseBody,
             CompositeItemModel compositeItem)
@@ -172,7 +173,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         {
             return await _mvcItemViewModelHelper.GetProductModelProductDescriptionMvcItemViewModel(compositeItem.UIParams, compositeItem.Response, responseBody, loadTopLevelDropDownListsFromDatabase, topLevelDropDownListsFromDatabase);
         }
-        public async Task<PagedSearchViewModel<ProductModelProductDescriptionAdvancedQuery, ProductModelProductDescriptionDataModel.DefaultView[]>> GetProductModelProductDescriptionPagedSearchViewModel(
+        public async Task<ListSearchViewModel<ProductModelProductDescriptionAdvancedQuery, ProductModelProductDescriptionDataModel.DefaultView[]>> GetProductModelProductDescriptionPagedSearchViewModel(
             ProductModelProductDescriptionAdvancedQuery query,
             ProductModelProductDescriptionDataModel.DefaultView[]? responseBody,
             CompositeItemModel compositeItem)
@@ -188,7 +189,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         {
             return await _mvcItemViewModelHelper.GetSalesOrderDetailMvcItemViewModel(compositeItem.UIParams, compositeItem.Response, responseBody, loadTopLevelDropDownListsFromDatabase, topLevelDropDownListsFromDatabase);
         }
-        public async Task<PagedSearchViewModel<SalesOrderDetailAdvancedQuery, SalesOrderDetailDataModel.DefaultView[]>> GetSalesOrderDetailPagedSearchViewModel(
+        public async Task<ListSearchViewModel<SalesOrderDetailAdvancedQuery, SalesOrderDetailDataModel.DefaultView[]>> GetSalesOrderDetailPagedSearchViewModel(
             SalesOrderDetailAdvancedQuery query,
             SalesOrderDetailDataModel.DefaultView[]? responseBody,
             CompositeItemModel compositeItem)
@@ -204,7 +205,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
         {
             return await _mvcItemViewModelHelper.GetSalesOrderHeaderMvcItemViewModel(compositeItem.UIParams, compositeItem.Response, responseBody, loadTopLevelDropDownListsFromDatabase, topLevelDropDownListsFromDatabase);
         }
-        public async Task<PagedSearchViewModel<SalesOrderHeaderAdvancedQuery, SalesOrderHeaderDataModel.DefaultView[]>> GetSalesOrderHeaderPagedSearchViewModel(
+        public async Task<ListSearchViewModel<SalesOrderHeaderAdvancedQuery, SalesOrderHeaderDataModel.DefaultView[]>> GetSalesOrderHeaderPagedSearchViewModel(
             SalesOrderHeaderAdvancedQuery query,
             SalesOrderHeaderDataModel.DefaultView[]? responseBody,
             CompositeItemModel compositeItem)

@@ -1,8 +1,8 @@
 @using AdventureWorksLT2019.Models;
 @using AdventureWorksLT2019.Resx;
+@using Framework.Mvc.Models;
 @using Framework.Models;
-@using AdventureWorksLT2019.MvcWebApp.Models;
-@model PagedViewModel<ProductDataModel.DefaultView[]>
+@model ListViewModel<ProductDataModel.DefaultView[]>
 @inject IUIStrings localizor;
 <!--for EditableList "Create New" for now, can copy to Tiles -->
 <input type="hidden" class="nt-list-count" value="@Model!.Result!.ResponseBody!.Count()" />
@@ -11,10 +11,6 @@
     <table class="table table-hover table-bordered table-striped align-middle">
         <thead class="table-dark">
             <tr class="pt-0 pb-0">
-                @if (Model!.UIListSetting.ShowListBulkActionRelated(true))
-                {
-                    <th class="p-0" style="width: 1% !important;"></th>
-                }
                 @if (Model!.UIListSetting.ShowItemButtons())
                 {
                     <th class="p-0" style="width: 1% !important;"></th>
@@ -57,7 +53,7 @@
                             UIItemFeatures = Model.UIListSetting.GetUIItemFeatures(),
                             Status = System.Net.HttpStatusCode.OK,
                             StatusMessage = Model.Result.StatusMessage,
-                            Template = Model!.UIListSetting.UIParams.PagedViewOption != PagedViewOptions.EditableTable ? ViewItemTemplateNames.Details.ToString() : ViewItemTemplateNames.Edit.ToString(),
+                            Template = Model!.UIListSetting.UIParams.PagedViewOption != ListViewOptions.EditableTable ? ViewItemTemplates.Details.ToString() : ViewItemTemplates.Edit.ToString(),
                             IndexInArray = i,
                             Model = Model.Result.ResponseBody[i],
                             TopLevelDropDownListsFromDatabase = Model.TopLevelDropDownListsFromDatabase,

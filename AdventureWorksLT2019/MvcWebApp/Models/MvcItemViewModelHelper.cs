@@ -1,4 +1,5 @@
 using AdventureWorksLT2019.ServiceContracts;
+using Framework.Mvc.Models;
 using Framework.Models;
 using AdventureWorksLT2019.Resx;
 using AdventureWorksLT2019.Models;
@@ -37,7 +38,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Model = responseBody,
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
-                Template = uiParams.Template ?? ViewItemTemplateNames.Details.ToString(),
+                Template = uiParams.Template ?? ViewItemTemplates.Details.ToString(),
                 UIItemFeatures = _viewFeaturesManager.GetBuildVersionUIItemFeatures(),
             });
 
@@ -54,7 +55,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Model = responseBody,
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
-                Template = uiParams.Template ?? ViewItemTemplateNames.Details.ToString(),
+                Template = uiParams.Template ?? ViewItemTemplates.Details.ToString(),
                 UIItemFeatures = _viewFeaturesManager.GetErrorLogUIItemFeatures(),
             });
 
@@ -71,7 +72,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Model = responseBody,
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
-                Template = uiParams.Template ?? ViewItemTemplateNames.Details.ToString(),
+                Template = uiParams.Template ?? ViewItemTemplates.Details.ToString(),
                 UIItemFeatures = _viewFeaturesManager.GetAddressUIItemFeatures(),
             });
 
@@ -88,8 +89,8 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Model = responseBody,
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
-                Template = uiParams.Template ?? ViewItemTemplateNames.Details.ToString(),
-                UIItemFeatures = _viewFeaturesManager.GetCustomerUIItemFeatures(uiParams.PagedViewOption ?? PagedViewOptions.Table),
+                Template = uiParams.Template ?? ViewItemTemplates.Details.ToString(),
+                UIItemFeatures = _viewFeaturesManager.GetCustomerUIItemFeatures(uiParams.PagedViewOption ?? ListViewOptions.Table),
             });
 
             return result;
@@ -107,7 +108,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Model = responseBody,
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
-                Template = uiParams.Template ?? ViewItemTemplateNames.Details.ToString(),
+                Template = uiParams.Template ?? ViewItemTemplates.Details.ToString(),
                 UIItemFeatures = _viewFeaturesManager.GetCustomerAddressUIItemFeatures(),
             });
 
@@ -131,7 +132,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Model = responseBody,
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
-                Template = uiParams.Template ?? ViewItemTemplateNames.Details.ToString(),
+                Template = uiParams.Template ?? ViewItemTemplates.Details.ToString(),
                 UIItemFeatures = _viewFeaturesManager.GetProductUIItemFeatures(),
             });
 
@@ -155,7 +156,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Model = responseBody,
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
-                Template = uiParams.Template ?? ViewItemTemplateNames.Details.ToString(),
+                Template = uiParams.Template ?? ViewItemTemplates.Details.ToString(),
                 UIItemFeatures = _viewFeaturesManager.GetProductCategoryUIItemFeatures(),
             });
 
@@ -177,7 +178,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Model = responseBody,
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
-                Template = uiParams.Template ?? ViewItemTemplateNames.Details.ToString(),
+                Template = uiParams.Template ?? ViewItemTemplates.Details.ToString(),
                 UIItemFeatures = _viewFeaturesManager.GetProductDescriptionUIItemFeatures(),
             });
 
@@ -194,7 +195,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Model = responseBody,
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
-                Template = uiParams.Template ?? ViewItemTemplateNames.Details.ToString(),
+                Template = uiParams.Template ?? ViewItemTemplates.Details.ToString(),
                 UIItemFeatures = _viewFeaturesManager.GetProductModelUIItemFeatures(),
             });
 
@@ -213,7 +214,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Model = responseBody,
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
-                Template = uiParams.Template ?? ViewItemTemplateNames.Details.ToString(),
+                Template = uiParams.Template ?? ViewItemTemplates.Details.ToString(),
                 UIItemFeatures = _viewFeaturesManager.GetProductModelProductDescriptionUIItemFeatures(),
             });
 
@@ -237,7 +238,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Model = responseBody,
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
-                Template = uiParams.Template ?? ViewItemTemplateNames.Details.ToString(),
+                Template = uiParams.Template ?? ViewItemTemplates.Details.ToString(),
                 UIItemFeatures = _viewFeaturesManager.GetSalesOrderDetailUIItemFeatures(),
             });
 
@@ -261,8 +262,8 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Model = responseBody,
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
-                Template = uiParams.Template ?? ViewItemTemplateNames.Details.ToString(),
-                UIItemFeatures = _viewFeaturesManager.GetSalesOrderHeaderUIItemFeatures(uiParams.PagedViewOption ?? PagedViewOptions.Table),
+                Template = uiParams.Template ?? ViewItemTemplates.Details.ToString(),
+                UIItemFeatures = _viewFeaturesManager.GetSalesOrderHeaderUIItemFeatures(uiParams.PagedViewOption ?? ListViewOptions.Table),
             });
 
             if(loadTopLevelDropDownListsFromDatabase && (topLevelDropDownListsFromDatabase == null || !topLevelDropDownListsFromDatabase.Any()))
