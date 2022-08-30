@@ -6,6 +6,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frameworks", "Frameworks", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{DDF84217-C0AB-420B-B4E8-3540FA5405E7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{8E15F100-E137-47B4-8745-8472816F9608}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureWorksLT2019.MvcWebApp", "AdventureWorksLT2019\MvcWebApp\AdventureWorksLT2019.MvcWebApp.csproj", "{F8AE62B6-D741-4690-936C-E579ACB60171}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureWorksLT2019.WebApiControllers", "AdventureWorksLT2019\WebApiControllers\AdventureWorksLT2019.WebApiControllers.csproj", "{80E68725-6379-40C3-B793-8D529319F141}"
