@@ -1,7 +1,8 @@
 using AdventureWorksLT2019.ServiceContracts;
-using Framework.Models;
+using Framework.Common;
 using Framework.Mvc.Models;
 using AdventureWorksLT2019.Models;
+using Framework.Models;
 using AdventureWorksLT2019.Resx;
 namespace AdventureWorksLT2019.MvcWebApp.Models
 {

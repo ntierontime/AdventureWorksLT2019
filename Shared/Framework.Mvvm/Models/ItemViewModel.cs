@@ -1,7 +1,8 @@
-namespace Framework.Mvvm.Models
+using Framework.Common;
+namespace Framework.Models
 {
-    public class ItemViewModel<TDataModel>
-        where TDataModel : class
+    public class ItemViewModel<TModel>
+        where TModel : class
     {
         public System.Net.HttpStatusCode Status { get; set; }
         public string? StatusMessage { get; set; }
@@ -16,12 +17,15 @@ namespace Framework.Mvvm.Models
         public bool IsCurrentItem { get; set; } = false;
 
         public bool BulkSelected { get; set; } = false;
-
+        /// <summary>
+        /// the Key comes from {SolutionName}.Models.Definitions.TopLevelDropDownLists
+        /// </summary>
+        public Dictionary<string, List<NameValuePair>>? TopLevelDropDownListsFromDatabase { get; set; }
         /// <summary>
         /// Item1 is the partial view url
         /// Item2 is the Modal
         /// </summary>
-        public TDataModel? Model { get; set; } = null;
+        public TModel? Model { get; set; } = null;
     }
 }
 

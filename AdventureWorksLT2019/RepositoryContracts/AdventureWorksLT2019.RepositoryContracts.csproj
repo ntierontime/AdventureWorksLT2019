@@ -7,6 +7,7 @@
   </PropertyGroup>
 <ItemGroup>
     <ProjectReference Include="..\..\Shared\Framework\Framework.csproj" />
+    <ProjectReference Include="..\..\Shared\Framework.Common\Framework.Common.csproj" />
     <ProjectReference Include="..\Models\AdventureWorksLT2019.Models.csproj" />
 </ItemGroup>
 

@@ -1,9 +1,9 @@
 ﻿TABLE_SCHEMA,TABLE_NAME,EntityReferenceSimpleFullPath,PKTypeDeclarationContextName,DuplicateIDPropertyFullPath,IsLeftJoin,InLinqJoin,IDInCriteria,IDInDefaultDataView,UniqueConstraintInDefaultDataView,PropertiesInDefaultDataView,CreatedDate
-SalesLT,SalesOrderDetail,\ProductID,Product,,False,True,True,True,True,,8/23/2022 12:00:00 AM
-SalesLT,SalesOrderDetail,\ProductID\ProductCategoryID,ProductCategory,,False,True,True,False,True,,8/23/2022 12:00:00 AM
-SalesLT,SalesOrderDetail,\ProductID\ProductCategoryID\ParentProductCategoryID,ProductCategory,,False,True,True,False,True,,8/23/2022 12:00:00 AM
-SalesLT,SalesOrderDetail,\ProductID\ProductModelID,ProductModel,,False,True,True,False,True,,8/23/2022 12:00:00 AM
-SalesLT,SalesOrderDetail,\SalesOrderID,SalesOrderHeader,,False,True,True,True,True,,8/23/2022 12:00:00 AM
-SalesLT,SalesOrderDetail,\SalesOrderID\BillToAddressID,Address,,False,True,True,False,True,,8/23/2022 12:00:00 AM
-SalesLT,SalesOrderDetail,\SalesOrderID\ShipToAddressID,Address,,False,True,True,False,True,,8/23/2022 12:00:00 AM
-SalesLT,SalesOrderDetail,\SalesOrderID\CustomerID,Customer,,False,True,True,False,True,,8/23/2022 12:00:00 AM
+SalesLT,SalesOrderDetail,\ProductID,Product,,False,True,True,True,True,,8/30/2022 12:00:00 AM
+SalesLT,SalesOrderDetail,\ProductID\ProductCategoryID,ProductCategory,,False,True,True,False,True,,8/30/2022 12:00:00 AM
+SalesLT,SalesOrderDetail,\ProductID\ProductCategoryID\ParentProductCategoryID,ProductCategory,,False,True,True,False,True,,8/30/2022 12:00:00 AM
+SalesLT,SalesOrderDetail,\ProductID\ProductModelID,ProductModel,,False,True,True,False,True,,8/30/2022 12:00:00 AM
+SalesLT,SalesOrderDetail,\SalesOrderID,SalesOrderHeader,,False,True,True,True,True,,8/30/2022 12:00:00 AM
+SalesLT,SalesOrderDetail,\SalesOrderID\BillToAddressID,Address,,False,True,True,False,True,,8/30/2022 12:00:00 AM
+SalesLT,SalesOrderDetail,\SalesOrderID\ShipToAddressID,Address,,False,True,True,False,True,,8/30/2022 12:00:00 AM
+SalesLT,SalesOrderDetail,\SalesOrderID\CustomerID,Customer,,False,True,True,False,True,,8/30/2022 12:00:00 AM

@@ -1,3 +1,4 @@
+using Framework.Common;
 using Framework.Models;
 
 namespace AdventureWorksLT2019.MvcWebApp.Models
