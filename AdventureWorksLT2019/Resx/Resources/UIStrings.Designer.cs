@@ -123,6 +123,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to "Dark"".
+        /// </summary>
+        public static string Dark {
+            get {
+                return ResourceManager.GetString("Dark", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to "Dashboard"".
         /// </summary>
         public static string Dashboard {
@@ -263,6 +272,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string Last {
             get {
                 return ResourceManager.GetString("Last", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Light"".
+        /// </summary>
+        public static string Light {
+            get {
+                return ResourceManager.GetString("Light", resourceCulture);
             }
         }
 

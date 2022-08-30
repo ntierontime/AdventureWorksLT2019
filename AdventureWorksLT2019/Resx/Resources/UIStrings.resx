@@ -139,6 +139,9 @@
   <data name="Create_New" xml:space="preserve">
     <value>Create New</value>
   </data>
+  <data name="Dark" xml:space="preserve">
+    <value>Dark</value>
+  </data>
   <data name="Dashboard" xml:space="preserve">
     <value>Dashboard</value>
   </data>
@@ -186,6 +189,9 @@
   </data>
   <data name="Last" xml:space="preserve">
     <value>Last</value>
+  </data>
+  <data name="Light" xml:space="preserve">
+    <value>Light</value>
   </data>
   <data name="More" xml:space="preserve">
     <value>More</value>

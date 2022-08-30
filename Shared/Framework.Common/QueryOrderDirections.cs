@@ -1,4 +1,4 @@
-namespace Framework.Models
+namespace Framework.Common
 {
     public enum  QueryOrderDirections
     {

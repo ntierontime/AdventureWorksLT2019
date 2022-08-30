@@ -2,6 +2,7 @@ using AdventureWorksLT2019.RepositoryContracts;
 using AdventureWorksLT2019.EFCoreContext;
 using AdventureWorksLT2019.Models;
 using Framework.Helpers;
+using Framework.Common;
 using Framework.Models;
 using Microsoft.Extensions.Logging;
 using System.Net;

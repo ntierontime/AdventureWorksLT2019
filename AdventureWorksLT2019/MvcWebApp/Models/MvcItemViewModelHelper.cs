@@ -1,5 +1,6 @@
 using AdventureWorksLT2019.ServiceContracts;
 using Framework.Mvc.Models;
+using Framework.Common;
 using Framework.Models;
 using AdventureWorksLT2019.Resx;
 using AdventureWorksLT2019.Models;
