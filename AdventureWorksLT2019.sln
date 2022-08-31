@@ -28,7 +28,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework", "Shared\Framewo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Common", "Shared\Framework.Common\Framework.Common.csproj", "{29BF25E3-75D8-4BD8-B6C8-AFE86EC28EEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Maui", "Shared\Framework.Maui\Framework.Maui.csproj", "{BD1BBD0D-CB7B-416E-93F9-0D97AB2285E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Mauix", "Shared\Framework.Mauix\Framework.Mauix.csproj", "{BD1BBD0D-CB7B-416E-93F9-0D97AB2285E3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Mvc", "Shared\Framework.Mvc\Framework.Mvc.csproj", "{0309E4E8-36CA-4881-9FBF-10A1E4960385}"
 EndProject
