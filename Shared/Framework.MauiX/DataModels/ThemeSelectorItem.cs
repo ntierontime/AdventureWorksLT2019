@@ -12,16 +12,6 @@ namespace Framework.MauiX.DataModels
             }
         }
 
-        private bool m_IsCurrent;
-        public bool IsCurrent
-        {
-            get { return m_IsCurrent; }
-            set
-            {
-                Set(nameof(IsCurrent), ref m_IsCurrent, value);
-            }
-        }
-
         private string m_Text;
         public string Text
         {
@@ -29,16 +19,6 @@ namespace Framework.MauiX.DataModels
             set
             {
                 Set(nameof(Text), ref m_Text, value);
-            }
-        }
-
-        private ResourceDictionary m_ResourceDictionary;
-        public ResourceDictionary ResourceDictionary
-        {
-            get { return m_ResourceDictionary; }
-            set
-            {
-                Set(nameof(ResourceDictionary), ref m_ResourceDictionary, value);
             }
         }
     }

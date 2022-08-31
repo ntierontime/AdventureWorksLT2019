@@ -18,11 +18,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\Framework.Common\Framework.Common.csproj" />
+	  <ProjectReference Include="..\..\Shared\Framework.Common\Framework.Common.csproj" />
 	  <ProjectReference Include="..\..\Shared\Framework.MauiX\Framework.MauiX.csproj" />
+	  <ProjectReference Include="..\Resx\AdventureWorksLT2019.Resx.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Helpers\" />
 	  <Folder Include="Views\" />
 	</ItemGroup>
 
@@ -40,6 +42,12 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MainPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Themes\DarkTheme.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Themes\LightTheme.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

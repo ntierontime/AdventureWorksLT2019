@@ -1,5 +1,7 @@
 
 
+using System.Text;
+
 namespace Framework.MauiX.DataModels
 {
     /// <summary>
@@ -16,8 +18,8 @@ namespace Framework.MauiX.DataModels
 
         public string PropertyName { get; set; }
 
-        private Framework.Models.QueryOrderDirections m_Direction = Framework.Models.QueryOrderDirections.Ascending;
-        public Framework.Models.QueryOrderDirections Direction
+        private Framework.Common.QueryOrderDirections m_Direction = Framework.Common.QueryOrderDirections.Ascending;
+        public Framework.Common.QueryOrderDirections Direction
         {
             get { return m_Direction; }
             set
@@ -49,16 +51,12 @@ namespace Framework.MauiX.DataModels
             }
         }
 
-        /// <summary>
-        /// This is used in Xamarin.Forms only for now.
-        /// </summary>
-        [JsonIgnore]
         public object ClientSideActions { get; set; }
 
         public void ToggleDirection()
         {
-            Direction = Direction == Framework.Models.QueryOrderDirections.Ascending ?
-                Framework.Models.QueryOrderDirections.Descending : Framework.Models.QueryOrderDirections.Ascending;
+            Direction = Direction == Framework.Common.QueryOrderDirections.Ascending ?
+                Framework.Common.QueryOrderDirections.Descending : Framework.Common.QueryOrderDirections.Ascending;
         }
 
         //public Expression OrderByExpression { get; set; }
@@ -67,7 +65,7 @@ namespace Framework.MauiX.DataModels
     /// <summary>
     /// a list/collection can have several order by clause
     /// </summary>
-    public class QueryOrderBySettingCollection : List<QueryOrderBySetting>
+    public class QueryOrderBySettingCollection : List<Framework.MauiX.DataModels.QueryOrderBySetting>
     {
         #region constructors
 
@@ -101,18 +99,18 @@ namespace Framework.MauiX.DataModels
                             string[] _Splitted2 = _Splitted1Item.Trim().Split("~".ToCharArray());
                             if (_Splitted2.Length == 1)
                             {
-                                this.Add(_Splitted2[0], QueryOrderDirections.Ascending);
+                                this.Add(_Splitted2[0], Framework.Common.QueryOrderDirections.Ascending);
                             }
                             else if (_Splitted2.Length > 1)
                             {
-                                QueryOrderDirections _ListSortDirection;
+                                Framework.Common.QueryOrderDirections _ListSortDirection;
                                 if (_Splitted2[1].Trim().ToLower() == "DESC".ToLower())
                                 {
-                                    _ListSortDirection = QueryOrderDirections.Descending;
+                                    _ListSortDirection = Framework.Common.QueryOrderDirections.Descending;
                                 }
                                 else
                                 {
-                                    _ListSortDirection = QueryOrderDirections.Ascending;
+                                    _ListSortDirection = Framework.Common.QueryOrderDirections.Ascending;
                                 }
                                 this.Add(_Splitted2[0], _ListSortDirection);
                             }
@@ -131,9 +129,9 @@ namespace Framework.MauiX.DataModels
         /// <param name="direction">The direction.</param>
         public void Add(
             string propertyName
-            , QueryOrderDirections direction)
+            , Framework.Common.QueryOrderDirections direction)
         {
-            this.Add(new QueryOrderBySetting{ DisplayName = propertyName, Direction = direction });
+            this.Add(new Framework.MauiX.DataModels.QueryOrderBySetting { DisplayName = propertyName, Direction = direction });
         }
 
         /// <summary>
@@ -142,10 +140,10 @@ namespace Framework.MauiX.DataModels
         /// <returns>order by expression in string</returns>
         public string GetOrderByExpression()
         {
-            StringBuilder _SB = new StringBuilder();
+            StringBuilder _SB = new();
 
             int _Count = 0;
-            foreach (QueryOrderBySetting _QueryOrderBySetting in this)
+            foreach (Framework.MauiX.DataModels.QueryOrderBySetting _QueryOrderBySetting in this)
             {
                 if (_Count == 0)
                 {
@@ -153,9 +151,9 @@ namespace Framework.MauiX.DataModels
                 }
                 else
                 {
-                    _SB.Append(",");
+                    _SB.Append(',');
                 }
-                _SB.Append(string.Format("{0}{1}", _QueryOrderBySetting.PropertyName ?? _QueryOrderBySetting.DisplayName, _QueryOrderBySetting.Direction == QueryOrderDirections.Ascending ? "" : " DESC"));
+                _SB.Append(string.Format("{0}{1}", _QueryOrderBySetting.PropertyName ?? _QueryOrderBySetting.DisplayName, _QueryOrderBySetting.Direction == Framework.Common.QueryOrderDirections.Ascending ? "" : " DESC"));
             }
 
             return _SB.ToString();

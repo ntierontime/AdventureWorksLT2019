@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk" >
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -8,21 +8,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="6.0.5" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Resources\GlobalUIStrings.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>GlobalUIStrings.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\GlobalUIStrings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>GlobalUIStrings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   
 </Project>

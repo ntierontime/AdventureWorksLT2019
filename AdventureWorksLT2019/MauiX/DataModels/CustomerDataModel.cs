@@ -2,8 +2,8 @@ namespace AdventureWorksLT2019.MauiX.DataModels
 {
     public class CustomerDataModel: Framework.MauiX.PropertyChangedNotifier
 	{
-		protected Framework.Models.ItemUIStatus m_ItemUIStatus______;
-		public Framework.Models.ItemUIStatus ItemUIStatus______
+		protected Framework.Common.ItemUIStatus m_ItemUIStatus______;
+		public Framework.Common.ItemUIStatus ItemUIStatus______
         {
             get
             {

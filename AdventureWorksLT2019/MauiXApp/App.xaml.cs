@@ -9,7 +9,6 @@
             AppVM = appVM;
 
             InitializeComponent();
-            AppVM.Initialize();
             MainPage = new AdventureWorksLT2019.MauiX.AppShell();
         }
 

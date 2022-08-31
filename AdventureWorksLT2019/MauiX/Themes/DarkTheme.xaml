@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="AdventureWorksLT2019.MauiX.Themes.DarkTheme">
+    <!--https://material.io/design/color/dark-theme.html#ui-application-->
+    <Color x:Key="Primary" x:FactoryMethod="FromHex">
+        <x:Arguments>
+            <x:String>#FFBB86FC</x:String>
+        </x:Arguments>
+    </Color>
+    <Color x:Key="PrimaryVariant" x:FactoryMethod="FromHex">
+        <x:Arguments>
+            <x:String>#FF3700B3</x:String>
+        </x:Arguments>
+    </Color>
+    <Color x:Key="Secondary" x:FactoryMethod="FromHex">
+        <x:Arguments>
+            <x:String>#FF03DAC6</x:String>
+        </x:Arguments>
+    </Color>
+    <Color x:Key="SecondaryVariant" x:FactoryMethod="FromHex">
+        <x:Arguments>
+            <x:String>#FF018786</x:String>
+        </x:Arguments>
+    </Color>
+    <Color x:Key="Background" x:FactoryMethod="FromHex">
+        <x:Arguments>
+            <x:String>#FF121212</x:String>
+        </x:Arguments>
+    </Color>
+    <Color x:Key="Surface" x:FactoryMethod="FromHex">
+        <x:Arguments>
+            <x:String>#FF173737</x:String>
+        </x:Arguments>
+    </Color>
+    <Color x:Key="Error" x:FactoryMethod="FromHex">
+        <x:Arguments>
+            <x:String>#FFB00020</x:String>
+        </x:Arguments>
+    </Color>
+    <Color x:Key="OnPrimary" x:FactoryMethod="FromHex">
+        <x:Arguments>
+            <x:String>#FF000000</x:String>
+        </x:Arguments>
+    </Color>
+    <Color x:Key="OnSecondary" x:FactoryMethod="FromHex">
+        <x:Arguments>
+            <x:String>#FFFFFFFF</x:String>
+        </x:Arguments>
+    </Color>
+    <Color x:Key="OnBackground" x:FactoryMethod="FromHex">
+        <x:Arguments>
+            <x:String>#FFFFFFFF</x:String>
+        </x:Arguments>
+    </Color>
+    <Color x:Key="OnSurface" x:FactoryMethod="FromHex">
+        <x:Arguments>
+            <x:String>#FFFFFFFF</x:String>
+        </x:Arguments>
+    </Color>
+    <Color x:Key="OnError" x:FactoryMethod="FromHex">
+        <x:Arguments>
+            <x:String>#FF000000</x:String>
+        </x:Arguments>
+    </Color>
+    <!--<x:String x:Key="FFImageLoadingTintTransformationHexColor">#FF211B33</x:String>-->
+</ResourceDictionary>

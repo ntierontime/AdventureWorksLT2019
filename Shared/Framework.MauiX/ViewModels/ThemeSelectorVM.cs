@@ -1,3 +1,4 @@
+using Microsoft.Maui.Controls;
 using System.Windows.Input;
 
 namespace Framework.MauiX.ViewModels
@@ -6,65 +7,39 @@ namespace Framework.MauiX.ViewModels
     {
         public List<Framework.MauiX.DataModels.ThemeSelectorItem> Themes { get; private set; }
 
+        protected Framework.Common.Theme _CurrentTheme;
+        public Framework.Common.Theme CurrentTheme
+        {
+            get
+            {
+                return _CurrentTheme;
+            }
+            set
+            {
+                //ValidateProperty(value);
+                Set(nameof(CurrentTheme), ref _CurrentTheme, value);
+            }
+        }
+
         public ICommand Command_ThemeSelected { get; set; }
 
-        public ThemeSelectorVM()
+        private readonly Framework.MauiX.Helpers.IThemesHelper _themesHelper;
+
+        public ThemeSelectorVM(Framework.MauiX.Helpers.IThemesHelper themesHelper)
         {
+            _themesHelper = themesHelper;
         }
 
-        public void Initialize(ResourceDictionary lightTheme, ResourceDictionary darkTheme)
+        public async Task Initialize()
         {
-            var currentTheme = Framework.Xaml.ApplicationPropertiesHelper.GetTheme();
-            LightTheme = new ThemeSelectorItem
+            Themes = _themesHelper.GetThemeSelectorItems();
+            CurrentTheme = await Framework.MauiX.Helpers.ApplicationPropertiesHelper.GetCurrentTheme();
+            Command_ThemeSelected = new Command<Framework.Common.Theme>(async t =>
             {
-                Theme = Framework.Themes.Theme.Light
-                 ,
-                IsCurrent = currentTheme == Framework.Themes.Theme.Light
-                 ,
-                Text = Framework.Resx.UIStringResource.Light
-                ,
-                ResourceDictionary = lightTheme
-            };
-            DarkTheme = new ThemeSelectorItem
-            {
-                Theme = Framework.Themes.Theme.Dark
-                 ,
-                IsCurrent = currentTheme == Framework.Themes.Theme.Dark
-                 ,
-                Text = Framework.Resx.UIStringResource.Dark
-                ,
-                ResourceDictionary = darkTheme
-            };
-
-            Command_ThemeSelected = new Command<Framework.Themes.Theme>(async t =>
-            {
-                LightTheme.IsCurrent = t == LightTheme.Theme;
-                DarkTheme.IsCurrent = t == DarkTheme.Theme;
-
-                await Framework.Xaml.ApplicationPropertiesHelper.SetTheme(t);
-                SwitchTheme(t);
+                await Framework.MauiX.Helpers.ApplicationPropertiesHelper.SetTheme(t);
+                CurrentTheme = t;
+                _themesHelper.SwitchTheme(t);
             });
-        }
-
-        public void SwitchTheme(Framework.Themes.Theme theme)
-        {
-            ICollection<ResourceDictionary> mergedDictionaries = Application.Current.Resources.MergedDictionaries;
-            if (mergedDictionaries != null)
-            {
-                mergedDictionaries.Clear();
-
-                switch (theme)
-                {
-                    case Framework.Themes.Theme.Dark:
-                        mergedDictionaries.Add(DarkTheme.ResourceDictionary);
-                        break;
-                    case Framework.Themes.Theme.Light:
-                    default:
-                        mergedDictionaries.Add(LightTheme.ResourceDictionary);
-                        break;
-                }
-            }
         }
     }
 }
-

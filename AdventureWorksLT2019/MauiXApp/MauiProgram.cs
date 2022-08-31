@@ -16,7 +16,7 @@ namespace AdventureWorksLT2019.MauiXApp
                 });
 
             // builder.Services.AddSingleton<AdventureWorksLT2019.MauiX.ViewModels.AppVM>();
-            AdventureWorksLT2019.MauiX.DIRegisterHelper.RegisterViewModels(builder);
+            AdventureWorksLT2019.MauiX.DiIocRegisterHelper.RegisterViewModels(builder);
 
             return builder.Build();
         }
