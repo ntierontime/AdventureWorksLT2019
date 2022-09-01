@@ -1,6 +1,5 @@
-using Framework.Common;
-using AdventureWorksLT2019.Resx;
 using Framework.Models;
+using AdventureWorksLT2019.Resx;
 
 namespace AdventureWorksLT2019.MvcWebApp.Models
 {

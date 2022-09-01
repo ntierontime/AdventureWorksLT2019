@@ -1,5 +1,4 @@
 using AdventureWorksLT2019.Resx;
-using Framework.Common;
 using Framework.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 

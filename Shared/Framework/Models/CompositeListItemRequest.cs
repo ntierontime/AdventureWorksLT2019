@@ -1,4 +1,3 @@
-using Framework.Common;
 namespace Framework.Models
 {
     public class CompositeListItemRequest

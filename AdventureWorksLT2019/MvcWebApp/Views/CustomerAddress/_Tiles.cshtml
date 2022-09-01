@@ -1,7 +1,7 @@
 @using AdventureWorksLT2019.Models;
 @using AdventureWorksLT2019.Resx;
 @using Framework.Mvc.Models;
-@using Framework.Common;
+@using Framework.Models;
 @model ListViewModel<CustomerAddressDataModel.DefaultView[]>
 @inject IUIStrings localizor;
 @if (Model != null && Model.Result != null && Model.Result.Status == System.Net.HttpStatusCode.OK && Model.Result.ResponseBody != null)

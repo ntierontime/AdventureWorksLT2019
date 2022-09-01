@@ -1,4 +1,4 @@
-namespace Framework.Common
+namespace Framework.Models
 {
     public enum CrudViewContainers
     {

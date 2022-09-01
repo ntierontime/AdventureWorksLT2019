@@ -78,6 +78,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to "Auto SignIn"".
+        /// </summary>
+        public static string AutoSignIn {
+            get {
+                return ResourceManager.GetString("AutoSignIn", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to "Back to List"".
         /// </summary>
         public static string Back_to_List {
@@ -164,6 +173,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Email"".
+        /// </summary>
+        public static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
             }
         }
 
@@ -285,6 +303,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to "LogIn"".
+        /// </summary>
+        public static string LogIn {
+            get {
+                return ResourceManager.GetString("LogIn", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to "More"".
         /// </summary>
         public static string More {
@@ -308,6 +335,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string Next {
             get {
                 return ResourceManager.GetString("Next", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Password"".
+        /// </summary>
+        public static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
             }
         }
 
@@ -524,6 +560,24 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string Previous {
             get {
                 return ResourceManager.GetString("Previous", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Register A New User"".
+        /// </summary>
+        public static string RegisterANewUser {
+            get {
+                return ResourceManager.GetString("RegisterANewUser", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Remember Me"".
+        /// </summary>
+        public static string RememberMe {
+            get {
+                return ResourceManager.GetString("RememberMe", resourceCulture);
             }
         }
 
