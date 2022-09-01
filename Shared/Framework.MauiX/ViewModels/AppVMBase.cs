@@ -31,15 +31,15 @@ namespace Framework.MauiX.ViewModels
             }
         }
 
-        private Framework.MauiX.DataModels.SignInData m_SignInData;
-        public Framework.MauiX.DataModels.SignInData SignInData
-        {
-            get { return m_SignInData; }
-            set
-            {
-                Set(nameof(SignInData), ref m_SignInData, value);
-            }
-        }
+        //private Framework.MauiX.DataModels.SignInData m_SignInData;
+        //public Framework.MauiX.DataModels.SignInData SignInData
+        //{
+        //    get { return m_SignInData; }
+        //    set
+        //    {
+        //        Set(nameof(SignInData), ref m_SignInData, value);
+        //    }
+        //}
 
         public async Task GetCurrentLocation()
         {

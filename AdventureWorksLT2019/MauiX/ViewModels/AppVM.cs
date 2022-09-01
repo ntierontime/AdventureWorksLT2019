@@ -2,11 +2,32 @@ namespace AdventureWorksLT2019.MauiX.ViewModels
 {
     public class AppVM : Framework.MauiX.ViewModels.AppVMBase
     {
-        private readonly Framework.MauiX.Helpers.IThemesHelper _themesHelper;
-        public AppVM(Framework.MauiX.Helpers.IThemesHelper themesHelper)
+        private readonly Framework.MauiX.Helpers.IThemeService _themeService;
+        public Framework.MauiX.ViewModels.ProgressBarVM ProgressBarVM
         {
-            _themesHelper = themesHelper;
+            get { return DependencyService.Resolve<Framework.MauiX.ViewModels.ProgressBarVM>(DependencyFetchTarget.GlobalInstance); }
         }
+
+        public AppVM(Framework.MauiX.Helpers.IThemeService themeService)
+        {
+            _themeService = themeService;
+        }
+
+        public async Task OnStart()
+        {
+            HasAuthentication = false;
+
+            // 2. 
+            var currentTheme = await Framework.MauiX.Helpers.ApplicationPropertiesHelper.GetCurrentTheme();
+            _themeService.SwitchTheme(AppTheme.Dark);
+
+            ProgressBarVM.Initialization(4);
+            ProgressBarVM.Forward();
+            ProgressBarVM.Forward();
+            ProgressBarVM.Forward();
+
+        }
+
 
         //public Elmah.XamarinForms.ViewModels.AppLoadingVM AppLoadingVM
         //{
@@ -57,73 +78,73 @@ namespace AdventureWorksLT2019.MauiX.ViewModels
         //    }
         //}
 
-        public void Initialize(bool hasAuthentication = true)
-        {
-            HasAuthentication = hasAuthentication;
+        // public void Initialize(bool hasAuthentication = true)
+        // {
+        // HasAuthentication = hasAuthentication;
 
-            //            // 1. initialize
+        //            // 1. initialize
 
-            //            Framework.Xamariner.TranslateExtension.RegisterResourceManager(typeof(Framework.Resx.UIStringResource));
-            //            Framework.Xamariner.TranslateExtension.RegisterResourceManager(typeof(Elmah.Resx.UIStringResourcePerApp));
-            //            Framework.Xamariner.TranslateExtension.RegisterResourceManager(typeof(Elmah.Resx.UIStringResourcePerEntity));
-            //            Framework.Xamariner.TranslateExtension.RegisterResourceManager(typeof(Elmah.Resx.UIStringResourceReport));
+        //            Framework.Xamariner.TranslateExtension.RegisterResourceManager(typeof(Framework.Resx.UIStringResource));
+        //            Framework.Xamariner.TranslateExtension.RegisterResourceManager(typeof(Elmah.Resx.UIStringResourcePerApp));
+        //            Framework.Xamariner.TranslateExtension.RegisterResourceManager(typeof(Elmah.Resx.UIStringResourcePerEntity));
+        //            Framework.Xamariner.TranslateExtension.RegisterResourceManager(typeof(Elmah.Resx.UIStringResourceReport));
 
-            //            Framework.Models.PropertyChangedNotifierHelper.Initialize(true);
-            //            Framework.Weather.WeatherServiceSingleton.Instance.InitWeatherServiceProvider(new Framework.Weather.OpenWeatherMap.OpenWeatherMapProvider());
-            //            Elmah.MVVMLightViewModels.SQLiteFactory.Initialize();
-            //            Framework.Helpers.GeoHelperSinglton.Instance.Init("3");
+        //            Framework.Models.PropertyChangedNotifierHelper.Initialize(true);
+        //            Framework.Weather.WeatherServiceSingleton.Instance.InitWeatherServiceProvider(new Framework.Weather.OpenWeatherMap.OpenWeatherMapProvider());
+        //            Elmah.MVVMLightViewModels.SQLiteFactory.Initialize();
+        //            Framework.Helpers.GeoHelperSinglton.Instance.Init("3");
 
-            //            // 2. Web Service Url and Toke
-            //            if (Device.RuntimePlatform.ToLower() == Framework.Xamariner.Platforms.Android.ToString().ToLower())
-            //            {
-            //                Elmah.MVVMLightViewModels.WebServiceConfig.WebApiRootUrl = Elmah.MVVMLightViewModels.WebServiceConfig.WebApiRootUrl_Android;
-            //            }
-            //            else if (Device.RuntimePlatform.ToLower() == Framework.Xamariner.Platforms.iOS.ToString().ToLower())
-            //            {
-            //                Elmah.MVVMLightViewModels.WebServiceConfig.WebApiRootUrl = Elmah.MVVMLightViewModels.WebServiceConfig.WebApiRootUrl_IOS;
-            //            }
-            //            else
-            //            {
-            //                Elmah.MVVMLightViewModels.WebServiceConfig.WebApiRootUrl = Elmah.MVVMLightViewModels.WebServiceConfig.WebApiRootUrl_General;
-            //            }
+        //            // 2. Web Service Url and Toke
+        //            if (Device.RuntimePlatform.ToLower() == Framework.Xamariner.Platforms.Android.ToString().ToLower())
+        //            {
+        //                Elmah.MVVMLightViewModels.WebServiceConfig.WebApiRootUrl = Elmah.MVVMLightViewModels.WebServiceConfig.WebApiRootUrl_Android;
+        //            }
+        //            else if (Device.RuntimePlatform.ToLower() == Framework.Xamariner.Platforms.iOS.ToString().ToLower())
+        //            {
+        //                Elmah.MVVMLightViewModels.WebServiceConfig.WebApiRootUrl = Elmah.MVVMLightViewModels.WebServiceConfig.WebApiRootUrl_IOS;
+        //            }
+        //            else
+        //            {
+        //                Elmah.MVVMLightViewModels.WebServiceConfig.WebApiRootUrl = Elmah.MVVMLightViewModels.WebServiceConfig.WebApiRootUrl_General;
+        //            }
 
-            //#if DEBUG
-            //            // TODO: change to false if want to test/enable/disable XXX.MVVMLightViewModels.WebServiceConfig.UseToken
-            //            Elmah.MVVMLightViewModels.WebServiceConfig.UseToken = true;
-            //#else
-            //            Elmah.MVVMLightViewModels.WebServiceConfig.UseToken = true;
-            //#endif
-            //            // 3. Initialize Localization
-            //            if (Device.RuntimePlatform.ToLower() == Framework.Xamariner.Platforms.iOS.ToString().ToLower() || Device.RuntimePlatform.ToLower() == Framework.Xamariner.Platforms.Android.ToString().ToLower())
-            //            {
-            //                // determine the correct, supported .NET culture
-            //                var ci = DependencyService.Get<Framework.Xamariner.ILocalize>().GetCurrentCultureInfo();
-            //                Framework.Resx.UIStringResource.Culture = ci; // set the RESX for resource localization
-            //                Elmah.Resx.UIStringResourcePerApp.Culture = ci; // set the RESX for resource localization
+        //#if DEBUG
+        //            // TODO: change to false if want to test/enable/disable XXX.MVVMLightViewModels.WebServiceConfig.UseToken
+        //            Elmah.MVVMLightViewModels.WebServiceConfig.UseToken = true;
+        //#else
+        //            Elmah.MVVMLightViewModels.WebServiceConfig.UseToken = true;
+        //#endif
+        //            // 3. Initialize Localization
+        //            if (Device.RuntimePlatform.ToLower() == Framework.Xamariner.Platforms.iOS.ToString().ToLower() || Device.RuntimePlatform.ToLower() == Framework.Xamariner.Platforms.Android.ToString().ToLower())
+        //            {
+        //                // determine the correct, supported .NET culture
+        //                var ci = DependencyService.Get<Framework.Xamariner.ILocalize>().GetCurrentCultureInfo();
+        //                Framework.Resx.UIStringResource.Culture = ci; // set the RESX for resource localization
+        //                Elmah.Resx.UIStringResourcePerApp.Culture = ci; // set the RESX for resource localization
 
-            //                Elmah.Resx.UIStringResourcePerEntity.Culture = ci; // set the RESX for resource localization
-            //                Elmah.Resx.UIStringResourceReport.Culture = ci; // set the RESX for resource localization
+        //                Elmah.Resx.UIStringResourcePerEntity.Culture = ci; // set the RESX for resource localization
+        //                Elmah.Resx.UIStringResourceReport.Culture = ci; // set the RESX for resource localization
 
-            //                DependencyService.Get<Framework.Xamariner.ILocalize>().SetLocale(ci); // set the Thread for locale-aware methods
-            //            }
+        //                DependencyService.Get<Framework.Xamariner.ILocalize>().SetLocale(ci); // set the Thread for locale-aware methods
+        //            }
 
-            //            // 5. Register ViewModels
-            //            Elmah.MVVMLightViewModels.ViewModelLocator._RegisterViewModels();
-            //            Elmah.XamarinForms.ViewModels.ViewModelLocator.RegisterViewModels();
+        //            // 5. Register ViewModels
+        //            Elmah.MVVMLightViewModels.ViewModelLocator._RegisterViewModels();
+        //            Elmah.XamarinForms.ViewModels.ViewModelLocator.RegisterViewModels();
 
-            //            // 6. Register Domains
-            //            RegisterDomains();
-            //            foreach (var domainManager in DomainManagers)
-            //            {
-            //                // 6.1. Register domain specific ViewModels
-            //                domainManager.RegisterViewModels();
-            //                // 6.2. Get DomainRegistrationModel, DomainRegistrationModel.Routers will be called in NavigationVM.RegisterRoutes()
-            //                this.DomainRegistrationModels.Add(domainManager.CreateDomainModel());
-            //            }
+        //            // 6. Register Domains
+        //            RegisterDomains();
+        //            foreach (var domainManager in DomainManagers)
+        //            {
+        //                // 6.1. Register domain specific ViewModels
+        //                domainManager.RegisterViewModels();
+        //                // 6.2. Get DomainRegistrationModel, DomainRegistrationModel.Routers will be called in NavigationVM.RegisterRoutes()
+        //                this.DomainRegistrationModels.Add(domainManager.CreateDomainModel());
+        //            }
 
-            //            // 7.
-            //            AppShellVM.Cleanup();
-        }
+        //            // 7.
+        //            AppShellVM.Cleanup();
+        // }
 
         //        private void RegisterDomains()
         //        {
@@ -140,64 +161,66 @@ namespace AdventureWorksLT2019.MauiX.ViewModels
         //            }
         //        }
 
-        public async Task OnStart()
-        {
-            var currentTheme = await Framework.MauiX.Helpers.ApplicationPropertiesHelper.GetCurrentTheme();
-            _themesHelper.SwitchTheme(currentTheme);
+        //    public async Task OnStart()
+        //{
+        //    HasAuthentication = hasAuthentication;
 
-            //if (!HasAuthentication)
-            //{
-            //    MessagingCenter.Send<Elmah.XamarinForms.ViewModels.DashboardVM, long>(DashboardVM, Elmah.XamarinForms.ViewModels.DashboardVM.MessageTitle_LoadData, -1);
-            //    return;
-            //}
+        //    var currentTheme = await Framework.MauiX.Helpers.ApplicationPropertiesHelper.GetCurrentTheme();
+        //    _themesHelper.SwitchTheme(currentTheme);
 
-            //try
-            //{
-            //    App.Current.MainPage = new NavigationPage(new Elmah.XamarinForms.Pages.AppLoadingPage());
+        //if (!HasAuthentication)
+        //{
+        //    MessagingCenter.Send<Elmah.XamarinForms.ViewModels.DashboardVM, long>(DashboardVM, Elmah.XamarinForms.ViewModels.DashboardVM.MessageTitle_LoadData, -1);
+        //    return;
+        //}
 
-            //    // Load SignInData
-            //    SignInData = Framework.Xaml.ApplicationPropertiesHelper.GetSignInData();
+        //try
+        //{
+        //    App.Current.MainPage = new NavigationPage(new Elmah.XamarinForms.Pages.AppLoadingPage());
 
-            //    if (SignInData.RememberMe && SignInData.AutoSignIn)
-            //    {
-            //        var client = Elmah.MVVMLightViewModels.WebApiClientFactory.CreateAuthenticationApiClient();
+        //    // Load SignInData
+        //    SignInData = Framework.Xaml.ApplicationPropertiesHelper.GetSignInData();
 
-            //        var LoginResponse = await client.LogInAsync(SignInData.UserName, SignInData.Password);
-            //        if (LoginResponse.Succeeded)
-            //        {
-            //            LoginResponse.LoggedInSource = Framework.WebApi.LoggedInSource.AutoLogIn;
+        //    if (SignInData.RememberMe && SignInData.AutoSignIn)
+        //    {
+        //        var client = Elmah.MVVMLightViewModels.WebApiClientFactory.CreateAuthenticationApiClient();
 
-            //            await Framework.Xaml.ApplicationPropertiesHelper.SetSignInData(
-            //                SignInData.UserName
-            //                , SignInData.Password
-            //                , SignInData.RememberMe, SignInData.AutoSignIn, LoginResponse.Token, LoginResponse.EntityID ?? 0, !LoginResponse.EntityID.HasValue, null);
+        //        var LoginResponse = await client.LogInAsync(SignInData.UserName, SignInData.Password);
+        //        if (LoginResponse.Succeeded)
+        //        {
+        //            LoginResponse.LoggedInSource = Framework.WebApi.LoggedInSource.AutoLogIn;
 
-            //            SignInData = Framework.Xaml.ApplicationPropertiesHelper.GetSignInData();
+        //            await Framework.Xaml.ApplicationPropertiesHelper.SetSignInData(
+        //                SignInData.UserName
+        //                , SignInData.Password
+        //                , SignInData.RememberMe, SignInData.AutoSignIn, LoginResponse.Token, LoginResponse.EntityID ?? 0, !LoginResponse.EntityID.HasValue, null);
 
-            //            App.Current.MainPage = new NavigationPage(new Elmah.XamarinForms.Pages.AppLoadingPage());
-            //            MessagingCenter.Send<Elmah.XamarinForms.ViewModels.AppLoadingVM, Framework.WebApi.AuthenticationResponse>(AppLoadingVM, Elmah.XamarinForms.ViewModels.AppLoadingVM.MessageTitle_LoadData, LoginResponse);
-            //        }
-            //        else
-            //        {
-            //            await Framework.Xaml.ApplicationPropertiesHelper.ClearSignInData();
-            //            App.Current.MainPage = new NavigationPage(new Elmah.XamarinForms.Pages.LogInPage());
-            //        }
-            //    }
-            //    else
-            //    {
-            //        await Framework.Xaml.ApplicationPropertiesHelper.ClearSignInData();
-            //        App.Current.MainPage = new NavigationPage(new Elmah.XamarinForms.Pages.LogInPage());
-            //    }
-            //    // TODO: if you want to track current GPS location
-            //    //Framework.Xamariner.CrossGeolocatorHelper.locationChangedHandler += OnLocationChanged;
-            //    //CurrentLocation = await Framework.Xamariner.CrossGeolocatorHelper.GetCurrentLocationAsync(null);
-            //}
-            //catch (System.Exception ex)
-            //{
-            //    await Framework.Xaml.ApplicationPropertiesHelper.ClearSignInData();
-            //    App.Current.MainPage = new NavigationPage(new Elmah.XamarinForms.Pages.LogInPage());
-            //}
-        }
+        //            SignInData = Framework.Xaml.ApplicationPropertiesHelper.GetSignInData();
+
+        //            App.Current.MainPage = new NavigationPage(new Elmah.XamarinForms.Pages.AppLoadingPage());
+        //            MessagingCenter.Send<Elmah.XamarinForms.ViewModels.AppLoadingVM, Framework.WebApi.AuthenticationResponse>(AppLoadingVM, Elmah.XamarinForms.ViewModels.AppLoadingVM.MessageTitle_LoadData, LoginResponse);
+        //        }
+        //        else
+        //        {
+        //            await Framework.Xaml.ApplicationPropertiesHelper.ClearSignInData();
+        //            App.Current.MainPage = new NavigationPage(new Elmah.XamarinForms.Pages.LogInPage());
+        //        }
+        //    }
+        //    else
+        //    {
+        //        await Framework.Xaml.ApplicationPropertiesHelper.ClearSignInData();
+        //        App.Current.MainPage = new NavigationPage(new Elmah.XamarinForms.Pages.LogInPage());
+        //    }
+        //    // TODO: if you want to track current GPS location
+        //    //Framework.Xamariner.CrossGeolocatorHelper.locationChangedHandler += OnLocationChanged;
+        //    //CurrentLocation = await Framework.Xamariner.CrossGeolocatorHelper.GetCurrentLocationAsync(null);
+        //}
+        //catch (System.Exception ex)
+        //{
+        //    await Framework.Xaml.ApplicationPropertiesHelper.ClearSignInData();
+        //    App.Current.MainPage = new NavigationPage(new Elmah.XamarinForms.Pages.LogInPage());
+        //}
+        // }
     }
 }
 

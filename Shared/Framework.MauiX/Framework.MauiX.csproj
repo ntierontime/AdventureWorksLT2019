@@ -25,4 +25,10 @@
 	  <ProjectReference Include="..\Framework.Common\Framework.Common.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="Views\Settings\ThemeSelector.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

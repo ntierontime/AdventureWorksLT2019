@@ -3,10 +3,9 @@ using Framework.MauiX.DataModels;
 
 namespace Framework.MauiX.Helpers
 {
-    public interface IThemesHelper
+    public interface IThemeService
     {
-        ResourceDictionary GetTheme(Theme theme);
         List<ThemeSelectorItem> GetThemeSelectorItems();
-        void SwitchTheme(Framework.Common.Theme theme);
+        void SwitchTheme(AppTheme theme);
     }
 }

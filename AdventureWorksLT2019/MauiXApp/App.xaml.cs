@@ -2,19 +2,32 @@
 {
     public partial class App : Application
     {
-        public AdventureWorksLT2019.MauiX.ViewModels.AppVM AppVM { get; private set; }
+        //public AdventureWorksLT2019.MauiX.ViewModels.AppVM AppVM
+        //{
+        //    get
+        //    {
+        //        return DependencyService.Resolve<AdventureWorksLT2019.MauiX.ViewModels.AppVM>();
+        //    }
+        //}
+
+        private readonly AdventureWorksLT2019.MauiX.ViewModels.AppVM _appVM;
 
         public App(AdventureWorksLT2019.MauiX.ViewModels.AppVM appVM)
         {
-            AppVM = appVM;
+            _appVM = appVM;
 
             InitializeComponent();
-            MainPage = new AdventureWorksLT2019.MauiX.AppShell();
+            
+            // 1. Register ViewModels
+            Framework.MauiX.ViewModels.ViewModelLocator.RegisterViewModels();
+            AdventureWorksLT2019.MauiX.ViewModels.ViewModelLocator.RegisterViewModels();
+
+            MainPage = new AdventureWorksLT2019.MauiX.Views.AppLoadingPage();
         }
 
         protected override async void OnStart()
         {
-            await AppVM.OnStart();
+            await _appVM.OnStart();
         }
 
         protected override void OnSleep()

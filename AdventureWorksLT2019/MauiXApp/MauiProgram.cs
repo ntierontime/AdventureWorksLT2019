@@ -15,10 +15,20 @@ namespace AdventureWorksLT2019.MauiXApp
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            // builder.Services.AddSingleton<AdventureWorksLT2019.MauiX.ViewModels.AppVM>();
-            AdventureWorksLT2019.MauiX.DiIocRegisterHelper.RegisterViewModels(builder);
+            RegisterServices(builder);
 
             return builder.Build();
+        }
+
+        /// <summary>
+        /// Services are using mauiAppBuilder.Services.AddSingleton(), to be resolved in Constructor
+        /// ViewModels are using DependencyService.Register();
+        /// </summary>
+        /// <param name="mauiAppBuilder"></param>
+        public static void RegisterServices(MauiAppBuilder mauiAppBuilder)
+        {
+            mauiAppBuilder.Services.AddSingleton<AdventureWorksLT2019.MauiX.ViewModels.AppVM>();
+            mauiAppBuilder.Services.AddSingleton<Framework.MauiX.Helpers.IThemeService, AdventureWorksLT2019.MauiX.Services.ThemeService>();
         }
     }
 }

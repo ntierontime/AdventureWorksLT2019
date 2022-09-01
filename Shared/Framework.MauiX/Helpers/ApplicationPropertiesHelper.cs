@@ -12,7 +12,7 @@ namespace Framework.MauiX.Helpers
 
         public static async Task<Framework.MauiX.DataModels.SignInData> GetSignInData()
         {
-            var signInData = await GetData<Framework.MauiX.DataModels.SignInData>(Key_SignInData);
+            var signInData = await GetSerializedData<Framework.MauiX.DataModels.SignInData>(Key_SignInData);
 
             if (!string.IsNullOrEmpty(signInData.UserName))
             {
@@ -51,7 +51,7 @@ namespace Framework.MauiX.Helpers
                 GoToWelcomeWizard = goToWelcomeWizard,
             };
 
-            await SaveData(Key_SignInData, _sSignInData);
+            await SaveSerializedData(Key_SignInData, _sSignInData);
         }
 
         public static void ClearSignInData()
@@ -143,18 +143,18 @@ namespace Framework.MauiX.Helpers
 
         public const string Key_Theme = "Theme";
 
-        public static async Task<Framework.Common.Theme> GetCurrentTheme()
+        public static async Task<AppTheme> GetCurrentTheme()
         {
             var currentThemeInSecureStorage = await SecureStorage.Default.GetAsync(Key_Theme);
-            if (!string.IsNullOrEmpty(currentThemeInSecureStorage) && Enum.TryParse<Framework.Common.Theme>(currentThemeInSecureStorage, out Framework.Common.Theme currentTheme))
+            if (!string.IsNullOrEmpty(currentThemeInSecureStorage) && Enum.TryParse<AppTheme>(currentThemeInSecureStorage, out AppTheme currentTheme))
             {
                 return currentTheme;
             }
-            await SecureStorage.Default.SetAsync(Key_Theme, Framework.Common.Theme.Light.ToString());
-            return Framework.Common.Theme.Light;
+            await SecureStorage.Default.SetAsync(Key_Theme, AppTheme.Light.ToString());
+            return AppTheme.Light;
         }
 
-        public static async Task SetTheme(Framework.Common.Theme theme)
+        public static async Task SetTheme(AppTheme theme)
         {
             await SecureStorage.Default.SetAsync(Key_Theme, theme.ToString());
         }
@@ -168,17 +168,17 @@ namespace Framework.MauiX.Helpers
             SecureStorage.Default.RemoveAll();
         }
 
-        public static async Task SaveData(string key, object data)
+        public static async Task SaveSerializedData(string key, object data)
         {
             await SecureStorage.Default.SetAsync(key, JsonSerializer.Serialize(data));
         }
 
-        public static async Task<T> GetData<T>(string key)
+        public static async Task<T> GetSerializedData<T>(string key)
         {
             var serializedData = await SecureStorage.Default.GetAsync(key);
             if(string.IsNullOrEmpty(serializedData))
             {
-                return default(T);
+                return default;
             }
             try
             {
@@ -186,7 +186,7 @@ namespace Framework.MauiX.Helpers
             }
             catch
             {
-                return default(T);
+                return default;
             }
         }
 

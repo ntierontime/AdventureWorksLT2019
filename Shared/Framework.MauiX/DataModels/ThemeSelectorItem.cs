@@ -2,8 +2,8 @@ namespace Framework.MauiX.DataModels
 {
     public class ThemeSelectorItem : Framework.MauiX.PropertyChangedNotifier
     {
-        private Framework.Common.Theme m_Theme;
-        public Framework.Common.Theme Theme
+        private AppTheme m_Theme;
+        public AppTheme Theme
         {
             get { return m_Theme; }
             set

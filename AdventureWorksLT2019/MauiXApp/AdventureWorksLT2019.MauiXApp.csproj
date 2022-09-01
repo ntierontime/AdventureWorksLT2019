@@ -49,6 +49,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\ntierontime_logo.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <ProjectReference Include="..\..\Shared\Framework.MauiX\Framework.MauiX.csproj" />
 	  <ProjectReference Include="..\..\Shared\Framework\Framework.csproj" />
 	  <ProjectReference Include="..\MauiX\AdventureWorksLT2019.MauiX.csproj" />
