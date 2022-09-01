@@ -26,7 +26,7 @@ namespace Framework.MauiX.ViewModels.Account
         }
 
         string m_Password;
-        [Required(ErrorMessageResourceType = typeof(Adve Framework.Resx.UIStringResource), ErrorMessageResourceName = "Common_PasswordRequiredErrorMessage")]
+        //[Required(ErrorMessageResourceType = typeof(Framework.Resx.UIStringResource), ErrorMessageResourceName = "Common_PasswordRequiredErrorMessage")]
         public string Password
         {
             get => m_Password;

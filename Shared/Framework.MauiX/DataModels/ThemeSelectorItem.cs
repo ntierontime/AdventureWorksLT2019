@@ -4,7 +4,7 @@ namespace Framework.MauiX.DataModels
 {
     public class ThemeSelectorItem
     {
-        public AppTheme Theme { get; set }
-        public string Text { get; set }
+        public AppTheme Theme { get; set; }
+        public string Text { get; set; }
     }
 }
