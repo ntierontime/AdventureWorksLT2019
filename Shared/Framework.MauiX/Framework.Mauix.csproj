@@ -23,11 +23,11 @@
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
 	  <PackageReference Include="Microsoft.Spatial" Version="7.12.2" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\Framework.Common\Framework.Common.csproj" />
-	</ItemGroup>
-
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Framework\Framework.csproj" />
+  </ItemGroup>
+  
 	<ItemGroup>
 	  <MauiXaml Update="Views\Settings\ThemeSelector.xaml">
 	    <Generator>MSBuild:Compile</Generator>

@@ -14,8 +14,8 @@ namespace Framework.MauiX.DataModels
             set => SetProperty(ref m_PropertyName, value);
         }
 
-        private Framework.Common.QueryOrderDirections m_Direction = Framework.Common.QueryOrderDirections.Ascending;
-        public Framework.Common.QueryOrderDirections Direction
+        private Framework.Models.QueryOrderDirections m_Direction = Framework.Models.QueryOrderDirections.Ascending;
+        public Framework.Models.QueryOrderDirections Direction
         {
             get => m_Direction;
             set => SetProperty(ref m_Direction, value);
@@ -41,8 +41,8 @@ namespace Framework.MauiX.DataModels
 
         public void ToggleDirection()
         {
-            Direction = Direction == Framework.Common.QueryOrderDirections.Ascending ?
-                Framework.Common.QueryOrderDirections.Descending : Framework.Common.QueryOrderDirections.Ascending;
+            Direction = Direction == Framework.Models.QueryOrderDirections.Ascending ?
+                Framework.Models.QueryOrderDirections.Descending : Framework.Models.QueryOrderDirections.Ascending;
         }
 
         //public Expression OrderByExpression { get; set; }
