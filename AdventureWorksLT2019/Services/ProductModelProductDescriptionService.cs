@@ -2,7 +2,6 @@ using AdventureWorksLT2019.RepositoryContracts;
 using AdventureWorksLT2019.ServiceContracts;
 using AdventureWorksLT2019.Models;
 using Framework.Models;
-using Framework.Common;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Net;

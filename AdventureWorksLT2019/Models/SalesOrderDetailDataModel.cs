@@ -1,5 +1,5 @@
 using AdventureWorksLT2019.Resx.Resources;
-using Framework.Common;
+using Framework.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace AdventureWorksLT2019.Models

@@ -1,4 +1,3 @@
-using Framework.Common;
 using Framework.Models;
 
 namespace Framework.Mvc.Models

@@ -5,7 +5,6 @@ using AdventureWorksLT2019.Resx;
 using AdventureWorksLT2019.Models.Definitions;
 using AdventureWorksLT2019.Models;
 using Framework.Models;
-using Framework.Common;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Rendering;
