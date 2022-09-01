@@ -2,15 +2,21 @@ namespace AdventureWorksLT2019.MauiX.ViewModels
 {
     public class AppVM : Framework.MauiX.ViewModels.AppVMBase
     {
-        private readonly Framework.MauiX.Helpers.IThemeService _themeService;
+        private readonly Framework.MauiX.Services.IThemeService _themeService;
+        private readonly Framework.MauiX.Services.SecureStorageService _secureStorageService;
+
         public Framework.MauiX.ViewModels.ProgressBarVM ProgressBarVM
         {
             get { return DependencyService.Resolve<Framework.MauiX.ViewModels.ProgressBarVM>(DependencyFetchTarget.GlobalInstance); }
         }
 
-        public AppVM(Framework.MauiX.Helpers.IThemeService themeService)
+        public AppVM(
+            Framework.MauiX.Services.IThemeService themeService, 
+            Framework.MauiX.Services.SecureStorageService secureStorageService
+            )
         {
             _themeService = themeService;
+            _secureStorageService = secureStorageService;
         }
 
         public async Task OnStart()
@@ -18,14 +24,30 @@ namespace AdventureWorksLT2019.MauiX.ViewModels
             HasAuthentication = false;
 
             // 2. 
-            var currentTheme = await Framework.MauiX.Helpers.ApplicationPropertiesHelper.GetCurrentTheme();
-            _themeService.SwitchTheme(AppTheme.Dark);
+            var currentTheme = await _secureStorageService.GetCurrentTheme();
+            _themeService.SwitchTheme(currentTheme);
+
+            // 3. 
+            var signInData = await _secureStorageService.GetSignInData();
+            // 1. Goto LogInPage
+            if (!signInData.AutoSignIn)
+            {
+
+                Application.Current.MainPage = new AdventureWorksLT2019.MauiX.Pages.Account.LogInPage();
+            }
+            else
+            {
+                Application.Current.MainPage = new AdventureWorksLT2019.MauiX.AppShell();
+            }
 
             ProgressBarVM.Initialization(4);
             ProgressBarVM.Forward();
+            Thread.Sleep(2000);
             ProgressBarVM.Forward();
+            Thread.Sleep(2000);
             ProgressBarVM.Forward();
-
+            Thread.Sleep(2000);
+            ProgressBarVM.Forward();
         }
 
 

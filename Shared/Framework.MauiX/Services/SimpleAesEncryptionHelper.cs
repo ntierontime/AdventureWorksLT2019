@@ -1,6 +1,6 @@
 using System.Security.Cryptography;
 
-namespace Framework.MauiX.Helpers
+namespace Framework.MauiX.Services
 {
     // Taken from https://xamarinhelp.com/cryptography-in-xamarin-forms/
 

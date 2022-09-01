@@ -117,7 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  
   <data name="AdvancedSearch" xml:space="preserve">
     <value>Advanced Search</value>
   </data>
@@ -799,6 +798,22 @@
   <data name="Section_SalesOrderDetails_Via_SalesOrderID" xml:space="preserve">
     <value>Sales Order Details  Via  Sales Order ID</value>
   </data>
-
+  <data name="AutoSignIn" xml:space="preserve">
+    <value>Auto SignIn</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="LogIn" xml:space="preserve">
+    <value>LogIn</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="RegisterANewUser" xml:space="preserve">
+    <value>Register A New User</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Remember Me</value>
+  </data>
 </root>
-

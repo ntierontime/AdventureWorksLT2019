@@ -1,45 +1,27 @@
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Devices.Sensors;
+using System.Xml.Linq;
 
 namespace Framework.MauiX.ViewModels
 {
-    public class AppVMBase : Framework.MauiX.PropertyChangedNotifier
+    public class AppVMBase : ObservableObject
     {
         public bool HasAuthentication { get; set; }
 
         protected bool m_ShellNavBarIsVisible;
         public bool ShellNavBarIsVisible
         {
-            get
-            {
-                return m_ShellNavBarIsVisible;
-            }
-            set
-            {
-                //ValidateProperty(value);
-                Set(nameof(ShellNavBarIsVisible), ref m_ShellNavBarIsVisible, value);
-            }
+            get => m_ShellNavBarIsVisible;
+            set => SetProperty(ref m_ShellNavBarIsVisible, value);
         }
 
         private Microsoft.Spatial.GeographyPoint m_CurrentLocation;
         public Microsoft.Spatial.GeographyPoint CurrentLocation
         {
-            get { return m_CurrentLocation; }
-            set
-            {
-                Set(nameof(CurrentLocation), ref m_CurrentLocation, value);
-            }
+            get => m_CurrentLocation;
+            set => SetProperty(ref m_CurrentLocation, value);
         }
-
-        //private Framework.MauiX.DataModels.SignInData m_SignInData;
-        //public Framework.MauiX.DataModels.SignInData SignInData
-        //{
-        //    get { return m_SignInData; }
-        //    set
-        //    {
-        //        Set(nameof(SignInData), ref m_SignInData, value);
-        //    }
-        //}
 
         public async Task GetCurrentLocation()
         {

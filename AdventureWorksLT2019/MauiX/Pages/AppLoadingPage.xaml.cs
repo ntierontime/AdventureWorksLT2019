@@ -1,4 +1,4 @@
-namespace AdventureWorksLT2019.MauiX.Views;
+namespace AdventureWorksLT2019.MauiX.Pages;
 
 public partial class AppLoadingPage : ContentPage
 {

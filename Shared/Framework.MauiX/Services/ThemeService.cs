@@ -1,7 +1,7 @@
 ﻿using Framework.Common;
 using Framework.MauiX.DataModels;
 
-namespace Framework.MauiX.Helpers
+namespace Framework.MauiX.Services
 {
     public interface IThemeService
     {

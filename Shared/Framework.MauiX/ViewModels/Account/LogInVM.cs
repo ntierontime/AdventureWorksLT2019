@@ -1,16 +1,17 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Framework.MauiX.ViewModels.Account
 {
-    public class LogInVM: Framework.MauiX.PropertyChangedNotifier
+    public class LogInVM: ObservableValidator
     {
-        private bool _IsVisible;
+        private bool m_IsVisible;
         public bool IsVisible
         {
-            get { return _IsVisible; }
-            set { Set(nameof(IsVisible), ref _IsVisible, value); }
+            get => m_IsVisible;
+            set => SetProperty(ref m_IsVisible, value);
         }
 
         public bool FromLogInFromLogInPage { get; set; } = false;
@@ -20,29 +21,19 @@ namespace Framework.MauiX.ViewModels.Account
         //[RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessageResourceName = "Common_EmailFormatErrorMessage", ErrorMessageResourceType = typeof(Framework.Resx.UIStringResource))]
         public string Email
         {
-            get
-            {
-                return m_Email;
-            }
-            set
-            {
-                ValidateProperty(value);
-                Set(nameof(Email), ref m_Email, value);
-            }
+            get => m_Email;
+            set => SetProperty(ref m_Email, value);
         }
 
         string m_Password;
-        //[Required(ErrorMessageResourceType = typeof(Framework.Resx.UIStringResource), ErrorMessageResourceName = "Common_PasswordRequiredErrorMessage")]
+        [Required(ErrorMessageResourceType = typeof(Adve Framework.Resx.UIStringResource), ErrorMessageResourceName = "Common_PasswordRequiredErrorMessage")]
         public string Password
         {
-            get
-            {
-                return m_Password;
-            }
-            set
-            {
-                ValidateProperty(value);
-                Set(nameof(Password), ref m_Password, value);
+            get => m_Password;
+            set 
+            { 
+                SetProperty(ref m_Password, value);
+                ValidateProperty(Password, nameof(Password));
             }
         }
 
@@ -57,29 +48,22 @@ namespace Framework.MauiX.ViewModels.Account
         string m_ErrorMessage;
         public string ErrorMessage
         {
-            get
-            {
-                return m_ErrorMessage;
-            }
-            set
-            {
-                m_ErrorMessage = value;
-                RaisePropertyChanged(nameof(ErrorMessage));
-            }
+            get => m_ErrorMessage;
+            set => SetProperty(ref m_ErrorMessage, value);
         }
 
-        private bool _RememberMe;
+        private bool m_RememberMe;
         public bool RememberMe
         {
-            get { return _RememberMe; }
-            set { Set(nameof(RememberMe), ref _RememberMe, value); }
+            get => m_RememberMe;
+            set => SetProperty(ref m_RememberMe, value);
         }
 
-        private bool _AutoSignIn;
+        private bool m_AutoSignIn;
         public bool AutoSignIn
         {
-            get { return _AutoSignIn; }
-            set { Set(nameof(AutoSignIn), ref _AutoSignIn, value); }
+            get => m_AutoSignIn;
+            set => SetProperty(ref m_AutoSignIn, value);
         }
 
         //Framework.MauiX.WebApi.AuthenticationResponse m_LoginResponse = new Framework.WebApi.AuthenticationResponse();
@@ -193,14 +177,6 @@ namespace Framework.MauiX.ViewModels.Account
         //}
 
         #endregion 2. Google OAuth2 Login Command
-
-
-        protected override void ValidateProperty(object value, [CallerMemberName] string propertyName = null)
-        {
-            base.ValidateProperty(value, propertyName);
-
-            RaisePropertyChanged(nameof(EnableLogInButton));
-        }
 
         //#region 2. Google OAuth2 Login OnAuthCompleted/OnAuthError
 

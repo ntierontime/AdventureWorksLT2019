@@ -22,7 +22,7 @@
             Framework.MauiX.ViewModels.ViewModelLocator.RegisterViewModels();
             AdventureWorksLT2019.MauiX.ViewModels.ViewModelLocator.RegisterViewModels();
 
-            MainPage = new AdventureWorksLT2019.MauiX.Views.AppLoadingPage();
+            MainPage = new AdventureWorksLT2019.MauiX.Pages.AppLoadingPage();
         }
 
         protected override async void OnStart()

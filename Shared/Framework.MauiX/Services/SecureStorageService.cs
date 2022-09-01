@@ -1,16 +1,16 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Framework.MauiX.Helpers
+namespace Framework.MauiX.Services
 {
-    public class ApplicationPropertiesHelper
+    public class SecureStorageService
     {
         #region 1. CacheSignInData
 
         public const string Key_SignInData = "SignInData";
         private const string EncryptionKey = "!whatever!";
 
-        public static async Task<Framework.MauiX.DataModels.SignInData> GetSignInData()
+        public async Task<Framework.MauiX.DataModels.SignInData> GetSignInData()
         {
             var signInData = await GetSerializedData<Framework.MauiX.DataModels.SignInData>(Key_SignInData);
 
@@ -34,7 +34,7 @@ namespace Framework.MauiX.Helpers
             return signInData;
         }
 
-        public static async Task SetSignInData(string userName, string password, bool rememberMe, bool autoSignIn, string token, long entityID, bool goToWelcomeWizard, string shortGuid)
+        public async Task SetSignInData(string userName, string password, bool rememberMe, bool autoSignIn, string token, bool goToWelcomeWizard, string shortGuid)
         {
             string encryptedUsername = !string.IsNullOrEmpty(userName) ? userName.Encrypt(EncryptionKey) : null;
             string encryptedPassword = rememberMe && !string.IsNullOrEmpty(password) ? password?.Encrypt(EncryptionKey): null;
@@ -46,7 +46,6 @@ namespace Framework.MauiX.Helpers
                 RememberMe = rememberMe,
                 AutoSignIn = autoSignIn,
                 Token = token,
-                EntityID = entityID,
                 ShortGuid = shortGuid,
                 GoToWelcomeWizard = goToWelcomeWizard,
             };
@@ -54,7 +53,7 @@ namespace Framework.MauiX.Helpers
             await SaveSerializedData(Key_SignInData, _sSignInData);
         }
 
-        public static void ClearSignInData()
+        public void ClearSignInData()
         {
             SecureStorage.Default.Remove(Key_SignInData);
         }
@@ -65,14 +64,14 @@ namespace Framework.MauiX.Helpers
 
         //public const string Key_WelcomeWizardData = "WelcomeWizardData";
 
-        //public static Framework.Models.WizardData GetWelcomeWizardData()
+        //public Framework.Models.WizardData GetWelcomeWizardData()
         //{
         //    var wizardData = GetData<Framework.Models.WizardData>(Key_WelcomeWizardData);
 
         //    return wizardData;
         //}
 
-        //public static async Task SetWelcomeWizardData(bool completed, string currentItemName, List<Framework.Models.WizardDataItem> wizardDataItems)
+        //public async Task SetWelcomeWizardData(bool completed, string currentItemName, List<Framework.Models.WizardDataItem> wizardDataItems)
         //{
         //    var wizardData = new Framework.Models.WizardData
         //    {
@@ -86,11 +85,11 @@ namespace Framework.MauiX.Helpers
         //    await SaveData(Key_WelcomeWizardData, wizardData);
         //}
 
-        //public static void ClearWelcomeWizardData()
+        //public void ClearWelcomeWizardData()
         //{
         //    Application.Current.Properties.Remove(Key_WelcomeWizardData);
         //}
-        //public static bool HasWelcomeWizardData()
+        //public bool HasWelcomeWizardData()
         //{
         //    return HasData(Key_WelcomeWizardData);
         //}
@@ -101,7 +100,7 @@ namespace Framework.MauiX.Helpers
 
         //public const string Prefix_TableCachingData = "TCD_";
 
-        //public static Framework.Xaml.TableCachingItem GetTableCachingData(string tableName)
+        //public Framework.Xaml.TableCachingItem GetTableCachingData(string tableName)
         //{
         //    var data = GetData<Framework.Xaml.TableCachingItem>(Prefix_TableCachingData + tableName);
         //    if (string.IsNullOrEmpty(data.TableName))
@@ -112,7 +111,7 @@ namespace Framework.MauiX.Helpers
         //    return data;
         //}
 
-        //public static async Task SetTableCachingData(string tableName, DateTime syncDateTime, bool shouldRefresh)
+        //public async Task SetTableCachingData(string tableName, DateTime syncDateTime, bool shouldRefresh)
         //{
         //    var data = GetTableCachingData(tableName);
         //    data.TableName = tableName; data.SyncDateTime = syncDateTime; data.ShouldRefresh = shouldRefresh;
@@ -120,7 +119,7 @@ namespace Framework.MauiX.Helpers
         //    await SaveData(Prefix_TableCachingData + tableName, data);
         //}
 
-        //public static async Task SetTableUIListSetting(string tableName, bool bindToGroupedResults, List<Framework.Queries.QueryOrderBySetting> queryOrderBySettings)
+        //public async Task SetTableUIListSetting(string tableName, bool bindToGroupedResults, List<Framework.Queries.QueryOrderBySetting> queryOrderBySettings)
         //{
         //    var data = GetTableCachingData(tableName);
         //    data.TableName = tableName; data.UIListBindToGroupedResults = bindToGroupedResults; data.UIListQueryOrderBySettings = queryOrderBySettings;
@@ -128,11 +127,11 @@ namespace Framework.MauiX.Helpers
         //    await SaveData(Prefix_TableCachingData + tableName, data);
         //}
 
-        //public static void ClearTableCachingData(string tableName)
+        //public void ClearTableCachingData(string tableName)
         //{
         //    Application.Current.Properties.Remove(Prefix_TableCachingData + tableName);
         //}
-        //public static bool HasTableCachingData(string tableName)
+        //public bool HasTableCachingData(string tableName)
         //{
         //    return HasData(Prefix_TableCachingData + tableName);
         //}
@@ -143,7 +142,7 @@ namespace Framework.MauiX.Helpers
 
         public const string Key_Theme = "Theme";
 
-        public static async Task<AppTheme> GetCurrentTheme()
+        public async Task<AppTheme> GetCurrentTheme()
         {
             var currentThemeInSecureStorage = await SecureStorage.Default.GetAsync(Key_Theme);
             if (!string.IsNullOrEmpty(currentThemeInSecureStorage) && Enum.TryParse<AppTheme>(currentThemeInSecureStorage, out AppTheme currentTheme))
@@ -154,7 +153,7 @@ namespace Framework.MauiX.Helpers
             return AppTheme.Light;
         }
 
-        public static async Task SetTheme(AppTheme theme)
+        public async Task SetTheme(AppTheme theme)
         {
             await SecureStorage.Default.SetAsync(Key_Theme, theme.ToString());
         }
@@ -163,17 +162,17 @@ namespace Framework.MauiX.Helpers
 
         #region z. Generic<T> Get or Save
 
-        public static void ClearAll()
+        public void ClearAll()
         {
             SecureStorage.Default.RemoveAll();
         }
 
-        public static async Task SaveSerializedData(string key, object data)
+        public async Task SaveSerializedData(string key, object data)
         {
             await SecureStorage.Default.SetAsync(key, JsonSerializer.Serialize(data));
         }
 
-        public static async Task<T> GetSerializedData<T>(string key)
+        public async Task<T> GetSerializedData<T>(string key)
         {
             var serializedData = await SecureStorage.Default.GetAsync(key);
             if(string.IsNullOrEmpty(serializedData))

@@ -1,4 +1,6 @@
-﻿using Microsoft.Maui.Hosting;
+﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Markup;
+using Microsoft.Maui.Hosting;
 
 namespace AdventureWorksLT2019.MauiXApp
 {
@@ -8,6 +10,8 @@ namespace AdventureWorksLT2019.MauiXApp
         {
             var builder = MauiApp.CreateBuilder();
             builder
+                .UseMauiCommunityToolkit()
+                .UseMauiCommunityToolkitMarkup()
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
                 {
@@ -16,7 +20,7 @@ namespace AdventureWorksLT2019.MauiXApp
                 });
 
             RegisterServices(builder);
-
+            builder.Services.AddLocalization();
             return builder.Build();
         }
 
@@ -27,8 +31,9 @@ namespace AdventureWorksLT2019.MauiXApp
         /// <param name="mauiAppBuilder"></param>
         public static void RegisterServices(MauiAppBuilder mauiAppBuilder)
         {
+            mauiAppBuilder.Services.AddSingleton<Framework.MauiX.Services.SecureStorageService>();
+            mauiAppBuilder.Services.AddSingleton<Framework.MauiX.Services.IThemeService, AdventureWorksLT2019.MauiX.Services.ThemeService>();
             mauiAppBuilder.Services.AddSingleton<AdventureWorksLT2019.MauiX.ViewModels.AppVM>();
-            mauiAppBuilder.Services.AddSingleton<Framework.MauiX.Helpers.IThemeService, AdventureWorksLT2019.MauiX.Services.ThemeService>();
         }
     }
 }

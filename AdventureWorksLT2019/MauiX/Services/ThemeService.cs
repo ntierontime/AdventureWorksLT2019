@@ -1,6 +1,6 @@
 namespace AdventureWorksLT2019.MauiX.Services
 {
-    public class ThemeService : Framework.MauiX.Helpers.IThemeService
+    public class ThemeService : Framework.MauiX.Services.IThemeService
     {
         public List<Framework.MauiX.DataModels.ThemeSelectorItem> GetThemeSelectorItems()
         {

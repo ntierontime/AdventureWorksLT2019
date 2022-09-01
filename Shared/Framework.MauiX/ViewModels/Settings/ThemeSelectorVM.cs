@@ -1,44 +1,47 @@
-using Microsoft.Maui.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Windows.Input;
 
 namespace Framework.MauiX.ViewModels.Settings
 {
-    public class ThemeSelectorVM : Framework.MauiX.PropertyChangedNotifier
+    public class ThemeSelectorVM : ObservableObject
     {
         public List<Framework.MauiX.DataModels.ThemeSelectorItem> Themes { get; private set; }
 
-        protected AppTheme _CurrentTheme;
+        protected AppTheme m_CurrentTheme;
         public AppTheme CurrentTheme
         {
-            get
-            {
-                return _CurrentTheme;
-            }
-            set
-            {
-                //ValidateProperty(value);
-                Set(nameof(CurrentTheme), ref _CurrentTheme, value);
-            }
+            get => m_CurrentTheme;
+            set => SetProperty(ref m_CurrentTheme, value);
         }
 
         public ICommand Command_ThemeSelected { get; set; }
 
-        private readonly Framework.MauiX.Helpers.IThemeService _themesHelper;
+        private readonly Framework.MauiX.Services.IThemeService _themeService;
+        private readonly Framework.MauiX.Services.SecureStorageService _secureStorageService;
 
-        public ThemeSelectorVM(Framework.MauiX.Helpers.IThemeService themesHelper)
+        public Framework.MauiX.ViewModels.ProgressBarVM ProgressBarVM
         {
-            _themesHelper = themesHelper;
+            get { return DependencyService.Resolve<Framework.MauiX.ViewModels.ProgressBarVM>(DependencyFetchTarget.GlobalInstance); }
+        }
+
+        public ThemeSelectorVM(
+            Framework.MauiX.Services.IThemeService themeService,
+            Framework.MauiX.Services.SecureStorageService secureStorageService
+            )
+        {
+            _themeService = themeService;
+            _secureStorageService = secureStorageService;
         }
 
         public async Task Initialize()
         {
-            Themes = _themesHelper.GetThemeSelectorItems();
-            CurrentTheme = await Framework.MauiX.Helpers.ApplicationPropertiesHelper.GetCurrentTheme();
+            Themes = _themeService.GetThemeSelectorItems();
+            CurrentTheme = await _secureStorageService.GetCurrentTheme();
             Command_ThemeSelected = new Command<AppTheme>(async t =>
             {
-                await Framework.MauiX.Helpers.ApplicationPropertiesHelper.SetTheme(t);
+                await _secureStorageService.SetTheme(t);
                 CurrentTheme = t;
-                _themesHelper.SwitchTheme(t);
+                _themeService.SwitchTheme(t);
             });
         }
     }

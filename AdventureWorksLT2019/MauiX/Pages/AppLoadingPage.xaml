@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:fvmg="clr-namespace:Framework.MauiX.ViewModels;assembly=Framework.MauiX"
              xmlns:vmc="clr-namespace:AdventureWorksLT2019.MauiX.ViewModels;assembly=AdventureWorksLT2019.MauiX"
-             x:Class="AdventureWorksLT2019.MauiX.Views.AppLoadingPage"
+             x:Class="AdventureWorksLT2019.MauiX.Pages.AppLoadingPage"
              Shell.NavBarIsVisible="False"
              Shell.TabBarIsVisible="False"
              NavigationPage.HasNavigationBar="false"

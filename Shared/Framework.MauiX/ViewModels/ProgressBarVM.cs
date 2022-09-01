@@ -1,25 +1,21 @@
+using CommunityToolkit.Mvvm.ComponentModel;
+
 namespace Framework.MauiX.ViewModels
 {
-    public class ProgressBarVM: Framework.MauiX.PropertyChangedNotifier
+    public class ProgressBarVM: ObservableObject
     {
         private double m_Progress = 0;
         public double Progress
         {
-            get { return m_Progress; }
-            set
-            {
-                Set(nameof(Progress), ref m_Progress, value);
-            }
+            get => m_Progress;
+            set => SetProperty(ref m_Progress, value);
         }
 
         private double m_Scale;
         public double Scale
         {
-            get { return m_Scale; }
-            set
-            {
-                Set(nameof(Scale), ref m_Scale, value);
-            }
+            get => m_Scale;
+            set => SetProperty(ref m_Scale, value);
         }
 
         public void Initialization(double scale)
