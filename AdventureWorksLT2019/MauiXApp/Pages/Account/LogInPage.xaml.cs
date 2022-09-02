@@ -1,4 +1,4 @@
-namespace AdventureWorksLT2019.MauiX.Pages.Account;
+namespace AdventureWorksLT2019.MauiXApp.Pages.Account;
 
 public partial class LogInPage : ContentPage
 {
@@ -6,7 +6,7 @@ public partial class LogInPage : ContentPage
 	{
 		InitializeComponent();
 
-        BindingContext = DependencyService.Resolve<AdventureWorksLT2019.MauiX.ViewModels.Account.LogInVM>();
+        BindingContext = Framework.MauiX.Helpers.ServiceHelper.GetService<AdventureWorksLT2019.MauiXApp.ViewModels.Account.LogInVM>();
 	}
 
     private void OnSignUpButtonClicked(object sender, EventArgs e)

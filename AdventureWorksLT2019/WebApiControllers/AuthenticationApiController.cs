@@ -1,4 +1,4 @@
-using Framework.Mvc.Models.Account;
+using Framework.Models.Account;
 using Framework.Mvc.Identity.Data;
 using Framework.Mvc.Identity;
 using Framework.Mvc;
@@ -40,7 +40,7 @@ namespace AdventureWorksLT2019.WebApiControllers
         }
 
         [HttpPost]
-        public async Task<AuthenticationResponse> Login([FromBody] LoginViewModel model)
+        public async Task<AuthenticationResponse> Login([FromBody] LoginRequest model)
         {
             var user = await _userManager.FindByNameAsync(model.Email);
             var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
@@ -139,7 +139,7 @@ namespace AdventureWorksLT2019.WebApiControllers
 
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
-        public async Task<AuthenticationResponse> Logout([FromBody] LoginViewModel model)
+        public async Task<AuthenticationResponse> Logout([FromBody] LoginRequest model)
         {
 
             // TODO: set a flag? last log out time
@@ -149,7 +149,7 @@ namespace AdventureWorksLT2019.WebApiControllers
         // POST api/Account/Register
         [AllowAnonymous]
         [HttpPost]
-        public async Task<AuthenticationResponse> Register([FromBody] RegisterViewModel model)
+        public async Task<AuthenticationResponse> Register([FromBody] RegisterRequest model)
         {
             if (!ModelState.IsValid)
             {
@@ -188,7 +188,7 @@ namespace AdventureWorksLT2019.WebApiControllers
                 */
             }
 
-            var loginViewModel = new LoginViewModel { Email = model.Email, Password = model.Password };
+            var loginViewModel = new LoginRequest { Email = model.Email, Password = model.Password };
 
             return await Login(loginViewModel);
         }

@@ -1,7 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Windows.Input;
 
-namespace AdventureWorksLT2019.MauiX.ViewModels.Settings
+namespace AdventureWorksLT2019.MauiXApp.ViewModels.Settings
 {
     public class ThemeSelectorVM : ObservableObject
     {
@@ -19,9 +19,9 @@ namespace AdventureWorksLT2019.MauiX.ViewModels.Settings
         private readonly Framework.MauiX.Services.IThemeService _themeService;
         private readonly Framework.MauiX.Services.SecureStorageService _secureStorageService;
 
-        public AdventureWorksLT2019.MauiX.ViewModels.ProgressBarVM ProgressBarVM
+        public AdventureWorksLT2019.MauiXApp.ViewModels.ProgressBarVM ProgressBarVM
         {
-            get { return DependencyService.Resolve<AdventureWorksLT2019.MauiX.ViewModels.ProgressBarVM>(DependencyFetchTarget.GlobalInstance); }
+            get { return DependencyService.Resolve<AdventureWorksLT2019.MauiXApp.ViewModels.ProgressBarVM>(DependencyFetchTarget.GlobalInstance); }
         }
 
         public ThemeSelectorVM(

@@ -3,9 +3,9 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace AdventureWorksLT2019.MauiX.ViewModels.Account
+namespace AdventureWorksLT2019.MauiXApp.ViewModels.Account
 {
-    public class LogInVM: ObservableValidator
+    public class LogInVM: Framework.MauiX.ComponentModels.ObservableValidatorExt
     {
         private bool m_IsVisible;
         public bool IsVisible
@@ -70,30 +70,13 @@ namespace AdventureWorksLT2019.MauiX.ViewModels.Account
             set => SetProperty(ref m_AutoSignIn, value);
         }
 
-        //Framework.MauiX.WebApi.AuthenticationResponse m_LoginResponse = new Framework.WebApi.AuthenticationResponse();
+        private readonly AdventureWorksLT2019.MauiX.Services.AuthenticationService _authenticationService;
 
-        //public Framework.WebApi.AuthenticationResponse LoginResponse
-        //{
-        //    get { return m_LoginResponse; }
-        //    set { Set(nameof(LoginResponse), ref m_LoginResponse, value); }
-        //}
-
-        public LogInVM()
+        public LogInVM(
+            AdventureWorksLT2019.MauiX.Services.AuthenticationService authenticationService 
+            )
         {
-            //if (AppVM.SignInData.RememberMe)
-            //{
-            //    this.Email = AppVM.SignInData.UserName;
-            //    this.Password = AppVM.SignInData.Password;
-            //}
-            //else
-            //{
-            //    this.Email = string.Empty;
-            //    this.Password = string.Empty;
-            //}
-
-            //this.RememberMe = AppVM.SignInData.RememberMe;
-            //this.AutoSignIn = AppVM.SignInData.AutoSignIn;
-            //RaisePropertyChanged(nameof(EnableLogInButton));
+            _authenticationService = authenticationService;
         }
 
         #region 1. Login Asp.Net Identity Command
@@ -105,6 +88,7 @@ namespace AdventureWorksLT2019.MauiX.ViewModels.Account
 
         private async void OnLogIn()
         {
+            var response = await _authenticationService.LogIn(Email, Password, RememberMe);
             //PopupVM.ShowPopup(Framework.Resx.UIStringResource.Loading, false);
 
             //this.FromLogInFromLogInPage = true;

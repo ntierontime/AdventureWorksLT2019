@@ -1,6 +1,6 @@
-namespace Framework.Mvc.Models.Account
+namespace Framework.Models.Account
 {
-    public class LoginViewModel
+    public class LoginRequest
     {
         public string Email { get; set; } = null!;
 

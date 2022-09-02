@@ -1,53 +1,67 @@
-namespace AdventureWorksLT2019.MauiX.ViewModels
+namespace AdventureWorksLT2019.MauiXApp.ViewModels
 {
     public class AppVM : Framework.MauiX.ViewModels.AppVMBase
     {
+        private readonly AdventureWorksLT2019.MauiXApp.ViewModels.ProgressBarVM _progressBarVM;
+
         private readonly Framework.MauiX.Services.IThemeService _themeService;
         private readonly Framework.MauiX.Services.SecureStorageService _secureStorageService;
-
-        public AdventureWorksLT2019.MauiX.ViewModels.ProgressBarVM ProgressBarVM
-        {
-            get { return DependencyService.Resolve<AdventureWorksLT2019.MauiX.ViewModels.ProgressBarVM>(DependencyFetchTarget.GlobalInstance); }
-        }
+        private readonly AdventureWorksLT2019.MauiX.Services.AuthenticationService _authenticationService;
 
         public AppVM(
             Framework.MauiX.Services.IThemeService themeService, 
-            Framework.MauiX.Services.SecureStorageService secureStorageService
+            Framework.MauiX.Services.SecureStorageService secureStorageService,
+            AdventureWorksLT2019.MauiX.Services.AuthenticationService authenticationService,
+            AdventureWorksLT2019.MauiXApp.ViewModels.ProgressBarVM progressBarVM
             )
         {
             _themeService = themeService;
             _secureStorageService = secureStorageService;
+            _authenticationService = authenticationService;
+            _progressBarVM = progressBarVM;
         }
 
         public async Task OnStart()
         {
             HasAuthentication = false;
 
+            _progressBarVM.Initialization(1);
+            _progressBarVM.Forward();
+            Thread.Sleep(2000);
+            _progressBarVM.Forward();
+            Thread.Sleep(2000);
+            _progressBarVM.Forward();
+            Thread.Sleep(2000);
+            _progressBarVM.Forward();
+
             // 2. 
             var currentTheme = await _secureStorageService.GetCurrentTheme();
             _themeService.SwitchTheme(currentTheme);
+            // _themeService.SwitchTheme(AppTheme.Dark);
 
-            // 3. 
-            var signInData = await _secureStorageService.GetSignInData();
-            // 1. Goto LogInPage
-            if (!signInData.AutoSignIn)
+            // 3.
+            // 1. Auto Login
+            var signInData = await _authenticationService.AutoLogIn();
+            if (signInData.IsAuthenticated())
             {
-
-                Application.Current.MainPage = new AdventureWorksLT2019.MauiX.Pages.Account.LogInPage();
+                Application.Current.MainPage = new AdventureWorksLT2019.MauiXApp.MainPage();
             }
             else
             {
-                Application.Current.MainPage = new AdventureWorksLT2019.MauiX.AppShell();
+                Application.Current.MainPage = new AdventureWorksLT2019.MauiXApp.Pages.Account.LogInPage();
             }
+            // var signInData = await _secureStorageService.GetSignInData();
+            // 1. Goto LogInPage
+            //if (!signInData.AutoSignIn)
+            //{
 
-            ProgressBarVM.Initialization(4);
-            //ProgressBarVM.Forward();
-            //Thread.Sleep(2000);
-            //ProgressBarVM.Forward();
-            //Thread.Sleep(2000);
-            //ProgressBarVM.Forward();
-            Thread.Sleep(2000);
-            ProgressBarVM.Forward();
+            //    Application.Current.MainPage = new AdventureWorksLT2019.MauiXApp.Pages.Account.LogInPage();
+            //}
+            //else
+            //{
+            //    Application.Current.MainPage = new AdventureWorksLT2019.MauiXApp.AppShell();
+            //}
+
         }
 
 

@@ -25,32 +25,27 @@ namespace Framework.MauiX.Services
                 signInData.Password = encryptedPassword.Decrypt(EncryptionKey);
             }
 
-            if (string.IsNullOrEmpty(signInData.UserName) || string.IsNullOrEmpty(signInData.Password))
-            {
-                signInData.AutoSignIn = false;
-                signInData.RememberMe = false;
-            }
-
             return signInData;
         }
 
-        public async Task SetSignInData(string userName, string password, bool rememberMe, bool autoSignIn, string token, bool goToWelcomeWizard, string shortGuid)
+        public async Task<Framework.MauiX.DataModels.SignInData> SetSignInData(Framework.MauiX.DataModels.SignInData signInData)
         {
-            string encryptedUsername = !string.IsNullOrEmpty(userName) ? userName.Encrypt(EncryptionKey) : null;
-            string encryptedPassword = rememberMe && !string.IsNullOrEmpty(password) ? password?.Encrypt(EncryptionKey): null;
+            string encryptedUsername = !string.IsNullOrEmpty(signInData.UserName) ? signInData.UserName.Encrypt(EncryptionKey) : null;
+            string encryptedPassword = !string.IsNullOrEmpty(signInData.Password) ? signInData.Password.Encrypt(EncryptionKey): null;
 
-            var _sSignInData = new Framework.MauiX.DataModels.SignInData
+            var newSignInData = new Framework.MauiX.DataModels.SignInData
             {
                 UserName = encryptedUsername,
                 Password = encryptedPassword,
-                RememberMe = rememberMe,
-                AutoSignIn = autoSignIn,
-                Token = token,
-                ShortGuid = shortGuid,
-                GoToWelcomeWizard = goToWelcomeWizard,
+                Token = signInData.Token,
+                ShortGuid = signInData.ShortGuid,
+                LastLoggedInDateTime = signInData.LastLoggedInDateTime,
+                TokenExpireDateTime = signInData.TokenExpireDateTime,
+                GoToWelcomeWizard = signInData.GoToWelcomeWizard,
             };
 
-            await SaveSerializedData(Key_SignInData, _sSignInData);
+            await SaveSerializedData(Key_SignInData, newSignInData);
+            return newSignInData;
         }
 
         public void ClearSignInData()

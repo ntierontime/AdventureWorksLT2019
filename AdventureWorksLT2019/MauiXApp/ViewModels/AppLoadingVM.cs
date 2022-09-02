@@ -1,6 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace AdventureWorksLT2019.MauiX.ViewModels
+namespace AdventureWorksLT2019.MauiXApp.ViewModels
 {
     public class AppLoadingVM : ObservableObject
     {

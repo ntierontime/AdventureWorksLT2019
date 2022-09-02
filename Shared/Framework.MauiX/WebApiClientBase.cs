@@ -1,3 +1,6 @@
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Framework.MauiX
 {
-    public abstract class ApiControllerHttpClientBase
+    public abstract class WebApiClientBase
     {
         protected readonly string _rootPath;
 
@@ -15,7 +18,7 @@ namespace Framework.MauiX
 
         protected readonly HttpClient _client = null!;
 
-        public ApiControllerHttpClientBase(string rootPath, bool useToken = false, string token = null!)
+        public WebApiClientBase(string rootPath, bool useToken = false, string token = null!)
         {
             this._rootPath = rootPath;
             _client = new HttpClient(new System.Net.Http.HttpClientHandler());
@@ -24,6 +27,36 @@ namespace Framework.MauiX
                 _client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
             }
         }
+
+
+        public async Task<TResponse> Post<TRequest, TResponse>(string url, TRequest request)
+        {
+            var jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
+            jsonSerializerSettings.Converters.Add(new StringEnumConverter());
+            string requestJSON = JsonConvert.SerializeObject(request, Formatting.Indented, jsonSerializerSettings);
+            var httpContent = new StringContent(requestJSON, System.Text.Encoding.UTF8, "application/json");
+
+            var response = await _client.PostAsync(url, httpContent);
+
+            if (response.IsSuccessStatusCode)
+            {
+                try
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<TResponse>(content);
+                    return result;
+                }
+                catch
+                {
+                    return default(TResponse);
+                }
+            }
+            else
+            {
+                return default(TResponse);
+            }
+        }
+
 
         public string GetHttpRequestUrl(string actionName, Dictionary<string, string> parameters)
         {

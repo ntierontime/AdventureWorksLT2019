@@ -1,4 +1,4 @@
-﻿namespace AdventureWorksLT2019.MauiX
+﻿namespace AdventureWorksLT2019.MauiXApp
 {
     public partial class AppShell : Shell
     {

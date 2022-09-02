@@ -1,6 +1,6 @@
-namespace Framework.Mvc.Models.Account
+namespace Framework.Models.Account
 {
-    public class RegisterViewModel
+    public class RegisterRequest
     {
         public string Email { get; set; } = null!;
 

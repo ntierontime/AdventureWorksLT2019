@@ -1,6 +1,6 @@
-namespace Framework.Mvc.Models.Account
+namespace Framework.Models.Account
 {
-    public class ResetPasswordViewModel
+    public class ResetPasswordRequest
     {
         public string Email { get; set; } = null!;
 

@@ -2,22 +2,21 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:fvmg="clr-namespace:Framework.MauiX.ViewModels;assembly=Framework.MauiX"
-             xmlns:vmc="clr-namespace:AdventureWorksLT2019.MauiX.ViewModels;assembly=AdventureWorksLT2019.MauiX"
-             x:Class="AdventureWorksLT2019.MauiX.Pages.AppLoadingPage"
+             xmlns:vm="clr-namespace:AdventureWorksLT2019.MauiXApp.ViewModels"
+             x:Class="AdventureWorksLT2019.MauiXApp.Pages.AppLoadingPage"
              Shell.NavBarIsVisible="False"
              Shell.TabBarIsVisible="False"
              NavigationPage.HasNavigationBar="false"
              Visual="Material"
              Title="EmptyPage">
     <ContentPage.Resources>
-        <vmc:ViewModelLocator x:Key="Locator" />
+        <vm:ViewModelLocator x:Key="Locator" />
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid>
             <Image Source="ntierontime_logo.png"  HorizontalOptions="Fill" VerticalOptions="FillAndExpand"/>
             <ProgressBar BindingContext="{Binding Path=ProgressBarVM, Source={StaticResource Locator}}"
-                Progress="{Binding Path=Progress}" Scale="{Binding Path=Scale}" VerticalOptions="End" HorizontalOptions="CenterAndExpand" Margin="0,0,0,50" />
-            <!--<fxc:PopupMessage IsVisible="{Binding PopupVM.PopupOption, Source={StaticResource Locator}, Converter={StaticResource StringEqualsConverter}, ConverterParameter=RegularPopup}" />-->
+                Progress="{Binding Path=Progress}" Scale="{Binding Path=Scale}" VerticalOptions="End" HorizontalOptions="Fill" Margin="20,0,20,250"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
