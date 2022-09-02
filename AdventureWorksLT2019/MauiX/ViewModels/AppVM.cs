@@ -5,9 +5,9 @@ namespace AdventureWorksLT2019.MauiX.ViewModels
         private readonly Framework.MauiX.Services.IThemeService _themeService;
         private readonly Framework.MauiX.Services.SecureStorageService _secureStorageService;
 
-        public Framework.MauiX.ViewModels.ProgressBarVM ProgressBarVM
+        public AdventureWorksLT2019.MauiX.ViewModels.ProgressBarVM ProgressBarVM
         {
-            get { return DependencyService.Resolve<Framework.MauiX.ViewModels.ProgressBarVM>(DependencyFetchTarget.GlobalInstance); }
+            get { return DependencyService.Resolve<AdventureWorksLT2019.MauiX.ViewModels.ProgressBarVM>(DependencyFetchTarget.GlobalInstance); }
         }
 
         public AppVM(
@@ -41,11 +41,11 @@ namespace AdventureWorksLT2019.MauiX.ViewModels
             }
 
             ProgressBarVM.Initialization(4);
-            ProgressBarVM.Forward();
-            Thread.Sleep(2000);
-            ProgressBarVM.Forward();
-            Thread.Sleep(2000);
-            ProgressBarVM.Forward();
+            //ProgressBarVM.Forward();
+            //Thread.Sleep(2000);
+            //ProgressBarVM.Forward();
+            //Thread.Sleep(2000);
+            //ProgressBarVM.Forward();
             Thread.Sleep(2000);
             ProgressBarVM.Forward();
         }

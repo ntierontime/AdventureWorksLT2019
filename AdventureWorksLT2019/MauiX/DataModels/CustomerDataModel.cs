@@ -4,8 +4,8 @@ namespace AdventureWorksLT2019.MauiX.DataModels
 {
     public class CustomerDataModel : ObservableValidator
     {
-        protected Framework.Common.ItemUIStatus m_ItemUIStatus______;
-        public Framework.Common.ItemUIStatus ItemUIStatus______
+        protected Framework.Models.ItemUIStatus m_ItemUIStatus______;
+        public Framework.Models.ItemUIStatus ItemUIStatus______
         {
             get => m_ItemUIStatus______;
             set => SetProperty(ref m_ItemUIStatus______, value);

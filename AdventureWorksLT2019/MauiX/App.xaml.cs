@@ -19,7 +19,6 @@
             InitializeComponent();
             
             // 1. Register ViewModels
-            Framework.MauiX.ViewModels.ViewModelLocator.RegisterViewModels();
             AdventureWorksLT2019.MauiX.ViewModels.ViewModelLocator.RegisterViewModels();
 
             MainPage = new AdventureWorksLT2019.MauiX.Pages.AppLoadingPage();

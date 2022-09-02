@@ -2,8 +2,6 @@
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:AdventureWorksLT2019.MauiXApp"
-             xmlns:fvmg="clr-namespace:Framework.MauiX.ViewModels;assembly=Framework.MauiX"
-             xmlns:vmc="clr-namespace:AdventureWorksLT2019.MauiX.ViewModels;assembly=AdventureWorksLT2019.MauiX"
              x:Class="AdventureWorksLT2019.MauiXApp.App">
     <Application.Resources>
         <!--<vmc:ViewModelLocator x:Key="LocatorC" />-->
@@ -13,7 +11,5 @@
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-        <!--viewmodels from Framework.MauiX-->
-        <!--<fvmg:ViewModelLocator x:Key="LocatorG" />-->
     </Application.Resources>
 </Application>

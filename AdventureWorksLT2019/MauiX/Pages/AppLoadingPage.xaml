@@ -10,13 +10,12 @@
              Visual="Material"
              Title="EmptyPage">
     <ContentPage.Resources>
-        <fvmg:ViewModelLocator x:Key="LocatorG" />
-        <vmc:ViewModelLocator x:Key="LocatorC" />
+        <vmc:ViewModelLocator x:Key="Locator" />
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid>
             <Image Source="ntierontime_logo.png"  HorizontalOptions="Fill" VerticalOptions="FillAndExpand"/>
-            <ProgressBar BindingContext="{Binding Path=ProgressBarVM, Source={StaticResource LocatorG}}"
+            <ProgressBar BindingContext="{Binding Path=ProgressBarVM, Source={StaticResource Locator}}"
                 Progress="{Binding Path=Progress}" Scale="{Binding Path=Scale}" VerticalOptions="End" HorizontalOptions="CenterAndExpand" Margin="0,0,0,50" />
             <!--<fxc:PopupMessage IsVisible="{Binding PopupVM.PopupOption, Source={StaticResource Locator}, Converter={StaticResource StringEqualsConverter}, ConverterParameter=RegularPopup}" />-->
         </Grid>

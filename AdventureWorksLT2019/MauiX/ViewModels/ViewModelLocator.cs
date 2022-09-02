@@ -7,6 +7,11 @@ namespace AdventureWorksLT2019.MauiX.ViewModels
         {
             DependencyService.Register<AdventureWorksLT2019.MauiX.ViewModels.AppVM>();
             DependencyService.Register<AdventureWorksLT2019.MauiX.ViewModels.AppLoadingVM>();
+            DependencyService.Register<AdventureWorksLT2019.MauiX.ViewModels.ProgressBarVM>();
+
+            DependencyService.Register<AdventureWorksLT2019.MauiX.ViewModels.Account.LogInVM>();
+
+            DependencyService.Register<AdventureWorksLT2019.MauiX.ViewModels.ProgressBarVM>();
         }
 
         //public AdventureWorksLT2019.MauiX.ViewModels.AppVM AppVM

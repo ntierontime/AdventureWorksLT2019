@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Framework.MauiX.ViewModels.Account
+namespace AdventureWorksLT2019.MauiX.ViewModels.Account
 {
     public class LogInVM: ObservableValidator
     {
@@ -17,16 +17,20 @@ namespace Framework.MauiX.ViewModels.Account
         public bool FromLogInFromLogInPage { get; set; } = false;
 
         string m_Email;
-        //[Required(ErrorMessageResourceName = "Common_EmailRequiredErrorMessage", ErrorMessageResourceType = typeof(Framework.Resx.UIStringResource))]
-        //[RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessageResourceName = "Common_EmailFormatErrorMessage", ErrorMessageResourceType = typeof(Framework.Resx.UIStringResource))]
+        [Required(ErrorMessageResourceName = "EmailRequired", ErrorMessageResourceType = typeof(AdventureWorksLT2019.Resx.Resources.UIStrings))]
+        [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessageResourceName = "EmailFormatError", ErrorMessageResourceType = typeof(AdventureWorksLT2019.Resx.Resources.UIStrings))]
         public string Email
         {
             get => m_Email;
-            set => SetProperty(ref m_Email, value);
+            set
+            {
+                SetProperty(ref m_Email, value);
+                ValidateProperty(Email, nameof(Email));
+            }
         }
 
         string m_Password;
-        //[Required(ErrorMessageResourceType = typeof(Framework.Resx.UIStringResource), ErrorMessageResourceName = "Common_PasswordRequiredErrorMessage")]
+        [Required(ErrorMessageResourceName = "PasswordRequired", ErrorMessageResourceType = typeof(AdventureWorksLT2019.Resx.Resources.UIStrings))]
         public string Password
         {
             get => m_Password;

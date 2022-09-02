@@ -123,11 +123,20 @@
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="EmailFormatError" xml:space="preserve">
+    <value>Email Format Error</value>
+  </data>
+  <data name="EmailRequired" xml:space="preserve">
+    <value>Email is Required</value>
+  </data>
   <data name="LogIn" xml:space="preserve">
     <value>LogIn</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="PasswordRequired" xml:space="preserve">
+    <value>Password is Required</value>
   </data>
   <data name="RegisterANewUser" xml:space="preserve">
     <value>Register A New User</value>

@@ -61,7 +61,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Account Number.
+        ///   Looks up a localized string similar to (en)Account Number.
         /// </summary>
         public static string AccountNumber {
             get {
@@ -70,7 +70,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Address.
+        ///   Looks up a localized string similar to (en)Address.
         /// </summary>
         public static string Address {
             get {
@@ -79,7 +79,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Address ID.
+        ///   Looks up a localized string similar to (en)Address ID.
         /// </summary>
         public static string AddressID {
             get {
@@ -88,7 +88,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AddressID is required.
+        ///   Looks up a localized string similar to (en)AddressID is required.
         /// </summary>
         public static string AddressID_is_required {
             get {
@@ -97,7 +97,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Address Line 1.
+        ///   Looks up a localized string similar to (en)Address Line 1.
         /// </summary>
         public static string AddressLine1 {
             get {
@@ -106,7 +106,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Address Line 2.
+        ///   Looks up a localized string similar to (en)Address Line 2.
         /// </summary>
         public static string AddressLine2 {
             get {
@@ -115,7 +115,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Address Type.
+        ///   Looks up a localized string similar to (en)Address Type.
         /// </summary>
         public static string AddressType {
             get {
@@ -124,7 +124,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Advanced Search.
+        ///   Looks up a localized string similar to (en)Advanced Search.
         /// </summary>
         public static string AdvancedSearch {
             get {
@@ -133,7 +133,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete this?.
+        ///   Looks up a localized string similar to (en)Are you sure you want to delete this?.
         /// </summary>
         public static string Are_you_sure_you_want_to_delete_this_ {
             get {
@@ -151,7 +151,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to List.
+        ///   Looks up a localized string similar to (en)Back to List.
         /// </summary>
         public static string Back_to_List {
             get {
@@ -160,7 +160,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Address.
+        ///   Looks up a localized string similar to (en)Address.
         /// </summary>
         public static string BillTo {
             get {
@@ -169,7 +169,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Address.
+        ///   Looks up a localized string similar to (en)Address.
         /// </summary>
         public static string BillToAddressID {
             get {
@@ -178,7 +178,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cancel.
+        ///   Looks up a localized string similar to (en)Cancel.
         /// </summary>
         public static string Cancel {
             get {
@@ -187,7 +187,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Catalog Description.
+        ///   Looks up a localized string similar to (en)Catalog Description.
         /// </summary>
         public static string CatalogDescription {
             get {
@@ -196,7 +196,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to City.
+        ///   Looks up a localized string similar to (en)City.
         /// </summary>
         public static string City {
             get {
@@ -205,7 +205,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Color.
+        ///   Looks up a localized string similar to (en)Color.
         /// </summary>
         public static string Color {
             get {
@@ -214,7 +214,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Comment.
+        ///   Looks up a localized string similar to (en)Comment.
         /// </summary>
         public static string Comment {
             get {
@@ -223,7 +223,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Company Name.
+        ///   Looks up a localized string similar to (en)Company Name.
         /// </summary>
         public static string CompanyName {
             get {
@@ -232,7 +232,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Contains.
+        ///   Looks up a localized string similar to (en)Contains.
         /// </summary>
         public static string Contains {
             get {
@@ -241,7 +241,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Country Region.
+        ///   Looks up a localized string similar to (en)Country Region.
         /// </summary>
         public static string CountryRegion {
             get {
@@ -250,7 +250,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create.
+        ///   Looks up a localized string similar to (en)Create.
         /// </summary>
         public static string Create {
             get {
@@ -259,7 +259,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create New.
+        ///   Looks up a localized string similar to (en)Create New.
         /// </summary>
         public static string Create_New {
             get {
@@ -268,7 +268,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Credit Card Approval Code.
+        ///   Looks up a localized string similar to (en)Credit Card Approval Code.
         /// </summary>
         public static string CreditCardApprovalCode {
             get {
@@ -277,7 +277,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Culture.
+        ///   Looks up a localized string similar to (en)Culture.
         /// </summary>
         public static string Culture_ {
             get {
@@ -286,7 +286,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Customer.
+        ///   Looks up a localized string similar to (en)Customer.
         /// </summary>
         public static string Customer {
             get {
@@ -295,7 +295,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Customer ID.
+        ///   Looks up a localized string similar to (en)Customer ID.
         /// </summary>
         public static string CustomerID {
             get {
@@ -304,7 +304,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CustomerID is required.
+        ///   Looks up a localized string similar to (en)CustomerID is required.
         /// </summary>
         public static string CustomerID_is_required {
             get {
@@ -313,7 +313,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dark.
+        ///   Looks up a localized string similar to (en)Dark.
         /// </summary>
         public static string Dark {
             get {
@@ -322,7 +322,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dashboard.
+        ///   Looks up a localized string similar to (en)Dashboard.
         /// </summary>
         public static string Dashboard {
             get {
@@ -331,7 +331,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Database _ Version.
+        ///   Looks up a localized string similar to (en)Database _ Version.
         /// </summary>
         public static string Database_Version {
             get {
@@ -340,7 +340,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete.
+        ///   Looks up a localized string similar to (en)Delete.
         /// </summary>
         public static string Delete {
             get {
@@ -349,7 +349,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description.
+        ///   Looks up a localized string similar to (en)Description.
         /// </summary>
         public static string Description {
             get {
@@ -358,7 +358,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Details.
+        ///   Looks up a localized string similar to (en)Details.
         /// </summary>
         public static string Details {
             get {
@@ -367,7 +367,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Discontinued Date.
+        ///   Looks up a localized string similar to (en)Discontinued Date.
         /// </summary>
         public static string DiscontinuedDate {
             get {
@@ -376,7 +376,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Due Date.
+        ///   Looks up a localized string similar to (en)Due Date.
         /// </summary>
         public static string DueDate {
             get {
@@ -385,7 +385,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DueDate is required.
+        ///   Looks up a localized string similar to (en)DueDate is required.
         /// </summary>
         public static string DueDate_is_required {
             get {
@@ -394,7 +394,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit.
+        ///   Looks up a localized string similar to (en)Edit.
         /// </summary>
         public static string Edit {
             get {
@@ -412,7 +412,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email Address.
+        ///   Looks up a localized string similar to (en)Email Address.
         /// </summary>
         public static string EmailAddress {
             get {
@@ -421,7 +421,25 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ends With.
+        ///   Looks up a localized string similar to Email Format Error.
+        /// </summary>
+        public static string EmailFormatError {
+            get {
+                return ResourceManager.GetString("EmailFormatError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email is Required.
+        /// </summary>
+        public static string EmailRequired {
+            get {
+                return ResourceManager.GetString("EmailRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (en)Ends With.
         /// </summary>
         public static string EndsWith {
             get {
@@ -430,7 +448,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error Line.
+        ///   Looks up a localized string similar to (en)Error Line.
         /// </summary>
         public static string ErrorLine {
             get {
@@ -439,7 +457,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error Log ID.
+        ///   Looks up a localized string similar to (en)Error Log ID.
         /// </summary>
         public static string ErrorLogID {
             get {
@@ -448,7 +466,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error Message.
+        ///   Looks up a localized string similar to (en)Error Message.
         /// </summary>
         public static string ErrorMessage {
             get {
@@ -457,7 +475,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error Number.
+        ///   Looks up a localized string similar to (en)Error Number.
         /// </summary>
         public static string ErrorNumber {
             get {
@@ -466,7 +484,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ErrorNumber is required.
+        ///   Looks up a localized string similar to (en)ErrorNumber is required.
         /// </summary>
         public static string ErrorNumber_is_required {
             get {
@@ -475,7 +493,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error Procedure.
+        ///   Looks up a localized string similar to (en)Error Procedure.
         /// </summary>
         public static string ErrorProcedure {
             get {
@@ -484,7 +502,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error Severity.
+        ///   Looks up a localized string similar to (en)Error Severity.
         /// </summary>
         public static string ErrorSeverity {
             get {
@@ -493,7 +511,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error State.
+        ///   Looks up a localized string similar to (en)Error State.
         /// </summary>
         public static string ErrorState {
             get {
@@ -502,7 +520,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error Time.
+        ///   Looks up a localized string similar to (en)Error Time.
         /// </summary>
         public static string ErrorTime {
             get {
@@ -511,7 +529,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ErrorTime is required.
+        ///   Looks up a localized string similar to (en)ErrorTime is required.
         /// </summary>
         public static string ErrorTime_is_required {
             get {
@@ -520,7 +538,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export to Csv.
+        ///   Looks up a localized string similar to (en)Export to Csv.
         /// </summary>
         public static string ExportToCsv {
             get {
@@ -529,7 +547,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export to Excel.
+        ///   Looks up a localized string similar to (en)Export to Excel.
         /// </summary>
         public static string ExportToExcel {
             get {
@@ -538,7 +556,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to First.
+        ///   Looks up a localized string similar to (en)First.
         /// </summary>
         public static string First {
             get {
@@ -547,7 +565,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to First Name.
+        ///   Looks up a localized string similar to (en)First Name.
         /// </summary>
         public static string FirstName {
             get {
@@ -556,7 +574,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to -- All {0} --.
+        ///   Looks up a localized string similar to (en)-- All {0} --.
         /// </summary>
         public static string Format_All {
             get {
@@ -565,7 +583,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Items Per Page.
+        ///   Looks up a localized string similar to (en){0} Items Per Page.
         /// </summary>
         public static string Format_ItemsPerPage {
             get {
@@ -574,7 +592,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to -- Please Select {0} --.
+        ///   Looks up a localized string similar to (en)-- Please Select {0} --.
         /// </summary>
         public static string Format_Please_Select {
             get {
@@ -583,7 +601,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search text in {0} field.
+        ///   Looks up a localized string similar to (en)Search text in {0} field.
         /// </summary>
         public static string Format_SearchTextDescription {
             get {
@@ -592,7 +610,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Freight.
+        ///   Looks up a localized string similar to (en)Freight.
         /// </summary>
         public static string Freight {
             get {
@@ -601,7 +619,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Freight is required.
+        ///   Looks up a localized string similar to (en)Freight is required.
         /// </summary>
         public static string Freight_is_required {
             get {
@@ -610,7 +628,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hide Advanced Search.
+        ///   Looks up a localized string similar to (en)Hide Advanced Search.
         /// </summary>
         public static string HideAdvancedSearch {
             get {
@@ -619,7 +637,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Import.
+        ///   Looks up a localized string similar to (en)Import.
         /// </summary>
         public static string Import {
             get {
@@ -628,7 +646,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Index.
+        ///   Looks up a localized string similar to (en)Index.
         /// </summary>
         public static string Index {
             get {
@@ -637,7 +655,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Last.
+        ///   Looks up a localized string similar to (en)Last.
         /// </summary>
         public static string Last {
             get {
@@ -646,7 +664,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Last Name.
+        ///   Looks up a localized string similar to (en)Last Name.
         /// </summary>
         public static string LastName {
             get {
@@ -655,7 +673,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Light.
+        ///   Looks up a localized string similar to (en)Light.
         /// </summary>
         public static string Light {
             get {
@@ -664,7 +682,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Line Total.
+        ///   Looks up a localized string similar to (en)Line Total.
         /// </summary>
         public static string LineTotal {
             get {
@@ -673,7 +691,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List Price.
+        ///   Looks up a localized string similar to (en)List Price.
         /// </summary>
         public static string ListPrice {
             get {
@@ -682,7 +700,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ListPrice is required.
+        ///   Looks up a localized string similar to (en)ListPrice is required.
         /// </summary>
         public static string ListPrice_is_required {
             get {
@@ -700,7 +718,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Middle Name.
+        ///   Looks up a localized string similar to (en)Middle Name.
         /// </summary>
         public static string MiddleName {
             get {
@@ -709,7 +727,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Modified Date.
+        ///   Looks up a localized string similar to (en)Modified Date.
         /// </summary>
         public static string ModifiedDate {
             get {
@@ -718,7 +736,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ModifiedDate is required.
+        ///   Looks up a localized string similar to (en)ModifiedDate is required.
         /// </summary>
         public static string ModifiedDate_is_required {
             get {
@@ -727,7 +745,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to More.
+        ///   Looks up a localized string similar to (en)More.
         /// </summary>
         public static string More {
             get {
@@ -736,7 +754,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to More Details.
+        ///   Looks up a localized string similar to (en)More Details.
         /// </summary>
         public static string MoreDetails {
             get {
@@ -745,7 +763,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name.
+        ///   Looks up a localized string similar to (en)Name.
         /// </summary>
         public static string Name {
             get {
@@ -754,7 +772,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name Style.
+        ///   Looks up a localized string similar to (en)Name Style.
         /// </summary>
         public static string NameStyle {
             get {
@@ -763,7 +781,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NameStyle is required.
+        ///   Looks up a localized string similar to (en)NameStyle is required.
         /// </summary>
         public static string NameStyle_is_required {
             get {
@@ -772,7 +790,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Next.
+        ///   Looks up a localized string similar to (en)Next.
         /// </summary>
         public static string Next {
             get {
@@ -781,7 +799,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Online Order Flag.
+        ///   Looks up a localized string similar to (en)Online Order Flag.
         /// </summary>
         public static string OnlineOrderFlag {
             get {
@@ -790,7 +808,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OnlineOrderFlag is required.
+        ///   Looks up a localized string similar to (en)OnlineOrderFlag is required.
         /// </summary>
         public static string OnlineOrderFlag_is_required {
             get {
@@ -799,7 +817,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Order Date.
+        ///   Looks up a localized string similar to (en)Order Date.
         /// </summary>
         public static string OrderDate {
             get {
@@ -808,7 +826,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OrderDate is required.
+        ///   Looks up a localized string similar to (en)OrderDate is required.
         /// </summary>
         public static string OrderDate_is_required {
             get {
@@ -817,7 +835,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Order Qty.
+        ///   Looks up a localized string similar to (en)Order Qty.
         /// </summary>
         public static string OrderQty {
             get {
@@ -826,7 +844,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OrderQty is required.
+        ///   Looks up a localized string similar to (en)OrderQty is required.
         /// </summary>
         public static string OrderQty_is_required {
             get {
@@ -835,7 +853,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Product Category.
+        ///   Looks up a localized string similar to (en)Product Category.
         /// </summary>
         public static string Parent {
             get {
@@ -844,7 +862,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Product Category.
+        ///   Looks up a localized string similar to (en)Product Category.
         /// </summary>
         public static string ParentProductCategoryID {
             get {
@@ -862,7 +880,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password Hash.
+        ///   Looks up a localized string similar to (en)Password Hash.
         /// </summary>
         public static string PasswordHash {
             get {
@@ -871,7 +889,16 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password Salt.
+        ///   Looks up a localized string similar to Password is Required.
+        /// </summary>
+        public static string PasswordRequired {
+            get {
+                return ResourceManager.GetString("PasswordRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (en)Password Salt.
         /// </summary>
         public static string PasswordSalt {
             get {
@@ -880,7 +907,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Phone.
+        ///   Looks up a localized string similar to (en)Phone.
         /// </summary>
         public static string Phone {
             get {
@@ -889,7 +916,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please confirm you going to move selected items to {0}.
+        ///   Looks up a localized string similar to (en)Please confirm you going to move selected items to {0}.
         /// </summary>
         public static string Please_confirm_you_going_to_set_selected_items_to {
             get {
@@ -898,7 +925,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please confirm you want to delete selected {0}.
+        ///   Looks up a localized string similar to (en)Please confirm you want to delete selected {0}.
         /// </summary>
         public static string Please_confirm_you_want_to_delete_selected {
             get {
@@ -907,7 +934,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Postal Code.
+        ///   Looks up a localized string similar to (en)Postal Code.
         /// </summary>
         public static string PostalCode {
             get {
@@ -916,7 +943,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Custom.
+        ///   Looks up a localized string similar to (en)Custom.
         /// </summary>
         public static string PreDefinedDateTimeRanges_Custom {
             get {
@@ -925,7 +952,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Last Five Years.
+        ///   Looks up a localized string similar to (en)Last Five Years.
         /// </summary>
         public static string PreDefinedDateTimeRanges_LastFiveYears {
             get {
@@ -934,7 +961,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Last Month.
+        ///   Looks up a localized string similar to (en)Last Month.
         /// </summary>
         public static string PreDefinedDateTimeRanges_LastMonth {
             get {
@@ -943,7 +970,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Last Six Months.
+        ///   Looks up a localized string similar to (en)Last Six Months.
         /// </summary>
         public static string PreDefinedDateTimeRanges_LastSixMonths {
             get {
@@ -952,7 +979,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Last Ten Years.
+        ///   Looks up a localized string similar to (en)Last Ten Years.
         /// </summary>
         public static string PreDefinedDateTimeRanges_LastTenYears {
             get {
@@ -961,7 +988,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Last Three Months.
+        ///   Looks up a localized string similar to (en)Last Three Months.
         /// </summary>
         public static string PreDefinedDateTimeRanges_LastThreeMonths {
             get {
@@ -970,7 +997,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Last Week.
+        ///   Looks up a localized string similar to (en)Last Week.
         /// </summary>
         public static string PreDefinedDateTimeRanges_LastWeek {
             get {
@@ -979,7 +1006,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Last Year.
+        ///   Looks up a localized string similar to (en)Last Year.
         /// </summary>
         public static string PreDefinedDateTimeRanges_LastYear {
             get {
@@ -988,7 +1015,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Next Five Years.
+        ///   Looks up a localized string similar to (en)Next Five Years.
         /// </summary>
         public static string PreDefinedDateTimeRanges_NextFiveYears {
             get {
@@ -997,7 +1024,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Next Month.
+        ///   Looks up a localized string similar to (en)Next Month.
         /// </summary>
         public static string PreDefinedDateTimeRanges_NextMonth {
             get {
@@ -1006,7 +1033,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Next Six Months.
+        ///   Looks up a localized string similar to (en)Next Six Months.
         /// </summary>
         public static string PreDefinedDateTimeRanges_NextSixMonths {
             get {
@@ -1015,7 +1042,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Next Ten Years.
+        ///   Looks up a localized string similar to (en)Next Ten Years.
         /// </summary>
         public static string PreDefinedDateTimeRanges_NextTenYears {
             get {
@@ -1024,7 +1051,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Next Three Months.
+        ///   Looks up a localized string similar to (en)Next Three Months.
         /// </summary>
         public static string PreDefinedDateTimeRanges_NextThreeMonths {
             get {
@@ -1033,7 +1060,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Next Week.
+        ///   Looks up a localized string similar to (en)Next Week.
         /// </summary>
         public static string PreDefinedDateTimeRanges_NextWeek {
             get {
@@ -1042,7 +1069,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Next Year.
+        ///   Looks up a localized string similar to (en)Next Year.
         /// </summary>
         public static string PreDefinedDateTimeRanges_NextYear {
             get {
@@ -1051,7 +1078,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This Month.
+        ///   Looks up a localized string similar to (en)This Month.
         /// </summary>
         public static string PreDefinedDateTimeRanges_ThisMonth {
             get {
@@ -1060,7 +1087,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This Week.
+        ///   Looks up a localized string similar to (en)This Week.
         /// </summary>
         public static string PreDefinedDateTimeRanges_ThisWeek {
             get {
@@ -1069,7 +1096,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This Year.
+        ///   Looks up a localized string similar to (en)This Year.
         /// </summary>
         public static string PreDefinedDateTimeRanges_ThisYear {
             get {
@@ -1078,7 +1105,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Today.
+        ///   Looks up a localized string similar to (en)Today.
         /// </summary>
         public static string PreDefinedDateTimeRanges_Today {
             get {
@@ -1087,7 +1114,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tomorrow.
+        ///   Looks up a localized string similar to (en)Tomorrow.
         /// </summary>
         public static string PreDefinedDateTimeRanges_Tomorrow {
             get {
@@ -1096,7 +1123,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yesterday.
+        ///   Looks up a localized string similar to (en)Yesterday.
         /// </summary>
         public static string PreDefinedDateTimeRanges_Yesterday {
             get {
@@ -1105,7 +1132,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Previous.
+        ///   Looks up a localized string similar to (en)Previous.
         /// </summary>
         public static string Previous {
             get {
@@ -1114,7 +1141,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Product.
+        ///   Looks up a localized string similar to (en)Product.
         /// </summary>
         public static string Product {
             get {
@@ -1123,7 +1150,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Product Category.
+        ///   Looks up a localized string similar to (en)Product Category.
         /// </summary>
         public static string ProductCategory {
             get {
@@ -1132,7 +1159,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Product Category.
+        ///   Looks up a localized string similar to (en)Product Category.
         /// </summary>
         public static string ProductCategory_Parent {
             get {
@@ -1141,7 +1168,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Product Category.
+        ///   Looks up a localized string similar to (en)Product Category.
         /// </summary>
         public static string ProductCategoryID {
             get {
@@ -1150,7 +1177,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Product Description.
+        ///   Looks up a localized string similar to (en)Product Description.
         /// </summary>
         public static string ProductDescription {
             get {
@@ -1159,7 +1186,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Product Description ID.
+        ///   Looks up a localized string similar to (en)Product Description ID.
         /// </summary>
         public static string ProductDescriptionID {
             get {
@@ -1168,7 +1195,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ProductDescriptionID is required.
+        ///   Looks up a localized string similar to (en)ProductDescriptionID is required.
         /// </summary>
         public static string ProductDescriptionID_is_required {
             get {
@@ -1177,7 +1204,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Product ID.
+        ///   Looks up a localized string similar to (en)Product ID.
         /// </summary>
         public static string ProductID {
             get {
@@ -1186,7 +1213,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ProductID is required.
+        ///   Looks up a localized string similar to (en)ProductID is required.
         /// </summary>
         public static string ProductID_is_required {
             get {
@@ -1195,7 +1222,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Product Model.
+        ///   Looks up a localized string similar to (en)Product Model.
         /// </summary>
         public static string ProductModel {
             get {
@@ -1204,7 +1231,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Product Model.
+        ///   Looks up a localized string similar to (en)Product Model.
         /// </summary>
         public static string ProductModelID {
             get {
@@ -1213,7 +1240,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ProductModelID is required.
+        ///   Looks up a localized string similar to (en)ProductModelID is required.
         /// </summary>
         public static string ProductModelID_is_required {
             get {
@@ -1222,7 +1249,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Product Number.
+        ///   Looks up a localized string similar to (en)Product Number.
         /// </summary>
         public static string ProductNumber {
             get {
@@ -1231,7 +1258,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Purchase Order Number.
+        ///   Looks up a localized string similar to (en)Purchase Order Number.
         /// </summary>
         public static string PurchaseOrderNumber {
             get {
@@ -1240,7 +1267,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recursive Path __.
+        ///   Looks up a localized string similar to (en)Recursive Path __.
         /// </summary>
         public static string RecursivePath__ {
             get {
@@ -1267,7 +1294,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Revision Number.
+        ///   Looks up a localized string similar to (en)Revision Number.
         /// </summary>
         public static string RevisionNumber {
             get {
@@ -1276,7 +1303,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to RevisionNumber is required.
+        ///   Looks up a localized string similar to (en)RevisionNumber is required.
         /// </summary>
         public static string RevisionNumber_is_required {
             get {
@@ -1285,7 +1312,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to rowguid.
+        ///   Looks up a localized string similar to (en)rowguid.
         /// </summary>
         public static string rowguid {
             get {
@@ -1294,7 +1321,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to rowguid is required.
+        ///   Looks up a localized string similar to (en)rowguid is required.
         /// </summary>
         public static string rowguid_is_required {
             get {
@@ -1303,7 +1330,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sales Order Detail ID.
+        ///   Looks up a localized string similar to (en)Sales Order Detail ID.
         /// </summary>
         public static string SalesOrderDetailID {
             get {
@@ -1312,7 +1339,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sales Order Header.
+        ///   Looks up a localized string similar to (en)Sales Order Header.
         /// </summary>
         public static string SalesOrderHeader {
             get {
@@ -1321,7 +1348,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sales Order Header.
+        ///   Looks up a localized string similar to (en)Sales Order Header.
         /// </summary>
         public static string SalesOrderID {
             get {
@@ -1330,7 +1357,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SalesOrderID is required.
+        ///   Looks up a localized string similar to (en)SalesOrderID is required.
         /// </summary>
         public static string SalesOrderID_is_required {
             get {
@@ -1339,7 +1366,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sales Order Number.
+        ///   Looks up a localized string similar to (en)Sales Order Number.
         /// </summary>
         public static string SalesOrderNumber {
             get {
@@ -1348,7 +1375,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sales Person.
+        ///   Looks up a localized string similar to (en)Sales Person.
         /// </summary>
         public static string SalesPerson {
             get {
@@ -1357,7 +1384,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save.
+        ///   Looks up a localized string similar to (en)Save.
         /// </summary>
         public static string Save {
             get {
@@ -1366,7 +1393,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search text in all text fields.
+        ///   Looks up a localized string similar to (en)Search text in all text fields.
         /// </summary>
         public static string SearchTextDescription {
             get {
@@ -1375,7 +1402,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Customer Addresses  Via  Address ID.
+        ///   Looks up a localized string similar to (en)Customer Addresses  Via  Address ID.
         /// </summary>
         public static string Section_CustomerAddresses_Via_AddressID {
             get {
@@ -1384,7 +1411,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Customer Addresses  Via  Customer ID.
+        ///   Looks up a localized string similar to (en)Customer Addresses  Via  Customer ID.
         /// </summary>
         public static string Section_CustomerAddresses_Via_CustomerID {
             get {
@@ -1393,7 +1420,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Product.
+        ///   Looks up a localized string similar to (en)Product.
         /// </summary>
         public static string Section_Product {
             get {
@@ -1402,7 +1429,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Product Categories  Via  Parent Product Category ID.
+        ///   Looks up a localized string similar to (en)Product Categories  Via  Parent Product Category ID.
         /// </summary>
         public static string Section_ProductCategories_Via_ParentProductCategoryID {
             get {
@@ -1411,7 +1438,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Product Category.
+        ///   Looks up a localized string similar to (en)Product Category.
         /// </summary>
         public static string Section_ProductCategory {
             get {
@@ -1420,7 +1447,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Product Model Product Descriptions  Via  Product Description ID.
+        ///   Looks up a localized string similar to (en)Product Model Product Descriptions  Via  Product Description ID.
         /// </summary>
         public static string Section_ProductModelProductDescriptions_Via_ProductDescriptionID {
             get {
@@ -1429,7 +1456,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Product Model Product Descriptions  Via  Product Model ID.
+        ///   Looks up a localized string similar to (en)Product Model Product Descriptions  Via  Product Model ID.
         /// </summary>
         public static string Section_ProductModelProductDescriptions_Via_ProductModelID {
             get {
@@ -1438,7 +1465,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Products  Via  Product Category ID.
+        ///   Looks up a localized string similar to (en)Products  Via  Product Category ID.
         /// </summary>
         public static string Section_Products_Via_ProductCategoryID {
             get {
@@ -1447,7 +1474,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Products  Via  Product Model ID.
+        ///   Looks up a localized string similar to (en)Products  Via  Product Model ID.
         /// </summary>
         public static string Section_Products_Via_ProductModelID {
             get {
@@ -1456,7 +1483,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sales Order Details  Via  Product ID.
+        ///   Looks up a localized string similar to (en)Sales Order Details  Via  Product ID.
         /// </summary>
         public static string Section_SalesOrderDetails_Via_ProductID {
             get {
@@ -1465,7 +1492,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sales Order Details  Via  Sales Order ID.
+        ///   Looks up a localized string similar to (en)Sales Order Details  Via  Sales Order ID.
         /// </summary>
         public static string Section_SalesOrderDetails_Via_SalesOrderID {
             get {
@@ -1474,7 +1501,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sales Order Header.
+        ///   Looks up a localized string similar to (en)Sales Order Header.
         /// </summary>
         public static string Section_SalesOrderHeader {
             get {
@@ -1483,7 +1510,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sales Order Headers  Via  Bill To Address ID.
+        ///   Looks up a localized string similar to (en)Sales Order Headers  Via  Bill To Address ID.
         /// </summary>
         public static string Section_SalesOrderHeaders_Via_BillToAddressID {
             get {
@@ -1492,7 +1519,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sales Order Headers  Via  Customer ID.
+        ///   Looks up a localized string similar to (en)Sales Order Headers  Via  Customer ID.
         /// </summary>
         public static string Section_SalesOrderHeaders_Via_CustomerID {
             get {
@@ -1501,7 +1528,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sales Order Headers  Via  Ship To Address ID.
+        ///   Looks up a localized string similar to (en)Sales Order Headers  Via  Ship To Address ID.
         /// </summary>
         public static string Section_SalesOrderHeaders_Via_ShipToAddressID {
             get {
@@ -1510,7 +1537,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sell End Date.
+        ///   Looks up a localized string similar to (en)Sell End Date.
         /// </summary>
         public static string SellEndDate {
             get {
@@ -1519,7 +1546,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sell Start Date.
+        ///   Looks up a localized string similar to (en)Sell Start Date.
         /// </summary>
         public static string SellStartDate {
             get {
@@ -1528,7 +1555,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SellStartDate is required.
+        ///   Looks up a localized string similar to (en)SellStartDate is required.
         /// </summary>
         public static string SellStartDate_is_required {
             get {
@@ -1537,7 +1564,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ship Date.
+        ///   Looks up a localized string similar to (en)Ship Date.
         /// </summary>
         public static string ShipDate {
             get {
@@ -1546,7 +1573,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ship Method.
+        ///   Looks up a localized string similar to (en)Ship Method.
         /// </summary>
         public static string ShipMethod {
             get {
@@ -1555,7 +1582,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Address.
+        ///   Looks up a localized string similar to (en)Address.
         /// </summary>
         public static string ShipTo {
             get {
@@ -1564,7 +1591,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Address.
+        ///   Looks up a localized string similar to (en)Address.
         /// </summary>
         public static string ShipToAddressID {
             get {
@@ -1573,7 +1600,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show Advanced Search.
+        ///   Looks up a localized string similar to (en)Show Advanced Search.
         /// </summary>
         public static string ShowAdvancedSearch {
             get {
@@ -1582,7 +1609,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Size.
+        ///   Looks up a localized string similar to (en)Size.
         /// </summary>
         public static string Size {
             get {
@@ -1591,7 +1618,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Standard Cost.
+        ///   Looks up a localized string similar to (en)Standard Cost.
         /// </summary>
         public static string StandardCost {
             get {
@@ -1600,7 +1627,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to StandardCost is required.
+        ///   Looks up a localized string similar to (en)StandardCost is required.
         /// </summary>
         public static string StandardCost_is_required {
             get {
@@ -1609,7 +1636,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Starts With.
+        ///   Looks up a localized string similar to (en)Starts With.
         /// </summary>
         public static string StartsWith {
             get {
@@ -1618,7 +1645,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to State Province.
+        ///   Looks up a localized string similar to (en)State Province.
         /// </summary>
         public static string StateProvince {
             get {
@@ -1627,7 +1654,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Status.
+        ///   Looks up a localized string similar to (en)Status.
         /// </summary>
         public static string Status {
             get {
@@ -1636,7 +1663,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Status is required.
+        ///   Looks up a localized string similar to (en)Status is required.
         /// </summary>
         public static string Status_is_required {
             get {
@@ -1645,7 +1672,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sub Total.
+        ///   Looks up a localized string similar to (en)Sub Total.
         /// </summary>
         public static string SubTotal {
             get {
@@ -1654,7 +1681,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SubTotal is required.
+        ///   Looks up a localized string similar to (en)SubTotal is required.
         /// </summary>
         public static string SubTotal_is_required {
             get {
@@ -1663,7 +1690,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Suffix.
+        ///   Looks up a localized string similar to (en)Suffix.
         /// </summary>
         public static string Suffix {
             get {
@@ -1672,7 +1699,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to System Information ID.
+        ///   Looks up a localized string similar to (en)System Information ID.
         /// </summary>
         public static string SystemInformationID {
             get {
@@ -1681,7 +1708,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Also a ....
+        ///   Looks up a localized string similar to (en)Also a ....
         /// </summary>
         public static string Tab_AlsoA {
             get {
@@ -1690,7 +1717,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lists.
+        ///   Looks up a localized string similar to (en)Lists.
         /// </summary>
         public static string Tab_Lists {
             get {
@@ -1699,7 +1726,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to More Details.
+        ///   Looks up a localized string similar to (en)More Details.
         /// </summary>
         public static string Tab_MoreDetails {
             get {
@@ -1708,7 +1735,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tax Amt.
+        ///   Looks up a localized string similar to (en)Tax Amt.
         /// </summary>
         public static string TaxAmt {
             get {
@@ -1717,7 +1744,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TaxAmt is required.
+        ///   Looks up a localized string similar to (en)TaxAmt is required.
         /// </summary>
         public static string TaxAmt_is_required {
             get {
@@ -1726,7 +1753,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of AccountNumber should be 0 to 15.
+        ///   Looks up a localized string similar to (en)The length of AccountNumber should be 0 to 15.
         /// </summary>
         public static string The_length_of_AccountNumber_should_be_0_to_15 {
             get {
@@ -1735,7 +1762,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of AddressLine1 should be 1 to 60.
+        ///   Looks up a localized string similar to (en)The length of AddressLine1 should be 1 to 60.
         /// </summary>
         public static string The_length_of_AddressLine1_should_be_1_to_60 {
             get {
@@ -1744,7 +1771,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of AddressLine2 should be 0 to 60.
+        ///   Looks up a localized string similar to (en)The length of AddressLine2 should be 0 to 60.
         /// </summary>
         public static string The_length_of_AddressLine2_should_be_0_to_60 {
             get {
@@ -1753,7 +1780,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of AddressType should be 1 to 50.
+        ///   Looks up a localized string similar to (en)The length of AddressType should be 1 to 50.
         /// </summary>
         public static string The_length_of_AddressType_should_be_1_to_50 {
             get {
@@ -1762,7 +1789,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of City should be 1 to 30.
+        ///   Looks up a localized string similar to (en)The length of City should be 1 to 30.
         /// </summary>
         public static string The_length_of_City_should_be_1_to_30 {
             get {
@@ -1771,7 +1798,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of Color should be 0 to 15.
+        ///   Looks up a localized string similar to (en)The length of Color should be 0 to 15.
         /// </summary>
         public static string The_length_of_Color_should_be_0_to_15 {
             get {
@@ -1780,7 +1807,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of Comment should be 0 to MAX.
+        ///   Looks up a localized string similar to (en)The length of Comment should be 0 to MAX.
         /// </summary>
         public static string The_length_of_Comment_should_be_0_to_MAX {
             get {
@@ -1789,7 +1816,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of CompanyName should be 0 to 128.
+        ///   Looks up a localized string similar to (en)The length of CompanyName should be 0 to 128.
         /// </summary>
         public static string The_length_of_CompanyName_should_be_0_to_128 {
             get {
@@ -1798,7 +1825,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of CountryRegion should be 1 to 50.
+        ///   Looks up a localized string similar to (en)The length of CountryRegion should be 1 to 50.
         /// </summary>
         public static string The_length_of_CountryRegion_should_be_1_to_50 {
             get {
@@ -1807,7 +1834,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of CreditCardApprovalCode should be 0 to 15.
+        ///   Looks up a localized string similar to (en)The length of CreditCardApprovalCode should be 0 to 15.
         /// </summary>
         public static string The_length_of_CreditCardApprovalCode_should_be_0_to_15 {
             get {
@@ -1816,7 +1843,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of Culture should be 1 to 6.
+        ///   Looks up a localized string similar to (en)The length of Culture should be 1 to 6.
         /// </summary>
         public static string The_length_of_Culture_should_be_1_to_6 {
             get {
@@ -1825,7 +1852,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of Database_Version should be 1 to 25.
+        ///   Looks up a localized string similar to (en)The length of Database_Version should be 1 to 25.
         /// </summary>
         public static string The_length_of_Database_Version_should_be_1_to_25 {
             get {
@@ -1834,7 +1861,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of Description should be 1 to 400.
+        ///   Looks up a localized string similar to (en)The length of Description should be 1 to 400.
         /// </summary>
         public static string The_length_of_Description_should_be_1_to_400 {
             get {
@@ -1843,7 +1870,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of EmailAddress should be 0 to 50.
+        ///   Looks up a localized string similar to (en)The length of EmailAddress should be 0 to 50.
         /// </summary>
         public static string The_length_of_EmailAddress_should_be_0_to_50 {
             get {
@@ -1852,7 +1879,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of ErrorMessage should be 1 to 4000.
+        ///   Looks up a localized string similar to (en)The length of ErrorMessage should be 1 to 4000.
         /// </summary>
         public static string The_length_of_ErrorMessage_should_be_1_to_4000 {
             get {
@@ -1861,7 +1888,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of ErrorProcedure should be 0 to 126.
+        ///   Looks up a localized string similar to (en)The length of ErrorProcedure should be 0 to 126.
         /// </summary>
         public static string The_length_of_ErrorProcedure_should_be_0_to_126 {
             get {
@@ -1870,7 +1897,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of FirstName should be 1 to 50.
+        ///   Looks up a localized string similar to (en)The length of FirstName should be 1 to 50.
         /// </summary>
         public static string The_length_of_FirstName_should_be_1_to_50 {
             get {
@@ -1879,7 +1906,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of LastName should be 1 to 50.
+        ///   Looks up a localized string similar to (en)The length of LastName should be 1 to 50.
         /// </summary>
         public static string The_length_of_LastName_should_be_1_to_50 {
             get {
@@ -1888,7 +1915,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of MiddleName should be 0 to 50.
+        ///   Looks up a localized string similar to (en)The length of MiddleName should be 0 to 50.
         /// </summary>
         public static string The_length_of_MiddleName_should_be_0_to_50 {
             get {
@@ -1897,7 +1924,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of Name should be 1 to 50.
+        ///   Looks up a localized string similar to (en)The length of Name should be 1 to 50.
         /// </summary>
         public static string The_length_of_Name_should_be_1_to_50 {
             get {
@@ -1906,7 +1933,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of PasswordHash should be 1 to 128.
+        ///   Looks up a localized string similar to (en)The length of PasswordHash should be 1 to 128.
         /// </summary>
         public static string The_length_of_PasswordHash_should_be_1_to_128 {
             get {
@@ -1915,7 +1942,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of PasswordSalt should be 1 to 10.
+        ///   Looks up a localized string similar to (en)The length of PasswordSalt should be 1 to 10.
         /// </summary>
         public static string The_length_of_PasswordSalt_should_be_1_to_10 {
             get {
@@ -1924,7 +1951,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of Phone should be 0 to 25.
+        ///   Looks up a localized string similar to (en)The length of Phone should be 0 to 25.
         /// </summary>
         public static string The_length_of_Phone_should_be_0_to_25 {
             get {
@@ -1933,7 +1960,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of PostalCode should be 1 to 15.
+        ///   Looks up a localized string similar to (en)The length of PostalCode should be 1 to 15.
         /// </summary>
         public static string The_length_of_PostalCode_should_be_1_to_15 {
             get {
@@ -1942,7 +1969,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of ProductNumber should be 1 to 25.
+        ///   Looks up a localized string similar to (en)The length of ProductNumber should be 1 to 25.
         /// </summary>
         public static string The_length_of_ProductNumber_should_be_1_to_25 {
             get {
@@ -1951,7 +1978,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of PurchaseOrderNumber should be 0 to 25.
+        ///   Looks up a localized string similar to (en)The length of PurchaseOrderNumber should be 0 to 25.
         /// </summary>
         public static string The_length_of_PurchaseOrderNumber_should_be_0_to_25 {
             get {
@@ -1960,7 +1987,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of SalesOrderNumber should be 0 to 25.
+        ///   Looks up a localized string similar to (en)The length of SalesOrderNumber should be 0 to 25.
         /// </summary>
         public static string The_length_of_SalesOrderNumber_should_be_0_to_25 {
             get {
@@ -1969,7 +1996,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of SalesPerson should be 0 to 256.
+        ///   Looks up a localized string similar to (en)The length of SalesPerson should be 0 to 256.
         /// </summary>
         public static string The_length_of_SalesPerson_should_be_0_to_256 {
             get {
@@ -1978,7 +2005,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of ShipMethod should be 1 to 50.
+        ///   Looks up a localized string similar to (en)The length of ShipMethod should be 1 to 50.
         /// </summary>
         public static string The_length_of_ShipMethod_should_be_1_to_50 {
             get {
@@ -1987,7 +2014,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of Size should be 0 to 5.
+        ///   Looks up a localized string similar to (en)The length of Size should be 0 to 5.
         /// </summary>
         public static string The_length_of_Size_should_be_0_to_5 {
             get {
@@ -1996,7 +2023,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of StateProvince should be 1 to 50.
+        ///   Looks up a localized string similar to (en)The length of StateProvince should be 1 to 50.
         /// </summary>
         public static string The_length_of_StateProvince_should_be_1_to_50 {
             get {
@@ -2005,7 +2032,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of Suffix should be 0 to 10.
+        ///   Looks up a localized string similar to (en)The length of Suffix should be 0 to 10.
         /// </summary>
         public static string The_length_of_Suffix_should_be_0_to_10 {
             get {
@@ -2014,7 +2041,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of ThumbnailPhotoFileName should be 0 to 50.
+        ///   Looks up a localized string similar to (en)The length of ThumbnailPhotoFileName should be 0 to 50.
         /// </summary>
         public static string The_length_of_ThumbnailPhotoFileName_should_be_0_to_50 {
             get {
@@ -2023,7 +2050,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of Title should be 0 to 8.
+        ///   Looks up a localized string similar to (en)The length of Title should be 0 to 8.
         /// </summary>
         public static string The_length_of_Title_should_be_0_to_8 {
             get {
@@ -2032,7 +2059,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of UserName should be 1 to 128.
+        ///   Looks up a localized string similar to (en)The length of UserName should be 1 to 128.
         /// </summary>
         public static string The_length_of_UserName_should_be_1_to_128 {
             get {
@@ -2041,7 +2068,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thumb Nail Photo.
+        ///   Looks up a localized string similar to (en)Thumb Nail Photo.
         /// </summary>
         public static string ThumbNailPhoto {
             get {
@@ -2050,7 +2077,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thumbnail Photo File Name.
+        ///   Looks up a localized string similar to (en)Thumbnail Photo File Name.
         /// </summary>
         public static string ThumbnailPhotoFileName {
             get {
@@ -2059,7 +2086,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Title.
+        ///   Looks up a localized string similar to (en)Title.
         /// </summary>
         public static string Title {
             get {
@@ -2068,7 +2095,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Total Due.
+        ///   Looks up a localized string similar to (en)Total Due.
         /// </summary>
         public static string TotalDue {
             get {
@@ -2077,7 +2104,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unit Price.
+        ///   Looks up a localized string similar to (en)Unit Price.
         /// </summary>
         public static string UnitPrice {
             get {
@@ -2086,7 +2113,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UnitPrice is required.
+        ///   Looks up a localized string similar to (en)UnitPrice is required.
         /// </summary>
         public static string UnitPrice_is_required {
             get {
@@ -2095,7 +2122,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unit Price Discount.
+        ///   Looks up a localized string similar to (en)Unit Price Discount.
         /// </summary>
         public static string UnitPriceDiscount {
             get {
@@ -2104,7 +2131,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UnitPriceDiscount is required.
+        ///   Looks up a localized string similar to (en)UnitPriceDiscount is required.
         /// </summary>
         public static string UnitPriceDiscount_is_required {
             get {
@@ -2113,7 +2140,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User Name.
+        ///   Looks up a localized string similar to (en)User Name.
         /// </summary>
         public static string UserName {
             get {
@@ -2122,7 +2149,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Value.
+        ///   Looks up a localized string similar to (en)Value.
         /// </summary>
         public static string Value {
             get {
@@ -2131,7 +2158,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version Date.
+        ///   Looks up a localized string similar to (en)Version Date.
         /// </summary>
         public static string VersionDate {
             get {
@@ -2140,7 +2167,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to VersionDate is required.
+        ///   Looks up a localized string similar to (en)VersionDate is required.
         /// </summary>
         public static string VersionDate_is_required {
             get {
@@ -2149,7 +2176,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Weight.
+        ///   Looks up a localized string similar to (en)Weight.
         /// </summary>
         public static string Weight {
             get {

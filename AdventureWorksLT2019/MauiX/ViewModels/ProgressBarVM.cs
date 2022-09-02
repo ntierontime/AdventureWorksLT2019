@@ -1,7 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Framework.MauiX.ViewModels
-{
+namespace AdventureWorksLT2019.MauiX.ViewModels
+{ 
     public class ProgressBarVM: ObservableObject
     {
         private double m_Progress = 0;

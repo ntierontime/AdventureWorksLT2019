@@ -124,7 +124,7 @@
     <value>(en)Are you sure you want to delete this?</value>
   </data>
   <data name="AutoSignIn" xml:space="preserve">
-    <value>(en)Auto SignIn</value>
+    <value>Auto SignIn</value>
   </data>
   <data name="Back_to_List" xml:space="preserve">
     <value>(en)Back to List</value>
@@ -157,7 +157,7 @@
     <value>(en)Edit</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>(en)Email</value>
+    <value>Email</value>
   </data>
   <data name="EndsWith" xml:space="preserve">
     <value>(en)Ends With</value>
@@ -199,7 +199,7 @@
     <value>(en)Light</value>
   </data>
   <data name="LogIn" xml:space="preserve">
-    <value>(en)LogIn</value>
+    <value>LogIn</value>
   </data>
   <data name="More" xml:space="preserve">
     <value>(en)More</value>
@@ -211,7 +211,7 @@
     <value>(en)Next</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>(en)Password</value>
+    <value>Password</value>
   </data>
   <data name="Please_confirm_you_going_to_set_selected_items_to" xml:space="preserve">
     <value>(en)Please confirm you going to move selected items to {0}</value>
@@ -286,10 +286,10 @@
     <value>(en)Previous</value>
   </data>
   <data name="RegisterANewUser" xml:space="preserve">
-    <value>(en)Register A New User</value>
+    <value>Register A New User</value>
   </data>
   <data name="RememberMe" xml:space="preserve">
-    <value>(en)Remember Me</value>
+    <value>Remember Me</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>(en)Save</value>
@@ -816,22 +816,13 @@
   <data name="Section_SalesOrderDetails_Via_SalesOrderID" xml:space="preserve">
     <value>(en)Sales Order Details  Via  Sales Order ID</value>
   </data>
-  <data name="AutoSignIn" xml:space="preserve">
-    <value>Auto SignIn</value>
+  <data name="EmailFormatError" xml:space="preserve">
+    <value>Email Format Error</value>
   </data>
-  <data name="Email" xml:space="preserve">
-    <value>Email</value>
+  <data name="EmailRequired" xml:space="preserve">
+    <value>Email is Required</value>
   </data>
-  <data name="LogIn" xml:space="preserve">
-    <value>LogIn</value>
-  </data>
-  <data name="Password" xml:space="preserve">
-    <value>Password</value>
-  </data>
-  <data name="RegisterANewUser" xml:space="preserve">
-    <value>Register A New User</value>
-  </data>
-  <data name="RememberMe" xml:space="preserve">
-    <value>Remember Me</value>
+  <data name="PasswordRequired" xml:space="preserve">
+    <value>Password is Required</value>
   </data>
 </root>

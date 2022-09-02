@@ -3,33 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:l="clr-namespace:AdventureWorksLT2019.MauiX.Extensions"
-             xmlns:fvmg="clr-namespace:Framework.MauiX.ViewModels;assembly=Framework.MauiX"
+             xmlns:fmb="clr-namespace:Framework.MauiX.Behaviors;assembly=Framework.MauiX"
+             xmlns:fmc="clr-namespace:Framework.MauiX.Converters;assembly=Framework.MauiX"
              xmlns:vmc="clr-namespace:AdventureWorksLT2019.MauiX.ViewModels;assembly=AdventureWorksLT2019.MauiX"
              x:Class="AdventureWorksLT2019.MauiX.Pages.Account.LogInPage"
              Title="LogInPage">
     <ContentPage.Resources>
-        <fvmg:ViewModelLocator x:Key="LocatorG" />
-        <vmc:ViewModelLocator x:Key="LocatorC" />
+        <vmc:ViewModelLocator x:Key="Locator" />
+        <fmc:ValidationErrorConverter x:Key="ValidationErrorConverter" />
+        <fmc:ValidationErrorToIsVisibleConverter x:Key="ValidationErrorToIsVisibleConverter" />
     </ContentPage.Resources>
-    <StackLayout VerticalOptions="StartAndExpand" Margin="5">
-        <Entry x:Name="usernameEntry" AutomationId="UsernameEntryField" Placeholder="{l:Localize Email}" Text="{Binding Email}" ClearButtonVisibility="WhileEditing" >
-            <Entry.Behaviors>
-                <mct:EmailValidationBehavior
-                    x:Name="EmailValidator"
-                    Flags="ValidateOnValueChanged"
-                    DecorationFlags="Trim"
-                    ValidStyle="{StaticResource ValidEntryStyle}"
-                    InvalidStyle="{StaticResource InvalidEntryStyle}"/>
-            </Entry.Behaviors>
+    <VerticalStackLayout VerticalOptions="EndAndExpand"  Margin="5">
+        <Entry x:Name="usernameEntry" AutomationId="UsernameEntryField" Margin="5" Placeholder="{l:Localize Email}" Text="{Binding Email}" ClearButtonVisibility="WhileEditing" >
+            <!--<Entry.Behaviors>
+                <fmb:EntryValidationBehavior PropertyName="Email" />
+            </Entry.Behaviors>-->
         </Entry>
+        <Label Text="{Binding Path=Email, Converter={StaticResource ValidationErrorConverter}, ConverterParameter=Email}" 
+               IsVisible="{Binding Path=Email, Converter={StaticResource ValidationErrorToIsVisibleConverter}, ConverterParameter=Email}"/>
         <Entry x:Name="passwordEntry" AutomationId="PasswordEntryField" IsPassword="true" Placeholder="{l:Localize Password}" Text="{Binding Password}">
-            <Entry.Behaviors>
-                <mct:RequiredStringValidationBehavior 
-                    RequiredString="123"
-                    InvalidStyle="{StaticResource InvalidEntryStyle}"
-                    ValidStyle="{StaticResource ValidEntryStyle}"
-                    Flags="ValidateOnValueChanged"/>
-            </Entry.Behaviors>
         </Entry>
         <Button AutomationId="LogInButton" Text="{l:Localize LogIn}" Command="{Binding LogInCommand}" IsEnabled="{Binding EnableLogInButton}" />
         <Button AutomationId="RegisterButton" Text="{l:Localize RegisterANewUser}" Clicked="OnSignUpButtonClicked" />
@@ -56,5 +48,5 @@
                 </StackLayout.GestureRecognizers>
             </StackLayout>
         </Frame>-->
-    </StackLayout>
+    </VerticalStackLayout>
 </ContentPage>

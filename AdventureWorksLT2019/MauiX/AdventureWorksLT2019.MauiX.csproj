@@ -24,6 +24,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+    <ProjectReference Include="..\..\Shared\Framework\Framework.csproj" />
 	  <ProjectReference Include="..\..\Shared\Framework.MauiX\Framework.MauiX.csproj" />
 	  <ProjectReference Include="..\Resx\AdventureWorksLT2019.Resx.csproj" />
 	</ItemGroup>
