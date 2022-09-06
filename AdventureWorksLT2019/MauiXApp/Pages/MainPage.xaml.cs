@@ -1,4 +1,4 @@
-﻿namespace AdventureWorksLT2019.MauiXApp
+﻿namespace AdventureWorksLT2019.MauiXApp.Pages
 {
     public partial class MainPage : ContentPage
     {

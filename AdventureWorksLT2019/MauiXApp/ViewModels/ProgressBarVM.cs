@@ -27,13 +27,13 @@ namespace AdventureWorksLT2019.MauiXApp.ViewModels
         {
             Progress = progress;
         }
-        public void Forward()
+        public void Forward(double progress = 0.1)
         {
-            Progress += 0.1;
+            Progress += progress;
         }
-        public void Backward()
+        public void Backward(double progress = 0.1)
         {
-            Progress -= 0.1;
+            Progress -= progress;
         }
     }
 }

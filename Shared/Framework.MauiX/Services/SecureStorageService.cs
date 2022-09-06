@@ -14,6 +14,9 @@ namespace Framework.MauiX.Services
         {
             var signInData = await GetSerializedData<Framework.MauiX.DataModels.SignInData>(Key_SignInData);
 
+            if (signInData == null)
+                return new Framework.MauiX.DataModels.SignInData();
+
             if (!string.IsNullOrEmpty(signInData.UserName))
             {
                 string encryptedUserName = signInData.UserName;
@@ -41,7 +44,7 @@ namespace Framework.MauiX.Services
                 ShortGuid = signInData.ShortGuid,
                 LastLoggedInDateTime = signInData.LastLoggedInDateTime,
                 TokenExpireDateTime = signInData.TokenExpireDateTime,
-                GoToWelcomeWizard = signInData.GoToWelcomeWizard,
+                //GoToWelcomeWizard = signInData.GoToWelcomeWizard,
             };
 
             await SaveSerializedData(Key_SignInData, newSignInData);
@@ -162,9 +165,10 @@ namespace Framework.MauiX.Services
             SecureStorage.Default.RemoveAll();
         }
 
-        public async Task SaveSerializedData(string key, object data)
+        public async Task SaveSerializedData<T>(string key, T data)
         {
-            await SecureStorage.Default.SetAsync(key, JsonSerializer.Serialize(data));
+            var serialized = JsonSerializer.Serialize<T>(data);
+            await SecureStorage.Default.SetAsync(key, serialized);
         }
 
         public async Task<T> GetSerializedData<T>(string key)

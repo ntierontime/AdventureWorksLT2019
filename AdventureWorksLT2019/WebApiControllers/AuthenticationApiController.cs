@@ -1,16 +1,13 @@
 using Framework.Models.Account;
-using Framework.Mvc.Identity.Data;
-using Framework.Mvc.Identity;
 using Framework.Mvc;
-using System.Diagnostics;
-using Microsoft.AspNetCore.Authentication;
+using Framework.Mvc.Identity;
+using Framework.Mvc.Identity.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using static System.Collections.Specialized.BitVector32;
+using Microsoft.Extensions.Options;
 
 namespace AdventureWorksLT2019.WebApiControllers
 {
@@ -19,22 +16,21 @@ namespace AdventureWorksLT2019.WebApiControllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly ConfigurationManager _config;
+        private readonly Framework.Mvc.Identity.IdentitySecret _identitySecret;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
 
         public AuthenticationApiController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IServiceProvider serviceProvider,
             IEmailSender emailSender,
-            ConfigurationManager config,
+            IOptions<Framework.Mvc.Identity.IdentitySecret> identitySecret,
             ILogger<AuthenticationApiController> logger
             )
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _config = config;
+            _identitySecret = identitySecret.Value;
             _emailSender = emailSender;
             _logger = logger;
         }
@@ -42,10 +38,78 @@ namespace AdventureWorksLT2019.WebApiControllers
         [HttpPost]
         public async Task<AuthenticationResponse> Login([FromBody] LoginRequest model)
         {
-            var user = await _userManager.FindByNameAsync(model.Email);
-            var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+            return await Task.FromResult(new Framework.Models.Account.AuthenticationResponse
+            {
+                Succeeded = true,
+                Token = "TestToken",
+                ExpiresIn = 3600,
+                RefreshToken = "TestRefreshToken",
+                Roles = new[] { "Administrator" },
+            });
+            //var user = await _userManager.FindByNameAsync(model.Email);
+            //var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
 
-            return await GetAuthenticationResponse(user, result);
+            //return await GetAuthenticationResponse(user, result);
+        }
+
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost]
+        public async Task<AuthenticationResponse> Logout([FromBody] LoginRequest model)
+        {
+            // TODO: set a flag? last log out time
+            return new AuthenticationResponse { Succeeded = true };
+
+            //return await _signInManager.SignOutAsync();
+        }
+
+        // POST api/Account/Register
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<AuthenticationResponse> Register([FromBody] RegisterRequest model)
+        {
+            var LoginRequest = new LoginRequest { Email = model.Email, Password = model.Password };
+            return await Login(LoginRequest);
+
+            //if (!ModelState.IsValid)
+            //{
+            //    return new AuthenticationResponse { Succeeded = false };
+            //}
+
+            //var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+
+            //var result = await _userManager.CreateAsync(user, model.Password);
+
+            //if (!result.Succeeded)
+            //{
+            //    return new AuthenticationResponse { Succeeded = false };
+            //}
+            //else
+            //{
+            //    // This is a copy from Register method in AccountController.
+            //    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            //    var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+            //    await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+
+            //    /*
+            //    var service1 = _serviceProvider.GetRequiredService<NTierOnTime.WcfContracts.IEntityService>();
+
+            //    var response = await NTierOnTime.CoreCommonBLL.Helpers.EntityHelper.CreateNewEntity(service1, model.Email, _logger);
+
+            //    if (response.BusinessLogicLayerResponseStatus == Framework.Services.BusinessLogicLayerResponseStatus.MessageOK || response.BusinessLogicLayerResponseStatus == Framework.Services.BusinessLogicLayerResponseStatus.UIProcessReady)
+            //    {
+            //        var applicationUser = await _userManager.FindByEmailAsync(model.Email);
+            //        if (applicationUser != null)
+            //        {
+            //            applicationUser.EntityID = response.Message[0].EntityID;
+            //            await _userManager.UpdateAsync(applicationUser);
+            //        }
+            //    }
+            //    */
+            //}
+
+            //var LoginRequest = new LoginRequest { Email = model.Email, Password = model.Password };
+
+            //return await Login(LoginRequest);
         }
 
         private async Task<AuthenticationResponse> GetAuthenticationResponse(
@@ -63,10 +127,8 @@ namespace AdventureWorksLT2019.WebApiControllers
                 RequiresTwoFactor = result.RequiresTwoFactor
             };
 
-            var identitySecretSection = _config.GetSection("IdentitySecret");
-            var identitySecret = identitySecretSection.Get<IdentitySecret>();
             // authentication successful, then generate jwt token
-            string tokenInString = CustomizedClaimTypes.GetJwtSecurityTokenInString(user.Id.ToLower(), identitySecret.Secret);
+            string tokenInString = CustomizedClaimTypes.GetJwtSecurityTokenInString(user.Id.ToLower(), _identitySecret.Secret);
             loginResponse.Token = tokenInString;
 
             // Load LogIn User related data
@@ -134,93 +196,6 @@ namespace AdventureWorksLT2019.WebApiControllers
 
                 #endregion TODO: Load more data to LoginResponse
             }
-            return loginResponse;
-        }
-
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpPost]
-        public async Task<AuthenticationResponse> Logout([FromBody] LoginRequest model)
-        {
-
-            // TODO: set a flag? last log out time
-            return new AuthenticationResponse { Succeeded = true };
-        }
-
-        // POST api/Account/Register
-        [AllowAnonymous]
-        [HttpPost]
-        public async Task<AuthenticationResponse> Register([FromBody] RegisterRequest model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return new AuthenticationResponse { Succeeded = false };
-            }
-
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-
-            var result = await _userManager.CreateAsync(user, model.Password);
-
-            if (!result.Succeeded)
-            {
-                return new AuthenticationResponse { Succeeded = false };
-            }
-            else
-            {
-                // This is a copy from Register method in AccountController.
-                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-                await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
-
-                /*
-                var service1 = _serviceProvider.GetRequiredService<NTierOnTime.WcfContracts.IEntityService>();
-
-                var response = await NTierOnTime.CoreCommonBLL.Helpers.EntityHelper.CreateNewEntity(service1, model.Email, _logger);
-
-                if (response.BusinessLogicLayerResponseStatus == Framework.Services.BusinessLogicLayerResponseStatus.MessageOK || response.BusinessLogicLayerResponseStatus == Framework.Services.BusinessLogicLayerResponseStatus.UIProcessReady)
-                {
-                    var applicationUser = await _userManager.FindByEmailAsync(model.Email);
-                    if (applicationUser != null)
-                    {
-                        applicationUser.EntityID = response.Message[0].EntityID;
-                        await _userManager.UpdateAsync(applicationUser);
-                    }
-                }
-                */
-            }
-
-            var loginViewModel = new LoginRequest { Email = model.Email, Password = model.Password };
-
-            return await Login(loginViewModel);
-        }
-
-        private async Task<AuthenticationResponse> GetAuthenticationResponse(
-            ApplicationUser user)
-        {
-            var loginResponse = new AuthenticationResponse
-            {
-                Succeeded = true
-                ,
-                IsLockedOut = false
-                ,
-                IsNotAllowed = false
-                ,
-                RequiresTwoFactor = false
-                //,
-                //EntityID = user != null ? user.EntityID : null
-            };
-
-            var identitySecretSection = _config.GetSection("IdentitySecret");
-            var identitySecret = identitySecretSection.Get<IdentitySecret>();
-            // authentication successful, then generate jwt token
-            string tokenInString = CustomizedClaimTypes.GetJwtSecurityTokenInString(user.Id.ToLower(), identitySecret.Secret);
-            loginResponse.Token = tokenInString;
-
-            // Load LogIn User related data
-            if (loginResponse.Succeeded)
-            {
-                loginResponse.Roles = await _userManager.GetRolesAsync(user);
-            }
-
             return loginResponse;
         }
 

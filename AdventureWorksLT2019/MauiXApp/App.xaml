@@ -4,7 +4,6 @@
              xmlns:local="clr-namespace:AdventureWorksLT2019.MauiXApp"
              x:Class="AdventureWorksLT2019.MauiXApp.App">
     <Application.Resources>
-        <!--<vmc:ViewModelLocator x:Key="LocatorC" />-->
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />

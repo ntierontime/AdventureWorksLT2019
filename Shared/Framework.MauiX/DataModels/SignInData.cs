@@ -1,14 +1,13 @@
 namespace Framework.MauiX.DataModels
 {
-    public struct SignInData
+    public class SignInData
     {
-        public string UserName;
-        public string Password;
+        public string UserName { get; set; }
+        public string Password { get; set; }
         //public bool RememberMe;
         //public bool AutoSignIn;
-        public string Token;
-        public string ShortGuid;
-        public bool GoToWelcomeWizard;
+        public string Token { get; set; }
+        public string ShortGuid { get; set; }
         public DateTime? LastLoggedInDateTime;
         public DateTime? TokenExpireDateTime;
 

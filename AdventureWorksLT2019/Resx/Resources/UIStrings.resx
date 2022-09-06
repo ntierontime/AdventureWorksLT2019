@@ -211,7 +211,7 @@
     <value>(en)Next</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Password</value>
+    <value>(en)Password</value>
   </data>
   <data name="Please_confirm_you_going_to_set_selected_items_to" xml:space="preserve">
     <value>(en)Please confirm you going to move selected items to {0}</value>
@@ -824,5 +824,23 @@
   </data>
   <data name="PasswordRequired" xml:space="preserve">
     <value>Password is Required</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirm Password</value>
+  </data>
+  <data name="ConfirmPasswordNotMatchError" xml:space="preserve">
+    <value>Passwords not match</value>
+  </data>
+  <data name="PasswordPatternError" xml:space="preserve">
+    <value>Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character:</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="ConfirmPasswordRequired" xml:space="preserve">
+    <value>Confirm Password Required</value>
+  </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>Log Out</value>
   </data>
 </root>

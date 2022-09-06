@@ -3,8 +3,8 @@
     x:Class="AdventureWorksLT2019.MauiXApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:AdventureWorksLT2019.MauiXApp"
-    Shell.FlyoutBehavior="Disabled">
+    xmlns:local="clr-namespace:AdventureWorksLT2019.MauiXApp.Pages"
+    Shell.FlyoutBehavior="Flyout">
 
     <ShellContent
         Title="Home"

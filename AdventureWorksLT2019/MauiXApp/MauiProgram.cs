@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Markup;
-using Microsoft.Maui.Hosting;
 
 namespace AdventureWorksLT2019.MauiXApp
 {
@@ -8,16 +7,21 @@ namespace AdventureWorksLT2019.MauiXApp
     {
         public static MauiApp CreateMauiApp()
         {
+#if ANDROID && DEBUG
+            Platforms.Android.DangerousAndroidMessageHandlerEmitter.Register();
+            Platforms.Android.DangerousTrustProvider.Register();
+#endif
             var builder = MauiApp.CreateBuilder();
             builder
+                .UseMauiApp<AdventureWorksLT2019.MauiXApp.App>()
                 .UseMauiCommunityToolkit()
                 .UseMauiCommunityToolkitMarkup()
-                .UseMauiApp<AdventureWorksLT2019.MauiXApp.App>()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
             builder.Services.AddLocalization();
 
             // 1. Framework.MauiX.Services
@@ -38,8 +42,10 @@ namespace AdventureWorksLT2019.MauiXApp
             // 4.2. Page ViewModels
             // 4.2.1. AdventureWorksLT2019.MauiXApp.ViewModels.AppVM is a Singleton/Global, most of others are Scoped(new instance)
             builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.AppVM>();
-            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.ViewModels.AppLoadingVM>();
-            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.ViewModels.Account.LogInVM>();
+            builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.AppShellVM>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.ViewModels.LogInVM>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.ViewModels.RegisterUserVM>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.ViewModels.FirstTimeUserVM>();
 
             return builder.Build();
         }

@@ -9,11 +9,6 @@
     <PackageReference Include="Microsoft.Extensions.Localization" Version="6.0.5" />
 </ItemGroup>
 <ItemGroup>
-    <Compile Update="Resources\NewResource.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>NewResource.resx</DependentUpon>
-    </Compile>
     <Compile Update="Resources\UIStrings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -21,10 +16,6 @@
     </Compile>
 </ItemGroup>
 <ItemGroup>
-    <EmbeddedResource Update="Resources\NewResource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>NewResource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Update="Resources\UIStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>UIStrings.Designer.cs</LastGenOutput>

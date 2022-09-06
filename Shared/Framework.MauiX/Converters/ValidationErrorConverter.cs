@@ -5,7 +5,6 @@ namespace Framework.MauiX.Converters
 {
     public class ValidationErrorConverter : IValueConverter
     {
-
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null || parameter == null)

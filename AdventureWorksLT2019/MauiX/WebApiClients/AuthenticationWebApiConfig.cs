@@ -8,24 +8,24 @@ namespace AdventureWorksLT2019.MauiX.WebApiClients
             {
 #if DEBUG
 #if WINDOWS
-                return "http://localhost:15601/api/";
+                return "https://localhost:16601/api/";
 #elif ANDROID
-                return "http://10.0.2.2:15601/api/";
+                return "https://10.0.2.2:16601/api/";
 #elif IOS || MACCATALYST
-                return "http://localhost:15601/api/";
+                return "https://localhost:16601/api/";
 #else
-                return "http://localhost:15601/api/";
+                return "https://localhost:16601/api/";
 #endif
 #else
         // TODO: use production url.
 #if WINDOWS
-                return "http://localhost:15601/api/";
+                return "https://localhost:16601/api/";
 #elif ANDROID
-                return "http://10.0.2.2:15601/api/";
+                return "https://10.0.2.2:16601/api/";
 #elif IOS || MACCATALYST
-                return "http://localhost:15601/api/";
+                return "https://localhost:16601/api/";
 #else
-                return "http://localhost:15601/api/";
+                return "https://localhost:16601/api/";
 #endif
 #endif
             }

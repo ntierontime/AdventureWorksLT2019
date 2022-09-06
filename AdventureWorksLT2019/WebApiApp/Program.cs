@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -98,9 +99,12 @@ builder.Services.AddDbContext<EFDbContext>(options =>
 // 3. Identity Authentication
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("Identity")));
-var identitySecretSection = builder.Configuration.GetSection("IdentitySecret");
-var identitySecret = identitySecretSection.Get<IdentitySecret>();
-builder.Services.Configure<IdentitySecret>(s => s.Secret = identitySecret.Secret);
+builder.Services.AddIdentity<Framework.Mvc.Identity.Data.ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+var identitySecretSection = builder.Configuration.GetSection(nameof(Framework.Mvc.Identity.IdentitySecret));
+var identitySecret = identitySecretSection.Get<Framework.Mvc.Identity.IdentitySecret>();
+builder.Services.Configure<Framework.Mvc.Identity.IdentitySecret>(identitySecretSection);
 var key = Encoding.ASCII.GetBytes(identitySecret.Secret);
 builder.Services.AddAuthentication()
     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, cfg => cfg.SlidingExpiration = true)

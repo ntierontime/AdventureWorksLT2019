@@ -232,6 +232,33 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirm Password.
+        /// </summary>
+        public static string ConfirmPassword {
+            get {
+                return ResourceManager.GetString("ConfirmPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Passwords not match.
+        /// </summary>
+        public static string ConfirmPasswordNotMatchError {
+            get {
+                return ResourceManager.GetString("ConfirmPasswordNotMatchError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm Password Required.
+        /// </summary>
+        public static string ConfirmPasswordRequired {
+            get {
+                return ResourceManager.GetString("ConfirmPasswordRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (en)Contains.
         /// </summary>
         public static string Contains {
@@ -718,6 +745,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Log Out.
+        /// </summary>
+        public static string LogOut {
+            get {
+                return ResourceManager.GetString("LogOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (en)Middle Name.
         /// </summary>
         public static string MiddleName {
@@ -871,7 +907,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password.
+        ///   Looks up a localized string similar to (en)Password.
         /// </summary>
         public static string Password {
             get {
@@ -885,6 +921,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string PasswordHash {
             get {
                 return ResourceManager.GetString("PasswordHash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character:.
+        /// </summary>
+        public static string PasswordPatternError {
+            get {
+                return ResourceManager.GetString("PasswordPatternError", resourceCulture);
             }
         }
         
@@ -1272,6 +1317,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string RecursivePath__ {
             get {
                 return ResourceManager.GetString("RecursivePath__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register.
+        /// </summary>
+        public static string Register {
+            get {
+                return ResourceManager.GetString("Register", resourceCulture);
             }
         }
         
