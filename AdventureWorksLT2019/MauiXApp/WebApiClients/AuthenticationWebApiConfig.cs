@@ -1,4 +1,4 @@
-namespace AdventureWorksLT2019.MauiX.WebApiClients
+namespace AdventureWorksLT2019.MauiXApp.WebApiClients
 {
     public class AuthenticationWebApiConfig: Framework.MauiX.IWebApiConfig
     {
@@ -30,10 +30,10 @@ namespace AdventureWorksLT2019.MauiX.WebApiClients
 #endif
             }
         }
-        public bool UseToken { get; set; }
+        public bool UseToken { get; set; } = false;
         /// <summary>
         /// Should use TOKEN when on all web services calls, only exception is login.
         /// </summary>
-        public string Token { get; set; }
+        public string Token { get; set; } = String.Empty;
     }
 }

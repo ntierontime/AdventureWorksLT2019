@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Localization;
 
-namespace AdventureWorksLT2019.MauiX.Extensions
+namespace AdventureWorksLT2019.MauiXApp.Extensions
 {
     [ContentProperty(nameof(Key))]
     public class LocalizeExtension : IMarkupExtension

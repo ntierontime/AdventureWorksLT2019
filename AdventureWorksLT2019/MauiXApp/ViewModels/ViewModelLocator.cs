@@ -7,10 +7,10 @@ namespace AdventureWorksLT2019.MauiXApp.ViewModels
     /// </summary>
     public class ViewModelLocator
     {
-        public AdventureWorksLT2019.MauiXApp.ViewModels.ProgressBarVM ProgressBarVM
-        {
-            get { return Framework.MauiX.Helpers.ServiceHelper.GetService<AdventureWorksLT2019.MauiXApp.ViewModels.ProgressBarVM>(); }
-        }
+        //public AdventureWorksLT2019.MauiXApp.ViewModels.ProgressBarVM ProgressBarVM
+        //{
+        //    get { return Framework.MauiX.Helpers.ServiceHelper.GetService<AdventureWorksLT2019.MauiXApp.ViewModels.ProgressBarVM>(); }
+        //}
 
     }
 }

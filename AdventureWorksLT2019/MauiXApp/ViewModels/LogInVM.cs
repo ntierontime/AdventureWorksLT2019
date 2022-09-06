@@ -56,16 +56,16 @@ public class LogInVM: Framework.MauiX.ComponentModels.ObservableValidatorExt
     //    set => SetProperty(ref m_AutoSignIn, value);
     //}
 
-    private readonly AdventureWorksLT2019.MauiX.Services.AuthenticationService _authenticationService;
-    private readonly AdventureWorksLT2019.MauiXApp.ViewModels.AppVM _appVM;
+    private readonly AdventureWorksLT2019.MauiXApp.Services.AuthenticationService _authenticationService;
+    private readonly AdventureWorksLT2019.MauiXApp.Services.AppLoadingService _appLoadingService;
 
     public LogInVM(
-        AdventureWorksLT2019.MauiX.Services.AuthenticationService authenticationService,
-        AdventureWorksLT2019.MauiXApp.ViewModels.AppVM appVM
+        AdventureWorksLT2019.MauiXApp.Services.AuthenticationService authenticationService,
+        AdventureWorksLT2019.MauiXApp.Services.AppLoadingService appLoadingService
         )
     {
         _authenticationService = authenticationService;
-        _appVM = appVM;
+        _appLoadingService = appLoadingService;
         ValidateAllProperties();
     }
 
@@ -81,117 +81,8 @@ public class LogInVM: Framework.MauiX.ComponentModels.ObservableValidatorExt
         if(signInData.IsAuthenticated())
         {
             // Application.Current.MainPage = new AdventureWorksLT2019.MauiXApp.Pages.AppLoadingPage();
-            await _appVM.OnAuthenticated(true, false);
+            await _appLoadingService.Step2OnAuthenticated(true, false);
         }
     }
-
-    //public ICommand GoogleLogInCommand => new Command(OnGoogleLogin);
-
-    //private async void OnGoogleLogin()
-    //{
-    //    string clientId = null;
-    //    string redirectUri = null;
-
-    //    switch (Device.RuntimePlatform)
-    //    {
-    //        case Device.iOS:
-    //            clientId = Elmah.XamarinForms.Authentication.GoogleAuthenticationConstants.iOSClientId;
-    //            redirectUri = Elmah.XamarinForms.Authentication.GoogleAuthenticationConstants.iOSRedirectUrl;
-    //            break;
-
-    //        case Device.Android:
-    //            clientId = Elmah.XamarinForms.Authentication.GoogleAuthenticationConstants.AndroidClientId;
-    //            redirectUri = Elmah.XamarinForms.Authentication.GoogleAuthenticationConstants.AndroidRedirectUrl;
-    //            break;
-    //    }
-
-    //    var account = await Framework.Xamariner.Helpers.SecureStorageAccountStoreHelper.FindAccountsForServiceAsync(Elmah.XamarinForms.Authentication.GoogleAuthenticationConstants.AppName);
-
-    //    var authenticator = new OAuth2Authenticator(
-    //        clientId,
-    //        null,
-    //        Elmah.XamarinForms.Authentication.GoogleAuthenticationConstants.Scope,
-    //        new Uri(Elmah.XamarinForms.Authentication.GoogleAuthenticationConstants.AuthorizeUrl),
-    //        new Uri(redirectUri),
-    //        new Uri(Elmah.XamarinForms.Authentication.GoogleAuthenticationConstants.AccessTokenUrl),
-    //        null,
-    //        true);
-
-    //    authenticator.Completed += OnAuthCompleted_Google;
-    //    authenticator.Error += OnAuthError;
-
-    //    Elmah.XamarinForms.Authentication.AuthenticationState.Authenticator = authenticator;
-
-    //    var presenter = new Xamarin.Auth.Presenters.OAuthLoginPresenter();
-    //    presenter.Login(authenticator);
-    //}
-
-    //#region 2. Google OAuth2 Login OnAuthCompleted/OnAuthError
-
-    //async void OnAuthCompleted_Google(object sender, AuthenticatorCompletedEventArgs e)
-    //{
-    //    var authenticator = sender as OAuth2Authenticator;
-
-    //    if (authenticator != null)
-    //    {
-    //        authenticator.Completed -= OnAuthCompleted_Google;
-    //        authenticator.Error -= OnAuthError;
-    //    }
-
-    //    Elmah.XamarinForms.Authentication.GoogleUser googleUser = null;
-    //    if (e.IsAuthenticated)
-    //    {
-    //        var account = await Framework.Xamariner.Helpers.SecureStorageAccountStoreHelper.FindAccountsForServiceAsync(Elmah.XamarinForms.Authentication.GoogleAuthenticationConstants.AppName);
-
-    //        // If the user is authenticated, request their basic user data from Google
-    //        // UserInfoUrl = https://www.googleapis.com/oauth2/v2/userinfo
-    //        var request = new OAuth2Request("GET", new Uri(Elmah.XamarinForms.Authentication.GoogleAuthenticationConstants.UserInfoUrl), null, e.Account);
-    //        var response = await request.GetResponseAsync();
-    //        if (response != null)
-    //        {
-    //            // Deserialize the data and store it in the account store
-    //            // The users email address will be used to identify data in SimpleDB
-    //            string userJson = await response.GetResponseTextAsync();
-    //            googleUser = JsonConvert.DeserializeObject<Elmah.XamarinForms.Authentication.GoogleUser>(userJson);
-    //            var userTokenIdModel = new Framework.WebApi.UserTokenIdModel
-    //            {
-    //                AuthenticationProvider = Framework.Models.AuthenticationProvider.Google,
-    //                Name = googleUser.Name,
-    //                FamilyName = googleUser.FamilyName,
-    //                Email = googleUser.Email,
-    //                Gender = googleUser.Gender,
-    //                GivenName = googleUser.GivenName,
-    //                Id = googleUser.Id,
-    //                JwtToken = e.Account.Properties["id_token"],
-    //                Picture = googleUser.Picture,
-    //                VerifiedEmail = googleUser.VerifiedEmail
-    //            };
-
-    //            var authenticationApiClient = Elmah.MVVMLightViewModels.WebApiClientFactory.CreateAuthenticationApiClient();
-    //            var apiResponse = await authenticationApiClient.SignInWithOAuth2(userTokenIdModel, Framework.Models.AuthenticationProvider.Google);
-    //        }
-
-    //        if (account != null)
-    //        {
-    //            await Framework.Xamariner.Helpers.SecureStorageAccountStoreHelper.DeleteAsync(account.FirstOrDefault(), Elmah.XamarinForms.Authentication.GoogleAuthenticationConstants.AppName);
-    //        }
-
-    //        await Framework.Xamariner.Helpers.SecureStorageAccountStoreHelper.SaveAsync(e.Account, Elmah.XamarinForms.Authentication.GoogleAuthenticationConstants.AppName);
-    //    }
-    //}
-
-    //#endregion 2. Google OAuth2 Login OnAuthCompleted/OnAuthError
-
-    //void OnAuthError(object sender, AuthenticatorErrorEventArgs e)
-    //{
-    //    var authenticator = sender as OAuth2Authenticator;
-    //    if (authenticator != null)
-    //    {
-    //        authenticator.Completed -= OnAuthCompleted_Google;
-    //        authenticator.Error -= OnAuthError;
-    //    }
-
-    //    Debug.WriteLine("Authentication error: " + e.Message);
-    //}
 }
 

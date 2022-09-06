@@ -1,4 +1,4 @@
-namespace AdventureWorksLT2019.MauiX.Services
+namespace AdventureWorksLT2019.MauiXApp.Services
 {
     public class ThemeService : Framework.MauiX.Services.IThemeService
     {

@@ -55,16 +55,15 @@ public class RegisterUserVM : Framework.MauiX.ComponentModels.ObservableValidato
         set => SetProperty(ref m_ErrorMessage, value);
     }
 
-    private readonly AdventureWorksLT2019.MauiX.Services.AuthenticationService _authenticationService;
-    private readonly AdventureWorksLT2019.MauiXApp.ViewModels.AppVM _appVM;
+    private readonly AdventureWorksLT2019.MauiXApp.Services.AuthenticationService _authenticationService;
+    private readonly AdventureWorksLT2019.MauiXApp.Services.AppLoadingService _appLoadingService;
 
     public RegisterUserVM(
-        AdventureWorksLT2019.MauiX.Services.AuthenticationService authenticationService,
-        AdventureWorksLT2019.MauiXApp.ViewModels.AppVM appVM
-        )
+        AdventureWorksLT2019.MauiXApp.Services.AuthenticationService authenticationService,
+        AdventureWorksLT2019.MauiXApp.Services.AppLoadingService appLoadingService        )
     {
         _authenticationService = authenticationService;
-        _appVM = appVM;
+        _appLoadingService = appLoadingService;        
         ValidateAllProperties();
     }
 
@@ -76,8 +75,7 @@ public class RegisterUserVM : Framework.MauiX.ComponentModels.ObservableValidato
         var signInData = await _authenticationService.RegisterUserAsync(Email, Password, ConfirmPassword, true);
         if(signInData.IsAuthenticated())
         {
-            // Application.Current.MainPage = new AdventureWorksLT2019.MauiXApp.Pages.AppLoadingPage();
-            await _appVM.OnAuthenticated(true, true);
+            await _appLoadingService.Step2OnAuthenticated(true, true);
         }
     }
 }

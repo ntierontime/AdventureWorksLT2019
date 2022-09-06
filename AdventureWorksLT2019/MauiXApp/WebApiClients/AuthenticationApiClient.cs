@@ -7,15 +7,15 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
-using AdventureWorksLT2019.MauiX.WebApiClients;
+using AdventureWorksLT2019.MauiXApp.WebApiClients;
 
-namespace AdventureWorksLT2019.MauiX.WebApiClients
+namespace AdventureWorksLT2019.MauiXApp.WebApiClients
 {
     public partial class AuthenticationApiClient : Framework.MauiX.WebApiClientBase
     {
         public override string ControllerName => "AuthenticationApi";
 
-        public AuthenticationApiClient(AdventureWorksLT2019.MauiX.WebApiClients.AuthenticationWebApiConfig webApiConfig) 
+        public AuthenticationApiClient(AdventureWorksLT2019.MauiXApp.WebApiClients.AuthenticationWebApiConfig webApiConfig) 
             : base(webApiConfig.WebApiRootUrl, webApiConfig.UseToken, webApiConfig.Token)
         {
         }
@@ -32,10 +32,7 @@ namespace AdventureWorksLT2019.MauiX.WebApiClients
 
             string url = GetHttpRequestUrl(ActionName_Login);
             var response = await Post<Framework.Models.Account.LoginRequest, Framework.Models.Account.AuthenticationResponse>(url, model);
-            if (response == null)
-            {
-                response = new Framework.Models.Account.AuthenticationResponse { Succeeded = false, IsLockedOut = false, IsNotAllowed = false, RequiresTwoFactor = false, };
-            }
+            response ??= new Framework.Models.Account.AuthenticationResponse { Succeeded = false, IsLockedOut = false, IsNotAllowed = false, RequiresTwoFactor = false, };
 
             return response;
         }
@@ -51,10 +48,8 @@ namespace AdventureWorksLT2019.MauiX.WebApiClients
 
             string url = GetHttpRequestUrl(ActionName_Logout);
             var response = await Post<Framework.Models.Account.LoginRequest, Framework.Models.Account.AuthenticationResponse>(url, model);
-            if (response == null)
-            {
-                response = new Framework.Models.Account.AuthenticationResponse { Succeeded = false, IsLockedOut = false, IsNotAllowed = false, RequiresTwoFactor = false, };
-            }
+            response ??= new Framework.Models.Account.AuthenticationResponse { Succeeded = false, IsLockedOut = false, IsNotAllowed = false, RequiresTwoFactor = false, };
+
             return response;
         }
 
