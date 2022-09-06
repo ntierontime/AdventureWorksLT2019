@@ -1,10 +1,15 @@
-﻿using Javax.Net.Ssl;
+﻿#if ANDROID && DEBUG
+
+using Javax.Net.Ssl;
 using System.Reflection;
 using System.Reflection.Emit;
 using Xamarin.Android.Net;
 
 namespace AdventureWorksLT2019.MauiXApp.Platforms.Android
 {
+    /// <summary>
+    /// https://stackoverflow.com/questions/71047509/trust-anchor-for-certification-path-not-found-in-a-net-maui-project-trying-t
+    /// </summary>
     static class DangerousAndroidMessageHandlerEmitter
     {
         private static Assembly _emittedAssembly = null;
@@ -67,3 +72,5 @@ namespace AdventureWorksLT2019.MauiXApp.Platforms.Android
         public static IHostnameVerifier Create() => new DangerousHostNameVerifier();
     }
 }
+
+#endif

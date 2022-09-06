@@ -2,10 +2,13 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AdventureWorksLT2019.MauiXApp.Pages.AppLoadingPage"
-              BackgroundColor="#512BD4"
+             BackgroundColor="#512BD4"
+             Shell.NavBarIsVisible="False"
              Title="">
-    <VerticalStackLayout VerticalOptions="Center">
-        <Image Source="ntierontime_logo.png"  HorizontalOptions="Center"  VerticalOptions="Center" BackgroundColor="#512BD4"/>
+    <Grid>
+        <VerticalStackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+            <Image Source="ntierontime_logo.png"  HorizontalOptions="Center"  VerticalOptions="Center" BackgroundColor="#512BD4"/>
+        </VerticalStackLayout>
         <ProgressBar Progress="{Binding Path=Progress}" Scale="{Binding Path=Scale}" VerticalOptions="End" HorizontalOptions="Fill" Margin="20,0,20,250"/>
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

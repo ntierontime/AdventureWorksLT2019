@@ -8,6 +8,7 @@ namespace AdventureWorksLT2019.MauiXApp
         public static MauiApp CreateMauiApp()
         {
 #if ANDROID && DEBUG
+            // https://stackoverflow.com/questions/71047509/trust-anchor-for-certification-path-not-found-in-a-net-maui-project-trying-t
             Platforms.Android.DangerousAndroidMessageHandlerEmitter.Register();
             Platforms.Android.DangerousTrustProvider.Register();
 #endif

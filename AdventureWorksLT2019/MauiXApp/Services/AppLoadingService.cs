@@ -55,7 +55,7 @@ namespace AdventureWorksLT2019.MauiXApp.Services
             }
             else
             {
-                await Shell.Current.GoToAsync(nameof(AdventureWorksLT2019.MauiXApp.Pages.LogInPage));
+                await AdventureWorksLT2019.MauiXApp.Services.AppShellRoutingHelper.GoToAbsoluteAsync(nameof(AdventureWorksLT2019.MauiXApp.Pages.LogInPage));
             }
         }
 
@@ -72,7 +72,7 @@ namespace AdventureWorksLT2019.MauiXApp.Services
             if (reAssignAppLoadingPage)
             {
                 WeakReferenceMessenger.Default.Send<AdventureWorksLT2019.MauiXApp.Messages.AppLoadingProgressChangedMessage>(new AdventureWorksLT2019.MauiXApp.Messages.AppLoadingProgressChangedMessage(Step20Progress));
-                await Shell.Current.GoToAsync(nameof(AdventureWorksLT2019.MauiXApp.Pages.AppLoadingPage));
+                await AdventureWorksLT2019.MauiXApp.Services.AppShellRoutingHelper.GoToAbsoluteAsync(nameof(AdventureWorksLT2019.MauiXApp.Pages.AppLoadingPage));
             }
 
             //// 2. GetCurrentLocation
@@ -85,12 +85,12 @@ namespace AdventureWorksLT2019.MauiXApp.Services
             if (!gotoFirstTimeUserPage)
             {
                 // TODO: Get Other Application/User Level data if not first time user
-                await Shell.Current.GoToAsync(nameof(AdventureWorksLT2019.MauiXApp.Pages.MainPage));
+                await AdventureWorksLT2019.MauiXApp.Services.AppShellRoutingHelper.GoToAbsoluteAsync(nameof(AdventureWorksLT2019.MauiXApp.Pages.MainPage));
             }
             else
             {
                 // TODO: Setup User Profile in FirstTimeUserPage
-                await Shell.Current.GoToAsync(nameof(AdventureWorksLT2019.MauiXApp.Pages.FirstTimeUserPage));
+                await AdventureWorksLT2019.MauiXApp.Services.AppShellRoutingHelper.GoToAbsoluteAsync(nameof(AdventureWorksLT2019.MauiXApp.Pages.FirstTimeUserPage));
             }
         }
     }

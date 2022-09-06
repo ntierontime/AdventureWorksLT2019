@@ -1,10 +1,16 @@
-﻿using Java.Net;
+﻿#if ANDROID && DEBUG
+
+using Java.Net;
 using Java.Security;
 using Java.Security.Cert;
 using Javax.Net.Ssl;
 
+
 namespace AdventureWorksLT2019.MauiXApp.Platforms.Android
 {
+    /// <summary>
+    /// https://stackoverflow.com/questions/71047509/trust-anchor-for-certification-path-not-found-in-a-net-maui-project-trying-t
+    /// </summary>
     internal class DangerousTrustProvider : Provider
     {
         private const string TRUST_PROVIDER_ALG = "DangerousTrustAlgorithm";
@@ -56,3 +62,5 @@ namespace AdventureWorksLT2019.MauiXApp.Platforms.Android
         }
     }
 }
+
+#endif
