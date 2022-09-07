@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Layouts;assembly=CommunityToolkit.Maui"
              x:Class="AdventureWorksLT2019.MauiXApp.Pages.FirstTimeUserPage"
-             Shell.NavBarIsVisible="False"
              Title="FirstTimeUserPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <Grid VerticalOptions="FillAndExpand">
+        <ScrollView Margin="10">
+            <mct:UniformItemsLayout x:Name="UniformItemsLayout_Default1" VerticalOptions="StartAndExpand">
+                <Label
+                    Text="Setup User Profile Wizard"
+                    SemanticProperties.HeadingLevel="Level1"
+                    FontSize="32"
+                    HorizontalOptions="Center" />
+            </mct:UniformItemsLayout>
+        </ScrollView>
+        <mct:UniformItemsLayout x:Name="UniformItemsLayout_Default" VerticalOptions="End">
+            <Button Text="Skip" Command="{Binding Path=SkipCommand}" />
+            <Button Text="Done" Command="{Binding Path=DoneCommand}"  />
+        </mct:UniformItemsLayout>
+    </Grid>
 </ContentPage>

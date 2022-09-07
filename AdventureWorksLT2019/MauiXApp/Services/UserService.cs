@@ -30,5 +30,12 @@ namespace AdventureWorksLT2019.MauiXApp.Services
                 WeakReferenceMessenger.Default.Send<AdventureWorksLT2019.MauiXApp.Messages.AuthenticatedMessage>(new AdventureWorksLT2019.MauiXApp.Messages.AuthenticatedMessage(false));
             return response.Succeeded;
         }
+
+        public async Task SetUserProfileCompletedAsync()
+        {
+            var signInData = await _secureStorageService.GetSignInData();
+            signInData.UserProfileCompleted = true;
+            await _secureStorageService.SetSignInData(signInData);
+        }
     }
 }

@@ -75,7 +75,7 @@ public class RegisterUserVM : Framework.MauiX.ComponentModels.ObservableValidato
         var signInData = await _authenticationService.RegisterUserAsync(Email, Password, ConfirmPassword, true);
         if(signInData.IsAuthenticated())
         {
-            await _appLoadingService.Step2OnAuthenticated(true, true);
+            await _appLoadingService.Step2OnAuthenticated(true, signInData.GotoFirstTimeUserPage());
         }
     }
 }

@@ -38,6 +38,7 @@ namespace AdventureWorksLT2019.MauiXApp
             builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Services.UserService>();
             builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Services.AppLoadingService>();
             builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Services.GeoLocationService>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Services.AppShellService>();
 
             // 4. DataModels
             builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.DataModels.AppStates>();
@@ -46,7 +47,6 @@ namespace AdventureWorksLT2019.MauiXApp
             // 5.1. Global Page ViewModels
             // 5.1.1. AdventureWorksLT2019.MauiXApp.ViewModels.AppVM is a Singleton/Global, most of others are Scoped(new instance)
             builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.AppVM>();
-            builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.AppShellVM>();
             builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.AppLoadingVM>();
             builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.ViewModels.LogInVM>();
             builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.ViewModels.RegisterUserVM>();

@@ -18,21 +18,21 @@ namespace AdventureWorksLT2019.MauiXApp.Services
         private readonly Framework.MauiX.Services.SecureStorageService _secureStorageService;
         private readonly AdventureWorksLT2019.MauiXApp.Services.AuthenticationService _authenticationService;
         private readonly AdventureWorksLT2019.MauiXApp.Services.GeoLocationService _geoLocationService;
-        AdventureWorksLT2019.MauiXApp.ViewModels.AppLoadingVM _appLoadingVM;
+        private readonly AdventureWorksLT2019.MauiXApp.Services.AppShellService _appShellService;
 
         public AppLoadingService(
             Framework.MauiX.Services.IThemeService themeService,
             Framework.MauiX.Services.SecureStorageService secureStorageService,
             AdventureWorksLT2019.MauiXApp.Services.AuthenticationService authenticationService,
             AdventureWorksLT2019.MauiXApp.Services.GeoLocationService geoLocationService,
-            AdventureWorksLT2019.MauiXApp.ViewModels.AppLoadingVM appLoadingVM
+            AdventureWorksLT2019.MauiXApp.Services.AppShellService appShellService
             )
         {
             _themeService = themeService;
             _secureStorageService = secureStorageService;
             _authenticationService = authenticationService;
             _geoLocationService = geoLocationService;
-            _appLoadingVM = appLoadingVM;
+            _appShellService = appShellService;
         }
 
         public async Task Step1OnInitialAppLoading()
@@ -52,11 +52,11 @@ namespace AdventureWorksLT2019.MauiXApp.Services
             var signInData = await _authenticationService.AutoLogInAsync();
             if (signInData.IsAuthenticated())
             {
-                await Step2OnAuthenticated(false, false);
+                await Step2OnAuthenticated(false, signInData.GotoFirstTimeUserPage());
             }
             else
             {
-                await AdventureWorksLT2019.MauiXApp.Services.AppShellHelper.GoToAbsoluteAsync(nameof(AdventureWorksLT2019.MauiXApp.Pages.LogInPage));
+                await AdventureWorksLT2019.MauiXApp.Services.AppShellService.GoToAbsoluteAsync(nameof(AdventureWorksLT2019.MauiXApp.Pages.LogInPage));
             }
         }
 
@@ -68,11 +68,10 @@ namespace AdventureWorksLT2019.MauiXApp.Services
         /// <returns></returns>
         public async Task Step2OnAuthenticated(bool reAssignAppLoadingPage, bool gotoFirstTimeUserPage)
         {
-
             // 1. we know it is step #1 finished(Launching), we are going to load application level data 
             if (reAssignAppLoadingPage)
             {
-                await AdventureWorksLT2019.MauiXApp.Services.AppShellHelper.GoToAbsoluteAsync(nameof(AdventureWorksLT2019.MauiXApp.Pages.AppLoadingPage));
+                await AdventureWorksLT2019.MauiXApp.Services.AppShellService.GoToAbsoluteAsync(nameof(AdventureWorksLT2019.MauiXApp.Pages.AppLoadingPage));
                 WeakReferenceMessenger.Default.Send<AdventureWorksLT2019.MauiXApp.Messages.AppLoadingProgressChangedMessage>(new AdventureWorksLT2019.MauiXApp.Messages.AppLoadingProgressChangedMessage(Step20Progress));
             }
 
@@ -80,24 +79,10 @@ namespace AdventureWorksLT2019.MauiXApp.Services
             //_progressBarVM.Forward();
             await _geoLocationService.GetCurrentLocation();
             WeakReferenceMessenger.Default.Send<AdventureWorksLT2019.MauiXApp.Messages.AppLoadingProgressChangedMessage>(new AdventureWorksLT2019.MauiXApp.Messages.AppLoadingProgressChangedMessage(Step21Progress));
-            // Thread.SpinWait(1000);
 
             // 3. Get Other Application/User Level data if not first time user
 
-            await AdventureWorksLT2019.MauiXApp.Services.AppShellHelper.AddFlyoutMenusDetails(gotoFirstTimeUserPage);
-
-            //if (!gotoFirstTimeUserPage)
-            //{
-
-            //    await AdventureWorksLT2019.MauiXApp.Services.AppShellHelper.GoToAbsoluteAsync(nameof(AdventureWorksLT2019.MauiXApp.Pages.MainPage));
-            //    // TODO: Get Other Application/User Level data if not first time user
-            //    await AdventureWorksLT2019.MauiXApp.Services.AppShellHelper.GoToAbsoluteAsync(nameof(AdventureWorksLT2019.MauiXApp.Pages.MainPage));
-            //}
-            //else
-            //{
-            //    // TODO: Setup User Profile in FirstTimeUserPage
-            //    await AdventureWorksLT2019.MauiXApp.Services.AppShellHelper.GoToAbsoluteAsync(nameof(AdventureWorksLT2019.MauiXApp.Pages.FirstTimeUserPage));
-            //}
+            await _appShellService.AddFlyoutMenusDetails(gotoFirstTimeUserPage);
         }
     }
 }

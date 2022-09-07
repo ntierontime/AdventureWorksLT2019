@@ -81,7 +81,7 @@ public class LogInVM: Framework.MauiX.ComponentModels.ObservableValidatorExt
         if(signInData.IsAuthenticated())
         {
             // Application.Current.MainPage = new AdventureWorksLT2019.MauiXApp.Pages.AppLoadingPage();
-            await _appLoadingService.Step2OnAuthenticated(true, false);
+            await _appLoadingService.Step2OnAuthenticated(true, signInData.GotoFirstTimeUserPage());
         }
     }
 }

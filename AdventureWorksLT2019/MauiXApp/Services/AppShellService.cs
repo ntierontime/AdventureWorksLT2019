@@ -1,21 +1,19 @@
 ﻿using AdventureWorksLT2019.MauiXApp.Pages;
+using Microsoft.Maui.Controls;
 
 namespace AdventureWorksLT2019.MauiXApp.Services
 {
-    public static class AppShellHelper
+    public class AppShellService
     {
-        //public static Dictionary<string, Type> GetRoutes()
-        //{
-        //    var routes = new Dictionary<string, Type>();
-        //    //routes.Add(nameof(AdventureWorksLT2019.MauiXApp.Pages.AppLoadingPage), typeof(AdventureWorksLT2019.MauiXApp.Pages.AppLoadingPage));
-        //    //routes.Add(nameof(AdventureWorksLT2019.MauiXApp.Pages.RegisterUserPage), typeof(AdventureWorksLT2019.MauiXApp.Pages.RegisterUserPage));
-        //    //routes.Add(nameof(AdventureWorksLT2019.MauiXApp.Pages.LogInPage), typeof(AdventureWorksLT2019.MauiXApp.Pages.LogInPage));
-        //    routes.Add(nameof(AdventureWorksLT2019.MauiXApp.Pages.FirstTimeUserPage), typeof(AdventureWorksLT2019.MauiXApp.Pages.FirstTimeUserPage));
-        //    routes.Add(nameof(AdventureWorksLT2019.MauiXApp.Pages.MainPage), typeof(AdventureWorksLT2019.MauiXApp.Pages.MainPage));
-        //    return routes;
-        //}
+        private readonly AdventureWorksLT2019.MauiXApp.Services.UserService _userService;
 
-        public async static Task AddFlyoutMenusDetails(bool gotoFirstTimeUserPage)
+        public AppShellService(
+            AdventureWorksLT2019.MauiXApp.Services.UserService userService)
+        {
+            _userService = userService;
+        }
+
+        public async Task AddFlyoutMenusDetails(bool gotoFirstTimeUserPage)
         {
             string gotoRoute = string.Empty;
             // 1. Main Page
@@ -50,7 +48,7 @@ namespace AdventureWorksLT2019.MauiXApp.Services
                 }
             }
 
-            // 1. Main Page
+            // 2. FirstTimeUserPage
             {
                 var route = nameof(AdventureWorksLT2019.MauiXApp.Pages.FirstTimeUserPage);
                 var pageType = typeof(AdventureWorksLT2019.MauiXApp.Pages.FirstTimeUserPage);
@@ -82,7 +80,24 @@ namespace AdventureWorksLT2019.MauiXApp.Services
                 }
             }
 
-            await GoToAbsoluteAsync(gotoRoute);
+            var logoutMenuItem = new MenuItem
+            {
+                Text = AdventureWorksLT2019.Resx.Resources.UIStrings.LogOut,
+                Command = new Command(async ()=> {
+                    var succeeded = await _userService.LogOutAsync();
+                    if (succeeded)
+                    {
+                        await GoToAbsoluteAsync(nameof(AdventureWorksLT2019.MauiXApp.Pages.LogInPage));
+                    }
+                })
+
+            };
+            AppShell.Current.Items.Add(logoutMenuItem);
+
+            if (!string.IsNullOrEmpty(gotoRoute))
+            {
+                await GoToAbsoluteAsync(gotoRoute);
+            }
         }
 
         public static async Task GoToAbsoluteAsync(string route)

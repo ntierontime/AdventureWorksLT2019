@@ -43,7 +43,7 @@ namespace AdventureWorksLT2019.MauiXApp.Services
                     LastLoggedInDateTime = DateTime.Now,
                     Token = response.Token!,
                     TokenExpireDateTime = DateTime.Now.AddSeconds(response.ExpiresIn),
-                    // GoToWelcomeWizard = false, // should be true when register
+                    UserProfileCompleted = response.UserProfileCompleted,
                     ShortGuid = "", // should have an identifier returned in AuthenticationResponse
                 };
                 if (rememberMe)
@@ -71,7 +71,7 @@ namespace AdventureWorksLT2019.MauiXApp.Services
                     LastLoggedInDateTime = DateTime.Now,
                     Token = response.Token!,
                     TokenExpireDateTime = DateTime.Now.AddSeconds(response.ExpiresIn),
-                    // GoToWelcomeWizard = false, // should be true when register
+                    UserProfileCompleted = response.UserProfileCompleted,
                     ShortGuid = "", // should have an identifier returned in AuthenticationResponse
                 };
                 if (rememberMe)
