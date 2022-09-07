@@ -12,23 +12,23 @@ namespace AdventureWorksLT2019.MauiXApp.ViewModels
             set => SetProperty(ref m_FlyoutBehavior, value);
         }
 
-        private readonly AdventureWorksLT2019.MauiXApp.Services.AuthenticationService _authenticationService;
+        private readonly AdventureWorksLT2019.MauiXApp.Services.UserService _userService;
 
         public AppShellVM(
-            AdventureWorksLT2019.MauiXApp.Services.AuthenticationService authenticationService)
+            AdventureWorksLT2019.MauiXApp.Services.UserService userService)
         {
-            _authenticationService = authenticationService;
+            _userService = userService;
         }
 
-        //public ICommand LogOutCommand => new Command(OnLogOutAsync);
-        //private async void OnLogOutAsync()
-        //{
-        //    // RemeberMe always "true"
-        //    var succeeded = await _authenticationService.LogOutAsync();
-        //    if (succeeded)
-        //    {
-        //        // Application.Current.MainPage = new AdventureWorksLT2019.MauiXApp.Pages.LogInPage();
-        //    }
-        //}
+        public ICommand LogOutCommand => new Command(OnLogOutAsync);
+        private async void OnLogOutAsync()
+        {
+            // RemeberMe always "true"
+            var succeeded = await _userService.LogOutAsync();
+            if (succeeded)
+            {
+                await AdventureWorksLT2019.MauiXApp.Services.AppShellHelper.GoToAbsoluteAsync(nameof(AdventureWorksLT2019.MauiXApp.Pages.LogInPage));
+            }
+        }
     }
 }

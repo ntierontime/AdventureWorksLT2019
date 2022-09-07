@@ -11,7 +11,7 @@ namespace AdventureWorksLT2019.MauiXApp
             //private AdventureWorksLT2019.MauiXApp.DataModels.AppStates _appStates;
             //_appStates = Framework.MauiX.Helpers.ServiceHelper.GetService<AdventureWorksLT2019.MauiXApp.DataModels.AppStates>();
             _appLoadingService = Framework.MauiX.Helpers.ServiceHelper.GetService<AdventureWorksLT2019.MauiXApp.Services.AppLoadingService>();
-            MainPage = new AppShell();
+            MainPage = new AdventureWorksLT2019.MauiXApp.AppShell();
         }
 
         protected override async void OnStart()

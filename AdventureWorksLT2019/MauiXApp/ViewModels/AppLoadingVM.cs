@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace AdventureWorksLT2019.MauiXApp.ViewModels
 {
-    public class AppLoadingVM: ObservableRecipient
+    public class AppLoadingVM: ObservableObject
     {
         private double m_Progress = 0;
         public double Progress
@@ -19,17 +19,17 @@ namespace AdventureWorksLT2019.MauiXApp.ViewModels
             set => SetProperty(ref m_Scale, value);
         }
 
-        private readonly AdventureWorksLT2019.MauiXApp.Services.AuthenticationService _authenticationService;
-
-        public AppLoadingVM(
-            AdventureWorksLT2019.MauiXApp.Services.AuthenticationService authenticationService)
+        public AppLoadingVM()
         {
-            _authenticationService = authenticationService;
+            OnActivated();
         }
 
-        protected override void OnActivated()
+        protected void OnActivated()
         {
-            WeakReferenceMessenger.Default.Register<AdventureWorksLT2019.MauiXApp.ViewModels.AppLoadingVM, AdventureWorksLT2019.MauiXApp.Messages.AppLoadingProgressChangedMessage>(this, (r, m) => r.Progress = m.Value);
+            WeakReferenceMessenger.Default.Register<AdventureWorksLT2019.MauiXApp.ViewModels.AppLoadingVM, AdventureWorksLT2019.MauiXApp.Messages.AppLoadingProgressChangedMessage>(this, (r, m) =>
+            {
+                r.Progress = m.Value;
+            });
         }
     }
 }

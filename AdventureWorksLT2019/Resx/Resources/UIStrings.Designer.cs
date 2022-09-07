@@ -142,7 +142,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Auto SignIn.
+        ///   Looks up a localized string similar to (en)Auto SignIn.
         /// </summary>
         public static string AutoSignIn {
             get {
@@ -232,7 +232,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Confirm Password.
+        ///   Looks up a localized string similar to (en)Confirm Password.
         /// </summary>
         public static string ConfirmPassword {
             get {
@@ -241,7 +241,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Passwords not match.
+        ///   Looks up a localized string similar to (en)Passwords not match.
         /// </summary>
         public static string ConfirmPasswordNotMatchError {
             get {
@@ -250,7 +250,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Confirm Password Required.
+        ///   Looks up a localized string similar to (en)Confirm Password Required.
         /// </summary>
         public static string ConfirmPasswordRequired {
             get {
@@ -430,7 +430,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email.
+        ///   Looks up a localized string similar to (en)Email.
         /// </summary>
         public static string Email {
             get {
@@ -601,6 +601,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to (en)First Time User.
+        /// </summary>
+        public static string FirstTimeUser {
+            get {
+                return ResourceManager.GetString("FirstTimeUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (en)-- All {0} --.
         /// </summary>
         public static string Format_All {
@@ -660,6 +669,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string HideAdvancedSearch {
             get {
                 return ResourceManager.GetString("HideAdvancedSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (en)Home.
+        /// </summary>
+        public static string Home {
+            get {
+                return ResourceManager.GetString("Home", resourceCulture);
             }
         }
         
@@ -736,7 +754,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LogIn.
+        ///   Looks up a localized string similar to (en)LogIn.
         /// </summary>
         public static string LogIn {
             get {
@@ -745,7 +763,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Log Out.
+        ///   Looks up a localized string similar to (en)Log Out.
         /// </summary>
         public static string LogOut {
             get {
@@ -925,7 +943,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character:.
+        ///   Looks up a localized string similar to (en)Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character:.
         /// </summary>
         public static string PasswordPatternError {
             get {
@@ -934,7 +952,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password is Required.
+        ///   Looks up a localized string similar to (en)Password is Required.
         /// </summary>
         public static string PasswordRequired {
             get {
@@ -1321,7 +1339,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Register.
+        ///   Looks up a localized string similar to (en)Register.
         /// </summary>
         public static string Register {
             get {
@@ -1330,7 +1348,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Register A New User.
+        ///   Looks up a localized string similar to (en)Register A New User.
         /// </summary>
         public static string RegisterANewUser {
             get {
@@ -1339,7 +1357,7 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remember Me.
+        ///   Looks up a localized string similar to (en)Remember Me.
         /// </summary>
         public static string RememberMe {
             get {

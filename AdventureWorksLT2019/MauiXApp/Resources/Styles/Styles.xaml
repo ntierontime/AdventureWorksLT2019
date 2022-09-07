@@ -16,7 +16,7 @@
     <!-- 1.Start Label Styles -->
     <Style x:Key="DataLabelStyle" TargetType="Label">
         <Setter Property="FontSize" Value="Medium" />
-        <!--<Setter Property="BackgroundColor" Value="{DynamicResource ThirdColor}" />-->
+        <Setter Property="BackgroundColor" Value="{DynamicResource ThirdColor}" />
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="HorizontalOptions" Value="StartAndExpand" />
         <Setter Property="Margin" Value="0,0,0,5" />
@@ -32,8 +32,8 @@
     <Style x:Key="RegularLabelStyle" TargetType="Label">
         <Setter Property="FontSize" Value="Small" />
         <Setter Property="FontAttributes" Value="Bold" />
-        <!--<Setter Property="TextColor" Value="Black" />
-            <Setter Property="BackgroundColor" Value="Azure" />-->
+        <Setter Property="TextColor" Value="Black" />
+            <Setter Property="BackgroundColor" Value="Azure" />
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="HorizontalOptions" Value="StartAndExpand" />
         <Setter Property="Margin" Value="0,10,0,5" />

@@ -5,8 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:AdventureWorksLT2019.MauiXApp.ViewModels"
     xmlns:p="clr-namespace:AdventureWorksLT2019.MauiXApp.Pages"
-    Shell.TabBarIsVisible="False"
-    Shell.FlyoutBehavior="{Binding Path=FlyoutBehavior}">
+    Shell.TabBarIsVisible="False">
 
     <ShellContent
         Title="Loading" FlyoutItemIsVisible="False" Shell.FlyoutBehavior="Disabled"

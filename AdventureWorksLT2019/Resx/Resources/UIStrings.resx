@@ -124,7 +124,7 @@
     <value>(en)Are you sure you want to delete this?</value>
   </data>
   <data name="AutoSignIn" xml:space="preserve">
-    <value>Auto SignIn</value>
+    <value>(en)Auto SignIn</value>
   </data>
   <data name="Back_to_List" xml:space="preserve">
     <value>(en)Back to List</value>
@@ -157,7 +157,7 @@
     <value>(en)Edit</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>Email</value>
+    <value>(en)Email</value>
   </data>
   <data name="EndsWith" xml:space="preserve">
     <value>(en)Ends With</value>
@@ -199,7 +199,7 @@
     <value>(en)Light</value>
   </data>
   <data name="LogIn" xml:space="preserve">
-    <value>LogIn</value>
+    <value>(en)LogIn</value>
   </data>
   <data name="More" xml:space="preserve">
     <value>(en)More</value>
@@ -286,10 +286,10 @@
     <value>(en)Previous</value>
   </data>
   <data name="RegisterANewUser" xml:space="preserve">
-    <value>Register A New User</value>
+    <value>(en)Register A New User</value>
   </data>
   <data name="RememberMe" xml:space="preserve">
-    <value>Remember Me</value>
+    <value>(en)Remember Me</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>(en)Save</value>
@@ -823,24 +823,30 @@
     <value>Email is Required</value>
   </data>
   <data name="PasswordRequired" xml:space="preserve">
-    <value>Password is Required</value>
+    <value>(en)Password is Required</value>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
-    <value>Confirm Password</value>
+    <value>(en)Confirm Password</value>
   </data>
   <data name="ConfirmPasswordNotMatchError" xml:space="preserve">
-    <value>Passwords not match</value>
+    <value>(en)Passwords not match</value>
   </data>
   <data name="PasswordPatternError" xml:space="preserve">
-    <value>Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character:</value>
+    <value>(en)Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character:</value>
   </data>
   <data name="Register" xml:space="preserve">
-    <value>Register</value>
+    <value>(en)Register</value>
   </data>
   <data name="ConfirmPasswordRequired" xml:space="preserve">
-    <value>Confirm Password Required</value>
+    <value>(en)Confirm Password Required</value>
   </data>
   <data name="LogOut" xml:space="preserve">
-    <value>Log Out</value>
+    <value>(en)Log Out</value>
+  </data>
+  <data name="FirstTimeUser" xml:space="preserve">
+    <value>(en)First Time User</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>(en)Home</value>
   </data>
 </root>

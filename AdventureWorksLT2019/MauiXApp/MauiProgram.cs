@@ -35,6 +35,7 @@ namespace AdventureWorksLT2019.MauiXApp
 
             // 3. AdventureWorksLT2019.MauiX.Services
             builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Services.AuthenticationService>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Services.UserService>();
             builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Services.AppLoadingService>();
             builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Services.GeoLocationService>();
 

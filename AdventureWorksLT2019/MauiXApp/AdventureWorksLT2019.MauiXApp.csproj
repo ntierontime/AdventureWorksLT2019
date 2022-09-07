@@ -37,13 +37,16 @@
   <ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiSplashScreen Include="Resources\Images\ntierontime.svg">
+		  <Color>Gray</Color>
+		  <BaseSize>400,400</BaseSize>
+		</MauiSplashScreen>
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\ntierontime_logo.png" Color="#512BD4" BaseSize="200,200" />
+		<MauiSplashScreen Include="Resources\Splash\ntierontime.svg" Color="Gray" BaseSize="400,400" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -53,11 +56,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiImage Remove="Resources\Images\ntierontime_logo.png" />
+	  <MauiImage Remove="Resources\Images\ntierontime.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Images\ntierontime_logo.png" />
+	  <None Remove="Resources\Images\ntierontime.svg" />
 	</ItemGroup>
 
 	<ItemGroup>

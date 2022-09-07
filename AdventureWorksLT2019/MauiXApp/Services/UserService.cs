@@ -25,7 +25,8 @@ namespace AdventureWorksLT2019.MauiXApp.Services
         {
             var signInData = await _secureStorageService.GetSignInData();
             var response = await _authenticationApiClient.LogoutAsync(signInData.UserName);
-            if(response.Succeeded)
+            _secureStorageService.ClearSignInData();
+            if (response.Succeeded)
                 WeakReferenceMessenger.Default.Send<AdventureWorksLT2019.MauiXApp.Messages.AuthenticatedMessage>(new AdventureWorksLT2019.MauiXApp.Messages.AuthenticatedMessage(false));
             return response.Succeeded;
         }
