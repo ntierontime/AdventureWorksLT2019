@@ -1,40 +1,75 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System.Windows.Input;
+using System.Globalization;
 
 namespace AdventureWorksLT2019.MauiXApp.ViewModels
 {
     public class SettingsVM: ObservableObject
     {
-        private AppTheme m_CurrentAppTheme;
-        public AppTheme CurrentAppTheme
+        public List<Framework.MauiX.DataModels.AppThemeItem> AppThemeItems { get; private set; }
+        public List<Framework.MauiX.DataModels.LanguageItem> LanguageItems { get; private set; }
+
+        private Framework.MauiX.DataModels.AppThemeItem m_CurrentAppTheme;
+        public Framework.MauiX.DataModels.AppThemeItem CurrentAppTheme
         {
             get => m_CurrentAppTheme;
-            set => SetProperty(ref m_CurrentAppTheme, value);
+            set
+            {
+                SetProperty(ref m_CurrentAppTheme, value);
+                Preferences.Default.Set<string>(nameof(CurrentAppTheme), value.AppTheme.ToString());
+                Application.Current.UserAppTheme = value.AppTheme;
+            }
         }
 
-        private string m_CurrentLanguage;
-        public string CurrentLanguage
+        private Framework.MauiX.DataModels.LanguageItem m_CurrentLanguage;
+        public Framework.MauiX.DataModels.LanguageItem CurrentLanguage
         {
             get => m_CurrentLanguage;
-            set => SetProperty(ref m_CurrentLanguage, value);
+            set
+            {
+                SetProperty(ref m_CurrentLanguage, value);
+                Preferences.Default.Set<string>(nameof(CurrentLanguage), value.Language);
+                CultureInfo.CurrentUICulture = new CultureInfo(value.Language, false);
+            }
         }
-
-        public ICommand ChangeAppThemeCommand { private set; get; }
-        public ICommand ChangeLanguageCommand { private set; get; }
 
         public SettingsVM()
         {
-            ChangeAppThemeCommand = new Command<AppTheme>(
-                execute: (AppTheme arg) =>
-                {
-                    CurrentAppTheme = arg;
-                });
+            AppThemeItems = new List<Framework.MauiX.DataModels.AppThemeItem>
+            {
+                new Framework.MauiX.DataModels.AppThemeItem { AppTheme = AppTheme.Light, AppThemeName = AdventureWorksLT2019.Resx.Resources.UIStrings.Light },
+                new Framework.MauiX.DataModels.AppThemeItem { AppTheme = AppTheme.Dark, AppThemeName = AdventureWorksLT2019.Resx.Resources.UIStrings.Dark }
+            };
+            LanguageItems = new List<Framework.MauiX.DataModels.LanguageItem>
+            {
+                new Framework.MauiX.DataModels.LanguageItem { Language = "en", LanguageName = AdventureWorksLT2019.Resx.Resources.UIStrings.English },
+                new Framework.MauiX.DataModels.LanguageItem { Language = "fr", LanguageName = AdventureWorksLT2019.Resx.Resources.UIStrings.French },
+                new Framework.MauiX.DataModels.LanguageItem { Language = "zh-Hans", LanguageName = AdventureWorksLT2019.Resx.Resources.UIStrings.ChinesseSimplified },
+                new Framework.MauiX.DataModels.LanguageItem { Language = "es", LanguageName = AdventureWorksLT2019.Resx.Resources.UIStrings.Spanish },
+                new Framework.MauiX.DataModels.LanguageItem { Language = "ar", LanguageName = AdventureWorksLT2019.Resx.Resources.UIStrings.Arabic },
+            };
 
-            ChangeLanguageCommand = new Command<string>(
-                execute: (string arg) =>
+            {
+                if (Preferences.Default.ContainsKey(nameof(CurrentAppTheme)))
                 {
-                    CurrentLanguage = arg;
-                });
+                    var inPreferences = Preferences.Default.Get<string>(nameof(CurrentAppTheme), AppTheme.Light.ToString());
+                    m_CurrentAppTheme = AppThemeItems.First(t => t.AppTheme.ToString() == inPreferences);
+                }
+                else
+                {
+                    m_CurrentAppTheme = AppThemeItems.First();
+                }
+            }
+            {
+                if (Preferences.Default.ContainsKey(nameof(CurrentLanguage)))
+                {
+                    var inPreferences = Preferences.Default.Get<string>(nameof(CurrentLanguage), "en");
+                    m_CurrentLanguage = LanguageItems.First(t => t.Language == inPreferences);
+                }
+                else
+                {
+                    m_CurrentLanguage = LanguageItems.First();
+                }
+            }
         }
     }
 }

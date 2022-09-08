@@ -2,8 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Layouts;assembly=CommunityToolkit.Maui"
+             xmlns:l="clr-namespace:AdventureWorksLT2019.MauiXApp.Extensions"
              x:Class="AdventureWorksLT2019.MauiXApp.Pages.FirstTimeUserPage"
-             Title="FirstTimeUserPage">
+             Title="{l:Localize FirstTimeUser}">
     <Grid VerticalOptions="FillAndExpand">
         <ScrollView Margin="10">
             <mct:UniformItemsLayout x:Name="UniformItemsLayout_Default1" VerticalOptions="StartAndExpand">
@@ -15,8 +16,8 @@
             </mct:UniformItemsLayout>
         </ScrollView>
         <mct:UniformItemsLayout x:Name="UniformItemsLayout_Default" VerticalOptions="End">
-            <Button Text="Skip" Command="{Binding Path=SkipCommand}" />
-            <Button Text="Done" Command="{Binding Path=DoneCommand}"  />
+            <Button Text="{l:Localize Skip}" Command="{Binding Path=SkipCommand}" />
+            <Button Text="{l:Localize Done}" Command="{Binding Path=DoneCommand}"  />
         </mct:UniformItemsLayout>
     </Grid>
 </ContentPage>

@@ -133,6 +133,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to عربي.
+        /// </summary>
+        public static string Arabic {
+            get {
+                return ResourceManager.GetString("Arabic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (en)Are you sure you want to delete this?.
         /// </summary>
         public static string Are_you_sure_you_want_to_delete_this_ {
@@ -192,6 +201,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string CatalogDescription {
             get {
                 return ResourceManager.GetString("CatalogDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 汉语.
+        /// </summary>
+        public static string ChinesseSimplified {
+            get {
+                return ResourceManager.GetString("ChinesseSimplified", resourceCulture);
             }
         }
         
@@ -475,6 +493,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to English.
+        /// </summary>
+        public static string English {
+            get {
+                return ResourceManager.GetString("English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (en)Error Line.
         /// </summary>
         public static string ErrorLine {
@@ -664,6 +691,16 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to français
+        ///.
+        /// </summary>
+        public static string French {
+            get {
+                return ResourceManager.GetString("French", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (en)Hide Advanced Search.
         /// </summary>
         public static string HideAdvancedSearch {
@@ -696,6 +733,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string Index {
             get {
                 return ResourceManager.GetString("Index", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string Language {
+            get {
+                return ResourceManager.GetString("Language", resourceCulture);
             }
         }
         
@@ -1636,6 +1682,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to (en)Settings.
+        /// </summary>
+        public static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (en)Ship Date.
         /// </summary>
         public static string ShipDate {
@@ -1686,6 +1741,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string Size {
             get {
                 return ResourceManager.GetString("Size", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Española.
+        /// </summary>
+        public static string Spanish {
+            get {
+                return ResourceManager.GetString("Spanish", resourceCulture);
             }
         }
         
@@ -2136,6 +2200,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string The_length_of_UserName_should_be_1_to_128 {
             get {
                 return ResourceManager.GetString("The_length_of_UserName_should_be_1_to_128", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Theme.
+        /// </summary>
+        public static string Theme {
+            get {
+                return ResourceManager.GetString("Theme", resourceCulture);
             }
         }
         

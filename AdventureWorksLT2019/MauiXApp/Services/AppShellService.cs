@@ -19,28 +19,10 @@ namespace AdventureWorksLT2019.MauiXApp.Services
             // 1. Main Page
             {
                 var route = nameof(AdventureWorksLT2019.MauiXApp.Pages.MainPage);
-                var pageType = typeof(AdventureWorksLT2019.MauiXApp.Pages.MainPage);
-                var thePage = AppShell.Current.Items.Where(f => f.Route == route).FirstOrDefault();
-                if (thePage != null) AppShell.Current.Items.Remove(thePage);
-
-                var flyoutItem = new FlyoutItem()
-                {
-                    Title = AdventureWorksLT2019.Resx.Resources.UIStrings.Home,
-                    Route = route,
-                    FlyoutDisplayOptions = FlyoutDisplayOptions.AsMultipleItems,
-                    Items =
-                    {
-                        new ShellContent
-                        {
-                            Title = AdventureWorksLT2019.Resx.Resources.UIStrings.Home,
-                            ContentTemplate = new DataTemplate(pageType),
-                        },
-                    }
-                };
-                if (!AppShell.Current.Items.Contains(flyoutItem))
-                {
-                    AppShell.Current.Items.Add(flyoutItem);
-                }
+                AddFlyoutItem(
+                    route,
+                    typeof(AdventureWorksLT2019.MauiXApp.Pages.MainPage),
+                    AdventureWorksLT2019.Resx.Resources.UIStrings.Home);
 
                 if (!gotoFirstTimeUserPage)
                 {
@@ -51,28 +33,10 @@ namespace AdventureWorksLT2019.MauiXApp.Services
             // 2. FirstTimeUserPage
             {
                 var route = nameof(AdventureWorksLT2019.MauiXApp.Pages.FirstTimeUserPage);
-                var pageType = typeof(AdventureWorksLT2019.MauiXApp.Pages.FirstTimeUserPage);
-                var thePage = AppShell.Current.Items.Where(f => f.Route == route).FirstOrDefault();
-                if (thePage != null) AppShell.Current.Items.Remove(thePage);
-
-                var flyoutItem = new FlyoutItem()
-                {
-                    Title = AdventureWorksLT2019.Resx.Resources.UIStrings.FirstTimeUser,
-                    Route = route,
-                    FlyoutDisplayOptions = FlyoutDisplayOptions.AsMultipleItems,
-                    Items =
-                    {
-                        new ShellContent
-                        {
-                            Title = AdventureWorksLT2019.Resx.Resources.UIStrings.FirstTimeUser,
-                            ContentTemplate = new DataTemplate(pageType),
-                        },
-                    }
-                };
-                if (!AppShell.Current.Items.Contains(flyoutItem))
-                {
-                    AppShell.Current.Items.Add(flyoutItem);
-                }
+                AddFlyoutItem(
+                    route,
+                    typeof(AdventureWorksLT2019.MauiXApp.Pages.FirstTimeUserPage),
+                    AdventureWorksLT2019.Resx.Resources.UIStrings.FirstTimeUser);
 
                 if (gotoFirstTimeUserPage)
                 {
@@ -80,10 +44,17 @@ namespace AdventureWorksLT2019.MauiXApp.Services
                 }
             }
 
+            // SettingsPage
+            AddFlyoutItem(
+                nameof(AdventureWorksLT2019.MauiXApp.Pages.SettingsPage),
+                typeof(AdventureWorksLT2019.MauiXApp.Pages.SettingsPage),
+                AdventureWorksLT2019.Resx.Resources.UIStrings.Settings);
+
             var logoutMenuItem = new MenuItem
             {
                 Text = AdventureWorksLT2019.Resx.Resources.UIStrings.LogOut,
-                Command = new Command(async ()=> {
+                Command = new Command(async () =>
+                {
                     var succeeded = await _userService.LogOutAsync();
                     if (succeeded)
                     {
@@ -97,6 +68,31 @@ namespace AdventureWorksLT2019.MauiXApp.Services
             if (!string.IsNullOrEmpty(gotoRoute))
             {
                 await GoToAbsoluteAsync(gotoRoute);
+            }
+        }
+
+        private static void AddFlyoutItem(string route, Type pageType, string title)
+        {
+            var thePage = AppShell.Current.Items.Where(f => f.Route == route).FirstOrDefault();
+            if (thePage != null) AppShell.Current.Items.Remove(thePage);
+
+            var flyoutItem = new FlyoutItem()
+            {
+                Title = title,
+                Route = route,
+                FlyoutDisplayOptions = FlyoutDisplayOptions.AsSingleItem,
+                Items =
+                    {
+                        new ShellContent
+                        {
+                            Title = title,
+                            ContentTemplate = new DataTemplate(pageType),
+                        },
+                    }
+            };
+            if (!AppShell.Current.Items.Contains(flyoutItem))
+            {
+                AppShell.Current.Items.Add(flyoutItem);
             }
         }
 

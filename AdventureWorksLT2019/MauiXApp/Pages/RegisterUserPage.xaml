@@ -6,7 +6,7 @@
              xmlns:fmc="clr-namespace:Framework.MauiX.Converters;assembly=Framework.MauiX"
              x:Class="AdventureWorksLT2019.MauiXApp.Pages.RegisterUserPage"
              Shell.NavBarIsVisible="False"
-             Title="RegisterUserPage">
+             Title="{l:Localize Register}">
     <ContentPage.Resources>
         <mct:InvertedBoolConverter x:Key="InvertedBoolConverter" />
         <fmc:ValidationErrorConverter x:Key="ValidationErrorConverter" />

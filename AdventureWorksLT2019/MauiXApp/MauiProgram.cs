@@ -51,6 +51,7 @@ namespace AdventureWorksLT2019.MauiXApp
             builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.ViewModels.LogInVM>();
             builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.ViewModels.RegisterUserVM>();
             builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.ViewModels.FirstTimeUserVM>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.ViewModels.SettingsVM>();
 
             return builder.Build();
         }

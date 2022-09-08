@@ -2,12 +2,21 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Layouts;assembly=CommunityToolkit.Maui"
+             xmlns:l="clr-namespace:AdventureWorksLT2019.MauiXApp.Extensions"
              x:Class="AdventureWorksLT2019.MauiXApp.Pages.SettingsPage"
              Title="SettingsPage">
     <VerticalStackLayout>
-        <mct:UniformItemsLayout x:Name="UniformItemsLayout_Default" VerticalOptions="Start" MaxColumns="2">
-            <Button Text="Skip" Command="{Binding Path=SkipCommand}" />
-            <Button Text="Done" Command="{Binding Path=DoneCommand}"  />
+        <mct:UniformItemsLayout x:Name="UIL2C" VerticalOptions="Start" MaxColumns="2">
+            <Label
+                Text="{l:Localize Theme}" HorizontalTextAlignment="Start"
+                HorizontalOptions="Center" />
+            <Picker x:Name="themePicker" Title="{Binding Path=CurrentAppTheme.AppThemeName}" ItemsSource="{Binding Path=AppThemeItems}" ItemDisplayBinding="{Binding AppThemeName}" SelectedItem="{Binding Path=CurrentAppTheme}"/>
+
+            <Label
+                Text="{l:Localize Language}" HorizontalTextAlignment="Start"
+                HorizontalOptions="Center" />
+            <Picker x:Name="languagePicker" Title="{Binding Path=CurrentLanguage.LanguageName}" ItemsSource="{Binding Path=LanguageItems}" ItemDisplayBinding="{Binding LanguageName}" SelectedItem="{Binding Path=CurrentLanguage}"/>
+
         </mct:UniformItemsLayout>
     </VerticalStackLayout>
 </ContentPage>
