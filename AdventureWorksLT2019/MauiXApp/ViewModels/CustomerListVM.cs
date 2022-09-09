@@ -11,24 +11,25 @@ namespace AdventureWorksLT2019.MauiXApp.ViewModels
             _customerService = customerService;
         }
 
-        public ICommand SearchCommand => new Command<bool>(OnSearch);
+        public ICommand SearchCommand => new Command<string>(OnSearch);
 
-        private async void OnSearch(bool clearExisting)
+        private async void OnSearch(string textSearch)
         {
+            Criteria.TextSearch = textSearch;
             var response = await _customerService.Search(Criteria);
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                if (clearExisting)
+                //if (clearExisting)
                 {
                     Result = new System.Collections.ObjectModel.ObservableCollection<AdventureWorksLT2019.MauiXApp.DataModels.CustomerDataModel>(response.ResponseBody);
                 }
-                else
-                {
-                    foreach (var item in response.ResponseBody)
-                    {
-                        Result.Add(item);
-                    }
-                }
+                //else
+                //{
+                //    foreach (var item in response.ResponseBody)
+                //    {
+                //        Result.Add(item);
+                //    }
+                //}
             }
         }
     }

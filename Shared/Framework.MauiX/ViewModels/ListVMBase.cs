@@ -4,10 +4,10 @@ using System.Collections.ObjectModel;
 namespace Framework.MauiX.ViewModels
 {
     public class ListVMBase<TCriteria, TDataModel>: ObservableObject 
-        where TCriteria : class
+        where TCriteria : class, new()
         where TDataModel : class
     {
-        private TCriteria m_Criteria;
+        private TCriteria m_Criteria = new TCriteria();
         public TCriteria Criteria
         {
             get => m_Criteria;

@@ -4,8 +4,8 @@
              x:Class="AdventureWorksLT2019.MauiXApp.Pages.CustomerListPage"
              Title="CustomerListPage">
     <VerticalStackLayout>
-        <SearchBar Placeholder=".NET MAUI property"
-                   SearchCommand="{Binding SearchCommand}" SearchCommandParameter="true" />
+        <SearchBar x:Name="searchBar" Placeholder=".NET MAUI property"
+                   SearchCommand="{Binding Path=SearchCommand}" SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}" />
 
         <ScrollView VerticalOptions="FillAndExpand">
             <Label x:Name="resultsLabel" />
