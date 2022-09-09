@@ -9,10 +9,14 @@ namespace Framework.MauiX
     public interface IWebApiConfig
     {
         string WebApiRootUrl { get; }
-        bool UseToken { get; set; }
+
+        ///// <summary>
+        ///// UseToken will be a a parameter of each GET/POST/PUT... method in HttpClient
+        ///// </summary>
+        //bool UseToken { get; }
         /// <summary>
-        /// Should use TOKEN when on all web services calls, only exception is login.
+        /// Token is saved in Preferences: will read each time call web api Should use TOKEN when on all web services calls, only exception is login.
         /// </summary>
-        string Token { get; set; }
+        //string Token { get; }
     }
 }

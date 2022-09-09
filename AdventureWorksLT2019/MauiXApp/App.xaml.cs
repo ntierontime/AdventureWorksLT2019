@@ -4,13 +4,13 @@ namespace AdventureWorksLT2019.MauiXApp
 {
     public partial class App : Application
     {
-        private readonly AdventureWorksLT2019.MauiXApp.Services.AppLoadingService _appLoadingService;
+        private readonly AdventureWorksLT2019.MauiXApp.Services.Common.AppLoadingService _appLoadingService;
         public App()
         {
             InitializeComponent();
             //private AdventureWorksLT2019.MauiXApp.DataModels.AppStates _appStates;
             //_appStates = Framework.MauiX.Helpers.ServiceHelper.GetService<AdventureWorksLT2019.MauiXApp.DataModels.AppStates>();
-            _appLoadingService = Framework.MauiX.Helpers.ServiceHelper.GetService<AdventureWorksLT2019.MauiXApp.Services.AppLoadingService>();
+            _appLoadingService = Framework.MauiX.Helpers.ServiceHelper.GetService<AdventureWorksLT2019.MauiXApp.Services.Common.AppLoadingService>();
             MainPage = new AdventureWorksLT2019.MauiXApp.AppShell();
         }
 

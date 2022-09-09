@@ -13,24 +13,24 @@ namespace Framework.MauiX
     public abstract class WebApiClientBase
     {
         protected readonly string _rootPath;
-
-        public abstract string ControllerName { get; }
+        protected readonly string _controllerName;
 
         protected readonly HttpClient _client = null!;
 
-        public WebApiClientBase(string rootPath, bool useToken = false, string token = null!)
+        public WebApiClientBase(string rootPath, string controllerName)
         {
             this._rootPath = rootPath;
+            _controllerName = controllerName;
             _client = new HttpClient(new System.Net.Http.HttpClientHandler());
-            if(useToken)
-            {
-                _client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-            }
         }
 
-
-        public async Task<TResponse> Post<TRequest, TResponse>(string url, TRequest request)
+        public async Task<TResponse> Post<TRequest, TResponse>(string url, TRequest request, bool userToken = true)
         {
+            if (userToken)
+            {
+                _client.DefaultRequestHeaders.Add("Authorization", "Bearer " + GetToken());
+            }
+
             var jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
             jsonSerializerSettings.Converters.Add(new StringEnumConverter());
             string requestJSON = JsonConvert.SerializeObject(request, Formatting.Indented, jsonSerializerSettings);
@@ -57,6 +57,11 @@ namespace Framework.MauiX
             }
         }
 
+        public static string GetToken()
+        {
+            // TODO, review on how to keep TOKEN
+            return Preferences.Default.Get<string>("Token", string.Empty);
+        }
 
         public string GetHttpRequestUrl(string actionName, Dictionary<string, string> parameters)
         {
@@ -74,7 +79,7 @@ namespace Framework.MauiX
             }
             string parametersInString = String.Join("&", parametersInList);
 
-            return GetHttpRequestUrl(_rootPath, ControllerName, actionName, parametersInString);
+            return GetHttpRequestUrl(_rootPath, _controllerName, actionName, parametersInString);
         }
 
         public const string ListsApiControllerName = "ListsApi";
@@ -112,7 +117,7 @@ namespace Framework.MauiX
 
         public string GetHttpRequestUrl(string actionName)
         {
-            return GetHttpRequestUrl(_rootPath, ControllerName, actionName, null);
+            return GetHttpRequestUrl(_rootPath, _controllerName, actionName, null);
         }
 
         public static string GetHttpRequestUrl(string rootPath, string controllerName, string actionName, string parameters)
