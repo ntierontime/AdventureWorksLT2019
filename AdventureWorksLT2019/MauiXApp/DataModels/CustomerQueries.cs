@@ -8,9 +8,14 @@ namespace AdventureWorksLT2019.MauiXApp.DataModels
 
         // PredicateType:Equals
         public int? CustomerID { get; set; }
+
+        public string GetWebApiRoute()
+        {
+            return $"{CustomerID}";
+        }
     }
 
-    public class CustomerAdvancedQuery: BaseQuery
+    public class CustomerAdvancedQuery: Framework.MauiX.DataModels.ObservableBaseQuery
     {
         // will query all text columns in this table, ||
         public string TextSearch { get; set; }

@@ -4,7 +4,7 @@ namespace Framework.MauiX.Services
 {
     public interface IThemeService
     {
-        List<ThemeSelectorItem> GetThemeSelectorItems();
+        // List<ThemeSelectorItem> GetThemeSelectorItems();
         void SwitchTheme(AppTheme theme);
     }
 }

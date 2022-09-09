@@ -23,7 +23,7 @@ namespace Framework.MauiX.SQLite
     public abstract class SQLiteTableRepositoryBase<TItem, TAdvancedCriteria, TIIdentifier>
         : SQLiteTableRepositoryBase<TItem>
         where TItem : new()
-        where TAdvancedCriteria : Framework.Models.BaseQuery, new()
+        where TAdvancedCriteria : Framework.MauiX.DataModels.ObservableBaseQuery, new()
     {
         public SQLiteTableRepositoryBase(Framework.MauiX.SQLite.SQLiteService sqLiteService)
             : base(sqLiteService)

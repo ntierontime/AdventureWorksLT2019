@@ -43,6 +43,12 @@ namespace AdventureWorksLT2019.MauiXApp.Services.Common
                     gotoRoute = route;
                 }
             }
+            
+            // SettingsPage
+            AddFlyoutItem(
+                nameof(AdventureWorksLT2019.MauiXApp.Pages.CustomerListPage),
+                typeof(AdventureWorksLT2019.MauiXApp.Pages.CustomerListPage),
+                AdventureWorksLT2019.Resx.Resources.UIStrings.Customer);
 
             // SettingsPage
             AddFlyoutItem(

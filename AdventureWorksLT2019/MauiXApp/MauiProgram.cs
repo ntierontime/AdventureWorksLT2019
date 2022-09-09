@@ -28,9 +28,9 @@ namespace AdventureWorksLT2019.MauiXApp
             // 1.1. Framework.MauiX.Services
             builder.Services.AddSingleton<Framework.MauiX.Services.SecureStorageService>();
             builder.Services.AddScoped<Framework.MauiX.Services.IThemeService, AdventureWorksLT2019.MauiXApp.Services.Common.ThemeService>();
+            builder.Services.AddSingleton<Framework.MauiX.SQLite.SQLiteService>();
 
             // 1.2. AdventureWorksLT2019.MauiX.WebApiClients
-
             builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.WebApiClients.Common.WebApiConfig>();
             builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.WebApiClients.Common.AuthenticationApiClient>();
 
@@ -64,7 +64,7 @@ namespace AdventureWorksLT2019.MauiXApp
             builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Services.CustomerService>();
 
             // 2.4. View Models
-            // builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Services.CustomerService>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.ViewModels.CustomerListVM>();
 
             return builder.Build();
         }
