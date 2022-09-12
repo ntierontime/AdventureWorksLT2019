@@ -4,22 +4,22 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:AdventureWorksLT2019.MauiXApp.ViewModels"
-    xmlns:p="clr-namespace:AdventureWorksLT2019.MauiXApp.Pages.Common"
+    xmlns:v="clr-namespace:AdventureWorksLT2019.MauiXApp.Views"
     Shell.TabBarIsVisible="False">
 
     <ShellContent
         Title="Loading" FlyoutItemIsVisible="False" Shell.FlyoutBehavior="Disabled"
-        ContentTemplate="{DataTemplate p:AppLoadingPage}"
+        ContentTemplate="{DataTemplate v:AppLoadingPage}"
         Route="AppLoadingPage" />
     
     <ShellContent
         Title="Login Page" FlyoutItemIsVisible="False" Shell.FlyoutBehavior="Disabled"
-        ContentTemplate="{DataTemplate p:LogInPage}"
+        ContentTemplate="{DataTemplate v:LogInPage}"
         Route="LogInPage" />
 
     <ShellContent
         Title="Register User Page" FlyoutItemIsVisible="False" Shell.FlyoutBehavior="Disabled"
-        ContentTemplate="{DataTemplate p:RegisterUserPage}"
+        ContentTemplate="{DataTemplate v:RegisterUserPage}"
         Route="RegisterUserPage" />
     
 </Shell>

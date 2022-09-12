@@ -28,6 +28,8 @@ namespace Framework.MauiX
         {
             if (userToken)
             {
+                if (_client.DefaultRequestHeaders.Contains("Authorization"))
+                    _client.DefaultRequestHeaders.Remove("Authorization");
                 _client.DefaultRequestHeaders.Add("Authorization", "Bearer " + GetToken());
             }
 
@@ -63,6 +65,8 @@ namespace Framework.MauiX
         {
             if (userToken)
             {
+                if (_client.DefaultRequestHeaders.Contains("Authorization"))
+                    _client.DefaultRequestHeaders.Remove("Authorization");
                 _client.DefaultRequestHeaders.Add("Authorization", "Bearer " + GetToken());
             }
 
@@ -86,6 +90,8 @@ namespace Framework.MauiX
         {
             if (userToken)
             {
+                if (_client.DefaultRequestHeaders.Contains("Authorization"))
+                    _client.DefaultRequestHeaders.Remove("Authorization");
                 _client.DefaultRequestHeaders.Add("Authorization", "Bearer " + GetToken());
             }
 
@@ -107,6 +113,8 @@ namespace Framework.MauiX
         {
             if (userToken)
             {
+                if (_client.DefaultRequestHeaders.Contains("Authorization"))
+                    _client.DefaultRequestHeaders.Remove("Authorization");
                 _client.DefaultRequestHeaders.Add("Authorization", "Bearer " + GetToken());
             }
             var response = await _client.DeleteAsync(url);

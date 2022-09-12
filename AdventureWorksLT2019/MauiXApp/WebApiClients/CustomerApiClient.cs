@@ -4,7 +4,7 @@ namespace AdventureWorksLT2019.MauiXApp.WebApiClients
 {
     public partial class CustomerApiClient : Framework.MauiX.WebApiClientBase
     {
-        public CustomerApiClient(AdventureWorksLT2019.MauiXApp.WebApiClients.Common.WebApiConfig webApiConfig)
+        public CustomerApiClient(AdventureWorksLT2019.MauiXApp.Common.WebApiClients.WebApiConfig webApiConfig)
             : base(webApiConfig.WebApiRootUrl, "CustomerApi")
         {
         }
