@@ -9,6 +9,6 @@
         <VerticalStackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
             <Image Source="ntierontime.svg"  HorizontalOptions="Center"  VerticalOptions="Center" BackgroundColor="Transparent"/>
         </VerticalStackLayout>
-        <ProgressBar Progress="{Binding Path=Progress}" Scale="{Binding Path=Scale}" VerticalOptions="End" HorizontalOptions="CenterAndExpand" Margin="0,0,0,250"/>
+        <ProgressBar Progress="{Binding Path=Progress}" Scale="{Binding Path=Scale}" VerticalOptions="End" HorizontalOptions="CenterAndExpand" Margin="0,0,0,150"/>
     </Grid>
 </ContentPage>

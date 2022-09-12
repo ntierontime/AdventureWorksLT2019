@@ -25,8 +25,8 @@ namespace AdventureWorksLT2019.MauiXApp.DataModels
             get => m_CustomerID;
             set => SetProperty(ref m_CustomerID, value);
         }
-        protected System.Boolean m_NameStyle;
-        public System.Boolean NameStyle
+        protected System.Boolean? m_NameStyle;
+        public System.Boolean? NameStyle
         {
             get => m_NameStyle;
             set => SetProperty(ref m_NameStyle, value);

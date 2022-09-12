@@ -37,13 +37,14 @@
   <ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
-		<MauiSplashScreen Include="Resources\Images\ntierontime.svg">
-		  <Color>Gray</Color>
-		  <BaseSize>400,400</BaseSize>
-		</MauiSplashScreen>
+		<MauiIcon Include="Resources\Images\arrow_down_a_z_solid.svg" />
+		<MauiIcon Include="Resources\Images\arrow_up_z_a_solid.svg" />
+		<MauiIcon Include="Resources\Images\filter_solid.svg" />
+		<MauiIcon Include="Resources\Images\magnifying_glass_solid.svg" />
+		<MauiIcon Include="Resources\Images\xmark_solid.svg" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\ntierontime.svg" Color="Gray" BaseSize="400,400" />
+		<MauiSplashScreen Include="Resources\Splash\ntierontime_splash.svg" Color="Gray" BaseSize="400,400" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -55,13 +56,13 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <MauiImage Remove="Resources\Images\ntierontime.svg" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Remove="Resources\Images\ntierontime.svg" />
-	</ItemGroup>
+  <ItemGroup>
+    <MauiImage Remove="Resources\Images\arrow_down_a_z_solid.svg" />
+    <MauiImage Remove="Resources\Images\arrow_up_z_a_solid.svg" />
+    <MauiImage Remove="Resources\Images\filter_solid.svg" />
+    <MauiImage Remove="Resources\Images\magnifying_glass_solid.svg" />
+    <MauiImage Remove="Resources\Images\xmark_solid.svg" />
+  </ItemGroup>
 
 	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Maui" Version="1.2.0" />
@@ -69,6 +70,10 @@
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
 	  <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="6.0.5" />
 	  <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+	  <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.1" />
+	  <PackageReference Include="SQLitePCLRaw.core" Version="2.1.1" />
+	  <PackageReference Include="SQLitePCLRaw.provider.dynamic_cdecl" Version="2.1.1" />
+	  <PackageReference Include="SQLitePCLRaw.provider.e_sqlite3" Version="2.1.1" />
 	</ItemGroup>
 
 	<ItemGroup>

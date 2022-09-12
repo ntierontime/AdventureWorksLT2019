@@ -1,17 +1,18 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace Framework.MauiX.ViewModels
 {
-    public class ListVMBase<TCriteria, TDataModel>: ObservableObject 
-        where TCriteria : class, new()
+    public abstract class ListVMBase<TQuery, TDataModel>: ObservableObject 
+        where TQuery : class, new()
         where TDataModel : class
     {
-        private TCriteria m_Criteria = new TCriteria();
-        public TCriteria Criteria
+        private TQuery m_Query = new TQuery();
+        public TQuery Query
         {
-            get => m_Criteria;
-            set => SetProperty(ref m_Criteria, value);
+            get => m_Query;
+            set => SetProperty(ref m_Query, value);
         }
 
         protected ObservableCollection<TDataModel> m_Result = new ObservableCollection<TDataModel>();
@@ -34,6 +35,21 @@ namespace Framework.MauiX.ViewModels
             get => m_StatusMessage;
             set => SetProperty(ref m_StatusMessage, value);
         }
+
+        public ObservableCollection<Framework.MauiX.DataModels.ObservableQueryOrderBySetting> QueryOrderBySettings { get; protected set; } = new();
+        private Framework.MauiX.DataModels.ObservableQueryOrderBySetting m_CurrentQueryOrderBySetting;
+        public Framework.MauiX.DataModels.ObservableQueryOrderBySetting CurrentQueryOrderBySetting
+        {
+            get => m_CurrentQueryOrderBySetting;
+            set => SetProperty(ref m_CurrentQueryOrderBySetting, value);
+        }
+
+        public ICommand TextSearchCommand { get; protected set; }
+        public ICommand LaunchAdvancedSearchCommand { get; protected set; }
+        public ICommand ApplyAdvancedSearchCommand { get; protected set; }
+        public ICommand LoadMoreCommand { get; protected set; }
+
+        protected abstract Task DoSearch(bool clearExisting);
     }
 }
 

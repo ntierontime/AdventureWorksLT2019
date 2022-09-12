@@ -20,14 +20,19 @@ namespace Framework.MauiX.SQLite
         }
     }
 
-    public abstract class SQLiteTableRepositoryBase<TItem, TAdvancedCriteria, TIIdentifier>
+    public abstract class SQLiteTableRepositoryBase<TItem, TAdvancedQuery, TIIdentifier>
         : SQLiteTableRepositoryBase<TItem>
         where TItem : new()
-        where TAdvancedCriteria : Framework.MauiX.DataModels.ObservableBaseQuery, new()
+        where TAdvancedQuery : Framework.MauiX.DataModels.ObservableBaseQuery, new()
     {
         public SQLiteTableRepositoryBase(Framework.MauiX.SQLite.SQLiteService sqLiteService)
             : base(sqLiteService)
         {
+        }
+
+        protected virtual Expression<Func<TItem, bool>> GetItemExpression(TItem item)
+        {
+            throw new NotImplementedException("Please implement GetItemExpression in SqliteRepository");
         }
 
         protected virtual Expression<Func<TItem, bool>> GetItemExpression(TIIdentifier identifier)
@@ -37,20 +42,28 @@ namespace Framework.MauiX.SQLite
 
         public virtual async Task<TItem> Get(TIIdentifier identifier)
         {
-            return await Task.FromResult(new TItem());
+            return await GetItemFromTableAsync(GetItemExpression(identifier));
         }
 
-        //public virtual async Task Save(List<TItem> list)
-        //{
-        //    foreach (var item in list)
-        //    {
-        //        await Save(item);
-        //    }
-        //}
-
-        public virtual async Task Save(TIIdentifier identifier, TItem item)
+        public virtual async Task Save(IEnumerable<TItem> list)
         {
-            await Task.FromException(new NotImplementedException());
+            foreach (var item in list)
+            {
+                await Save(item);
+            }
+        }
+
+        public virtual async Task Save(TItem item)
+        {
+            await InsertUpdateItemInTableAsync(GetItemExpression(item), item);
+        }
+
+        public virtual async Task Delete(List<TIIdentifier> ids)
+        {
+            if (ids == null)
+                return;
+            foreach (var id in ids)
+                await DeleteItemFromTableAsync(GetItemExpression(id));
         }
 
         public virtual async Task Delete(TIIdentifier identifier)
@@ -58,32 +71,38 @@ namespace Framework.MauiX.SQLite
             await DeleteItemFromTableAsync(GetItemExpression(identifier));
         }
 
-        public async Task<int> Count(TAdvancedCriteria criteria)
+        public async Task<int> TotalCount(TAdvancedQuery query)
         {
-            var predicate = GetSQLiteTableQueryPredicate_Common(criteria);
+            var predicate = GetSQLiteTableQueryPredicateByAdvancedQuery(query);
             return await Task.FromResult(_database.Table<TItem>().Count(predicate));
         }
 
-        public async Task<List<TItem>> Load(
-            TAdvancedCriteria criteria
-            , Framework.Models.QueryOrderBySetting queryOrderBySetting
+        public virtual async Task<List<TItem>> Search(
+            TAdvancedQuery query, Framework.MauiX.DataModels.ObservableQueryOrderBySetting queryOrderBySetting)
+        {
+            return await Search(query, queryOrderBySetting.Direction, (Func<TableQuery<TItem>, Framework.Models.QueryOrderDirections, TableQuery<TItem>>)queryOrderBySetting.SortFunc);
+        }
+
+        protected async Task<List<TItem>> Search(
+            TAdvancedQuery query
+            , Framework.Models.QueryOrderDirections direction
             , Func<TableQuery<TItem>, Framework.Models.QueryOrderDirections, TableQuery<TItem>> sortFunction)
         {
-            var predicate = GetSQLiteTableQueryPredicate_Common(criteria);
+            var predicate = GetSQLiteTableQueryPredicateByAdvancedQuery(query);
 
             var tableQuery = _database.Table<TItem>().Where(predicate);
 
             if (sortFunction != null)
-                tableQuery = sortFunction(tableQuery, queryOrderBySetting.Direction);
+                tableQuery = sortFunction(tableQuery, direction);
 
-            tableQuery = tableQuery.Skip((criteria.PageIndex - 1) * criteria.PageSize).Take(criteria.PageSize);
+            tableQuery = tableQuery.Skip((query.PageIndex - 1) * query.PageSize).Take(query.PageSize);
 
             return
                 await Task.FromResult((from t in tableQuery
                                        select (TItem)t).ToList());
         }
 
-        protected abstract Expression<Func<TItem, bool>> GetSQLiteTableQueryPredicate_Common(TAdvancedCriteria criteria);
+        protected abstract Expression<Func<TItem, bool>> GetSQLiteTableQueryPredicateByAdvancedQuery(TAdvancedQuery criteria);
 
     }
 
@@ -113,12 +132,11 @@ namespace Framework.MauiX.SQLite
             }
         }
 
-        public Task<List<TItem>> GetAllItemsFromTableAsync()
+        public async Task<List<TItem>> GetAllItemsFromTableAsync()
         {
-            List<TItem> retItem = new List<TItem>();
             try
             {
-                retItem = _database.Table<TItem>().ToList();
+                return await Task.FromResult(_database.Table<TItem>().ToList());
             }
             //catch (MobileServiceInvalidOperationException msioe)
             //{
@@ -130,16 +148,13 @@ namespace Framework.MauiX.SQLite
                 Console.WriteLine(e);
                 throw;
             }
-
-            return Task.FromResult(retItem);
         }
 
-        public Task<TItem> GetItemFromTableAsync(Expression<Func<TItem, bool>> predicate)
+        protected async Task<TItem> GetItemFromTableAsync(Expression<Func<TItem, bool>> predicate)
         {
-            TItem retItem = new TItem();
             try
             {
-                retItem = _database.Table<TItem>().Where(predicate).FirstOrDefault();
+                return await Task.FromResult<TItem>(_database.Table<TItem>().Where(predicate).FirstOrDefault(default(TItem)));
             }
             //catch (MobileServiceInvalidOperationException msioe)
             //{
@@ -151,17 +166,13 @@ namespace Framework.MauiX.SQLite
                 Console.WriteLine(e);
                 throw;
             }
-
-            return Task.FromResult(retItem);
         }
 
-        public Task<List<TItem>> GetItemsFromTableAsync(Expression<Func<TItem, bool>> predicate)
+        protected async Task<List<TItem>> GetItemsFromTableAsync(Expression<Func<TItem, bool>> predicate)
         {
-            List<TItem> retItem = new List<TItem>();
-
             try
             {
-                retItem = _database.Table<TItem>().Where(predicate).ToList();
+                return await Task.FromResult(_database.Table<TItem>().Where(predicate).ToList());
             }
             //catch (MobileServiceInvalidOperationException msioe)
             //{
@@ -173,17 +184,13 @@ namespace Framework.MauiX.SQLite
                 Console.WriteLine(e);
                 throw;
             }
-
-            return Task.FromResult(retItem);
         }
 
-        public Task<int> GetTotalByPredicate(Expression<Func<TItem, bool>> predicate)
+        protected async Task<int> GetTotalByPredicate(Expression<Func<TItem, bool>> predicate)
         {
-            int retItem = 0;
-
             try
             {
-                retItem = _database.Table<TItem>().Where(predicate).ToList().Count;
+                return await Task.FromResult(_database.Table<TItem>().Where(predicate).ToList().Count);
             }
             //catch (MobileServiceInvalidOperationException msioe)
             //{
@@ -195,16 +202,13 @@ namespace Framework.MauiX.SQLite
                 Console.WriteLine(e);
                 throw;
             }
-
-            return Task.FromResult(retItem);
         }
 
-        public Task<List<TItem>> GetItemRangeFromTableAsync<U>(Expression<Func<TItem, bool>> predicate, int limit, Expression<Func<TItem, U>> orderExp, string orderType)
+        protected Task<List<TItem>> GetItemRangeFromTableAsync<U>(Expression<Func<TItem, bool>> predicate, int limit, Expression<Func<TItem, U>> orderExp, string orderType)
         {
-            List<TItem> retItem = new List<TItem>();
-
             try
             {
+                List<TItem> retItem = new();
                 if (string.IsNullOrEmpty(orderType) || orderType.ToLower() == "asc")
                 {
                     retItem = _database.Table<TItem>().Where(predicate).OrderBy(orderExp).Take(limit).ToList();
@@ -213,6 +217,7 @@ namespace Framework.MauiX.SQLite
                 {
                     retItem = _database.Table<TItem>().Where(predicate).OrderByDescending(orderExp).Take(limit).ToList();
                 }
+                return Task.FromResult(retItem);
             }
             //catch (MobileServiceInvalidOperationException msioe)
             //{
@@ -225,16 +230,16 @@ namespace Framework.MauiX.SQLite
                 throw;
             }
 
-            return Task.FromResult(retItem);
+
         }
 
-        public Task<List<TItem>> GetItemRangeFromTableAsync<U>(Expression<Func<TItem, bool>> predicate, int skip, int take, Expression<Func<TItem, U>> orderExp, Framework.Models.QueryOrderDirections orderDirections = Framework.Models.QueryOrderDirections.Ascending)
+        protected Task<List<TItem>> GetItemRangeFromTableAsync<U>(Expression<Func<TItem, bool>> predicate, int skip, int take, Expression<Func<TItem, U>> orderExp, Framework.Models.QueryOrderDirections orderDirections = Framework.Models.QueryOrderDirections.Ascending)
         {
-            TableQuery<TItem> tableQuery = _database.Table<TItem>().Where(predicate);
-            List<TItem> retItem = new List<TItem>();
-
             try
             {
+                TableQuery<TItem> tableQuery = _database.Table<TItem>().Where(predicate);
+                List<TItem> retItem = new();
+
                 if (orderDirections == Framework.Models.QueryOrderDirections.Ascending)
                 {
                     tableQuery = tableQuery.OrderBy(orderExp).Skip(skip).Take(take);
@@ -244,6 +249,8 @@ namespace Framework.MauiX.SQLite
                     tableQuery = tableQuery.OrderByDescending(orderExp).Skip(skip).Take(take);
                 }
                 retItem = tableQuery.ToList();
+
+                return Task.FromResult(retItem);
             }
             //catch (MobileServiceInvalidOperationException msioe)
             //{
@@ -256,10 +263,9 @@ namespace Framework.MauiX.SQLite
                 throw;
             }
 
-            return Task.FromResult(retItem);
         }
 
-        public Task<int> InsertItemIntoTableAsync(TItem item)
+        protected Task<int> InsertItemIntoTableAsync(TItem item)
         {
             try
             {
@@ -281,7 +287,7 @@ namespace Framework.MauiX.SQLite
 #pragma warning restore CS0162 // Unreachable code detected
         }
 
-        public Task<int> DeleteItemFromTableAsync(Expression<Func<TItem, bool>> predicate)
+        protected Task<int> DeleteItemFromTableAsync(Expression<Func<TItem, bool>> predicate)
         {
             var retItem = -1;
             try
@@ -303,7 +309,7 @@ namespace Framework.MauiX.SQLite
             return Task.FromResult(retItem);
         }
 
-        public Task<int> DeleteAllItemsFromTableAsync()
+        protected Task<int> DeleteAllItemsFromTableAsync()
         {
             try
             {
@@ -325,7 +331,7 @@ namespace Framework.MauiX.SQLite
 #pragma warning restore CS0162 // Unreachable code detected
         }
 
-        public Task<int> UpdateItemInTableAsync(TItem item)
+        protected Task<int> UpdateItemInTableAsync(TItem item)
         {
             try
             {
@@ -347,7 +353,7 @@ namespace Framework.MauiX.SQLite
 #pragma warning restore CS0162 // Unreachable code detected
         }
 
-        public Task<int> InsertUpdateItemInTableAsync(Expression<Func<TItem, bool>> predicate, TItem item)
+        protected Task<int> InsertUpdateItemInTableAsync(Expression<Func<TItem, bool>> predicate, TItem item)
         {
             var retItem = GetItemFromTableAsync(predicate).Result;
 
@@ -374,40 +380,39 @@ namespace Framework.MauiX.SQLite
             }
         }
 
-        public Task<List<TItem>> Execute(string sql, params object[] paramVals)
+        protected Task<List<TItem>> Execute(string sql, params object[] paramVals)
         {
-            List<TItem> ret = new List<TItem>();
-
             try
             {
+                List<TItem> ret = new();
                 SQLiteCommand cmd = _database.CreateCommand(sql, paramVals);
                 ret = cmd.ExecuteQuery<TItem>();
+
+                return Task.FromResult(ret);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
                 throw;
             }
-
-            return Task.FromResult(ret);
         }
 
-        public Task<int> ExecuteNonQuery(string sql, params object[] paramVals)
+        protected Task<int> ExecuteNonQuery(string sql, params object[] paramVals)
         {
-            int ret = 0;
-
             try
             {
+                int ret = 0;
+
                 SQLiteCommand cmd = _database.CreateCommand(sql, paramVals);
                 ret = cmd.ExecuteNonQuery();
+
+                return Task.FromResult(ret);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
                 throw;
             }
-
-            return Task.FromResult(ret);
         }
     }
 }
