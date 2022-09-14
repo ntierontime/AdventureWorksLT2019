@@ -1,32 +1,66 @@
+using CommunityToolkit.Maui.Views;
+using System.Windows.Input;
+
 namespace AdventureWorksLT2019.MauiXApp.Views.Customer;
 
 public partial class ListPage : ContentPage
 {
-	public ListPage()
+    private readonly AdventureWorksLT2019.MauiXApp.ViewModels.Customer.ListVM viewModel;
+
+    public ListPage()
 	{
-		InitializeComponent();
-
-
-/* Unmerged change from project 'AdventureWorksLT2019.MauiXApp (net6.0-ios)'
-Before:
-        BindingContext = Framework.MauiX.Helpers.ServiceHelper.GetService<AdventureWorksLT2019.MauiXApp.ViewModels.CustomerListVM>();
-After:
-        BindingContext = Framework.MauiX.Helpers.ServiceHelper.GetService<CustomerListVM>();
-*/
-        BindingContext = Framework.MauiX.Helpers.ServiceHelper.GetService<ViewModels.Customer.ListVM>();
+        viewModel = Framework.MauiX.Helpers.ServiceHelper.GetService<AdventureWorksLT2019.MauiXApp.ViewModels.Customer.ListVM>();
+        BindingContext = viewModel;
+        viewModel.AttachPopupLaunchCommands(
+            new Command(OnLaunchAdvancedSearchPopup),
+            new Command(OnLaunchListQuickActionsPopup),
+            new Command<Framework.Models.ViewItemTemplates>(OnLaunchItemPopupView)
+            );
+        InitializeComponent();
     }
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-
         await Task.Delay(1000);
+        await viewModel.DoSearch(true, true);
+    }
+    public async void OnLaunchAdvancedSearchPopup()
+    {
+        var popup = new AdventureWorksLT2019.MauiXApp.Views.Customer.AdvancedSearchPopup();
+        await this.ShowPopupAsync(popup);
+    }
+    public async void OnLaunchListQuickActionsPopup()
+    {
+        var popup = new AdventureWorksLT2019.MauiXApp.Views.Customer.ListQuickActionsPopup();
+        await this.ShowPopupAsync(popup);
+    }
+    public async void OnLaunchItemPopupView(Framework.Models.ViewItemTemplates itemView)
+    {
+        if (itemView == Framework.Models.ViewItemTemplates.Details)
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.Customer.DetailsPopup();
+            await this.ShowPopupAsync(popup);
+            return;
+        }
 
-/* Unmerged change from project 'AdventureWorksLT2019.MauiXApp (net6.0-ios)'
-Before:
-        (BindingContext as AdventureWorksLT2019.MauiXApp.ViewModels.CustomerListVM).ApplyAdvancedSearchCommand.Execute(null);
-After:
-        (BindingContext as CustomerListVM).ApplyAdvancedSearchCommand.Execute(null);
-*/
-        (BindingContext as ViewModels.Customer.ListVM).ApplyAdvancedSearchCommand.Execute(null);
+        viewModel.RegisterItemDataChangedMessage();
+        if (itemView == Framework.Models.ViewItemTemplates.Edit)
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.Customer.EditPopup();
+            await this.ShowPopupAsync(popup);
+            return;
+        }
+        if (itemView == Framework.Models.ViewItemTemplates.Create)
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.Customer.CreatePopup();
+            await this.ShowPopupAsync(popup);
+            return;
+        }
+        if (itemView == Framework.Models.ViewItemTemplates.Delete)
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.Customer.DeletePopup();
+            await this.ShowPopupAsync(popup);
+            return;
+        }
     }
 }

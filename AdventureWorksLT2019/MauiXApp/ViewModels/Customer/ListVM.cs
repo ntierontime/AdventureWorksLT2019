@@ -1,66 +1,21 @@
-﻿using SQLite;
-using System.Windows.Input;
-using Framework.MauiX.SQLite;
-using Framework.MauiX.DataModels;
-using Framework.Models;
-using AdventureWorksLT2019.MauiXApp.Services;
+﻿using CommunityToolkit.Mvvm.Messaging;
 
-namespace AdventureWorksLT2019.MauiXApp.ViewModels.Customer
+namespace AdventureWorksLT2019.MauiXApp.ViewModels.Customer;
+
+public class ListVM : Framework.MauiX.ViewModels.ListVMBase<AdventureWorksLT2019.MauiXApp.DataModels.CustomerAdvancedQuery, AdventureWorksLT2019.MauiXApp.DataModels.CustomerIdentifier, AdventureWorksLT2019.MauiXApp.DataModels.CustomerDataModel, AdventureWorksLT2019.MauiXApp.Services.CustomerService, AdventureWorksLT2019.MauiXApp.Messages.CustomerItemChangedMessage, AdventureWorksLT2019.MauiXApp.Messages.CustomerItemRequestMessage>
 {
-    public class ListVM : Framework.MauiX.ViewModels.ListVMBase<DataModels.CustomerAdvancedQuery, DataModels.CustomerDataModel>
+    public ListVM(AdventureWorksLT2019.MauiXApp.Services.CustomerService dataService)
+        : base(dataService)
     {
-        private readonly AdventureWorksLT2019.MauiXApp.Services.CustomerService _customerService;
+    }
 
-        public ListVM(AdventureWorksLT2019.MauiXApp.Services.CustomerService customerService)
-        {
-            _customerService = customerService;
+    public override void RegisterRequestSelectedItemMessage()
+    {
+        RegisterRequestSelectedItemMessage<AdventureWorksLT2019.MauiXApp.ViewModels.Customer.ListVM>(this);
+    }
 
-            QueryOrderBySettings = new System.Collections.ObjectModel.ObservableCollection<ObservableQueryOrderBySetting>(
-                CustomerService.GetQueryOrderBySettings());
-            CurrentQueryOrderBySetting = QueryOrderBySettings.First(t => t.IsSelected);
-
-            TextSearchCommand = new Command<string>(async (text) =>
-            {
-                if (Query.TextSearch != text)
-                {
-                    Query.TextSearch = text;
-                    await DoSearch(true); // clear existing
-                }
-            });
-
-            LaunchAdvancedSearchCommand = new Command(async () =>
-            {
-                await DoSearch(true); // clear existing
-            });
-
-            ApplyAdvancedSearchCommand = new Command(async () =>
-            {
-                await DoSearch(true); // clear existing
-            });
-
-            LoadMoreCommand = new Command(async () =>
-            {
-                await DoSearch(false); // keep existing
-            });
-        }
-
-        protected override async Task DoSearch(bool clearExisting)
-        {
-            var response = await _customerService.Search(Query, CurrentQueryOrderBySetting);
-            if (response.Status == System.Net.HttpStatusCode.OK)
-            {
-                if (clearExisting)
-                {
-                    Result = new System.Collections.ObjectModel.ObservableCollection<DataModels.CustomerDataModel>(response.ResponseBody);
-                }
-                else
-                {
-                    foreach (var item in response.ResponseBody)
-                    {
-                        Result.Add(item);
-                    }
-                }
-            }
-        }
+    public override void RegisterItemDataChangedMessage()
+    {
+        RegisterItemDataChangedMessage<AdventureWorksLT2019.MauiXApp.ViewModels.Customer.ListVM>(this);
     }
 }

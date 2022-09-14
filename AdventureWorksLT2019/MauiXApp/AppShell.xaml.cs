@@ -1,10 +1,9 @@
-﻿namespace AdventureWorksLT2019.MauiXApp
+﻿namespace AdventureWorksLT2019.MauiXApp;
+
+public partial class AppShell : Shell
 {
-    public partial class AppShell : Shell
+    public AppShell()
     {
-        public AppShell()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

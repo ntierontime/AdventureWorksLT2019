@@ -1,8 +1,7 @@
-﻿namespace Framework.MauiX.DataModels
+﻿namespace Framework.MauiX.DataModels;
+
+public class LanguageItem
 {
-    public class LanguageItem
-    {
-        public string Language { get; set; }
-        public string LanguageName { get; set; }
-    }
+    public string Language { get; set; }
+    public string LanguageName { get; set; }
 }

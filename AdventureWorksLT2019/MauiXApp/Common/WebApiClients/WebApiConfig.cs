@@ -1,39 +1,38 @@
-namespace AdventureWorksLT2019.MauiXApp.Common.WebApiClients
+namespace AdventureWorksLT2019.MauiXApp.Common.WebApiClients;
+
+public class WebApiConfig : Framework.MauiX.IWebApiConfig
 {
-    public class WebApiConfig : Framework.MauiX.IWebApiConfig
+    public string WebApiRootUrl
     {
-        public string WebApiRootUrl
+        get
         {
-            get
-            {
 #if DEBUG
 #if WINDOWS
-                return "https://localhost:16601/api/";
+            return "https://localhost:16601/api/";
 #elif ANDROID
-                return "https://10.0.2.2:16601/api/";
+            return "https://10.0.2.2:16601/api/";
 #elif IOS || MACCATALYST
-                return "https://localhost:16601/api/";
+            return "https://localhost:16601/api/";
 #else
-                return "https://localhost:16601/api/";
+            return "https://localhost:16601/api/";
 #endif
 #else
-        // TODO: use production url.
+    // TODO: use production url.
 #if WINDOWS
-                return "https://localhost:16601/api/";
+            return "https://localhost:16601/api/";
 #elif ANDROID
-                return "https://10.0.2.2:16601/api/";
+            return "https://10.0.2.2:16601/api/";
 #elif IOS || MACCATALYST
-                return "https://localhost:16601/api/";
+            return "https://localhost:16601/api/";
 #else
-                return "https://localhost:16601/api/";
+            return "https://localhost:16601/api/";
 #endif
 #endif
-            }
         }
-        //public bool UseToken { get => false; }
-        ///// <summary>
-        ///// Should use TOKEN when on all web services calls, only exception is login.
-        ///// </summary>
-        //public string Token { get => String.Empty; }
     }
+    //public bool UseToken { get => false; }
+    ///// <summary>
+    ///// Should use TOKEN when on all web services calls, only exception is login.
+    ///// </summary>
+    //public string Token { get => String.Empty; }
 }

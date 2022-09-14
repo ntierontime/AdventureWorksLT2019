@@ -3,23 +3,46 @@
     x:Class="AdventureWorksLT2019.MauiXApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:l="clr-namespace:AdventureWorksLT2019.MauiXApp.Extensions"
     xmlns:vm="clr-namespace:AdventureWorksLT2019.MauiXApp.ViewModels"
     xmlns:v="clr-namespace:AdventureWorksLT2019.MauiXApp.Views"
+    xmlns:cs="clr-namespace:AdventureWorksLT2019.MauiXApp.Common.Services"
+    
+    xmlns:vCustomner="clr-namespace:AdventureWorksLT2019.MauiXApp.Views.Customer"
     Shell.TabBarIsVisible="False">
 
     <ShellContent
-        Title="Loading" FlyoutItemIsVisible="False" Shell.FlyoutBehavior="Disabled"
+        Title="{l:Localize Loading}" FlyoutItemIsVisible="False" Shell.FlyoutBehavior="Disabled"
         ContentTemplate="{DataTemplate v:AppLoadingPage}"
-        Route="AppLoadingPage" />
+        Route="{x:Static cs:AppShellRoutes.AppLoadingPage}" />
     
     <ShellContent
-        Title="Login Page" FlyoutItemIsVisible="False" Shell.FlyoutBehavior="Disabled"
+        Title="{l:Localize LogIn}" FlyoutItemIsVisible="False" Shell.FlyoutBehavior="Disabled"
         ContentTemplate="{DataTemplate v:LogInPage}"
-        Route="LogInPage" />
+        Route="{x:Static cs:AppShellRoutes.LogInPage}" />
 
     <ShellContent
-        Title="Register User Page" FlyoutItemIsVisible="False" Shell.FlyoutBehavior="Disabled"
+        Title="{l:Localize RegisterANewUser}" FlyoutItemIsVisible="False" Shell.FlyoutBehavior="Disabled"
         ContentTemplate="{DataTemplate v:RegisterUserPage}"
-        Route="RegisterUserPage" />
-    
+        Route="{x:Static cs:AppShellRoutes.RegisterUserPage}" />
+
+    <ShellContent
+        Title="{l:Localize Create}" FlyoutItemIsVisible="False" Shell.FlyoutBehavior="Disabled"
+        ContentTemplate="{DataTemplate vCustomner:CreatePage}"
+        Route="{x:Static cs:AppShellRoutes.CustomerCreatePage}" />
+
+    <ShellContent
+        Title="{l:Localize Edit}" FlyoutItemIsVisible="False" Shell.FlyoutBehavior="Disabled"
+        ContentTemplate="{DataTemplate vCustomner:EditPage}"
+        Route="{x:Static cs:AppShellRoutes.CustomerEditPage}" />
+
+    <ShellContent
+        Title="{l:Localize Delete}" FlyoutItemIsVisible="False" Shell.FlyoutBehavior="Disabled"
+        ContentTemplate="{DataTemplate vCustomner:DeletePage}"
+        Route="{x:Static cs:AppShellRoutes.CustomerDeletePage}" />
+
+    <ShellContent
+        Title="{l:Localize Details}" FlyoutItemIsVisible="False" Shell.FlyoutBehavior="Disabled"
+        ContentTemplate="{DataTemplate vCustomner:DetailsPage}"
+        Route="{x:Static cs:AppShellRoutes.CustomerDetailsPage}" />
 </Shell>

@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdventureWorksLT2019.MauiXApp.Common.Services
+namespace AdventureWorksLT2019.MauiXApp.Common.Services;
+
+public enum CachedData
 {
-    public enum CachedData
-    {
-        Customer,
-    }
+    Customer,
 }

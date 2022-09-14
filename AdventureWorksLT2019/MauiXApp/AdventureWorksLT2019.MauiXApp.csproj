@@ -37,11 +37,6 @@
   <ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
-		<MauiIcon Include="Resources\Images\arrow_down_a_z_solid.svg" />
-		<MauiIcon Include="Resources\Images\arrow_up_z_a_solid.svg" />
-		<MauiIcon Include="Resources\Images\filter_solid.svg" />
-		<MauiIcon Include="Resources\Images\magnifying_glass_solid.svg" />
-		<MauiIcon Include="Resources\Images\xmark_solid.svg" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\ntierontime_splash.svg" Color="Gray" BaseSize="400,400" />
@@ -55,14 +50,6 @@
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
-
-  <ItemGroup>
-    <MauiImage Remove="Resources\Images\arrow_down_a_z_solid.svg" />
-    <MauiImage Remove="Resources\Images\arrow_up_z_a_solid.svg" />
-    <MauiImage Remove="Resources\Images\filter_solid.svg" />
-    <MauiImage Remove="Resources\Images\magnifying_glass_solid.svg" />
-    <MauiImage Remove="Resources\Images\xmark_solid.svg" />
-  </ItemGroup>
 
 	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Maui" Version="1.2.0" />
@@ -83,6 +70,27 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\Customer\DeletePage.xaml.cs">
+	    <DependentUpon>DeletePage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Customer\DeletePopup.xaml.cs">
+	    <DependentUpon>DeletePopup.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Customer\CreatePopup.xaml.cs">
+	    <DependentUpon>CreatePopup.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Customer\CreatePage.xaml.cs">
+	    <DependentUpon>CreatePage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Customer\DetailsPage.xaml.cs">
+	    <DependentUpon>DetailsPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Customer\EditPopup.xaml.cs">
+	    <DependentUpon>EditPopup.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Customer\EditPage.xaml.cs">
+	    <DependentUpon>EditPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\Customer\ListPage.xaml.cs">
 	    <DependentUpon>ListPage.xaml</DependentUpon>
 	  </Compile>
@@ -90,6 +98,30 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="Views\AppLoadingPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Customer\DeletePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Customer\DeletePopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Customer\CreatePopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Customer\CreatePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Customer\DetailsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Customer\EditPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Customer\DetailsPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Customer\EditPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\FirstTimeUserPage.xaml">

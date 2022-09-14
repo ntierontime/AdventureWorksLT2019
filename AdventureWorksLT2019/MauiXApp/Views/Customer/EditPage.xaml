@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:fmif="clr-namespace:Framework.MauiX.Icons;assembly=Framework.MauiX"
+             xmlns:l="clr-namespace:AdventureWorksLT2019.MauiXApp.Extensions"
+             x:Class="AdventureWorksLT2019.MauiXApp.Views.Customer.EditPage"
+             Title="CustomerListPage">
+    <VerticalStackLayout>
+        <Label 
+            Text="Edit Welcome to .NET MAUI!"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Button
+			Command="{Binding EditConfirmCommand}"
+			Style="{StaticResource ConfirmButton}"
+			Text="Apply" />
+        <Button
+			Command="{Binding EditCancelCommand}"
+			Style="{StaticResource ConfirmButton}"
+			Text="Cancel" />
+    </VerticalStackLayout>
+</ContentPage>

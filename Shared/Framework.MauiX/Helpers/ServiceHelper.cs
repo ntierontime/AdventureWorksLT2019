@@ -1,18 +1,17 @@
-﻿namespace Framework.MauiX.Helpers
-{
-    public static class ServiceHelper
-    {
-        public static TService GetService<TService>() => Current.GetService<TService>();
+﻿namespace Framework.MauiX.Helpers;
 
-        public static IServiceProvider Current =>
+public static class ServiceHelper
+{
+    public static TService GetService<TService>() => Current.GetService<TService>();
+
+    public static IServiceProvider Current =>
 #if WINDOWS
-            MauiWinUIApplication.Current.Services;
+        MauiWinUIApplication.Current.Services;
 #elif ANDROID
-            MauiApplication.Current.Services;
+        MauiApplication.Current.Services;
 #elif IOS || MACCATALYST
-            MauiUIApplicationDelegate.Current.Services;
+        MauiUIApplicationDelegate.Current.Services;
 #else
-            null;
+        null;
 #endif
-    }
 }

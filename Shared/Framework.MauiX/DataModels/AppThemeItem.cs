@@ -1,8 +1,7 @@
-﻿namespace Framework.MauiX.DataModels
+﻿namespace Framework.MauiX.DataModels;
+
+public class AppThemeItem
 {
-    public class AppThemeItem
-    {
-        public AppTheme AppTheme { get; set; }
-        public string AppThemeName { get; set; }
-    }
+    public AppTheme AppTheme { get; set; }
+    public string AppThemeName { get; set; }
 }

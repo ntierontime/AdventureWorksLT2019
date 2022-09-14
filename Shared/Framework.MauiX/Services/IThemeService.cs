@@ -1,10 +1,9 @@
 ﻿using Framework.MauiX.DataModels;
 
-namespace Framework.MauiX.Services
+namespace Framework.MauiX.Services;
+
+public interface IThemeService
 {
-    public interface IThemeService
-    {
-        // List<ThemeSelectorItem> GetThemeSelectorItems();
-        void SwitchTheme(AppTheme theme);
-    }
+    // List<ThemeSelectorItem> GetThemeSelectorItems();
+    void SwitchTheme(AppTheme theme);
 }
