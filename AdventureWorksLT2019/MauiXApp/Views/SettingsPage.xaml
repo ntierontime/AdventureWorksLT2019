@@ -16,7 +16,6 @@
                 Text="{l:Localize Language}" HorizontalTextAlignment="Start"
                 HorizontalOptions="Center" />
             <Picker x:Name="languagePicker" Title="{Binding Path=CurrentLanguage.LanguageName}" ItemsSource="{Binding Path=LanguageItems}" ItemDisplayBinding="{Binding LanguageName}" SelectedItem="{Binding Path=CurrentLanguage}"/>
-
         </mct:UniformItemsLayout>
     </VerticalStackLayout>
 </ContentPage>

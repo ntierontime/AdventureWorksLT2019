@@ -12,7 +12,7 @@
             HorizontalOptions="Center" />
         <Button
 			Command="{Binding ListQuickActionsCancelCommand}"
-			Style="{StaticResource ConfirmButton}"
+			
 			Text="OKAY" />
     </VerticalStackLayout>
 </mct:Popup>

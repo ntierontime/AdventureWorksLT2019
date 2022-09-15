@@ -18,7 +18,18 @@ public class CustomerIdentifier
 public class CustomerAdvancedQuery: Framework.MauiX.DataModels.ObservableBaseQuery
 {
     // PredicateType:Equals
-    public bool? NameStyle { get; set; }
+    //private Framework.Models.BooleanSearchOptions m_NameStyle;
+    //public Framework.Models.BooleanSearchOptions NameStyle
+    //{
+    //    get => m_NameStyle;
+    //    set => SetProperty(ref m_NameStyle, value);
+    //}
+    private string m_NameStyle = "All";
+    public string NameStyle
+    {
+        get => m_NameStyle;
+        set => SetProperty(ref m_NameStyle, value);
+    }
 
     public string ModifiedDateRange { get; set; }
     // PredicateType:Range - Lower Bound
@@ -28,48 +39,5 @@ public class CustomerAdvancedQuery: Framework.MauiX.DataModels.ObservableBaseQue
     [DataType(DataType.DateTime)]
     public System.DateTime? ModifiedDateRangeUpper { get; set; }
 
-    // PredicateType:Contains
-    public string Title { get; set; }
-    public Framework.Models.TextSearchTypes TitleSearchType { get; set; } = Framework.Models.TextSearchTypes.Contains;
-
-    // PredicateType:Contains
-    public string FirstName { get; set; }
-    public Framework.Models.TextSearchTypes FirstNameSearchType { get; set; } = Framework.Models.TextSearchTypes.Contains;
-
-    // PredicateType:Contains
-    public string MiddleName { get; set; }
-    public Framework.Models.TextSearchTypes MiddleNameSearchType { get; set; } = Framework.Models.TextSearchTypes.Contains;
-
-    // PredicateType:Contains
-    public string LastName { get; set; }
-    public Framework.Models.TextSearchTypes LastNameSearchType { get; set; } = Framework.Models.TextSearchTypes.Contains;
-
-    // PredicateType:Contains
-    public string Suffix { get; set; }
-    public Framework.Models.TextSearchTypes SuffixSearchType { get; set; } = Framework.Models.TextSearchTypes.Contains;
-
-    // PredicateType:Contains
-    public string CompanyName { get; set; }
-    public Framework.Models.TextSearchTypes CompanyNameSearchType { get; set; } = Framework.Models.TextSearchTypes.Contains;
-
-    // PredicateType:Contains
-    public string SalesPerson { get; set; }
-    public Framework.Models.TextSearchTypes SalesPersonSearchType { get; set; } = Framework.Models.TextSearchTypes.Contains;
-
-    // PredicateType:Contains
-    public string EmailAddress { get; set; }
-    public Framework.Models.TextSearchTypes EmailAddressSearchType { get; set; } = Framework.Models.TextSearchTypes.Contains;
-
-    // PredicateType:Contains
-    public string Phone { get; set; }
-    public Framework.Models.TextSearchTypes PhoneSearchType { get; set; } = Framework.Models.TextSearchTypes.Contains;
-
-    // PredicateType:Contains
-    public string PasswordHash { get; set; }
-    public Framework.Models.TextSearchTypes PasswordHashSearchType { get; set; } = Framework.Models.TextSearchTypes.Contains;
-
-    // PredicateType:Contains
-    public string PasswordSalt { get; set; }
-    public Framework.Models.TextSearchTypes PasswordSaltSearchType { get; set; } = Framework.Models.TextSearchTypes.Contains;
 }
 

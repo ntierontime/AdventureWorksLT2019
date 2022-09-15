@@ -21,23 +21,15 @@
 
             <Image>
                 <Image.Source>
-                    <FontImageSource Color="Gray" Glyph="{x:Static fmif:MaterialIcons.Search}" FontFamily="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}"/>
+                    <FontImageSource Glyph="{x:Static fmif:MaterialIcons.Search}" FontFamily="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}"/>
                 </Image.Source>
             </Image>
 
-            <Border Grid.Column="1" StrokeThickness="1" Padding="10,0,5,0" Margin="0" HeightRequest="40"
-                StrokeShape="RoundRectangle 40,0,0,40"
-                Background="Transparent"
-                HorizontalOptions="FillAndExpand" 
-                VerticalOptions="End">
-                <Entry x:Name="SearchBarEntry" Margin="0" Placeholder="{l:Localize Customer}" HorizontalOptions="FillAndExpand" VerticalOptions="End" ClearButtonVisibility="WhileEditing" 
-                       ReturnType="Done" ReturnCommand="{Binding Path=TextSearchCommand}" ReturnCommandParameter="{Binding Source={x:Reference SearchBarEntry},Path=Text}"></Entry>
+            <Border Grid.Column="1" Style="{StaticResource TextSearchBorderStyle}">
+                <Entry x:Name="TextSearchEntry" Placeholder="{l:Localize Customer}" Style="{StaticResource TextSearchEntryStyle}" 
+                       ReturnCommand="{Binding Path=TextSearchCommand}" ReturnCommandParameter="{Binding Source={x:Reference TextSearchEntry},Path=Text}"></Entry>
             </Border>
-            <Button Grid.Column="2" Text="{x:Static fmif:MaterialIcons.FilterAlt}" Padding="5"
-                    FontFamily="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}"
-                    FontSize="Large"
-                    VerticalOptions="CenterAndExpand"
-                    HorizontalOptions="CenterAndExpand"
+            <Button Grid.Column="2" Style="{StaticResource AdvancedSearchButtonStyle}"
                     Command="{Binding AdvancedSearchLaunchCommand}"
                     />
         </Grid>
@@ -99,26 +91,20 @@
                                     <ColumnDefinition Width="4*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <mct:AvatarView
+                                <mct:AvatarView 
+                                    Style="{StaticResource AvatarView60Style}"
                                     Text="{Binding Avatar__}"
-                                    HeightRequest="60" WidthRequest="60"
-                                    TextColor="Blue" BackgroundColor="Yellow"
-                                    CornerRadius="30" BorderColor="Red" 
-                                    />
-                                <Label Grid.Column="1" Padding="20,0,10,0"
-                                    Text="{Binding FirstName}"
-                                    FontSize="Title"
-                                    FontAttributes="Bold" 
-                                    HorizontalOptions="Start"
-                                    VerticalOptions="Start"/>
+                                    TextColor="Blue" 
+                                    BackgroundColor="Yellow"
+                                    BorderColor="Red" />
                                 <Label 
-                                    Grid.Column="1" Padding="20,0,10,0"
-                                    Text="{Binding LastName}"
-                                    FontSize="Subtitle"
-                                    FontAttributes="Italic"
-                                    HorizontalOptions="Start"
-                                    VerticalOptions="End"
-                            />
+                                    Grid.Column="1" 
+                                    Style="{StaticResource TitleLabelStyle}"
+                                    Text="{Binding FirstName}" />
+                                <Label 
+                                    Grid.Column="1" 
+                                    Style="{StaticResource SubTitleLabelStyle}"
+                                    Text="{Binding LastName}" />
                             </Grid>
                         </SwipeView>
                     </DataTemplate>
@@ -126,19 +112,11 @@
             </CollectionView>
         </RefreshView>
         <VerticalStackLayout  HorizontalOptions="End" VerticalOptions="End" Margin="0,0,20,20">
-            <Button Text="{x:Static fmif:MaterialIcons.Add}" Padding="5"
-                    FontFamily="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}"
-                    FontSize="Large"
-                    VerticalOptions="CenterAndExpand"
-                    HorizontalOptions="CenterAndExpand"
+            <Button Style="{StaticResource AddButtonStyle}"
                     Command="{Binding AdvancedSearchLaunchCommand}"
                     CommandParameter="{x:Static fm:ViewItemTemplates.Create}"
                     />
-            <Button Text="{x:Static fmif:MaterialIcons.Add}" Padding="5"
-                    FontFamily="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}"
-                    FontSize="Large"
-                    VerticalOptions="CenterAndExpand"
-                    HorizontalOptions="CenterAndExpand"
+            <Button Style="{StaticResource AddButtonStyle}"
                     Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
                     CommandParameter="{x:Static cs:AppShellRoutes.CustomerCreatePage}"
                     />

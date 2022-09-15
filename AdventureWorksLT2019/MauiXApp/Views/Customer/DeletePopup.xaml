@@ -12,11 +12,11 @@
             HorizontalOptions="Center" />
         <Button
 			Command="{Binding DeleteConfirmCommand}"
-			Style="{StaticResource ConfirmButton}"
+			
 			Text="Apply" />
         <Button
 			Command="{Binding DeleteCancelCommand}"
-			Style="{StaticResource ConfirmButton}"
+			
 			Text="Cancel" />
     </VerticalStackLayout>
 </mct:Popup>

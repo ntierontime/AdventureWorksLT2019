@@ -19,6 +19,13 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         get => m_Query;
         set => SetProperty(ref m_Query, value);
     }
+    
+    private bool m_IsBusy;
+    public bool IsBusy
+    {
+        get => m_IsBusy;
+        set => SetProperty(ref m_IsBusy, value);
+    }
 
     private bool m_IsRefreshing;
     public bool IsRefreshing
@@ -112,9 +119,16 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         RegisterRequestSelectedItemMessage();
     }
 
-    public virtual async Task DoSearch(bool isLoadMore, bool showRefreshing)
+    public virtual async Task DoSearch(bool isLoadMore, bool showRefreshing, bool loadIfAnyResult = true)
     {
-        if(showRefreshing)
+        // for Page.OnAppearing()
+        if (IsBusy || !loadIfAnyResult && Result.Count > 0)
+        {
+            return;
+        }
+
+        IsBusy = true;
+        if (showRefreshing)
             IsRefreshing = true;
         var response = await _dataService.Search(Query, CurrentQueryOrderBySetting);
         if (response.Status == System.Net.HttpStatusCode.OK)
@@ -138,6 +152,7 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         }
         if (showRefreshing)
             IsRefreshing = false;
+        IsBusy = false;
     }
 
     public void AttachPopupLaunchCommands(

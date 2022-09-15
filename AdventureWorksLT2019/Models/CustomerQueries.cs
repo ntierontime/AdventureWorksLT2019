@@ -18,7 +18,9 @@ namespace AdventureWorksLT2019.Models
         public TextSearchTypes TextSearchType { get; set; } = TextSearchTypes.Contains;
 
         // PredicateType:Equals
-        public bool? NameStyle { get; set; }
+        //public bool? NameStyle { get; set; }
+        public Framework.Models.BooleanSearchOptions NameStyle { get; set; } = Framework.Models.BooleanSearchOptions.All;
+
 
         public string? ModifiedDateRange { get; set; }
         // PredicateType:Range - Lower Bound

@@ -76,8 +76,8 @@ namespace AdventureWorksLT2019.MauiXApp
             builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Services.CustomerService>();
 
             // 3.4. View Models
-            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.ViewModels.Customer.ListVM>();
-            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.ViewModels.Customer.ItemVM>();
+            builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.Customer.ListVM>();
+            builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.Customer.ItemVM>();
 
             return builder.Build();
         }

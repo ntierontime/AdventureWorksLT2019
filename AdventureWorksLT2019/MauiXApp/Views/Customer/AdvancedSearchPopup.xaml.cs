@@ -11,12 +11,19 @@ public partial class AdvancedSearchPopup : CommunityToolkit.Maui.Views.Popup
         BindingContext = viewModel;
         viewModel.AttachAdvancedSearchPopupCommands(new Command(OnCancelled));
         InitializeComponent();
-        IDeviceDisplay deviceDisplay = Framework.MauiX.Helpers.ServiceHelper.GetService<IDeviceDisplay>();
-        Size = new(deviceDisplay.MainDisplayInfo.Width / deviceDisplay.MainDisplayInfo.Density, deviceDisplay.MainDisplayInfo.Height / deviceDisplay.MainDisplayInfo.Density);
+        // WinUI Size is not correct.
+        //IDeviceDisplay deviceDisplay = Framework.MauiX.Helpers.ServiceHelper.GetService<IDeviceDisplay>();
+        //Size = new(0.9 * deviceDisplay.MainDisplayInfo.Width / deviceDisplay.MainDisplayInfo.Density, 0.9 * deviceDisplay.MainDisplayInfo.Height / deviceDisplay.MainDisplayInfo.Density);
     }
 
     protected void OnCancelled()
     {
         Close();
+    }
+
+    void OnFruitsRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+    {
+        //RadioButton button = sender as RadioButton;
+        //colorLabel.Text = $"You have chosen: {button.Content}";
     }
 }

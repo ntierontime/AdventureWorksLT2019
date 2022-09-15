@@ -37,7 +37,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.Title!, "%" + query.TextSearch) || EF.Functions.Like(t.FirstName!, "%" + query.TextSearch) || EF.Functions.Like(t.MiddleName!, "%" + query.TextSearch) || EF.Functions.Like(t.LastName!, "%" + query.TextSearch) || EF.Functions.Like(t.Suffix!, "%" + query.TextSearch) || EF.Functions.Like(t.CompanyName!, "%" + query.TextSearch) || EF.Functions.Like(t.SalesPerson!, "%" + query.TextSearch) || EF.Functions.Like(t.EmailAddress!, "%" + query.TextSearch) || EF.Functions.Like(t.Phone!, "%" + query.TextSearch) || EF.Functions.Like(t.PasswordHash!, "%" + query.TextSearch) || EF.Functions.Like(t.PasswordSalt!, "%" + query.TextSearch)))
                     &&
 
-                    (!query.NameStyle.HasValue || t.NameStyle == query.NameStyle)
+                    (query.NameStyle == Framework.Models.BooleanSearchOptions.All || query.NameStyle == Framework.Models.BooleanSearchOptions.True && t.NameStyle || query.NameStyle == Framework.Models.BooleanSearchOptions.False && !t.NameStyle)
                     &&
 
                     (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))
@@ -626,7 +626,7 @@ private IQueryable<CustomerDataModel> GetIQueryableAsBulkUpdateResponse(
                         query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.Title!, "%" + query.TextSearch) || EF.Functions.Like(t.FirstName!, "%" + query.TextSearch) || EF.Functions.Like(t.MiddleName!, "%" + query.TextSearch) || EF.Functions.Like(t.LastName!, "%" + query.TextSearch) || EF.Functions.Like(t.Suffix!, "%" + query.TextSearch) || EF.Functions.Like(t.CompanyName!, "%" + query.TextSearch) || EF.Functions.Like(t.SalesPerson!, "%" + query.TextSearch) || EF.Functions.Like(t.EmailAddress!, "%" + query.TextSearch) || EF.Functions.Like(t.Phone!, "%" + query.TextSearch) || EF.Functions.Like(t.PasswordHash!, "%" + query.TextSearch) || EF.Functions.Like(t.PasswordSalt!, "%" + query.TextSearch)))
                     &&
 
-                    (!query.NameStyle.HasValue || t.NameStyle == query.NameStyle)
+                    (query.NameStyle == Framework.Models.BooleanSearchOptions.All || query.NameStyle == Framework.Models.BooleanSearchOptions.True && t.NameStyle || query.NameStyle == Framework.Models.BooleanSearchOptions.False && !t.NameStyle)
                     &&
 
                     (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))

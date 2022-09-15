@@ -13,11 +13,11 @@
             HorizontalOptions="Center" />
         <Button
 			Command="{Binding CreateConfirmCommand}"
-			Style="{StaticResource ConfirmButton}"
+			
 			Text="Apply" />
         <Button
 			Command="{Binding CreateCancelCommand}"
-			Style="{StaticResource ConfirmButton}"
+			
 			Text="Cancel" />
     </VerticalStackLayout>
 </ContentPage>
