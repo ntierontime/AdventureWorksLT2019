@@ -15,15 +15,8 @@ public class CustomerIdentifier
     }
 }
 
-public class CustomerAdvancedQuery: Framework.MauiX.DataModels.ObservableBaseQuery
+public class CustomerAdvancedQuery : Framework.MauiX.DataModels.ObservableBaseQuery, Framework.Models.IClone<CustomerAdvancedQuery>
 {
-    // PredicateType:Equals
-    //private Framework.Models.BooleanSearchOptions m_NameStyle;
-    //public Framework.Models.BooleanSearchOptions NameStyle
-    //{
-    //    get => m_NameStyle;
-    //    set => SetProperty(ref m_NameStyle, value);
-    //}
     private string m_NameStyle = "All";
     public string NameStyle
     {
@@ -31,13 +24,36 @@ public class CustomerAdvancedQuery: Framework.MauiX.DataModels.ObservableBaseQue
         set => SetProperty(ref m_NameStyle, value);
     }
 
-    public string ModifiedDateRange { get; set; }
-    // PredicateType:Range - Lower Bound
-    [DataType(DataType.DateTime)]
-    public System.DateTime? ModifiedDateRangeLower { get; set; }
-    // PredicateType:Range - Upper Bound
-    [DataType(DataType.DateTime)]
-    public System.DateTime? ModifiedDateRangeUpper { get; set; }
+    private string m_ModifiedDateRange = Framework.Models.PreDefinedDateTimeRanges.AllTime.ToString();
+    public string ModifiedDateRange
+    {
+        get => m_ModifiedDateRange;
+        set => SetProperty(ref m_ModifiedDateRange, value);
+    }
 
+    private DateTime? m_ModifiedDateRangeLower;
+    public DateTime? ModifiedDateRangeLower
+    {
+        get => m_ModifiedDateRangeLower;
+        set => SetProperty(ref m_ModifiedDateRangeLower, value);
+    }
+
+    private DateTime? m_ModifiedDateRangeUpper;
+    public DateTime? ModifiedDateRangeUpper
+    {
+        get => m_ModifiedDateRangeUpper;
+        set => SetProperty(ref m_ModifiedDateRangeUpper, value);
+    }
+
+    public AdventureWorksLT2019.MauiXApp.DataModels.CustomerAdvancedQuery Clone()
+    {
+        return new AdventureWorksLT2019.MauiXApp.DataModels.CustomerAdvancedQuery
+        {
+            m_NameStyle = m_NameStyle,
+            m_ModifiedDateRange = m_ModifiedDateRange,
+            m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
+            m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper
+        };
+    }
 }
 

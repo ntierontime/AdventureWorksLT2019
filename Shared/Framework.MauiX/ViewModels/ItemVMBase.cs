@@ -1,13 +1,14 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using Framework.Models;
 using System.Windows.Input;
 
 namespace Framework.MauiX.ViewModels;
 
 public abstract class ItemVMBase<TIdentifier, TDataModel, TDataService, TDataChangedMessage, TItemRequestMessage>: ObservableObject
     where TIdentifier : class
-    where TDataModel : class
+    where TDataModel : class, Framework.Models.IClone<TDataModel>
     where TDataService : class, Framework.MauiX.Services.IDataServiceBase<TIdentifier, TDataModel>
     where TDataChangedMessage : Framework.MauiX.ComponentModels.ValueChangedMessageExt<TDataModel>
     where TItemRequestMessage : RequestMessage<TDataModel>, new()
@@ -71,7 +72,8 @@ public abstract class ItemVMBase<TIdentifier, TDataModel, TDataService, TDataCha
         }
         else
         {
-            Item = WeakReferenceMessenger.Default.Send<TItemRequestMessage>();
+            var messagge = WeakReferenceMessenger.Default.Send<TItemRequestMessage>();
+            Item = messagge.Response.Clone();
         }
     }
     
@@ -90,7 +92,7 @@ public abstract class ItemVMBase<TIdentifier, TDataModel, TDataService, TDataCha
         CreateCancelCommand = new Command(() =>
         {
             SendDataChangedMessage(Framework.Models.ViewItemTemplates.Details);
-            cancelCommand.Execute(null);
+            cancelCommand.Execute(commandParameter);
             CreateConfirmCommand = null;
             CreateCancelCommand = null;
         });
@@ -102,14 +104,14 @@ public abstract class ItemVMBase<TIdentifier, TDataModel, TDataService, TDataCha
         {
             await _dataService.Update(Identifier, Item);
             SendDataChangedMessage(Framework.Models.ViewItemTemplates.Edit);
-            cancelCommand.Execute(null);
+            cancelCommand.Execute(commandParameter);
             EditConfirmCommand = null;
             EditCancelCommand = null;
         });
         EditCancelCommand = new Command(() =>
         {
             SendDataChangedMessage(Framework.Models.ViewItemTemplates.Details);
-            cancelCommand.Execute(null);
+            cancelCommand.Execute(commandParameter);
             EditConfirmCommand = null;
             EditCancelCommand = null;
         });

@@ -1052,6 +1052,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        public static string PreDefinedDateTimeRanges_AllTime {
+            get {
+                return ResourceManager.GetString("PreDefinedDateTimeRanges_AllTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (en)Custom.
         /// </summary>
         public static string PreDefinedDateTimeRanges_Custom {

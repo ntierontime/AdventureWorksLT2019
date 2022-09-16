@@ -874,4 +874,7 @@
   <data name="Theme" xml:space="preserve">
     <value>Theme</value>
   </data>
+  <data name="PreDefinedDateTimeRanges_AllTime" xml:space="preserve">
+    <value>All</value>
+  </data>
 </root>

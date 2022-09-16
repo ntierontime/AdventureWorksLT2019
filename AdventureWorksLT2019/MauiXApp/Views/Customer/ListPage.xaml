@@ -113,7 +113,7 @@
         </RefreshView>
         <VerticalStackLayout  HorizontalOptions="End" VerticalOptions="End" Margin="0,0,20,20">
             <Button Style="{StaticResource AddButtonStyle}"
-                    Command="{Binding AdvancedSearchLaunchCommand}"
+                    Command="{Binding LaunchItemPopupViewCommand}"
                     CommandParameter="{x:Static fm:ViewItemTemplates.Create}"
                     />
             <Button Style="{StaticResource AddButtonStyle}"

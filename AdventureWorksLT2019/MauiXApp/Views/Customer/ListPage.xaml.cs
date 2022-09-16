@@ -21,7 +21,7 @@ public partial class ListPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await viewModel.DoSearch(true, true, false);
+        await viewModel.DoSearch(true, true);
     }
     public async void OnLaunchAdvancedSearchPopup()
     {

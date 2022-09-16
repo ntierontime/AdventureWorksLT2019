@@ -6,9 +6,9 @@ using System.Windows.Input;
 
 namespace Framework.MauiX.ViewModels;
 
-public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataService, TDataChangedMessage, TItemRequestMessage> : ObservableObject 
-    where TAdvancedQuery : Framework.MauiX.DataModels.ObservableBaseQuery, new()
-    where TDataModel : class
+public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataService, TDataChangedMessage, TItemRequestMessage> : ObservableObject
+    where TAdvancedQuery : Framework.MauiX.DataModels.ObservableBaseQuery, Framework.Models.IClone<TAdvancedQuery>, new()
+    where TDataModel : class, Framework.Models.IClone<TDataModel>, Framework.Models.ICopyTo<TDataModel>
     where TDataService : class, Framework.MauiX.Services.IDataServiceBase<TAdvancedQuery, TIdentifier, TDataModel>
     where TDataChangedMessage : Framework.MauiX.ComponentModels.ValueChangedMessageExt<TDataModel>
     where TItemRequestMessage : RequestMessage<TDataModel>, new()
@@ -19,7 +19,17 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         get => m_Query;
         set => SetProperty(ref m_Query, value);
     }
-    
+
+    private TAdvancedQuery m_EditingQuery = new();
+    /// <summary>
+    /// This is a copy of Query property(not same instance), will sync when TextSearchCommand(click Keyboard.Done button) or AdvancedSearchConfirmCommand(AdvancedSearchPopup.Apply button).
+    /// </summary>
+    public TAdvancedQuery EditingQuery
+    {
+        get => m_EditingQuery;
+        set => SetProperty(ref m_EditingQuery, value);
+    }
+
     private bool m_IsBusy;
     public bool IsBusy
     {
@@ -40,7 +50,7 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         get => m_Result;
         set => SetProperty(ref m_Result, value);
     }
-    
+
     private TDataModel m_SelectedItem;
     public TDataModel SelectedItem
     {
@@ -80,7 +90,7 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
 
     public ICommand LoadMoreCommand { get; protected set; }
     public ICommand RefreshCommand { get; protected set; }
-    
+
     public ICommand LaunchItemPopupViewCommand { get; protected set; }
     public ICommand LaunchItemPageCommand { get; protected set; }
 
@@ -96,23 +106,23 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
 
         TextSearchCommand = new Command<string>(async (text) =>
         {
-            if (Query.TextSearch != text)
+            if (EditingQuery.TextSearch != text)
             {
-                Query.TextSearch = text;
-                Query.PageIndex = 1;
+                EditingQuery.TextSearch = text;
+                EditingQuery.PageIndex = 1;
                 await DoSearch(true, true); // clear existing
             }
         });
 
         LoadMoreCommand = new Command(async () =>
         {
-            Query.PageIndex++;
+            EditingQuery.PageIndex++;
             await DoSearch(false, false); // keep existing
         });
 
         RefreshCommand = new Command(async () =>
         {
-            Query.PageIndex = 1;
+            EditingQuery.PageIndex = 1;
             await DoSearch(true, true);
         });
 
@@ -121,6 +131,8 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
 
     public virtual async Task DoSearch(bool isLoadMore, bool showRefreshing, bool loadIfAnyResult = true)
     {
+        Query = EditingQuery.Clone();
+
         // for Page.OnAppearing()
         if (IsBusy || !loadIfAnyResult && Result.Count > 0)
         {
@@ -147,7 +159,7 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         }
         else
         {
-            if(isLoadMore)
+            if (isLoadMore)
                 Query.PageIndex--;
         }
         if (showRefreshing)
@@ -168,12 +180,16 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
     public void AttachAdvancedSearchPopupCommands(
         ICommand cancelCommand)
     {
-        AdvancedSearchCancelCommand = cancelCommand;
+        AdvancedSearchCancelCommand = new Command(() =>
+        {
+            EditingQuery = Query.Clone();// put back original Query if AdvancedSearch cancelled
+            cancelCommand.Execute(null);
+        });
         AdvancedSearchConfirmCommand = new Command(async () =>
         {
-            Query.PageIndex = 1;
+            EditingQuery.PageIndex = 1;
             await DoSearch(true, true);
-            AdvancedSearchCancelCommand.Execute(null);
+            cancelCommand.Execute(null);
         });
     }
 
@@ -191,14 +207,14 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         WeakReferenceMessenger.Default.Register<TListVM, TItemRequestMessage>(
             listVM, (r, m) =>
             {
-                m.Reply(listVM.SelectedItem);
+                m.Reply(listVM.SelectedItem.Clone());
                 WeakReferenceMessenger.Default.Unregister<TItemRequestMessage>(listVM);
             });
     }
 
     public abstract void RegisterItemDataChangedMessage();
     public static void RegisterItemDataChangedMessage<TListVM>(TListVM listVM)
-        where TListVM: ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataService, TDataChangedMessage, TItemRequestMessage>
+        where TListVM : ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataService, TDataChangedMessage, TItemRequestMessage>
     {
         WeakReferenceMessenger.Default.Register<TListVM, TDataChangedMessage>(
             listVM, (r, m) =>
@@ -213,7 +229,7 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
                 }
                 else if (m.ItemView == Framework.Models.ViewItemTemplates.Edit)
                 {
-
+                    m.Value.CopyTo(listVM.SelectedItem);
                 }
 
                 WeakReferenceMessenger.Default.Unregister<TDataChangedMessage>(listVM);

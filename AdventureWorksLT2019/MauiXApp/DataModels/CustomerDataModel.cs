@@ -3,12 +3,14 @@ using SQLite;
 
 namespace AdventureWorksLT2019.MauiXApp.DataModels;
 
-public class CustomerDataModel : ObservableValidator
+public class CustomerDataModel : ObservableValidator, Framework.Models.IClone<CustomerDataModel>, Framework.Models.ICopyTo<CustomerDataModel>
 {
     private string GetAvatar()
     {
         return (string.IsNullOrEmpty(FirstName) ? "" : FirstName[0].ToString()) + (string.IsNullOrEmpty(LastName) ? "" : LastName[0].ToString());
     }
+
+
 
     public string Avatar__
     {
@@ -44,7 +46,7 @@ public class CustomerDataModel : ObservableValidator
         get => m_NameStyle;
         set => SetProperty(ref m_NameStyle, value);
     }
-    
+
     protected System.String m_Title;
     public System.String Title
     {
@@ -132,5 +134,50 @@ public class CustomerDataModel : ObservableValidator
     {
         get => m_ModifiedDate;
         set => SetProperty(ref m_ModifiedDate, value);
+    }
+
+    public CustomerDataModel Clone()
+    {
+        return new CustomerDataModel
+        {
+            m_ItemUIStatus______ = m_ItemUIStatus______,
+            m_IsDeleted______ = m_IsDeleted______,
+            m_CustomerID = m_CustomerID,
+            m_FirstName = m_FirstName,
+            m_LastName = m_LastName,
+            m_CompanyName = m_CompanyName,
+            m_EmailAddress = m_EmailAddress,
+            m_MiddleName = m_MiddleName,
+            m_ModifiedDate = m_ModifiedDate,
+            m_NameStyle = m_NameStyle,
+            m_PasswordHash = m_PasswordHash,
+            m_PasswordSalt = m_PasswordSalt,
+            m_Phone = m_Phone,
+            m_rowguid = m_rowguid,
+            m_SalesPerson = m_SalesPerson,
+            m_Suffix = m_Suffix,
+            m_Title = m_Title,
+        };
+    }
+
+    public void CopyTo(CustomerDataModel destination)
+    {
+        destination.ItemUIStatus______ = ItemUIStatus______;
+        destination.IsDeleted______ = IsDeleted______;
+        destination.CustomerID = CustomerID;
+        destination.FirstName = FirstName;
+        destination.LastName = LastName;
+        destination.CompanyName = CompanyName;
+        destination.EmailAddress = EmailAddress;
+        destination.MiddleName = MiddleName;
+        destination.ModifiedDate = ModifiedDate;
+        destination.NameStyle = NameStyle;
+        destination.PasswordHash = PasswordHash;
+        destination.PasswordSalt = PasswordSalt;
+        destination.Phone = Phone;
+        destination.rowguid = rowguid;
+        destination.SalesPerson = SalesPerson;
+        destination.Suffix = Suffix;
+        destination.Title = Title;
     }
 }
