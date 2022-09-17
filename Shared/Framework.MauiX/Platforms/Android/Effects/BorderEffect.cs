@@ -1,9 +1,10 @@
+using Framework.MauiX.Effects;
 using Android.Graphics.Drawables;
 using Microsoft.Maui.Controls.Compatibility.Platform.Android;
 using Microsoft.Maui.Controls.Platform;
 
 [assembly: ResolutionGroupName("Framework.MauiX.Effects")]
-[assembly: ExportEffect(typeof(Framework.MauiX.Effects.BorderEffect), "BorderEffect")]
+[assembly: ExportEffect(typeof(BorderEffect), "BorderEffect")]
 namespace Framework.MauiX.Platforms.Android.Effects
 {
     public class BorderEffect : PlatformEffect

@@ -4,6 +4,8 @@ VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{5CF5D7F5-8BB0-4B42-B719-18E7A86EB35E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureWorksLT2019.MauiXApp", "AdventureWorksLT2019\MauiXApp\AdventureWorksLT2019.MauiXApp.csproj", "{04A404A3-D7CB-4938-B247-10F6B029D206}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureWorksLT2019.EFCoreContext", "AdventureWorksLT2019\EFCoreContext\AdventureWorksLT2019.EFCoreContext.csproj", "{E632F75F-2407-452A-8A35-C1461C9B626C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureWorksLT2019.EFCoreRepositories", "AdventureWorksLT2019\EFCoreRepositories\AdventureWorksLT2019.EFCoreRepositories.csproj", "{5345F5B7-F1A1-4A0B-8F4C-447545601E65}"
@@ -37,6 +39,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{04A404A3-D7CB-4938-B247-10F6B029D206}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04A404A3-D7CB-4938-B247-10F6B029D206}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04A404A3-D7CB-4938-B247-10F6B029D206}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04A404A3-D7CB-4938-B247-10F6B029D206}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E632F75F-2407-452A-8A35-C1461C9B626C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E632F75F-2407-452A-8A35-C1461C9B626C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E632F75F-2407-452A-8A35-C1461C9B626C}.Release|Any CPU.ActiveCfg = Release|Any CPU

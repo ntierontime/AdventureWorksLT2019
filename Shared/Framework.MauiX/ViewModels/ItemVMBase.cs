@@ -10,7 +10,7 @@ namespace Framework.MauiX.ViewModels;
 
 public abstract class ItemVMBase<TIdentifier, TDataModel, TDataService, TDataChangedMessage, TItemRequestMessage>: ObservableObject
     where TIdentifier : class
-    where TDataModel : class
+    where TDataModel : class, IClone<TDataModel>
     where TDataService : class, IDataServiceBase<TIdentifier, TDataModel>
     where TDataChangedMessage : ValueChangedMessageExt<TDataModel>
     where TItemRequestMessage : RequestMessage<TDataModel>, new()
@@ -74,7 +74,8 @@ public abstract class ItemVMBase<TIdentifier, TDataModel, TDataService, TDataCha
         }
         else
         {
-            Item = WeakReferenceMessenger.Default.Send<TItemRequestMessage>();
+            var messagge = WeakReferenceMessenger.Default.Send<TItemRequestMessage>();
+            Item = messagge.Response.Clone();
         }
     }
 
@@ -93,7 +94,7 @@ public abstract class ItemVMBase<TIdentifier, TDataModel, TDataService, TDataCha
         CreateCancelCommand = new Command(() =>
         {
             SendDataChangedMessage(ViewItemTemplates.Details);
-            cancelCommand.Execute(null);
+            cancelCommand.Execute(commandParameter);
             CreateConfirmCommand = null;
             CreateCancelCommand = null;
         });
@@ -105,14 +106,14 @@ public abstract class ItemVMBase<TIdentifier, TDataModel, TDataService, TDataCha
         {
             await _dataService.Update(Identifier, Item);
             SendDataChangedMessage(ViewItemTemplates.Edit);
-            cancelCommand.Execute(null);
+            cancelCommand.Execute(commandParameter);
             EditConfirmCommand = null;
             EditCancelCommand = null;
         });
         EditCancelCommand = new Command(() =>
         {
             SendDataChangedMessage(ViewItemTemplates.Details);
-            cancelCommand.Execute(null);
+            cancelCommand.Execute(commandParameter);
             EditConfirmCommand = null;
             EditCancelCommand = null;
         });

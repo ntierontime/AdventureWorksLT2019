@@ -27,7 +27,7 @@ namespace AdventureWorksLT2019.Models
         public int? CustomerID { get; set; }
 
         // PredicateType:Equals
-        public bool? OnlineOrderFlag { get; set; }
+        public BooleanSearchOptions? OnlineOrderFlag { get; set; }
 
         public string? OrderDateRange { get; set; }
         // PredicateType:Range - Lower Bound

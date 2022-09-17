@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:fmif="clr-namespace:Framework.MauiX.Icons;assembly=Framework.MauiX"
+    >
+    <Style x:Key="AddButtonStyle" TargetType="Button">
+        <Setter Property="Text" Value="{x:Static fmif:MaterialIcons.Add}" />
+        <Setter Property="FontFamily" Value="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}" />
+        <Setter Property="FontSize" Value="Large" />
+        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+        <Setter Property="Padding" Value="5" />
+    </Style>
+    <Style x:Key="AdvancedSearchButtonStyle" TargetType="Button">
+        <Setter Property="Text" Value="{x:Static fmif:MaterialIcons.FilterAlt}" />
+        <Setter Property="FontFamily" Value="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}" />
+        <Setter Property="FontSize" Value="Large" />
+        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+        <Setter Property="Padding" Value="5" />
+    </Style>
+</ResourceDictionary>
