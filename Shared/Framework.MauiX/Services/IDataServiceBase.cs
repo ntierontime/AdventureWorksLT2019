@@ -1,4 +1,5 @@
-﻿namespace Framework.MauiX.Services;
+﻿
+namespace Framework.MauiX.Services;
 
 public interface IDataServiceBase<TIdentifier, TDataModel>
     where TDataModel : class

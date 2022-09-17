@@ -14,16 +14,16 @@ namespace AdventureWorksLT2019.WebApiControllers
     [Route("/api/[controller]/[action]")]
     public class AuthenticationApiController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<Framework.Mvc.Identity.Data.ApplicationUser> _userManager;
+        private readonly SignInManager<Framework.Mvc.Identity.Data.ApplicationUser> _signInManager;
         private readonly Framework.Mvc.Identity.IdentitySecret _identitySecret;
-        private readonly IEmailSender _emailSender;
+        private readonly Framework.Mvc.IEmailSender _emailSender;
         private readonly ILogger _logger;
 
         public AuthenticationApiController(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
-            IEmailSender emailSender,
+            UserManager<Framework.Mvc.Identity.Data.ApplicationUser> userManager,
+            SignInManager<Framework.Mvc.Identity.Data.ApplicationUser> signInManager,
+            Framework.Mvc.IEmailSender emailSender,
             IOptions<Framework.Mvc.Identity.IdentitySecret> identitySecret,
             ILogger<AuthenticationApiController> logger
             )
@@ -36,7 +36,7 @@ namespace AdventureWorksLT2019.WebApiControllers
         }
 
         [HttpPost]
-        public async Task<AuthenticationResponse> Login([FromBody] LoginRequest model)
+        public async Task<Framework.Models.Account.AuthenticationResponse> Login([FromBody] Framework.Models.Account.LoginRequest model)
         {
             return await Task.FromResult(new Framework.Models.Account.AuthenticationResponse
             {
@@ -54,10 +54,10 @@ namespace AdventureWorksLT2019.WebApiControllers
 
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
-        public async Task<AuthenticationResponse> Logout([FromBody] LoginRequest model)
+        public async Task<Framework.Models.Account.AuthenticationResponse> Logout([FromBody] Framework.Models.Account.LoginRequest model)
         {
             // TODO: set a flag? last log out time
-            return new AuthenticationResponse { Succeeded = true };
+            return new Framework.Models.Account.AuthenticationResponse { Succeeded = true };
 
             //return await _signInManager.SignOutAsync();
         }
@@ -65,58 +65,44 @@ namespace AdventureWorksLT2019.WebApiControllers
         // POST api/Account/Register
         [AllowAnonymous]
         [HttpPost]
-        public async Task<AuthenticationResponse> Register([FromBody] RegisterRequest model)
+        public async Task<Framework.Models.Account.AuthenticationResponse> Register([FromBody] Framework.Models.Account.RegisterRequest model)
         {
-            var LoginRequest = new LoginRequest { Email = model.Email, Password = model.Password };
+            var LoginRequest = new Framework.Models.Account.LoginRequest { Email = model.Email, Password = model.Password };
             return await Login(LoginRequest);
 
-            //if (!ModelState.IsValid)
-            //{
-            //    return new AuthenticationResponse { Succeeded = false };
-            //}
+            if (!ModelState.IsValid)
+            {
+                return new Framework.Models.Account.AuthenticationResponse { Succeeded = false };
+            }
 
-            //var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new Framework.Mvc.Identity.Data.ApplicationUser() { UserName = model.Email, Email = model.Email };
 
-            //var result = await _userManager.CreateAsync(user, model.Password);
+            var result = await _userManager.CreateAsync(user, model.Password);
 
-            //if (!result.Succeeded)
-            //{
-            //    return new AuthenticationResponse { Succeeded = false };
-            //}
-            //else
-            //{
-            //    // This is a copy from Register method in AccountController.
-            //    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            //    var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-            //    await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+            if (!result.Succeeded)
+            {
+                return new Framework.Models.Account.AuthenticationResponse { Succeeded = false };
+            }
+            else
+            {
+                // This is a copy from Register method in AccountController.
+                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+                await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
-            //    /*
-            //    var service1 = _serviceProvider.GetRequiredService<NTierOnTime.WcfContracts.IEntityService>();
+                // TODO: load more data
+            }
 
-            //    var response = await NTierOnTime.CoreCommonBLL.Helpers.EntityHelper.CreateNewEntity(service1, model.Email, _logger);
+            var loginRequest = new Framework.Models.Account.LoginRequest { Email = model.Email, Password = model.Password };
 
-            //    if (response.BusinessLogicLayerResponseStatus == Framework.Services.BusinessLogicLayerResponseStatus.MessageOK || response.BusinessLogicLayerResponseStatus == Framework.Services.BusinessLogicLayerResponseStatus.UIProcessReady)
-            //    {
-            //        var applicationUser = await _userManager.FindByEmailAsync(model.Email);
-            //        if (applicationUser != null)
-            //        {
-            //            applicationUser.EntityID = response.Message[0].EntityID;
-            //            await _userManager.UpdateAsync(applicationUser);
-            //        }
-            //    }
-            //    */
-            //}
-
-            //var LoginRequest = new LoginRequest { Email = model.Email, Password = model.Password };
-
-            //return await Login(LoginRequest);
+            return await Login(loginRequest);
         }
 
-        private async Task<AuthenticationResponse> GetAuthenticationResponse(
-            ApplicationUser user
+        private async Task<Framework.Models.Account.AuthenticationResponse> GetAuthenticationResponse(
+            Framework.Mvc.Identity.Data.ApplicationUser user
             , Microsoft.AspNetCore.Identity.SignInResult result)
         {
-            var loginResponse = new AuthenticationResponse
+            var loginResponse = new Framework.Models.Account.AuthenticationResponse
             {
                 Succeeded = result.Succeeded
                 ,
@@ -128,7 +114,7 @@ namespace AdventureWorksLT2019.WebApiControllers
             };
 
             // authentication successful, then generate jwt token
-            string tokenInString = CustomizedClaimTypes.GetJwtSecurityTokenInString(user.Id.ToLower(), _identitySecret.Secret);
+            string tokenInString = Framework.Mvc.Identity.CustomizedClaimTypes.GetJwtSecurityTokenInString(user.Id.ToLower(), _identitySecret.Secret);
             loginResponse.Token = tokenInString;
 
             // Load LogIn User related data
@@ -136,65 +122,7 @@ namespace AdventureWorksLT2019.WebApiControllers
             {
                 loginResponse.Roles = await _userManager.GetRolesAsync(user);
 
-                #region TODO: Load more data to LoginResponse
-
                 //// TODO: Load more data to LoginResponse
-                //using (var scope = _serviceProvider.CreateScope())
-                //{
-                //    var criteria = new NTierOnTime.CommonBLLEntities.EntityChainedQueryCriteriaIdentifier();
-                //    criteria.Identifier.EntityID.NullableValueToCompare = user.EntityID;
-
-                //    var entityResponse = new NTierOnTime.AspNetMvcCoreViewModel.Entity.DashboardVM(); // TODO: how to IoC
-                //    entityResponse.CriteriaOfMasterEntity = criteria;
-                //    entityResponse.SetServiceProvider(this._serviceProvider);
-                //    await entityResponse.LoadData(
-                //        isToLoadFK_CourseCategory_Entity_ParentEntityID_List: false
-                //        , isToLoadFK_Album_Entity_Owner_List: false
-                //        , isToLoadFK_Comment_Entity_PostedByID_List: false
-                //        , isToLoadFK_EntityAddress_Entity_EntityID_List: false
-                //        , isToLoadFK_EntityAlbum_Entity_EntityID_List: false
-                //        , isToLoadFK_EntityCalendarItem_Entity_EntityID_List: false
-                //        , isToLoadFK_EntityCommentThread_Entity_EntityID_List: false
-                //        , isToLoadFK_EntityContact_Entity_EntityID_List: false
-                //        , isToLoadFK_EntityEmail_Entity_EntityID_List: false
-                //        , isToLoadFK_EntityScheduleGroup_Entity_EntityID_List: false
-                //        , isToLoadFK_EntityVirtualAddress_Entity_EntityID_List: false
-                //        , isToLoadFK_Liking_Entity_EntityID_List: false
-                //        , isToLoadFK_Liking_Entity_TheOtherSideEntityID_List: false
-                //        , isToLoadFK_MemberProgram_Entity_ProgramEntityID_List: false
-                //        , isToLoadFK_Membership_Entity_MasterEntityID_List: false
-                //        , isToLoadFK_Membership_Entity_SlaveEntityID_List: true
-                //        , isToLoadFK_ProgramScheduleCalendarItem_Entity_ProgramEntityID_List: false
-                //        , isToLoadFK_BusinessEntity_Entity_EntityID_FormView: false
-                //        , isToLoadFK_Class_Entity_EntityID_FormView: false
-                //        , isToLoadFK_Course_Entity_EntityID_FormView: false
-                //        , isToLoadFK_ActivitySummary_Entity_EntityID_FormView: false
-                //        , isToLoadFK_Membership_Entity_MembershipID_FormView: true
-                //        , isToLoadFK_Person_Entity_EntityID_FormView: true);
-
-                //    // 1. Entity
-                //    if (entityResponse.StatusOfMasterEntity == Framework.Services.BusinessLogicLayerResponseStatus.MessageOK || entityResponse.StatusOfMasterEntity == Framework.Services.BusinessLogicLayerResponseStatus.UIProcessReady)
-                //    {
-                //        loginResponse.Entity = entityResponse.MasterEntity;
-                //    }
-
-                //    // 2. Person
-                //    if (entityResponse.StatusOfFK_Person_Entity_EntityID_FormView == Framework.Services.BusinessLogicLayerResponseStatus.MessageOK || entityResponse.StatusOfFK_Person_Entity_EntityID_FormView == Framework.Services.BusinessLogicLayerResponseStatus.UIProcessReady)
-                //    {
-                //        loginResponse.HasPerson = entityResponse.StatusOfFK_Person_Entity_EntityID_FormView == Framework.Services.BusinessLogicLayerResponseStatus.MessageOK || entityResponse.StatusOfFK_Person_Entity_EntityID_FormView == Framework.Services.BusinessLogicLayerResponseStatus.UIProcessReady;
-                //        loginResponse.Person = entityResponse.FK_Person_Entity_EntityID_FormView;
-                //    }
-
-                //    // 3. Joined Memberships
-                //    if (entityResponse.StatusOfFK_Membership_Entity_SlaveEntityID_List == Framework.Services.BusinessLogicLayerResponseStatus.MessageOK || entityResponse.StatusOfFK_Membership_Entity_SlaveEntityID_List == Framework.Services.BusinessLogicLayerResponseStatus.UIProcessReady)
-                //    {
-                //        loginResponse.HasJoinedMemberShip = entityResponse.StatusOfFK_Membership_Entity_SlaveEntityID_List == Framework.Services.BusinessLogicLayerResponseStatus.MessageOK || entityResponse.StatusOfFK_Membership_Entity_SlaveEntityID_List == Framework.Services.BusinessLogicLayerResponseStatus.UIProcessReady;
-                //        loginResponse.JoinedMemberships = entityResponse.FK_Membership_Entity_SlaveEntityID_List;
-                //    }
-
-                //}
-
-                #endregion TODO: Load more data to LoginResponse
             }
             return loginResponse;
         }

@@ -12,7 +12,6 @@ public class AppLoadingService
     private const double Step30Progress = 0.30;
     private const double Step31Progress = 0.35;
 
-    private readonly Framework.MauiX.Services.IThemeService _themeService;
     private readonly Framework.MauiX.Services.SecureStorageService _secureStorageService;
     private readonly AdventureWorksLT2019.MauiXApp.Common.Services.AuthenticationService _authenticationService;
     private readonly AdventureWorksLT2019.MauiXApp.Common.Services.GeoLocationService _geoLocationService;
@@ -20,7 +19,6 @@ public class AppLoadingService
     private readonly AdventureWorksLT2019.MauiXApp.Services.CustomerService _customerService;
 
     public AppLoadingService(
-        Framework.MauiX.Services.IThemeService themeService,
         Framework.MauiX.Services.SecureStorageService secureStorageService,
         AdventureWorksLT2019.MauiXApp.Common.Services.AuthenticationService authenticationService,
         AdventureWorksLT2019.MauiXApp.Common.Services.GeoLocationService geoLocationService,
@@ -28,7 +26,6 @@ public class AppLoadingService
         AdventureWorksLT2019.MauiXApp.Services.CustomerService customerService
         )
     {
-        _themeService = themeService;
         _secureStorageService = secureStorageService;
         _authenticationService = authenticationService;
         _geoLocationService = geoLocationService;

@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Framework.Models;
 
 namespace Framework.MauiX.DataModels;
 
@@ -53,19 +52,19 @@ public class ObservableQueryOrderBySetting: ObservableObject
     public object SortFunc { get; set; }
     public void ToggleDirection()
     {
-        Direction = Direction == QueryOrderDirections.Ascending ?
-            QueryOrderDirections.Descending : QueryOrderDirections.Ascending;
+        Direction = Direction == Framework.Models.QueryOrderDirections.Ascending ?
+            Framework.Models.QueryOrderDirections.Descending : Framework.Models.QueryOrderDirections.Ascending;
     }
 
-    public static IEnumerable<QueryOrderBySetting> Parse(string queryOrderByExpression)
+    public static IEnumerable<Framework.MauiX.DataModels.ObservableQueryOrderBySetting> Parse(string queryOrderByExpression)
     {
         if (string.IsNullOrWhiteSpace(queryOrderByExpression))
-            return Enumerable.Empty<QueryOrderBySetting>();
+            return Enumerable.Empty<Framework.MauiX.DataModels.ObservableQueryOrderBySetting>();
         string[] _Splitted1 = queryOrderByExpression.Split("|".ToCharArray());
         if (_Splitted1 == null || _Splitted1?.Length == 0)
-            return Enumerable.Empty<QueryOrderBySetting>();
+            return Enumerable.Empty<Framework.MauiX.DataModels.ObservableQueryOrderBySetting>();
 
-        var result = new List<QueryOrderBySetting>();
+        var result = new List<Framework.MauiX.DataModels.ObservableQueryOrderBySetting>();
         foreach (string _Splitted1Item in _Splitted1!)
         {
             if (string.IsNullOrWhiteSpace(_Splitted1Item) == false)
@@ -73,20 +72,20 @@ public class ObservableQueryOrderBySetting: ObservableObject
                 string[] _Splitted2 = _Splitted1Item.Trim().Split("~".ToCharArray());
                 if (_Splitted2.Length == 1)
                 {
-                    result.Add(new QueryOrderBySetting { PropertyName = _Splitted2[0], DisplayName = _Splitted2[0], Direction = QueryOrderDirections.Ascending });
+                    result.Add(new Framework.MauiX.DataModels.ObservableQueryOrderBySetting { PropertyName = _Splitted2[0], DisplayName = _Splitted2[0], Direction = Framework.Models.QueryOrderDirections.Ascending });
                 }
                 else if (_Splitted2.Length > 1)
                 {
-                    QueryOrderDirections _ListSortDirection;
+                    Framework.Models.QueryOrderDirections _ListSortDirection;
                     if (_Splitted2[1].Trim().ToLower() == "DESC".ToLower())
                     {
-                        _ListSortDirection = QueryOrderDirections.Descending;
+                        _ListSortDirection = Framework.Models.QueryOrderDirections.Descending;
                     }
                     else
                     {
-                        _ListSortDirection = QueryOrderDirections.Ascending;
+                        _ListSortDirection = Framework.Models.QueryOrderDirections.Ascending;
                     }
-                    result.Add(new QueryOrderBySetting { PropertyName = _Splitted2[0], DisplayName = _Splitted2[0], Direction = _ListSortDirection });
+                    result.Add(new Framework.MauiX.DataModels.ObservableQueryOrderBySetting { PropertyName = _Splitted2[0], DisplayName = _Splitted2[0], Direction = _ListSortDirection });
                 }
             }
         }
@@ -98,7 +97,7 @@ public class ObservableQueryOrderBySetting: ObservableObject
         var orderByExpressions =
             from t in orderBys
             let propertyName = t.PropertyName ?? t.DisplayName
-            select t.Direction == QueryOrderDirections.Ascending ? propertyName : propertyName + " DESC";
+            select t.Direction == Framework.Models.QueryOrderDirections.Ascending ? propertyName : propertyName + " DESC";
         return string.Join(",", orderByExpressions);
     }
 
