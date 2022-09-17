@@ -158,7 +158,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             try
             {
                 // 3.1.1. NewItems if any
-                List<ProductCategory> newEFItems = new List<ProductCategory>();
+                List<ProductCategory> newEFItems = new();
                 if (input.NewItems != null && input.NewItems.Count > 0)
                 {
                     foreach (var item in input.NewItems)

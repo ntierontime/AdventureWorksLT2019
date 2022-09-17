@@ -297,7 +297,7 @@ private IQueryable<SalesOrderHeaderDataModel.DefaultView> GetIQueryableAsBulkUpd
             try
             {
                 // 3.1.1. NewItems if any
-                List<SalesOrderHeader> newEFItems = new List<SalesOrderHeader>();
+                List<SalesOrderHeader> newEFItems = new();
                 if (input.NewItems != null && input.NewItems.Count > 0)
                 {
                     foreach (var item in input.NewItems)

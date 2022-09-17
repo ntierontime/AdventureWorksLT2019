@@ -167,7 +167,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             try
             {
                 // 3.1.1. NewItems if any
-                List<ErrorLog> newEFItems = new List<ErrorLog>();
+                List<ErrorLog> newEFItems = new();
                 if (input.NewItems != null && input.NewItems.Count > 0)
                 {
                     foreach (var item in input.NewItems)

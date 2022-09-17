@@ -283,7 +283,7 @@ private IQueryable<CustomerDataModel> GetIQueryableAsBulkUpdateResponse(
             try
             {
                 // 3.1.1. NewItems if any
-                List<Customer> newEFItems = new List<Customer>();
+                List<Customer> newEFItems = new();
                 if (input.NewItems != null && input.NewItems.Count > 0)
                 {
                     foreach (var item in input.NewItems)

@@ -121,6 +121,9 @@
   <data name="AdvancedSearch" xml:space="preserve">
     <value>(en)Advanced Search</value>
   </data>
+  <data name="Arabic" xml:space="preserve">
+    <value>(en)عربي</value>
+  </data>
   <data name="Are_you_sure_you_want_to_delete_this?" xml:space="preserve">
     <value>(en)Are you sure you want to delete this?</value>
   </data>
@@ -132,6 +135,18 @@
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>(en)Cancel</value>
+  </data>
+  <data name="ChinesseSimplified" xml:space="preserve">
+    <value>(en)汉语</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>(en)Confirm Password</value>
+  </data>
+  <data name="ConfirmPasswordNotMatchError" xml:space="preserve">
+    <value>(en)Passwords not match</value>
+  </data>
+  <data name="ConfirmPasswordRequired" xml:space="preserve">
+    <value>(en)Confirm Password Required</value>
   </data>
   <data name="Contains" xml:space="preserve">
     <value>(en)Contains</value>
@@ -154,14 +169,26 @@
   <data name="Details" xml:space="preserve">
     <value>(en)Details</value>
   </data>
+  <data name="Done" xml:space="preserve">
+    <value>(en)Done</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>(en)Edit</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>(en)Email</value>
   </data>
+  <data name="EmailFormatError" xml:space="preserve">
+    <value>(en)Email Format Error</value>
+  </data>
+  <data name="EmailRequired" xml:space="preserve">
+    <value>(en)Email is Required</value>
+  </data>
   <data name="EndsWith" xml:space="preserve">
     <value>(en)Ends With</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>(en)English</value>
   </data>
   <data name="ExportToCsv" xml:space="preserve">
     <value>(en)Export to Csv</value>
@@ -171,6 +198,9 @@
   </data>
   <data name="First" xml:space="preserve">
     <value>(en)First</value>
+  </data>
+  <data name="FirstTimeUser" xml:space="preserve">
+    <value>(en)First Time User</value>
   </data>
   <data name="Format_All" xml:space="preserve">
     <value>(en)-- All {0} --</value>
@@ -184,14 +214,23 @@
   <data name="Format_SearchTextDescription" xml:space="preserve">
     <value>(en)Search text in {0} field</value>
   </data>
+  <data name="French" xml:space="preserve">
+    <value>(en)français</value>
+  </data>
   <data name="HideAdvancedSearch" xml:space="preserve">
     <value>(en)Hide Advanced Search</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>(en)Home</value>
   </data>
   <data name="Import" xml:space="preserve">
     <value>(en)Import</value>
   </data>
   <data name="Index" xml:space="preserve">
     <value>(en)Index</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>(en)Language</value>
   </data>
   <data name="Last" xml:space="preserve">
     <value>(en)Last</value>
@@ -201,6 +240,9 @@
   </data>
   <data name="LogIn" xml:space="preserve">
     <value>(en)LogIn</value>
+  </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>(en)Log Out</value>
   </data>
   <data name="More" xml:space="preserve">
     <value>(en)More</value>
@@ -213,6 +255,12 @@
   </data>
   <data name="Password" xml:space="preserve">
     <value>(en)Password</value>
+  </data>
+  <data name="PasswordPatternError" xml:space="preserve">
+    <value>(en)Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character:</value>
+  </data>
+  <data name="PasswordRequired" xml:space="preserve">
+    <value>(en)Password is Required</value>
   </data>
   <data name="Please_confirm_you_going_to_set_selected_items_to" xml:space="preserve">
     <value>(en)Please confirm you going to move selected items to {0}</value>
@@ -286,6 +334,9 @@
   <data name="Previous" xml:space="preserve">
     <value>(en)Previous</value>
   </data>
+  <data name="Register" xml:space="preserve">
+    <value>(en)Register</value>
+  </data>
   <data name="RegisterANewUser" xml:space="preserve">
     <value>(en)Register A New User</value>
   </data>
@@ -298,14 +349,23 @@
   <data name="SearchTextDescription" xml:space="preserve">
     <value>(en)Search text in all text fields</value>
   </data>
+  <data name="Settings" xml:space="preserve">
+    <value>(en)(en)Settings</value>
+  </data>
   <data name="ShowAdvancedSearch" xml:space="preserve">
     <value>(en)Show Advanced Search</value>
+  </data>
+  <data name="Spanish" xml:space="preserve">
+    <value>(en)Española</value>
   </data>
   <data name="StartsWith" xml:space="preserve">
     <value>(en)Starts With</value>
   </data>
   <data name="Tab_AlsoA" xml:space="preserve">
     <value>(en)Also a ...</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>(en)Theme</value>
   </data>
   <data name="SystemInformationID" xml:space="preserve">
     <value>(en)System Information ID</value>

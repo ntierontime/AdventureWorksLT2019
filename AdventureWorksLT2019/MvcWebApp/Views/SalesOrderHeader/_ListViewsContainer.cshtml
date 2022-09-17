@@ -59,7 +59,7 @@
         <div class="btn-group float-end mt-1" role="group" aria-label="View Options">
             <input type="radio" class="btn-check nt-radio-pagedviewoption" name="btnradio" id="btnradio-Table" autocomplete="off"
                 data-bs-toggle="modal" data-bs-target="#fullScreenLoading"
-                data-nt-value="Table" data-nt-paginationoptionupdatevalue="PageIndexesAndAllButtons" @(Model!.UIListSetting.UIParams.PagedViewOption==ListViewOptions.Table ? "checked": "")>
+                data-nt-value="Table" data-nt-paginationoptionupdatevalue="PageIndexesAndAllButtons" @(Model!.UIListSetting!.UIParams.PagedViewOption==ListViewOptions.Table ? "checked": "")>
             <label class="btn btn-outline-primary" for="btnradio-Table" title="Table" aria-label="Table"><i class="fa-solid fa-table-list"></i></label>
             <input type="radio" class="btn-check nt-radio-pagedviewoption" name="btnradio" id="btnradio-Tiles" autocomplete="off"
                 data-bs-toggle="modal" data-bs-target="#fullScreenLoading"
@@ -71,7 +71,7 @@
             <label class="btn btn-outline-primary" for="btnradio-SlideShow" title="SlideShow" aria-label="SlideShow"><i class="fa-solid fa-circle-play"></i></label>
             <input type="radio" class="btn-check nt-radio-pagedviewoption" name="btnradio" id="btnradio-EditableTable" autocomplete="off"
                 data-bs-toggle="modal" data-bs-target="#fullScreenLoading"
-                data-nt-value="EditableTable" data-nt-paginationoptionupdatevalue="PageIndexesAndAllButtons" @(Model!.UIListSetting.UIParams.PagedViewOption == ListViewOptions.EditableTable ? "checked": "")>
+                data-nt-value="EditableTable" data-nt-paginationoptionupdatevalue="PageIndexesAndAllButtons" @(Model!.UIListSetting!.UIParams.PagedViewOption == ListViewOptions.EditableTable ? "checked": "")>
             <label class="btn btn-outline-primary" for="btnradio-EditableTable" title="EditableTable" aria-label="EditableTable"><i class="fa-solid fa-pen-ruler"></i></label>
         </div>
         @if (Model!.UIListSetting == null || Model!.UIListSetting.ShowListBulkActionRelated(true))

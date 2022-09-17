@@ -69,6 +69,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to "عربي"".
+        /// </summary>
+        public static string Arabic {
+            get {
+                return ResourceManager.GetString("Arabic", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to "Are you sure you want to delete this?"".
         /// </summary>
         public static string Are_you_sure_you_want_to_delete_this_ {
@@ -101,6 +110,42 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "汉语"".
+        /// </summary>
+        public static string ChinesseSimplified {
+            get {
+                return ResourceManager.GetString("ChinesseSimplified", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Confirm Password"".
+        /// </summary>
+        public static string ConfirmPassword {
+            get {
+                return ResourceManager.GetString("ConfirmPassword", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Passwords not match"".
+        /// </summary>
+        public static string ConfirmPasswordNotMatchError {
+            get {
+                return ResourceManager.GetString("ConfirmPasswordNotMatchError", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Confirm Password Required"".
+        /// </summary>
+        public static string ConfirmPasswordRequired {
+            get {
+                return ResourceManager.GetString("ConfirmPasswordRequired", resourceCulture);
             }
         }
 
@@ -168,6 +213,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to "Done"".
+        /// </summary>
+        public static string Done {
+            get {
+                return ResourceManager.GetString("Done", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to "Edit"".
         /// </summary>
         public static string Edit {
@@ -186,11 +240,38 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to "Email Format Error"".
+        /// </summary>
+        public static string EmailFormatError {
+            get {
+                return ResourceManager.GetString("EmailFormatError", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Email is Required"".
+        /// </summary>
+        public static string EmailRequired {
+            get {
+                return ResourceManager.GetString("EmailRequired", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to "Ends With"".
         /// </summary>
         public static string EndsWith {
             get {
                 return ResourceManager.GetString("EndsWith", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "English"".
+        /// </summary>
+        public static string English {
+            get {
+                return ResourceManager.GetString("English", resourceCulture);
             }
         }
 
@@ -218,6 +299,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string First {
             get {
                 return ResourceManager.GetString("First", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "First Time User"".
+        /// </summary>
+        public static string FirstTimeUser {
+            get {
+                return ResourceManager.GetString("FirstTimeUser", resourceCulture);
             }
         }
 
@@ -258,11 +348,29 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to "français"".
+        /// </summary>
+        public static string French {
+            get {
+                return ResourceManager.GetString("French", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to "Hide Advanced Search"".
         /// </summary>
         public static string HideAdvancedSearch {
             get {
                 return ResourceManager.GetString("HideAdvancedSearch", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Home"".
+        /// </summary>
+        public static string Home {
+            get {
+                return ResourceManager.GetString("Home", resourceCulture);
             }
         }
 
@@ -281,6 +389,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string Index {
             get {
                 return ResourceManager.GetString("Index", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Language"".
+        /// </summary>
+        public static string Language {
+            get {
+                return ResourceManager.GetString("Language", resourceCulture);
             }
         }
 
@@ -308,6 +425,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string LogIn {
             get {
                 return ResourceManager.GetString("LogIn", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Log Out"".
+        /// </summary>
+        public static string LogOut {
+            get {
+                return ResourceManager.GetString("LogOut", resourceCulture);
             }
         }
 
@@ -344,6 +470,24 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character:"".
+        /// </summary>
+        public static string PasswordPatternError {
+            get {
+                return ResourceManager.GetString("PasswordPatternError", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Password is Required"".
+        /// </summary>
+        public static string PasswordRequired {
+            get {
+                return ResourceManager.GetString("PasswordRequired", resourceCulture);
             }
         }
 
@@ -564,6 +708,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to "Register"".
+        /// </summary>
+        public static string Register {
+            get {
+                return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to "Register A New User"".
         /// </summary>
         public static string RegisterANewUser {
@@ -600,11 +753,29 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to "(en)Settings"".
+        /// </summary>
+        public static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to "Show Advanced Search"".
         /// </summary>
         public static string ShowAdvancedSearch {
             get {
                 return ResourceManager.GetString("ShowAdvancedSearch", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Española"".
+        /// </summary>
+        public static string Spanish {
+            get {
+                return ResourceManager.GetString("Spanish", resourceCulture);
             }
         }
 
@@ -623,6 +794,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string Tab_AlsoA {
             get {
                 return ResourceManager.GetString("Tab_AlsoA", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Theme"".
+        /// </summary>
+        public static string Theme {
+            get {
+                return ResourceManager.GetString("Theme", resourceCulture);
             }
         }
 
