@@ -189,11 +189,6 @@ public abstract class WebApiClientBase
         return GetHttpRequestUrl(_rootPath, ListsApiControllerName, actionName, null, parametersInString);
     }
 
-    //public string GetHttpRequestUrl(string actionName, string parameters)
-    //{
-    //    return GetHttpRequestUrl(RootPath, ControllerName, actionName, parameters);
-    //}
-
     public static string GetArrayParamterString<T>(string name, bool addNameToParameters, List<T> array = null!)
     {
         if (array == null && array!.Count == 0)

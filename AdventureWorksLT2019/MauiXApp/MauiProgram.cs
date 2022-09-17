@@ -37,7 +37,6 @@ namespace AdventureWorksLT2019.MauiXApp
 
             // 2.1. Framework.MauiX.Services
             builder.Services.AddSingleton<Framework.MauiX.Services.SecureStorageService>();
-            builder.Services.AddScoped<Framework.MauiX.Services.IThemeService, AdventureWorksLT2019.MauiXApp.Common.Services.ThemeService>();
             builder.Services.AddSingleton<Framework.MauiX.SQLite.SQLiteService>();
             builder.Services.AddSingleton<Framework.MauiX.SQLite.CacheDataStatusRepository>();
             builder.Services.AddSingleton<Framework.MauiX.SQLite.CacheDataStatusService>();

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Framework.MauiX.SQLite;
+﻿namespace Framework.MauiX.SQLite;
 
 public class CacheDataStatusRepository : Framework.MauiX.SQLite.SQLiteTableRepositoryBase<Framework.MauiX.DataModels.CacheDataStatusItem>
 {
