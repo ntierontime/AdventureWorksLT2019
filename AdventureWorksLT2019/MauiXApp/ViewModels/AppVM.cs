@@ -28,17 +28,14 @@ public class AppVM : ObservableObject
         set => SetProperty(ref m_CurrentLocation, value);
     }
 
-    private readonly Framework.MauiX.Services.IThemeService _themeService;
     private readonly Framework.MauiX.Services.SecureStorageService _secureStorageService;
     private readonly AdventureWorksLT2019.MauiXApp.Common.Services.AuthenticationService _authenticationService;
 
     public AppVM(
-        Framework.MauiX.Services.IThemeService themeService,
         Framework.MauiX.Services.SecureStorageService secureStorageService,
         AdventureWorksLT2019.MauiXApp.Common.Services.AuthenticationService authenticationService
         )
     {
-        _themeService = themeService;
         _secureStorageService = secureStorageService;
         _authenticationService = authenticationService;
     }

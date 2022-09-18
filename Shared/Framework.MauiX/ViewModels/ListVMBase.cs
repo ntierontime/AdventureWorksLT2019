@@ -214,8 +214,7 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
 
     public abstract void RegisterItemDataChangedMessage();
     public static void RegisterItemDataChangedMessage<TListVM>(TListVM listVM)
-        where TListVM : ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataService, TDataChangedMessage, TItemRequestMessage>
-        where TListVM: Framework.MauiX.ViewModels.ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataService, TDataChangedMessage, TItemRequestMessage>
+        where TListVM : Framework.MauiX.ViewModels.ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataService, TDataChangedMessage, TItemRequestMessage>
     {
         WeakReferenceMessenger.Default.Register<TListVM, TDataChangedMessage>(
             listVM, (r, m) =>
