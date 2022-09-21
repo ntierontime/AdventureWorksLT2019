@@ -99,6 +99,8 @@ builder.Services.AddDbContext<EFDbContext>(options =>
 // 3. Identity Authentication
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("Identity")));
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
 var identitySecretSection = builder.Configuration.GetSection(nameof(IdentitySecret));
 var identitySecret = identitySecretSection.Get<IdentitySecret>();
 builder.Services.Configure<IdentitySecret>(identitySecretSection);
