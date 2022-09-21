@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:fmif="clr-namespace:Framework.MauiX.Icons;assembly=Framework.MauiX"
+             xmlns:fm="clr-namespace:Framework.Models;assembly=Framework"
+             xmlns:l="clr-namespace:AdventureWorksLT2019.MauiXApp.Extensions"
+             xmlns:cs="clr-namespace:AdventureWorksLT2019.MauiXApp.Common.Services"
+             x:Class="AdventureWorksLT2019.MauiXApp.Views.ProductDescription.ListPage"
+             Title="ProductDescriptionListPage">
+    <Grid>
+        <Grid Margin="2,0,2,0" VerticalOptions="Start" HorizontalOptions="Fill">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="25" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
+            <Image>
+                <Image.Source>
+                    <FontImageSource Glyph="{x:Static fmif:MaterialIcons.Search}" FontFamily="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}"/>
+                </Image.Source>
+            </Image>
+            <Border Grid.Column="1" Style="{StaticResource TextSearchBorderStyle}">
+                <Entry x:Name="TextSearchEntry" Placeholder="{l:Localize ProductDescription}" Style="{StaticResource TextSearchEntryStyle}"
+                       ReturnCommand="{Binding Path=TextSearchCommand}" ReturnCommandParameter="{Binding Source={x:Reference TextSearchEntry},Path=Text}"></Entry>
+            </Border>
+            <Button Grid.Column="2" Style="{StaticResource AdvancedSearchButtonStyle}"
+                    Command="{Binding AdvancedSearchLaunchCommand}"
+                    />
+        </Grid>
+        <RefreshView Margin="0,40,0,0"
+            IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}"
+            VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand">
+            <CollectionView
+                x:Name="collectionView" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+                ItemsSource="{Binding Path=Result}" SelectionMode="Single" SelectedItem="{Binding Path=SelectedItem}"
+                RemainingItemsThreshold="5"
+                RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <SwipeView.LeftItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Edit"
+                                           BackgroundColor="LightPink"
+                                           Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
+                                           CommandParameter="{x:Static fm:ViewItemTemplates.Edit}"
+                                           />
+                                    <SwipeItem Text="Delete"
+                                           BackgroundColor="LightPink"
+                                           Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
+                                           CommandParameter="{x:Static fm:ViewItemTemplates.Delete}"
+                                           />
+                                    <SwipeItem Text="Details"
+                                           BackgroundColor="LightPink"
+                                           Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
+                                           CommandParameter="{x:Static fm:ViewItemTemplates.Details}"
+                                           />
+                                </SwipeItems>
+                            </SwipeView.LeftItems>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Edit"
+                                           BackgroundColor="LightPink"
+                                           Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
+                                           CommandParameter="{x:Static cs:AppShellRoutes.ProductDescriptionEditPage}"
+                                            />
+                                    <SwipeItem Text="Delete"
+                                           BackgroundColor="LightPink"
+                                           Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
+                                           CommandParameter="{x:Static cs:AppShellRoutes.ProductDescriptionDeletePage}"
+                                            />
+                                    <SwipeItem Text="Details"
+                                           BackgroundColor="LightPink"
+                                           Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
+                                           CommandParameter="{x:Static cs:AppShellRoutes.ProductDescriptionDetailsPage}"
+                                            />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Grid Padding="10" HorizontalOptions="FillAndExpand">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="60" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition Width="4*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <mct:AvatarView
+                                    Style="{StaticResource AvatarView60Style}"
+                                    Text="{Binding Avatar__}"
+                                    TextColor="Blue"
+                                    BackgroundColor="Yellow"
+                                    BorderColor="Red" />
+                                <Label
+                                    Grid.Column="1"
+                                    Style="{StaticResource TitleLabelStyle}"
+                                    Text="{Binding FirstName}" />
+                                <Label
+                                    Grid.Column="1"
+                                    Style="{StaticResource SubTitleLabelStyle}"
+                                    Text="{Binding LastName}" />
+                            </Grid>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+        <VerticalStackLayout  HorizontalOptions="End" VerticalOptions="End" Margin="0,0,20,20">
+            <Button Style="{StaticResource AddButtonStyle}"
+                    Command="{Binding LaunchItemPopupViewCommand}"
+                    CommandParameter="{x:Static fm:ViewItemTemplates.Create}"
+                    />
+            <Button Style="{StaticResource AddButtonStyle}"
+                    Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
+                    CommandParameter="{x:Static cs:AppShellRoutes.ProductDescriptionCreatePage}"
+                    />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

@@ -11,9 +11,8 @@ using System.Windows.Input;
 namespace Framework.MauiX.ViewModels;
 
 public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataService, TDataChangedMessage, TItemRequestMessage> : ObservableObject
-    where TAdvancedQuery : ObservableBaseQuery, new()
-    where TIdentifier : class
-    where TDataModel : class
+    where TAdvancedQuery : ObservableBaseQuery, IClone<TAdvancedQuery>, new()
+    where TDataModel : class, IClone<TDataModel>, ICopyTo<TDataModel>
     where TDataService : class, IDataServiceBase<TAdvancedQuery, TIdentifier, TDataModel>
     where TDataChangedMessage : ValueChangedMessageExt<TDataModel>
     where TItemRequestMessage : RequestMessage<TDataModel>, new()
@@ -23,6 +22,23 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
     {
         get => m_Query;
         set => SetProperty(ref m_Query, value);
+    }
+
+    private TAdvancedQuery m_EditingQuery = new();
+    /// <summary>
+    /// This is a copy of Query property(not same instance), will sync when TextSearchCommand(click Keyboard.Done button) or AdvancedSearchConfirmCommand(AdvancedSearchPopup.Apply button).
+    /// </summary>
+    public TAdvancedQuery EditingQuery
+    {
+        get => m_EditingQuery;
+        set => SetProperty(ref m_EditingQuery, value);
+    }
+
+    private bool m_IsBusy;
+    public bool IsBusy
+    {
+        get => m_IsBusy;
+        set => SetProperty(ref m_IsBusy, value);
     }
 
     private bool m_IsRefreshing;
@@ -94,32 +110,41 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
 
         TextSearchCommand = new Command<string>(async (text) =>
         {
-            if (Query.TextSearch != text)
+            if (EditingQuery.TextSearch != text)
             {
-                Query.TextSearch = text;
-                Query.PageIndex = 1;
+                EditingQuery.TextSearch = text;
+                EditingQuery.PageIndex = 1;
                 await DoSearch(true, true); // clear existing
             }
         });
 
         LoadMoreCommand = new Command(async () =>
         {
-            Query.PageIndex++;
+            EditingQuery.PageIndex++;
             await DoSearch(false, false); // keep existing
         });
 
         RefreshCommand = new Command(async () =>
         {
-            Query.PageIndex = 1;
+            EditingQuery.PageIndex = 1;
             await DoSearch(true, true);
         });
 
         RegisterRequestSelectedItemMessage();
     }
 
-    public virtual async Task DoSearch(bool isLoadMore, bool showRefreshing)
+    public virtual async Task DoSearch(bool isLoadMore, bool showRefreshing, bool loadIfAnyResult = true)
     {
-        if(showRefreshing)
+        Query = EditingQuery.Clone();
+
+        // for Page.OnAppearing()
+        if (IsBusy || !loadIfAnyResult && Result.Count > 0)
+        {
+            return;
+        }
+
+        IsBusy = true;
+        if (showRefreshing)
             IsRefreshing = true;
         var response = await _dataService.Search(Query, CurrentQueryOrderBySetting);
         if (response.Status == System.Net.HttpStatusCode.OK)
@@ -138,11 +163,12 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         }
         else
         {
-            if(isLoadMore)
+            if (isLoadMore)
                 Query.PageIndex--;
         }
         if (showRefreshing)
             IsRefreshing = false;
+        IsBusy = false;
     }
 
     public void AttachPopupLaunchCommands(
@@ -158,12 +184,16 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
     public void AttachAdvancedSearchPopupCommands(
         ICommand cancelCommand)
     {
-        AdvancedSearchCancelCommand = cancelCommand;
+        AdvancedSearchCancelCommand = new Command(() =>
+        {
+            EditingQuery = Query.Clone();// put back original Query if AdvancedSearch cancelled
+            cancelCommand.Execute(null);
+        });
         AdvancedSearchConfirmCommand = new Command(async () =>
         {
-            Query.PageIndex = 1;
+            EditingQuery.PageIndex = 1;
             await DoSearch(true, true);
-            AdvancedSearchCancelCommand.Execute(null);
+            cancelCommand.Execute(null);
         });
     }
 
@@ -181,14 +211,14 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         WeakReferenceMessenger.Default.Register<TListVM, TItemRequestMessage>(
             listVM, (r, m) =>
             {
-                m.Reply(listVM.SelectedItem);
+                m.Reply(listVM.SelectedItem.Clone());
                 WeakReferenceMessenger.Default.Unregister<TItemRequestMessage>(listVM);
             });
     }
 
     public abstract void RegisterItemDataChangedMessage();
     public static void RegisterItemDataChangedMessage<TListVM>(TListVM listVM)
-        where TListVM: ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataService, TDataChangedMessage, TItemRequestMessage>
+        where TListVM : ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataService, TDataChangedMessage, TItemRequestMessage>
     {
         WeakReferenceMessenger.Default.Register<TListVM, TDataChangedMessage>(
             listVM, (r, m) =>
@@ -203,7 +233,7 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
                 }
                 else if (m.ItemView == ViewItemTemplates.Edit)
                 {
-
+                    m.Value.CopyTo(listVM.SelectedItem);
                 }
 
                 WeakReferenceMessenger.Default.Unregister<TDataChangedMessage>(listVM);

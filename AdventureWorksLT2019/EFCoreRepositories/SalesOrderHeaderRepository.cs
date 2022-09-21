@@ -47,7 +47,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     (!query.CustomerID.HasValue || Customer.CustomerID == query.CustomerID)
                     &&
 
-(query.OnlineOrderFlag == BooleanSearchOptions.All || query.OnlineOrderFlag == BooleanSearchOptions.True && t.OnlineOrderFlag || query.OnlineOrderFlag == BooleanSearchOptions.False && !t.OnlineOrderFlag)
+                    (query.OnlineOrderFlag == BooleanSearchOptions.All || query.OnlineOrderFlag == BooleanSearchOptions.True && t.OnlineOrderFlag || query.OnlineOrderFlag == BooleanSearchOptions.False && !t.OnlineOrderFlag)
                     &&
 
                     (!query.OrderDateRangeLower.HasValue && !query.OrderDateRangeUpper.HasValue || (!query.OrderDateRangeLower.HasValue || t.OrderDate >= query.OrderDateRangeLower) && (!query.OrderDateRangeLower.HasValue || t.OrderDate <= query.OrderDateRangeUpper))
@@ -747,7 +747,7 @@ private IQueryable<SalesOrderHeaderDataModel.DefaultView> GetIQueryableAsBulkUpd
                     (!query.CustomerID.HasValue || Customer.CustomerID == query.CustomerID)
                     &&
 
-(query.OnlineOrderFlag == BooleanSearchOptions.All || query.OnlineOrderFlag == BooleanSearchOptions.True && t.OnlineOrderFlag || query.OnlineOrderFlag == BooleanSearchOptions.False && !t.OnlineOrderFlag)
+                    (query.OnlineOrderFlag == BooleanSearchOptions.All || query.OnlineOrderFlag == BooleanSearchOptions.True && t.OnlineOrderFlag || query.OnlineOrderFlag == BooleanSearchOptions.False && !t.OnlineOrderFlag)
                     &&
 
                     (!query.OrderDateRangeLower.HasValue && !query.OrderDateRangeUpper.HasValue || (!query.OrderDateRangeLower.HasValue || t.OrderDate >= query.OrderDateRangeLower) && (!query.OrderDateRangeLower.HasValue || t.OrderDate <= query.OrderDateRangeUpper))

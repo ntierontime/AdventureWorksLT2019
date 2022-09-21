@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:l="clr-namespace:AdventureWorksLT2019.MauiXApp.Extensions"
+             CanBeDismissedByTappingOutsideOfPopup="False"
+             x:Class="AdventureWorksLT2019.MauiXApp.Views.Product.AdvancedSearchPopup">
+    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0,0,0,50">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
+                Text="{l:Localize ProductCategoryID}" />
+            <Entry Grid.Row="0" Grid.Column="1"
+                Text="{Binding ProductCategoryID}"
+                HorizontalOptions="End"
+                VerticalOptions="Center" />
+            <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
+                Text="{l:Localize ProductCategoryID}" />
+            <Entry Grid.Row="1" Grid.Column="1"
+                Text="{Binding ParentID}"
+                HorizontalOptions="End"
+                VerticalOptions="Center" />
+            <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
+                Text="{l:Localize ProductModelID}" />
+            <Entry Grid.Row="2" Grid.Column="1"
+                Text="{Binding ProductModelID}"
+                HorizontalOptions="End"
+                VerticalOptions="Center" />
+            <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
+                Text="{l:Localize SellStartDate}" />
+            <Picker Grid.Row="3" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
+                ItemsSource="{Binding Path=DateTimeRangePast}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding Path=SelectedSellStartDateRange}" />
+            <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
+                Text="{l:Localize SellEndDate}" />
+            <Picker Grid.Row="4" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
+                ItemsSource="{Binding Path=DateTimeRangePast}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding Path=SelectedSellEndDateRange}" />
+            <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
+                Text="{l:Localize DiscontinuedDate}" />
+            <Picker Grid.Row="5" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
+                ItemsSource="{Binding Path=DateTimeRangePast}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding Path=SelectedDiscontinuedDateRange}" />
+            <Label Grid.Row="6" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
+                Text="{l:Localize ModifiedDate}" />
+            <Picker Grid.Row="6" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
+                ItemsSource="{Binding Path=DateTimeRangePast}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding Path=SelectedModifiedDateRange}" />
+        </Grid>
+        <mct:UniformItemsLayout VerticalOptions="End">
+            <Button
+                    Command="{Binding AdvancedSearchConfirmCommand}"
+                    Text="{l:Localize Apply}" />
+            <Button
+                    Command="{Binding AdvancedSearchCancelCommand}"
+                    Text="{l:Localize Cancel}" />
+        </mct:UniformItemsLayout>
+    </Grid>
+</mct:Popup>

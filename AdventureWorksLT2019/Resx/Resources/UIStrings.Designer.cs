@@ -897,6 +897,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to "Build Version"".
+        /// </summary>
+        public static string BuildVersion {
+            get {
+                return ResourceManager.GetString("BuildVersion", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to "Error Log ID"".
         /// </summary>
         public static string ErrorLogID {
@@ -1019,6 +1028,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string The_length_of_ErrorMessage_should_be_1_to_4000 {
             get {
                 return ResourceManager.GetString("The_length_of_ErrorMessage_should_be_1_to_4000", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Error Log"".
+        /// </summary>
+        public static string ErrorLog {
+            get {
+                return ResourceManager.GetString("ErrorLog", resourceCulture);
             }
         }
 
@@ -1154,6 +1172,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string rowguid_is_required {
             get {
                 return ResourceManager.GetString("rowguid_is_required", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Address"".
+        /// </summary>
+        public static string Address {
+            get {
+                return ResourceManager.GetString("Address", resourceCulture);
             }
         }
 
@@ -1419,6 +1446,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to "Customer"".
+        /// </summary>
+        public static string Customer {
+            get {
+                return ResourceManager.GetString("Customer", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to "Customer Addresses  Via  Customer ID"".
         /// </summary>
         public static string Section_CustomerAddresses_Via_CustomerID {
@@ -1473,20 +1509,11 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to "Customer"".
+        ///   Looks up a localized string similar to "Customer Address"".
         /// </summary>
-        public static string Customer {
+        public static string CustomerAddress {
             get {
-                return ResourceManager.GetString("Customer", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to "Address"".
-        /// </summary>
-        public static string Address {
-            get {
-                return ResourceManager.GetString("Address", resourceCulture);
+                return ResourceManager.GetString("CustomerAddress", resourceCulture);
             }
         }
 
@@ -1716,6 +1743,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to "Product"".
+        /// </summary>
+        public static string Product {
+            get {
+                return ResourceManager.GetString("Product", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to "More Details"".
         /// </summary>
         public static string Tab_MoreDetails {
@@ -1806,6 +1842,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to "Product Description"".
+        /// </summary>
+        public static string ProductDescription {
+            get {
+                return ResourceManager.GetString("ProductDescription", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to "Product Model Product Descriptions  Via  Product Description ID"".
         /// </summary>
         public static string Section_ProductModelProductDescriptions_Via_ProductDescriptionID {
@@ -1878,11 +1923,11 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to "Product Description"".
+        ///   Looks up a localized string similar to "Product Model Product Description"".
         /// </summary>
-        public static string ProductDescription {
+        public static string ProductModelProductDescription {
             get {
-                return ResourceManager.GetString("ProductDescription", resourceCulture);
+                return ResourceManager.GetString("ProductModelProductDescription", resourceCulture);
             }
         }
 
@@ -1995,15 +2040,6 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to "Product"".
-        /// </summary>
-        public static string Product {
-            get {
-                return ResourceManager.GetString("Product", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to "Sales Order Number"".
         /// </summary>
         public static string SalesOrderNumber {
@@ -2036,6 +2072,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string ShipTo {
             get {
                 return ResourceManager.GetString("ShipTo", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Sales Order Detail"".
+        /// </summary>
+        public static string SalesOrderDetail {
+            get {
+                return ResourceManager.GetString("SalesOrderDetail", resourceCulture);
             }
         }
 

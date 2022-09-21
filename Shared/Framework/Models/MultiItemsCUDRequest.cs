@@ -1,7 +1,6 @@
 namespace Framework.Models
 {
     public class MultiItemsCUDRequest<TIdentifier, TItem>
-        where TIdentifier : class
         where TItem : class
     {
         public List<TIdentifier>? DeleteItems { get; set; }

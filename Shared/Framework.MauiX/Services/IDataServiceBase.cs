@@ -14,11 +14,10 @@ public interface IDataServiceBase<TIdentifier, TDataModel>
 }
 
 public interface IDataServiceBase<TAdvancedQuery, TIdentifier, TDataModel> : IDataServiceBase<TIdentifier, TDataModel>
-    where TIdentifier : class
     where TDataModel : class
 {
     Task<Response> BulkDelete(List<TIdentifier> ids);
-    Task<ListResponse<TDataModel[]>> BulkUpdate(BatchActionRequest<TIdentifier, TDataModel> data);
+    // Task<ListResponse<TDataModel[]>> BulkUpdate(BatchActionRequest<TIdentifier, TDataModel> data);
     Task<Response<MultiItemsCUDRequest<TIdentifier, TDataModel>>> MultiItemsCUD(MultiItemsCUDRequest<TIdentifier, TDataModel> input);
     Task<ListResponse<TDataModel[]>> Search(TAdvancedQuery query, ObservableQueryOrderBySetting queryOrderBySetting);
 

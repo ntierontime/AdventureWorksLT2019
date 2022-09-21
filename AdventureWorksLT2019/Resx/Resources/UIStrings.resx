@@ -397,6 +397,9 @@
   <data name="Name" xml:space="preserve">
     <value>(en)Name</value>
   </data>
+  <data name="BuildVersion" xml:space="preserve">
+    <value>(en)Build Version</value>
+  </data>
   <data name="ErrorLogID" xml:space="preserve">
     <value>(en)Error Log ID</value>
   </data>
@@ -438,6 +441,9 @@
   </data>
   <data name="The_length_of_ErrorMessage_should_be_1_to_4000" xml:space="preserve">
     <value>(en)The length of ErrorMessage should be 1 to 4000</value>
+  </data>
+  <data name="ErrorLog" xml:space="preserve">
+    <value>(en)Error Log</value>
   </data>
   <data name="AddressID" xml:space="preserve">
     <value>(en)Address ID</value>
@@ -483,6 +489,9 @@
   </data>
   <data name="rowguid_is_required" xml:space="preserve">
     <value>(en)rowguid is required</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>(en)Address</value>
   </data>
   <data name="Tab_Lists" xml:space="preserve">
     <value>(en)Lists</value>
@@ -571,6 +580,9 @@
   <data name="The_length_of_PasswordSalt_should_be_1_to_10" xml:space="preserve">
     <value>(en)The length of PasswordSalt should be 1 to 10</value>
   </data>
+  <data name="Customer" xml:space="preserve">
+    <value>(en)Customer</value>
+  </data>
   <data name="Section_CustomerAddresses_Via_CustomerID" xml:space="preserve">
     <value>(en)Customer Addresses  Via  Customer ID</value>
   </data>
@@ -589,11 +601,8 @@
   <data name="The_length_of_AddressType_should_be_1_to_50" xml:space="preserve">
     <value>(en)The length of AddressType should be 1 to 50</value>
   </data>
-  <data name="Customer" xml:space="preserve">
-    <value>(en)Customer</value>
-  </data>
-  <data name="Address" xml:space="preserve">
-    <value>(en)Address</value>
+  <data name="CustomerAddress" xml:space="preserve">
+    <value>(en)Customer Address</value>
   </data>
   <data name="ProductID" xml:space="preserve">
     <value>(en)Product ID</value>
@@ -670,6 +679,9 @@
   <data name="Parent" xml:space="preserve">
     <value>(en)Product Category</value>
   </data>
+  <data name="Product" xml:space="preserve">
+    <value>(en)Product</value>
+  </data>
   <data name="Tab_MoreDetails" xml:space="preserve">
     <value>(en)More Details</value>
   </data>
@@ -700,6 +712,9 @@
   <data name="The_length_of_Description_should_be_1_to_400" xml:space="preserve">
     <value>(en)The length of Description should be 1 to 400</value>
   </data>
+  <data name="ProductDescription" xml:space="preserve">
+    <value>(en)Product Description</value>
+  </data>
   <data name="Section_ProductModelProductDescriptions_Via_ProductDescriptionID" xml:space="preserve">
     <value>(en)Product Model Product Descriptions  Via  Product Description ID</value>
   </data>
@@ -724,8 +739,8 @@
   <data name="The_length_of_Culture_should_be_1_to_6" xml:space="preserve">
     <value>(en)The length of Culture should be 1 to 6</value>
   </data>
-  <data name="ProductDescription" xml:space="preserve">
-    <value>(en)Product Description</value>
+  <data name="ProductModelProductDescription" xml:space="preserve">
+    <value>(en)Product Model Product Description</value>
   </data>
   <data name="SalesOrderID" xml:space="preserve">
     <value>(en)Sales Order Header</value>
@@ -763,9 +778,6 @@
   <data name="SalesOrderHeader" xml:space="preserve">
     <value>(en)Sales Order Header</value>
   </data>
-  <data name="Product" xml:space="preserve">
-    <value>(en)Product</value>
-  </data>
   <data name="SalesOrderNumber" xml:space="preserve">
     <value>(en)Sales Order Number</value>
   </data>
@@ -777,6 +789,9 @@
   </data>
   <data name="ShipTo" xml:space="preserve">
     <value>(en)Address</value>
+  </data>
+  <data name="SalesOrderDetail" xml:space="preserve">
+    <value>(en)Sales Order Detail</value>
   </data>
   <data name="Section_Product" xml:space="preserve">
     <value>(en)Product</value>
