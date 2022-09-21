@@ -102,6 +102,11 @@ public abstract class SQLiteTableRepositoryBase<TItem, TAdvancedQuery, TIIdentif
                                    select (TItem)t).ToList());
     }
 
+    /// <summary>
+    /// this expression will be used in Search(TAdvancedQuery query) to filter data in SQLite table
+    /// </summary>
+    /// <param name="criteria"></param>
+    /// <returns></returns>
     protected abstract Expression<Func<TItem, bool>> GetSQLiteTableQueryPredicateByAdvancedQuery(TAdvancedQuery criteria);
 
 }

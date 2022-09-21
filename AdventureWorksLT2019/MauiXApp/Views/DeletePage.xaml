@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:fmif="clr-namespace:Framework.MauiX.Icons;assembly=Framework.MauiX"
              xmlns:l="clr-namespace:AdventureWorksLT2019.MauiXApp.Extensions"
-	         CanBeDismissedByTappingOutsideOfPopup="False"
-             x:Class="AdventureWorksLT2019.MauiXApp.Views.Customer.CreatePopup">
+             x:Class="AdventureWorksLT2019.MauiXApp.Views.Customer.DeletePage"
+             Title="{l:Localize Delete}">
     <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
         <VerticalStackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0,0,0,50">
             <HorizontalStackLayout HorizontalOptions="FillAndExpand">
                 <Label 
-                Text="{l:Localize NameStyle}"
+                    Text="{l:Localize NameStyle}"
                     HorizontalOptions="Start" 
                     VerticalOptions="Center" />
                 <Switch x:Name="switch"
+                    IsEnabled="False"
                     IsToggled="{Binding Item.NameStyle}"
                     HorizontalOptions="End"
                     VerticalOptions="Center" />
@@ -22,10 +24,11 @@
                     Text="{l:Localize ModifiedDate}"
                     HorizontalOptions="Start" 
                     VerticalOptions="Center" />
-                <DatePicker 
-                    Date="{Binding Item.ModifiedDate}" 
+                <Entry 
+                    Text="{Binding Item.ModifiedDate}"
+                    IsReadOnly="True"
                     HorizontalOptions="End"
-                    VerticalOptions="Center" />
+                    VerticalOptions="Center"/>
             </HorizontalStackLayout>
             <HorizontalStackLayout HorizontalOptions="FillAndExpand">
                 <Label 
@@ -34,17 +37,18 @@
                     VerticalOptions="Center" />
                 <Entry 
                     Text="{Binding Item.Title}"
+                    IsReadOnly="True"
                     HorizontalOptions="End"
-                    VerticalOptions="Center" />
+                    VerticalOptions="Center"/>
             </HorizontalStackLayout>
         </VerticalStackLayout>
         <mct:UniformItemsLayout VerticalOptions="End">
             <Button
-			    Command="{Binding CreateConfirmCommand}"
-			    Text="{l:Localize Save}" />
+			    Command="{Binding DeleteConfirmCommand}"
+			    Text="{l:Localize Delete}" />
             <Button
-			    Command="{Binding CreateCancelCommand}"
+			    Command="{Binding DeleteCancelCommand}"
                 Text="{l:Localize Cancel}" />
         </mct:UniformItemsLayout>
     </Grid>
-</mct:Popup>
+</ContentPage>

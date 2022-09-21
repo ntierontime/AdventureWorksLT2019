@@ -7,17 +7,16 @@ public class CustomerDataModel : ObservableValidator, Framework.Models.IClone<Cu
 {
     private string GetAvatar()
     {
-        return (string.IsNullOrEmpty(FirstName) ? "" : FirstName[0].ToString()) + (string.IsNullOrEmpty(LastName) ? "" : LastName[0].ToString());
+        if (string.IsNullOrEmpty(FirstName) || FirstName.Length == 0)
+            return "?";
+        if (FirstName.Length == 1)
+            return FirstName.Substring(0, 1);
+        return FirstName.Substring(0, 2);
     }
-
-
 
     public string Avatar__
     {
-        get
-        {
-            return GetAvatar();
-        }
+        get => GetAvatar();
     }
 
     protected Framework.Models.ItemUIStatus m_ItemUIStatus______;

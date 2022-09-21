@@ -1,2 +1,2 @@
 ﻿TABLE_SCHEMA,TABLE_NAME,EntityReferenceSimpleFullPath,PKTypeDeclarationContextName,DuplicateIDPropertyFullPath,IsLeftJoin,InLinqJoin,IDInCriteria,IDInDefaultDataView,UniqueConstraintInDefaultDataView,PropertiesInDefaultDataView,CreatedDate
-SalesLT,ProductCategory,\ParentProductCategoryID,ProductCategory,,False,True,True,True,True,,9/17/2022 12:00:00 AM
+SalesLT,ProductCategory,\ParentProductCategoryID,ProductCategory,,False,True,True,True,True,,9/19/2022 12:00:00 AM

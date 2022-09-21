@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <Style x:Key="ReadonlySwitchStyle" TargetType="Switch">
+        <Setter Property="IsEnabled" Value="False" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="End" />
+    </Style>
+    <Style x:Key="ValueSwitchStyle" TargetType="Switch">
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="End" />
+    </Style>
+</ResourceDictionary>

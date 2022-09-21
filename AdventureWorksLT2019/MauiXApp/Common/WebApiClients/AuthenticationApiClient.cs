@@ -1,13 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using System.Net.Http;
-using Newtonsoft.Json;
-using System.Net.Http.Headers;
-using System.Text;
-
 namespace AdventureWorksLT2019.MauiXApp.Common.WebApiClients;
 
 public partial class AuthenticationApiClient : Framework.MauiX.WebApiClientBase

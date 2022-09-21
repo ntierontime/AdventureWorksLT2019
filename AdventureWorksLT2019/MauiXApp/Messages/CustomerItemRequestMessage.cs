@@ -2,7 +2,7 @@
 
 namespace AdventureWorksLT2019.MauiXApp.Messages;
 
-public sealed class CustomerItemRequestMessage : RequestMessage<DataModels.CustomerDataModel>
+public sealed class CustomerItemRequestMessage : RequestMessage<AdventureWorksLT2019.MauiXApp.DataModels.CustomerDataModel>
 {
 
 }

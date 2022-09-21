@@ -1,4 +1,4 @@
-namespace AdventureWorksLT2019.MauiXApp.Views.Common;
+namespace AdventureWorksLT2019.MauiXApp.Views;
 
 public partial class SettingsPage : ContentPage
 {

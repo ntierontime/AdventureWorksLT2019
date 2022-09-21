@@ -127,6 +127,7 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         });
 
         RegisterRequestSelectedItemMessage();
+        RegisterItemDataChangedMessage();
     }
 
     public virtual async Task DoSearch(bool isLoadMore, bool showRefreshing, bool loadIfAnyResult = true)
@@ -208,7 +209,7 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
             listVM, (r, m) =>
             {
                 m.Reply(listVM.SelectedItem.Clone());
-                WeakReferenceMessenger.Default.Unregister<TItemRequestMessage>(listVM);
+                // WeakReferenceMessenger.Default.Unregister<TItemRequestMessage>(listVM);
             });
     }
 
@@ -232,7 +233,7 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
                     m.Value.CopyTo(listVM.SelectedItem);
                 }
 
-                WeakReferenceMessenger.Default.Unregister<TDataChangedMessage>(listVM);
+                // WeakReferenceMessenger.Default.Unregister<TDataChangedMessage>(listVM);
             });
     }
 }

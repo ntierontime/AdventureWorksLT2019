@@ -1,4 +1,4 @@
-﻿using AdventureWorksLT2019.MauiXApp.Views.Common;
+﻿using AdventureWorksLT2019.MauiXApp.Views;
 using Microsoft.Maui.Controls;
 using System.Windows.Input;
 
@@ -57,10 +57,10 @@ public class AppShellService
 
         // SettingsPage
         AddFlyoutItem(
-            nameof(AdventureWorksLT2019.MauiXApp.Views.Common.SettingsPage),
-            typeof(AdventureWorksLT2019.MauiXApp.Views.Common.SettingsPage),
+            nameof(AdventureWorksLT2019.MauiXApp.Views.SettingsPage),
+            typeof(AdventureWorksLT2019.MauiXApp.Views.SettingsPage),
             AdventureWorksLT2019.Resx.Resources.UIStrings.Settings);
-
+        
         var logoutMenuItem = new MenuItem
         {
             Text = AdventureWorksLT2019.Resx.Resources.UIStrings.LogOut,
@@ -76,8 +76,8 @@ public class AppShellService
         };
         AppShell.Current.Items.Add(logoutMenuItem);
 
-        RegisterRoutes();
-
+        // RegisterRoutes();
+        AddCRUDPagesShellContents();
         // TODO: for testing purpose
         gotoRoute = AdventureWorksLT2019.MauiXApp.Common.Services.AppShellRoutes.CustomerListPage;
 
@@ -96,33 +96,41 @@ public class AppShellService
         AddFlyoutItem(AdventureWorksLT2019.MauiXApp.Common.Services.AppShellRoutes.CustomerListPage, typeof(AdventureWorksLT2019.MauiXApp.Views.Customer.ListPage), AdventureWorksLT2019.Resx.Resources.UIStrings.Customer);
     }
 
+    public static void AddCRUDPagesShellContents()
+    {
+        AddShellContent(false, AdventureWorksLT2019.MauiXApp.Common.Services.AppShellRoutes.CustomerCreatePage, typeof(AdventureWorksLT2019.MauiXApp.Views.Customer.CreatePage), AdventureWorksLT2019.Resx.Resources.UIStrings.Create_New);
+        AddShellContent(false, AdventureWorksLT2019.MauiXApp.Common.Services.AppShellRoutes.CustomerDeletePage, typeof(AdventureWorksLT2019.MauiXApp.Views.Customer.DeletePage), AdventureWorksLT2019.Resx.Resources.UIStrings.Delete);
+        AddShellContent(false, AdventureWorksLT2019.MauiXApp.Common.Services.AppShellRoutes.CustomerDetailsPage, typeof(AdventureWorksLT2019.MauiXApp.Views.Customer.DetailsPage), AdventureWorksLT2019.Resx.Resources.UIStrings.Details);
+        AddShellContent(false, AdventureWorksLT2019.MauiXApp.Common.Services.AppShellRoutes.CustomerEditPage, typeof(AdventureWorksLT2019.MauiXApp.Views.Customer.EditPage), AdventureWorksLT2019.Resx.Resources.UIStrings.Edit);
+    }
+
     /// <summary>
     /// Not in flyout menu
     /// </summary>
     public static void RegisterRoutes()
     {
-        Routing.RegisterRoute(AdventureWorksLT2019.MauiXApp.Common.Services.AppShellRoutes.CustomerCreatePage, typeof(AdventureWorksLT2019.MauiXApp.Views.Customer.CreatePage));
-        Routing.RegisterRoute(AdventureWorksLT2019.MauiXApp.Common.Services.AppShellRoutes.CustomerEditPage, typeof(AdventureWorksLT2019.MauiXApp.Views.Customer.EditPage));
-        Routing.RegisterRoute(AdventureWorksLT2019.MauiXApp.Common.Services.AppShellRoutes.CustomerDeletePage, typeof(AdventureWorksLT2019.MauiXApp.Views.Customer.DeletePage));
-        Routing.RegisterRoute(AdventureWorksLT2019.MauiXApp.Common.Services.AppShellRoutes.CustomerDetailsPage, typeof(AdventureWorksLT2019.MauiXApp.Views.Customer.DetailsPage));
+        //Routing.RegisterRoute(AdventureWorksLT2019.MauiXApp.Common.Services.AppShellRoutes.CustomerCreatePage, typeof(AdventureWorksLT2019.MauiXApp.Views.Customer.CreatePage));
+        //Routing.RegisterRoute(AdventureWorksLT2019.MauiXApp.Common.Services.AppShellRoutes.CustomerEditPage, typeof(AdventureWorksLT2019.MauiXApp.Views.Customer.EditPage));
+        //Routing.RegisterRoute(AdventureWorksLT2019.MauiXApp.Common.Services.AppShellRoutes.CustomerDeletePage, typeof(AdventureWorksLT2019.MauiXApp.Views.Customer.DeletePage));
+        //Routing.RegisterRoute(AdventureWorksLT2019.MauiXApp.Common.Services.AppShellRoutes.CustomerDetailsPage, typeof(AdventureWorksLT2019.MauiXApp.Views.Customer.DetailsPage));
     }
 
-    // this is to add table related List Page
-    private static void AddFlyoutItem(string tableName, string route, Type pageType, string title)
+    private static void AddShellContent(bool flyoutItemIsVisible, string route, Type pageType, string title, FlyoutBehavior flyoutBehavior = FlyoutBehavior.Disabled)
     {
-        AddFlyoutItem(tableName + route, pageType, title);
-    }
+        var thePage = AppShell.Current.Items.Where(f => f.Route == route).FirstOrDefault();
+        if (thePage != null) AppShell.Current.Items.Remove(thePage);
 
-    private static void AddShellContent(bool flyoutItemIsVisible, string route, Type pageType, string title)
-    {
         var shellContent = new ShellContent
         {
             FlyoutItemIsVisible = flyoutItemIsVisible,
             Route = route,
             ContentTemplate = new DataTemplate(pageType),
-            Title = title,
+            Title = title
         };
-        AppShell.Current.Items.Add(shellContent);
+        if (!AppShell.Current.Items.Contains(shellContent))
+        {
+            AppShell.Current.Items.Add(shellContent);
+        }
     }
 
     private static void AddFlyoutItem(string route, Type pageType, string title)

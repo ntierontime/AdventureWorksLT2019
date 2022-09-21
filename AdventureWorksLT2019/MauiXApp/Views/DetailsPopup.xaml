@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:l="clr-namespace:AdventureWorksLT2019.MauiXApp.Extensions"
+	         CanBeDismissedByTappingOutsideOfPopup="False"
+             x:Class="AdventureWorksLT2019.MauiXApp.Views.Customer.DetailsPopup">
+    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <VerticalStackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0,0,0,50">
+            <HorizontalStackLayout HorizontalOptions="FillAndExpand">
+                <Label 
+                    Text="{l:Localize NameStyle}"
+                    HorizontalOptions="Start" 
+                    VerticalOptions="Center" />
+                <Switch x:Name="switch"
+                    IsEnabled="False"
+                    IsToggled="{Binding Item.NameStyle}"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout HorizontalOptions="FillAndExpand">
+                <Label 
+                    Text="{l:Localize ModifiedDate}"
+                    HorizontalOptions="Start" 
+                    VerticalOptions="Center" />
+                <Entry 
+                    Text="{Binding Item.ModifiedDate}"
+                    IsReadOnly="True"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout HorizontalOptions="FillAndExpand">
+                <Label 
+                    Text="{l:Localize Title}"
+                    HorizontalOptions="Start" 
+                    VerticalOptions="Center" />
+                <Entry 
+                    Text="{Binding Item.Title}"
+                    IsReadOnly="True"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+        <mct:UniformItemsLayout VerticalOptions="End">
+            <Button
+			    Command="{Binding DetailsCloseCommand}"
+                Text="{l:Localize Cancel}" />
+        </mct:UniformItemsLayout>
+    </Grid>
+</mct:Popup>

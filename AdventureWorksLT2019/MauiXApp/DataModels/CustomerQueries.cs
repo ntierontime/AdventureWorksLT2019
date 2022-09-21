@@ -17,7 +17,7 @@ public class CustomerIdentifier
 
 public class CustomerAdvancedQuery : Framework.MauiX.DataModels.ObservableBaseQuery, Framework.Models.IClone<CustomerAdvancedQuery>
 {
-    private string m_NameStyle = "All";
+    private string m_NameStyle = Framework.Models.BooleanSearchOptions.All.ToString();
     public string NameStyle
     {
         get => m_NameStyle;

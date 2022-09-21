@@ -17,7 +17,7 @@ public class FirstTimeUserVM : ObservableObject
 
     private async void OnSkip()
     {
-        await Common.Services.AppShellService.GoToAbsoluteAsync(nameof(AdventureWorksLT2019.MauiXApp.Views.MainPage));
+        await AdventureWorksLT2019.MauiXApp.Common.Services.AppShellService.GoToAbsoluteAsync(nameof(AdventureWorksLT2019.MauiXApp.Views.MainPage));
     }
     private bool CanSkip()
     {
@@ -29,7 +29,7 @@ public class FirstTimeUserVM : ObservableObject
     private async void OnDone()
     {
         await _userService.SetUserProfileCompletedAsync();
-        await Common.Services.AppShellService.GoToAbsoluteAsync(nameof(AdventureWorksLT2019.MauiXApp.Views.MainPage));
+        await AdventureWorksLT2019.MauiXApp.Common.Services.AppShellService.GoToAbsoluteAsync(nameof(AdventureWorksLT2019.MauiXApp.Views.MainPage));
     }
     private bool CanDone()
     {

@@ -42,7 +42,6 @@ public partial class ListPage : ContentPage
             return;
         }
 
-        viewModel.RegisterItemDataChangedMessage();
         if (itemView == Framework.Models.ViewItemTemplates.Edit)
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.Customer.EditPopup();

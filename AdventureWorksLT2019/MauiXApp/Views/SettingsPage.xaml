@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Layouts;assembly=CommunityToolkit.Maui"
              xmlns:l="clr-namespace:AdventureWorksLT2019.MauiXApp.Extensions"
-             x:Class="AdventureWorksLT2019.MauiXApp.Views.Common.SettingsPage"
+             x:Class="AdventureWorksLT2019.MauiXApp.Views.SettingsPage"
              Title="{l:Localize Settings}">
     <VerticalStackLayout>
         <mct:UniformItemsLayout x:Name="UIL2C" VerticalOptions="Start" MaxColumns="2">

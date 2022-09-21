@@ -2,9 +2,9 @@
 
 namespace AdventureWorksLT2019.MauiXApp.Messages;
 
-public sealed class CustomerItemChangedMessage : Framework.MauiX.ComponentModels.ValueChangedMessageExt<DataModels.CustomerDataModel>
+public sealed class CustomerItemChangedMessage : Framework.MauiX.ComponentModels.ValueChangedMessageExt<AdventureWorksLT2019.MauiXApp.DataModels.CustomerDataModel>
 {
-    public CustomerItemChangedMessage(DataModels.CustomerDataModel value, Framework.Models.ViewItemTemplates itemView) : base(value, itemView)
+    public CustomerItemChangedMessage(AdventureWorksLT2019.MauiXApp.DataModels.CustomerDataModel value, Framework.Models.ViewItemTemplates itemView) : base(value, itemView)
     {
     }
 }

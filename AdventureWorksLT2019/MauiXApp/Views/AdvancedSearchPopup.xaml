@@ -6,12 +6,12 @@
 	         CanBeDismissedByTappingOutsideOfPopup="False"
              x:Class="AdventureWorksLT2019.MauiXApp.Views.Customer.AdvancedSearchPopup">
     <Grid>
-        <VerticalStackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0,0,0,50">
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0,0,0,50">
+            <Label Style="{StaticResource SearchNameLabelStyle}"
+                Text="{l:Localize NameStyle}"
+                VerticalOptions="Center" 
+                HorizontalOptions="Start" />
             <HorizontalStackLayout RadioButtonGroup.SelectedValue="{Binding EditingQuery.NameStyle}" RadioButtonGroup.GroupName="NameStyle" HorizontalOptions="FillAndExpand">
-                <Label 
-                    Text="{l:Localize NameStyle}"
-                    VerticalOptions="Center" 
-                    HorizontalOptions="Start" />
                 <RadioButton Content="{l:Localize All}" Value="All"
                      GroupName="NameStyle" HorizontalOptions="End" />
                 <RadioButton Content="True" Value="True"
@@ -19,19 +19,17 @@
                 <RadioButton Content="False" Value="False"
                      GroupName="NameStyle" HorizontalOptions="End" />
             </HorizontalStackLayout>
-            <HorizontalStackLayout HorizontalOptions="FillAndExpand">
-                <Label 
-                    Text="{l:Localize ModifiedDate}"
-                    VerticalOptions="Center" 
-                    HorizontalOptions="Start" />
-                <Picker 
-                    ItemsSource="{Binding Path=DateTimeRangePast}" 
-                    ItemDisplayBinding="{Binding Name}" 
-                    SelectedItem="{Binding Path=SelectedModifiedDateRange}"
-                    HorizontalOptions="End"
-                    VerticalOptions="Center" />
-            </HorizontalStackLayout>
-        </VerticalStackLayout>
+            <Label 
+                Text="{l:Localize ModifiedDate}"
+                VerticalOptions="Center" 
+                HorizontalOptions="Start" />
+            <Picker 
+                ItemsSource="{Binding Path=DateTimeRangePast}" 
+                ItemDisplayBinding="{Binding Name}" 
+                SelectedItem="{Binding Path=SelectedModifiedDateRange}"
+                HorizontalOptions="End"
+                VerticalOptions="Center" />
+        </Grid>
         <mct:UniformItemsLayout VerticalOptions="End">
             <Button
 			        Command="{Binding AdvancedSearchConfirmCommand}"
