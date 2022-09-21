@@ -1,38 +1,37 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 17
+# Visual Studio Version 17
 VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{5CF5D7F5-8BB0-4B42-B719-18E7A86EB35E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureWorksLT2019.MauiXApp", "AdventureWorksLT2019\MauiXApp\AdventureWorksLT2019.MauiXApp.csproj", "{47B78B6B-19BE-4E13-8911-507A8E4D1482}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventureWorksLT2019.MauiXApp", "AdventureWorksLT2019\MauiXApp\AdventureWorksLT2019.MauiXApp.csproj", "{47B78B6B-19BE-4E13-8911-507A8E4D1482}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureWorksLT2019.EFCoreContext", "AdventureWorksLT2019\EFCoreContext\AdventureWorksLT2019.EFCoreContext.csproj", "{7EFF5C1B-E49D-4750-9766-51B89E46CBB0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventureWorksLT2019.EFCoreContext", "AdventureWorksLT2019\EFCoreContext\AdventureWorksLT2019.EFCoreContext.csproj", "{7EFF5C1B-E49D-4750-9766-51B89E46CBB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureWorksLT2019.EFCoreRepositories", "AdventureWorksLT2019\EFCoreRepositories\AdventureWorksLT2019.EFCoreRepositories.csproj", "{30C775D4-8204-47B8-8604-484DD2E157B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventureWorksLT2019.EFCoreRepositories", "AdventureWorksLT2019\EFCoreRepositories\AdventureWorksLT2019.EFCoreRepositories.csproj", "{30C775D4-8204-47B8-8604-484DD2E157B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureWorksLT2019.MvcWebApp", "AdventureWorksLT2019\MvcWebApp\AdventureWorksLT2019.MvcWebApp.csproj", "{2E1756C3-6739-4E42-A702-AB9E7B7EE9B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventureWorksLT2019.MvcWebApp", "AdventureWorksLT2019\MvcWebApp\AdventureWorksLT2019.MvcWebApp.csproj", "{2E1756C3-6739-4E42-A702-AB9E7B7EE9B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureWorksLT2019.Models", "AdventureWorksLT2019\Models\AdventureWorksLT2019.Models.csproj", "{70732AA1-286B-4079-837C-A90000C836C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventureWorksLT2019.Models", "AdventureWorksLT2019\Models\AdventureWorksLT2019.Models.csproj", "{70732AA1-286B-4079-837C-A90000C836C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureWorksLT2019.RepositoryContracts", "AdventureWorksLT2019\RepositoryContracts\AdventureWorksLT2019.RepositoryContracts.csproj", "{B2E658A9-41F2-45FB-8B8E-94D139E0E6B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventureWorksLT2019.RepositoryContracts", "AdventureWorksLT2019\RepositoryContracts\AdventureWorksLT2019.RepositoryContracts.csproj", "{B2E658A9-41F2-45FB-8B8E-94D139E0E6B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureWorksLT2019.Resx", "AdventureWorksLT2019\Resx\AdventureWorksLT2019.Resx.csproj", "{4E121412-B7DE-41C0-ADC7-420146022A2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventureWorksLT2019.Resx", "AdventureWorksLT2019\Resx\AdventureWorksLT2019.Resx.csproj", "{4E121412-B7DE-41C0-ADC7-420146022A2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureWorksLT2019.ServiceContracts", "AdventureWorksLT2019\ServiceContracts\AdventureWorksLT2019.ServiceContracts.csproj", "{9BD9BF40-3EA5-4FD2-97A7-1BA9123B9804}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventureWorksLT2019.ServiceContracts", "AdventureWorksLT2019\ServiceContracts\AdventureWorksLT2019.ServiceContracts.csproj", "{9BD9BF40-3EA5-4FD2-97A7-1BA9123B9804}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureWorksLT2019.Services", "AdventureWorksLT2019\Services\AdventureWorksLT2019.Services.csproj", "{5D3D00A2-86BD-49D0-BA25-A8C2CCEE7CE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventureWorksLT2019.Services", "AdventureWorksLT2019\Services\AdventureWorksLT2019.Services.csproj", "{5D3D00A2-86BD-49D0-BA25-A8C2CCEE7CE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureWorksLT2019.WebApiApp", "AdventureWorksLT2019\WebApiApp\AdventureWorksLT2019.WebApiApp.csproj", "{2A375EBB-9D16-46BF-96D4-F95FAAD3D67D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventureWorksLT2019.WebApiApp", "AdventureWorksLT2019\WebApiApp\AdventureWorksLT2019.WebApiApp.csproj", "{2A375EBB-9D16-46BF-96D4-F95FAAD3D67D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureWorksLT2019.WebApiControllers", "AdventureWorksLT2019\WebApiControllers\AdventureWorksLT2019.WebApiControllers.csproj", "{A1E58A03-AB4B-41DE-884E-4DBE3628B15D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventureWorksLT2019.WebApiControllers", "AdventureWorksLT2019\WebApiControllers\AdventureWorksLT2019.WebApiControllers.csproj", "{A1E58A03-AB4B-41DE-884E-4DBE3628B15D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework", "Shared\Framework\Framework.csproj", "{6D25AA30-C3AF-4AE0-B567-0F2653120CDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework", "Shared\Framework\Framework.csproj", "{6D25AA30-C3AF-4AE0-B567-0F2653120CDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.MauiX", "Shared\Framework.MauiX\Framework.MauiX.csproj", "{BD1BBD0D-CB7B-416E-93F9-0D97AB2285E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.MauiX", "Shared\Framework.MauiX\Framework.MauiX.csproj", "{BD1BBD0D-CB7B-416E-93F9-0D97AB2285E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Mvc", "Shared\Framework.Mvc\Framework.Mvc.csproj", "{0309E4E8-36CA-4881-9FBF-10A1E4960385}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Mvc", "Shared\Framework.Mvc\Framework.Mvc.csproj", "{0309E4E8-36CA-4881-9FBF-10A1E4960385}"
 EndProject
-
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +40,7 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{47B78B6B-19BE-4E13-8911-507A8E4D1482}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{47B78B6B-19BE-4E13-8911-507A8E4D1482}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47B78B6B-19BE-4E13-8911-507A8E4D1482}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{47B78B6B-19BE-4E13-8911-507A8E4D1482}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47B78B6B-19BE-4E13-8911-507A8E4D1482}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7EFF5C1B-E49D-4750-9766-51B89E46CBB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -95,7 +95,6 @@ Global
 		{0309E4E8-36CA-4881-9FBF-10A1E4960385}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0309E4E8-36CA-4881-9FBF-10A1E4960385}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0309E4E8-36CA-4881-9FBF-10A1E4960385}.Release|Any CPU.Build.0 = Release|Any CPU
-
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,6 +103,8 @@ Global
 		{6D25AA30-C3AF-4AE0-B567-0F2653120CDC} = {5CF5D7F5-8BB0-4B42-B719-18E7A86EB35E}
 		{BD1BBD0D-CB7B-416E-93F9-0D97AB2285E3} = {5CF5D7F5-8BB0-4B42-B719-18E7A86EB35E}
 		{0309E4E8-36CA-4881-9FBF-10A1E4960385} = {5CF5D7F5-8BB0-4B42-B719-18E7A86EB35E}
-
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {445DFA0C-897E-4D46-B9AD-255BC8CFBCA3}
 	EndGlobalSection
 EndGlobal

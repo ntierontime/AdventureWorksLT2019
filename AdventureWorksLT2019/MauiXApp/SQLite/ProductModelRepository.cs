@@ -27,7 +27,7 @@ public class ProductModelRepository : SQLiteTableRepositoryBase<ProductModelData
     /// <summary>
     /// this expression will be used in Search(TAdvancedQuery query) to filter data in SQLite table
     /// </summary>
-    /// <param name="criteria"></param>
+    /// <param name="query"></param>
     /// <returns></returns>
     protected override Expression<Func<ProductModelDataModel, bool>> GetSQLiteTableQueryPredicateByAdvancedQuery(ProductModelAdvancedQuery query)
     {

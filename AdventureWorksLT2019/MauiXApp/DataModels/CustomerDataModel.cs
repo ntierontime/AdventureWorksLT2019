@@ -59,10 +59,10 @@ public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>,
         }
     }
 
-    protected string? m_Title;
+    protected string m_Title;
     [Display(Name = "Title", ResourceType = typeof(UIStrings))]
     [StringLength(8, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_Title_should_be_0_to_8")]
-    public string? Title
+    public string Title
     {
         get => m_Title;
         set
@@ -84,10 +84,10 @@ public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>,
         }
     }
 
-    protected string? m_MiddleName;
+    protected string m_MiddleName;
     [Display(Name = "MiddleName", ResourceType = typeof(UIStrings))]
     [StringLength(50, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_MiddleName_should_be_0_to_50")]
-    public string? MiddleName
+    public string MiddleName
     {
         get => m_MiddleName;
         set
@@ -108,10 +108,10 @@ public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>,
         }
     }
 
-    protected string? m_Suffix;
+    protected string m_Suffix;
     [Display(Name = "Suffix", ResourceType = typeof(UIStrings))]
     [StringLength(10, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_Suffix_should_be_0_to_10")]
-    public string? Suffix
+    public string Suffix
     {
         get => m_Suffix;
         set
@@ -120,10 +120,10 @@ public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>,
         }
     }
 
-    protected string? m_CompanyName;
+    protected string m_CompanyName;
     [Display(Name = "CompanyName", ResourceType = typeof(UIStrings))]
     [StringLength(128, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_CompanyName_should_be_0_to_128")]
-    public string? CompanyName
+    public string CompanyName
     {
         get => m_CompanyName;
         set
@@ -132,10 +132,10 @@ public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>,
         }
     }
 
-    protected string? m_SalesPerson;
+    protected string m_SalesPerson;
     [Display(Name = "SalesPerson", ResourceType = typeof(UIStrings))]
     [StringLength(256, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_SalesPerson_should_be_0_to_256")]
-    public string? SalesPerson
+    public string SalesPerson
     {
         get => m_SalesPerson;
         set
@@ -144,10 +144,10 @@ public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>,
         }
     }
 
-    protected string? m_EmailAddress;
+    protected string m_EmailAddress;
     [Display(Name = "EmailAddress", ResourceType = typeof(UIStrings))]
     [StringLength(50, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_EmailAddress_should_be_0_to_50")]
-    public string? EmailAddress
+    public string EmailAddress
     {
         get => m_EmailAddress;
         set
@@ -156,10 +156,10 @@ public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>,
         }
     }
 
-    protected string? m_Phone;
+    protected string m_Phone;
     [Display(Name = "Phone", ResourceType = typeof(UIStrings))]
     [StringLength(25, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_Phone_should_be_0_to_25")]
-    public string? Phone
+    public string Phone
     {
         get => m_Phone;
         set

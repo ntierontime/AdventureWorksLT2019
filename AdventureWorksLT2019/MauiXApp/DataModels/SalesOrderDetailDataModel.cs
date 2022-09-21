@@ -149,9 +149,9 @@ public class SalesOrderDetailDataModel : ObservableValidator, IClone<SalesOrderD
         }
     }
 
-    protected string? m_Product_Name;
+    protected string m_Product_Name;
     [Display(Name = "Name", ResourceType = typeof(UIStrings))]
-    public string? Product_Name
+    public string Product_Name
     {
         get => m_Product_Name;
         set
@@ -171,9 +171,9 @@ public class SalesOrderDetailDataModel : ObservableValidator, IClone<SalesOrderD
         }
     }
 
-    protected string? m_ProductCategory_Name;
+    protected string m_ProductCategory_Name;
     [Display(Name = "Name", ResourceType = typeof(UIStrings))]
-    public string? ProductCategory_Name
+    public string ProductCategory_Name
     {
         get => m_ProductCategory_Name;
         set
@@ -193,9 +193,9 @@ public class SalesOrderDetailDataModel : ObservableValidator, IClone<SalesOrderD
         }
     }
 
-    protected string? m_ProductCategory_Parent_Name;
+    protected string m_ProductCategory_Parent_Name;
     [Display(Name = "Name", ResourceType = typeof(UIStrings))]
-    public string? ProductCategory_Parent_Name
+    public string ProductCategory_Parent_Name
     {
         get => m_ProductCategory_Parent_Name;
         set
@@ -215,9 +215,9 @@ public class SalesOrderDetailDataModel : ObservableValidator, IClone<SalesOrderD
         }
     }
 
-    protected string? m_ProductModel_Name;
+    protected string m_ProductModel_Name;
     [Display(Name = "Name", ResourceType = typeof(UIStrings))]
-    public string? ProductModel_Name
+    public string ProductModel_Name
     {
         get => m_ProductModel_Name;
         set
@@ -226,9 +226,9 @@ public class SalesOrderDetailDataModel : ObservableValidator, IClone<SalesOrderD
         }
     }
 
-    protected string? m_SalesOrderHeader_Name;
+    protected string m_SalesOrderHeader_Name;
     [Display(Name = "SalesOrderNumber", ResourceType = typeof(UIStrings))]
-    public string? SalesOrderHeader_Name
+    public string SalesOrderHeader_Name
     {
         get => m_SalesOrderHeader_Name;
         set
@@ -248,9 +248,9 @@ public class SalesOrderDetailDataModel : ObservableValidator, IClone<SalesOrderD
         }
     }
 
-    protected string? m_BillTo_Name;
+    protected string m_BillTo_Name;
     [Display(Name = "AddressLine1", ResourceType = typeof(UIStrings))]
-    public string? BillTo_Name
+    public string BillTo_Name
     {
         get => m_BillTo_Name;
         set
@@ -270,9 +270,9 @@ public class SalesOrderDetailDataModel : ObservableValidator, IClone<SalesOrderD
         }
     }
 
-    protected string? m_Customer_Name;
+    protected string m_Customer_Name;
     [Display(Name = "Title", ResourceType = typeof(UIStrings))]
-    public string? Customer_Name
+    public string Customer_Name
     {
         get => m_Customer_Name;
         set
@@ -292,9 +292,9 @@ public class SalesOrderDetailDataModel : ObservableValidator, IClone<SalesOrderD
         }
     }
 
-    protected string? m_ShipTo_Name;
+    protected string m_ShipTo_Name;
     [Display(Name = "AddressLine1", ResourceType = typeof(UIStrings))]
-    public string? ShipTo_Name
+    public string ShipTo_Name
     {
         get => m_ShipTo_Name;
         set

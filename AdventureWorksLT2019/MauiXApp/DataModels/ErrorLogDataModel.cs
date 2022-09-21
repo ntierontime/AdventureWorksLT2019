@@ -107,10 +107,10 @@ public class ErrorLogDataModel : ObservableValidator, IClone<ErrorLogDataModel>,
         }
     }
 
-    protected string? m_ErrorProcedure;
+    protected string m_ErrorProcedure;
     [Display(Name = "ErrorProcedure", ResourceType = typeof(UIStrings))]
     [StringLength(126, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_ErrorProcedure_should_be_0_to_126")]
-    public string? ErrorProcedure
+    public string ErrorProcedure
     {
         get => m_ErrorProcedure;
         set

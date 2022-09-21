@@ -103,9 +103,9 @@ public class CustomerAddressDataModel : ObservableValidator, IClone<CustomerAddr
         }
     }
 
-    protected string? m_Address_Name;
+    protected string m_Address_Name;
     [Display(Name = "AddressLine1", ResourceType = typeof(UIStrings))]
-    public string? Address_Name
+    public string Address_Name
     {
         get => m_Address_Name;
         set
@@ -114,9 +114,9 @@ public class CustomerAddressDataModel : ObservableValidator, IClone<CustomerAddr
         }
     }
 
-    protected string? m_Customer_Name;
+    protected string m_Customer_Name;
     [Display(Name = "Title", ResourceType = typeof(UIStrings))]
-    public string? Customer_Name
+    public string Customer_Name
     {
         get => m_Customer_Name;
         set

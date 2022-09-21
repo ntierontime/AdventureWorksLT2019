@@ -96,9 +96,9 @@ public class ProductCategoryDataModel : ObservableValidator, IClone<ProductCateg
         }
     }
 
-    protected string? m_Parent_Name;
+    protected string m_Parent_Name;
     [Display(Name = "Name", ResourceType = typeof(UIStrings))]
-    public string? Parent_Name
+    public string Parent_Name
     {
         get => m_Parent_Name;
         set

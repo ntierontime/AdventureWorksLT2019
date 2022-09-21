@@ -134,10 +134,10 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected string? m_PurchaseOrderNumber;
+    protected string m_PurchaseOrderNumber;
     [Display(Name = "PurchaseOrderNumber", ResourceType = typeof(UIStrings))]
     [StringLength(25, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_PurchaseOrderNumber_should_be_0_to_25")]
-    public string? PurchaseOrderNumber
+    public string PurchaseOrderNumber
     {
         get => m_PurchaseOrderNumber;
         set
@@ -146,10 +146,10 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected string? m_AccountNumber;
+    protected string m_AccountNumber;
     [Display(Name = "AccountNumber", ResourceType = typeof(UIStrings))]
     [StringLength(15, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_AccountNumber_should_be_0_to_15")]
-    public string? AccountNumber
+    public string AccountNumber
     {
         get => m_AccountNumber;
         set
@@ -203,10 +203,10 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected string? m_CreditCardApprovalCode;
+    protected string m_CreditCardApprovalCode;
     [Display(Name = "CreditCardApprovalCode", ResourceType = typeof(UIStrings))]
     [StringLength(15, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_CreditCardApprovalCode_should_be_0_to_15")]
-    public string? CreditCardApprovalCode
+    public string CreditCardApprovalCode
     {
         get => m_CreditCardApprovalCode;
         set
@@ -262,10 +262,10 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected string? m_Comment;
+    protected string m_Comment;
     [Display(Name = "Comment", ResourceType = typeof(UIStrings))]
     [StringLength(4096, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_Comment_should_be_0_to_MAX")]
-    public string? Comment
+    public string Comment
     {
         get => m_Comment;
         set
@@ -299,9 +299,9 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected string? m_BillTo_Name;
+    protected string m_BillTo_Name;
     [Display(Name = "AddressLine1", ResourceType = typeof(UIStrings))]
-    public string? BillTo_Name
+    public string BillTo_Name
     {
         get => m_BillTo_Name;
         set
@@ -310,9 +310,9 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected string? m_Customer_Name;
+    protected string m_Customer_Name;
     [Display(Name = "Title", ResourceType = typeof(UIStrings))]
-    public string? Customer_Name
+    public string Customer_Name
     {
         get => m_Customer_Name;
         set
@@ -321,9 +321,9 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected string? m_ShipTo_Name;
+    protected string m_ShipTo_Name;
     [Display(Name = "AddressLine1", ResourceType = typeof(UIStrings))]
-    public string? ShipTo_Name
+    public string ShipTo_Name
     {
         get => m_ShipTo_Name;
         set

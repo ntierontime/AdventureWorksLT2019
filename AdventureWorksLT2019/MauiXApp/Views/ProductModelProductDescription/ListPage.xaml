@@ -98,11 +98,11 @@
                                 <Label
                                     Grid.Column="1"
                                     Style="{StaticResource TitleLabelStyle}"
-                                    Text="{Binding FirstName}" />
+                                    Text="{Binding Culture}" />
                                 <Label
                                     Grid.Column="1"
                                     Style="{StaticResource SubTitleLabelStyle}"
-                                    Text="{Binding LastName}" />
+                                    Text="{Binding ModifiedDate}" />
                             </Grid>
                         </SwipeView>
                     </DataTemplate>

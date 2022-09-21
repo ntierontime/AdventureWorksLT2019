@@ -18,8 +18,8 @@ public class AddressDataModel : ObservableValidator, IClone<AddressDataModel>, I
         if (string.IsNullOrEmpty(AddressLine1) || AddressLine1.Length == 0)
             return "?";
         if (AddressLine1.Length == 1)
-            return AddressLine1.Substring(0, 1);
-        return AddressLine1.Substring(0, 2);
+            return AddressLine1[..1];
+        return AddressLine1[..2];
     }
 
     protected ItemUIStatus m_ItemUIStatus______;
@@ -60,10 +60,10 @@ public class AddressDataModel : ObservableValidator, IClone<AddressDataModel>, I
         }
     }
 
-    protected string? m_AddressLine2;
+    protected string m_AddressLine2;
     [Display(Name = "AddressLine2", ResourceType = typeof(UIStrings))]
     [StringLength(60, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_AddressLine2_should_be_0_to_60")]
-    public string? AddressLine2
+    public string AddressLine2
     {
         get => m_AddressLine2;
         set

@@ -103,9 +103,9 @@ public class ProductModelProductDescriptionDataModel : ObservableValidator, IClo
         }
     }
 
-    protected string? m_ProductDescription_Name;
+    protected string m_ProductDescription_Name;
     [Display(Name = "Description", ResourceType = typeof(UIStrings))]
-    public string? ProductDescription_Name
+    public string ProductDescription_Name
     {
         get => m_ProductDescription_Name;
         set
@@ -114,9 +114,9 @@ public class ProductModelProductDescriptionDataModel : ObservableValidator, IClo
         }
     }
 
-    protected string? m_ProductModel_Name;
+    protected string m_ProductModel_Name;
     [Display(Name = "Name", ResourceType = typeof(UIStrings))]
-    public string? ProductModel_Name
+    public string ProductModel_Name
     {
         get => m_ProductModel_Name;
         set

@@ -72,10 +72,10 @@ public class ProductDataModel : ObservableValidator, IClone<ProductDataModel>, I
         }
     }
 
-    protected string? m_Color;
+    protected string m_Color;
     [Display(Name = "Color", ResourceType = typeof(UIStrings))]
     [StringLength(15, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_Color_should_be_0_to_15")]
-    public string? Color
+    public string Color
     {
         get => m_Color;
         set
@@ -108,10 +108,10 @@ public class ProductDataModel : ObservableValidator, IClone<ProductDataModel>, I
         }
     }
 
-    protected string? m_Size;
+    protected string m_Size;
     [Display(Name = "Size", ResourceType = typeof(UIStrings))]
     [StringLength(5, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_Size_should_be_0_to_5")]
-    public string? Size
+    public string Size
     {
         get => m_Size;
         set
@@ -190,9 +190,9 @@ public class ProductDataModel : ObservableValidator, IClone<ProductDataModel>, I
         }
     }
 
-    protected System.Byte[]? m_ThumbNailPhoto;
+    protected System.Byte[] m_ThumbNailPhoto;
     [Display(Name = "ThumbNailPhoto", ResourceType = typeof(UIStrings))]
-    public System.Byte[]? ThumbNailPhoto
+    public System.Byte[] ThumbNailPhoto
     {
         get => m_ThumbNailPhoto;
         set
@@ -201,10 +201,10 @@ public class ProductDataModel : ObservableValidator, IClone<ProductDataModel>, I
         }
     }
 
-    protected string? m_ThumbnailPhotoFileName;
+    protected string m_ThumbnailPhotoFileName;
     [Display(Name = "ThumbnailPhotoFileName", ResourceType = typeof(UIStrings))]
     [StringLength(50, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_ThumbnailPhotoFileName_should_be_0_to_50")]
-    public string? ThumbnailPhotoFileName
+    public string ThumbnailPhotoFileName
     {
         get => m_ThumbnailPhotoFileName;
         set
@@ -238,9 +238,9 @@ public class ProductDataModel : ObservableValidator, IClone<ProductDataModel>, I
         }
     }
 
-    protected string? m_ProductCategory_Name;
+    protected string m_ProductCategory_Name;
     [Display(Name = "Name", ResourceType = typeof(UIStrings))]
-    public string? ProductCategory_Name
+    public string ProductCategory_Name
     {
         get => m_ProductCategory_Name;
         set
@@ -251,7 +251,6 @@ public class ProductDataModel : ObservableValidator, IClone<ProductDataModel>, I
 
     protected int m_ParentID;
     [Display(Name = "ProductCategory", ResourceType = typeof(UIStrings))]
-    [PrimaryKey]
     public int ParentID
     {
         get => m_ParentID;
@@ -261,9 +260,9 @@ public class ProductDataModel : ObservableValidator, IClone<ProductDataModel>, I
         }
     }
 
-    protected string? m_Parent_Name;
+    protected string m_Parent_Name;
     [Display(Name = "Name", ResourceType = typeof(UIStrings))]
-    public string? Parent_Name
+    public string Parent_Name
     {
         get => m_Parent_Name;
         set
@@ -272,9 +271,9 @@ public class ProductDataModel : ObservableValidator, IClone<ProductDataModel>, I
         }
     }
 
-    protected string? m_ProductModel_Name;
+    protected string m_ProductModel_Name;
     [Display(Name = "Name", ResourceType = typeof(UIStrings))]
-    public string? ProductModel_Name
+    public string ProductModel_Name
     {
         get => m_ProductModel_Name;
         set

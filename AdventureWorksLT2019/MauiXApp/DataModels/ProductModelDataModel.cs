@@ -60,9 +60,9 @@ public class ProductModelDataModel : ObservableValidator, IClone<ProductModelDat
         }
     }
 
-    protected string? m_CatalogDescription;
+    protected string m_CatalogDescription;
     [Display(Name = "CatalogDescription", ResourceType = typeof(UIStrings))]
-    public string? CatalogDescription
+    public string CatalogDescription
     {
         get => m_CatalogDescription;
         set
