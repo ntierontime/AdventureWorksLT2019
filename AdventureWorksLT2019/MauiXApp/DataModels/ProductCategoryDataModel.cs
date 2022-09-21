@@ -18,8 +18,8 @@ public class ProductCategoryDataModel : ObservableValidator, IClone<ProductCateg
         if (string.IsNullOrEmpty(Name) || Name.Length == 0)
             return "?";
         if (Name.Length == 1)
-            return Name.Substring(0, 1);
-        return Name.Substring(0, 2);
+            return Name[..1];
+        return Name[..2];
     }
 
     protected ItemUIStatus m_ItemUIStatus______;

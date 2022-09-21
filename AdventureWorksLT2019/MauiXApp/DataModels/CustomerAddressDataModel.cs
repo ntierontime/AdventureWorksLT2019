@@ -18,8 +18,8 @@ public class CustomerAddressDataModel : ObservableValidator, IClone<CustomerAddr
         if (string.IsNullOrEmpty(AddressType) || AddressType.Length == 0)
             return "?";
         if (AddressType.Length == 1)
-            return AddressType.Substring(0, 1);
-        return AddressType.Substring(0, 2);
+            return AddressType[..1];
+        return AddressType[..2];
     }
 
     protected ItemUIStatus m_ItemUIStatus______;

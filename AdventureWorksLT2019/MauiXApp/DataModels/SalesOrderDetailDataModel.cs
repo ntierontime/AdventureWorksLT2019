@@ -18,8 +18,8 @@ public class SalesOrderDetailDataModel : ObservableValidator, IClone<SalesOrderD
         if (string.IsNullOrEmpty(SalesOrderID.ToString()) || SalesOrderID.ToString().Length == 0)
             return "?";
         if (SalesOrderID.ToString().Length == 1)
-            return SalesOrderID.ToString().Substring(0, 1);
-        return SalesOrderID.ToString().Substring(0, 2);
+            return SalesOrderID.ToString()[..1];
+        return SalesOrderID.ToString()[..2];
     }
 
     protected ItemUIStatus m_ItemUIStatus______;

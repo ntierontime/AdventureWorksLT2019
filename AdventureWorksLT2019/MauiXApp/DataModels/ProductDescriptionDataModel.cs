@@ -18,8 +18,8 @@ public class ProductDescriptionDataModel : ObservableValidator, IClone<ProductDe
         if (string.IsNullOrEmpty(Description) || Description.Length == 0)
             return "?";
         if (Description.Length == 1)
-            return Description.Substring(0, 1);
-        return Description.Substring(0, 2);
+            return Description[..1];
+        return Description[..2];
     }
 
     protected ItemUIStatus m_ItemUIStatus______;

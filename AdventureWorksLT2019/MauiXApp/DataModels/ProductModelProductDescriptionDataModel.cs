@@ -18,8 +18,8 @@ public class ProductModelProductDescriptionDataModel : ObservableValidator, IClo
         if (string.IsNullOrEmpty(Culture) || Culture.Length == 0)
             return "?";
         if (Culture.Length == 1)
-            return Culture.Substring(0, 1);
-        return Culture.Substring(0, 2);
+            return Culture[..1];
+        return Culture[..2];
     }
 
     protected ItemUIStatus m_ItemUIStatus______;

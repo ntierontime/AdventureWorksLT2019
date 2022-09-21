@@ -18,8 +18,8 @@ public class ProductDataModel : ObservableValidator, IClone<ProductDataModel>, I
         if (string.IsNullOrEmpty(Name) || Name.Length == 0)
             return "?";
         if (Name.Length == 1)
-            return Name.Substring(0, 1);
-        return Name.Substring(0, 2);
+            return Name[..1];
+        return Name[..2];
     }
 
     protected ItemUIStatus m_ItemUIStatus______;
@@ -251,6 +251,7 @@ public class ProductDataModel : ObservableValidator, IClone<ProductDataModel>, I
 
     protected int m_ParentID;
     [Display(Name = "ProductCategory", ResourceType = typeof(UIStrings))]
+    [PrimaryKey]
     public int ParentID
     {
         get => m_ParentID;

@@ -18,8 +18,8 @@ public class ErrorLogDataModel : ObservableValidator, IClone<ErrorLogDataModel>,
         if (string.IsNullOrEmpty(UserName) || UserName.Length == 0)
             return "?";
         if (UserName.Length == 1)
-            return UserName.Substring(0, 1);
-        return UserName.Substring(0, 2);
+            return UserName[..1];
+        return UserName[..2];
     }
 
     protected ItemUIStatus m_ItemUIStatus______;

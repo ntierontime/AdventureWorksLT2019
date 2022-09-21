@@ -18,8 +18,8 @@ public class BuildVersionDataModel : ObservableValidator, IClone<BuildVersionDat
         if (string.IsNullOrEmpty(Database_Version) || Database_Version.Length == 0)
             return "?";
         if (Database_Version.Length == 1)
-            return Database_Version.Substring(0, 1);
-        return Database_Version.Substring(0, 2);
+            return Database_Version[..1];
+        return Database_Version[..2];
     }
 
     protected ItemUIStatus m_ItemUIStatus______;

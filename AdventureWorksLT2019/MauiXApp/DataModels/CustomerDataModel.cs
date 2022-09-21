@@ -18,8 +18,8 @@ public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>,
         if (string.IsNullOrEmpty(Title) || Title.Length == 0)
             return "?";
         if (Title.Length == 1)
-            return Title.Substring(0, 1);
-        return Title.Substring(0, 2);
+            return Title[..1];
+        return Title[..2];
     }
 
     protected ItemUIStatus m_ItemUIStatus______;

@@ -18,8 +18,8 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         if (string.IsNullOrEmpty(SalesOrderNumber) || SalesOrderNumber.Length == 0)
             return "?";
         if (SalesOrderNumber.Length == 1)
-            return SalesOrderNumber.Substring(0, 1);
-        return SalesOrderNumber.Substring(0, 2);
+            return SalesOrderNumber[..1];
+        return SalesOrderNumber[..2];
     }
 
     protected ItemUIStatus m_ItemUIStatus______;
