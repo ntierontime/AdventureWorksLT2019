@@ -44,44 +44,45 @@
                         <SwipeView>
                             <SwipeView.LeftItems>
                                 <SwipeItems>
-                                    <SwipeItem Text="Edit"
-                                           BackgroundColor="LightPink"
-                                           Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
-                                           CommandParameter="{x:Static fm:ViewItemTemplates.Edit}"
-                                           />
-                                    <SwipeItem Text="Delete"
-                                           BackgroundColor="LightPink"
-                                           Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
-                                           CommandParameter="{x:Static fm:ViewItemTemplates.Delete}"
-                                           />
-                                    <SwipeItem Text="Details"
-                                           BackgroundColor="LightPink"
-                                           Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
-                                           CommandParameter="{x:Static fm:ViewItemTemplates.Details}"
-                                           />
+                                    <SwipeItem Text="{l:Localize Delete}"
+                                            BackgroundColor="LightPink"
+                                            Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
+                                            CommandParameter="{x:Static fm:ViewItemTemplates.Delete}"
+                                            />
+                                    <SwipeItem Text="{l:Localize Details}"
+                                            BackgroundColor="LightPink"
+                                            Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
+                                            CommandParameter="{x:Static fm:ViewItemTemplates.Details}"
+                                            />
+                                    <SwipeItem Text="{l:Localize Edit}"
+                                            BackgroundColor="LightPink"
+                                            Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
+                                            CommandParameter="{x:Static fm:ViewItemTemplates.Edit}"
+                                            />
                                 </SwipeItems>
                             </SwipeView.LeftItems>
                             <SwipeView.RightItems>
                                 <SwipeItems>
-                                    <SwipeItem Text="Edit"
-                                           BackgroundColor="LightPink"
-                                           Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
-                                           CommandParameter="{x:Static cs:AppShellRoutes.SalesOrderDetailEditPage}"
+                                    <SwipeItem Text="{l:Localize Delete}"
+                                            BackgroundColor="LightPink"
+                                            Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
+                                            CommandParameter="{x:Static cs:AppShellRoutes.SalesOrderDetailDeletePage}"
                                             />
-                                    <SwipeItem Text="Delete"
-                                           BackgroundColor="LightPink"
-                                           Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
-                                           CommandParameter="{x:Static cs:AppShellRoutes.SalesOrderDetailDeletePage}"
+                                    <SwipeItem Text="{l:Localize Details}"
+                                            BackgroundColor="LightPink"
+                                            Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
+                                            CommandParameter="{x:Static cs:AppShellRoutes.SalesOrderDetailDetailsPage}"
                                             />
-                                    <SwipeItem Text="Details"
-                                           BackgroundColor="LightPink"
-                                           Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
-                                           CommandParameter="{x:Static cs:AppShellRoutes.SalesOrderDetailDetailsPage}"
+                                    <SwipeItem Text="{l:Localize Edit}"
+                                            BackgroundColor="LightPink"
+                                            Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
+                                            CommandParameter="{x:Static cs:AppShellRoutes.SalesOrderDetailEditPage}"
                                             />
                                 </SwipeItems>
                             </SwipeView.RightItems>
                             <Grid Padding="10" HorizontalOptions="FillAndExpand">
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="60" />
                                     <RowDefinition Height="60" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
@@ -103,21 +104,29 @@
                                     Grid.Column="1"
                                     Style="{StaticResource SubTitleLabelStyle}"
                                     Text="{Binding ModifiedDate}" />
+                                <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+                                </HorizontalStackLayout>
                             </Grid>
                         </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </RefreshView>
-        <VerticalStackLayout  HorizontalOptions="End" VerticalOptions="End" Margin="0,0,20,20">
-            <Button Style="{StaticResource AddButtonStyle}"
+        <HorizontalStackLayout  HorizontalOptions="End" VerticalOptions="End" Margin="0,0,20,20">
+            <Button Style="{StaticResource AddIconButtonStyle}"
                     Command="{Binding LaunchItemPopupViewCommand}"
                     CommandParameter="{x:Static fm:ViewItemTemplates.Create}"
                     />
-            <Button Style="{StaticResource AddButtonStyle}"
+            <Button Style="{StaticResource AddIconButtonStyle}"
                     Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
                     CommandParameter="{x:Static cs:AppShellRoutes.SalesOrderDetailCreatePage}"
                     />
-        </VerticalStackLayout>
+            <Button Grid.Column="2" Style="{StaticResource LaunchAdvancedSearchIconButtonStyle}"
+                    Command="{Binding AdvancedSearchLaunchCommand}"
+                    />
+            <Button Style="{StaticResource LaunchListQuickActionsIconButtonStyle}"
+                    Command="{Binding ListQuickActionsLaunchCommand}"
+                    />
+        </HorizontalStackLayout>
     </Grid>
 </ContentPage>

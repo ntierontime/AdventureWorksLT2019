@@ -114,62 +114,62 @@ public class AppShellService
     /// </summary>
     public static void AddCRUDPagesShellContents()
     {
-                // 1. BuildVersion
+        // 1. BuildVersion
         AddShellContent(false, AppShellRoutes.BuildVersionCreatePage, typeof(AdventureWorksLT2019.MauiXApp.Views.BuildVersion.CreatePage), UIStrings.Create_New);
         AddShellContent(false, AppShellRoutes.BuildVersionDeletePage, typeof(AdventureWorksLT2019.MauiXApp.Views.BuildVersion.DeletePage), UIStrings.Delete);
         AddShellContent(false, AppShellRoutes.BuildVersionDetailsPage, typeof(AdventureWorksLT2019.MauiXApp.Views.BuildVersion.DetailsPage), UIStrings.Details);
         AddShellContent(false, AppShellRoutes.BuildVersionEditPage, typeof(AdventureWorksLT2019.MauiXApp.Views.BuildVersion.EditPage), UIStrings.Edit);
-                // 2. ErrorLog
+        // 2. ErrorLog
         AddShellContent(false, AppShellRoutes.ErrorLogCreatePage, typeof(AdventureWorksLT2019.MauiXApp.Views.ErrorLog.CreatePage), UIStrings.Create_New);
         AddShellContent(false, AppShellRoutes.ErrorLogDeletePage, typeof(AdventureWorksLT2019.MauiXApp.Views.ErrorLog.DeletePage), UIStrings.Delete);
         AddShellContent(false, AppShellRoutes.ErrorLogDetailsPage, typeof(AdventureWorksLT2019.MauiXApp.Views.ErrorLog.DetailsPage), UIStrings.Details);
         AddShellContent(false, AppShellRoutes.ErrorLogEditPage, typeof(AdventureWorksLT2019.MauiXApp.Views.ErrorLog.EditPage), UIStrings.Edit);
-                // 3. Address
+        // 3. Address
         AddShellContent(false, AppShellRoutes.AddressCreatePage, typeof(AdventureWorksLT2019.MauiXApp.Views.Address.CreatePage), UIStrings.Create_New);
         AddShellContent(false, AppShellRoutes.AddressDeletePage, typeof(AdventureWorksLT2019.MauiXApp.Views.Address.DeletePage), UIStrings.Delete);
         AddShellContent(false, AppShellRoutes.AddressDetailsPage, typeof(AdventureWorksLT2019.MauiXApp.Views.Address.DetailsPage), UIStrings.Details);
         AddShellContent(false, AppShellRoutes.AddressEditPage, typeof(AdventureWorksLT2019.MauiXApp.Views.Address.EditPage), UIStrings.Edit);
-                // 4. Customer
+        // 4. Customer
         AddShellContent(false, AppShellRoutes.CustomerCreatePage, typeof(AdventureWorksLT2019.MauiXApp.Views.Customer.CreatePage), UIStrings.Create_New);
         AddShellContent(false, AppShellRoutes.CustomerDeletePage, typeof(AdventureWorksLT2019.MauiXApp.Views.Customer.DeletePage), UIStrings.Delete);
         AddShellContent(false, AppShellRoutes.CustomerDetailsPage, typeof(AdventureWorksLT2019.MauiXApp.Views.Customer.DetailsPage), UIStrings.Details);
         AddShellContent(false, AppShellRoutes.CustomerEditPage, typeof(AdventureWorksLT2019.MauiXApp.Views.Customer.EditPage), UIStrings.Edit);
-                // 5. CustomerAddress
+        // 5. CustomerAddress
         AddShellContent(false, AppShellRoutes.CustomerAddressCreatePage, typeof(AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.CreatePage), UIStrings.Create_New);
         AddShellContent(false, AppShellRoutes.CustomerAddressDeletePage, typeof(AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.DeletePage), UIStrings.Delete);
         AddShellContent(false, AppShellRoutes.CustomerAddressDetailsPage, typeof(AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.DetailsPage), UIStrings.Details);
         AddShellContent(false, AppShellRoutes.CustomerAddressEditPage, typeof(AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.EditPage), UIStrings.Edit);
-                // 6. Product
+        // 6. Product
         AddShellContent(false, AppShellRoutes.ProductCreatePage, typeof(AdventureWorksLT2019.MauiXApp.Views.Product.CreatePage), UIStrings.Create_New);
         AddShellContent(false, AppShellRoutes.ProductDeletePage, typeof(AdventureWorksLT2019.MauiXApp.Views.Product.DeletePage), UIStrings.Delete);
         AddShellContent(false, AppShellRoutes.ProductDetailsPage, typeof(AdventureWorksLT2019.MauiXApp.Views.Product.DetailsPage), UIStrings.Details);
         AddShellContent(false, AppShellRoutes.ProductEditPage, typeof(AdventureWorksLT2019.MauiXApp.Views.Product.EditPage), UIStrings.Edit);
-                // 7. ProductCategory
+        // 7. ProductCategory
         AddShellContent(false, AppShellRoutes.ProductCategoryCreatePage, typeof(AdventureWorksLT2019.MauiXApp.Views.ProductCategory.CreatePage), UIStrings.Create_New);
         AddShellContent(false, AppShellRoutes.ProductCategoryDeletePage, typeof(AdventureWorksLT2019.MauiXApp.Views.ProductCategory.DeletePage), UIStrings.Delete);
         AddShellContent(false, AppShellRoutes.ProductCategoryDetailsPage, typeof(AdventureWorksLT2019.MauiXApp.Views.ProductCategory.DetailsPage), UIStrings.Details);
         AddShellContent(false, AppShellRoutes.ProductCategoryEditPage, typeof(AdventureWorksLT2019.MauiXApp.Views.ProductCategory.EditPage), UIStrings.Edit);
-                // 8. ProductDescription
+        // 8. ProductDescription
         AddShellContent(false, AppShellRoutes.ProductDescriptionCreatePage, typeof(AdventureWorksLT2019.MauiXApp.Views.ProductDescription.CreatePage), UIStrings.Create_New);
         AddShellContent(false, AppShellRoutes.ProductDescriptionDeletePage, typeof(AdventureWorksLT2019.MauiXApp.Views.ProductDescription.DeletePage), UIStrings.Delete);
         AddShellContent(false, AppShellRoutes.ProductDescriptionDetailsPage, typeof(AdventureWorksLT2019.MauiXApp.Views.ProductDescription.DetailsPage), UIStrings.Details);
         AddShellContent(false, AppShellRoutes.ProductDescriptionEditPage, typeof(AdventureWorksLT2019.MauiXApp.Views.ProductDescription.EditPage), UIStrings.Edit);
-                // 9. ProductModel
+        // 9. ProductModel
         AddShellContent(false, AppShellRoutes.ProductModelCreatePage, typeof(AdventureWorksLT2019.MauiXApp.Views.ProductModel.CreatePage), UIStrings.Create_New);
         AddShellContent(false, AppShellRoutes.ProductModelDeletePage, typeof(AdventureWorksLT2019.MauiXApp.Views.ProductModel.DeletePage), UIStrings.Delete);
         AddShellContent(false, AppShellRoutes.ProductModelDetailsPage, typeof(AdventureWorksLT2019.MauiXApp.Views.ProductModel.DetailsPage), UIStrings.Details);
         AddShellContent(false, AppShellRoutes.ProductModelEditPage, typeof(AdventureWorksLT2019.MauiXApp.Views.ProductModel.EditPage), UIStrings.Edit);
-                // 10. ProductModelProductDescription
+        // 10. ProductModelProductDescription
         AddShellContent(false, AppShellRoutes.ProductModelProductDescriptionCreatePage, typeof(AdventureWorksLT2019.MauiXApp.Views.ProductModelProductDescription.CreatePage), UIStrings.Create_New);
         AddShellContent(false, AppShellRoutes.ProductModelProductDescriptionDeletePage, typeof(AdventureWorksLT2019.MauiXApp.Views.ProductModelProductDescription.DeletePage), UIStrings.Delete);
         AddShellContent(false, AppShellRoutes.ProductModelProductDescriptionDetailsPage, typeof(AdventureWorksLT2019.MauiXApp.Views.ProductModelProductDescription.DetailsPage), UIStrings.Details);
         AddShellContent(false, AppShellRoutes.ProductModelProductDescriptionEditPage, typeof(AdventureWorksLT2019.MauiXApp.Views.ProductModelProductDescription.EditPage), UIStrings.Edit);
-                // 11. SalesOrderDetail
+        // 11. SalesOrderDetail
         AddShellContent(false, AppShellRoutes.SalesOrderDetailCreatePage, typeof(AdventureWorksLT2019.MauiXApp.Views.SalesOrderDetail.CreatePage), UIStrings.Create_New);
         AddShellContent(false, AppShellRoutes.SalesOrderDetailDeletePage, typeof(AdventureWorksLT2019.MauiXApp.Views.SalesOrderDetail.DeletePage), UIStrings.Delete);
         AddShellContent(false, AppShellRoutes.SalesOrderDetailDetailsPage, typeof(AdventureWorksLT2019.MauiXApp.Views.SalesOrderDetail.DetailsPage), UIStrings.Details);
         AddShellContent(false, AppShellRoutes.SalesOrderDetailEditPage, typeof(AdventureWorksLT2019.MauiXApp.Views.SalesOrderDetail.EditPage), UIStrings.Edit);
-                // 12. SalesOrderHeader
+        // 12. SalesOrderHeader
         AddShellContent(false, AppShellRoutes.SalesOrderHeaderCreatePage, typeof(AdventureWorksLT2019.MauiXApp.Views.SalesOrderHeader.CreatePage), UIStrings.Create_New);
         AddShellContent(false, AppShellRoutes.SalesOrderHeaderDeletePage, typeof(AdventureWorksLT2019.MauiXApp.Views.SalesOrderHeader.DeletePage), UIStrings.Delete);
         AddShellContent(false, AppShellRoutes.SalesOrderHeaderDetailsPage, typeof(AdventureWorksLT2019.MauiXApp.Views.SalesOrderHeader.DetailsPage), UIStrings.Details);
@@ -198,7 +198,7 @@ public class AppShellService
         {
             AppShell.Current.Items.Add(shellContent);
         }
-        //((AppShell)shellContent.Parent).FlyoutBehavior = flyoutBehavior;
+        // ((AppShell)shellContent.Parent).FlyoutBehavior = flyoutBehavior;
     }
 
     private static void AddFlyoutItem(string route, Type pageType, string title)
