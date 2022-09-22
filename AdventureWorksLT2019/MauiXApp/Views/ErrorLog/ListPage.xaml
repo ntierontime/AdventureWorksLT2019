@@ -27,7 +27,7 @@
                 <Entry x:Name="TextSearchEntry" Placeholder="{l:Localize ErrorLog}" Style="{StaticResource TextSearchEntryStyle}"
                        ReturnCommand="{Binding Path=TextSearchCommand}" ReturnCommandParameter="{Binding Source={x:Reference TextSearchEntry},Path=Text}"></Entry>
             </Border>
-            <Button Grid.Column="2" Style="{StaticResource AdvancedSearchButtonStyle}"
+            <Button Grid.Column="2" Style="{StaticResource LaunchAdvancedSearchIconButtonStyle}"
                     Command="{Binding AdvancedSearchLaunchCommand}"
                     />
         </Grid>

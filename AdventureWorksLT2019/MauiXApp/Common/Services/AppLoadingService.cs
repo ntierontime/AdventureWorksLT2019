@@ -112,27 +112,27 @@ public class AppLoadingService
         // 3. Cache Application/User Level data if not first time user
         WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(Step31Progress));
 
-        //// SQLite Cache is disabled for now, because SQLite query not working properly.
-        //await _addressService.CacheDeltaData();
-        //WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.4));
-        //await _customerService.CacheDeltaData();
-        //WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.45));
-        //await _customerAddressService.CacheDeltaData();
-        //WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.5));
-        //await _productService.CacheDeltaData();
-        //WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.55));
-        //await _productCategoryService.CacheDeltaData();
-        //WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.6));
-        //await _productDescriptionService.CacheDeltaData();
-        //WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.65));
-        //await _productModelService.CacheDeltaData();
-        //WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.7));
-        //await _productModelProductDescriptionService.CacheDeltaData();
-        //WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.75));
-        //await _salesOrderDetailService.CacheDeltaData();
-        //WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.8));
-        //await _salesOrderHeaderService.CacheDeltaData();
-        //WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.85));
+        // SQLite Cache is disabled for now, because SQLite query not working properly.
+        await _addressService.CacheDeltaData();
+        WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.4));
+        await _customerService.CacheDeltaData();
+        WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.45));
+        await _customerAddressService.CacheDeltaData();
+        WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.5));
+        await _productService.CacheDeltaData();
+        WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.55));
+        await _productCategoryService.CacheDeltaData();
+        WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.6));
+        await _productDescriptionService.CacheDeltaData();
+        WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.65));
+        await _productModelService.CacheDeltaData();
+        WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.7));
+        await _productModelProductDescriptionService.CacheDeltaData();
+        WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.75));
+        await _salesOrderDetailService.CacheDeltaData();
+        WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.8));
+        await _salesOrderHeaderService.CacheDeltaData();
+        WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.85));
 
         await _appShellService.AddFlyoutMenus(gotoFirstTimeUserPage);
     }

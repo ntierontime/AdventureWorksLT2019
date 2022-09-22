@@ -20,11 +20,12 @@ public partial class ListPage : ContentPage
             new Command<ViewItemTemplates>(OnLaunchItemPopupView)
             );
         InitializeComponent();
+
     }
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await viewModel.DoSearch(true, true);
+        //await viewModel.DoSearch(false, true, false);
     }
     public async void OnLaunchAdvancedSearchPopup()
     {
