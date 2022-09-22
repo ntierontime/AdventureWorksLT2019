@@ -131,6 +131,7 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         });
 
         RegisterRequestSelectedItemMessage();
+        RegisterItemDataChangedMessage();
     }
 
     public virtual async Task DoSearch(bool isLoadMore, bool showRefreshing, bool loadIfAnyResult = true)

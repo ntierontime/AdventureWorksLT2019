@@ -6,14 +6,14 @@
         <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="VerticalOptions" Value="Start" />
         <Setter Property="HorizontalOptions" Value="Start" />
-        <Setter Property="Padding" Value="20,0,10,0" />
+        <Setter Property="Padding" Value="10,0,10,0" />
     </Style>
     <Style x:Key="SubTitleLabelStyle" TargetType="Label">
         <Setter Property="FontSize" Value="Subtitle" />
         <Setter Property="FontAttributes" Value="Italic" />
         <Setter Property="VerticalOptions" Value="End" />
         <Setter Property="HorizontalOptions" Value="Start" />
-        <Setter Property="Padding" Value="20,0,10,0" />
+        <Setter Property="Padding" Value="10,0,10,0" />
     </Style>
     <Style x:Key="DataLabelStyle" TargetType="Label">
         <Setter Property="FontSize" Value="Medium" />

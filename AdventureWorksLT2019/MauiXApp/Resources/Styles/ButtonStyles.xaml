@@ -7,34 +7,42 @@
     <Style x:Key="ToolbarDashboardIconButtonStyle" TargetType="Button">
         <Setter Property="Text" Value="{x:Static fmif:MaterialIcons.Dashboard}" />
         <Setter Property="FontFamily" Value="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}" />
-        <Setter Property="FontSize" Value="Large" />
+        <Setter Property="FontSize" Value="Small" />
         <Setter Property="VerticalOptions" Value="CenterAndExpand" />
         <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
-        <Setter Property="Padding" Value="5" />
+        <Setter Property="Padding" Value="2,0,2,0" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray300}}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
     </Style>
     <Style x:Key="ToolbarDeleteIconButtonStyle" TargetType="Button">
         <Setter Property="Text" Value="{x:Static fmif:MaterialIcons.Delete}" />
         <Setter Property="FontFamily" Value="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}" />
-        <Setter Property="FontSize" Value="Large" />
+        <Setter Property="FontSize" Value="Small" />
         <Setter Property="VerticalOptions" Value="CenterAndExpand" />
         <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
-        <Setter Property="Padding" Value="5" />
+        <Setter Property="Padding" Value="2,0,2,0" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
     </Style>
     <Style x:Key="ToolbarDetailsIconButtonStyle" TargetType="Button">
         <Setter Property="Text" Value="{x:Static fmif:MaterialIcons.Details}" />
         <Setter Property="FontFamily" Value="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}" />
-        <Setter Property="FontSize" Value="Large" />
+        <Setter Property="FontSize" Value="Small" />
         <Setter Property="VerticalOptions" Value="CenterAndExpand" />
         <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
-        <Setter Property="Padding" Value="5" />
+        <Setter Property="Padding" Value="2,0,2,0" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
     </Style>
     <Style x:Key="ToolbarEditIconButtonStyle" TargetType="Button">
         <Setter Property="Text" Value="{x:Static fmif:MaterialIcons.Edit}" />
         <Setter Property="FontFamily" Value="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}" />
-        <Setter Property="FontSize" Value="Large" />
+        <Setter Property="FontSize" Value="Small" />
         <Setter Property="VerticalOptions" Value="CenterAndExpand" />
         <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
-        <Setter Property="Padding" Value="5" />
+        <Setter Property="Padding" Value="2,0,2,0" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
     </Style>
     <Style x:Key="CloseIconButtonStyle" TargetType="Button">
         <Setter Property="Text" Value="{x:Static fmif:MaterialIcons.Cancel}" />

@@ -14,22 +14,12 @@
                 <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="25" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
-            <Image>
-                <Image.Source>
-                    <FontImageSource Glyph="{x:Static fmif:MaterialIcons.Search}" FontFamily="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}"/>
-                </Image.Source>
-            </Image>
-            <Border Grid.Column="1" Style="{StaticResource TextSearchBorderStyle}">
+            <Border Style="{StaticResource TextSearchBorderStyle}">
                 <Entry x:Name="TextSearchEntry" Placeholder="{l:Localize Address}" Style="{StaticResource TextSearchEntryStyle}"
                        ReturnCommand="{Binding Path=TextSearchCommand}" ReturnCommandParameter="{Binding Source={x:Reference TextSearchEntry},Path=Text}"></Entry>
             </Border>
-            <Button Grid.Column="2" Style="{StaticResource AdvancedSearchButtonStyle}"
-                    Command="{Binding AdvancedSearchLaunchCommand}"
-                    />
         </Grid>
         <RefreshView Margin="0,40,0,0"
             IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}"
@@ -83,7 +73,7 @@
                             <Grid Padding="10" HorizontalOptions="FillAndExpand">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="60" />
-                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="30" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="60" />
@@ -104,7 +94,31 @@
                                     Grid.Column="1"
                                     Style="{StaticResource SubTitleLabelStyle}"
                                     Text="{Binding ModifiedDate}" />
-                                <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+                                <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"  Margin="0" Padding="5,0,10,0">
+                                    <Button Style="{StaticResource ToolbarDeleteIconButtonStyle}" Margin="0"
+                                            Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
+                                            CommandParameter="{x:Static fm:ViewItemTemplates.Delete}"
+                                            />
+                                    <Button Style="{StaticResource ToolbarDetailsIconButtonStyle}" Margin="0"
+                                            Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
+                                            CommandParameter="{x:Static fm:ViewItemTemplates.Details}"
+                                            />
+                                    <Button Style="{StaticResource ToolbarEditIconButtonStyle}" Margin="0"
+                                            Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
+                                            CommandParameter="{x:Static fm:ViewItemTemplates.Edit}"
+                                            />
+                                    <Button Style="{StaticResource ToolbarDeleteIconButtonStyle}" Margin="0"
+                                            Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
+                                            CommandParameter="{x:Static cs:AppShellRoutes.AddressDeletePage}"
+                                            />
+                                    <Button Style="{StaticResource ToolbarDetailsIconButtonStyle}" Margin="0"
+                                            Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
+                                            CommandParameter="{x:Static cs:AppShellRoutes.AddressDetailsPage}"
+                                            />
+                                    <Button Style="{StaticResource ToolbarEditIconButtonStyle}" Margin="0"
+                                            Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
+                                            CommandParameter="{x:Static cs:AppShellRoutes.AddressEditPage}"
+                                            />
                                 </HorizontalStackLayout>
                             </Grid>
                         </SwipeView>
