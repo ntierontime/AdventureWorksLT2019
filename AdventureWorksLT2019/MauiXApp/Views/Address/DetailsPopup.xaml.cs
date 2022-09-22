@@ -16,7 +16,7 @@ public partial class DetailsPopup : Popup
 
         InitializeComponent();
         IDeviceDisplay deviceDisplay = ServiceHelper.GetService<IDeviceDisplay>();
-        Size = new(0.8 * (deviceDisplay.MainDisplayInfo.Width / deviceDisplay.MainDisplayInfo.Density), 0.8 * (deviceDisplay.MainDisplayInfo.Height / deviceDisplay.MainDisplayInfo.Density));
+        Size = new(0.5 * (deviceDisplay.MainDisplayInfo.Width / deviceDisplay.MainDisplayInfo.Density), 0.5 * (deviceDisplay.MainDisplayInfo.Height / deviceDisplay.MainDisplayInfo.Density));
     }
 
     protected void OnCancelled()

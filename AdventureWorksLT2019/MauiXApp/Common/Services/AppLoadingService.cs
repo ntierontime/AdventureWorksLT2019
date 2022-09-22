@@ -100,8 +100,10 @@ public class AppLoadingService
         // 2.1. CurrentTheme
         WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(Step20Progress));
         var currentAppTheme = Preferences.Default.Get<string>("CurrentAppTheme", AppTheme.Light.ToString());
-        var currentAppThemeEnum = Enum.Parse<AppTheme>(currentAppTheme);
-        Application.Current.UserAppTheme = currentAppThemeEnum;
+        if (Enum.TryParse<AppTheme>(currentAppTheme, out AppTheme currentAppThemeEnum))
+        {
+            Application.Current.UserAppTheme = currentAppThemeEnum;
+        }
 
         // 2.2. GetCurrentLocation
         WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(Step21Progress));

@@ -12,7 +12,7 @@ public partial class ListQuickActionsPopup : CommunityToolkit.Maui.Views.Popup
 
         InitializeComponent();
         IDeviceDisplay deviceDisplay = ServiceHelper.GetService<IDeviceDisplay>();
-        Size = new(deviceDisplay.MainDisplayInfo.Width / deviceDisplay.MainDisplayInfo.Density, deviceDisplay.MainDisplayInfo.Height / deviceDisplay.MainDisplayInfo.Density);
+        Size = new(0.5 * (deviceDisplay.MainDisplayInfo.Width / deviceDisplay.MainDisplayInfo.Density), 0.5 * (deviceDisplay.MainDisplayInfo.Height / deviceDisplay.MainDisplayInfo.Density));
     }
 
     protected void OnCancelled()
