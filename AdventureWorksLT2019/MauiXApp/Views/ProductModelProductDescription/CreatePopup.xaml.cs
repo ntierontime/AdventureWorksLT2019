@@ -15,6 +15,8 @@ public partial class CreatePopup : Popup
         viewModel.RequestItem(ViewItemTemplates.Create);
 
         InitializeComponent();
+        IDeviceDisplay deviceDisplay = ServiceHelper.GetService<IDeviceDisplay>();
+        Size = new(deviceDisplay.MainDisplayInfo.Width / deviceDisplay.MainDisplayInfo.Density, deviceDisplay.MainDisplayInfo.Height / deviceDisplay.MainDisplayInfo.Density);
     }
 
     protected void OnCancelled()
