@@ -17,6 +17,7 @@ public partial class ListPage : ContentPage
         viewModel.AttachPopupLaunchCommands(
             new Command(OnLaunchAdvancedSearchPopup),
             new Command(OnLaunchListQuickActionsPopup),
+            new Command(OnLaunchListOrderBysPopup),
             new Command<ViewItemTemplates>(OnLaunchItemPopupView)
             );
         InitializeComponent();
@@ -25,7 +26,7 @@ public partial class ListPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        //await viewModel.DoSearch(false, true, false);
+        await viewModel.DoSearch(false, true, false);
     }
     public async void OnLaunchAdvancedSearchPopup()
     {
@@ -35,6 +36,11 @@ public partial class ListPage : ContentPage
     public async void OnLaunchListQuickActionsPopup()
     {
         var popup = new ListQuickActionsPopup();
+        await this.ShowPopupAsync(popup);
+    }
+    public async void OnLaunchListOrderBysPopup()
+    {
+        var popup = new AdventureWorksLT2019.MauiXApp.Views.Address.ListOrderBysPopup();
         await this.ShowPopupAsync(popup);
     }
     public async void OnLaunchItemPopupView(ViewItemTemplates itemView)

@@ -92,11 +92,16 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
     public ICommand ListQuickActionsLaunchCommand { get; protected set; }
     public ICommand ListQuickActionsCancelCommand { get; protected set; }
 
+    public ICommand ListOrderBysLaunchCommand { get; protected set; }
+    public ICommand ListOrderByChangedCommand { get; protected set; }
+    public ICommand ListOrderBysCancelCommand { get; protected set; }
+
     public ICommand LoadMoreCommand { get; protected set; }
     public ICommand RefreshCommand { get; protected set; }
 
     public ICommand LaunchItemPopupViewCommand { get; protected set; }
     public ICommand LaunchItemPageCommand { get; protected set; }
+
 
     protected readonly TDataService _dataService;
 
@@ -175,10 +180,12 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
     public void AttachPopupLaunchCommands(
         ICommand launchAdvancedSearchCommand,
         ICommand launchListQuickActionsCommand,
+        ICommand listOrderBysLaunchCommand,
         ICommand launchItemPopupViewCommand)
     {
         AdvancedSearchLaunchCommand = launchAdvancedSearchCommand;
         ListQuickActionsLaunchCommand = launchListQuickActionsCommand;
+        ListOrderBysLaunchCommand = listOrderBysLaunchCommand;
         LaunchItemPopupViewCommand = launchItemPopupViewCommand;
     }
 
@@ -202,6 +209,47 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         ICommand cancelCommand)
     {
         ListQuickActionsCancelCommand = cancelCommand;
+    }
+
+    public void AttachListOrderBysPopupCommand(
+        ICommand cancelCommand)
+    {
+        // TODO: add ListOrderByChangedCommand;
+        ListOrderByChangedCommand = new Command<Framework.MauiX.DataModels.ObservableQueryOrderBySetting>(async (orderby) => {
+            if (orderby == null)
+                return;
+            if(CurrentQueryOrderBySetting == null)
+            {
+                CurrentQueryOrderBySetting = orderby;
+                orderby.Direction = Framework.Models.QueryOrderDirections.Ascending;
+            }
+            else if(orderby.PropertyName == CurrentQueryOrderBySetting.PropertyName)
+            {
+                // Toggle if same property changed?
+                CurrentQueryOrderBySetting.Direction = CurrentQueryOrderBySetting.Direction == Framework.Models.QueryOrderDirections.Ascending ? Framework.Models.QueryOrderDirections.Descending : Framework.Models.QueryOrderDirections.Ascending;
+            }
+            else
+            {
+                CurrentQueryOrderBySetting = orderby;
+                orderby.Direction = Framework.Models.QueryOrderDirections.Ascending;
+            }
+            if(QueryOrderBySettings != null && QueryOrderBySettings.Any(t=>t.IsSelected))
+            {
+                var selectedOrderBys = QueryOrderBySettings.Where(t => t.IsSelected && t.PropertyName != CurrentQueryOrderBySetting.PropertyName);
+                foreach(var selectedOrderBy in selectedOrderBys)
+                {
+                    selectedOrderBy.IsSelected = false;
+                }
+                CurrentQueryOrderBySetting.IsSelected = true;
+            }
+
+            // TODO: should do a search here
+            await DoSearch(false, true, true);
+
+            // Close ListOrderBysPopup
+            cancelCommand.Execute(null);
+        });
+        ListOrderBysCancelCommand = cancelCommand;
     }
 
     public abstract void RegisterRequestSelectedItemMessage();

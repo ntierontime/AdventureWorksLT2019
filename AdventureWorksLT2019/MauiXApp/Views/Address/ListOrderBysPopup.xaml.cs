@@ -1,18 +1,14 @@
 using AdventureWorksLT2019.MauiXApp.ViewModels.Address;
 using Framework.MauiX.Helpers;
-using Framework.Models;
-using CommunityToolkit.Maui.Views;
-
 namespace AdventureWorksLT2019.MauiXApp.Views.Address;
 
-public partial class DetailsPopup : Popup
+public partial class ListOrderBysPopup : CommunityToolkit.Maui.Views.Popup
 {
-    public DetailsPopup()
+    public ListOrderBysPopup()
     {
-        var viewModel = ServiceHelper.GetService<ItemVM>();
+        var viewModel = ServiceHelper.GetService<ListVM>();
         BindingContext = viewModel;
-        viewModel.AttachDetailsViewCommands(new Command(OnCancelled));
-        viewModel.RequestItem(ViewItemTemplates.Details);
+        viewModel.AttachListOrderBysPopupCommand(new Command(OnCancelled));
 
         InitializeComponent();
         IDeviceDisplay deviceDisplay = ServiceHelper.GetService<IDeviceDisplay>();

@@ -16,6 +16,8 @@
                 <ResourceDictionary Source="Resources/Styles/PickerStyles.xaml" />
                 <ResourceDictionary Source="Resources/Styles/RadioButtonStyles.xaml" />
                 <ResourceDictionary Source="Resources/Styles/SwitchStyles.xaml" />
+
+                <ResourceDictionary Source="Resources/Styles/Converters.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

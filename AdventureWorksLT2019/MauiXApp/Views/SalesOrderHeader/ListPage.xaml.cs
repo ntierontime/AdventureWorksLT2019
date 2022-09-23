@@ -17,7 +17,7 @@ public partial class ListPage : ContentPage
         viewModel.AttachPopupLaunchCommands(
             new Command(OnLaunchAdvancedSearchPopup),
             new Command(OnLaunchListQuickActionsPopup),
-            new Command<ViewItemTemplates>(OnLaunchItemPopupView)
+            null, new Command<ViewItemTemplates>(OnLaunchItemPopupView)
             );
         InitializeComponent();
     }

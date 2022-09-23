@@ -5,13 +5,14 @@
              CanBeDismissedByTappingOutsideOfPopup="False"
              Color="Black"
              x:Class="AdventureWorksLT2019.MauiXApp.Views.Address.ListQuickActionsPopup">
-    <VerticalStackLayout>
-        <Label
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center"
-            HorizontalOptions="Center" />
-        <Button
+    <Grid>
+        <VerticalStackLayout HorizontalOptions="FillAndExpand" VerticalOptions="End">
+            <Button HorizontalOptions="End" Style="{StaticResource LaunchListQuickActionsIconButtonStyle}"
             Command="{Binding ListQuickActionsCancelCommand}"
-            Text="OKAY" />
-    </VerticalStackLayout>
+            />
+            <Button HorizontalOptions="End" Style="{StaticResource PopupCloseIconButtonStyle}"
+            Command="{Binding ListQuickActionsCancelCommand}"
+            />
+        </VerticalStackLayout>
+    </Grid>
 </mct:Popup>

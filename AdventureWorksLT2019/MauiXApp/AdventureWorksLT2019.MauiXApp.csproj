@@ -66,5 +66,18 @@
     <ProjectReference Include="..\..\Shared\Framework.MauiX\Framework.MauiX.csproj" />
     <ProjectReference Include="..\Resx\AdventureWorksLT2019.Resx.csproj" />
 </ItemGroup>
+<ItemGroup>
+  <Compile Update="Views\Address\ListOrderBysPopup.xaml.cs">
+    <DependentUpon>ListOrderBysPopup.xaml</DependentUpon>
+  </Compile>
+</ItemGroup>
+<ItemGroup>
+  <MauiXaml Update="Resources\Styles\Converters.xaml">
+    <Generator>MSBuild:Compile</Generator>
+  </MauiXaml>
+  <MauiXaml Update="Views\Address\ListOrderBysPopup.xaml">
+    <Generator>MSBuild:Compile</Generator>
+  </MauiXaml>
+</ItemGroup>
 	
 </Project>

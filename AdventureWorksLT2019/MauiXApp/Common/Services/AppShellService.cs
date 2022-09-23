@@ -79,10 +79,10 @@ public class AppShellService
         AppShell.Current.Items.Add(logoutMenuItem);
 
         // TODO: For Testing Purpose: table relate Create/Delete/Details/Edit page
-        AddCRUDPagesShellContents();
+        //AddCRUDPagesShellContents();
 
         // TODO: for testing purpose
-        //gotoRoute = AppShellRoutes.;
+        gotoRoute = AppShellRoutes.AddressListPage;
 
         if (!string.IsNullOrEmpty(gotoRoute))
         {

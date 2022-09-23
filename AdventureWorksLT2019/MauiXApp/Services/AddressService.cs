@@ -150,7 +150,7 @@ public class AddressService : IDataServiceBase<AddressAdvancedQuery, AddressIden
                 DisplayName = UIStrings.ModifiedDate,
                 PropertyName = nameof(AddressDataModel.ModifiedDate),
                 Direction = QueryOrderDirections.Ascending,
-                //FontIcon = Framework.Xaml.FontAwesomeIcons.Font, FontIconFamily = Framework.Xaml.IconFontFamily.FontAwesomeSolid.ToString(),
+                FontIcon = Framework.MauiX.Icons.MaterialIcons.History, FontIconFamily = Framework.MauiX.Icons.MaterialIconFamilies.MaterialIconRegular,
                 SortFunc = (TableQuery<AddressDataModel> tableQuery, QueryOrderDirections direction) =>
                 {
                     tableQuery = tableQuery.Sort(t => t.ModifiedDate, direction);
@@ -160,13 +160,13 @@ public class AddressService : IDataServiceBase<AddressAdvancedQuery, AddressIden
             new ObservableQueryOrderBySetting
             {
                 IsSelected = false,
-                DisplayName = UIStrings.ModifiedDate,
-                PropertyName = nameof(AddressDataModel.ModifiedDate),
-                Direction = QueryOrderDirections.Descending,
-                //FontIcon = Framework.Xaml.FontAwesomeIcons.Font, FontIconFamily = Framework.Xaml.IconFontFamily.FontAwesomeSolid.ToString(),
+                DisplayName = UIStrings.City,
+                PropertyName = nameof(AddressDataModel.City),
+                Direction = QueryOrderDirections.Ascending,
+                FontIcon = Framework.MauiX.Icons.MaterialIcons.LocationCity, FontIconFamily = Framework.MauiX.Icons.MaterialIconFamilies.MaterialIconRegular,
                 SortFunc = (TableQuery<AddressDataModel> tableQuery, QueryOrderDirections direction) =>
                 {
-                    tableQuery = tableQuery.Sort(t => t.ModifiedDate, direction);
+                    tableQuery = tableQuery.Sort(t => t.City, direction);
                     return tableQuery;
                 }
             }
