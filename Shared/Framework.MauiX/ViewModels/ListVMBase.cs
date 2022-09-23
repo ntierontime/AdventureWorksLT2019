@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace Framework.MauiX.ViewModels;
-
+]
 public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataService, TDataChangedMessage, TItemRequestMessage> : ObservableObject
     where TAdvancedQuery : ObservableBaseQuery, IClone<TAdvancedQuery>, new()
     where TDataModel : class, IClone<TDataModel>, ICopyTo<TDataModel>
@@ -55,6 +55,13 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         set => SetProperty(ref m_Result, value);
     }
 
+    private ObservableCollection<TDataModel> m_SelectedItems = new();
+    public ObservableCollection<TDataModel> SelectedItems
+    {
+        get => m_SelectedItems;
+        set => SetProperty(ref m_SelectedItems, value);
+    }
+
     private TDataModel m_SelectedItem;
     public TDataModel SelectedItem
     {
@@ -84,6 +91,19 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         set => SetProperty(ref m_CurrentQueryOrderBySetting, value);
     }
 
+    private SelectionMode m_CurrentSelectionMode = SelectionMode.Single;
+    public SelectionMode CurrentSelectionMode
+    {
+        get => m_CurrentSelectionMode;
+        set => SetProperty(ref m_CurrentSelectionMode, value);
+    }
+    private string m_CurrentSelectionModeText = "Select";
+    public string CurrentSelectionModeText
+    {
+        get => m_CurrentSelectionModeText;
+        set => SetProperty(ref m_CurrentSelectionModeText, value);
+    }
+
     public ICommand TextSearchCommand { get; protected set; }
     public ICommand AdvancedSearchLaunchCommand { get; protected set; }
     public ICommand AdvancedSearchConfirmCommand { get; protected set; }
@@ -102,6 +122,8 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
     public ICommand LaunchItemPopupViewCommand { get; protected set; }
     public ICommand LaunchItemPageCommand { get; protected set; }
 
+    public ICommand ToggleSelectModeCommand { get; protected set; }
+    public ICommand ClearSelectedItemsCommand { get; protected set; }
 
     protected readonly TDataService _dataService;
 
@@ -133,6 +155,16 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         {
             EditingQuery.PageIndex = 1;
             await DoSearch(true, true);
+        });
+
+        ToggleSelectModeCommand = new Command(() =>
+        {
+            CurrentSelectionMode = CurrentSelectionMode == SelectionMode.Single ? SelectionMode.Multiple : SelectionMode.Single;
+            CurrentSelectionModeText = CurrentSelectionMode == SelectionMode.Single ? "Select" : "Done";
+        });
+        ClearSelectedItemsCommand = new Command(() =>
+        {
+            SelectedItems.Clear();
         });
 
         RegisterRequestSelectedItemMessage();

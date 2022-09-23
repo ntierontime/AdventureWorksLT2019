@@ -117,7 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  
   <data name="AdvancedSearch" xml:space="preserve">
     <value>(en)Advanced Search</value>
   </data>
@@ -895,6 +894,10 @@
   <data name="Section_SalesOrderDetails_Via_SalesOrderID" xml:space="preserve">
     <value>(en)Sales Order Details  Via  Sales Order ID</value>
   </data>
-
+  <data name="Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
+  </data>
 </root>
-
