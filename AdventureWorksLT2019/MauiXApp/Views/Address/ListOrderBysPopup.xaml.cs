@@ -16,7 +16,7 @@ public partial class ListOrderBysPopup : CommunityToolkit.Maui.Views.Popup
         Size = new(0.5 * (deviceDisplay.MainDisplayInfo.Width / deviceDisplay.MainDisplayInfo.Density), 0.5 * (deviceDisplay.MainDisplayInfo.Height / deviceDisplay.MainDisplayInfo.Density));
 #else
         // Full Screen On Android / IOs ...
-        Size = new((deviceDisplay.MainDisplayInfo.Width / deviceDisplay.MainDisplayInfo.Density), (deviceDisplay.MainDisplayInfo.Height / deviceDisplay.MainDisplayInfo.Density));
+        Size = new(0.98 * (deviceDisplay.MainDisplayInfo.Width / deviceDisplay.MainDisplayInfo.Density), 0.89 * (deviceDisplay.MainDisplayInfo.Height / deviceDisplay.MainDisplayInfo.Density));
 #endif
     }
 

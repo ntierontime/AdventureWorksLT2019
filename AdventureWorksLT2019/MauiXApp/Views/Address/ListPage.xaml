@@ -21,7 +21,7 @@
                 <Entry x:Name="TextSearchEntry" Placeholder="{l:Localize Address}" Style="{StaticResource TextSearchEntryStyle}"
                        ReturnCommand="{Binding Path=TextSearchCommand}" ReturnCommandParameter="{Binding Source={x:Reference TextSearchEntry},Path=Text}"></Entry>
             </Border>
-            <Button Grid.Column="1"
+            <Button Grid.Column="1" Padding="0" Margin="0,5,0,5"
                 Command="{Binding ToggleSelectModeCommand}"
                 Text="{Binding CurrentSelectionModeText}" />
         </Grid>
@@ -33,7 +33,8 @@
                 ItemsSource="{Binding Path=Result}" 
                 SelectionMode="{Binding Path=CurrentSelectionMode}" 
                 SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}"
-                SelectedItems="{Binding Path=SelectedItems, Mode=TwoWay}"
+                SelectionChangedCommand="{Binding Path=SelectionChangedCommand}"
+                SelectionChangedCommandParameter="{Binding Source={x:Reference collectionView}, Path=SelectedItems}"
                 RemainingItemsThreshold="5"
                 RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}">
                 <CollectionView.ItemTemplate>
@@ -158,8 +159,16 @@
                 <Label Text="{x:Static fmif:MaterialIcons.South}" FontFamily="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}" FontSize="Medium" VerticalOptions="CenterAndExpand" HorizontalOptions="End" TextColor="Black" IsVisible="{Binding CurrentQueryOrderBySetting.Direction, Converter={StaticResource DirectionAscendingConverter}}"></Label>
             </Grid>
         </HorizontalStackLayout>
-        <VerticalStackLayout x:Name="ButtonsWhenMultipleSelection" HorizontalOptions="End" VerticalOptions="End" Margin="0,0,20,20" IsVisible="{Binding CurrentSelectionMode, Converter={StaticResource ListSelectModeMultipleConverter}}" >
+        <VerticalStackLayout 
+            x:Name="ButtonsWhenMultipleSelection" 
+            HorizontalOptions="End" VerticalOptions="End" Margin="0,0,20,20" 
+            IsVisible="{Binding CurrentSelectionMode, Converter={StaticResource ListSelectModeMultipleConverter}}" >
+            <Button  
+                
+                Command="{Binding BulkDeleteCommand}"
+                Text="{l:Localize Delete}" />
             <Button
+                
                 Command="{Binding ClearSelectedItemsCommand}"
                 Text="{l:Localize Clear}" />
         </VerticalStackLayout>

@@ -69,12 +69,13 @@ public class AddressService : IDataServiceBase<AddressAdvancedQuery, AddressIden
 
     public async Task<Response> BulkDelete(List<AddressIdentifier> ids)
     {
-        var response = await _thisApiClient.BulkDelete(ids);
-        if (response.Status == System.Net.HttpStatusCode.OK)
-        {
-            await _thisRepository.Delete(ids);
-        }
-        return response;
+        return await Task.FromResult(new Response { Status = System.Net.HttpStatusCode.OK });
+        //var response = await _thisApiClient.BulkDelete(ids);
+        //if (response.Status == System.Net.HttpStatusCode.OK)
+        //{
+        //    await _thisRepository.Delete(ids);
+        //}
+        //return response;
     }
 
     public async Task<Response<MultiItemsCUDRequest<AddressIdentifier, AddressDataModel>>> MultiItemsCUD(

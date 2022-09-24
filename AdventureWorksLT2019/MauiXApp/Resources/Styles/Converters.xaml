@@ -24,4 +24,6 @@
             <SelectionMode>Multiple</SelectionMode>
         </mct:EnumToBoolConverter.TrueValues>
     </mct:EnumToBoolConverter>
+    <mct:IsListNotNullOrEmptyConverter x:Key="IsListNotNullOrEmptyConverter" />
+    <mct:IsListNullOrEmptyConverter x:Key="IsListNullOrEmptyConverter" />
 </ResourceDictionary>

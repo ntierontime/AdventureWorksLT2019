@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace Framework.MauiX.ViewModels;
-]
+
 public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataService, TDataChangedMessage, TItemRequestMessage> : ObservableObject
     where TAdvancedQuery : ObservableBaseQuery, IClone<TAdvancedQuery>, new()
     where TDataModel : class, IClone<TDataModel>, ICopyTo<TDataModel>
@@ -124,7 +124,8 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
 
     public ICommand ToggleSelectModeCommand { get; protected set; }
     public ICommand ClearSelectedItemsCommand { get; protected set; }
-
+    public ICommand SelectionChangedCommand { get; protected set; }
+    
     protected readonly TDataService _dataService;
 
     public ListVMBase(TDataService dataService)
@@ -162,10 +163,33 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
             CurrentSelectionMode = CurrentSelectionMode == SelectionMode.Single ? SelectionMode.Multiple : SelectionMode.Single;
             CurrentSelectionModeText = CurrentSelectionMode == SelectionMode.Single ? "Select" : "Done";
         });
-        ClearSelectedItemsCommand = new Command(() =>
-        {
-            SelectedItems.Clear();
-        });
+
+        // TODO: this is a workaround of SelectedItems binding not working
+        // https://github.com/dotnet/maui/issues/8435
+        // SelectedItems="{Binding Path=SelectedItems, Mode=TwoWay}"
+        //ClearSelectedItemsCommand = new Command(() =>
+        //{
+        //    SelectedItems.Clear();
+        //});
+
+        // TODO: this is a workaround of SelectedItems binding not working
+        // https://github.com/dotnet/maui/issues/8435
+        // SelectedItems="{Binding Path=SelectedItems, Mode=TwoWay}"
+        SelectionChangedCommand = new Command<IList<object>>(
+            (selectItems) =>
+            {
+                if (selectItems == null || selectItems.Count == 0)
+                {
+                    SelectedItems.Clear();
+                }
+                else
+                {
+                    var typedSelectItems = selectItems.Select(t=> t as TDataModel);
+                    SelectedItems = new ObservableCollection<TDataModel>(typedSelectItems);
+                }
+                RefreshMultiSelectCommandsCanExecute();
+            }
+        );
 
         RegisterRequestSelectedItemMessage();
         RegisterItemDataChangedMessage();
@@ -207,6 +231,25 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         if (showRefreshing)
             IsRefreshing = false;
         IsBusy = false;
+    }
+
+    public virtual void RefreshMultiSelectCommandsCanExecute()
+    {
+        ((Command)ClearSelectedItemsCommand).ChangeCanExecute();
+    }
+
+    public bool EnableMultiSelectCommands()
+    {
+        return SelectedItems != null && SelectedItems.Count > 0;
+    }
+    /// <summary>
+    /// TODO: this is a workaround of SelectedItems binding not working
+    /// https://github.com/dotnet/maui/issues/8435
+    /// SelectedItems="{Binding Path=SelectedItems, Mode=TwoWay}"
+    /// </summary>
+    public void AttachClearSelectedItemsCommand(Command clearSelectedItemsCommand)
+    {
+        ClearSelectedItemsCommand = clearSelectedItemsCommand;
     }
 
     public void AttachPopupLaunchCommands(

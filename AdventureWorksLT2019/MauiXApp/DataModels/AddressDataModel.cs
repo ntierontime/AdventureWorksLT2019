@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdventureWorksLT2019.MauiXApp.DataModels;
 
-public class AddressDataModel : ObservableValidator, IClone<AddressDataModel>, ICopyTo<AddressDataModel>
+public class AddressDataModel : ObservableValidator, IClone<AddressDataModel>, ICopyTo<AddressDataModel>, Framework.Models.IGetIdentifier<AdventureWorksLT2019.MauiXApp.DataModels.AddressIdentifier>
 {
     public string Avatar__
     {
@@ -176,6 +176,14 @@ public class AddressDataModel : ObservableValidator, IClone<AddressDataModel>, I
         destination.PostalCode = PostalCode;
         destination.rowguid = rowguid;
         destination.ModifiedDate = ModifiedDate;
+    }
+
+    public AdventureWorksLT2019.MauiXApp.DataModels.AddressIdentifier GetIdentifier()
+    {
+        return new AdventureWorksLT2019.MauiXApp.DataModels.AddressIdentifier
+        {
+            AddressID = AddressID,
+        };
     }
 }
 
