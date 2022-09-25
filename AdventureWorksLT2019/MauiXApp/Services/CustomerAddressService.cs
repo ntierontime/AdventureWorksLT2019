@@ -163,7 +163,7 @@ public class CustomerAddressService : IDataServiceBase<CustomerAddressAdvancedQu
                 IsSelected = false,
                 DisplayName = UIStrings.AddressType,
                 PropertyName = nameof(CustomerAddressDataModel.AddressType),
-                Direction = QueryOrderDirections.Descending,
+                Direction = QueryOrderDirections.Ascending,
                 FontIcon = MaterialIcons.SortByAlpha, FontIconFamily = MaterialIconFamilies.MaterialIconRegular,
                 SortFunc = (TableQuery<CustomerAddressDataModel> tableQuery, QueryOrderDirections direction) =>
                 {

@@ -173,7 +173,7 @@ public class SalesOrderHeaderService : IDataServiceBase<SalesOrderHeaderAdvanced
                 IsSelected = false,
                 DisplayName = UIStrings.SalesOrderNumber,
                 PropertyName = nameof(SalesOrderHeaderDataModel.SalesOrderNumber),
-                Direction = QueryOrderDirections.Descending,
+                Direction = QueryOrderDirections.Ascending,
                 FontIcon = MaterialIcons.SortByAlpha, FontIconFamily = MaterialIconFamilies.MaterialIconRegular,
                 SortFunc = (TableQuery<SalesOrderHeaderDataModel> tableQuery, QueryOrderDirections direction) =>
                 {

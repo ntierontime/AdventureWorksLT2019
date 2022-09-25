@@ -173,7 +173,7 @@ public class CustomerService : IDataServiceBase<CustomerAdvancedQuery, CustomerI
                 IsSelected = false,
                 DisplayName = UIStrings.Title,
                 PropertyName = nameof(CustomerDataModel.Title),
-                Direction = QueryOrderDirections.Descending,
+                Direction = QueryOrderDirections.Ascending,
                 FontIcon = MaterialIcons.SortByAlpha, FontIconFamily = MaterialIconFamilies.MaterialIconRegular,
                 SortFunc = (TableQuery<CustomerDataModel> tableQuery, QueryOrderDirections direction) =>
                 {

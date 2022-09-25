@@ -163,7 +163,7 @@ public class ProductModelProductDescriptionService : IDataServiceBase<ProductMod
                 IsSelected = false,
                 DisplayName = UIStrings.Culture_,
                 PropertyName = nameof(ProductModelProductDescriptionDataModel.Culture),
-                Direction = QueryOrderDirections.Descending,
+                Direction = QueryOrderDirections.Ascending,
                 FontIcon = MaterialIcons.SortByAlpha, FontIconFamily = MaterialIconFamilies.MaterialIconRegular,
                 SortFunc = (TableQuery<ProductModelProductDescriptionDataModel> tableQuery, QueryOrderDirections direction) =>
                 {

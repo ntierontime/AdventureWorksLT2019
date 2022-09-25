@@ -44,18 +44,18 @@
                                 <SwipeItems>
                                     <SwipeItem Text="{l:Localize Delete}"
                                             BackgroundColor="LightPink"
-                                            Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
-                                            CommandParameter="{x:Static fm:ViewItemTemplates.Delete}"
+                                            Command="{x:Static cs:AppShellService.ShellShowPopupCommand}"
+                                            CommandParameter="{x:Static cs:AppShellPopupTypes.ProductModelProductDescriptionDeletePopup}"
                                             />
                                     <SwipeItem Text="{l:Localize Details}"
                                             BackgroundColor="LightPink"
-                                            Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
-                                            CommandParameter="{x:Static fm:ViewItemTemplates.Details}"
+                                            Command="{x:Static cs:AppShellService.ShellShowPopupCommand}"
+                                            CommandParameter="{x:Static cs:AppShellPopupTypes.ProductModelProductDescriptionDetailsPopup}"
                                             />
                                     <SwipeItem Text="{l:Localize Edit}"
                                             BackgroundColor="LightPink"
-                                            Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
-                                            CommandParameter="{x:Static fm:ViewItemTemplates.Edit}"
+                                            Command="{x:Static cs:AppShellService.ShellShowPopupCommand}"
+                                            CommandParameter="{x:Static cs:AppShellPopupTypes.ProductModelProductDescriptionEditPopup}"
                                             />
                                 </SwipeItems>
                             </SwipeView.LeftItems>
@@ -104,16 +104,16 @@
                                     Text="{Binding ModifiedDate}" />
                                 <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"  Margin="0" Padding="5,0,10,0">
                                     <Button Style="{StaticResource ToolbarDeleteIconButtonStyle}" Margin="0"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
-                                        CommandParameter="{x:Static fm:ViewItemTemplates.Delete}"
+                                        Command="{x:Static cs:AppShellService.ShellShowPopupCommand}"
+                                        CommandParameter="{x:Static cs:AppShellPopupTypes.ProductModelProductDescriptionDeletePopup}"
                                         />
                                     <Button Style="{StaticResource ToolbarDetailsIconButtonStyle}" Margin="0"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
-                                        CommandParameter="{x:Static fm:ViewItemTemplates.Details}"
+                                        Command="{x:Static cs:AppShellService.ShellShowPopupCommand}"
+                                        CommandParameter="{x:Static cs:AppShellPopupTypes.ProductModelProductDescriptionDetailsPopup}"
                                         />
                                     <Button Style="{StaticResource ToolbarEditIconButtonStyle}" Margin="0"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
-                                        CommandParameter="{x:Static fm:ViewItemTemplates.Edit}"
+                                        Command="{x:Static cs:AppShellService.ShellShowPopupCommand}"
+                                        CommandParameter="{x:Static cs:AppShellPopupTypes.ProductModelProductDescriptionEditPopup}"
                                         />
                                     <Button Style="{StaticResource ToolbarDeleteIconButtonStyle}" Margin="0"
                                         Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
@@ -136,24 +136,27 @@
         </RefreshView>
         <HorizontalStackLayout x:Name="ButtonsWhenNonMultipleSelection" HorizontalOptions="End" VerticalOptions="End" Margin="0,0,20,20" IsVisible="{Binding CurrentSelectionMode, Converter={StaticResource ListSelectModeSingleConverter}}" >
             <Button Style="{StaticResource AddIconButtonStyle}"
-                    Command="{Binding LaunchItemPopupViewCommand}"
-                    CommandParameter="{x:Static fm:ViewItemTemplates.Create}"
+                    Command="{x:Static cs:AppShellService.ShellShowPopupCommand}"
+                    CommandParameter="{x:Static cs:AppShellPopupTypes.ProductModelProductDescriptionCreatePopup}"
                     />
             <Button Style="{StaticResource AddIconButtonStyle}"
                     Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
                     CommandParameter="{x:Static cs:AppShellRoutes.ProductModelProductDescriptionCreatePage}"
                     />
             <Button Grid.Column="2" Style="{StaticResource LaunchAdvancedSearchIconButtonStyle}"
-                    Command="{Binding AdvancedSearchLaunchCommand}"
+                    Command="{x:Static cs:AppShellService.ShellShowPopupCommand}"
+                    CommandParameter="{x:Static cs:AppShellPopupTypes.ProductModelProductDescriptionAdvancedSearchPopup}"
                     />
             <Button Style="{StaticResource LaunchListQuickActionsIconButtonStyle}"
-                    Command="{Binding ListQuickActionsLaunchCommand}"
+                    Command="{x:Static cs:AppShellService.ShellShowPopupCommand}"
+                    CommandParameter="{x:Static cs:AppShellPopupTypes.ProductModelProductDescriptionListQuickActionsPopup}"
                     />
                     <Grid VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
                         <Button Style="{StaticResource LaunchListOrderBysIconButtonStyle}"
                             Text="{Binding Path=CurrentQueryOrderBySetting.FontIcon}"
                             FontFamily="{Binding Path=CurrentQueryOrderBySetting.FontIconFamily}"
-                            Command="{Binding ListOrderBysLaunchCommand}"
+                            Command="{x:Static cs:AppShellService.ShellShowPopupCommand}"
+                            CommandParameter="{x:Static cs:AppShellPopupTypes.ProductModelProductDescriptionListOrderBysPopup}"
                             />
                         <Label Text="{x:Static fmif:MaterialIcons.North}" FontFamily="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}" FontSize="Medium" VerticalOptions="CenterAndExpand" HorizontalOptions="End" TextColor="Black" IsVisible="{Binding CurrentQueryOrderBySetting.Direction, Converter={StaticResource DirectionDescendingConverter}}"></Label>
                         <Label Text="{x:Static fmif:MaterialIcons.South}" FontFamily="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}" FontSize="Medium" VerticalOptions="CenterAndExpand" HorizontalOptions="End" TextColor="Black" IsVisible="{Binding CurrentQueryOrderBySetting.Direction, Converter={StaticResource DirectionAscendingConverter}}"></Label>

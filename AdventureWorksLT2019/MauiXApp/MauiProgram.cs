@@ -142,6 +142,116 @@ namespace AdventureWorksLT2019.MauiXApp
             builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.SalesOrderDetail.ItemVM>();
             builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.SalesOrderHeader.ItemVM>();
 
+            // 4.1. Views: Popups
+
+            // 4.1.11 Views: BuildVersion Popups
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.BuildVersion.AdvancedSearchPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.BuildVersion.CreatePopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.BuildVersion.DeletePopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.BuildVersion.DetailsPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.BuildVersion.EditPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.BuildVersion.ListOrderBysPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.BuildVersion.ListQuickActionsPopup>();
+
+            // 4.1.21 Views: ErrorLog Popups
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ErrorLog.AdvancedSearchPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ErrorLog.CreatePopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ErrorLog.DeletePopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ErrorLog.DetailsPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ErrorLog.EditPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ErrorLog.ListOrderBysPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ErrorLog.ListQuickActionsPopup>();
+
+            // 4.1.31 Views: Address Popups
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.Address.AdvancedSearchPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.Address.CreatePopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.Address.DeletePopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.Address.DetailsPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.Address.EditPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.Address.ListOrderBysPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.Address.ListQuickActionsPopup>();
+
+            // 4.1.41 Views: Customer Popups
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.Customer.AdvancedSearchPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.Customer.CreatePopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.Customer.DeletePopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.Customer.DetailsPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.Customer.EditPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.Customer.ListOrderBysPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.Customer.ListQuickActionsPopup>();
+
+            // 4.1.51 Views: CustomerAddress Popups
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.AdvancedSearchPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.CreatePopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.DeletePopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.DetailsPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.EditPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.ListOrderBysPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.ListQuickActionsPopup>();
+
+            // 4.1.61 Views: Product Popups
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.Product.AdvancedSearchPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.Product.CreatePopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.Product.DeletePopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.Product.DetailsPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.Product.EditPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.Product.ListOrderBysPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.Product.ListQuickActionsPopup>();
+
+            // 4.1.71 Views: ProductCategory Popups
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductCategory.AdvancedSearchPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductCategory.CreatePopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductCategory.DeletePopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductCategory.DetailsPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductCategory.EditPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductCategory.ListOrderBysPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductCategory.ListQuickActionsPopup>();
+
+            // 4.1.81 Views: ProductDescription Popups
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductDescription.AdvancedSearchPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductDescription.CreatePopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductDescription.DeletePopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductDescription.DetailsPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductDescription.EditPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductDescription.ListOrderBysPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductDescription.ListQuickActionsPopup>();
+
+            // 4.1.91 Views: ProductModel Popups
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductModel.AdvancedSearchPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductModel.CreatePopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductModel.DeletePopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductModel.DetailsPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductModel.EditPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductModel.ListOrderBysPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductModel.ListQuickActionsPopup>();
+
+            // 4.1.101 Views: ProductModelProductDescription Popups
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductModelProductDescription.AdvancedSearchPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductModelProductDescription.CreatePopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductModelProductDescription.DeletePopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductModelProductDescription.DetailsPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductModelProductDescription.EditPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductModelProductDescription.ListOrderBysPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.ProductModelProductDescription.ListQuickActionsPopup>();
+
+            // 4.1.111 Views: SalesOrderDetail Popups
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.SalesOrderDetail.AdvancedSearchPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.SalesOrderDetail.CreatePopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.SalesOrderDetail.DeletePopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.SalesOrderDetail.DetailsPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.SalesOrderDetail.EditPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.SalesOrderDetail.ListOrderBysPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.SalesOrderDetail.ListQuickActionsPopup>();
+
+            // 4.1.121 Views: SalesOrderHeader Popups
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.SalesOrderHeader.AdvancedSearchPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.SalesOrderHeader.CreatePopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.SalesOrderHeader.DeletePopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.SalesOrderHeader.DetailsPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.SalesOrderHeader.EditPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.SalesOrderHeader.ListOrderBysPopup>();
+            builder.Services.AddScoped<AdventureWorksLT2019.MauiXApp.Views.SalesOrderHeader.ListQuickActionsPopup>();
+
             return builder.Build();
         }
     }
