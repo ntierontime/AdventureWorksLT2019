@@ -115,7 +115,7 @@ public class ProductModelProductDescriptionDataModel : ObservableValidator, IClo
     }
 
     private string m_ProductModel_Name;
-    [Display(Name = "Name", ResourceType = typeof(UIStrings))]
+    [Display(Name = "ProductModel", ResourceType = typeof(UIStrings))]
     public string ProductModel_Name
     {
         get => m_ProductModel_Name;

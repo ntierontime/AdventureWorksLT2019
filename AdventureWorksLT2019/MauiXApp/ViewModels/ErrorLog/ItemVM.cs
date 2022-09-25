@@ -15,7 +15,7 @@ public class ItemVM : ItemVMBase<ErrorLogIdentifier, ErrorLogDataModel, ErrorLog
     {
     }
 
-    public override void SendDataChangedMessage(ViewItemTemplates itemView)
+    protected override void SendDataChangedMessage(ViewItemTemplates itemView)
     {
         WeakReferenceMessenger.Default.Send<ErrorLogItemChangedMessage>(new ErrorLogItemChangedMessage(Item, itemView));
     }

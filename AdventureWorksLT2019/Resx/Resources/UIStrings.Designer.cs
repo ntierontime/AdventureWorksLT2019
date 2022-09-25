@@ -1770,24 +1770,6 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to "More Details"".
-        /// </summary>
-        public static string Tab_MoreDetails {
-            get {
-                return ResourceManager.GetString("Tab_MoreDetails", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to "Product Category"".
-        /// </summary>
-        public static string Section_ProductCategory {
-            get {
-                return ResourceManager.GetString("Section_ProductCategory", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to "Sales Order Details  Via  Product ID"".
         /// </summary>
         public static string Section_SalesOrderDetails_Via_ProductID {
@@ -2099,6 +2081,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string SalesOrderDetail {
             get {
                 return ResourceManager.GetString("SalesOrderDetail", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "More Details"".
+        /// </summary>
+        public static string Tab_MoreDetails {
+            get {
+                return ResourceManager.GetString("Tab_MoreDetails", resourceCulture);
             }
         }
 

@@ -12,7 +12,7 @@ using SQLite;
 
 namespace AdventureWorksLT2019.MauiXApp.Services;
 
-public class BuildVersionService : IDataServiceBase<BuildVersionAdvancedQuery, BuildVersionIdentifier, BuildVersionDataModel>
+public class BuildVersionService : DataServiceBase<BuildVersionAdvancedQuery, BuildVersionIdentifier, BuildVersionDataModel>
 {
 
     private readonly BuildVersionApiClient _thisApiClient;
@@ -26,7 +26,7 @@ public class BuildVersionService : IDataServiceBase<BuildVersionAdvancedQuery, B
         _cacheDataStatusService = cacheDataStatusService;
     }
 
-    public async Task<ListResponse<BuildVersionDataModel[]>> Search(
+    public override async Task<ListResponse<BuildVersionDataModel[]>> Search(
         BuildVersionAdvancedQuery query,
         ObservableQueryOrderBySetting queryOrderBySetting)
     {
@@ -35,47 +35,9 @@ public class BuildVersionService : IDataServiceBase<BuildVersionAdvancedQuery, B
         return response;
     }
 
-    public async Task<BuildVersionCompositeModel> GetCompositeModel(
-        BuildVersionIdentifier id)
-    {
-        var response = await _thisApiClient.GetCompositeModel(id);
-        return response;
-    }
-
-    public async Task<Response> BulkDelete(List<BuildVersionIdentifier> ids)
-    {
-        var response = await _thisApiClient.BulkDelete(ids);
-        return response;
-    }
-
-    public async Task<Response<MultiItemsCUDRequest<BuildVersionIdentifier, BuildVersionDataModel>>> MultiItemsCUD(
-        MultiItemsCUDRequest<BuildVersionIdentifier, BuildVersionDataModel> input)
-    {
-        var response = await _thisApiClient.MultiItemsCUD(input);
-        return response;
-    }
-
-    public async Task<Response<BuildVersionDataModel>> Update(BuildVersionIdentifier id, BuildVersionDataModel input)
-    {
-        var response = await _thisApiClient.Update(id, input);
-        return response;
-    }
-
-    public async Task<Response<BuildVersionDataModel>> Get(BuildVersionIdentifier id)
+    public override async Task<Response<BuildVersionDataModel>> Get(BuildVersionIdentifier id)
     {
         var response = await _thisApiClient.Get(id);
-        return response;
-    }
-
-    public async Task<Response<BuildVersionDataModel>> Create(BuildVersionDataModel input)
-    {
-        var response = await _thisApiClient.Create(input);
-        return response;
-    }
-
-    public async Task<Response> Delete(BuildVersionIdentifier id)
-    {
-        var response = await _thisApiClient.Delete(id);
         return response;
     }
 
@@ -87,7 +49,7 @@ public class BuildVersionService : IDataServiceBase<BuildVersionAdvancedQuery, B
         return currentQueryOrderBySetting;
     }
 
-    public List<ObservableQueryOrderBySetting> GetQueryOrderBySettings()
+    public override List<ObservableQueryOrderBySetting> GetQueryOrderBySettings()
     {
         var queryOrderBySettings = new List<ObservableQueryOrderBySetting> {
             new ObservableQueryOrderBySetting
@@ -119,7 +81,7 @@ public class BuildVersionService : IDataServiceBase<BuildVersionAdvancedQuery, B
         };
         return queryOrderBySettings;
     }
-    public BuildVersionDataModel GetDefault()
+    public override BuildVersionDataModel GetDefault()
     {
         // TODO: please set default value here
         return new BuildVersionDataModel { ItemUIStatus______ = ItemUIStatus.New };

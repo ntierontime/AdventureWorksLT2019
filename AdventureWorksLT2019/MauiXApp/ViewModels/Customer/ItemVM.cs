@@ -15,7 +15,7 @@ public class ItemVM : ItemVMBase<CustomerIdentifier, CustomerDataModel, Customer
     {
     }
 
-    public override void SendDataChangedMessage(ViewItemTemplates itemView)
+    protected override void SendDataChangedMessage(ViewItemTemplates itemView)
     {
         WeakReferenceMessenger.Default.Send<CustomerItemChangedMessage>(new CustomerItemChangedMessage(Item, itemView));
     }

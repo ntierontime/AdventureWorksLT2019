@@ -1,5 +1,2 @@
 ﻿TABLE_SCHEMA,TABLE_NAME,Enabled,DeepFKType,Order,PropertyNameInDashboardVM,BaseTableName,MasterTableName,ForeignKeyTableName,EntityReferenceSimpleFullPath,EntityReferenceName,CachingOption,IsRequired,IsATab,InXamarinFormsVM,FuntionDashboardName,InBaseTableFuntionDashboard,InWizard,WizardOrder
-SalesLT,Product,True,AncestorTable,1,ProductCategory,,,,\ProductCategoryID,,UpdateCacheWhenViewLoaded,False,False,False,MoreDetails,False,False,0
-SalesLT,Product,False,AncestorTable,2,Parent,,,,\ProductCategoryID\ParentProductCategoryID,,UpdateCacheWhenViewLoaded,False,False,False,MoreDetails,False,False,0
-SalesLT,Product,False,AncestorTable,3,ProductModel,,,,\ProductModelID,,UpdateCacheWhenViewLoaded,False,False,False,MoreDetails,False,False,0
 SalesLT,Product,True,ListTable,20100,SalesOrderDetails_Via_ProductID,,,SalesOrderDetail,,FK_SalesOrderDetail_Product_ProductID,UpdateCacheWhenMasterLoaded,False,False,False,Lists,False,False,0

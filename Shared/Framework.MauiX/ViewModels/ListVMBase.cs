@@ -1,7 +1,7 @@
+using Framework.Models;
 using Framework.MauiX.DataModels;
 using Framework.MauiX.ComponentModels;
 using Framework.MauiX.Services;
-using Framework.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
@@ -288,18 +288,18 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         ICommand cancelCommand)
     {
         // TODO: add ListOrderByChangedCommand;
-        ListOrderByChangedCommand = new Command<Framework.MauiX.DataModels.ObservableQueryOrderBySetting>(async (orderby) => {
+        ListOrderByChangedCommand = new Command<ObservableQueryOrderBySetting>(async (orderby) => {
             if (orderby == null)
                 return;
             if(CurrentQueryOrderBySetting == null)
             {
                 CurrentQueryOrderBySetting = orderby;
-                orderby.Direction = Framework.Models.QueryOrderDirections.Ascending;
+                orderby.Direction = QueryOrderDirections.Ascending;
             }
             else if(orderby.PropertyName == CurrentQueryOrderBySetting.PropertyName)
             {
                 // Toggle if same property changed?
-                CurrentQueryOrderBySetting.Direction = CurrentQueryOrderBySetting.Direction == Framework.Models.QueryOrderDirections.Ascending ? Framework.Models.QueryOrderDirections.Descending : Framework.Models.QueryOrderDirections.Ascending;
+                CurrentQueryOrderBySetting.Direction = CurrentQueryOrderBySetting.Direction == QueryOrderDirections.Ascending ? QueryOrderDirections.Descending : QueryOrderDirections.Ascending;
             }
             else
             {

@@ -79,7 +79,7 @@ public abstract class ItemVMBase<TIdentifier, TDataModel, TDataService, TDataCha
         }
     }
 
-    public abstract void SendDataChangedMessage(ViewItemTemplates itemView);
+    protected abstract void SendDataChangedMessage(ViewItemTemplates itemView);
 
     public void AttachCreateViewCommands(ICommand cancelCommand, object commandParameter = null)
     {

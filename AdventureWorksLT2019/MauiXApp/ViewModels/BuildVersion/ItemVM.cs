@@ -15,7 +15,7 @@ public class ItemVM : ItemVMBase<BuildVersionIdentifier, BuildVersionDataModel, 
     {
     }
 
-    public override void SendDataChangedMessage(ViewItemTemplates itemView)
+    protected override void SendDataChangedMessage(ViewItemTemplates itemView)
     {
         WeakReferenceMessenger.Default.Send<BuildVersionItemChangedMessage>(new BuildVersionItemChangedMessage(Item, itemView));
     }

@@ -12,125 +12,44 @@ using SQLite;
 
 namespace AdventureWorksLT2019.MauiXApp.Services;
 
-public class CustomerAddressService : IDataServiceBase<CustomerAddressAdvancedQuery, CustomerAddressIdentifier, CustomerAddressDataModel>
+public class CustomerAddressService : DataServiceBase<CustomerAddressAdvancedQuery, CustomerAddressIdentifier, CustomerAddressDataModel>
 {
 
     private readonly CustomerAddressApiClient _thisApiClient;
-    private readonly CustomerAddressRepository _thisRepository;
     private readonly CacheDataStatusService _cacheDataStatusService;
     public CustomerAddressService(
         CustomerAddressApiClient thisApiClient,
-        CustomerAddressRepository thisRepository,
         CacheDataStatusService cacheDataStatusService
         )
     {
         _thisApiClient = thisApiClient;
-        _thisRepository = thisRepository;
         _cacheDataStatusService = cacheDataStatusService;
     }
 
-    public async Task CacheDeltaData()
+    public override async Task<ListResponse<CustomerAddressDataModel[]>> Search(
+        CustomerAddressAdvancedQuery query,
+        ObservableQueryOrderBySetting queryOrderBySetting)
     {
-        var query = new CustomerAddressAdvancedQuery();
-        var cachedDataStatusItem = await _cacheDataStatusService.Get(CachedData.CustomerAddress.ToString());
-        // query.ModifiedDateRangeLower = cachedDataStatusItem.LastSyncDateTime;
-        query.PageSize = 10000;// load all
-        query.PageIndex = 1;
-        var currentQueryOrderBySetting = GetCurrentQueryOrderBySettings();
-        query.OrderBys = currentQueryOrderBySetting.ToString();
-        var result = await _thisApiClient.Search(query);
-        await _thisRepository.Save(result.ResponseBody);
-        await _cacheDataStatusService.SyncedServerData(CachedData.CustomerAddress.ToString());
-    }
-
-    public async Task<ListResponse<CustomerAddressDataModel[]>> Search(
-        CustomerAddressAdvancedQuery query, ObservableQueryOrderBySetting queryOrderBySetting)
-    {
-        var result1 = await _thisRepository.GetAllItemsFromTableAsync();
-
-        var result = await _thisRepository.Search(query, queryOrderBySetting);
-        var totalCount = await _thisRepository.TotalCount(query);
-        var response = new ListResponse<CustomerAddressDataModel[]>
-        {
-            Status = System.Net.HttpStatusCode.OK,
-            ResponseBody = result.ToArray(),
-            Pagination = new PaginationResponse(
-                totalCount, result.Count, query.PageIndex, query.PageSize, PaginationOptions.LoadMore)
-        };
-
+        query.OrderBys = ObservableQueryOrderBySetting.GetOrderByExpression(new[] { queryOrderBySetting });
+        var response = await _thisApiClient.Search(query);
         return response;
     }
 
-    public async Task<CustomerAddressCompositeModel> GetCompositeModel(
-        CustomerAddressIdentifier id)
-    {
-        var response = await _thisApiClient.GetCompositeModel(id);
-        return response;
-    }
-
-    public async Task<Response> BulkDelete(List<CustomerAddressIdentifier> ids)
-    {
-        var response = await _thisApiClient.BulkDelete(ids);
-        if (response.Status == System.Net.HttpStatusCode.OK)
-        {
-            await _thisRepository.Delete(ids);
-        }
-        return response;
-    }
-
-    public async Task<Response<MultiItemsCUDRequest<CustomerAddressIdentifier, CustomerAddressDataModel>>> MultiItemsCUD(
-        MultiItemsCUDRequest<CustomerAddressIdentifier, CustomerAddressDataModel> input)
-    {
-        var response = await _thisApiClient.MultiItemsCUD(input);
-        if (response.Status == System.Net.HttpStatusCode.OK)
-        {
-            if (response.ResponseBody.NewItems != null && response.ResponseBody.NewItems.Count > 0)
-                await _thisRepository.Save(response.ResponseBody.NewItems);
-            if (response.ResponseBody.UpdateItems != null && response.ResponseBody.UpdateItems.Count > 0)
-                await _thisRepository.Save(response.ResponseBody.UpdateItems);
-            if (response.ResponseBody.DeleteItems != null && response.ResponseBody.DeleteItems.Count > 0)
-                await _thisRepository.Delete(response.ResponseBody.DeleteItems);
-        }
-        return response;
-    }
-
-    public async Task<Response<CustomerAddressDataModel>> Update(CustomerAddressIdentifier id, CustomerAddressDataModel input)
+    public override async Task<Response<CustomerAddressDataModel>> Update(CustomerAddressIdentifier id, CustomerAddressDataModel input)
     {
         var response = await _thisApiClient.Update(id, input);
-        if (response.Status == System.Net.HttpStatusCode.OK)
-        {
-            await _thisRepository.Save(response.ResponseBody);
-        }
         return response;
     }
 
-    public async Task<Response<CustomerAddressDataModel>> Get(CustomerAddressIdentifier id)
+    public override async Task<Response<CustomerAddressDataModel>> Get(CustomerAddressIdentifier id)
     {
         var response = await _thisApiClient.Get(id);
-        if (response.Status == System.Net.HttpStatusCode.OK)
-        {
-            await _thisRepository.Save(response.ResponseBody);
-        }
         return response;
     }
 
-    public async Task<Response<CustomerAddressDataModel>> Create(CustomerAddressDataModel input)
+    public override async Task<Response<CustomerAddressDataModel>> Create(CustomerAddressDataModel input)
     {
         var response = await _thisApiClient.Create(input);
-        if (response.Status == System.Net.HttpStatusCode.OK)
-        {
-            await _thisRepository.Save(response.ResponseBody);
-        }
-        return response;
-    }
-
-    public async Task<Response> Delete(CustomerAddressIdentifier id)
-    {
-        var response = await _thisApiClient.Delete(id);
-        if (response.Status == System.Net.HttpStatusCode.OK)
-        {
-            await _thisRepository.Delete(id);
-        }
         return response;
     }
 
@@ -142,7 +61,7 @@ public class CustomerAddressService : IDataServiceBase<CustomerAddressAdvancedQu
         return currentQueryOrderBySetting;
     }
 
-    public List<ObservableQueryOrderBySetting> GetQueryOrderBySettings()
+    public override List<ObservableQueryOrderBySetting> GetQueryOrderBySettings()
     {
         var queryOrderBySettings = new List<ObservableQueryOrderBySetting> {
             new ObservableQueryOrderBySetting
@@ -152,29 +71,29 @@ public class CustomerAddressService : IDataServiceBase<CustomerAddressAdvancedQu
                 PropertyName = nameof(CustomerAddressDataModel.ModifiedDate),
                 Direction = QueryOrderDirections.Ascending,
                 FontIcon = MaterialIcons.History, FontIconFamily = MaterialIconFamilies.MaterialIconRegular,
-                SortFunc = (TableQuery<CustomerAddressDataModel> tableQuery, QueryOrderDirections direction) =>
-                {
-                    tableQuery = tableQuery.Sort(t => t.ModifiedDate, direction);
-                    return tableQuery;
-                }
+                //SortFunc = (TableQuery<CustomerAddressDataModel> tableQuery, QueryOrderDirections direction) =>
+                //{
+                //    tableQuery = tableQuery.Sort(t => t.ModifiedDate, direction);
+                //    return tableQuery;
+                //}
             },
             new ObservableQueryOrderBySetting
             {
                 IsSelected = false,
                 DisplayName = UIStrings.AddressType,
                 PropertyName = nameof(CustomerAddressDataModel.AddressType),
-                Direction = QueryOrderDirections.Descending,
+                Direction = QueryOrderDirections.Ascending,
                 FontIcon = MaterialIcons.SortByAlpha, FontIconFamily = MaterialIconFamilies.MaterialIconRegular,
-                SortFunc = (TableQuery<CustomerAddressDataModel> tableQuery, QueryOrderDirections direction) =>
-                {
-                    tableQuery = tableQuery.Sort(t => t.AddressType, direction);
-                    return tableQuery;
-                }
+                //SortFunc = (TableQuery<CustomerAddressDataModel> tableQuery, QueryOrderDirections direction) =>
+                //{
+                //    tableQuery = tableQuery.Sort(t => t.AddressType, direction);
+                //    return tableQuery;
+                //}
             }
         };
         return queryOrderBySettings;
     }
-    public CustomerAddressDataModel GetDefault()
+    public override CustomerAddressDataModel GetDefault()
     {
         // TODO: please set default value here
         return new CustomerAddressDataModel { ItemUIStatus______ = ItemUIStatus.New };

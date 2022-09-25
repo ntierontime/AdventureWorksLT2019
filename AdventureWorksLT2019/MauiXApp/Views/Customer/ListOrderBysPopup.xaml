@@ -43,8 +43,8 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button HorizontalOptions="End" Style="{StaticResource PopupCloseIconButtonStyle}" Padding="0,0,40,0"
-            Command="{Binding ListOrderBysCancelCommand}"
+            <Button HorizontalOptions="End" Style="{StaticResource PopupCloseIconButtonStyle}" Padding="0,20,70,40"
+                Command="{Binding ListOrderBysCancelCommand}"
             />
         </VerticalStackLayout>
     </Grid>

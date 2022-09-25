@@ -89,16 +89,6 @@ namespace AdventureWorksLT2019.MauiXApp
             builder.Services.AddScoped<SalesOrderHeaderApiClient>();
 
             // 3.2. SQLite Repositories - Register if wannt to cache.
-            builder.Services.AddScoped<AddressRepository>();
-            builder.Services.AddScoped<CustomerRepository>();
-            builder.Services.AddScoped<CustomerAddressRepository>();
-            builder.Services.AddScoped<ProductRepository>();
-            builder.Services.AddScoped<ProductCategoryRepository>();
-            builder.Services.AddScoped<ProductDescriptionRepository>();
-            builder.Services.AddScoped<ProductModelRepository>();
-            builder.Services.AddScoped<ProductModelProductDescriptionRepository>();
-            builder.Services.AddScoped<SalesOrderDetailRepository>();
-            builder.Services.AddScoped<SalesOrderHeaderRepository>();
 
             // 3.3. Services
             builder.Services.AddScoped<BuildVersionService>();

@@ -20,48 +20,19 @@ public class AppLoadingService
     private readonly AuthenticationService _authenticationService;
     private readonly GeoLocationService _geoLocationService;
     private readonly AppShellService _appShellService;
-    private readonly AddressService _addressService;
-    private readonly CustomerService _customerService;
-    private readonly CustomerAddressService _customerAddressService;
-    private readonly ProductService _productService;
-    private readonly ProductCategoryService _productCategoryService;
-    private readonly ProductDescriptionService _productDescriptionService;
-    private readonly ProductModelService _productModelService;
-    private readonly ProductModelProductDescriptionService _productModelProductDescriptionService;
-    private readonly SalesOrderDetailService _salesOrderDetailService;
-    private readonly SalesOrderHeaderService _salesOrderHeaderService;
 
     public AppLoadingService(
         SecureStorageService secureStorageService,
         AuthenticationService authenticationService,
         GeoLocationService geoLocationService,
-        AppShellService appShellService,
-        AddressService addressService,
-        CustomerService customerService,
-        CustomerAddressService customerAddressService,
-        ProductService productService,
-        ProductCategoryService productCategoryService,
-        ProductDescriptionService productDescriptionService,
-        ProductModelService productModelService,
-        ProductModelProductDescriptionService productModelProductDescriptionService,
-        SalesOrderDetailService salesOrderDetailService,
-        SalesOrderHeaderService salesOrderHeaderService
+        AppShellService appShellService
         )
     {
         _secureStorageService = secureStorageService;
         _authenticationService = authenticationService;
         _geoLocationService = geoLocationService;
         _appShellService = appShellService;
-        _addressService = addressService;
-        _customerService = customerService;
-        _customerAddressService = customerAddressService;
-        _productService = productService;
-        _productCategoryService = productCategoryService;
-        _productDescriptionService = productDescriptionService;
-        _productModelService = productModelService;
-        _productModelProductDescriptionService = productModelProductDescriptionService;
-        _salesOrderDetailService = salesOrderDetailService;
-        _salesOrderHeaderService = salesOrderHeaderService;
+
     }
 
     public async Task Step1OnInitialAppLoading()
@@ -112,27 +83,7 @@ public class AppLoadingService
         // 3. Cache Application/User Level data if not first time user
         WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(Step31Progress));
 
-        //// SQLite Cache is disabled for now, because SQLite query not working properly.
-        //await _addressService.CacheDeltaData();
-        //WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.4));
-        //await _customerService.CacheDeltaData();
-        //WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.65));
-        //await _customerAddressService.CacheDeltaData();
-        //WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.9));
-        //await _productService.CacheDeltaData();
-        //WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(1.15));
-        //await _productCategoryService.CacheDeltaData();
-        //WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(1.4));
-        //await _productDescriptionService.CacheDeltaData();
-        //WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(1.65));
-        //await _productModelService.CacheDeltaData();
-        //WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(1.9));
-        //await _productModelProductDescriptionService.CacheDeltaData();
-        //WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(2.15));
-        //await _salesOrderDetailService.CacheDeltaData();
-        //WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(2.4));
-        //await _salesOrderHeaderService.CacheDeltaData();
-        //WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(2.65));
+        // SQLite Cache is disabled for now, because SQLite query not working properly.
 
         await _appShellService.AddFlyoutMenus(gotoFirstTimeUserPage);
     }

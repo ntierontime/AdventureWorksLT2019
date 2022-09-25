@@ -15,7 +15,7 @@ public class ItemVM : ItemVMBase<SalesOrderHeaderIdentifier, SalesOrderHeaderDat
     {
     }
 
-    public override void SendDataChangedMessage(ViewItemTemplates itemView)
+    protected override void SendDataChangedMessage(ViewItemTemplates itemView)
     {
         WeakReferenceMessenger.Default.Send<SalesOrderHeaderItemChangedMessage>(new SalesOrderHeaderItemChangedMessage(Item, itemView));
     }

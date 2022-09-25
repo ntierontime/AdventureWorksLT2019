@@ -116,17 +116,6 @@ namespace AdventureWorksLT2019.Services
             return successResponse;
         }
 
-        public async Task<Response> BulkDelete(List<ProductModelIdentifier> ids)
-        {
-            return await _thisRepository.BulkDelete(ids);
-        }
-
-        public async Task<Response<MultiItemsCUDRequest<ProductModelIdentifier, ProductModelDataModel>>> MultiItemsCUD(
-            MultiItemsCUDRequest<ProductModelIdentifier, ProductModelDataModel> input)
-        {
-            return await _thisRepository.MultiItemsCUD(input);
-        }
-
         public async Task<Response<ProductModelDataModel>> Update(ProductModelIdentifier id, ProductModelDataModel input)
         {
             return await _thisRepository.Update(id, input);
