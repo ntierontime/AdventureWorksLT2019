@@ -14,29 +14,27 @@
                 <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="25" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="60" />
             </Grid.ColumnDefinitions>
-            <Image>
-                <Image.Source>
-                    <FontImageSource Glyph="{x:Static fmif:MaterialIcons.Search}" FontFamily="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}"/>
-                </Image.Source>
-            </Image>
-            <Border Grid.Column="1" Style="{StaticResource TextSearchBorderStyle}">
-                <Entry x:Name="TextSearchEntry" Placeholder="{l:Localize SalesOrderDetail}" Style="{StaticResource TextSearchEntryStyle}"
+            <Border Style="{StaticResource TextSearchBorderStyle}">
+                <Entry x:Name="TextSearchEntry" Placeholder="{l:Localize Address}" Style="{StaticResource TextSearchEntryStyle}"
                        ReturnCommand="{Binding Path=TextSearchCommand}" ReturnCommandParameter="{Binding Source={x:Reference TextSearchEntry},Path=Text}"></Entry>
             </Border>
-            <Button Grid.Column="2" Style="{StaticResource AdvancedSearchButtonStyle}"
-                    Command="{Binding AdvancedSearchLaunchCommand}"
-                    />
+            <Button Grid.Column="1" Padding="0" Margin="0,5,0,5"
+                Command="{Binding ToggleSelectModeCommand}"
+                Text="{Binding CurrentSelectionModeText}" />
         </Grid>
         <RefreshView Margin="0,40,0,0"
             IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}"
             VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand">
             <CollectionView
                 x:Name="collectionView" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
-                ItemsSource="{Binding Path=Result}" SelectionMode="Single" SelectedItem="{Binding Path=SelectedItem}"
+                ItemsSource="{Binding Path=Result}"
+                SelectionMode="{Binding Path=CurrentSelectionMode}"
+                SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}"
+                SelectionChangedCommand="{Binding Path=SelectionChangedCommand}"
+                SelectionChangedCommandParameter="{Binding Source={x:Reference collectionView}, Path=SelectedItems}"
                 RemainingItemsThreshold="5"
                 RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}">
                 <CollectionView.ItemTemplate>
@@ -83,7 +81,7 @@
                             <Grid Padding="10" HorizontalOptions="FillAndExpand">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="60" />
-                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="30" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="60" />
@@ -104,7 +102,31 @@
                                     Grid.Column="1"
                                     Style="{StaticResource SubTitleLabelStyle}"
                                     Text="{Binding ModifiedDate}" />
-                                <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+                                <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"  Margin="0" Padding="5,0,10,0">
+                                    <Button Style="{StaticResource ToolbarDeleteIconButtonStyle}" Margin="0"
+                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
+                                        CommandParameter="{x:Static fm:ViewItemTemplates.Delete}"
+                                        />
+                                    <Button Style="{StaticResource ToolbarDetailsIconButtonStyle}" Margin="0"
+                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
+                                        CommandParameter="{x:Static fm:ViewItemTemplates.Details}"
+                                        />
+                                    <Button Style="{StaticResource ToolbarEditIconButtonStyle}" Margin="0"
+                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
+                                        CommandParameter="{x:Static fm:ViewItemTemplates.Edit}"
+                                        />
+                                    <Button Style="{StaticResource ToolbarDeleteIconButtonStyle}" Margin="0"
+                                        Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
+                                        CommandParameter="{x:Static cs:AppShellRoutes.SalesOrderDetailDeletePage}"
+                                        />
+                                    <Button Style="{StaticResource ToolbarDetailsIconButtonStyle}" Margin="0"
+                                        Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
+                                        CommandParameter="{x:Static cs:AppShellRoutes.SalesOrderDetailDetailsPage}"
+                                        />
+                                    <Button Style="{StaticResource ToolbarEditIconButtonStyle}" Margin="0"
+                                        Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
+                                        CommandParameter="{x:Static cs:AppShellRoutes.SalesOrderDetailEditPage}"
+                                        />
                                 </HorizontalStackLayout>
                             </Grid>
                         </SwipeView>
@@ -112,7 +134,7 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </RefreshView>
-        <HorizontalStackLayout  HorizontalOptions="End" VerticalOptions="End" Margin="0,0,20,20">
+        <HorizontalStackLayout x:Name="ButtonsWhenNonMultipleSelection" HorizontalOptions="End" VerticalOptions="End" Margin="0,0,20,20" IsVisible="{Binding CurrentSelectionMode, Converter={StaticResource ListSelectModeSingleConverter}}" >
             <Button Style="{StaticResource AddIconButtonStyle}"
                     Command="{Binding LaunchItemPopupViewCommand}"
                     CommandParameter="{x:Static fm:ViewItemTemplates.Create}"
@@ -127,6 +149,26 @@
             <Button Style="{StaticResource LaunchListQuickActionsIconButtonStyle}"
                     Command="{Binding ListQuickActionsLaunchCommand}"
                     />
+                    <Grid VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                        <Button Style="{StaticResource LaunchListOrderBysIconButtonStyle}"
+                            Text="{Binding Path=CurrentQueryOrderBySetting.FontIcon}"
+                            FontFamily="{Binding Path=CurrentQueryOrderBySetting.FontIconFamily}"
+                            Command="{Binding ListOrderBysLaunchCommand}"
+                            />
+                        <Label Text="{x:Static fmif:MaterialIcons.North}" FontFamily="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}" FontSize="Medium" VerticalOptions="CenterAndExpand" HorizontalOptions="End" TextColor="Black" IsVisible="{Binding CurrentQueryOrderBySetting.Direction, Converter={StaticResource DirectionDescendingConverter}}"></Label>
+                        <Label Text="{x:Static fmif:MaterialIcons.South}" FontFamily="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}" FontSize="Medium" VerticalOptions="CenterAndExpand" HorizontalOptions="End" TextColor="Black" IsVisible="{Binding CurrentQueryOrderBySetting.Direction, Converter={StaticResource DirectionAscendingConverter}}"></Label>
+                    </Grid>
         </HorizontalStackLayout>
+        <VerticalStackLayout
+            x:Name="ButtonsWhenMultipleSelection"
+            HorizontalOptions="End" VerticalOptions="End" Margin="0,0,20,20"
+            IsVisible="{Binding CurrentSelectionMode, Converter={StaticResource ListSelectModeMultipleConverter}}" >
+            <Button
+                Command="{Binding BulkDeleteCommand}"
+                Text="{l:Localize Delete}" />
+            <Button
+                Command="{Binding ClearSelectedItemsCommand}"
+                Text="{l:Localize Clear}" />
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>

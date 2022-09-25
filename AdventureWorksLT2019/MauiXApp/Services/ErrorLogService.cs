@@ -1,6 +1,7 @@
 using AdventureWorksLT2019.MauiXApp.SQLite;
 using Framework.MauiX.SQLite;
 using AdventureWorksLT2019.MauiXApp.Common.Services;
+using Framework.MauiX.Icons;
 using AdventureWorksLT2019.MauiXApp.DataModels;
 using AdventureWorksLT2019.MauiXApp.WebApiClients;
 using Framework.MauiX.DataModels;
@@ -95,7 +96,7 @@ public class ErrorLogService : IDataServiceBase<ErrorLogAdvancedQuery, ErrorLogI
                 DisplayName = UIStrings.ErrorTime,
                 PropertyName = nameof(ErrorLogDataModel.ErrorTime),
                 Direction = QueryOrderDirections.Ascending,
-                //FontIcon = Framework.Xaml.FontAwesomeIcons.Font, FontIconFamily = Framework.Xaml.IconFontFamily.FontAwesomeSolid.ToString(),
+                FontIcon = MaterialIcons.History, FontIconFamily = MaterialIconFamilies.MaterialIconRegular,
                 //SortFunc = (TableQuery<ErrorLogDataModel> tableQuery, QueryOrderDirections direction) =>
                 //{
                 //    tableQuery = tableQuery.Sort(t => t.ErrorTime, direction);
@@ -105,13 +106,13 @@ public class ErrorLogService : IDataServiceBase<ErrorLogAdvancedQuery, ErrorLogI
             new ObservableQueryOrderBySetting
             {
                 IsSelected = false,
-                DisplayName = UIStrings.ErrorTime,
-                PropertyName = nameof(ErrorLogDataModel.ErrorTime),
-                Direction = QueryOrderDirections.Descending,
-                //FontIcon = Framework.Xaml.FontAwesomeIcons.Font, FontIconFamily = Framework.Xaml.IconFontFamily.FontAwesomeSolid.ToString(),
+                DisplayName = UIStrings.UserName,
+                PropertyName = nameof(ErrorLogDataModel.UserName),
+                Direction = QueryOrderDirections.Ascending,
+                FontIcon = MaterialIcons.SortByAlpha, FontIconFamily = MaterialIconFamilies.MaterialIconRegular,
                 //SortFunc = (TableQuery<ErrorLogDataModel> tableQuery, QueryOrderDirections direction) =>
                 //{
-                //    tableQuery = tableQuery.Sort(t => t.ErrorTime, direction);
+                //    tableQuery = tableQuery.Sort(t => t.UserName, direction);
                 //    return tableQuery;
                 //}
             }

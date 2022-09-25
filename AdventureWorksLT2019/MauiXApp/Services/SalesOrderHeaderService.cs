@@ -1,6 +1,7 @@
 using AdventureWorksLT2019.MauiXApp.SQLite;
 using Framework.MauiX.SQLite;
 using AdventureWorksLT2019.MauiXApp.Common.Services;
+using Framework.MauiX.Icons;
 using AdventureWorksLT2019.MauiXApp.DataModels;
 using AdventureWorksLT2019.MauiXApp.WebApiClients;
 using Framework.MauiX.DataModels;
@@ -160,7 +161,7 @@ public class SalesOrderHeaderService : IDataServiceBase<SalesOrderHeaderAdvanced
                 DisplayName = UIStrings.OrderDate,
                 PropertyName = nameof(SalesOrderHeaderDataModel.OrderDate),
                 Direction = QueryOrderDirections.Ascending,
-                //FontIcon = Framework.Xaml.FontAwesomeIcons.Font, FontIconFamily = Framework.Xaml.IconFontFamily.FontAwesomeSolid.ToString(),
+                FontIcon = MaterialIcons.History, FontIconFamily = MaterialIconFamilies.MaterialIconRegular,
                 SortFunc = (TableQuery<SalesOrderHeaderDataModel> tableQuery, QueryOrderDirections direction) =>
                 {
                     tableQuery = tableQuery.Sort(t => t.OrderDate, direction);
@@ -170,13 +171,13 @@ public class SalesOrderHeaderService : IDataServiceBase<SalesOrderHeaderAdvanced
             new ObservableQueryOrderBySetting
             {
                 IsSelected = false,
-                DisplayName = UIStrings.OrderDate,
-                PropertyName = nameof(SalesOrderHeaderDataModel.OrderDate),
+                DisplayName = UIStrings.SalesOrderNumber,
+                PropertyName = nameof(SalesOrderHeaderDataModel.SalesOrderNumber),
                 Direction = QueryOrderDirections.Descending,
-                //FontIcon = Framework.Xaml.FontAwesomeIcons.Font, FontIconFamily = Framework.Xaml.IconFontFamily.FontAwesomeSolid.ToString(),
+                FontIcon = MaterialIcons.SortByAlpha, FontIconFamily = MaterialIconFamilies.MaterialIconRegular,
                 SortFunc = (TableQuery<SalesOrderHeaderDataModel> tableQuery, QueryOrderDirections direction) =>
                 {
-                    tableQuery = tableQuery.Sort(t => t.OrderDate, direction);
+                    tableQuery = tableQuery.Sort(t => t.SalesOrderNumber, direction);
                     return tableQuery;
                 }
             }

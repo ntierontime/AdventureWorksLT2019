@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdventureWorksLT2019.MauiXApp.DataModels;
 
-public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderHeaderDataModel>, ICopyTo<SalesOrderHeaderDataModel>
+public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderHeaderDataModel>, ICopyTo<SalesOrderHeaderDataModel>, IGetIdentifier<SalesOrderHeaderIdentifier>
 {
     public string Avatar__
     {
@@ -22,20 +22,20 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         return SalesOrderNumber[..2];
     }
 
-    protected ItemUIStatus m_ItemUIStatus______;
+    private ItemUIStatus m_ItemUIStatus______;
     public ItemUIStatus ItemUIStatus______
     {
         get => m_ItemUIStatus______;
         set => SetProperty(ref m_ItemUIStatus______, value);
     }
-    protected System.Boolean m_IsDeleted______;
+    private System.Boolean m_IsDeleted______;
     public System.Boolean IsDeleted______
     {
         get => m_IsDeleted______;
         set => SetProperty(ref m_IsDeleted______, value);
     }
 
-    protected int m_SalesOrderID;
+    private int m_SalesOrderID;
     [Display(Name = "SalesOrderID", ResourceType = typeof(UIStrings))]
     [PrimaryKey]
     public int SalesOrderID
@@ -47,7 +47,7 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected byte m_RevisionNumber;
+    private byte m_RevisionNumber;
     [Display(Name = "RevisionNumber", ResourceType = typeof(UIStrings))]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="RevisionNumber_is_required")]
     public byte RevisionNumber
@@ -59,7 +59,7 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected System.DateTime m_OrderDate;
+    private System.DateTime m_OrderDate;
     [Display(Name = "OrderDate", ResourceType = typeof(UIStrings))]
     [DataType(DataType.DateTime)]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="OrderDate_is_required")]
@@ -72,7 +72,7 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected System.DateTime m_DueDate;
+    private System.DateTime m_DueDate;
     [Display(Name = "DueDate", ResourceType = typeof(UIStrings))]
     [DataType(DataType.DateTime)]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="DueDate_is_required")]
@@ -85,7 +85,7 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected System.DateTime? m_ShipDate;
+    private System.DateTime? m_ShipDate;
     [Display(Name = "ShipDate", ResourceType = typeof(UIStrings))]
     [DataType(DataType.DateTime)]
     public System.DateTime? ShipDate
@@ -97,7 +97,7 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected byte m_Status;
+    private byte m_Status;
     [Display(Name = "Status", ResourceType = typeof(UIStrings))]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="Status_is_required")]
     public byte Status
@@ -109,7 +109,7 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected bool m_OnlineOrderFlag;
+    private bool m_OnlineOrderFlag;
     [Display(Name = "OnlineOrderFlag", ResourceType = typeof(UIStrings))]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="OnlineOrderFlag_is_required")]
     public bool OnlineOrderFlag
@@ -121,7 +121,7 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected string m_SalesOrderNumber;
+    private string m_SalesOrderNumber;
     [Display(Name = "SalesOrderNumber", ResourceType = typeof(UIStrings))]
     [StringLength(25, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_SalesOrderNumber_should_be_0_to_25")]
     public string SalesOrderNumber
@@ -134,7 +134,7 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected string m_PurchaseOrderNumber;
+    private string m_PurchaseOrderNumber;
     [Display(Name = "PurchaseOrderNumber", ResourceType = typeof(UIStrings))]
     [StringLength(25, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_PurchaseOrderNumber_should_be_0_to_25")]
     public string PurchaseOrderNumber
@@ -146,7 +146,7 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected string m_AccountNumber;
+    private string m_AccountNumber;
     [Display(Name = "AccountNumber", ResourceType = typeof(UIStrings))]
     [StringLength(15, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_AccountNumber_should_be_0_to_15")]
     public string AccountNumber
@@ -158,7 +158,7 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected int m_CustomerID;
+    private int m_CustomerID;
     [Display(Name = "Customer", ResourceType = typeof(UIStrings))]
     public int CustomerID
     {
@@ -169,7 +169,7 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected int? m_ShipToAddressID;
+    private int? m_ShipToAddressID;
     [Display(Name = "Address", ResourceType = typeof(UIStrings))]
     public int? ShipToAddressID
     {
@@ -180,7 +180,7 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected int? m_BillToAddressID;
+    private int? m_BillToAddressID;
     [Display(Name = "Address", ResourceType = typeof(UIStrings))]
     public int? BillToAddressID
     {
@@ -191,7 +191,7 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected string m_ShipMethod;
+    private string m_ShipMethod;
     [Display(Name = "ShipMethod", ResourceType = typeof(UIStrings))]
     [StringLength(50, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_ShipMethod_should_be_1_to_50", MinimumLength = 1)]
     public string ShipMethod
@@ -203,7 +203,7 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected string m_CreditCardApprovalCode;
+    private string m_CreditCardApprovalCode;
     [Display(Name = "CreditCardApprovalCode", ResourceType = typeof(UIStrings))]
     [StringLength(15, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_CreditCardApprovalCode_should_be_0_to_15")]
     public string CreditCardApprovalCode
@@ -215,7 +215,7 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected decimal m_SubTotal;
+    private decimal m_SubTotal;
     [Display(Name = "SubTotal", ResourceType = typeof(UIStrings))]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="SubTotal_is_required")]
     public decimal SubTotal
@@ -227,7 +227,7 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected decimal m_TaxAmt;
+    private decimal m_TaxAmt;
     [Display(Name = "TaxAmt", ResourceType = typeof(UIStrings))]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="TaxAmt_is_required")]
     public decimal TaxAmt
@@ -239,7 +239,7 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected decimal m_Freight;
+    private decimal m_Freight;
     [Display(Name = "Freight", ResourceType = typeof(UIStrings))]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="Freight_is_required")]
     public decimal Freight
@@ -251,7 +251,7 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected decimal m_TotalDue;
+    private decimal m_TotalDue;
     [Display(Name = "TotalDue", ResourceType = typeof(UIStrings))]
     public decimal TotalDue
     {
@@ -262,7 +262,7 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected string m_Comment;
+    private string m_Comment;
     [Display(Name = "Comment", ResourceType = typeof(UIStrings))]
     [StringLength(4096, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_Comment_should_be_0_to_MAX")]
     public string Comment
@@ -274,7 +274,7 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected System.Guid m_rowguid;
+    private System.Guid m_rowguid;
     [Display(Name = "rowguid", ResourceType = typeof(UIStrings))]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="rowguid_is_required")]
     public System.Guid rowguid
@@ -286,7 +286,7 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected System.DateTime m_ModifiedDate;
+    private System.DateTime m_ModifiedDate;
     [Display(Name = "ModifiedDate", ResourceType = typeof(UIStrings))]
     [DataType(DataType.DateTime)]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="ModifiedDate_is_required")]
@@ -299,7 +299,7 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected string m_BillTo_Name;
+    private string m_BillTo_Name;
     [Display(Name = "AddressLine1", ResourceType = typeof(UIStrings))]
     public string BillTo_Name
     {
@@ -310,7 +310,7 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected string m_Customer_Name;
+    private string m_Customer_Name;
     [Display(Name = "Title", ResourceType = typeof(UIStrings))]
     public string Customer_Name
     {
@@ -321,7 +321,7 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         }
     }
 
-    protected string m_ShipTo_Name;
+    private string m_ShipTo_Name;
     [Display(Name = "AddressLine1", ResourceType = typeof(UIStrings))]
     public string ShipTo_Name
     {
@@ -395,6 +395,14 @@ public class SalesOrderHeaderDataModel : ObservableValidator, IClone<SalesOrderH
         destination.BillTo_Name = BillTo_Name;
         destination.Customer_Name = Customer_Name;
         destination.ShipTo_Name = ShipTo_Name;
+    }
+
+    public SalesOrderHeaderIdentifier GetIdentifier()
+    {
+        return new SalesOrderHeaderIdentifier
+        {
+            SalesOrderID = SalesOrderID,
+        };
     }
 }
 

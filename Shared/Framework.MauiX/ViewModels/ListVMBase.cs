@@ -48,13 +48,18 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         set => SetProperty(ref m_IsRefreshing, value);
     }
 
-    protected ObservableCollection<TDataModel> m_Result = new();
+    private ObservableCollection<TDataModel> m_Result = new();
     public ObservableCollection<TDataModel> Result
     {
         get => m_Result;
         set => SetProperty(ref m_Result, value);
     }
-
+    private ObservableCollection<TDataModel> m_SelectedItems = new();
+    public ObservableCollection<TDataModel> SelectedItems
+    {
+        get => m_SelectedItems;
+        set => SetProperty(ref m_SelectedItems, value);
+    }
     private TDataModel m_SelectedItem;
     public TDataModel SelectedItem
     {
@@ -84,10 +89,27 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         set => SetProperty(ref m_CurrentQueryOrderBySetting, value);
     }
 
+    private SelectionMode m_CurrentSelectionMode = SelectionMode.Single;
+    public SelectionMode CurrentSelectionMode
+    {
+        get => m_CurrentSelectionMode;
+        set => SetProperty(ref m_CurrentSelectionMode, value);
+    }
+    private string m_CurrentSelectionModeText = "Select";
+    public string CurrentSelectionModeText
+    {
+        get => m_CurrentSelectionModeText;
+        set => SetProperty(ref m_CurrentSelectionModeText, value);
+    }
+
     public ICommand TextSearchCommand { get; protected set; }
     public ICommand AdvancedSearchLaunchCommand { get; protected set; }
     public ICommand AdvancedSearchConfirmCommand { get; protected set; }
     public ICommand AdvancedSearchCancelCommand { get; protected set; }
+
+    public ICommand ListOrderBysLaunchCommand { get; protected set; }
+    public ICommand ListOrderByChangedCommand { get; protected set; }
+    public ICommand ListOrderBysCancelCommand { get; protected set; }
 
     public ICommand ListQuickActionsLaunchCommand { get; protected set; }
     public ICommand ListQuickActionsCancelCommand { get; protected set; }
@@ -97,6 +119,10 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
 
     public ICommand LaunchItemPopupViewCommand { get; protected set; }
     public ICommand LaunchItemPageCommand { get; protected set; }
+
+    public ICommand ToggleSelectModeCommand { get; protected set; }
+    public ICommand ClearSelectedItemsCommand { get; protected set; }
+    public ICommand SelectionChangedCommand { get; protected set; }
 
     protected readonly TDataService _dataService;
 
@@ -130,7 +156,41 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
             await DoSearch(true, true);
         });
 
+        ToggleSelectModeCommand = new Command(() =>
+        {
+            CurrentSelectionMode = CurrentSelectionMode == SelectionMode.Single ? SelectionMode.Multiple : SelectionMode.Single;
+            CurrentSelectionModeText = CurrentSelectionMode == SelectionMode.Single ? "Select" : "Done";
+        });
+
+        // TODO: this is a workaround of SelectedItems binding not working
+        // https://github.com/dotnet/maui/issues/8435
+        // SelectedItems="{Binding Path=SelectedItems, Mode=TwoWay}"
+        //ClearSelectedItemsCommand = new Command(() =>
+        //{
+        //    SelectedItems.Clear();
+        //});
+
+        // TODO: this is a workaround of SelectedItems binding not working
+        // https://github.com/dotnet/maui/issues/8435
+        // SelectedItems="{Binding Path=SelectedItems, Mode=TwoWay}"
+        SelectionChangedCommand = new Command<IList<object>>(
+            (selectItems) =>
+            {
+                if (selectItems == null || selectItems.Count == 0)
+                {
+                    SelectedItems.Clear();
+                }
+                else
+                {
+                    var typedSelectItems = selectItems.Select(t=> t as TDataModel);
+                    SelectedItems = new ObservableCollection<TDataModel>(typedSelectItems);
+                }
+                RefreshMultiSelectCommandsCanExecute();
+            }
+        );
+
         RegisterRequestSelectedItemMessage();
+        RegisterItemDataChangedMessage();
     }
 
     public virtual async Task DoSearch(bool isLoadMore, bool showRefreshing, bool loadIfAnyResult = true)
@@ -171,13 +231,34 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         IsBusy = false;
     }
 
+    public virtual void RefreshMultiSelectCommandsCanExecute()
+    {
+        ((Command)ClearSelectedItemsCommand).ChangeCanExecute();
+    }
+
+    public bool EnableMultiSelectCommands()
+    {
+        return SelectedItems != null && SelectedItems.Count > 0;
+    }
+    /// <summary>
+    /// TODO: this is a workaround of SelectedItems binding not working
+    /// https://github.com/dotnet/maui/issues/8435
+    /// SelectedItems="{Binding Path=SelectedItems, Mode=TwoWay}"
+    /// </summary>
+    public void AttachClearSelectedItemsCommand(Command clearSelectedItemsCommand)
+    {
+        ClearSelectedItemsCommand = clearSelectedItemsCommand;
+    }
+
     public void AttachPopupLaunchCommands(
         ICommand launchAdvancedSearchCommand,
         ICommand launchListQuickActionsCommand,
+        ICommand listOrderBysLaunchCommand,
         ICommand launchItemPopupViewCommand)
     {
         AdvancedSearchLaunchCommand = launchAdvancedSearchCommand;
         ListQuickActionsLaunchCommand = launchListQuickActionsCommand;
+        ListOrderBysLaunchCommand = listOrderBysLaunchCommand;
         LaunchItemPopupViewCommand = launchItemPopupViewCommand;
     }
 
@@ -203,6 +284,47 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         ListQuickActionsCancelCommand = cancelCommand;
     }
 
+    public void AttachListOrderBysPopupCommand(
+        ICommand cancelCommand)
+    {
+        // TODO: add ListOrderByChangedCommand;
+        ListOrderByChangedCommand = new Command<Framework.MauiX.DataModels.ObservableQueryOrderBySetting>(async (orderby) => {
+            if (orderby == null)
+                return;
+            if(CurrentQueryOrderBySetting == null)
+            {
+                CurrentQueryOrderBySetting = orderby;
+                orderby.Direction = Framework.Models.QueryOrderDirections.Ascending;
+            }
+            else if(orderby.PropertyName == CurrentQueryOrderBySetting.PropertyName)
+            {
+                // Toggle if same property changed?
+                CurrentQueryOrderBySetting.Direction = CurrentQueryOrderBySetting.Direction == Framework.Models.QueryOrderDirections.Ascending ? Framework.Models.QueryOrderDirections.Descending : Framework.Models.QueryOrderDirections.Ascending;
+            }
+            else
+            {
+                CurrentQueryOrderBySetting = orderby;
+                orderby.Direction = Framework.Models.QueryOrderDirections.Ascending;
+            }
+            if(QueryOrderBySettings != null && QueryOrderBySettings.Any(t=>t.IsSelected))
+            {
+                var selectedOrderBys = QueryOrderBySettings.Where(t => t.IsSelected && t.PropertyName != CurrentQueryOrderBySetting.PropertyName);
+                foreach(var selectedOrderBy in selectedOrderBys)
+                {
+                    selectedOrderBy.IsSelected = false;
+                }
+                CurrentQueryOrderBySetting.IsSelected = true;
+            }
+
+            // TODO: should do a search here
+            await DoSearch(false, true, true);
+
+            // Close ListOrderBysPopup
+            cancelCommand.Execute(null);
+        });
+        ListOrderBysCancelCommand = cancelCommand;
+    }
+
     public abstract void RegisterRequestSelectedItemMessage();
 
     public static void RegisterRequestSelectedItemMessage<TListVM>(TListVM listVM)
@@ -212,7 +334,7 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
             listVM, (r, m) =>
             {
                 m.Reply(listVM.SelectedItem.Clone());
-                WeakReferenceMessenger.Default.Unregister<TItemRequestMessage>(listVM);
+                //WeakReferenceMessenger.Default.Unregister<TItemRequestMessage>(listVM);
             });
     }
 
@@ -236,7 +358,7 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
                     m.Value.CopyTo(listVM.SelectedItem);
                 }
 
-                WeakReferenceMessenger.Default.Unregister<TDataChangedMessage>(listVM);
+                //WeakReferenceMessenger.Default.Unregister<TDataChangedMessage>(listVM);
             });
     }
 }

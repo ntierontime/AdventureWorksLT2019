@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdventureWorksLT2019.MauiXApp.DataModels;
 
-public class AddressDataModel : ObservableValidator, IClone<AddressDataModel>, ICopyTo<AddressDataModel>
+public class AddressDataModel : ObservableValidator, IClone<AddressDataModel>, ICopyTo<AddressDataModel>, IGetIdentifier<AddressIdentifier>
 {
     public string Avatar__
     {
@@ -22,20 +22,20 @@ public class AddressDataModel : ObservableValidator, IClone<AddressDataModel>, I
         return AddressLine1[..2];
     }
 
-    protected ItemUIStatus m_ItemUIStatus______;
+    private ItemUIStatus m_ItemUIStatus______;
     public ItemUIStatus ItemUIStatus______
     {
         get => m_ItemUIStatus______;
         set => SetProperty(ref m_ItemUIStatus______, value);
     }
-    protected System.Boolean m_IsDeleted______;
+    private System.Boolean m_IsDeleted______;
     public System.Boolean IsDeleted______
     {
         get => m_IsDeleted______;
         set => SetProperty(ref m_IsDeleted______, value);
     }
 
-    protected int m_AddressID;
+    private int m_AddressID;
     [Display(Name = "AddressID", ResourceType = typeof(UIStrings))]
     [PrimaryKey]
     public int AddressID
@@ -47,7 +47,7 @@ public class AddressDataModel : ObservableValidator, IClone<AddressDataModel>, I
         }
     }
 
-    protected string m_AddressLine1;
+    private string m_AddressLine1;
     [Display(Name = "AddressLine1", ResourceType = typeof(UIStrings))]
     [StringLength(60, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_AddressLine1_should_be_1_to_60", MinimumLength = 1)]
     public string AddressLine1
@@ -60,7 +60,7 @@ public class AddressDataModel : ObservableValidator, IClone<AddressDataModel>, I
         }
     }
 
-    protected string m_AddressLine2;
+    private string m_AddressLine2;
     [Display(Name = "AddressLine2", ResourceType = typeof(UIStrings))]
     [StringLength(60, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_AddressLine2_should_be_0_to_60")]
     public string AddressLine2
@@ -72,7 +72,7 @@ public class AddressDataModel : ObservableValidator, IClone<AddressDataModel>, I
         }
     }
 
-    protected string m_City;
+    private string m_City;
     [Display(Name = "City", ResourceType = typeof(UIStrings))]
     [StringLength(30, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_City_should_be_1_to_30", MinimumLength = 1)]
     public string City
@@ -84,7 +84,7 @@ public class AddressDataModel : ObservableValidator, IClone<AddressDataModel>, I
         }
     }
 
-    protected string m_StateProvince;
+    private string m_StateProvince;
     [Display(Name = "StateProvince", ResourceType = typeof(UIStrings))]
     [StringLength(50, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_StateProvince_should_be_1_to_50", MinimumLength = 1)]
     public string StateProvince
@@ -96,7 +96,7 @@ public class AddressDataModel : ObservableValidator, IClone<AddressDataModel>, I
         }
     }
 
-    protected string m_CountryRegion;
+    private string m_CountryRegion;
     [Display(Name = "CountryRegion", ResourceType = typeof(UIStrings))]
     [StringLength(50, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_CountryRegion_should_be_1_to_50", MinimumLength = 1)]
     public string CountryRegion
@@ -108,7 +108,7 @@ public class AddressDataModel : ObservableValidator, IClone<AddressDataModel>, I
         }
     }
 
-    protected string m_PostalCode;
+    private string m_PostalCode;
     [Display(Name = "PostalCode", ResourceType = typeof(UIStrings))]
     [StringLength(15, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_PostalCode_should_be_1_to_15", MinimumLength = 1)]
     public string PostalCode
@@ -120,7 +120,7 @@ public class AddressDataModel : ObservableValidator, IClone<AddressDataModel>, I
         }
     }
 
-    protected System.Guid m_rowguid;
+    private System.Guid m_rowguid;
     [Display(Name = "rowguid", ResourceType = typeof(UIStrings))]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="rowguid_is_required")]
     public System.Guid rowguid
@@ -132,7 +132,7 @@ public class AddressDataModel : ObservableValidator, IClone<AddressDataModel>, I
         }
     }
 
-    protected System.DateTime m_ModifiedDate;
+    private System.DateTime m_ModifiedDate;
     [Display(Name = "ModifiedDate", ResourceType = typeof(UIStrings))]
     [DataType(DataType.DateTime)]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="ModifiedDate_is_required")]
@@ -176,6 +176,14 @@ public class AddressDataModel : ObservableValidator, IClone<AddressDataModel>, I
         destination.PostalCode = PostalCode;
         destination.rowguid = rowguid;
         destination.ModifiedDate = ModifiedDate;
+    }
+
+    public AddressIdentifier GetIdentifier()
+    {
+        return new AddressIdentifier
+        {
+            AddressID = AddressID,
+        };
     }
 }
 

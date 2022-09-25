@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdventureWorksLT2019.MauiXApp.DataModels;
 
-public class CustomerAddressDataModel : ObservableValidator, IClone<CustomerAddressDataModel>, ICopyTo<CustomerAddressDataModel>
+public class CustomerAddressDataModel : ObservableValidator, IClone<CustomerAddressDataModel>, ICopyTo<CustomerAddressDataModel>, IGetIdentifier<CustomerAddressIdentifier>
 {
     public string Avatar__
     {
@@ -22,13 +22,13 @@ public class CustomerAddressDataModel : ObservableValidator, IClone<CustomerAddr
         return AddressType[..2];
     }
 
-    protected ItemUIStatus m_ItemUIStatus______;
+    private ItemUIStatus m_ItemUIStatus______;
     public ItemUIStatus ItemUIStatus______
     {
         get => m_ItemUIStatus______;
         set => SetProperty(ref m_ItemUIStatus______, value);
     }
-    protected System.Boolean m_IsDeleted______;
+    private System.Boolean m_IsDeleted______;
     public System.Boolean IsDeleted______
     {
         get => m_IsDeleted______;
@@ -43,7 +43,7 @@ public class CustomerAddressDataModel : ObservableValidator, IClone<CustomerAddr
         set => SetProperty(ref m___DBId__, value);
     }
 
-    protected int m_CustomerID;
+    private int m_CustomerID;
     [Display(Name = "Customer", ResourceType = typeof(UIStrings))]
     public int CustomerID
     {
@@ -54,7 +54,7 @@ public class CustomerAddressDataModel : ObservableValidator, IClone<CustomerAddr
         }
     }
 
-    protected int m_AddressID;
+    private int m_AddressID;
     [Display(Name = "Address", ResourceType = typeof(UIStrings))]
     public int AddressID
     {
@@ -65,7 +65,7 @@ public class CustomerAddressDataModel : ObservableValidator, IClone<CustomerAddr
         }
     }
 
-    protected string m_AddressType;
+    private string m_AddressType;
     [Display(Name = "AddressType", ResourceType = typeof(UIStrings))]
     [StringLength(50, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_AddressType_should_be_1_to_50", MinimumLength = 1)]
     public string AddressType
@@ -78,7 +78,7 @@ public class CustomerAddressDataModel : ObservableValidator, IClone<CustomerAddr
         }
     }
 
-    protected System.Guid m_rowguid;
+    private System.Guid m_rowguid;
     [Display(Name = "rowguid", ResourceType = typeof(UIStrings))]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="rowguid_is_required")]
     public System.Guid rowguid
@@ -90,7 +90,7 @@ public class CustomerAddressDataModel : ObservableValidator, IClone<CustomerAddr
         }
     }
 
-    protected System.DateTime m_ModifiedDate;
+    private System.DateTime m_ModifiedDate;
     [Display(Name = "ModifiedDate", ResourceType = typeof(UIStrings))]
     [DataType(DataType.DateTime)]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="ModifiedDate_is_required")]
@@ -103,7 +103,7 @@ public class CustomerAddressDataModel : ObservableValidator, IClone<CustomerAddr
         }
     }
 
-    protected string m_Address_Name;
+    private string m_Address_Name;
     [Display(Name = "AddressLine1", ResourceType = typeof(UIStrings))]
     public string Address_Name
     {
@@ -114,7 +114,7 @@ public class CustomerAddressDataModel : ObservableValidator, IClone<CustomerAddr
         }
     }
 
-    protected string m_Customer_Name;
+    private string m_Customer_Name;
     [Display(Name = "Title", ResourceType = typeof(UIStrings))]
     public string Customer_Name
     {
@@ -154,6 +154,15 @@ public class CustomerAddressDataModel : ObservableValidator, IClone<CustomerAddr
         destination.ModifiedDate = ModifiedDate;
         destination.Address_Name = Address_Name;
         destination.Customer_Name = Customer_Name;
+    }
+
+    public CustomerAddressIdentifier GetIdentifier()
+    {
+        return new CustomerAddressIdentifier
+        {
+            CustomerID = CustomerID,
+            AddressID = AddressID,
+        };
     }
 }
 

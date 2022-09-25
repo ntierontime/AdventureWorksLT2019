@@ -10,8 +10,13 @@
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
                 <ResourceDictionary Source="Resources/Styles/AvatarViewStyles.xaml" />
                 <ResourceDictionary Source="Resources/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="Resources/Styles/DatePickerStyles.xaml" />
                 <ResourceDictionary Source="Resources/Styles/EntryStyles.xaml" />
                 <ResourceDictionary Source="Resources/Styles/LabelStyles.xaml" />
+                <ResourceDictionary Source="Resources/Styles/PickerStyles.xaml" />
+                <ResourceDictionary Source="Resources/Styles/RadioButtonStyles.xaml" />
+                <ResourceDictionary Source="Resources/Styles/SwitchStyles.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Converters.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

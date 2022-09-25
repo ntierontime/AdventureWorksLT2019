@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:fmif="clr-namespace:Framework.MauiX.Icons;assembly=Framework.MauiX"
+             xmlns:fm="clr-namespace:Framework.Models;assembly=Framework"
+             CanBeDismissedByTappingOutsideOfPopup="False"
+             x:Name="thisPopup"
+             x:Class="AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.ListOrderBysPopup">
+    <Grid>
+        <VerticalStackLayout HorizontalOptions="FillAndExpand" VerticalOptions="End">
+            <ListView ItemsSource="{Binding QueryOrderBySettings}" VerticalOptions="End" HorizontalOptions="End">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition Width="40" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="1"
+                                   Text="{Binding DisplayName}"
+                                   FontAttributes="Bold" />
+                                <Button
+                                    Grid.Column="2"
+                                    Text="{Binding FontIcon}"
+                                    FontFamily="{Binding FontIconFamily}"
+                                    Style="{StaticResource ListOrderByChangeIconButtonStyle}"
+                                    Command="{Binding Source={x:Reference thisPopup}, Path=BindingContext.ListOrderByChangedCommand}"
+                                    CommandParameter="{Binding}"
+                                    />
+                                <Grid Grid.Column="3" VerticalOptions="CenterAndExpand" HorizontalOptions="End" IsVisible="{Binding IsSelected}">
+                                    <Label Text="{x:Static fmif:MaterialIcons.North}" FontFamily="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}" FontSize="Medium" VerticalOptions="CenterAndExpand" HorizontalOptions="End" IsVisible="{Binding Direction, Converter={StaticResource DirectionDescendingConverter}}"></Label>
+                                    <Label Text="{x:Static fmif:MaterialIcons.South}" FontFamily="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}" FontSize="Medium" VerticalOptions="CenterAndExpand" HorizontalOptions="End" IsVisible="{Binding Direction, Converter={StaticResource DirectionAscendingConverter}}"></Label>
+                                </Grid>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button HorizontalOptions="End" Style="{StaticResource PopupCloseIconButtonStyle}" Padding="0,0,40,0"
+            Command="{Binding ListOrderBysCancelCommand}"
+            />
+        </VerticalStackLayout>
+    </Grid>
+</mct:Popup>

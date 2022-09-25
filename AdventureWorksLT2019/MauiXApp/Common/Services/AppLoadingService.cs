@@ -100,8 +100,10 @@ public class AppLoadingService
         // 2.1. CurrentTheme
         WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(Step20Progress));
         var currentAppTheme = Preferences.Default.Get<string>("CurrentAppTheme", AppTheme.Light.ToString());
-        var currentAppThemeEnum = Enum.Parse<AppTheme>(currentAppTheme);
-        Application.Current.UserAppTheme = currentAppThemeEnum;
+        if (Enum.TryParse<AppTheme>(currentAppTheme, out AppTheme currentAppThemeEnum))
+        {
+            Application.Current.UserAppTheme = currentAppThemeEnum;
+        }
 
         // 2.2. GetCurrentLocation
         WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(Step21Progress));
@@ -112,15 +114,25 @@ public class AppLoadingService
 
         // SQLite Cache is disabled for now, because SQLite query not working properly.
         await _addressService.CacheDeltaData();
+        WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.4));
         await _customerService.CacheDeltaData();
+        WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.65));
         await _customerAddressService.CacheDeltaData();
+        WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(0.9));
         await _productService.CacheDeltaData();
+        WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(1.15));
         await _productCategoryService.CacheDeltaData();
+        WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(1.4));
         await _productDescriptionService.CacheDeltaData();
+        WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(1.65));
         await _productModelService.CacheDeltaData();
+        WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(1.9));
         await _productModelProductDescriptionService.CacheDeltaData();
+        WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(2.15));
         await _salesOrderDetailService.CacheDeltaData();
+        WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(2.4));
         await _salesOrderHeaderService.CacheDeltaData();
+        WeakReferenceMessenger.Default.Send<AppLoadingProgressChangedMessage>(new AppLoadingProgressChangedMessage(2.65));
 
         await _appShellService.AddFlyoutMenus(gotoFirstTimeUserPage);
     }

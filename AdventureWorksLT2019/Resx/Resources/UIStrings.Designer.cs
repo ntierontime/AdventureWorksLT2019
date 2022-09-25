@@ -123,6 +123,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to "Clear"".
+        /// </summary>
+        public static string Clear {
+            get {
+                return ResourceManager.GetString("Clear", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to "Confirm Password"".
         /// </summary>
         public static string ConfirmPassword {
@@ -762,7 +771,16 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to "(en)Settings"".
+        ///   Looks up a localized string similar to "Select"".
+        /// </summary>
+        public static string Select {
+            get {
+                return ResourceManager.GetString("Select", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Settings"".
         /// </summary>
         public static string Settings {
             get {

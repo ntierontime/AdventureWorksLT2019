@@ -17,7 +17,7 @@ namespace AdventureWorksLT2019.Models
         [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="ProductDescriptionID_is_required")]
         public int ProductDescriptionID { get; set; }
 
-        [Display(Name = "Culture", ResourceType = typeof(UIStrings))]
+        [Display(Name = "Culture_", ResourceType = typeof(UIStrings))]
         [StringLength(6, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_Culture_should_be_1_to_6", MinimumLength = 1)]
         public string Culture { get; set; } = null!;
 

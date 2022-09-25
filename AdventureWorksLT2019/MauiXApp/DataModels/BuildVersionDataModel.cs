@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdventureWorksLT2019.MauiXApp.DataModels;
 
-public class BuildVersionDataModel : ObservableValidator, IClone<BuildVersionDataModel>, ICopyTo<BuildVersionDataModel>
+public class BuildVersionDataModel : ObservableValidator, IClone<BuildVersionDataModel>, ICopyTo<BuildVersionDataModel>, IGetIdentifier<BuildVersionIdentifier>
 {
     public string Avatar__
     {
@@ -22,13 +22,13 @@ public class BuildVersionDataModel : ObservableValidator, IClone<BuildVersionDat
         return Database_Version[..2];
     }
 
-    protected ItemUIStatus m_ItemUIStatus______;
+    private ItemUIStatus m_ItemUIStatus______;
     public ItemUIStatus ItemUIStatus______
     {
         get => m_ItemUIStatus______;
         set => SetProperty(ref m_ItemUIStatus______, value);
     }
-    protected System.Boolean m_IsDeleted______;
+    private System.Boolean m_IsDeleted______;
     public System.Boolean IsDeleted______
     {
         get => m_IsDeleted______;
@@ -43,7 +43,7 @@ public class BuildVersionDataModel : ObservableValidator, IClone<BuildVersionDat
         set => SetProperty(ref m___DBId__, value);
     }
 
-    protected byte m_SystemInformationID;
+    private byte m_SystemInformationID;
     [Display(Name = "SystemInformationID", ResourceType = typeof(UIStrings))]
     public byte SystemInformationID
     {
@@ -54,7 +54,7 @@ public class BuildVersionDataModel : ObservableValidator, IClone<BuildVersionDat
         }
     }
 
-    protected string m_Database_Version;
+    private string m_Database_Version;
     [Display(Name = "Database_Version", ResourceType = typeof(UIStrings))]
     [StringLength(25, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_Database_Version_should_be_1_to_25", MinimumLength = 1)]
     public string Database_Version
@@ -67,7 +67,7 @@ public class BuildVersionDataModel : ObservableValidator, IClone<BuildVersionDat
         }
     }
 
-    protected System.DateTime m_VersionDate;
+    private System.DateTime m_VersionDate;
     [Display(Name = "VersionDate", ResourceType = typeof(UIStrings))]
     [DataType(DataType.DateTime)]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="VersionDate_is_required")]
@@ -80,7 +80,7 @@ public class BuildVersionDataModel : ObservableValidator, IClone<BuildVersionDat
         }
     }
 
-    protected System.DateTime m_ModifiedDate;
+    private System.DateTime m_ModifiedDate;
     [Display(Name = "ModifiedDate", ResourceType = typeof(UIStrings))]
     [DataType(DataType.DateTime)]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="ModifiedDate_is_required")]
@@ -116,6 +116,16 @@ public class BuildVersionDataModel : ObservableValidator, IClone<BuildVersionDat
         destination.Database_Version = Database_Version;
         destination.VersionDate = VersionDate;
         destination.ModifiedDate = ModifiedDate;
+    }
+
+    public BuildVersionIdentifier GetIdentifier()
+    {
+        return new BuildVersionIdentifier
+        {
+            SystemInformationID = SystemInformationID,
+            VersionDate = VersionDate,
+            ModifiedDate = ModifiedDate,
+        };
     }
 }
 

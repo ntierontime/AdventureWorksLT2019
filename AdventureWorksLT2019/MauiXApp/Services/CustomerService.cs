@@ -1,6 +1,7 @@
 using AdventureWorksLT2019.MauiXApp.SQLite;
 using Framework.MauiX.SQLite;
 using AdventureWorksLT2019.MauiXApp.Common.Services;
+using Framework.MauiX.Icons;
 using AdventureWorksLT2019.MauiXApp.DataModels;
 using AdventureWorksLT2019.MauiXApp.WebApiClients;
 using Framework.MauiX.DataModels;
@@ -160,7 +161,7 @@ public class CustomerService : IDataServiceBase<CustomerAdvancedQuery, CustomerI
                 DisplayName = UIStrings.ModifiedDate,
                 PropertyName = nameof(CustomerDataModel.ModifiedDate),
                 Direction = QueryOrderDirections.Ascending,
-                //FontIcon = Framework.Xaml.FontAwesomeIcons.Font, FontIconFamily = Framework.Xaml.IconFontFamily.FontAwesomeSolid.ToString(),
+                FontIcon = MaterialIcons.History, FontIconFamily = MaterialIconFamilies.MaterialIconRegular,
                 SortFunc = (TableQuery<CustomerDataModel> tableQuery, QueryOrderDirections direction) =>
                 {
                     tableQuery = tableQuery.Sort(t => t.ModifiedDate, direction);
@@ -170,13 +171,13 @@ public class CustomerService : IDataServiceBase<CustomerAdvancedQuery, CustomerI
             new ObservableQueryOrderBySetting
             {
                 IsSelected = false,
-                DisplayName = UIStrings.ModifiedDate,
-                PropertyName = nameof(CustomerDataModel.ModifiedDate),
+                DisplayName = UIStrings.Title,
+                PropertyName = nameof(CustomerDataModel.Title),
                 Direction = QueryOrderDirections.Descending,
-                //FontIcon = Framework.Xaml.FontAwesomeIcons.Font, FontIconFamily = Framework.Xaml.IconFontFamily.FontAwesomeSolid.ToString(),
+                FontIcon = MaterialIcons.SortByAlpha, FontIconFamily = MaterialIconFamilies.MaterialIconRegular,
                 SortFunc = (TableQuery<CustomerDataModel> tableQuery, QueryOrderDirections direction) =>
                 {
-                    tableQuery = tableQuery.Sort(t => t.ModifiedDate, direction);
+                    tableQuery = tableQuery.Sort(t => t.Title, direction);
                     return tableQuery;
                 }
             }

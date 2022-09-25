@@ -1,6 +1,7 @@
 using AdventureWorksLT2019.MauiXApp.SQLite;
 using Framework.MauiX.SQLite;
 using AdventureWorksLT2019.MauiXApp.Common.Services;
+using Framework.MauiX.Icons;
 using AdventureWorksLT2019.MauiXApp.DataModels;
 using AdventureWorksLT2019.MauiXApp.WebApiClients;
 using Framework.MauiX.DataModels;
@@ -150,7 +151,7 @@ public class CustomerAddressService : IDataServiceBase<CustomerAddressAdvancedQu
                 DisplayName = UIStrings.ModifiedDate,
                 PropertyName = nameof(CustomerAddressDataModel.ModifiedDate),
                 Direction = QueryOrderDirections.Ascending,
-                //FontIcon = Framework.Xaml.FontAwesomeIcons.Font, FontIconFamily = Framework.Xaml.IconFontFamily.FontAwesomeSolid.ToString(),
+                FontIcon = MaterialIcons.History, FontIconFamily = MaterialIconFamilies.MaterialIconRegular,
                 SortFunc = (TableQuery<CustomerAddressDataModel> tableQuery, QueryOrderDirections direction) =>
                 {
                     tableQuery = tableQuery.Sort(t => t.ModifiedDate, direction);
@@ -160,13 +161,13 @@ public class CustomerAddressService : IDataServiceBase<CustomerAddressAdvancedQu
             new ObservableQueryOrderBySetting
             {
                 IsSelected = false,
-                DisplayName = UIStrings.ModifiedDate,
-                PropertyName = nameof(CustomerAddressDataModel.ModifiedDate),
+                DisplayName = UIStrings.AddressType,
+                PropertyName = nameof(CustomerAddressDataModel.AddressType),
                 Direction = QueryOrderDirections.Descending,
-                //FontIcon = Framework.Xaml.FontAwesomeIcons.Font, FontIconFamily = Framework.Xaml.IconFontFamily.FontAwesomeSolid.ToString(),
+                FontIcon = MaterialIcons.SortByAlpha, FontIconFamily = MaterialIconFamilies.MaterialIconRegular,
                 SortFunc = (TableQuery<CustomerAddressDataModel> tableQuery, QueryOrderDirections direction) =>
                 {
-                    tableQuery = tableQuery.Sort(t => t.ModifiedDate, direction);
+                    tableQuery = tableQuery.Sort(t => t.AddressType, direction);
                     return tableQuery;
                 }
             }

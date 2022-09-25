@@ -14,9 +14,15 @@ public partial class ListPage : ContentPage
     {
         viewModel = ServiceHelper.GetService<ListVM>();
         BindingContext = viewModel;
+
+        // TODO: this is a workaround of SelectedItems binding not working
+        // https://github.com/dotnet/maui/issues/8435
+        // SelectedItems="{Binding Path=SelectedItems, Mode=TwoWay}"
+        viewModel.AttachClearSelectedItemsCommand(new Command(OnClearSelectedItems, ()=> viewModel.EnableMultiSelectCommands()));
         viewModel.AttachPopupLaunchCommands(
             new Command(OnLaunchAdvancedSearchPopup),
             new Command(OnLaunchListQuickActionsPopup),
+            new Command(OnLaunchListOrderBysPopup),
             new Command<ViewItemTemplates>(OnLaunchItemPopupView)
             );
         InitializeComponent();
@@ -26,17 +32,23 @@ public partial class ListPage : ContentPage
         base.OnAppearing();
         await viewModel.DoSearch(true, true);
     }
-    public async void OnLaunchAdvancedSearchPopup()
+    private async void OnLaunchAdvancedSearchPopup()
     {
         var popup = new AdvancedSearchPopup();
         await this.ShowPopupAsync(popup);
     }
-    public async void OnLaunchListQuickActionsPopup()
+    private async void OnLaunchListQuickActionsPopup()
     {
         var popup = new ListQuickActionsPopup();
         await this.ShowPopupAsync(popup);
     }
-    public async void OnLaunchItemPopupView(ViewItemTemplates itemView)
+    private async void OnLaunchListOrderBysPopup()
+    {
+        var popup = new AdventureWorksLT2019.MauiXApp.Views.Address.ListOrderBysPopup();
+        await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        //await this.ShowPopupAsync(popup);
+    }
+    private async void OnLaunchItemPopupView(ViewItemTemplates itemView)
     {
         if (itemView == ViewItemTemplates.Details)
         {
@@ -63,6 +75,18 @@ public partial class ListPage : ContentPage
             await this.ShowPopupAsync(popup);
             return;
         }
+    }
+
+    /// <summary>
+    /// TODO: this is a workaround of SelectedItems binding not working
+    /// https://github.com/dotnet/maui/issues/8435
+    /// SelectedItems="{Binding Path=SelectedItems, Mode=TwoWay}"
+    /// </summary>
+    private void OnClearSelectedItems()
+    {
+        collectionView.SelectedItems.Clear();
+        viewModel.SelectedItems.Clear();
+        viewModel.RefreshMultiSelectCommandsCanExecute();
     }
 }
 

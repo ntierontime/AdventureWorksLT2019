@@ -1,6 +1,7 @@
 using AdventureWorksLT2019.MauiXApp.SQLite;
 using Framework.MauiX.SQLite;
 using AdventureWorksLT2019.MauiXApp.Common.Services;
+using Framework.MauiX.Icons;
 using AdventureWorksLT2019.MauiXApp.DataModels;
 using AdventureWorksLT2019.MauiXApp.WebApiClients;
 using Framework.MauiX.DataModels;
@@ -150,7 +151,7 @@ public class AddressService : IDataServiceBase<AddressAdvancedQuery, AddressIden
                 DisplayName = UIStrings.ModifiedDate,
                 PropertyName = nameof(AddressDataModel.ModifiedDate),
                 Direction = QueryOrderDirections.Ascending,
-                //FontIcon = Framework.Xaml.FontAwesomeIcons.Font, FontIconFamily = Framework.Xaml.IconFontFamily.FontAwesomeSolid.ToString(),
+                FontIcon = MaterialIcons.History, FontIconFamily = MaterialIconFamilies.MaterialIconRegular,
                 SortFunc = (TableQuery<AddressDataModel> tableQuery, QueryOrderDirections direction) =>
                 {
                     tableQuery = tableQuery.Sort(t => t.ModifiedDate, direction);
@@ -160,13 +161,13 @@ public class AddressService : IDataServiceBase<AddressAdvancedQuery, AddressIden
             new ObservableQueryOrderBySetting
             {
                 IsSelected = false,
-                DisplayName = UIStrings.ModifiedDate,
-                PropertyName = nameof(AddressDataModel.ModifiedDate),
+                DisplayName = UIStrings.AddressLine1,
+                PropertyName = nameof(AddressDataModel.AddressLine1),
                 Direction = QueryOrderDirections.Descending,
-                //FontIcon = Framework.Xaml.FontAwesomeIcons.Font, FontIconFamily = Framework.Xaml.IconFontFamily.FontAwesomeSolid.ToString(),
+                FontIcon = MaterialIcons.SortByAlpha, FontIconFamily = MaterialIconFamilies.MaterialIconRegular,
                 SortFunc = (TableQuery<AddressDataModel> tableQuery, QueryOrderDirections direction) =>
                 {
-                    tableQuery = tableQuery.Sort(t => t.ModifiedDate, direction);
+                    tableQuery = tableQuery.Sort(t => t.AddressLine1, direction);
                     return tableQuery;
                 }
             }

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdventureWorksLT2019.MauiXApp.DataModels;
 
-public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>, ICopyTo<CustomerDataModel>
+public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>, ICopyTo<CustomerDataModel>, IGetIdentifier<CustomerIdentifier>
 {
     public string Avatar__
     {
@@ -22,20 +22,20 @@ public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>,
         return Title[..2];
     }
 
-    protected ItemUIStatus m_ItemUIStatus______;
+    private ItemUIStatus m_ItemUIStatus______;
     public ItemUIStatus ItemUIStatus______
     {
         get => m_ItemUIStatus______;
         set => SetProperty(ref m_ItemUIStatus______, value);
     }
-    protected System.Boolean m_IsDeleted______;
+    private System.Boolean m_IsDeleted______;
     public System.Boolean IsDeleted______
     {
         get => m_IsDeleted______;
         set => SetProperty(ref m_IsDeleted______, value);
     }
 
-    protected int m_CustomerID;
+    private int m_CustomerID;
     [Display(Name = "CustomerID", ResourceType = typeof(UIStrings))]
     [PrimaryKey]
     public int CustomerID
@@ -47,7 +47,7 @@ public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>,
         }
     }
 
-    protected bool m_NameStyle;
+    private bool m_NameStyle;
     [Display(Name = "NameStyle", ResourceType = typeof(UIStrings))]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="NameStyle_is_required")]
     public bool NameStyle
@@ -59,7 +59,7 @@ public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>,
         }
     }
 
-    protected string m_Title;
+    private string m_Title;
     [Display(Name = "Title", ResourceType = typeof(UIStrings))]
     [StringLength(8, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_Title_should_be_0_to_8")]
     public string Title
@@ -72,7 +72,7 @@ public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>,
         }
     }
 
-    protected string m_FirstName;
+    private string m_FirstName;
     [Display(Name = "FirstName", ResourceType = typeof(UIStrings))]
     [StringLength(50, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_FirstName_should_be_1_to_50", MinimumLength = 1)]
     public string FirstName
@@ -84,7 +84,7 @@ public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>,
         }
     }
 
-    protected string m_MiddleName;
+    private string m_MiddleName;
     [Display(Name = "MiddleName", ResourceType = typeof(UIStrings))]
     [StringLength(50, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_MiddleName_should_be_0_to_50")]
     public string MiddleName
@@ -96,7 +96,7 @@ public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>,
         }
     }
 
-    protected string m_LastName;
+    private string m_LastName;
     [Display(Name = "LastName", ResourceType = typeof(UIStrings))]
     [StringLength(50, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_LastName_should_be_1_to_50", MinimumLength = 1)]
     public string LastName
@@ -108,7 +108,7 @@ public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>,
         }
     }
 
-    protected string m_Suffix;
+    private string m_Suffix;
     [Display(Name = "Suffix", ResourceType = typeof(UIStrings))]
     [StringLength(10, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_Suffix_should_be_0_to_10")]
     public string Suffix
@@ -120,7 +120,7 @@ public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>,
         }
     }
 
-    protected string m_CompanyName;
+    private string m_CompanyName;
     [Display(Name = "CompanyName", ResourceType = typeof(UIStrings))]
     [StringLength(128, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_CompanyName_should_be_0_to_128")]
     public string CompanyName
@@ -132,7 +132,7 @@ public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>,
         }
     }
 
-    protected string m_SalesPerson;
+    private string m_SalesPerson;
     [Display(Name = "SalesPerson", ResourceType = typeof(UIStrings))]
     [StringLength(256, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_SalesPerson_should_be_0_to_256")]
     public string SalesPerson
@@ -144,7 +144,7 @@ public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>,
         }
     }
 
-    protected string m_EmailAddress;
+    private string m_EmailAddress;
     [Display(Name = "EmailAddress", ResourceType = typeof(UIStrings))]
     [StringLength(50, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_EmailAddress_should_be_0_to_50")]
     public string EmailAddress
@@ -156,7 +156,7 @@ public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>,
         }
     }
 
-    protected string m_Phone;
+    private string m_Phone;
     [Display(Name = "Phone", ResourceType = typeof(UIStrings))]
     [StringLength(25, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_Phone_should_be_0_to_25")]
     public string Phone
@@ -168,7 +168,7 @@ public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>,
         }
     }
 
-    protected string m_PasswordHash;
+    private string m_PasswordHash;
     [Display(Name = "PasswordHash", ResourceType = typeof(UIStrings))]
     [StringLength(128, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_PasswordHash_should_be_1_to_128", MinimumLength = 1)]
     public string PasswordHash
@@ -180,7 +180,7 @@ public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>,
         }
     }
 
-    protected string m_PasswordSalt;
+    private string m_PasswordSalt;
     [Display(Name = "PasswordSalt", ResourceType = typeof(UIStrings))]
     [StringLength(10, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_PasswordSalt_should_be_1_to_10", MinimumLength = 1)]
     public string PasswordSalt
@@ -192,7 +192,7 @@ public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>,
         }
     }
 
-    protected System.Guid m_rowguid;
+    private System.Guid m_rowguid;
     [Display(Name = "rowguid", ResourceType = typeof(UIStrings))]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="rowguid_is_required")]
     public System.Guid rowguid
@@ -204,7 +204,7 @@ public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>,
         }
     }
 
-    protected System.DateTime m_ModifiedDate;
+    private System.DateTime m_ModifiedDate;
     [Display(Name = "ModifiedDate", ResourceType = typeof(UIStrings))]
     [DataType(DataType.DateTime)]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="ModifiedDate_is_required")]
@@ -260,6 +260,14 @@ public class CustomerDataModel : ObservableValidator, IClone<CustomerDataModel>,
         destination.PasswordSalt = PasswordSalt;
         destination.rowguid = rowguid;
         destination.ModifiedDate = ModifiedDate;
+    }
+
+    public CustomerIdentifier GetIdentifier()
+    {
+        return new CustomerIdentifier
+        {
+            CustomerID = CustomerID,
+        };
     }
 }
 

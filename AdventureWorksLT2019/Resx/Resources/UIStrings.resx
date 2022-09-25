@@ -139,6 +139,9 @@
   <data name="ChinesseSimplified" xml:space="preserve">
     <value>(en)汉语</value>
   </data>
+  <data name="Clear" xml:space="preserve">
+    <value>(en)Clear</value>
+  </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>(en)Confirm Password</value>
   </data>
@@ -352,8 +355,11 @@
   <data name="SearchTextDescription" xml:space="preserve">
     <value>(en)Search text in all text fields</value>
   </data>
+  <data name="Select" xml:space="preserve">
+    <value>(en)Select</value>
+  </data>
   <data name="Settings" xml:space="preserve">
-    <value>(en)(en)Settings</value>
+    <value>(en)Settings</value>
   </data>
   <data name="ShowAdvancedSearch" xml:space="preserve">
     <value>(en)Show Advanced Search</value>

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdventureWorksLT2019.MauiXApp.DataModels;
 
-public class ProductCategoryDataModel : ObservableValidator, IClone<ProductCategoryDataModel>, ICopyTo<ProductCategoryDataModel>
+public class ProductCategoryDataModel : ObservableValidator, IClone<ProductCategoryDataModel>, ICopyTo<ProductCategoryDataModel>, IGetIdentifier<ProductCategoryIdentifier>
 {
     public string Avatar__
     {
@@ -22,20 +22,20 @@ public class ProductCategoryDataModel : ObservableValidator, IClone<ProductCateg
         return Name[..2];
     }
 
-    protected ItemUIStatus m_ItemUIStatus______;
+    private ItemUIStatus m_ItemUIStatus______;
     public ItemUIStatus ItemUIStatus______
     {
         get => m_ItemUIStatus______;
         set => SetProperty(ref m_ItemUIStatus______, value);
     }
-    protected System.Boolean m_IsDeleted______;
+    private System.Boolean m_IsDeleted______;
     public System.Boolean IsDeleted______
     {
         get => m_IsDeleted______;
         set => SetProperty(ref m_IsDeleted______, value);
     }
 
-    protected int m_ProductCategoryID;
+    private int m_ProductCategoryID;
     [Display(Name = "ProductCategoryID", ResourceType = typeof(UIStrings))]
     [PrimaryKey]
     public int ProductCategoryID
@@ -47,7 +47,7 @@ public class ProductCategoryDataModel : ObservableValidator, IClone<ProductCateg
         }
     }
 
-    protected int? m_ParentProductCategoryID;
+    private int? m_ParentProductCategoryID;
     [Display(Name = "ProductCategory", ResourceType = typeof(UIStrings))]
     public int? ParentProductCategoryID
     {
@@ -58,7 +58,7 @@ public class ProductCategoryDataModel : ObservableValidator, IClone<ProductCateg
         }
     }
 
-    protected string m_Name;
+    private string m_Name;
     [Display(Name = "Name", ResourceType = typeof(UIStrings))]
     [StringLength(50, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_Name_should_be_1_to_50", MinimumLength = 1)]
     public string Name
@@ -71,7 +71,7 @@ public class ProductCategoryDataModel : ObservableValidator, IClone<ProductCateg
         }
     }
 
-    protected System.Guid m_rowguid;
+    private System.Guid m_rowguid;
     [Display(Name = "rowguid", ResourceType = typeof(UIStrings))]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="rowguid_is_required")]
     public System.Guid rowguid
@@ -83,7 +83,7 @@ public class ProductCategoryDataModel : ObservableValidator, IClone<ProductCateg
         }
     }
 
-    protected System.DateTime m_ModifiedDate;
+    private System.DateTime m_ModifiedDate;
     [Display(Name = "ModifiedDate", ResourceType = typeof(UIStrings))]
     [DataType(DataType.DateTime)]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="ModifiedDate_is_required")]
@@ -96,7 +96,7 @@ public class ProductCategoryDataModel : ObservableValidator, IClone<ProductCateg
         }
     }
 
-    protected string m_Parent_Name;
+    private string m_Parent_Name;
     [Display(Name = "Name", ResourceType = typeof(UIStrings))]
     public string Parent_Name
     {
@@ -132,6 +132,14 @@ public class ProductCategoryDataModel : ObservableValidator, IClone<ProductCateg
         destination.rowguid = rowguid;
         destination.ModifiedDate = ModifiedDate;
         destination.Parent_Name = Parent_Name;
+    }
+
+    public ProductCategoryIdentifier GetIdentifier()
+    {
+        return new ProductCategoryIdentifier
+        {
+            ProductCategoryID = ProductCategoryID,
+        };
     }
 }
 

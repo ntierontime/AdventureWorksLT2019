@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdventureWorksLT2019.MauiXApp.DataModels;
 
-public class ProductModelProductDescriptionDataModel : ObservableValidator, IClone<ProductModelProductDescriptionDataModel>, ICopyTo<ProductModelProductDescriptionDataModel>
+public class ProductModelProductDescriptionDataModel : ObservableValidator, IClone<ProductModelProductDescriptionDataModel>, ICopyTo<ProductModelProductDescriptionDataModel>, IGetIdentifier<ProductModelProductDescriptionIdentifier>
 {
     public string Avatar__
     {
@@ -22,13 +22,13 @@ public class ProductModelProductDescriptionDataModel : ObservableValidator, IClo
         return Culture[..2];
     }
 
-    protected ItemUIStatus m_ItemUIStatus______;
+    private ItemUIStatus m_ItemUIStatus______;
     public ItemUIStatus ItemUIStatus______
     {
         get => m_ItemUIStatus______;
         set => SetProperty(ref m_ItemUIStatus______, value);
     }
-    protected System.Boolean m_IsDeleted______;
+    private System.Boolean m_IsDeleted______;
     public System.Boolean IsDeleted______
     {
         get => m_IsDeleted______;
@@ -43,7 +43,7 @@ public class ProductModelProductDescriptionDataModel : ObservableValidator, IClo
         set => SetProperty(ref m___DBId__, value);
     }
 
-    protected int m_ProductModelID;
+    private int m_ProductModelID;
     [Display(Name = "ProductModel", ResourceType = typeof(UIStrings))]
     public int ProductModelID
     {
@@ -54,7 +54,7 @@ public class ProductModelProductDescriptionDataModel : ObservableValidator, IClo
         }
     }
 
-    protected int m_ProductDescriptionID;
+    private int m_ProductDescriptionID;
     [Display(Name = "ProductDescription", ResourceType = typeof(UIStrings))]
     public int ProductDescriptionID
     {
@@ -65,8 +65,8 @@ public class ProductModelProductDescriptionDataModel : ObservableValidator, IClo
         }
     }
 
-    protected string m_Culture;
-    [Display(Name = "Culture", ResourceType = typeof(UIStrings))]
+    private string m_Culture;
+    [Display(Name = "Culture_", ResourceType = typeof(UIStrings))]
     [StringLength(6, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_Culture_should_be_1_to_6", MinimumLength = 1)]
     public string Culture
     {
@@ -78,7 +78,7 @@ public class ProductModelProductDescriptionDataModel : ObservableValidator, IClo
         }
     }
 
-    protected System.Guid m_rowguid;
+    private System.Guid m_rowguid;
     [Display(Name = "rowguid", ResourceType = typeof(UIStrings))]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="rowguid_is_required")]
     public System.Guid rowguid
@@ -90,7 +90,7 @@ public class ProductModelProductDescriptionDataModel : ObservableValidator, IClo
         }
     }
 
-    protected System.DateTime m_ModifiedDate;
+    private System.DateTime m_ModifiedDate;
     [Display(Name = "ModifiedDate", ResourceType = typeof(UIStrings))]
     [DataType(DataType.DateTime)]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="ModifiedDate_is_required")]
@@ -103,7 +103,7 @@ public class ProductModelProductDescriptionDataModel : ObservableValidator, IClo
         }
     }
 
-    protected string m_ProductDescription_Name;
+    private string m_ProductDescription_Name;
     [Display(Name = "Description", ResourceType = typeof(UIStrings))]
     public string ProductDescription_Name
     {
@@ -114,7 +114,7 @@ public class ProductModelProductDescriptionDataModel : ObservableValidator, IClo
         }
     }
 
-    protected string m_ProductModel_Name;
+    private string m_ProductModel_Name;
     [Display(Name = "Name", ResourceType = typeof(UIStrings))]
     public string ProductModel_Name
     {
@@ -154,6 +154,16 @@ public class ProductModelProductDescriptionDataModel : ObservableValidator, IClo
         destination.ModifiedDate = ModifiedDate;
         destination.ProductDescription_Name = ProductDescription_Name;
         destination.ProductModel_Name = ProductModel_Name;
+    }
+
+    public ProductModelProductDescriptionIdentifier GetIdentifier()
+    {
+        return new ProductModelProductDescriptionIdentifier
+        {
+            ProductModelID = ProductModelID,
+            ProductDescriptionID = ProductDescriptionID,
+            Culture = Culture,
+        };
     }
 }
 

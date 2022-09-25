@@ -1,6 +1,7 @@
 using AdventureWorksLT2019.MauiXApp.SQLite;
 using Framework.MauiX.SQLite;
 using AdventureWorksLT2019.MauiXApp.Common.Services;
+using Framework.MauiX.Icons;
 using AdventureWorksLT2019.MauiXApp.DataModels;
 using AdventureWorksLT2019.MauiXApp.WebApiClients;
 using Framework.MauiX.DataModels;
@@ -95,7 +96,7 @@ public class BuildVersionService : IDataServiceBase<BuildVersionAdvancedQuery, B
                 DisplayName = UIStrings.VersionDate,
                 PropertyName = nameof(BuildVersionDataModel.VersionDate),
                 Direction = QueryOrderDirections.Ascending,
-                //FontIcon = Framework.Xaml.FontAwesomeIcons.Font, FontIconFamily = Framework.Xaml.IconFontFamily.FontAwesomeSolid.ToString(),
+                FontIcon = MaterialIcons.History, FontIconFamily = MaterialIconFamilies.MaterialIconRegular,
                 //SortFunc = (TableQuery<BuildVersionDataModel> tableQuery, QueryOrderDirections direction) =>
                 //{
                 //    tableQuery = tableQuery.Sort(t => t.VersionDate, direction);
@@ -105,13 +106,13 @@ public class BuildVersionService : IDataServiceBase<BuildVersionAdvancedQuery, B
             new ObservableQueryOrderBySetting
             {
                 IsSelected = false,
-                DisplayName = UIStrings.VersionDate,
-                PropertyName = nameof(BuildVersionDataModel.VersionDate),
-                Direction = QueryOrderDirections.Descending,
-                //FontIcon = Framework.Xaml.FontAwesomeIcons.Font, FontIconFamily = Framework.Xaml.IconFontFamily.FontAwesomeSolid.ToString(),
+                DisplayName = UIStrings.Database_Version,
+                PropertyName = nameof(BuildVersionDataModel.Database_Version),
+                Direction = QueryOrderDirections.Ascending,
+                FontIcon = MaterialIcons.SortByAlpha, FontIconFamily = MaterialIconFamilies.MaterialIconRegular,
                 //SortFunc = (TableQuery<BuildVersionDataModel> tableQuery, QueryOrderDirections direction) =>
                 //{
-                //    tableQuery = tableQuery.Sort(t => t.VersionDate, direction);
+                //    tableQuery = tableQuery.Sort(t => t.Database_Version, direction);
                 //    return tableQuery;
                 //}
             }

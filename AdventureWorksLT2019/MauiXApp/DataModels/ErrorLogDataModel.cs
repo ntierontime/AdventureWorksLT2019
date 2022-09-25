@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdventureWorksLT2019.MauiXApp.DataModels;
 
-public class ErrorLogDataModel : ObservableValidator, IClone<ErrorLogDataModel>, ICopyTo<ErrorLogDataModel>
+public class ErrorLogDataModel : ObservableValidator, IClone<ErrorLogDataModel>, ICopyTo<ErrorLogDataModel>, IGetIdentifier<ErrorLogIdentifier>
 {
     public string Avatar__
     {
@@ -22,20 +22,20 @@ public class ErrorLogDataModel : ObservableValidator, IClone<ErrorLogDataModel>,
         return UserName[..2];
     }
 
-    protected ItemUIStatus m_ItemUIStatus______;
+    private ItemUIStatus m_ItemUIStatus______;
     public ItemUIStatus ItemUIStatus______
     {
         get => m_ItemUIStatus______;
         set => SetProperty(ref m_ItemUIStatus______, value);
     }
-    protected System.Boolean m_IsDeleted______;
+    private System.Boolean m_IsDeleted______;
     public System.Boolean IsDeleted______
     {
         get => m_IsDeleted______;
         set => SetProperty(ref m_IsDeleted______, value);
     }
 
-    protected int m_ErrorLogID;
+    private int m_ErrorLogID;
     [Display(Name = "ErrorLogID", ResourceType = typeof(UIStrings))]
     [PrimaryKey]
     public int ErrorLogID
@@ -47,7 +47,7 @@ public class ErrorLogDataModel : ObservableValidator, IClone<ErrorLogDataModel>,
         }
     }
 
-    protected System.DateTime m_ErrorTime;
+    private System.DateTime m_ErrorTime;
     [Display(Name = "ErrorTime", ResourceType = typeof(UIStrings))]
     [DataType(DataType.DateTime)]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="ErrorTime_is_required")]
@@ -60,7 +60,7 @@ public class ErrorLogDataModel : ObservableValidator, IClone<ErrorLogDataModel>,
         }
     }
 
-    protected string m_UserName;
+    private string m_UserName;
     [Display(Name = "UserName", ResourceType = typeof(UIStrings))]
     [StringLength(128, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_UserName_should_be_1_to_128", MinimumLength = 1)]
     public string UserName
@@ -73,7 +73,7 @@ public class ErrorLogDataModel : ObservableValidator, IClone<ErrorLogDataModel>,
         }
     }
 
-    protected int m_ErrorNumber;
+    private int m_ErrorNumber;
     [Display(Name = "ErrorNumber", ResourceType = typeof(UIStrings))]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="ErrorNumber_is_required")]
     public int ErrorNumber
@@ -85,7 +85,7 @@ public class ErrorLogDataModel : ObservableValidator, IClone<ErrorLogDataModel>,
         }
     }
 
-    protected int? m_ErrorSeverity;
+    private int? m_ErrorSeverity;
     [Display(Name = "ErrorSeverity", ResourceType = typeof(UIStrings))]
     public int? ErrorSeverity
     {
@@ -96,7 +96,7 @@ public class ErrorLogDataModel : ObservableValidator, IClone<ErrorLogDataModel>,
         }
     }
 
-    protected int? m_ErrorState;
+    private int? m_ErrorState;
     [Display(Name = "ErrorState", ResourceType = typeof(UIStrings))]
     public int? ErrorState
     {
@@ -107,7 +107,7 @@ public class ErrorLogDataModel : ObservableValidator, IClone<ErrorLogDataModel>,
         }
     }
 
-    protected string m_ErrorProcedure;
+    private string m_ErrorProcedure;
     [Display(Name = "ErrorProcedure", ResourceType = typeof(UIStrings))]
     [StringLength(126, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_ErrorProcedure_should_be_0_to_126")]
     public string ErrorProcedure
@@ -119,7 +119,7 @@ public class ErrorLogDataModel : ObservableValidator, IClone<ErrorLogDataModel>,
         }
     }
 
-    protected int? m_ErrorLine;
+    private int? m_ErrorLine;
     [Display(Name = "ErrorLine", ResourceType = typeof(UIStrings))]
     public int? ErrorLine
     {
@@ -130,7 +130,7 @@ public class ErrorLogDataModel : ObservableValidator, IClone<ErrorLogDataModel>,
         }
     }
 
-    protected string m_ErrorMessage;
+    private string m_ErrorMessage;
     [Display(Name = "ErrorMessage", ResourceType = typeof(UIStrings))]
     [StringLength(4000, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_ErrorMessage_should_be_1_to_4000", MinimumLength = 1)]
     public string ErrorMessage
@@ -173,6 +173,14 @@ public class ErrorLogDataModel : ObservableValidator, IClone<ErrorLogDataModel>,
         destination.ErrorProcedure = ErrorProcedure;
         destination.ErrorLine = ErrorLine;
         destination.ErrorMessage = ErrorMessage;
+    }
+
+    public ErrorLogIdentifier GetIdentifier()
+    {
+        return new ErrorLogIdentifier
+        {
+            ErrorLogID = ErrorLogID,
+        };
     }
 }
 

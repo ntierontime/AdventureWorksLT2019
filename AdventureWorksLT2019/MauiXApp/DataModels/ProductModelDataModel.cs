@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdventureWorksLT2019.MauiXApp.DataModels;
 
-public class ProductModelDataModel : ObservableValidator, IClone<ProductModelDataModel>, ICopyTo<ProductModelDataModel>
+public class ProductModelDataModel : ObservableValidator, IClone<ProductModelDataModel>, ICopyTo<ProductModelDataModel>, IGetIdentifier<ProductModelIdentifier>
 {
     public string Avatar__
     {
@@ -22,20 +22,20 @@ public class ProductModelDataModel : ObservableValidator, IClone<ProductModelDat
         return Name[..2];
     }
 
-    protected ItemUIStatus m_ItemUIStatus______;
+    private ItemUIStatus m_ItemUIStatus______;
     public ItemUIStatus ItemUIStatus______
     {
         get => m_ItemUIStatus______;
         set => SetProperty(ref m_ItemUIStatus______, value);
     }
-    protected System.Boolean m_IsDeleted______;
+    private System.Boolean m_IsDeleted______;
     public System.Boolean IsDeleted______
     {
         get => m_IsDeleted______;
         set => SetProperty(ref m_IsDeleted______, value);
     }
 
-    protected int m_ProductModelID;
+    private int m_ProductModelID;
     [Display(Name = "ProductModelID", ResourceType = typeof(UIStrings))]
     [PrimaryKey]
     public int ProductModelID
@@ -47,7 +47,7 @@ public class ProductModelDataModel : ObservableValidator, IClone<ProductModelDat
         }
     }
 
-    protected string m_Name;
+    private string m_Name;
     [Display(Name = "Name", ResourceType = typeof(UIStrings))]
     [StringLength(50, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_Name_should_be_1_to_50", MinimumLength = 1)]
     public string Name
@@ -60,7 +60,7 @@ public class ProductModelDataModel : ObservableValidator, IClone<ProductModelDat
         }
     }
 
-    protected string m_CatalogDescription;
+    private string m_CatalogDescription;
     [Display(Name = "CatalogDescription", ResourceType = typeof(UIStrings))]
     public string CatalogDescription
     {
@@ -71,7 +71,7 @@ public class ProductModelDataModel : ObservableValidator, IClone<ProductModelDat
         }
     }
 
-    protected System.Guid m_rowguid;
+    private System.Guid m_rowguid;
     [Display(Name = "rowguid", ResourceType = typeof(UIStrings))]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="rowguid_is_required")]
     public System.Guid rowguid
@@ -83,7 +83,7 @@ public class ProductModelDataModel : ObservableValidator, IClone<ProductModelDat
         }
     }
 
-    protected System.DateTime m_ModifiedDate;
+    private System.DateTime m_ModifiedDate;
     [Display(Name = "ModifiedDate", ResourceType = typeof(UIStrings))]
     [DataType(DataType.DateTime)]
     [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="ModifiedDate_is_required")]
@@ -119,6 +119,14 @@ public class ProductModelDataModel : ObservableValidator, IClone<ProductModelDat
         destination.CatalogDescription = CatalogDescription;
         destination.rowguid = rowguid;
         destination.ModifiedDate = ModifiedDate;
+    }
+
+    public ProductModelIdentifier GetIdentifier()
+    {
+        return new ProductModelIdentifier
+        {
+            ProductModelID = ProductModelID,
+        };
     }
 }
 

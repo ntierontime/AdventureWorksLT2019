@@ -11,11 +11,11 @@ public partial class ListQuickActionsPopup : CommunityToolkit.Maui.Views.Popup
         viewModel.AttachListQuickActionsPopupCommands(new Command(OnCancelled));
 
         InitializeComponent();
-        IDeviceDisplay deviceDisplay = ServiceHelper.GetService<IDeviceDisplay>();
-        Size = new(deviceDisplay.MainDisplayInfo.Width / deviceDisplay.MainDisplayInfo.Density, deviceDisplay.MainDisplayInfo.Height / deviceDisplay.MainDisplayInfo.Density);
+        // WinUI Size is not correct.
+        Size = PopupHelper.GetPopupSize();
     }
 
-    protected void OnCancelled()
+    private void OnCancelled()
     {
         Close();
     }

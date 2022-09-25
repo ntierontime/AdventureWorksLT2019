@@ -5,6 +5,7 @@ using AdventureWorksLT2019.MauiXApp.Services;
 using Framework.Models;
 using Framework.MauiX.ViewModels;
 using CommunityToolkit.Mvvm.Messaging;
+using System.Windows.Input;
 
 namespace AdventureWorksLT2019.MauiXApp.ViewModels.ProductModel;
 
@@ -46,6 +47,8 @@ public class ListVM : ListVMBase<ProductModelAdvancedQuery, ProductModelIdentifi
     }
     // AdvancedQuery.End
 
+    public ICommand BulkDeleteCommand { get; private set; }
+
     public ListVM(ProductModelService dataService)
         : base(dataService)
     {
@@ -62,6 +65,30 @@ public class ListVM : ListVMBase<ProductModelAdvancedQuery, ProductModelIdentifi
         SelectedModifiedDateRange = DateTimeRangeListAll.FirstOrDefault(t => t.Value == EditingQuery.ModifiedDateRange);
         */
         // AdvancedQuery.End
+
+        BulkDeleteCommand = new Command(
+            async () =>
+            {
+                // TODO: can add popup to confirm, and popup to show status OK/Failed
+                var response = await _dataService.BulkDelete(SelectedItems.Select(t => t.GetIdentifier()).ToList());
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    foreach (var item in SelectedItems)
+                    {
+                        Result.Remove(item);
+                    }
+                    SelectedItems.Clear();
+                    RefreshMultiSelectCommandsCanExecute();
+                }
+            },
+            () => EnableMultiSelectCommands()
+        );
+    }
+
+    public override void RefreshMultiSelectCommandsCanExecute()
+    {
+        base.RefreshMultiSelectCommandsCanExecute();
+        ((Command)BulkDeleteCommand).ChangeCanExecute();
     }
 
     public override void RegisterRequestSelectedItemMessage()
