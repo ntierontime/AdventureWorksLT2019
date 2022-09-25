@@ -1,13 +1,13 @@
 ﻿TABLE_SCHEMA,TABLE_NAME,Enabled,Table_Category,TableKnownName,UniqueConstraint,EnumDefinition,NameDefinition,AbstractTable,GlobalMapItem,BaseTables,AddressProperties,DerivedTables,UIPrimaryRouteId,CompositeQueryIdentifiers,CreatedDate,DownwardListTableOfListTable,CacheInClientApp,IsUserData
 dbo,BuildVersion,TRUE,CrossReferenceTable,,,,,FALSE,,,,,,,8/23/2022 15:21,,FALSE,FALSE
 dbo,ErrorLog,TRUE,DetailsTable,,,,,FALSE,,,,,,,8/23/2022 15:21,,FALSE,FALSE
-SalesLT,Address,TRUE,DetailsTable,,,,,FALSE,,,,,,,8/23/2022 15:21,,TRUE,TRUE
-SalesLT,Customer,TRUE,CoreTable,,,,,FALSE,,,,,,,8/23/2022 15:21,,TRUE,TRUE
-SalesLT,CustomerAddress,TRUE,CrossReferenceTable,,,,,FALSE,,,,,,,8/23/2022 15:21,,TRUE,TRUE
-SalesLT,Product,TRUE,CoreTable,,,,Name,FALSE,,,,,,,8/23/2022 15:21,,TRUE,TRUE
-SalesLT,ProductCategory,TRUE,DetailsTable,,,,Name,FALSE,,,,,,,8/23/2022 15:21,,TRUE,TRUE
-SalesLT,ProductDescription,TRUE,DetailsTable,,,,,FALSE,,,,,,,8/23/2022 15:21,,TRUE,TRUE
-SalesLT,ProductModel,TRUE,DetailsTable,,,,Name,FALSE,,,,,,,8/23/2022 15:21,,TRUE,TRUE
-SalesLT,ProductModelProductDescription,TRUE,CrossReferenceTable,,,,,FALSE,,,,,,,8/23/2022 15:21,,TRUE,TRUE
-SalesLT,SalesOrderDetail,TRUE,CrossReferenceTable,,,,,FALSE,,,,,,,8/23/2022 15:21,,TRUE,TRUE
-SalesLT,SalesOrderHeader,TRUE,DetailsTable,,,,,FALSE,,,,,,,8/23/2022 15:21,,TRUE,TRUE
+SalesLT,Address,TRUE,DetailsTable,,,,,FALSE,,,,,,,8/23/2022 15:21,,FALSE,TRUE
+SalesLT,Customer,TRUE,CoreTable,,,,,FALSE,,,,,,,8/23/2022 15:21,,FALSE,TRUE
+SalesLT,CustomerAddress,TRUE,CrossReferenceTable,,,,,FALSE,,,,,,,8/23/2022 15:21,,FALSE,TRUE
+SalesLT,Product,TRUE,CoreTable,,,,Name,FALSE,,,,,,,8/23/2022 15:21,,FALSE,TRUE
+SalesLT,ProductCategory,TRUE,LookupTable,,,,Name,FALSE,,,,,,,8/23/2022 15:21,,FALSE,TRUE
+SalesLT,ProductDescription,TRUE,DetailsTable,,,,,FALSE,,,,,,,8/23/2022 15:21,,FALSE,TRUE
+SalesLT,ProductModel,TRUE,LookupTable,,,,Name,FALSE,,,,,,,8/23/2022 15:21,,FALSE,TRUE
+SalesLT,ProductModelProductDescription,TRUE,CrossReferenceTable,,,,,FALSE,,,,,,,8/23/2022 15:21,,FALSE,TRUE
+SalesLT,SalesOrderDetail,TRUE,CrossReferenceTable,,,,,FALSE,,,,,,,8/23/2022 15:21,,FALSE,TRUE
+SalesLT,SalesOrderHeader,TRUE,CoreTable,,,,,FALSE,,,,,,,8/23/2022 15:21,,FALSE,TRUE

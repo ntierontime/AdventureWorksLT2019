@@ -30,7 +30,7 @@ namespace AdventureWorksLT2019.Models
 
         public partial class DefaultView: ProductCategoryDataModel
         {
-            [Display(Name = "Name", ResourceType = typeof(UIStrings))]
+            [Display(Name = "ProductCategory", ResourceType = typeof(UIStrings))]
             public string? Parent_Name { get; set; }
         }
 

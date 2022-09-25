@@ -239,7 +239,7 @@ public class ProductDataModel : ObservableValidator, IClone<ProductDataModel>, I
     }
 
     private string m_ProductCategory_Name;
-    [Display(Name = "Name", ResourceType = typeof(UIStrings))]
+    [Display(Name = "ProductCategory", ResourceType = typeof(UIStrings))]
     public string ProductCategory_Name
     {
         get => m_ProductCategory_Name;
@@ -251,6 +251,7 @@ public class ProductDataModel : ObservableValidator, IClone<ProductDataModel>, I
 
     private int m_ParentID;
     [Display(Name = "ProductCategory", ResourceType = typeof(UIStrings))]
+    [PrimaryKey]
     public int ParentID
     {
         get => m_ParentID;
@@ -261,7 +262,7 @@ public class ProductDataModel : ObservableValidator, IClone<ProductDataModel>, I
     }
 
     private string m_Parent_Name;
-    [Display(Name = "Name", ResourceType = typeof(UIStrings))]
+    [Display(Name = "ProductCategory", ResourceType = typeof(UIStrings))]
     public string Parent_Name
     {
         get => m_Parent_Name;
@@ -272,7 +273,7 @@ public class ProductDataModel : ObservableValidator, IClone<ProductDataModel>, I
     }
 
     private string m_ProductModel_Name;
-    [Display(Name = "Name", ResourceType = typeof(UIStrings))]
+    [Display(Name = "ProductModel", ResourceType = typeof(UIStrings))]
     public string ProductModel_Name
     {
         get => m_ProductModel_Name;

@@ -35,7 +35,7 @@ namespace AdventureWorksLT2019.Models
             [Display(Name = "Description", ResourceType = typeof(UIStrings))]
             public string? ProductDescription_Name { get; set; }
 
-            [Display(Name = "Name", ResourceType = typeof(UIStrings))]
+            [Display(Name = "ProductModel", ResourceType = typeof(UIStrings))]
             public string? ProductModel_Name { get; set; }
         }
 

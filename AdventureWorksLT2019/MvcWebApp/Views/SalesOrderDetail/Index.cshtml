@@ -51,6 +51,32 @@
             </div>
         </div>
     </div>
+    <div class="row pt-1">
+        <div class="col-md-6 col-lg-4 col-xl-3">
+            <div class="input-group">
+                <label class="input-group-text">@localizor.Get("ProductModel")</label>
+                <select asp-for="Query.ProductModelID" class="form-control form-select nt-ddlcascading" asp-items="@selectListHelper.GetSelectList(Model?.TopLevelDropDownListsFromDatabase?[TopLevelDropDownLists.ProductModel.ToString()])"data-childlisturl="@Url.Action("GetProductCodeList","SelectListsApi")" data-nt-queryparamname="productModelID" data-nt-targetchild="Query.ProductID">
+                    <option value="" selected>@string.Format(format_All, localizor.Get("ProductModel"))</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4 col-xl-3">
+            <div class="input-group">
+                <label class="input-group-text">@localizor.Get("ProductCategory")</label>
+                <select asp-for="Query.ProductCategory_ParentID" class="form-control form-select nt-ddlcascading" data-childlisturl="@Url.Action("GetProductCategoryCodeList","SelectListsApi")" data-nt-queryparamname="parentProductCategoryID" data-nt-targetchild="Query.ProductCategoryID">
+                    <option value="" selected>@string.Format(format_All, localizor.Get("ProductCategory"))</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4 col-xl-3">
+            <div class="input-group">
+                <label class="input-group-text">@localizor.Get("ProductCategory")</label>
+                <select asp-for="Query.ProductCategoryID" class="form-control form-select nt-ddlcascading" data-childlisturl="@Url.Action("GetProductCodeList","SelectListsApi")" data-nt-queryparamname="productCategoryID" data-nt-targetchild="Query.ProductID">
+                    <option value="" selected>@string.Format(format_All, localizor.Get("ProductCategory"))</option>
+                </select>
+            </div>
+        </div>
+    </div>
     <div class="d-flex justify-content-between pt-1">
         <div>
             <span class="h5"><a class="nav-link text-dark" asp-area="" asp-controller="SalesOrderDetail" asp-action="Index">you are working on <strong>@localizor.Get("SalesOrderDetail")</strong></a></span>

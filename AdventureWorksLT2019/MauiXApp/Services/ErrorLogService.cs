@@ -12,7 +12,7 @@ using SQLite;
 
 namespace AdventureWorksLT2019.MauiXApp.Services;
 
-public class ErrorLogService : IDataServiceBase<ErrorLogAdvancedQuery, ErrorLogIdentifier, ErrorLogDataModel>
+public class ErrorLogService : DataServiceBase<ErrorLogAdvancedQuery, ErrorLogIdentifier, ErrorLogDataModel>
 {
 
     private readonly ErrorLogApiClient _thisApiClient;
@@ -26,7 +26,7 @@ public class ErrorLogService : IDataServiceBase<ErrorLogAdvancedQuery, ErrorLogI
         _cacheDataStatusService = cacheDataStatusService;
     }
 
-    public async Task<ListResponse<ErrorLogDataModel[]>> Search(
+    public override async Task<ListResponse<ErrorLogDataModel[]>> Search(
         ErrorLogAdvancedQuery query,
         ObservableQueryOrderBySetting queryOrderBySetting)
     {
@@ -35,47 +35,21 @@ public class ErrorLogService : IDataServiceBase<ErrorLogAdvancedQuery, ErrorLogI
         return response;
     }
 
-    public async Task<ErrorLogCompositeModel> GetCompositeModel(
-        ErrorLogIdentifier id)
-    {
-        var response = await _thisApiClient.GetCompositeModel(id);
-        return response;
-    }
-
-    public async Task<Response> BulkDelete(List<ErrorLogIdentifier> ids)
-    {
-        var response = await _thisApiClient.BulkDelete(ids);
-        return response;
-    }
-
-    public async Task<Response<MultiItemsCUDRequest<ErrorLogIdentifier, ErrorLogDataModel>>> MultiItemsCUD(
-        MultiItemsCUDRequest<ErrorLogIdentifier, ErrorLogDataModel> input)
-    {
-        var response = await _thisApiClient.MultiItemsCUD(input);
-        return response;
-    }
-
-    public async Task<Response<ErrorLogDataModel>> Update(ErrorLogIdentifier id, ErrorLogDataModel input)
+    public override async Task<Response<ErrorLogDataModel>> Update(ErrorLogIdentifier id, ErrorLogDataModel input)
     {
         var response = await _thisApiClient.Update(id, input);
         return response;
     }
 
-    public async Task<Response<ErrorLogDataModel>> Get(ErrorLogIdentifier id)
+    public override async Task<Response<ErrorLogDataModel>> Get(ErrorLogIdentifier id)
     {
         var response = await _thisApiClient.Get(id);
         return response;
     }
 
-    public async Task<Response<ErrorLogDataModel>> Create(ErrorLogDataModel input)
+    public override async Task<Response<ErrorLogDataModel>> Create(ErrorLogDataModel input)
     {
         var response = await _thisApiClient.Create(input);
-        return response;
-    }
-
-    public async Task<Response> Delete(ErrorLogIdentifier id)
-    {
-        var response = await _thisApiClient.Delete(id);
         return response;
     }
 
@@ -87,7 +61,7 @@ public class ErrorLogService : IDataServiceBase<ErrorLogAdvancedQuery, ErrorLogI
         return currentQueryOrderBySetting;
     }
 
-    public List<ObservableQueryOrderBySetting> GetQueryOrderBySettings()
+    public override List<ObservableQueryOrderBySetting> GetQueryOrderBySettings()
     {
         var queryOrderBySettings = new List<ObservableQueryOrderBySetting> {
             new ObservableQueryOrderBySetting
@@ -119,7 +93,7 @@ public class ErrorLogService : IDataServiceBase<ErrorLogAdvancedQuery, ErrorLogI
         };
         return queryOrderBySettings;
     }
-    public ErrorLogDataModel GetDefault()
+    public override ErrorLogDataModel GetDefault()
     {
         // TODO: please set default value here
         return new ErrorLogDataModel { ItemUIStatus______ = ItemUIStatus.New };

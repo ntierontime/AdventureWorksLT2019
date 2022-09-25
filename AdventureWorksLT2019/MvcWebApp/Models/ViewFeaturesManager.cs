@@ -373,7 +373,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 PrimayEditViewContainer = CrudViewContainers.Inline,
 
                 ShowItemButtons = true,
-                CanGotoDashboard = false,
+                CanGotoDashboard = true,
             };
 
             return result;
@@ -398,7 +398,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     PrimayDetailsViewContainer = CrudViewContainers.Inline,
                     PrimayEditViewContainer = CrudViewContainers.Inline,
 
-                    CanGotoDashboard = false,
+                    CanGotoDashboard = true,
                     CanBulkDelete = false,
                     CanBulkActions = false,
 
@@ -475,7 +475,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 PrimayEditViewContainer = CrudViewContainers.Inline,
 
                 ShowItemButtons = true,
-                CanGotoDashboard = false,
+                CanGotoDashboard = true,
             };
 
             return result;
@@ -500,7 +500,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     PrimayDetailsViewContainer = CrudViewContainers.Inline,
                     PrimayEditViewContainer = CrudViewContainers.Inline,
 
-                    CanGotoDashboard = false,
+                    CanGotoDashboard = true,
                     CanBulkDelete = false,
                     CanBulkActions = false,
 
@@ -629,7 +629,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
 
                 ShowListBulkSelectCheckbox = pagedViewOptionForBulkSelectCheckBox != ListViewOptions.Card,
                 ShowItemButtons = true,
-                CanGotoDashboard = false,
+                CanGotoDashboard = true,
             };
 
             return result;
@@ -654,7 +654,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     PrimayDetailsViewContainer = CrudViewContainers.Dialog,
                     PrimayEditViewContainer = CrudViewContainers.Dialog,
 
-                    CanGotoDashboard = false,
+                    CanGotoDashboard = true,
                     CanBulkDelete = false,
                     CanBulkActions = true,
 

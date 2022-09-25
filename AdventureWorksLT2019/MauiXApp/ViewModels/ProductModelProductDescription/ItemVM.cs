@@ -15,7 +15,7 @@ public class ItemVM : ItemVMBase<ProductModelProductDescriptionIdentifier, Produ
     {
     }
 
-    public override void SendDataChangedMessage(ViewItemTemplates itemView)
+    protected override void SendDataChangedMessage(ViewItemTemplates itemView)
     {
         WeakReferenceMessenger.Default.Send<ProductModelProductDescriptionItemChangedMessage>(new ProductModelProductDescriptionItemChangedMessage(Item, itemView));
     }

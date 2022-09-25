@@ -57,6 +57,16 @@
         </div>
     </div>
     <div class="row pt-1">
+        <div class="col-md-6 col-lg-4 col-xl-3">
+            <div class="input-group">
+                <label class="input-group-text">@localizor.Get("ProductCategory")</label>
+                <select asp-for="Query.ParentProductCategoryID" class="form-control form-select" >
+                    <option value="" selected>@string.Format(format_All, localizor.Get("ProductCategory"))</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-1">
         <div class="col-md-6">
             <div class="input-group">
                 <label class="input-group-text">@localizor.Get("Name")</label>

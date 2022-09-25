@@ -172,7 +172,7 @@ public class SalesOrderDetailDataModel : ObservableValidator, IClone<SalesOrderD
     }
 
     private string m_ProductCategory_Name;
-    [Display(Name = "Name", ResourceType = typeof(UIStrings))]
+    [Display(Name = "ProductCategory", ResourceType = typeof(UIStrings))]
     public string ProductCategory_Name
     {
         get => m_ProductCategory_Name;
@@ -194,7 +194,7 @@ public class SalesOrderDetailDataModel : ObservableValidator, IClone<SalesOrderD
     }
 
     private string m_ProductCategory_Parent_Name;
-    [Display(Name = "Name", ResourceType = typeof(UIStrings))]
+    [Display(Name = "ProductCategory", ResourceType = typeof(UIStrings))]
     public string ProductCategory_Parent_Name
     {
         get => m_ProductCategory_Parent_Name;
@@ -216,7 +216,7 @@ public class SalesOrderDetailDataModel : ObservableValidator, IClone<SalesOrderD
     }
 
     private string m_ProductModel_Name;
-    [Display(Name = "Name", ResourceType = typeof(UIStrings))]
+    [Display(Name = "ProductModel", ResourceType = typeof(UIStrings))]
     public string ProductModel_Name
     {
         get => m_ProductModel_Name;
