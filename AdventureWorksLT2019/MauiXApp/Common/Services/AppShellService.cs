@@ -1,16 +1,14 @@
-using Framework.MauiX.Helpers;
 using AdventureWorksLT2019.MauiXApp.Views;
 using AdventureWorksLT2019.Resx.Resources;
 
+using Microsoft.Maui.Controls;
 using System.Windows.Input;
-using CommunityToolkit.Maui.Views;
 
 namespace AdventureWorksLT2019.MauiXApp.Common.Services;
 
 public class AppShellService
 {
     public static ICommand ShellGotoAbsoluteCommand { get; protected set; } = new Command<string>(OnShellGotoAbsolute);
-    public static ICommand ShellShowPopupCommand { get; protected set; } = new Command<Type>(OnShellShowPopup);
 
     private readonly UserService _userService;
 
@@ -23,12 +21,6 @@ public class AppShellService
     protected static async void OnShellGotoAbsolute(string route)
     {
         await AppShellService.GoToAbsoluteAsync(route);
-    }
-
-    private static async void OnShellShowPopup(Type popupType)
-    {
-        var popup = PopupHelper.GetPopup(popupType);
-        await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
     }
 
     public async Task AddFlyoutMenus(bool gotoFirstTimeUserPage)

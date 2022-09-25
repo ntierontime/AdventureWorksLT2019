@@ -1,5 +1,3 @@
-using CommunityToolkit.Maui.Views;
-
 namespace Framework.MauiX.Helpers;
 
 public class PopupHelper
@@ -13,12 +11,6 @@ public class PopupHelper
         // Full Screen On Android / IOs ...
         return new(0.975 * (deviceDisplay.MainDisplayInfo.Width / deviceDisplay.MainDisplayInfo.Density), 0.875 * (deviceDisplay.MainDisplayInfo.Height / deviceDisplay.MainDisplayInfo.Density));
 #endif
-    }
-
-    public static Popup GetPopup(Type popupType)
-    {
-        var popup = ServiceHelper.GetService(popupType);
-        return popup is Popup ? (Popup)popup : null;
     }
 }
 

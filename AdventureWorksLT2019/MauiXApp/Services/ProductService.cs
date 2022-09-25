@@ -163,7 +163,7 @@ public class ProductService : IDataServiceBase<ProductAdvancedQuery, ProductIden
                 IsSelected = false,
                 DisplayName = UIStrings.Name,
                 PropertyName = nameof(ProductDataModel.Name),
-                Direction = QueryOrderDirections.Ascending,
+                Direction = QueryOrderDirections.Descending,
                 FontIcon = MaterialIcons.SortByAlpha, FontIconFamily = MaterialIconFamilies.MaterialIconRegular,
                 SortFunc = (TableQuery<ProductDataModel> tableQuery, QueryOrderDirections direction) =>
                 {

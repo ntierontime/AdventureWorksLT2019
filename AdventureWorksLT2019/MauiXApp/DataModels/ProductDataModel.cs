@@ -251,7 +251,6 @@ public class ProductDataModel : ObservableValidator, IClone<ProductDataModel>, I
 
     private int m_ParentID;
     [Display(Name = "ProductCategory", ResourceType = typeof(UIStrings))]
-    [PrimaryKey]
     public int ParentID
     {
         get => m_ParentID;

@@ -163,7 +163,7 @@ public class AddressService : IDataServiceBase<AddressAdvancedQuery, AddressIden
                 IsSelected = false,
                 DisplayName = UIStrings.AddressLine1,
                 PropertyName = nameof(AddressDataModel.AddressLine1),
-                Direction = QueryOrderDirections.Ascending,
+                Direction = QueryOrderDirections.Descending,
                 FontIcon = MaterialIcons.SortByAlpha, FontIconFamily = MaterialIconFamilies.MaterialIconRegular,
                 SortFunc = (TableQuery<AddressDataModel> tableQuery, QueryOrderDirections direction) =>
                 {
