@@ -60,7 +60,7 @@ namespace AdventureWorksLT2019.Services
                     using (var scope = _serviceScopeFactor.CreateScope())
                     {
                         var productCategoryRepository = scope.ServiceProvider.GetRequiredService<IProductCategoryRepository>();
-                        var idQuery = new ProductCategoryIdentifier { ProductCategoryID = id.ProductID };
+                        var idQuery = new ProductCategoryIdentifier { ProductCategoryID = masterResponse.ResponseBody.ProductCategoryID };
                         var response = await productCategoryRepository.Get(idQuery);
                         responses.TryAdd(ProductCompositeModel.__DataOptions__.ProductCategory, new Response<PaginationResponse> { Status = response.Status, StatusMessage = response.StatusMessage });
                         if(response.Status == HttpStatusCode.OK)

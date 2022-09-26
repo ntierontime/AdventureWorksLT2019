@@ -1,0 +1,1629 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="OCCMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AccommodationType">
+          <Key>
+            <PropertyRef Name="AccommodationTypeID" />
+          </Key>
+          <Property Name="AccommodationTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OCCM.dbo.Address' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="OrgUID" />
+            <PropertyRef Name="OrgType" />
+          </Key>
+          <Property Name="OrgUID" Type="int" Nullable="false" />
+          <Property Name="OrgType" Type="int" Nullable="false" />
+          <Property Name="Address1" Type="varchar" MaxLength="50" />
+          <Property Name="Address2" Type="varchar" MaxLength="50" />
+          <Property Name="City" Type="varchar" MaxLength="50" />
+          <Property Name="PostalCode" Type="varchar" MaxLength="7" />
+          <Property Name="Province" Type="varchar" MaxLength="10" />
+          <Property Name="Proposed" Type="bit" />
+          <Property Name="Comments" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="BedGroup2">
+          <Key>
+            <PropertyRef Name="BedGroupID" />
+          </Key>
+          <Property Name="BedGroupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FacUID" Type="int" Nullable="false" />
+          <Property Name="EntryIndex" Type="int" Nullable="false" />
+          <Property Name="NOBeds" Type="int" Nullable="false" />
+          <Property Name="LTCBedClassID" Type="int" />
+          <Property Name="AccommodationTypeID" Type="int" />
+          <Property Name="ResourceTypeID" Type="int" />
+          <Property Name="CareLevelID" Type="int" Nullable="false" />
+          <Property Name="SpecUnitID" Type="int" Nullable="false" />
+          <Property Name="SmokingYN" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="Gender" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="CultID" Type="int" Nullable="false" />
+          <Property Name="ReligID" Type="int" Nullable="false" />
+          <Property Name="OpenDate" Type="datetime" Nullable="false" />
+          <Property Name="CloseDate" Type="datetime" Nullable="false" />
+          <Property Name="ConfLevel" Type="smallint" />
+          <Property Name="Comments" Type="varchar" MaxLength="5000" />
+          <Property Name="FMISMasterNo" Type="varchar" MaxLength="50" />
+          <Property Name="ExistingBed" Type="smallint" />
+          <Property Name="CheckedOut" Type="bit" />
+          <Property Name="DLU" Type="datetime" />
+          <Property Name="UserLog" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CareLevel">
+          <Key>
+            <PropertyRef Name="CareLevelID" />
+          </Key>
+          <Property Name="CareLevelID" Type="int" Nullable="false" />
+          <Property Name="CareLevelName" Type="varchar" MaxLength="50" />
+          <Property Name="CareLevelDescr" Type="text" />
+        </EntityType>
+        <EntityType Name="CSD">
+          <Key>
+            <PropertyRef Name="CSDid" />
+          </Key>
+          <Property Name="CSDid" Type="int" Nullable="false" />
+          <Property Name="CSDname" Type="varchar" MaxLength="50" />
+          <Property Name="CSDtype" Type="varchar" MaxLength="5" />
+          <Property Name="CDcode" Type="varchar" MaxLength="5" />
+          <Property Name="CSDscode" Type="varchar" MaxLength="3" />
+          <Property Name="CSDlcode" Type="varchar" MaxLength="5" />
+          <Property Name="CSDxname" Type="varchar" MaxLength="50" />
+          <Property Name="LocationID" Type="int" />
+        </EntityType>
+        <EntityType Name="Culture">
+          <Key>
+            <PropertyRef Name="CultID" />
+          </Key>
+          <Property Name="CultID" Type="int" Nullable="false" />
+          <Property Name="CultName" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Facility">
+          <Key>
+            <PropertyRef Name="FacUID" />
+          </Key>
+          <Property Name="FacUID" Type="int" Nullable="false" />
+          <Property Name="OwnerUID" Type="int" />
+          <Property Name="FacilityName" Type="varchar" MaxLength="100" />
+          <Property Name="FacClass" Type="int" />
+          <Property Name="FacStruct" Type="varchar" MaxLength="20" />
+          <Property Name="FacBeds" Type="int" />
+          <Property Name="SectorID" Type="int" />
+          <Property Name="OwnerTypeID" Type="smallint" />
+          <Property Name="LicBeds" Type="int" />
+          <Property Name="MISFacID" Type="int" />
+          <Property Name="MISMasterNo" Type="varchar" MaxLength="10" />
+          <Property Name="MISHomeNo" Type="varchar" MaxLength="10" />
+          <Property Name="FMISMasterNo" Type="varchar" MaxLength="10" />
+          <Property Name="FMISHomeNo" Type="varchar" MaxLength="10" />
+          <Property Name="FFNHID" Type="varchar" MaxLength="10" />
+          <Property Name="FFLTCID" Type="varchar" MaxLength="10" />
+          <Property Name="FundSource" Type="varchar" MaxLength="50" />
+          <Property Name="Comments" Type="varchar" MaxLength="3000" />
+          <Property Name="DLU" Type="datetime" />
+          <Property Name="UserLog" Type="varchar" MaxLength="50" />
+          <Property Name="LinkFacUID" Type="int" />
+          <Property Name="_MISOwner" Type="int" />
+          <Property Name="_FMISOwner" Type="int" />
+          <Property Name="LHINNumber" Type="int" />
+        </EntityType>
+        <EntityType Name="FacilityStatus">
+          <Key>
+            <PropertyRef Name="StatusID" />
+            <PropertyRef Name="FacUID" />
+          </Key>
+          <Property Name="StatusID" Type="int" Nullable="false" />
+          <Property Name="FacUID" Type="int" Nullable="false" />
+          <Property Name="StatusDate" Type="datetime" />
+          <Property Name="Comments" Type="text" />
+          <Property Name="CurrStatus" Type="bit" Nullable="false" />
+          <Property Name="DateEntered" Type="datetime" />
+          <Property Name="RecordNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FacStatus">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="int" Nullable="false" />
+          <Property Name="FacStatus" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OCCM.dbo.FMISDB_Owners' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="FMISDB_Owners">
+          <Key>
+            <PropertyRef Name="Owner" />
+          </Key>
+          <Property Name="Owner" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="Name1" Type="varchar" MaxLength="50" />
+          <Property Name="name2" Type="varchar" MaxLength="50" />
+          <Property Name="address1" Type="varchar" MaxLength="30" />
+          <Property Name="address2" Type="varchar" MaxLength="30" />
+          <Property Name="City" Type="varchar" MaxLength="25" />
+          <Property Name="Postal" Type="varchar" MaxLength="6" />
+          <Property Name="Prov" Type="varchar" MaxLength="2" />
+          <Property Name="Tel" Type="varchar" MaxLength="10" />
+          <Property Name="fax" Type="varchar" MaxLength="7" />
+          <Property Name="ContTitle" Type="varchar" MaxLength="4" />
+          <Property Name="ContSurname" Type="varchar" MaxLength="30" />
+          <Property Name="ContGiven" Type="varchar" MaxLength="10" />
+          <Property Name="MName1" Type="varchar" MaxLength="50" />
+          <Property Name="MName2" Type="varchar" MaxLength="50" />
+          <Property Name="Maddress1" Type="varchar" MaxLength="30" />
+          <Property Name="Maddress2" Type="varchar" MaxLength="30" />
+          <Property Name="MCity" Type="varchar" MaxLength="25" />
+          <Property Name="MProv" Type="varchar" MaxLength="2" />
+          <Property Name="MPostal" Type="varchar" MaxLength="6" />
+          <Property Name="MTel" Type="varchar" MaxLength="10" />
+          <Property Name="Type" Type="char" MaxLength="1" />
+          <Property Name="Kind" Type="char" MaxLength="1" />
+          <Property Name="Position1" Type="varchar" MaxLength="15" />
+          <Property Name="Title1" Type="varchar" MaxLength="4" />
+          <Property Name="LastName1" Type="varchar" MaxLength="30" />
+          <Property Name="GivenName1" Type="varchar" MaxLength="10" />
+          <Property Name="Pos1Address1" Type="varchar" MaxLength="30" />
+          <Property Name="Pos1Address2" Type="varchar" MaxLength="30" />
+          <Property Name="Pos1City" Type="varchar" MaxLength="25" />
+          <Property Name="Pos1Prov" Type="varchar" MaxLength="2" />
+          <Property Name="Pos1Postal" Type="varchar" MaxLength="6" />
+          <Property Name="Pos1Tel" Type="varchar" MaxLength="10" />
+          <Property Name="Position2" Type="varchar" MaxLength="15" />
+          <Property Name="Title2" Type="varchar" MaxLength="4" />
+          <Property Name="LastName2" Type="varchar" MaxLength="30" />
+          <Property Name="GivenName2" Type="varchar" MaxLength="10" />
+          <Property Name="Position3" Type="varchar" MaxLength="15" />
+          <Property Name="Title3" Type="varchar" MaxLength="4" />
+          <Property Name="LastName3" Type="varchar" MaxLength="30" />
+          <Property Name="GivenName3" Type="varchar" MaxLength="10" />
+          <Property Name="Position4" Type="varchar" MaxLength="15" />
+          <Property Name="Title4" Type="varchar" MaxLength="4" />
+          <Property Name="LastName4" Type="varchar" MaxLength="30" />
+          <Property Name="GivenName4" Type="varchar" MaxLength="10" />
+          <Property Name="Position5" Type="varchar" MaxLength="15" />
+          <Property Name="Title5" Type="varchar" MaxLength="4" />
+          <Property Name="LastName5" Type="varchar" MaxLength="30" />
+          <Property Name="GivenName5" Type="varchar" MaxLength="10" />
+          <Property Name="Position6" Type="varchar" MaxLength="15" />
+          <Property Name="Title6" Type="varchar" MaxLength="4" />
+          <Property Name="LastName6" Type="varchar" MaxLength="30" />
+          <Property Name="GivenName6" Type="varchar" MaxLength="10" />
+          <Property Name="Position7" Type="varchar" MaxLength="15" />
+          <Property Name="Title7" Type="varchar" MaxLength="4" />
+          <Property Name="LastName7" Type="varchar" MaxLength="30" />
+          <Property Name="GivenName7" Type="varchar" MaxLength="10" />
+          <Property Name="Position8" Type="varchar" MaxLength="15" />
+          <Property Name="Title8" Type="varchar" MaxLength="4" />
+          <Property Name="LastName8" Type="varchar" MaxLength="30" />
+          <Property Name="GivenName8" Type="varchar" MaxLength="10" />
+          <Property Name="Position9" Type="varchar" MaxLength="15" />
+          <Property Name="Title9" Type="varchar" MaxLength="4" />
+          <Property Name="LastName9" Type="varchar" MaxLength="30" />
+          <Property Name="GivenName9" Type="varchar" MaxLength="10" />
+          <Property Name="RepStatus" Type="char" MaxLength="1" />
+          <Property Name="RepNH" Type="char" MaxLength="4" />
+          <Property Name="MailFlag" Type="bit" />
+        </EntityType>
+        <EntityType Name="IRBlob">
+          <Key>
+            <PropertyRef Name="IRId" />
+          </Key>
+          <Property Name="FacUid" Type="int" />
+          <Property Name="IRId" Type="int" Nullable="false" />
+          <Property Name="Name1" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Name2" Type="varchar" MaxLength="200" />
+          <Property Name="Name3" Type="varchar" MaxLength="200" />
+          <Property Name="Name4" Type="varchar" MaxLength="200" />
+          <Property Name="Name5" Type="varchar" MaxLength="200" />
+          <Property Name="Address1" Type="varchar" MaxLength="1000" />
+          <Property Name="Address2" Type="varchar" MaxLength="1000" />
+          <Property Name="Blob" Type="text" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OCCM.dbo.LHIN10' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="LHIN10">
+          <Key>
+            <PropertyRef Name="LHIN10" />
+            <PropertyRef Name="LHIN10Name" />
+          </Key>
+          <Property Name="LHIN10" Type="int" Nullable="false" />
+          <Property Name="LHIN10Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RLISSS" Type="varchar" MaxLength="50" />
+          <Property Name="LHINNumber" Type="int" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Name="LocationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Location" Type="varchar" MaxLength="50" />
+          <Property Name="CDcode" Type="varchar" MaxLength="5" />
+          <Property Name="CSDid" Type="int" />
+        </EntityType>
+        <EntityType Name="LTC_Bed_Class">
+          <Key>
+            <PropertyRef Name="LTCBedClassID" />
+          </Key>
+          <Property Name="LTCBedClassID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Owner">
+          <Key>
+            <PropertyRef Name="OwnerUID" />
+          </Key>
+          <Property Name="OwnerUID" Type="int" Nullable="false" />
+          <Property Name="RegName" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="OperName" Type="varchar" MaxLength="50" />
+          <Property Name="RegCode" Type="varchar" MaxLength="10" />
+          <Property Name="CorpOwnUID" Type="int" />
+          <Property Name="MISOwnerID" Type="int" />
+          <Property Name="FMISOwnerID" Type="int" />
+        </EntityType>
+        <EntityType Name="OwnerType">
+          <Key>
+            <PropertyRef Name="OwnerTypeID" />
+          </Key>
+          <Property Name="OwnerTypeID" Type="smallint" Nullable="false" />
+          <Property Name="OwnerTypeName" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="OwnerTypeDesc" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Religion">
+          <Key>
+            <PropertyRef Name="ReligID" />
+          </Key>
+          <Property Name="ReligID" Type="int" Nullable="false" />
+          <Property Name="ReligName" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="ResourceType">
+          <Key>
+            <PropertyRef Name="ResourceTypeID" />
+          </Key>
+          <Property Name="ResourceTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ResourceTypeName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sector">
+          <Key>
+            <PropertyRef Name="SectorID" />
+          </Key>
+          <Property Name="SectorID" Type="int" Nullable="false" />
+          <Property Name="Sector" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="SpecialUnit">
+          <Key>
+            <PropertyRef Name="SpecUnitID" />
+          </Key>
+          <Property Name="SpecUnitID" Type="int" Nullable="false" />
+          <Property Name="SpecUnitName" Type="varchar" MaxLength="50" />
+          <Property Name="SpecUnitDescr" Type="text" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="RevokeAccess" Type="bit" Nullable="false" />
+          <Property Name="LastAccessDateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OCCM.dbo.FacilityAdressGeography' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <Association Name="FK__Facility__OwnerU__2704CA5F">
+          <End Role="Owner" Type="Self.Owner" Multiplicity="0..1" />
+          <End Role="Facility" Type="Self.Facility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owner">
+              <PropertyRef Name="OwnerUID" />
+            </Principal>
+            <Dependent Role="Facility">
+              <PropertyRef Name="OwnerUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FacilityS__FacUI__2334397B">
+          <End Role="Facility" Type="Self.Facility" Multiplicity="1" />
+          <End Role="FacilityStatus" Type="Self.FacilityStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facility">
+              <PropertyRef Name="FacUID" />
+            </Principal>
+            <Dependent Role="FacilityStatus">
+              <PropertyRef Name="FacUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FacilityS__Statu__22401542">
+          <End Role="FacStatus" Type="Self.FacStatus" Multiplicity="1" />
+          <End Role="FacilityStatus" Type="Self.FacilityStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FacStatus">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="FacilityStatus">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Address_Facility">
+          <End Role="Facility" Type="Self.Facility" Multiplicity="1" />
+          <End Role="Address" Type="Self.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facility">
+              <PropertyRef Name="FacUID" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="OrgUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BedGroup2_BedType">
+          <End Role="AccommodationType" Type="Self.AccommodationType" Multiplicity="0..1" />
+          <End Role="BedGroup2" Type="Self.BedGroup2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccommodationType">
+              <PropertyRef Name="AccommodationTypeID" />
+            </Principal>
+            <Dependent Role="BedGroup2">
+              <PropertyRef Name="AccommodationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BedGroup2_CareLevel">
+          <End Role="CareLevel" Type="Self.CareLevel" Multiplicity="1" />
+          <End Role="BedGroup2" Type="Self.BedGroup2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CareLevel">
+              <PropertyRef Name="CareLevelID" />
+            </Principal>
+            <Dependent Role="BedGroup2">
+              <PropertyRef Name="CareLevelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BedGroup2_Classification">
+          <End Role="LTC_Bed_Class" Type="Self.LTC_Bed_Class" Multiplicity="0..1" />
+          <End Role="BedGroup2" Type="Self.BedGroup2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LTC_Bed_Class">
+              <PropertyRef Name="LTCBedClassID" />
+            </Principal>
+            <Dependent Role="BedGroup2">
+              <PropertyRef Name="LTCBedClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BedGroup2_Culture">
+          <End Role="Culture" Type="Self.Culture" Multiplicity="1" />
+          <End Role="BedGroup2" Type="Self.BedGroup2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Culture">
+              <PropertyRef Name="CultID" />
+            </Principal>
+            <Dependent Role="BedGroup2">
+              <PropertyRef Name="CultID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BedGroup2_Facility">
+          <End Role="Facility" Type="Self.Facility" Multiplicity="1" />
+          <End Role="BedGroup2" Type="Self.BedGroup2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facility">
+              <PropertyRef Name="FacUID" />
+            </Principal>
+            <Dependent Role="BedGroup2">
+              <PropertyRef Name="FacUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BedGroup2_Religion">
+          <End Role="Religion" Type="Self.Religion" Multiplicity="1" />
+          <End Role="BedGroup2" Type="Self.BedGroup2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Religion">
+              <PropertyRef Name="ReligID" />
+            </Principal>
+            <Dependent Role="BedGroup2">
+              <PropertyRef Name="ReligID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BedGroup2_ResourceType">
+          <End Role="ResourceType" Type="Self.ResourceType" Multiplicity="0..1" />
+          <End Role="BedGroup2" Type="Self.BedGroup2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ResourceType">
+              <PropertyRef Name="ResourceTypeID" />
+            </Principal>
+            <Dependent Role="BedGroup2">
+              <PropertyRef Name="ResourceTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BedGroup2_SpecialUnit">
+          <End Role="SpecialUnit" Type="Self.SpecialUnit" Multiplicity="1" />
+          <End Role="BedGroup2" Type="Self.BedGroup2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SpecialUnit">
+              <PropertyRef Name="SpecUnitID" />
+            </Principal>
+            <Dependent Role="BedGroup2">
+              <PropertyRef Name="SpecUnitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Facility_OwnerType">
+          <End Role="OwnerType" Type="Self.OwnerType" Multiplicity="0..1" />
+          <End Role="Facility" Type="Self.Facility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OwnerType">
+              <PropertyRef Name="OwnerTypeID" />
+            </Principal>
+            <Dependent Role="Facility">
+              <PropertyRef Name="OwnerTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Facility_Sector">
+          <End Role="Sector" Type="Self.Sector" Multiplicity="0..1" />
+          <End Role="Facility" Type="Self.Facility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sector">
+              <PropertyRef Name="SectorID" />
+            </Principal>
+            <Dependent Role="Facility">
+              <PropertyRef Name="SectorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Location_CSD">
+          <End Role="CSD" Type="Self.CSD" Multiplicity="0..1" />
+          <End Role="Location" Type="Self.Location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CSD">
+              <PropertyRef Name="CSDid" />
+            </Principal>
+            <Dependent Role="Location">
+              <PropertyRef Name="CSDid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OCCMModelStoreContainer">
+          <EntitySet Name="AccommodationType" EntityType="Self.AccommodationType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BedGroup2" EntityType="Self.BedGroup2" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CareLevel" EntityType="Self.CareLevel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CSD" EntityType="Self.CSD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Culture" EntityType="Self.Culture" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Facility" EntityType="Self.Facility" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FacilityStatus" EntityType="Self.FacilityStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FacStatus" EntityType="Self.FacStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IRBlob" EntityType="Self.IRBlob" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LTC_Bed_Class" EntityType="Self.LTC_Bed_Class" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Owner" EntityType="Self.Owner" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OwnerType" EntityType="Self.OwnerType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Religion" EntityType="Self.Religion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ResourceType" EntityType="Self.ResourceType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sector" EntityType="Self.Sector" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SpecialUnit" EntityType="Self.SpecialUnit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Address" EntityType="Self.Address" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Address].[OrgUID] AS [OrgUID], 
+    [Address].[OrgType] AS [OrgType], 
+    [Address].[Address1] AS [Address1], 
+    [Address].[Address2] AS [Address2], 
+    [Address].[City] AS [City], 
+    [Address].[PostalCode] AS [PostalCode], 
+    [Address].[Province] AS [Province], 
+    [Address].[Proposed] AS [Proposed], 
+    [Address].[Comments] AS [Comments]
+    FROM [dbo].[Address] AS [Address]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="FMISDB_Owners" EntityType="Self.FMISDB_Owners" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [FMISDB_Owners].[Owner] AS [Owner], 
+    [FMISDB_Owners].[Name1] AS [Name1], 
+    [FMISDB_Owners].[name2] AS [name2], 
+    [FMISDB_Owners].[address1] AS [address1], 
+    [FMISDB_Owners].[address2] AS [address2], 
+    [FMISDB_Owners].[City] AS [City], 
+    [FMISDB_Owners].[Postal] AS [Postal], 
+    [FMISDB_Owners].[Prov] AS [Prov], 
+    [FMISDB_Owners].[Tel] AS [Tel], 
+    [FMISDB_Owners].[fax] AS [fax], 
+    [FMISDB_Owners].[ContTitle] AS [ContTitle], 
+    [FMISDB_Owners].[ContSurname] AS [ContSurname], 
+    [FMISDB_Owners].[ContGiven] AS [ContGiven], 
+    [FMISDB_Owners].[MName1] AS [MName1], 
+    [FMISDB_Owners].[MName2] AS [MName2], 
+    [FMISDB_Owners].[Maddress1] AS [Maddress1], 
+    [FMISDB_Owners].[Maddress2] AS [Maddress2], 
+    [FMISDB_Owners].[MCity] AS [MCity], 
+    [FMISDB_Owners].[MProv] AS [MProv], 
+    [FMISDB_Owners].[MPostal] AS [MPostal], 
+    [FMISDB_Owners].[MTel] AS [MTel], 
+    [FMISDB_Owners].[Type] AS [Type], 
+    [FMISDB_Owners].[Kind] AS [Kind], 
+    [FMISDB_Owners].[Position1] AS [Position1], 
+    [FMISDB_Owners].[Title1] AS [Title1], 
+    [FMISDB_Owners].[LastName1] AS [LastName1], 
+    [FMISDB_Owners].[GivenName1] AS [GivenName1], 
+    [FMISDB_Owners].[Pos1Address1] AS [Pos1Address1], 
+    [FMISDB_Owners].[Pos1Address2] AS [Pos1Address2], 
+    [FMISDB_Owners].[Pos1City] AS [Pos1City], 
+    [FMISDB_Owners].[Pos1Prov] AS [Pos1Prov], 
+    [FMISDB_Owners].[Pos1Postal] AS [Pos1Postal], 
+    [FMISDB_Owners].[Pos1Tel] AS [Pos1Tel], 
+    [FMISDB_Owners].[Position2] AS [Position2], 
+    [FMISDB_Owners].[Title2] AS [Title2], 
+    [FMISDB_Owners].[LastName2] AS [LastName2], 
+    [FMISDB_Owners].[GivenName2] AS [GivenName2], 
+    [FMISDB_Owners].[Position3] AS [Position3], 
+    [FMISDB_Owners].[Title3] AS [Title3], 
+    [FMISDB_Owners].[LastName3] AS [LastName3], 
+    [FMISDB_Owners].[GivenName3] AS [GivenName3], 
+    [FMISDB_Owners].[Position4] AS [Position4], 
+    [FMISDB_Owners].[Title4] AS [Title4], 
+    [FMISDB_Owners].[LastName4] AS [LastName4], 
+    [FMISDB_Owners].[GivenName4] AS [GivenName4], 
+    [FMISDB_Owners].[Position5] AS [Position5], 
+    [FMISDB_Owners].[Title5] AS [Title5], 
+    [FMISDB_Owners].[LastName5] AS [LastName5], 
+    [FMISDB_Owners].[GivenName5] AS [GivenName5], 
+    [FMISDB_Owners].[Position6] AS [Position6], 
+    [FMISDB_Owners].[Title6] AS [Title6], 
+    [FMISDB_Owners].[LastName6] AS [LastName6], 
+    [FMISDB_Owners].[GivenName6] AS [GivenName6], 
+    [FMISDB_Owners].[Position7] AS [Position7], 
+    [FMISDB_Owners].[Title7] AS [Title7], 
+    [FMISDB_Owners].[LastName7] AS [LastName7], 
+    [FMISDB_Owners].[GivenName7] AS [GivenName7], 
+    [FMISDB_Owners].[Position8] AS [Position8], 
+    [FMISDB_Owners].[Title8] AS [Title8], 
+    [FMISDB_Owners].[LastName8] AS [LastName8], 
+    [FMISDB_Owners].[GivenName8] AS [GivenName8], 
+    [FMISDB_Owners].[Position9] AS [Position9], 
+    [FMISDB_Owners].[Title9] AS [Title9], 
+    [FMISDB_Owners].[LastName9] AS [LastName9], 
+    [FMISDB_Owners].[GivenName9] AS [GivenName9], 
+    [FMISDB_Owners].[RepStatus] AS [RepStatus], 
+    [FMISDB_Owners].[RepNH] AS [RepNH], 
+    [FMISDB_Owners].[MailFlag] AS [MailFlag]
+    FROM [dbo].[FMISDB_Owners] AS [FMISDB_Owners]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="LHIN10" EntityType="Self.LHIN10" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [LHIN10].[LHIN10] AS [LHIN10], 
+    [LHIN10].[LHIN10Name] AS [LHIN10Name], 
+    [LHIN10].[RLISSS] AS [RLISSS], 
+    [LHIN10].[LHINNumber] AS [LHINNumber]
+    FROM [dbo].[LHIN10] AS [LHIN10]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Facility__OwnerU__2704CA5F" Association="Self.FK__Facility__OwnerU__2704CA5F">
+            <End Role="Owner" EntitySet="Owner" />
+            <End Role="Facility" EntitySet="Facility" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FacilityS__FacUI__2334397B" Association="Self.FK__FacilityS__FacUI__2334397B">
+            <End Role="Facility" EntitySet="Facility" />
+            <End Role="FacilityStatus" EntitySet="FacilityStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FacilityS__Statu__22401542" Association="Self.FK__FacilityS__Statu__22401542">
+            <End Role="FacStatus" EntitySet="FacStatus" />
+            <End Role="FacilityStatus" EntitySet="FacilityStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Address_Facility" Association="Self.FK_Address_Facility">
+            <End Role="Facility" EntitySet="Facility" />
+            <End Role="Address" EntitySet="Address" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BedGroup2_BedType" Association="Self.FK_BedGroup2_BedType">
+            <End Role="AccommodationType" EntitySet="AccommodationType" />
+            <End Role="BedGroup2" EntitySet="BedGroup2" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BedGroup2_CareLevel" Association="Self.FK_BedGroup2_CareLevel">
+            <End Role="CareLevel" EntitySet="CareLevel" />
+            <End Role="BedGroup2" EntitySet="BedGroup2" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BedGroup2_Classification" Association="Self.FK_BedGroup2_Classification">
+            <End Role="LTC_Bed_Class" EntitySet="LTC_Bed_Class" />
+            <End Role="BedGroup2" EntitySet="BedGroup2" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BedGroup2_Culture" Association="Self.FK_BedGroup2_Culture">
+            <End Role="Culture" EntitySet="Culture" />
+            <End Role="BedGroup2" EntitySet="BedGroup2" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BedGroup2_Facility" Association="Self.FK_BedGroup2_Facility">
+            <End Role="Facility" EntitySet="Facility" />
+            <End Role="BedGroup2" EntitySet="BedGroup2" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BedGroup2_Religion" Association="Self.FK_BedGroup2_Religion">
+            <End Role="Religion" EntitySet="Religion" />
+            <End Role="BedGroup2" EntitySet="BedGroup2" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BedGroup2_ResourceType" Association="Self.FK_BedGroup2_ResourceType">
+            <End Role="ResourceType" EntitySet="ResourceType" />
+            <End Role="BedGroup2" EntitySet="BedGroup2" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BedGroup2_SpecialUnit" Association="Self.FK_BedGroup2_SpecialUnit">
+            <End Role="SpecialUnit" EntitySet="SpecialUnit" />
+            <End Role="BedGroup2" EntitySet="BedGroup2" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Facility_OwnerType" Association="Self.FK_Facility_OwnerType">
+            <End Role="OwnerType" EntitySet="OwnerType" />
+            <End Role="Facility" EntitySet="Facility" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Facility_Sector" Association="Self.FK_Facility_Sector">
+            <End Role="Sector" EntitySet="Sector" />
+            <End Role="Facility" EntitySet="Facility" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Location_CSD" Association="Self.FK_Location_CSD">
+            <End Role="CSD" EntitySet="CSD" />
+            <End Role="Location" EntitySet="Location" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OCCMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AccommodationType">
+          <Key>
+            <PropertyRef Name="AccommodationTypeID" />
+          </Key>
+          <Property Name="AccommodationTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="BedGroup2" Relationship="Self.FK_BedGroup2_BedType" FromRole="AccommodationType" ToRole="BedGroup2" />
+        </EntityType>
+        <EntityType Name="BedGroup2">
+          <Key>
+            <PropertyRef Name="BedGroupID" />
+          </Key>
+          <Property Name="BedGroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FacUID" Type="Int32" Nullable="false" />
+          <Property Name="EntryIndex" Type="Int32" Nullable="false" />
+          <Property Name="NOBeds" Type="Int32" Nullable="false" />
+          <Property Name="LTCBedClassID" Type="Int32" />
+          <Property Name="AccommodationTypeID" Type="Int32" />
+          <Property Name="ResourceTypeID" Type="Int32" />
+          <Property Name="CareLevelID" Type="Int32" Nullable="false" />
+          <Property Name="SpecUnitID" Type="Int32" Nullable="false" />
+          <Property Name="SmokingYN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CultID" Type="Int32" Nullable="false" />
+          <Property Name="ReligID" Type="Int32" Nullable="false" />
+          <Property Name="OpenDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CloseDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ConfLevel" Type="Int16" />
+          <Property Name="Comments" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="FMISMasterNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ExistingBed" Type="Int16" />
+          <Property Name="CheckedOut" Type="Boolean" />
+          <Property Name="DLU" Type="DateTime" Precision="3" />
+          <Property Name="UserLog" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AccommodationType" Relationship="Self.FK_BedGroup2_BedType" FromRole="BedGroup2" ToRole="AccommodationType" />
+          <NavigationProperty Name="CareLevel" Relationship="Self.FK_BedGroup2_CareLevel" FromRole="BedGroup2" ToRole="CareLevel" />
+          <NavigationProperty Name="LTC_Bed_Class" Relationship="Self.FK_BedGroup2_Classification" FromRole="BedGroup2" ToRole="LTC_Bed_Class" />
+          <NavigationProperty Name="Culture" Relationship="Self.FK_BedGroup2_Culture" FromRole="BedGroup2" ToRole="Culture" />
+          <NavigationProperty Name="Facility" Relationship="Self.FK_BedGroup2_Facility" FromRole="BedGroup2" ToRole="Facility" />
+          <NavigationProperty Name="Religion" Relationship="Self.FK_BedGroup2_Religion" FromRole="BedGroup2" ToRole="Religion" />
+          <NavigationProperty Name="ResourceType" Relationship="Self.FK_BedGroup2_ResourceType" FromRole="BedGroup2" ToRole="ResourceType" />
+          <NavigationProperty Name="SpecialUnit" Relationship="Self.FK_BedGroup2_SpecialUnit" FromRole="BedGroup2" ToRole="SpecialUnit" />
+        </EntityType>
+        <EntityType Name="CareLevel">
+          <Key>
+            <PropertyRef Name="CareLevelID" />
+          </Key>
+          <Property Name="CareLevelID" Type="Int32" Nullable="false" />
+          <Property Name="CareLevelName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CareLevelDescr" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BedGroup2" Relationship="Self.FK_BedGroup2_CareLevel" FromRole="CareLevel" ToRole="BedGroup2" />
+        </EntityType>
+        <EntityType Name="CSD">
+          <Key>
+            <PropertyRef Name="CSDid" />
+          </Key>
+          <Property Name="CSDid" Type="Int32" Nullable="false" />
+          <Property Name="CSDname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CSDtype" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="CDcode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="CSDscode" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="CSDlcode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="CSDxname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LocationID" Type="Int32" />
+          <NavigationProperty Name="Location" Relationship="Self.FK_Location_CSD" FromRole="CSD" ToRole="Location" />
+        </EntityType>
+        <EntityType Name="Culture">
+          <Key>
+            <PropertyRef Name="CultID" />
+          </Key>
+          <Property Name="CultID" Type="Int32" Nullable="false" />
+          <Property Name="CultName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BedGroup2" Relationship="Self.FK_BedGroup2_Culture" FromRole="Culture" ToRole="BedGroup2" />
+        </EntityType>
+        <EntityType Name="Facility">
+          <Key>
+            <PropertyRef Name="FacUID" />
+          </Key>
+          <Property Name="FacUID" Type="Int32" Nullable="false" />
+          <Property Name="OwnerUID" Type="Int32" />
+          <Property Name="FacilityName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FacClass" Type="Int32" />
+          <Property Name="FacStruct" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FacBeds" Type="Int32" />
+          <Property Name="SectorID" Type="Int32" />
+          <Property Name="OwnerTypeID" Type="Int16" />
+          <Property Name="LicBeds" Type="Int32" />
+          <Property Name="MISFacID" Type="Int32" />
+          <Property Name="MISMasterNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MISHomeNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FMISMasterNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FMISHomeNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FFNHID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FFLTCID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FundSource" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Comments" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+          <Property Name="DLU" Type="DateTime" Precision="3" />
+          <Property Name="UserLog" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LinkFacUID" Type="Int32" />
+          <Property Name="C_MISOwner" Type="Int32" />
+          <Property Name="C_FMISOwner" Type="Int32" />
+          <Property Name="LHINNumber" Type="Int32" />
+          <NavigationProperty Name="BedGroup2" Relationship="Self.FK_BedGroup2_Facility" FromRole="Facility" ToRole="BedGroup2" />
+          <NavigationProperty Name="Owner" Relationship="Self.FK__Facility__OwnerU__2704CA5F" FromRole="Facility" ToRole="Owner" />
+          <NavigationProperty Name="FacilityStatus" Relationship="Self.FK__FacilityS__FacUI__2334397B" FromRole="Facility" ToRole="FacilityStatus" />
+          <NavigationProperty Name="Address" Relationship="Self.FK_Address_Facility" FromRole="Facility" ToRole="Address" />
+          <NavigationProperty Name="OwnerType" Relationship="Self.FK_Facility_OwnerType" FromRole="Facility" ToRole="OwnerType" />
+          <NavigationProperty Name="Sector" Relationship="Self.FK_Facility_Sector" FromRole="Facility" ToRole="Sector" />
+        </EntityType>
+        <EntityType Name="FacilityStatus">
+          <Key>
+            <PropertyRef Name="StatusID" />
+            <PropertyRef Name="FacUID" />
+          </Key>
+          <Property Name="StatusID" Type="Int32" Nullable="false" />
+          <Property Name="FacUID" Type="Int32" Nullable="false" />
+          <Property Name="StatusDate" Type="DateTime" Precision="3" />
+          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CurrStatus" Type="Boolean" Nullable="false" />
+          <Property Name="DateEntered" Type="DateTime" Precision="3" />
+          <Property Name="RecordNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Facility" Relationship="Self.FK__FacilityS__FacUI__2334397B" FromRole="FacilityStatus" ToRole="Facility" />
+          <NavigationProperty Name="FacStatus" Relationship="Self.FK__FacilityS__Statu__22401542" FromRole="FacilityStatus" ToRole="FacStatus" />
+        </EntityType>
+        <EntityType Name="FacStatus">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="Int32" Nullable="false" />
+          <Property Name="FacStatus1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="FacilityStatus" Relationship="Self.FK__FacilityS__Statu__22401542" FromRole="FacStatus" ToRole="FacilityStatus" />
+        </EntityType>
+        <EntityType Name="IRBlob">
+          <Key>
+            <PropertyRef Name="IRId" />
+          </Key>
+          <Property Name="FacUid" Type="Int32" />
+          <Property Name="IRId" Type="Int32" Nullable="false" />
+          <Property Name="Name1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name2" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Name3" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Name4" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Name5" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Address1" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Address2" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Blob" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Name="LocationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Location1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CDcode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="CSDid" Type="Int32" />
+          <NavigationProperty Name="CSD" Relationship="Self.FK_Location_CSD" FromRole="Location" ToRole="CSD" />
+        </EntityType>
+        <EntityType Name="LTC_Bed_Class">
+          <Key>
+            <PropertyRef Name="LTCBedClassID" />
+          </Key>
+          <Property Name="LTCBedClassID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="BedGroup2" Relationship="Self.FK_BedGroup2_Classification" FromRole="LTC_Bed_Class" ToRole="BedGroup2" />
+        </EntityType>
+        <EntityType Name="Owner">
+          <Key>
+            <PropertyRef Name="OwnerUID" />
+          </Key>
+          <Property Name="OwnerUID" Type="Int32" Nullable="false" />
+          <Property Name="RegName" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OperName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RegCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CorpOwnUID" Type="Int32" />
+          <Property Name="MISOwnerID" Type="Int32" />
+          <Property Name="FMISOwnerID" Type="Int32" />
+          <NavigationProperty Name="Facility" Relationship="Self.FK__Facility__OwnerU__2704CA5F" FromRole="Owner" ToRole="Facility" />
+        </EntityType>
+        <EntityType Name="OwnerType">
+          <Key>
+            <PropertyRef Name="OwnerTypeID" />
+          </Key>
+          <Property Name="OwnerTypeID" Type="Int16" Nullable="false" />
+          <Property Name="OwnerTypeName" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="OwnerTypeDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Facility" Relationship="Self.FK_Facility_OwnerType" FromRole="OwnerType" ToRole="Facility" />
+        </EntityType>
+        <EntityType Name="Religion">
+          <Key>
+            <PropertyRef Name="ReligID" />
+          </Key>
+          <Property Name="ReligID" Type="Int32" Nullable="false" />
+          <Property Name="ReligName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BedGroup2" Relationship="Self.FK_BedGroup2_Religion" FromRole="Religion" ToRole="BedGroup2" />
+        </EntityType>
+        <EntityType Name="ResourceType">
+          <Key>
+            <PropertyRef Name="ResourceTypeID" />
+          </Key>
+          <Property Name="ResourceTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ResourceTypeName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="BedGroup2" Relationship="Self.FK_BedGroup2_ResourceType" FromRole="ResourceType" ToRole="BedGroup2" />
+        </EntityType>
+        <EntityType Name="Sector">
+          <Key>
+            <PropertyRef Name="SectorID" />
+          </Key>
+          <Property Name="SectorID" Type="Int32" Nullable="false" />
+          <Property Name="Sector1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Facility" Relationship="Self.FK_Facility_Sector" FromRole="Sector" ToRole="Facility" />
+        </EntityType>
+        <EntityType Name="SpecialUnit">
+          <Key>
+            <PropertyRef Name="SpecUnitID" />
+          </Key>
+          <Property Name="SpecUnitID" Type="Int32" Nullable="false" />
+          <Property Name="SpecUnitName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SpecUnitDescr" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BedGroup2" Relationship="Self.FK_BedGroup2_SpecialUnit" FromRole="SpecialUnit" ToRole="BedGroup2" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RevokeAccess" Type="Boolean" Nullable="false" />
+          <Property Name="LastAccessDateTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="OrgUID" />
+            <PropertyRef Name="OrgType" />
+          </Key>
+          <Property Name="OrgUID" Type="Int32" Nullable="false" />
+          <Property Name="OrgType" Type="Int32" Nullable="false" />
+          <Property Name="Address1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PostalCode" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="Province" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Proposed" Type="Boolean" />
+          <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Facility" Relationship="Self.FK_Address_Facility" FromRole="Address" ToRole="Facility" />
+        </EntityType>
+        <EntityType Name="FMISDB_Owners">
+          <Key>
+            <PropertyRef Name="Owner" />
+          </Key>
+          <Property Name="Owner" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Name1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="name2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="address1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="address2" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Postal" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Prov" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Tel" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="fax" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="ContTitle" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="ContSurname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ContGiven" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MName1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MName2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Maddress1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Maddress2" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="MCity" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="MProv" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="MPostal" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="MTel" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Kind" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Position1" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Title1" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="LastName1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="GivenName1" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Pos1Address1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Pos1Address2" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Pos1City" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Pos1Prov" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Pos1Postal" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Pos1Tel" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Position2" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Title2" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="LastName2" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="GivenName2" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Position3" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Title3" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="LastName3" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="GivenName3" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Position4" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Title4" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="LastName4" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="GivenName4" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Position5" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Title5" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="LastName5" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="GivenName5" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Position6" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Title6" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="LastName6" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="GivenName6" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Position7" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Title7" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="LastName7" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="GivenName7" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Position8" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Title8" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="LastName8" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="GivenName8" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Position9" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Title9" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="LastName9" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="GivenName9" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="RepStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="RepNH" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="MailFlag" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="LHIN10">
+          <Key>
+            <PropertyRef Name="LHIN101" />
+            <PropertyRef Name="LHIN10Name" />
+          </Key>
+          <Property Name="LHIN101" Type="Int32" Nullable="false" />
+          <Property Name="LHIN10Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RLISSS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LHINNumber" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_BedGroup2_BedType">
+          <End Role="AccommodationType" Type="Self.AccommodationType" Multiplicity="0..1" />
+          <End Role="BedGroup2" Type="Self.BedGroup2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccommodationType">
+              <PropertyRef Name="AccommodationTypeID" />
+            </Principal>
+            <Dependent Role="BedGroup2">
+              <PropertyRef Name="AccommodationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BedGroup2_CareLevel">
+          <End Role="CareLevel" Type="Self.CareLevel" Multiplicity="1" />
+          <End Role="BedGroup2" Type="Self.BedGroup2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CareLevel">
+              <PropertyRef Name="CareLevelID" />
+            </Principal>
+            <Dependent Role="BedGroup2">
+              <PropertyRef Name="CareLevelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BedGroup2_Classification">
+          <End Role="LTC_Bed_Class" Type="Self.LTC_Bed_Class" Multiplicity="0..1" />
+          <End Role="BedGroup2" Type="Self.BedGroup2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LTC_Bed_Class">
+              <PropertyRef Name="LTCBedClassID" />
+            </Principal>
+            <Dependent Role="BedGroup2">
+              <PropertyRef Name="LTCBedClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BedGroup2_Culture">
+          <End Role="Culture" Type="Self.Culture" Multiplicity="1" />
+          <End Role="BedGroup2" Type="Self.BedGroup2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Culture">
+              <PropertyRef Name="CultID" />
+            </Principal>
+            <Dependent Role="BedGroup2">
+              <PropertyRef Name="CultID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BedGroup2_Facility">
+          <End Role="Facility" Type="Self.Facility" Multiplicity="1" />
+          <End Role="BedGroup2" Type="Self.BedGroup2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facility">
+              <PropertyRef Name="FacUID" />
+            </Principal>
+            <Dependent Role="BedGroup2">
+              <PropertyRef Name="FacUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BedGroup2_Religion">
+          <End Role="Religion" Type="Self.Religion" Multiplicity="1" />
+          <End Role="BedGroup2" Type="Self.BedGroup2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Religion">
+              <PropertyRef Name="ReligID" />
+            </Principal>
+            <Dependent Role="BedGroup2">
+              <PropertyRef Name="ReligID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BedGroup2_ResourceType">
+          <End Role="ResourceType" Type="Self.ResourceType" Multiplicity="0..1" />
+          <End Role="BedGroup2" Type="Self.BedGroup2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ResourceType">
+              <PropertyRef Name="ResourceTypeID" />
+            </Principal>
+            <Dependent Role="BedGroup2">
+              <PropertyRef Name="ResourceTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BedGroup2_SpecialUnit">
+          <End Role="SpecialUnit" Type="Self.SpecialUnit" Multiplicity="1" />
+          <End Role="BedGroup2" Type="Self.BedGroup2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SpecialUnit">
+              <PropertyRef Name="SpecUnitID" />
+            </Principal>
+            <Dependent Role="BedGroup2">
+              <PropertyRef Name="SpecUnitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Location_CSD">
+          <End Role="CSD" Type="Self.CSD" Multiplicity="0..1" />
+          <End Role="Location" Type="Self.Location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CSD">
+              <PropertyRef Name="CSDid" />
+            </Principal>
+            <Dependent Role="Location">
+              <PropertyRef Name="CSDid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Facility__OwnerU__2704CA5F">
+          <End Role="Owner" Type="Self.Owner" Multiplicity="0..1" />
+          <End Role="Facility" Type="Self.Facility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owner">
+              <PropertyRef Name="OwnerUID" />
+            </Principal>
+            <Dependent Role="Facility">
+              <PropertyRef Name="OwnerUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FacilityS__FacUI__2334397B">
+          <End Role="Facility" Type="Self.Facility" Multiplicity="1" />
+          <End Role="FacilityStatus" Type="Self.FacilityStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facility">
+              <PropertyRef Name="FacUID" />
+            </Principal>
+            <Dependent Role="FacilityStatus">
+              <PropertyRef Name="FacUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Address_Facility">
+          <End Role="Facility" Type="Self.Facility" Multiplicity="1" />
+          <End Role="Address" Type="Self.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facility">
+              <PropertyRef Name="FacUID" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="OrgUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Facility_OwnerType">
+          <End Role="OwnerType" Type="Self.OwnerType" Multiplicity="0..1" />
+          <End Role="Facility" Type="Self.Facility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OwnerType">
+              <PropertyRef Name="OwnerTypeID" />
+            </Principal>
+            <Dependent Role="Facility">
+              <PropertyRef Name="OwnerTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Facility_Sector">
+          <End Role="Sector" Type="Self.Sector" Multiplicity="0..1" />
+          <End Role="Facility" Type="Self.Facility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sector">
+              <PropertyRef Name="SectorID" />
+            </Principal>
+            <Dependent Role="Facility">
+              <PropertyRef Name="SectorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FacilityS__Statu__22401542">
+          <End Role="FacStatus" Type="Self.FacStatus" Multiplicity="1" />
+          <End Role="FacilityStatus" Type="Self.FacilityStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FacStatus">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="FacilityStatus">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OCCMEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AccommodationType" EntityType="Self.AccommodationType" />
+          <EntitySet Name="BedGroup2" EntityType="Self.BedGroup2" />
+          <EntitySet Name="CareLevel" EntityType="Self.CareLevel" />
+          <EntitySet Name="CSD" EntityType="Self.CSD" />
+          <EntitySet Name="Culture" EntityType="Self.Culture" />
+          <EntitySet Name="Facility" EntityType="Self.Facility" />
+          <EntitySet Name="FacilityStatus" EntityType="Self.FacilityStatus" />
+          <EntitySet Name="FacStatus" EntityType="Self.FacStatus" />
+          <EntitySet Name="IRBlob" EntityType="Self.IRBlob" />
+          <EntitySet Name="Location" EntityType="Self.Location" />
+          <EntitySet Name="LTC_Bed_Class" EntityType="Self.LTC_Bed_Class" />
+          <EntitySet Name="Owner" EntityType="Self.Owner" />
+          <EntitySet Name="OwnerType" EntityType="Self.OwnerType" />
+          <EntitySet Name="Religion" EntityType="Self.Religion" />
+          <EntitySet Name="ResourceType" EntityType="Self.ResourceType" />
+          <EntitySet Name="Sector" EntityType="Self.Sector" />
+          <EntitySet Name="SpecialUnit" EntityType="Self.SpecialUnit" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="Address" EntityType="Self.Address" />
+          <EntitySet Name="FMISDB_Owners" EntityType="Self.FMISDB_Owners" />
+          <EntitySet Name="LHIN10" EntityType="Self.LHIN10" />
+          <AssociationSet Name="FK_BedGroup2_BedType" Association="Self.FK_BedGroup2_BedType">
+            <End Role="AccommodationType" EntitySet="AccommodationType" />
+            <End Role="BedGroup2" EntitySet="BedGroup2" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BedGroup2_CareLevel" Association="Self.FK_BedGroup2_CareLevel">
+            <End Role="CareLevel" EntitySet="CareLevel" />
+            <End Role="BedGroup2" EntitySet="BedGroup2" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BedGroup2_Classification" Association="Self.FK_BedGroup2_Classification">
+            <End Role="LTC_Bed_Class" EntitySet="LTC_Bed_Class" />
+            <End Role="BedGroup2" EntitySet="BedGroup2" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BedGroup2_Culture" Association="Self.FK_BedGroup2_Culture">
+            <End Role="Culture" EntitySet="Culture" />
+            <End Role="BedGroup2" EntitySet="BedGroup2" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BedGroup2_Facility" Association="Self.FK_BedGroup2_Facility">
+            <End Role="Facility" EntitySet="Facility" />
+            <End Role="BedGroup2" EntitySet="BedGroup2" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BedGroup2_Religion" Association="Self.FK_BedGroup2_Religion">
+            <End Role="Religion" EntitySet="Religion" />
+            <End Role="BedGroup2" EntitySet="BedGroup2" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BedGroup2_ResourceType" Association="Self.FK_BedGroup2_ResourceType">
+            <End Role="ResourceType" EntitySet="ResourceType" />
+            <End Role="BedGroup2" EntitySet="BedGroup2" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BedGroup2_SpecialUnit" Association="Self.FK_BedGroup2_SpecialUnit">
+            <End Role="SpecialUnit" EntitySet="SpecialUnit" />
+            <End Role="BedGroup2" EntitySet="BedGroup2" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Location_CSD" Association="Self.FK_Location_CSD">
+            <End Role="CSD" EntitySet="CSD" />
+            <End Role="Location" EntitySet="Location" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Facility__OwnerU__2704CA5F" Association="Self.FK__Facility__OwnerU__2704CA5F">
+            <End Role="Owner" EntitySet="Owner" />
+            <End Role="Facility" EntitySet="Facility" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FacilityS__FacUI__2334397B" Association="Self.FK__FacilityS__FacUI__2334397B">
+            <End Role="Facility" EntitySet="Facility" />
+            <End Role="FacilityStatus" EntitySet="FacilityStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Address_Facility" Association="Self.FK_Address_Facility">
+            <End Role="Facility" EntitySet="Facility" />
+            <End Role="Address" EntitySet="Address" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Facility_OwnerType" Association="Self.FK_Facility_OwnerType">
+            <End Role="OwnerType" EntitySet="OwnerType" />
+            <End Role="Facility" EntitySet="Facility" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Facility_Sector" Association="Self.FK_Facility_Sector">
+            <End Role="Sector" EntitySet="Sector" />
+            <End Role="Facility" EntitySet="Facility" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FacilityS__Statu__22401542" Association="Self.FK__FacilityS__Statu__22401542">
+            <End Role="FacStatus" EntitySet="FacStatus" />
+            <End Role="FacilityStatus" EntitySet="FacilityStatus" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OCCMModelStoreContainer" CdmEntityContainer="OCCMEntities">
+          <EntitySetMapping Name="AccommodationType">
+            <EntityTypeMapping TypeName="OCCMModel.AccommodationType">
+              <MappingFragment StoreEntitySet="AccommodationType">
+                <ScalarProperty Name="AccommodationTypeID" ColumnName="AccommodationTypeID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BedGroup2">
+            <EntityTypeMapping TypeName="OCCMModel.BedGroup2">
+              <MappingFragment StoreEntitySet="BedGroup2">
+                <ScalarProperty Name="BedGroupID" ColumnName="BedGroupID" />
+                <ScalarProperty Name="FacUID" ColumnName="FacUID" />
+                <ScalarProperty Name="EntryIndex" ColumnName="EntryIndex" />
+                <ScalarProperty Name="NOBeds" ColumnName="NOBeds" />
+                <ScalarProperty Name="LTCBedClassID" ColumnName="LTCBedClassID" />
+                <ScalarProperty Name="AccommodationTypeID" ColumnName="AccommodationTypeID" />
+                <ScalarProperty Name="ResourceTypeID" ColumnName="ResourceTypeID" />
+                <ScalarProperty Name="CareLevelID" ColumnName="CareLevelID" />
+                <ScalarProperty Name="SpecUnitID" ColumnName="SpecUnitID" />
+                <ScalarProperty Name="SmokingYN" ColumnName="SmokingYN" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="CultID" ColumnName="CultID" />
+                <ScalarProperty Name="ReligID" ColumnName="ReligID" />
+                <ScalarProperty Name="OpenDate" ColumnName="OpenDate" />
+                <ScalarProperty Name="CloseDate" ColumnName="CloseDate" />
+                <ScalarProperty Name="ConfLevel" ColumnName="ConfLevel" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="FMISMasterNo" ColumnName="FMISMasterNo" />
+                <ScalarProperty Name="ExistingBed" ColumnName="ExistingBed" />
+                <ScalarProperty Name="CheckedOut" ColumnName="CheckedOut" />
+                <ScalarProperty Name="DLU" ColumnName="DLU" />
+                <ScalarProperty Name="UserLog" ColumnName="UserLog" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CareLevel">
+            <EntityTypeMapping TypeName="OCCMModel.CareLevel">
+              <MappingFragment StoreEntitySet="CareLevel">
+                <ScalarProperty Name="CareLevelID" ColumnName="CareLevelID" />
+                <ScalarProperty Name="CareLevelName" ColumnName="CareLevelName" />
+                <ScalarProperty Name="CareLevelDescr" ColumnName="CareLevelDescr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CSD">
+            <EntityTypeMapping TypeName="OCCMModel.CSD">
+              <MappingFragment StoreEntitySet="CSD">
+                <ScalarProperty Name="CSDid" ColumnName="CSDid" />
+                <ScalarProperty Name="CSDname" ColumnName="CSDname" />
+                <ScalarProperty Name="CSDtype" ColumnName="CSDtype" />
+                <ScalarProperty Name="CDcode" ColumnName="CDcode" />
+                <ScalarProperty Name="CSDscode" ColumnName="CSDscode" />
+                <ScalarProperty Name="CSDlcode" ColumnName="CSDlcode" />
+                <ScalarProperty Name="CSDxname" ColumnName="CSDxname" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Culture">
+            <EntityTypeMapping TypeName="OCCMModel.Culture">
+              <MappingFragment StoreEntitySet="Culture">
+                <ScalarProperty Name="CultID" ColumnName="CultID" />
+                <ScalarProperty Name="CultName" ColumnName="CultName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Facility">
+            <EntityTypeMapping TypeName="OCCMModel.Facility">
+              <MappingFragment StoreEntitySet="Facility">
+                <ScalarProperty Name="FacUID" ColumnName="FacUID" />
+                <ScalarProperty Name="OwnerUID" ColumnName="OwnerUID" />
+                <ScalarProperty Name="FacilityName" ColumnName="FacilityName" />
+                <ScalarProperty Name="FacClass" ColumnName="FacClass" />
+                <ScalarProperty Name="FacStruct" ColumnName="FacStruct" />
+                <ScalarProperty Name="FacBeds" ColumnName="FacBeds" />
+                <ScalarProperty Name="SectorID" ColumnName="SectorID" />
+                <ScalarProperty Name="OwnerTypeID" ColumnName="OwnerTypeID" />
+                <ScalarProperty Name="LicBeds" ColumnName="LicBeds" />
+                <ScalarProperty Name="MISFacID" ColumnName="MISFacID" />
+                <ScalarProperty Name="MISMasterNo" ColumnName="MISMasterNo" />
+                <ScalarProperty Name="MISHomeNo" ColumnName="MISHomeNo" />
+                <ScalarProperty Name="FMISMasterNo" ColumnName="FMISMasterNo" />
+                <ScalarProperty Name="FMISHomeNo" ColumnName="FMISHomeNo" />
+                <ScalarProperty Name="FFNHID" ColumnName="FFNHID" />
+                <ScalarProperty Name="FFLTCID" ColumnName="FFLTCID" />
+                <ScalarProperty Name="FundSource" ColumnName="FundSource" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="DLU" ColumnName="DLU" />
+                <ScalarProperty Name="UserLog" ColumnName="UserLog" />
+                <ScalarProperty Name="LinkFacUID" ColumnName="LinkFacUID" />
+                <ScalarProperty Name="C_MISOwner" ColumnName="_MISOwner" />
+                <ScalarProperty Name="C_FMISOwner" ColumnName="_FMISOwner" />
+                <ScalarProperty Name="LHINNumber" ColumnName="LHINNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FacilityStatus">
+            <EntityTypeMapping TypeName="OCCMModel.FacilityStatus">
+              <MappingFragment StoreEntitySet="FacilityStatus">
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="FacUID" ColumnName="FacUID" />
+                <ScalarProperty Name="StatusDate" ColumnName="StatusDate" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="CurrStatus" ColumnName="CurrStatus" />
+                <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+                <ScalarProperty Name="RecordNo" ColumnName="RecordNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FacStatus">
+            <EntityTypeMapping TypeName="OCCMModel.FacStatus">
+              <MappingFragment StoreEntitySet="FacStatus">
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="FacStatus1" ColumnName="FacStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IRBlob">
+            <EntityTypeMapping TypeName="OCCMModel.IRBlob">
+              <MappingFragment StoreEntitySet="IRBlob">
+                <ScalarProperty Name="FacUid" ColumnName="FacUid" />
+                <ScalarProperty Name="IRId" ColumnName="IRId" />
+                <ScalarProperty Name="Name1" ColumnName="Name1" />
+                <ScalarProperty Name="Name2" ColumnName="Name2" />
+                <ScalarProperty Name="Name3" ColumnName="Name3" />
+                <ScalarProperty Name="Name4" ColumnName="Name4" />
+                <ScalarProperty Name="Name5" ColumnName="Name5" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Blob" ColumnName="Blob" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Location">
+            <EntityTypeMapping TypeName="OCCMModel.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="Location1" ColumnName="Location" />
+                <ScalarProperty Name="CDcode" ColumnName="CDcode" />
+                <ScalarProperty Name="CSDid" ColumnName="CSDid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LTC_Bed_Class">
+            <EntityTypeMapping TypeName="OCCMModel.LTC_Bed_Class">
+              <MappingFragment StoreEntitySet="LTC_Bed_Class">
+                <ScalarProperty Name="LTCBedClassID" ColumnName="LTCBedClassID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Owner">
+            <EntityTypeMapping TypeName="OCCMModel.Owner">
+              <MappingFragment StoreEntitySet="Owner">
+                <ScalarProperty Name="OwnerUID" ColumnName="OwnerUID" />
+                <ScalarProperty Name="RegName" ColumnName="RegName" />
+                <ScalarProperty Name="OperName" ColumnName="OperName" />
+                <ScalarProperty Name="RegCode" ColumnName="RegCode" />
+                <ScalarProperty Name="CorpOwnUID" ColumnName="CorpOwnUID" />
+                <ScalarProperty Name="MISOwnerID" ColumnName="MISOwnerID" />
+                <ScalarProperty Name="FMISOwnerID" ColumnName="FMISOwnerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OwnerType">
+            <EntityTypeMapping TypeName="OCCMModel.OwnerType">
+              <MappingFragment StoreEntitySet="OwnerType">
+                <ScalarProperty Name="OwnerTypeID" ColumnName="OwnerTypeID" />
+                <ScalarProperty Name="OwnerTypeName" ColumnName="OwnerTypeName" />
+                <ScalarProperty Name="OwnerTypeDesc" ColumnName="OwnerTypeDesc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Religion">
+            <EntityTypeMapping TypeName="OCCMModel.Religion">
+              <MappingFragment StoreEntitySet="Religion">
+                <ScalarProperty Name="ReligID" ColumnName="ReligID" />
+                <ScalarProperty Name="ReligName" ColumnName="ReligName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ResourceType">
+            <EntityTypeMapping TypeName="OCCMModel.ResourceType">
+              <MappingFragment StoreEntitySet="ResourceType">
+                <ScalarProperty Name="ResourceTypeID" ColumnName="ResourceTypeID" />
+                <ScalarProperty Name="ResourceTypeName" ColumnName="ResourceTypeName" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sector">
+            <EntityTypeMapping TypeName="OCCMModel.Sector">
+              <MappingFragment StoreEntitySet="Sector">
+                <ScalarProperty Name="SectorID" ColumnName="SectorID" />
+                <ScalarProperty Name="Sector1" ColumnName="Sector" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SpecialUnit">
+            <EntityTypeMapping TypeName="OCCMModel.SpecialUnit">
+              <MappingFragment StoreEntitySet="SpecialUnit">
+                <ScalarProperty Name="SpecUnitID" ColumnName="SpecUnitID" />
+                <ScalarProperty Name="SpecUnitName" ColumnName="SpecUnitName" />
+                <ScalarProperty Name="SpecUnitDescr" ColumnName="SpecUnitDescr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="OCCMModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="RevokeAccess" ColumnName="RevokeAccess" />
+                <ScalarProperty Name="LastAccessDateTime" ColumnName="LastAccessDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Address">
+            <EntityTypeMapping TypeName="OCCMModel.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="OrgUID" ColumnName="OrgUID" />
+                <ScalarProperty Name="OrgType" ColumnName="OrgType" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="Proposed" ColumnName="Proposed" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FMISDB_Owners">
+            <EntityTypeMapping TypeName="OCCMModel.FMISDB_Owners">
+              <MappingFragment StoreEntitySet="FMISDB_Owners">
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="Name1" ColumnName="Name1" />
+                <ScalarProperty Name="name2" ColumnName="name2" />
+                <ScalarProperty Name="address1" ColumnName="address1" />
+                <ScalarProperty Name="address2" ColumnName="address2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Postal" ColumnName="Postal" />
+                <ScalarProperty Name="Prov" ColumnName="Prov" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="fax" ColumnName="fax" />
+                <ScalarProperty Name="ContTitle" ColumnName="ContTitle" />
+                <ScalarProperty Name="ContSurname" ColumnName="ContSurname" />
+                <ScalarProperty Name="ContGiven" ColumnName="ContGiven" />
+                <ScalarProperty Name="MName1" ColumnName="MName1" />
+                <ScalarProperty Name="MName2" ColumnName="MName2" />
+                <ScalarProperty Name="Maddress1" ColumnName="Maddress1" />
+                <ScalarProperty Name="Maddress2" ColumnName="Maddress2" />
+                <ScalarProperty Name="MCity" ColumnName="MCity" />
+                <ScalarProperty Name="MProv" ColumnName="MProv" />
+                <ScalarProperty Name="MPostal" ColumnName="MPostal" />
+                <ScalarProperty Name="MTel" ColumnName="MTel" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Kind" ColumnName="Kind" />
+                <ScalarProperty Name="Position1" ColumnName="Position1" />
+                <ScalarProperty Name="Title1" ColumnName="Title1" />
+                <ScalarProperty Name="LastName1" ColumnName="LastName1" />
+                <ScalarProperty Name="GivenName1" ColumnName="GivenName1" />
+                <ScalarProperty Name="Pos1Address1" ColumnName="Pos1Address1" />
+                <ScalarProperty Name="Pos1Address2" ColumnName="Pos1Address2" />
+                <ScalarProperty Name="Pos1City" ColumnName="Pos1City" />
+                <ScalarProperty Name="Pos1Prov" ColumnName="Pos1Prov" />
+                <ScalarProperty Name="Pos1Postal" ColumnName="Pos1Postal" />
+                <ScalarProperty Name="Pos1Tel" ColumnName="Pos1Tel" />
+                <ScalarProperty Name="Position2" ColumnName="Position2" />
+                <ScalarProperty Name="Title2" ColumnName="Title2" />
+                <ScalarProperty Name="LastName2" ColumnName="LastName2" />
+                <ScalarProperty Name="GivenName2" ColumnName="GivenName2" />
+                <ScalarProperty Name="Position3" ColumnName="Position3" />
+                <ScalarProperty Name="Title3" ColumnName="Title3" />
+                <ScalarProperty Name="LastName3" ColumnName="LastName3" />
+                <ScalarProperty Name="GivenName3" ColumnName="GivenName3" />
+                <ScalarProperty Name="Position4" ColumnName="Position4" />
+                <ScalarProperty Name="Title4" ColumnName="Title4" />
+                <ScalarProperty Name="LastName4" ColumnName="LastName4" />
+                <ScalarProperty Name="GivenName4" ColumnName="GivenName4" />
+                <ScalarProperty Name="Position5" ColumnName="Position5" />
+                <ScalarProperty Name="Title5" ColumnName="Title5" />
+                <ScalarProperty Name="LastName5" ColumnName="LastName5" />
+                <ScalarProperty Name="GivenName5" ColumnName="GivenName5" />
+                <ScalarProperty Name="Position6" ColumnName="Position6" />
+                <ScalarProperty Name="Title6" ColumnName="Title6" />
+                <ScalarProperty Name="LastName6" ColumnName="LastName6" />
+                <ScalarProperty Name="GivenName6" ColumnName="GivenName6" />
+                <ScalarProperty Name="Position7" ColumnName="Position7" />
+                <ScalarProperty Name="Title7" ColumnName="Title7" />
+                <ScalarProperty Name="LastName7" ColumnName="LastName7" />
+                <ScalarProperty Name="GivenName7" ColumnName="GivenName7" />
+                <ScalarProperty Name="Position8" ColumnName="Position8" />
+                <ScalarProperty Name="Title8" ColumnName="Title8" />
+                <ScalarProperty Name="LastName8" ColumnName="LastName8" />
+                <ScalarProperty Name="GivenName8" ColumnName="GivenName8" />
+                <ScalarProperty Name="Position9" ColumnName="Position9" />
+                <ScalarProperty Name="Title9" ColumnName="Title9" />
+                <ScalarProperty Name="LastName9" ColumnName="LastName9" />
+                <ScalarProperty Name="GivenName9" ColumnName="GivenName9" />
+                <ScalarProperty Name="RepStatus" ColumnName="RepStatus" />
+                <ScalarProperty Name="RepNH" ColumnName="RepNH" />
+                <ScalarProperty Name="MailFlag" ColumnName="MailFlag" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LHIN10">
+            <EntityTypeMapping TypeName="OCCMModel.LHIN10">
+              <MappingFragment StoreEntitySet="LHIN10">
+                <ScalarProperty Name="LHIN101" ColumnName="LHIN10" />
+                <ScalarProperty Name="LHIN10Name" ColumnName="LHIN10Name" />
+                <ScalarProperty Name="RLISSS" ColumnName="RLISSS" />
+                <ScalarProperty Name="LHINNumber" ColumnName="LHINNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
