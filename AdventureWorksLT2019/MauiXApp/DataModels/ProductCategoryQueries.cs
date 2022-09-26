@@ -26,8 +26,8 @@ public class ProductCategoryAdvancedQuery: ObservableBaseQuery, IClone<ProductCa
 {
 
     // PredicateType:Equals
-    private int m_ParentProductCategoryID;
-    public int ParentProductCategoryID
+    private int? m_ParentProductCategoryID;
+    public int? ParentProductCategoryID
     {
         get => m_ParentProductCategoryID;
         set => SetProperty(ref m_ParentProductCategoryID, value);

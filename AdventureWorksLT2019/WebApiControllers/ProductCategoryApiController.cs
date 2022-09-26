@@ -26,6 +26,16 @@ namespace AdventureWorksLT2019.WebApiControllers
             this._thisService = thisService;
             this._logger = logger;
         }
+        
+        // [Authorize]
+        [HttpGet]
+        [HttpPost]
+        public async Task<ActionResult<ListResponse<NameValuePair[]>>> GetCodeList(
+            ProductCategoryAdvancedQuery query)
+        {
+            var serviceResponse = await _thisService.GetCodeList(query);
+            return ReturnActionResult(serviceResponse);
+        }
 
         // [Authorize]
         [HttpGet]

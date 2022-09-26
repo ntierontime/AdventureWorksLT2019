@@ -66,7 +66,7 @@ public abstract class ItemVMBase<TIdentifier, TDataModel, TDataService, TDataCha
         _dataService = dataService;
     }
 
-    public void RequestItem(ViewItemTemplates itemView)
+    public async void RequestItem(ViewItemTemplates itemView)
     {
         if (itemView == ViewItemTemplates.Create)
         {
@@ -77,6 +77,13 @@ public abstract class ItemVMBase<TIdentifier, TDataModel, TDataService, TDataCha
             var messagge = WeakReferenceMessenger.Default.Send<TItemRequestMessage>();
             Item = messagge.Response.Clone();
         }
+        await LoadCodeListsIfAny(itemView);
+    }
+
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+    protected virtual async Task LoadCodeListsIfAny(Framework.Models.ViewItemTemplates itemView)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+    { 
     }
 
     protected abstract void SendDataChangedMessage(ViewItemTemplates itemView);

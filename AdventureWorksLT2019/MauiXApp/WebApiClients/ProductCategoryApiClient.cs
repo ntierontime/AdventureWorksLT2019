@@ -11,6 +11,14 @@ public partial class ProductCategoryApiClient : WebApiClientBase
         : base(webApiConfig.WebApiRootUrl, "ProductCategoryApi")
     {
     }
+    public async Task<ListResponse<NameValuePair<int>[]>> GetCodeList(
+        ProductCategoryAdvancedQuery query)
+    {
+        const string actionName = nameof(GetCodeList);
+        string url = GetHttpRequestUrl(actionName);
+        var response = await Post<ProductCategoryAdvancedQuery, ListResponse<NameValuePair<int>[]>>(url, query);
+        return response;
+    }
 
     public async Task<ListResponse<ProductCategoryDataModel[]>> Search(
         ProductCategoryAdvancedQuery query)

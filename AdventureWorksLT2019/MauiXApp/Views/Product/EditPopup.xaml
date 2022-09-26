@@ -69,8 +69,12 @@
             Text="{Binding Item.Weight}"/>
         <Label Grid.Row="8" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize ProductCategoryID}"/>
-        <Entry Grid.Row="8" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.ProductCategoryID}"/>
+        <Picker Grid.Row="8" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+            ItemsSource="{Binding Path=ProductCategoryList}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding Path=SelectedProductCategory}" />
+        <!--<Entry Grid.Row="8" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.ProductCategoryID}"/>-->
         <Label Grid.Row="9" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize ProductModelID}"/>
         <Entry Grid.Row="9" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"

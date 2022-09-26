@@ -26,6 +26,14 @@ public class ProductCategoryService : DataServiceBase<ProductCategoryAdvancedQue
         _cacheDataStatusService = cacheDataStatusService;
     }
 
+    public async Task<ListResponse<NameValuePair<int>[]>> GetCodeList(
+        ProductCategoryAdvancedQuery query)
+    {
+        // query.OrderBys = ObservableQueryOrderBySetting.GetOrderByExpression(new[] { queryOrderBySetting });
+        var response = await _thisApiClient.GetCodeList(query);
+        return response;
+    }
+
     public override async Task<ListResponse<ProductCategoryDataModel[]>> Search(
         ProductCategoryAdvancedQuery query,
         ObservableQueryOrderBySetting queryOrderBySetting)
