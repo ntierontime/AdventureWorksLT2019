@@ -134,7 +134,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
 
             var itemViewModel = new Framework.Mvc.Models.MvcItemViewModel<BuildVersionDataModel>
             {
-                UIItemFeatures = _viewFeatureManager.GetBuildVersionUIItemFeatures(),
+                UIItemFeatures = _viewFeatureManager.GetBuildVersionUIItemFeatures(view),
                 Status = System.Net.HttpStatusCode.OK,
                 Template = template,
                 IsCurrentItem = true,
@@ -198,7 +198,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
                                 PartialViews = new List<Tuple<string, object>> {
                                 new Tuple<string, object>("~/Views/BuildVersion/_TableItemTr.cshtml",
                                     new Framework.Mvc.Models.MvcItemViewModel<BuildVersionDataModel>{
-                                        UIItemFeatures = _viewFeatureManager.GetBuildVersionUIItemFeatures(),
+                                        UIItemFeatures = _viewFeatureManager.GetBuildVersionUIItemFeatures(view),
                                         Status = System.Net.HttpStatusCode.OK,
                                         Template = ViewItemTemplates.Details.ToString(),
                                         IsCurrentItem = true,
@@ -218,7 +218,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
                                     new Tuple<string, object>("~/Views/BuildVersion/_Tile.cshtml",
                                         new Framework.Mvc.Models.MvcItemViewModel<BuildVersionDataModel>
                                         {
-                                            UIItemFeatures = _viewFeatureManager.GetBuildVersionUIItemFeatures(),
+                                            UIItemFeatures = _viewFeatureManager.GetBuildVersionUIItemFeatures(view),
                                             Status = System.Net.HttpStatusCode.OK,
                                             Template = ViewItemTemplates.Details.ToString(),
                                             IsCurrentItem = true,
@@ -286,7 +286,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
                                 new Tuple<string, object>("~/Views/BuildVersion/_TableDetailsItem.cshtml",
                                     new Framework.Mvc.Models.MvcItemViewModel<BuildVersionDataModel>
                                     {
-                                        UIItemFeatures = _viewFeatureManager.GetBuildVersionUIItemFeatures(),
+                                        UIItemFeatures = _viewFeatureManager.GetBuildVersionUIItemFeatures(view),
                                         Status = System.Net.HttpStatusCode.OK,
                                         Template = ViewItemTemplates.Details.ToString(),
                                         IsCurrentItem = true,
@@ -306,7 +306,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
                                 new Tuple<string, object>("~/Views/BuildVersion/_TileDetailsItem.cshtml",
                                     new Framework.Mvc.Models.MvcItemViewModel<BuildVersionDataModel>
                                     {
-                                        UIItemFeatures = _viewFeatureManager.GetBuildVersionUIItemFeatures(),
+                                        UIItemFeatures = _viewFeatureManager.GetBuildVersionUIItemFeatures(view),
                                         Status = System.Net.HttpStatusCode.OK,
                                         Template = ViewItemTemplates.Details.ToString(),
                                         IsCurrentItem = true,

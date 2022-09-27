@@ -103,6 +103,19 @@
                 </button>
             </div>
         }
+        @if (Model!.UIListSetting == null || Model!.UIListSetting.HasEditableList())
+        {
+            <div class="btn-group float-start ps-0 nt-multiitem-editing-buttons" style="display:none;">
+                <button disabled type="button" class="btn btn-default btn-nt-multiitems-editing-submit" data-bs-toggle="modal" data-bs-target="#simpleActionConfirmationDialog"
+                    data-nt-confirmation-message="@string.Format(localizor.Get("Please_confirm_you_want_to_update_these_Data"), localizor.Get("Product"))" title="@localizor.Get("Save")">
+                    <i class="fa-solid fa-floppy-disk"></i><span class="submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Save")</span>
+                </button>
+                <button type="button" class="btn btn-default btn-nt-multiitems-editing-cancel" data-bs-toggle="modal" data-bs-target="#simpleActionConfirmationDialog"
+                    data-nt-confirmation-message="@string.Format(localizor.Get("Please_confirm_you_want_to_update_these_Data"), localizor.Get("Product"))" title="@localizor.Get("Save")">
+                    <i class="fa-solid fa-circle-xmark"></i><span class="submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Cancel")</span>
+                </button>
+            </div>
+        }
     </div>
     <div class="card-body nt-list-container-submit row m-0 p-0">
         <!--Developer keep this logic same on all Index.cshtml, although the 3 views may not available for some tables-->
