@@ -60,7 +60,7 @@ namespace AdventureWorksLT2019.Services
                     using (var scope = _serviceScopeFactor.CreateScope())
                     {
                         var productRepository = scope.ServiceProvider.GetRequiredService<IProductRepository>();
-                        var idQuery = new ProductIdentifier { ProductID = id.SalesOrderID };
+                        var idQuery = new ProductIdentifier { ProductID = masterResponse.ResponseBody.ProductID };
                         var response = await productRepository.Get(idQuery);
                         responses.TryAdd(SalesOrderDetailCompositeModel.__DataOptions__.Product, new Response<PaginationResponse> { Status = response.Status, StatusMessage = response.StatusMessage });
                         if(response.Status == HttpStatusCode.OK)
@@ -78,7 +78,7 @@ namespace AdventureWorksLT2019.Services
                     using (var scope = _serviceScopeFactor.CreateScope())
                     {
                         var salesOrderHeaderRepository = scope.ServiceProvider.GetRequiredService<ISalesOrderHeaderRepository>();
-                        var idQuery = new SalesOrderHeaderIdentifier { SalesOrderID = id.SalesOrderID };
+                        var idQuery = new SalesOrderHeaderIdentifier { SalesOrderID = masterResponse.ResponseBody.SalesOrderID };
                         var response = await salesOrderHeaderRepository.Get(idQuery);
                         responses.TryAdd(SalesOrderDetailCompositeModel.__DataOptions__.SalesOrderHeader, new Response<PaginationResponse> { Status = response.Status, StatusMessage = response.StatusMessage });
                         if(response.Status == HttpStatusCode.OK)
