@@ -9,8 +9,8 @@ public class CustomerIdentifier: ObservableBaseQuery
 {
 
     // PredicateType:Equals
-    private int m_CustomerID;
-    public int CustomerID
+    private int? m_CustomerID;
+    public int? CustomerID
     {
         get => m_CustomerID;
         set => SetProperty(ref m_CustomerID, value);

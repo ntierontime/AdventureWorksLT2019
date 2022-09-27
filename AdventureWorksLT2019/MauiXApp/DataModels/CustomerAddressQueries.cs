@@ -9,16 +9,16 @@ public class CustomerAddressIdentifier: ObservableBaseQuery
 {
 
     // PredicateType:Equals
-    private int m_CustomerID;
-    public int CustomerID
+    private int? m_CustomerID;
+    public int? CustomerID
     {
         get => m_CustomerID;
         set => SetProperty(ref m_CustomerID, value);
     }
 
     // PredicateType:Equals
-    private int m_AddressID;
-    public int AddressID
+    private int? m_AddressID;
+    public int? AddressID
     {
         get => m_AddressID;
         set => SetProperty(ref m_AddressID, value);
@@ -34,16 +34,16 @@ public class CustomerAddressAdvancedQuery: ObservableBaseQuery, IClone<CustomerA
 {
 
     // PredicateType:Equals
-    private int m_AddressID;
-    public int AddressID
+    private int? m_AddressID;
+    public int? AddressID
     {
         get => m_AddressID;
         set => SetProperty(ref m_AddressID, value);
     }
 
     // PredicateType:Equals
-    private int m_CustomerID;
-    public int CustomerID
+    private int? m_CustomerID;
+    public int? CustomerID
     {
         get => m_CustomerID;
         set => SetProperty(ref m_CustomerID, value);

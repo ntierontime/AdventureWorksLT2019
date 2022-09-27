@@ -35,6 +35,26 @@ public class SalesOrderDetailService : DataServiceBase<SalesOrderDetailAdvancedQ
         return response;
     }
 
+    public async Task<SalesOrderDetailCompositeModel> GetCompositeModel(
+        SalesOrderDetailIdentifier id)
+    {
+        var response = await _thisApiClient.GetCompositeModel(id);
+        return response;
+    }
+
+    public override async Task<Response> BulkDelete(List<SalesOrderDetailIdentifier> ids)
+    {
+        var response = await _thisApiClient.BulkDelete(ids);
+        return response;
+    }
+
+    public override async Task<Response<MultiItemsCUDRequest<SalesOrderDetailIdentifier, SalesOrderDetailDataModel>>> MultiItemsCUD(
+        MultiItemsCUDRequest<SalesOrderDetailIdentifier, SalesOrderDetailDataModel> input)
+    {
+        var response = await _thisApiClient.MultiItemsCUD(input);
+        return response;
+    }
+
     public override async Task<Response<SalesOrderDetailDataModel>> Update(SalesOrderDetailIdentifier id, SalesOrderDetailDataModel input)
     {
         var response = await _thisApiClient.Update(id, input);
@@ -50,6 +70,12 @@ public class SalesOrderDetailService : DataServiceBase<SalesOrderDetailAdvancedQ
     public override async Task<Response<SalesOrderDetailDataModel>> Create(SalesOrderDetailDataModel input)
     {
         var response = await _thisApiClient.Create(input);
+        return response;
+    }
+
+    public override async Task<Response> Delete(SalesOrderDetailIdentifier id)
+    {
+        var response = await _thisApiClient.Delete(id);
         return response;
     }
 

@@ -46,6 +46,49 @@ namespace AdventureWorksLT2019.WebApiControllers
             return Ok(serviceResponse);
         }
 
+        // [Authorize]
+        [HttpDelete]
+        public async Task<ActionResult> BulkDelete(List<ProductModelIdentifier> ids)
+        {
+            var serviceResponse = await _thisService.BulkDelete(ids);
+            return ReturnWithoutBodyActionResult(serviceResponse);
+        }
+
+        // [Authorize]
+        [Route("{ProductModelID}")]
+        [HttpPut]
+        public async Task<ActionResult<ProductModelDataModel>> Put([FromRoute]ProductModelIdentifier id, [FromBody]ProductModelDataModel input)
+        {
+            var serviceResponse = await _thisService.Update(id, input);
+            return ReturnResultOnlyActionResult(serviceResponse);
+        }
+
+        // [Authorize]
+        [Route("{ProductModelID}")]
+        [HttpGet]
+        public async Task<ActionResult<ProductModelDataModel>> Get([FromRoute]ProductModelIdentifier id)
+        {
+            var serviceResponse = await _thisService.Get(id);
+            return ReturnResultOnlyActionResult(serviceResponse);
+        }
+
+        // [Authorize]
+        [HttpPost]
+        public async Task<ActionResult<ProductModelDataModel>> Post(ProductModelDataModel input)
+        {
+            var serviceResponse = await _thisService.Create(input);
+            return ReturnResultOnlyActionResult(serviceResponse);
+        }
+
+        // [Authorize]
+        [Route("{ProductModelID}")]
+        [HttpDelete]
+        public async Task<ActionResult> Delete([FromRoute]ProductModelIdentifier id)
+        {
+            var serviceResponse = await _thisService.Delete(id);
+            return ReturnWithoutBodyActionResult(serviceResponse);
+        }
+
         /*
         // [Authorize]
         [HttpGet, ActionName("HeartBeat")]

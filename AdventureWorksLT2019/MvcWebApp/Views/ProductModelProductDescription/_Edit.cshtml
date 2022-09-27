@@ -1,0 +1,49 @@
+@using Framework.Models;
+@using AdventureWorksLT2019.Models.Definitions;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@using Framework.Mvc.Models;
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.Resx;
+@model MvcItemViewModel<ProductModelProductDescriptionDataModel.DefaultView>
+@inject SelectListHelper selectListHelper;
+@inject IUIStrings localizor;
+@{
+    var format_Please_Select = localizor.Get("Format_Please_Select");
+}
+@if (Model.Status != System.Net.HttpStatusCode.OK)
+{
+    <div class="row">
+        <div class="text-danger">@Model.StatusMessage</div>
+    </div>
+}
+else
+{
+    <input class="nt-hidden-modal-title" value="@Model!.Model!.Culture" type="hidden" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Model!.ProductModelID" class="control-label" for="@Model!.HtmlId(nameof(ProductModelProductDescriptionDataModel.DefaultView.ProductModelID))"></label>
+        <select asp-for="Model!.ProductModelID" class="form-control form-select nt-form-data" asp-items="@selectListHelper.GetSelectList(Model?.TopLevelDropDownListsFromDatabase?[TopLevelDropDownLists.ProductModel.ToString()])"
+            data-nt-value="@Model!.Model!.ProductModelID" id="@Model!.HtmlId(nameof(ProductModelProductDescriptionDataModel.DefaultView.ProductModelID))"  name="@Model!.HtmlName(nameof(ProductModelProductDescriptionDataModel.DefaultView.ProductModelID))">
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.ProductDescriptionID" class="control-label" for="@Model!.HtmlId(nameof(ProductModelProductDescriptionDataModel.DefaultView.ProductDescriptionID))"></label>
+        <select asp-for="Model!.ProductDescriptionID" class="form-control form-select nt-form-data" asp-items="@selectListHelper.GetSelectList(Model?.TopLevelDropDownListsFromDatabase?[TopLevelDropDownLists.ProductDescription.ToString()])"
+            data-nt-value="@Model!.Model!.ProductDescriptionID" id="@Model!.HtmlId(nameof(ProductModelProductDescriptionDataModel.DefaultView.ProductDescriptionID))"  name="@Model!.HtmlName(nameof(ProductModelProductDescriptionDataModel.DefaultView.ProductDescriptionID))">
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.Culture" class="control-label" for="@Model!.HtmlId(nameof(ProductModelProductDescriptionDataModel.DefaultView.Culture))"></label>
+        <input asp-for="Model!.Culture" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ProductModelProductDescriptionDataModel.DefaultView.Culture))" name="@Model!.HtmlName(nameof(ProductModelProductDescriptionDataModel.DefaultView.Culture))" data-nt-value="@Model!.Model!.Culture"/>
+        <span asp-validation-for="Model!.Culture" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(ProductModelProductDescriptionDataModel.DefaultView.Culture))"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.rowguid" class="control-label" for="@Model!.HtmlId(nameof(ProductModelProductDescriptionDataModel.DefaultView.rowguid))"></label>
+        <input asp-for="Model!.rowguid" readonly class="form-control " id="@Model!.HtmlId(nameof(ProductModelProductDescriptionDataModel.DefaultView.rowguid))" name="@Model!.HtmlName(nameof(ProductModelProductDescriptionDataModel.DefaultView.rowguid))" data-nt-value="@Model!.Model!.rowguid"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.ModifiedDate" class="control-label" for="@Model!.HtmlId(nameof(ProductModelProductDescriptionDataModel.DefaultView.ModifiedDate))"></label>
+        <input asp-for="Model!.ModifiedDate" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ProductModelProductDescriptionDataModel.DefaultView.ModifiedDate))" name="@Model!.HtmlName(nameof(ProductModelProductDescriptionDataModel.DefaultView.ModifiedDate))" data-nt-value="@Model!.Model!.ModifiedDate"/>
+        <span asp-validation-for="Model!.ModifiedDate" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(ProductModelProductDescriptionDataModel.DefaultView.ModifiedDate))"></span>
+    </div>
+}

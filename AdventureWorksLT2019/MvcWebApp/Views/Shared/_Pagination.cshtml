@@ -15,7 +15,7 @@
         @localizor.Get("More")
     </button>
 }
-else if (Model.PaginationOption == PaginationOptions.ItemRangeAndLeftRightButtons)
+else if (Model.PaginationOption == PaginationOptions.ItemRangeAndLeftRightButtons && Model.TotalCount > 0)
 {
     <div class="btn-group float-end me-2" role="group" aria-label="First group">
         <button type="button" data-nt-pageindex="@(Model.PageIndex - 1)" class="btn btn-default page-link border-0 @(Model.EnableFirstAndPrevious ? "page-item" : "page-item disabled")"><i class="fa-solid fa-angle-left"></i></button>
@@ -26,7 +26,10 @@ else if (Model.PaginationOption == PaginationOptions.ItemRangeAndLeftRightButton
 else if (Model.PaginationOption == PaginationOptions.PageIndexesAndAllButtons)
 {
     <ul class="pagination pagination-sm">
-        <li class="page-item me-4">@Model.StartIndex - @Model.EndIndex</li>
+        @if (Model.TotalCount > 0)
+        {
+            <li class="page-item me-4">@Model.StartIndex - @Model.EndIndex</li>
+        }
         <li class="@(Model.EnableFirstAndPrevious ? "page-item" : "page-item disabled" )"><button class="page-link" data-nt-pageindex="1"><i class="fa-solid fa-angles-left"></i></button></li>
         <li class="@(Model.EnableFirstAndPrevious ? "page-item" : "page-item disabled" )"><button class="page-link" data-nt-pageindex="@(Model.PageIndex - 1)"><i class="fa-solid fa-angle-left"></i></button></li>
         @if (Model.ThreeDotPreCurrent)

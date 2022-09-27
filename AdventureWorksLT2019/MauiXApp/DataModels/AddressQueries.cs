@@ -9,8 +9,8 @@ public class AddressIdentifier: ObservableBaseQuery
 {
 
     // PredicateType:Equals
-    private int m_AddressID;
-    public int AddressID
+    private int? m_AddressID;
+    public int? AddressID
     {
         get => m_AddressID;
         set => SetProperty(ref m_AddressID, value);

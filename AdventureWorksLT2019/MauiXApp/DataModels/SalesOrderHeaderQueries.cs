@@ -9,8 +9,8 @@ public class SalesOrderHeaderIdentifier: ObservableBaseQuery
 {
 
     // PredicateType:Equals
-    private int m_SalesOrderID;
-    public int SalesOrderID
+    private int? m_SalesOrderID;
+    public int? SalesOrderID
     {
         get => m_SalesOrderID;
         set => SetProperty(ref m_SalesOrderID, value);
@@ -26,24 +26,24 @@ public class SalesOrderHeaderAdvancedQuery: ObservableBaseQuery, IClone<SalesOrd
 {
 
     // PredicateType:Equals
-    private int m_BillToAddressID;
-    public int BillToAddressID
+    private int? m_BillToAddressID;
+    public int? BillToAddressID
     {
         get => m_BillToAddressID;
         set => SetProperty(ref m_BillToAddressID, value);
     }
 
     // PredicateType:Equals
-    private int m_ShipToAddressID;
-    public int ShipToAddressID
+    private int? m_ShipToAddressID;
+    public int? ShipToAddressID
     {
         get => m_ShipToAddressID;
         set => SetProperty(ref m_ShipToAddressID, value);
     }
 
     // PredicateType:Equals
-    private int m_CustomerID;
-    public int CustomerID
+    private int? m_CustomerID;
+    public int? CustomerID
     {
         get => m_CustomerID;
         set => SetProperty(ref m_CustomerID, value);

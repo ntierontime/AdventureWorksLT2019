@@ -9,8 +9,8 @@ public class ProductIdentifier: ObservableBaseQuery
 {
 
     // PredicateType:Equals
-    private int m_ProductID;
-    public int ProductID
+    private int? m_ProductID;
+    public int? ProductID
     {
         get => m_ProductID;
         set => SetProperty(ref m_ProductID, value);
@@ -26,24 +26,24 @@ public class ProductAdvancedQuery: ObservableBaseQuery, IClone<ProductAdvancedQu
 {
 
     // PredicateType:Equals
-    private int m_ProductCategoryID;
-    public int ProductCategoryID
+    private int? m_ProductCategoryID;
+    public int? ProductCategoryID
     {
         get => m_ProductCategoryID;
         set => SetProperty(ref m_ProductCategoryID, value);
     }
 
     // PredicateType:Equals
-    private int m_ParentID;
-    public int ParentID
+    private int? m_ParentID;
+    public int? ParentID
     {
         get => m_ParentID;
         set => SetProperty(ref m_ParentID, value);
     }
 
     // PredicateType:Equals
-    private int m_ProductModelID;
-    public int ProductModelID
+    private int? m_ProductModelID;
+    public int? ProductModelID
     {
         get => m_ProductModelID;
         set => SetProperty(ref m_ProductModelID, value);

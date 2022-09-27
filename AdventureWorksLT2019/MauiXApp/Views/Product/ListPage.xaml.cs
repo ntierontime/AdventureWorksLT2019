@@ -62,6 +62,13 @@ public partial class ListPage : ContentPage
             return;
         }
 
+        if (itemView == ViewItemTemplates.Delete)
+        {
+            var popup = new DeletePopup();
+            await this.ShowPopupAsync(popup);
+            return;
+        }
+
         if (itemView == ViewItemTemplates.Details)
         {
             var popup = new DetailsPopup();

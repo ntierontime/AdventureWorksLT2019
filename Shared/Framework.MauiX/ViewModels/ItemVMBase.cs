@@ -79,6 +79,10 @@ public abstract class ItemVMBase<TIdentifier, TDataModel, TDataService, TDataCha
         }
     }
 
+    protected virtual async Task LoadCodeListsIfAny()
+    {
+    }
+
     protected abstract void SendDataChangedMessage(ViewItemTemplates itemView);
 
     public void AttachCreateViewCommands(ICommand cancelCommand, object commandParameter = null)

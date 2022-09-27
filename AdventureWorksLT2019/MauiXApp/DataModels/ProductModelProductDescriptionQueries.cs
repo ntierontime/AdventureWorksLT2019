@@ -9,16 +9,16 @@ public class ProductModelProductDescriptionIdentifier: ObservableBaseQuery
 {
 
     // PredicateType:Equals
-    private int m_ProductModelID;
-    public int ProductModelID
+    private int? m_ProductModelID;
+    public int? ProductModelID
     {
         get => m_ProductModelID;
         set => SetProperty(ref m_ProductModelID, value);
     }
 
     // PredicateType:Equals
-    private int m_ProductDescriptionID;
-    public int ProductDescriptionID
+    private int? m_ProductDescriptionID;
+    public int? ProductDescriptionID
     {
         get => m_ProductDescriptionID;
         set => SetProperty(ref m_ProductDescriptionID, value);
@@ -42,16 +42,16 @@ public class ProductModelProductDescriptionAdvancedQuery: ObservableBaseQuery, I
 {
 
     // PredicateType:Equals
-    private int m_ProductDescriptionID;
-    public int ProductDescriptionID
+    private int? m_ProductDescriptionID;
+    public int? ProductDescriptionID
     {
         get => m_ProductDescriptionID;
         set => SetProperty(ref m_ProductDescriptionID, value);
     }
 
     // PredicateType:Equals
-    private int m_ProductModelID;
-    public int ProductModelID
+    private int? m_ProductModelID;
+    public int? ProductModelID
     {
         get => m_ProductModelID;
         set => SetProperty(ref m_ProductModelID, value);

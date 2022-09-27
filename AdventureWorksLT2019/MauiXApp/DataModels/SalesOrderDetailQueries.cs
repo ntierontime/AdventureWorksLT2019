@@ -9,16 +9,16 @@ public class SalesOrderDetailIdentifier: ObservableBaseQuery
 {
 
     // PredicateType:Equals
-    private int m_SalesOrderID;
-    public int SalesOrderID
+    private int? m_SalesOrderID;
+    public int? SalesOrderID
     {
         get => m_SalesOrderID;
         set => SetProperty(ref m_SalesOrderID, value);
     }
 
     // PredicateType:Equals
-    private int m_SalesOrderDetailID;
-    public int SalesOrderDetailID
+    private int? m_SalesOrderDetailID;
+    public int? SalesOrderDetailID
     {
         get => m_SalesOrderDetailID;
         set => SetProperty(ref m_SalesOrderDetailID, value);
@@ -34,64 +34,64 @@ public class SalesOrderDetailAdvancedQuery: ObservableBaseQuery, IClone<SalesOrd
 {
 
     // PredicateType:Equals
-    private int m_ProductID;
-    public int ProductID
+    private int? m_ProductID;
+    public int? ProductID
     {
         get => m_ProductID;
         set => SetProperty(ref m_ProductID, value);
     }
 
     // PredicateType:Equals
-    private int m_ProductCategoryID;
-    public int ProductCategoryID
+    private int? m_ProductCategoryID;
+    public int? ProductCategoryID
     {
         get => m_ProductCategoryID;
         set => SetProperty(ref m_ProductCategoryID, value);
     }
 
     // PredicateType:Equals
-    private int m_ProductCategory_ParentID;
-    public int ProductCategory_ParentID
+    private int? m_ProductCategory_ParentID;
+    public int? ProductCategory_ParentID
     {
         get => m_ProductCategory_ParentID;
         set => SetProperty(ref m_ProductCategory_ParentID, value);
     }
 
     // PredicateType:Equals
-    private int m_ProductModelID;
-    public int ProductModelID
+    private int? m_ProductModelID;
+    public int? ProductModelID
     {
         get => m_ProductModelID;
         set => SetProperty(ref m_ProductModelID, value);
     }
 
     // PredicateType:Equals
-    private int m_SalesOrderID;
-    public int SalesOrderID
+    private int? m_SalesOrderID;
+    public int? SalesOrderID
     {
         get => m_SalesOrderID;
         set => SetProperty(ref m_SalesOrderID, value);
     }
 
     // PredicateType:Equals
-    private int m_BillToID;
-    public int BillToID
+    private int? m_BillToID;
+    public int? BillToID
     {
         get => m_BillToID;
         set => SetProperty(ref m_BillToID, value);
     }
 
     // PredicateType:Equals
-    private int m_ShipToID;
-    public int ShipToID
+    private int? m_ShipToID;
+    public int? ShipToID
     {
         get => m_ShipToID;
         set => SetProperty(ref m_ShipToID, value);
     }
 
     // PredicateType:Equals
-    private int m_CustomerID;
-    public int CustomerID
+    private int? m_CustomerID;
+    public int? CustomerID
     {
         get => m_CustomerID;
         set => SetProperty(ref m_CustomerID, value);

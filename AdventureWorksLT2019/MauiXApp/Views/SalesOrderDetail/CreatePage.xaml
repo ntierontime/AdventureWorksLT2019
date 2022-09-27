@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:l="clr-namespace:AdventureWorksLT2019.MauiXApp.Extensions"
+             x:Class="AdventureWorksLT2019.MauiXApp.Views.SalesOrderDetail.CreatePage"
+             Title="{l:Localize Create_New}">
+    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0,0,0,50">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize SalesOrderID}"/>
+        <Entry Grid.Row="0" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.SalesOrderID}"/>
+        <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize OrderQty}"/>
+        <Entry Grid.Row="1" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.OrderQty}"/>
+        <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize ProductID}"/>
+        <Entry Grid.Row="2" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.ProductID}"/>
+        <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize UnitPrice}"/>
+        <Entry Grid.Row="3" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.UnitPrice}"/>
+        <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize UnitPriceDiscount}"/>
+        <Entry Grid.Row="4" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.UnitPriceDiscount}"/>
+        <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize ModifiedDate}"/>
+        <DatePicker Grid.Row="5" Grid.Column="1" Style="{StaticResource ValueDatePickerStyle}"
+            Date="{Binding Item.ModifiedDate}" />
+        <Label Grid.Row="6" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize Product_Name}"/>
+        <Entry Grid.Row="6" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.Product_Name}"/>
+        <Label Grid.Row="7" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize ProductCategoryID}"/>
+        <Entry Grid.Row="7" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.ProductCategoryID}"/>
+        <Label Grid.Row="8" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize ProductCategory_Name}"/>
+        <Entry Grid.Row="8" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.ProductCategory_Name}"/>
+        <Label Grid.Row="9" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize ProductCategory_ParentID}"/>
+        <Entry Grid.Row="9" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.ProductCategory_ParentID}"/>
+        <Label Grid.Row="10" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize ProductCategory_Parent_Name}"/>
+        <Entry Grid.Row="10" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.ProductCategory_Parent_Name}"/>
+        <Label Grid.Row="11" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize ProductModelID}"/>
+        <Entry Grid.Row="11" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.ProductModelID}"/>
+        <Label Grid.Row="12" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize ProductModel_Name}"/>
+        <Entry Grid.Row="12" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.ProductModel_Name}"/>
+        <Label Grid.Row="13" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize SalesOrderHeader_Name}"/>
+        <Entry Grid.Row="13" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.SalesOrderHeader_Name}"/>
+        <Label Grid.Row="14" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize BillToID}"/>
+        <Entry Grid.Row="14" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.BillToID}"/>
+        <Label Grid.Row="15" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize BillTo_Name}"/>
+        <Entry Grid.Row="15" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.BillTo_Name}"/>
+        <Label Grid.Row="16" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize CustomerID}"/>
+        <Entry Grid.Row="16" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.CustomerID}"/>
+        <Label Grid.Row="17" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize Customer_Name}"/>
+        <Entry Grid.Row="17" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.Customer_Name}"/>
+        <Label Grid.Row="18" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize ShipToID}"/>
+        <Entry Grid.Row="18" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.ShipToID}"/>
+        <Label Grid.Row="19" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize ShipTo_Name}"/>
+        <Entry Grid.Row="19" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.ShipTo_Name}"/>
+        </Grid>
+        <mct:UniformItemsLayout VerticalOptions="End">
+            <Button
+                Command="{Binding CreateConfirmCommand}"
+                Text="{l:Localize Save}" />
+            <Button
+                Command="{Binding CreateCancelCommand}"
+                Text="{l:Localize Cancel}" />
+        </mct:UniformItemsLayout>
+    </Grid>
+</ContentPage>

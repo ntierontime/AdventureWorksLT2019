@@ -9,24 +9,24 @@ public class BuildVersionIdentifier: ObservableBaseQuery
 {
 
     // PredicateType:Equals
-    private byte m_SystemInformationID;
-    public byte SystemInformationID
+    private byte? m_SystemInformationID;
+    public byte? SystemInformationID
     {
         get => m_SystemInformationID;
         set => SetProperty(ref m_SystemInformationID, value);
     }
 
     // PredicateType:Equals
-    private System.DateTime m_VersionDate;
-    public System.DateTime VersionDate
+    private System.DateTime? m_VersionDate;
+    public System.DateTime? VersionDate
     {
         get => m_VersionDate;
         set => SetProperty(ref m_VersionDate, value);
     }
 
     // PredicateType:Equals
-    private System.DateTime m_ModifiedDate;
-    public System.DateTime ModifiedDate
+    private System.DateTime? m_ModifiedDate;
+    public System.DateTime? ModifiedDate
     {
         get => m_ModifiedDate;
         set => SetProperty(ref m_ModifiedDate, value);

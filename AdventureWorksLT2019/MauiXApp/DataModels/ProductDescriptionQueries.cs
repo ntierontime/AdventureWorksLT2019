@@ -9,8 +9,8 @@ public class ProductDescriptionIdentifier: ObservableBaseQuery
 {
 
     // PredicateType:Equals
-    private int m_ProductDescriptionID;
-    public int ProductDescriptionID
+    private int? m_ProductDescriptionID;
+    public int? ProductDescriptionID
     {
         get => m_ProductDescriptionID;
         set => SetProperty(ref m_ProductDescriptionID, value);

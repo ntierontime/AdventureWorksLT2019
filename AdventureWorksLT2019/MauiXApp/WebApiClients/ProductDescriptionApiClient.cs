@@ -30,6 +30,23 @@ public partial class ProductDescriptionApiClient : WebApiClientBase
         return response;
     }
 
+    public async Task<Response> BulkDelete(List<ProductDescriptionIdentifier> ids)
+    {
+        const string actionName = nameof(BulkDelete);
+        string url = GetHttpRequestUrl(actionName);
+        var response = await Post<List<ProductDescriptionIdentifier>, Response>(url, ids);
+        return response;
+    }
+
+    public async Task<Response<MultiItemsCUDRequest<ProductDescriptionIdentifier, ProductDescriptionDataModel>>> MultiItemsCUD(
+        MultiItemsCUDRequest<ProductDescriptionIdentifier, ProductDescriptionDataModel> input)
+    {
+        const string actionName = nameof(MultiItemsCUD);
+        string url = GetHttpRequestUrl(actionName);
+        var response = await Post<MultiItemsCUDRequest<ProductDescriptionIdentifier, ProductDescriptionDataModel>, Response<MultiItemsCUDRequest<ProductDescriptionIdentifier, ProductDescriptionDataModel>>>(url, input);
+        return response;
+    }
+
     public async Task<Response<ProductDescriptionDataModel>> Update(ProductDescriptionIdentifier id, ProductDescriptionDataModel input)
     {
         const string actionName = nameof(Update);
