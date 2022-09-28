@@ -21,6 +21,32 @@ public partial class CustomerAddressApiClient : WebApiClientBase
         return response;
     }
 
+    public async Task<CustomerAddressCompositeModel> GetCompositeModel(
+        CustomerAddressIdentifier id)
+    {
+        const string actionName = nameof(GetCompositeModel);
+        string url = GetHttpRequestUrl(actionName, id.GetWebApiRoute());
+        var response = await Get<CustomerAddressCompositeModel>(url);
+        return response;
+    }
+
+    public async Task<Response> BulkDelete(List<CustomerAddressIdentifier> ids)
+    {
+        const string actionName = nameof(BulkDelete);
+        string url = GetHttpRequestUrl(actionName);
+        var response = await Post<List<CustomerAddressIdentifier>, Response>(url, ids);
+        return response;
+    }
+
+    public async Task<Response<MultiItemsCUDRequest<CustomerAddressIdentifier, CustomerAddressDataModel>>> MultiItemsCUD(
+        MultiItemsCUDRequest<CustomerAddressIdentifier, CustomerAddressDataModel> input)
+    {
+        const string actionName = nameof(MultiItemsCUD);
+        string url = GetHttpRequestUrl(actionName);
+        var response = await Post<MultiItemsCUDRequest<CustomerAddressIdentifier, CustomerAddressDataModel>, Response<MultiItemsCUDRequest<CustomerAddressIdentifier, CustomerAddressDataModel>>>(url, input);
+        return response;
+    }
+
     public async Task<Response<CustomerAddressDataModel>> Update(CustomerAddressIdentifier id, CustomerAddressDataModel input)
     {
         const string actionName = nameof(Update);
@@ -42,6 +68,14 @@ public partial class CustomerAddressApiClient : WebApiClientBase
         const string actionName = nameof(Create);
         string url = GetHttpRequestUrl(actionName);
         var response = await Post<CustomerAddressDataModel, Response<CustomerAddressDataModel>>(url, input);
+        return response;
+    }
+
+    public async Task<Response> Delete(CustomerAddressIdentifier id)
+    {
+        const string actionName = nameof(Get);
+        string url = GetHttpRequestUrl(actionName, id.GetWebApiRoute());
+        var response = await Delete<Response>(url);
         return response;
     }
 }

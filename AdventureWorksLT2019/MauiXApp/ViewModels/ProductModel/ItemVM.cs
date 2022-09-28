@@ -3,6 +3,8 @@ using AdventureWorksLT2019.MauiXApp.DataModels;
 using AdventureWorksLT2019.MauiXApp.Services;
 using Framework.MauiX.ViewModels;
 using Framework.Models;
+using Framework.MauiX.Helpers;
+using AdventureWorksLT2019.MauiXApp.Common.Services;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Windows.Input;
 
@@ -10,6 +12,7 @@ namespace AdventureWorksLT2019.MauiXApp.ViewModels.ProductModel;
 
 public class ItemVM : ItemVMBase<ProductModelIdentifier, ProductModelDataModel, ProductModelService, ProductModelItemChangedMessage, ProductModelItemRequestMessage>
 {
+
     public ItemVM(ProductModelService dataService)
         : base(dataService)
     {

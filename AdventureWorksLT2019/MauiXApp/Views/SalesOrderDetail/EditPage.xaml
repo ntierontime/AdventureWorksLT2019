@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:l="clr-namespace:AdventureWorksLT2019.MauiXApp.Extensions"
+             x:Class="AdventureWorksLT2019.MauiXApp.Views.SalesOrderDetail.EditPage"
+             Title="{l:Localize Edit}">
+    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0,0,0,50">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize SalesOrderID}"/>
+        <Picker Grid.Row="0" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+            ItemsSource="{Binding Path=SalesOrderIDList}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding Path=SelectedSalesOrderID}" />
+        <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize SalesOrderDetailID}"/>
+        <Entry Grid.Row="1" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.SalesOrderDetailID}"/>
+        <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize OrderQty}"/>
+        <Entry Grid.Row="2" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.OrderQty}"/>
+        <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize ProductID}"/>
+        <Picker Grid.Row="3" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+            ItemsSource="{Binding Path=ProductIDList}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding Path=SelectedProductID}" />
+        <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize UnitPrice}"/>
+        <Entry Grid.Row="4" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.UnitPrice}"/>
+        <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize UnitPriceDiscount}"/>
+        <Entry Grid.Row="5" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.UnitPriceDiscount}"/>
+        <Label Grid.Row="6" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize LineTotal}"/>
+        <Entry Grid.Row="6" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.LineTotal}"/>
+        <Label Grid.Row="7" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize rowguid}"/>
+        <Entry Grid.Row="7" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.rowguid}"/>
+        <Label Grid.Row="8" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize ModifiedDate}"/>
+        <DatePicker Grid.Row="8" Grid.Column="1" Style="{StaticResource ValueDatePickerStyle}"
+            Date="{Binding Item.ModifiedDate}" />
+        <Label Grid.Row="10" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize ProductCategoryID}"/>
+        <Picker Grid.Row="10" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+            ItemsSource="{Binding Path=ProductCategoryIDList}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding Path=SelectedProductCategoryID}" />
+        <Label Grid.Row="12" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize ProductCategory_ParentID}"/>
+        <Picker Grid.Row="12" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+            ItemsSource="{Binding Path=ProductCategory_ParentIDList}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding Path=SelectedProductCategory_ParentID}" />
+        <Label Grid.Row="14" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize ProductModelID}"/>
+        <Picker Grid.Row="14" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+            ItemsSource="{Binding Path=ProductModelIDList}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding Path=SelectedProductModelID}" />
+        <Label Grid.Row="17" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize BillToID}"/>
+        <Picker Grid.Row="17" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+            ItemsSource="{Binding Path=BillToIDList}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding Path=SelectedBillToID}" />
+        <Label Grid.Row="19" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize CustomerID}"/>
+        <Picker Grid.Row="19" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+            ItemsSource="{Binding Path=CustomerIDList}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding Path=SelectedCustomerID}" />
+        <Label Grid.Row="21" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize ShipToID}"/>
+        <Picker Grid.Row="21" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+            ItemsSource="{Binding Path=ShipToIDList}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding Path=SelectedShipToID}" />
+        </Grid>
+        <mct:UniformItemsLayout VerticalOptions="End">
+            <Button
+                Command="{Binding EditConfirmCommand}"
+                Text="{l:Localize Save}" />
+            <Button
+                Command="{Binding EditCancelCommand}"
+                Text="{l:Localize Cancel}" />
+        </mct:UniformItemsLayout>
+    </Grid>
+</ContentPage>

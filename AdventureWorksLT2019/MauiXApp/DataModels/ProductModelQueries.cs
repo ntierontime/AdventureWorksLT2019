@@ -9,8 +9,8 @@ public class ProductModelIdentifier: ObservableBaseQuery
 {
 
     // PredicateType:Equals
-    private int m_ProductModelID;
-    public int ProductModelID
+    private int? m_ProductModelID;
+    public int? ProductModelID
     {
         get => m_ProductModelID;
         set => SetProperty(ref m_ProductModelID, value);
@@ -50,10 +50,10 @@ public class ProductModelAdvancedQuery: ObservableBaseQuery, IClone<ProductModel
         return new ProductModelAdvancedQuery
         {
 
-        // PredicateType:Range
-        m_ModifiedDateRange = m_ModifiedDateRange,
-        m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
-        m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
+            // PredicateType:Range
+            m_ModifiedDateRange = m_ModifiedDateRange,
+            m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
+            m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
         };
     }
 }

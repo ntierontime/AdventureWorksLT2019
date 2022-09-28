@@ -47,6 +47,14 @@ namespace AdventureWorksLT2019.WebApiControllers
         }
 
         // [Authorize]
+        [HttpDelete]
+        public async Task<ActionResult> BulkDelete(List<CustomerIdentifier> ids)
+        {
+            var serviceResponse = await _thisService.BulkDelete(ids);
+            return ReturnWithoutBodyActionResult(serviceResponse);
+        }
+
+        // [Authorize]
         [HttpPut]
         public async Task<ActionResult<ListResponse<CustomerDataModel[]>>> BulkUpdate(BatchActionRequest<CustomerIdentifier, CustomerDataModel> data)
         {
@@ -78,6 +86,15 @@ namespace AdventureWorksLT2019.WebApiControllers
         {
             var serviceResponse = await _thisService.Create(input);
             return ReturnResultOnlyActionResult(serviceResponse);
+        }
+
+        // [Authorize]
+        [Route("{CustomerID}")]
+        [HttpDelete]
+        public async Task<ActionResult> Delete([FromRoute]CustomerIdentifier id)
+        {
+            var serviceResponse = await _thisService.Delete(id);
+            return ReturnWithoutBodyActionResult(serviceResponse);
         }
 
         /*

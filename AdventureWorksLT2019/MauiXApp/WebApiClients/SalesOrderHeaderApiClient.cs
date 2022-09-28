@@ -30,11 +30,28 @@ public partial class SalesOrderHeaderApiClient : WebApiClientBase
         return response;
     }
 
+    public async Task<Response> BulkDelete(List<SalesOrderHeaderIdentifier> ids)
+    {
+        const string actionName = nameof(BulkDelete);
+        string url = GetHttpRequestUrl(actionName);
+        var response = await Post<List<SalesOrderHeaderIdentifier>, Response>(url, ids);
+        return response;
+    }
+
     public async Task<ListResponse<SalesOrderHeaderDataModel[]>> BulkUpdate(BatchActionRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel> data)
     {
         const string actionName = nameof(BulkUpdate);
         string url = GetHttpRequestUrl(actionName);
         var response = await Post<BatchActionRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel>, ListResponse<SalesOrderHeaderDataModel[]>>(url, data);
+        return response;
+    }
+
+    public async Task<Response<MultiItemsCUDRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel>>> MultiItemsCUD(
+        MultiItemsCUDRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel> input)
+    {
+        const string actionName = nameof(MultiItemsCUD);
+        string url = GetHttpRequestUrl(actionName);
+        var response = await Post<MultiItemsCUDRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel>, Response<MultiItemsCUDRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel>>>(url, input);
         return response;
     }
 
@@ -59,6 +76,14 @@ public partial class SalesOrderHeaderApiClient : WebApiClientBase
         const string actionName = nameof(Create);
         string url = GetHttpRequestUrl(actionName);
         var response = await Post<SalesOrderHeaderDataModel, Response<SalesOrderHeaderDataModel>>(url, input);
+        return response;
+    }
+
+    public async Task<Response> Delete(SalesOrderHeaderIdentifier id)
+    {
+        const string actionName = nameof(Get);
+        string url = GetHttpRequestUrl(actionName, id.GetWebApiRoute());
+        var response = await Delete<Response>(url);
         return response;
     }
 }

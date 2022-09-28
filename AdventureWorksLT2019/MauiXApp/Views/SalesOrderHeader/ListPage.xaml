@@ -42,6 +42,11 @@
                         <SwipeView>
                             <SwipeView.LeftItems>
                                 <SwipeItems>
+                                    <SwipeItem Text="{l:Localize Delete}"
+                                            BackgroundColor="LightPink"
+                                            Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
+                                            CommandParameter="{x:Static fm:ViewItemTemplates.Delete}"
+                                            />
                                     <SwipeItem Text="{l:Localize Details}"
                                             BackgroundColor="LightPink"
                                             Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
@@ -54,6 +59,25 @@
                                             />
                                 </SwipeItems>
                             </SwipeView.LeftItems>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="{l:Localize Delete}"
+                                            BackgroundColor="LightPink"
+                                            Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
+                                            CommandParameter="{x:Static cs:AppShellRoutes.SalesOrderHeaderDeletePage}"
+                                            />
+                                    <SwipeItem Text="{l:Localize Details}"
+                                            BackgroundColor="LightPink"
+                                            Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
+                                            CommandParameter="{x:Static cs:AppShellRoutes.SalesOrderHeaderDetailsPage}"
+                                            />
+                                    <SwipeItem Text="{l:Localize Edit}"
+                                            BackgroundColor="LightPink"
+                                            Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
+                                            CommandParameter="{x:Static cs:AppShellRoutes.SalesOrderHeaderEditPage}"
+                                            />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
                             <Grid Padding="10" HorizontalOptions="FillAndExpand">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="60" />
@@ -79,6 +103,10 @@
                                     Style="{StaticResource SubTitleLabelStyle}"
                                     Text="{Binding OrderDate}" />
                                 <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"  Margin="0" Padding="5,0,10,0">
+                                    <Button Style="{StaticResource ToolbarDeleteIconButtonStyle}" Margin="0"
+                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
+                                        CommandParameter="{x:Static fm:ViewItemTemplates.Delete}"
+                                        />
                                     <Button Style="{StaticResource ToolbarDetailsIconButtonStyle}" Margin="0"
                                         Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
                                         CommandParameter="{x:Static fm:ViewItemTemplates.Details}"
@@ -86,6 +114,18 @@
                                     <Button Style="{StaticResource ToolbarEditIconButtonStyle}" Margin="0"
                                         Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
                                         CommandParameter="{x:Static fm:ViewItemTemplates.Edit}"
+                                        />
+                                    <Button Style="{StaticResource ToolbarDeleteIconButtonStyle}" Margin="0"
+                                        Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
+                                        CommandParameter="{x:Static cs:AppShellRoutes.SalesOrderHeaderDeletePage}"
+                                        />
+                                    <Button Style="{StaticResource ToolbarDetailsIconButtonStyle}" Margin="0"
+                                        Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
+                                        CommandParameter="{x:Static cs:AppShellRoutes.SalesOrderHeaderDetailsPage}"
+                                        />
+                                    <Button Style="{StaticResource ToolbarEditIconButtonStyle}" Margin="0"
+                                        Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
+                                        CommandParameter="{x:Static cs:AppShellRoutes.SalesOrderHeaderEditPage}"
                                         />
                                 </HorizontalStackLayout>
                             </Grid>
@@ -98,6 +138,10 @@
             <Button Style="{StaticResource AddIconButtonStyle}"
                     Command="{Binding LaunchItemPopupViewCommand}"
                     CommandParameter="{x:Static fm:ViewItemTemplates.Create}"
+                    />
+            <Button Style="{StaticResource AddIconButtonStyle}"
+                    Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
+                    CommandParameter="{x:Static cs:AppShellRoutes.SalesOrderHeaderCreatePage}"
                     />
             <Button Grid.Column="2" Style="{StaticResource LaunchAdvancedSearchIconButtonStyle}"
                     Command="{Binding AdvancedSearchLaunchCommand}"
@@ -119,6 +163,9 @@
             x:Name="ButtonsWhenMultipleSelection"
             HorizontalOptions="End" VerticalOptions="End" Margin="0,0,20,20"
             IsVisible="{Binding CurrentSelectionMode, Converter={StaticResource ListSelectModeMultipleConverter}}" >
+            <Button
+                Command="{Binding BulkDeleteCommand}"
+                Text="{l:Localize Delete}" />
             <Button
                 Command="{Binding ClearSelectedItemsCommand}"
                 Text="{l:Localize Clear}" />

@@ -81,9 +81,9 @@ public abstract class ItemVMBase<TIdentifier, TDataModel, TDataService, TDataCha
     }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-    protected virtual async Task LoadCodeListsIfAny(Framework.Models.ViewItemTemplates itemView)
+    protected virtual async Task LoadCodeListsIfAny(ViewItemTemplates itemView)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
-    { 
+    {
     }
 
     protected abstract void SendDataChangedMessage(ViewItemTemplates itemView);

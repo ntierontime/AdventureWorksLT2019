@@ -26,8 +26,10 @@
             Text="{Binding Item.ProductCategoryID}"/>
         <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize ParentProductCategoryID}"/>
-        <Entry Grid.Row="1" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.ParentProductCategoryID}"/>
+        <Picker Grid.Row="1" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+            ItemsSource="{Binding Path=ParentProductCategoryIDList}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding Path=SelectedParentProductCategoryID}" />
         <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize Name}"/>
         <Entry Grid.Row="2" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
@@ -40,17 +42,13 @@
             Text="{l:Localize ModifiedDate}"/>
         <DatePicker Grid.Row="4" Grid.Column="1" Style="{StaticResource ValueDatePickerStyle}"
             Date="{Binding Item.ModifiedDate}" />
-        <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize Parent_Name}"/>
-        <Entry Grid.Row="5" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.Parent_Name}"/>
         </Grid>
         <mct:UniformItemsLayout VerticalOptions="End">
             <Button
-                Command="{Binding CreateConfirmCommand}"
+                Command="{Binding EditConfirmCommand}"
                 Text="{l:Localize Save}" />
             <Button
-                Command="{Binding CreateCancelCommand}"
+                Command="{Binding EditCancelCommand}"
                 Text="{l:Localize Cancel}" />
         </mct:UniformItemsLayout>
     </Grid>

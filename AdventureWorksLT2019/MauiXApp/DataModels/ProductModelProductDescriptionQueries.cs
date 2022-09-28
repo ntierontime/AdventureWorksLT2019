@@ -9,16 +9,16 @@ public class ProductModelProductDescriptionIdentifier: ObservableBaseQuery
 {
 
     // PredicateType:Equals
-    private int m_ProductModelID;
-    public int ProductModelID
+    private int? m_ProductModelID;
+    public int? ProductModelID
     {
         get => m_ProductModelID;
         set => SetProperty(ref m_ProductModelID, value);
     }
 
     // PredicateType:Equals
-    private int m_ProductDescriptionID;
-    public int ProductDescriptionID
+    private int? m_ProductDescriptionID;
+    public int? ProductDescriptionID
     {
         get => m_ProductDescriptionID;
         set => SetProperty(ref m_ProductDescriptionID, value);
@@ -42,16 +42,16 @@ public class ProductModelProductDescriptionAdvancedQuery: ObservableBaseQuery, I
 {
 
     // PredicateType:Equals
-    private int m_ProductDescriptionID;
-    public int ProductDescriptionID
+    private int? m_ProductDescriptionID;
+    public int? ProductDescriptionID
     {
         get => m_ProductDescriptionID;
         set => SetProperty(ref m_ProductDescriptionID, value);
     }
 
     // PredicateType:Equals
-    private int m_ProductModelID;
-    public int ProductModelID
+    private int? m_ProductModelID;
+    public int? ProductModelID
     {
         get => m_ProductModelID;
         set => SetProperty(ref m_ProductModelID, value);
@@ -82,16 +82,16 @@ public class ProductModelProductDescriptionAdvancedQuery: ObservableBaseQuery, I
         return new ProductModelProductDescriptionAdvancedQuery
         {
 
-        // PredicateType:Equals
-        m_ProductDescriptionID = m_ProductDescriptionID,
+            // PredicateType:Equals
+            m_ProductDescriptionID = m_ProductDescriptionID,
 
-        // PredicateType:Equals
-        m_ProductModelID = m_ProductModelID,
+            // PredicateType:Equals
+            m_ProductModelID = m_ProductModelID,
 
-        // PredicateType:Range
-        m_ModifiedDateRange = m_ModifiedDateRange,
-        m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
-        m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
+            // PredicateType:Range
+            m_ModifiedDateRange = m_ModifiedDateRange,
+            m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
+            m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
         };
     }
 }

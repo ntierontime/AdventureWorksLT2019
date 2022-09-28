@@ -9,24 +9,24 @@ public class BuildVersionIdentifier: ObservableBaseQuery
 {
 
     // PredicateType:Equals
-    private byte m_SystemInformationID;
-    public byte SystemInformationID
+    private byte? m_SystemInformationID;
+    public byte? SystemInformationID
     {
         get => m_SystemInformationID;
         set => SetProperty(ref m_SystemInformationID, value);
     }
 
     // PredicateType:Equals
-    private System.DateTime m_VersionDate;
-    public System.DateTime VersionDate
+    private System.DateTime? m_VersionDate;
+    public System.DateTime? VersionDate
     {
         get => m_VersionDate;
         set => SetProperty(ref m_VersionDate, value);
     }
 
     // PredicateType:Equals
-    private System.DateTime m_ModifiedDate;
-    public System.DateTime ModifiedDate
+    private System.DateTime? m_ModifiedDate;
+    public System.DateTime? ModifiedDate
     {
         get => m_ModifiedDate;
         set => SetProperty(ref m_ModifiedDate, value);
@@ -86,15 +86,15 @@ public class BuildVersionAdvancedQuery: ObservableBaseQuery, IClone<BuildVersion
         return new BuildVersionAdvancedQuery
         {
 
-        // PredicateType:Range
-        m_VersionDateRange = m_VersionDateRange,
-        m_VersionDateRangeLower = m_VersionDateRangeLower,
-        m_VersionDateRangeUpper = m_VersionDateRangeUpper,
+            // PredicateType:Range
+            m_VersionDateRange = m_VersionDateRange,
+            m_VersionDateRangeLower = m_VersionDateRangeLower,
+            m_VersionDateRangeUpper = m_VersionDateRangeUpper,
 
-        // PredicateType:Range
-        m_ModifiedDateRange = m_ModifiedDateRange,
-        m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
-        m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
+            // PredicateType:Range
+            m_ModifiedDateRange = m_ModifiedDateRange,
+            m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
+            m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
         };
     }
 }

@@ -9,8 +9,8 @@ public class ErrorLogIdentifier: ObservableBaseQuery
 {
 
     // PredicateType:Equals
-    private int m_ErrorLogID;
-    public int ErrorLogID
+    private int? m_ErrorLogID;
+    public int? ErrorLogID
     {
         get => m_ErrorLogID;
         set => SetProperty(ref m_ErrorLogID, value);
@@ -50,10 +50,10 @@ public class ErrorLogAdvancedQuery: ObservableBaseQuery, IClone<ErrorLogAdvanced
         return new ErrorLogAdvancedQuery
         {
 
-        // PredicateType:Range
-        m_ErrorTimeRange = m_ErrorTimeRange,
-        m_ErrorTimeRangeLower = m_ErrorTimeRangeLower,
-        m_ErrorTimeRangeUpper = m_ErrorTimeRangeUpper,
+            // PredicateType:Range
+            m_ErrorTimeRange = m_ErrorTimeRange,
+            m_ErrorTimeRangeLower = m_ErrorTimeRangeLower,
+            m_ErrorTimeRangeUpper = m_ErrorTimeRangeUpper,
         };
     }
 }

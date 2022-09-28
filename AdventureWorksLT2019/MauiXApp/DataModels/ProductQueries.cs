@@ -9,8 +9,8 @@ public class ProductIdentifier: ObservableBaseQuery
 {
 
     // PredicateType:Equals
-    private int m_ProductID;
-    public int ProductID
+    private int? m_ProductID;
+    public int? ProductID
     {
         get => m_ProductID;
         set => SetProperty(ref m_ProductID, value);
@@ -134,34 +134,34 @@ public class ProductAdvancedQuery: ObservableBaseQuery, IClone<ProductAdvancedQu
         return new ProductAdvancedQuery
         {
 
-        // PredicateType:Equals
-        m_ProductCategoryID = m_ProductCategoryID,
+            // PredicateType:Equals
+            m_ProductCategoryID = m_ProductCategoryID,
 
-        // PredicateType:Equals
-        m_ParentID = m_ParentID,
+            // PredicateType:Equals
+            m_ParentID = m_ParentID,
 
-        // PredicateType:Equals
-        m_ProductModelID = m_ProductModelID,
+            // PredicateType:Equals
+            m_ProductModelID = m_ProductModelID,
 
-        // PredicateType:Range
-        m_SellStartDateRange = m_SellStartDateRange,
-        m_SellStartDateRangeLower = m_SellStartDateRangeLower,
-        m_SellStartDateRangeUpper = m_SellStartDateRangeUpper,
+            // PredicateType:Range
+            m_SellStartDateRange = m_SellStartDateRange,
+            m_SellStartDateRangeLower = m_SellStartDateRangeLower,
+            m_SellStartDateRangeUpper = m_SellStartDateRangeUpper,
 
-        // PredicateType:Range
-        m_SellEndDateRange = m_SellEndDateRange,
-        m_SellEndDateRangeLower = m_SellEndDateRangeLower,
-        m_SellEndDateRangeUpper = m_SellEndDateRangeUpper,
+            // PredicateType:Range
+            m_SellEndDateRange = m_SellEndDateRange,
+            m_SellEndDateRangeLower = m_SellEndDateRangeLower,
+            m_SellEndDateRangeUpper = m_SellEndDateRangeUpper,
 
-        // PredicateType:Range
-        m_DiscontinuedDateRange = m_DiscontinuedDateRange,
-        m_DiscontinuedDateRangeLower = m_DiscontinuedDateRangeLower,
-        m_DiscontinuedDateRangeUpper = m_DiscontinuedDateRangeUpper,
+            // PredicateType:Range
+            m_DiscontinuedDateRange = m_DiscontinuedDateRange,
+            m_DiscontinuedDateRangeLower = m_DiscontinuedDateRangeLower,
+            m_DiscontinuedDateRangeUpper = m_DiscontinuedDateRangeUpper,
 
-        // PredicateType:Range
-        m_ModifiedDateRange = m_ModifiedDateRange,
-        m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
-        m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
+            // PredicateType:Range
+            m_ModifiedDateRange = m_ModifiedDateRange,
+            m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
+            m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
         };
     }
 }

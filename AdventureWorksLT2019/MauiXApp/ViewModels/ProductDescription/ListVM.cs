@@ -1,3 +1,5 @@
+using Framework.MauiX.Helpers;
+using AdventureWorksLT2019.MauiXApp.Common.Services;
 using AdventureWorksLT2019.MauiXApp.Messages;
 using AdventureWorksLT2019.MauiXApp.DataModels;
 using AdventureWorksLT2019.MauiXApp.Common.Helpers;

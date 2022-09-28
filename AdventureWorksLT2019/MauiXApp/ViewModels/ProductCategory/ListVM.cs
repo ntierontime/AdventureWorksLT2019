@@ -1,3 +1,5 @@
+using Framework.MauiX.Helpers;
+using AdventureWorksLT2019.MauiXApp.Common.Services;
 using AdventureWorksLT2019.MauiXApp.Messages;
 using AdventureWorksLT2019.MauiXApp.DataModels;
 using AdventureWorksLT2019.MauiXApp.Common.Helpers;
@@ -12,6 +14,29 @@ namespace AdventureWorksLT2019.MauiXApp.ViewModels.ProductCategory;
 public class ListVM : ListVMBase<ProductCategoryAdvancedQuery, ProductCategoryIdentifier, ProductCategoryDataModel, ProductCategoryService, ProductCategoryItemChangedMessage, ProductCategoryItemRequestMessage>
 {
     // AdvancedQuery.Start
+
+    // ForeignKeys.1. ParentProductCategoryIDList
+    private List<NameValuePair<int>> m_ParentProductCategoryIDList;
+    public List<NameValuePair<int>> ParentProductCategoryIDList
+    {
+        get => m_ParentProductCategoryIDList;
+        set => SetProperty(ref m_ParentProductCategoryIDList, value);
+    }
+
+    private NameValuePair<int> m_SelectedParentProductCategoryID;
+    public NameValuePair<int> SelectedParentProductCategoryID
+    {
+        get => m_SelectedParentProductCategoryID;
+        set
+        {
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedParentProductCategoryID, value);
+                EditingQuery.ParentProductCategoryID = value.Value;
+            }
+        }
+    }
+
     private List<NameValuePair> m_DateTimeRangeListPast;
     public List<NameValuePair> DateTimeRangeListPast
     {
@@ -83,6 +108,21 @@ public class ListVM : ListVMBase<ProductCategoryAdvancedQuery, ProductCategoryId
             },
             () => EnableMultiSelectCommands()
         );
+    }
+
+    protected override async Task LoadCodeListsIfAny()
+    {
+
+        // // ForeignKeys.1. ParentProductCategoryIDList
+        {
+            var codeListsApiService = ServiceHelper.GetService<CodeListsApiService>();
+            var response = await codeListsApiService.GetProductCategoryCodeList(new ProductCategoryAdvancedQuery { PageIndex = 1, PageSize = 10000 });
+            if(response.Status == System.Net.HttpStatusCode.OK)
+            {
+                ParentProductCategoryIDList = new List<NameValuePair<int>>(response.ResponseBody);
+                SelectedParentProductCategoryID = ParentProductCategoryIDList.FirstOrDefault(t=>t.Value == EditingQuery.ParentProductCategoryID);
+            }
+        }
     }
 
     public override void RefreshMultiSelectCommandsCanExecute()

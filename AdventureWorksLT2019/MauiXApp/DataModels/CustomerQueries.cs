@@ -9,8 +9,8 @@ public class CustomerIdentifier: ObservableBaseQuery
 {
 
     // PredicateType:Equals
-    private int m_CustomerID;
-    public int CustomerID
+    private int? m_CustomerID;
+    public int? CustomerID
     {
         get => m_CustomerID;
         set => SetProperty(ref m_CustomerID, value);
@@ -58,13 +58,13 @@ public class CustomerAdvancedQuery: ObservableBaseQuery, IClone<CustomerAdvanced
         return new CustomerAdvancedQuery
         {
 
-        // PredicateType:Equals
-        m_NameStyle = m_NameStyle,
+            // PredicateType:Equals
+            m_NameStyle = m_NameStyle,
 
-        // PredicateType:Range
-        m_ModifiedDateRange = m_ModifiedDateRange,
-        m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
-        m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
+            // PredicateType:Range
+            m_ModifiedDateRange = m_ModifiedDateRange,
+            m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
+            m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
         };
     }
 }

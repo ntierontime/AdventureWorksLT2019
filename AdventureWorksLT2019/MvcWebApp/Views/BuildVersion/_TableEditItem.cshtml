@@ -1,0 +1,71 @@
+@using Framework.Models;
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.Resx;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@using Framework.Mvc.Models;
+@using AdventureWorksLT2019.Models.Definitions;
+@model MvcItemViewModel<BuildVersionDataModel>
+@inject SelectListHelper selectListHelper;
+@inject IUIStrings localizor;
+@{
+    var format_Please_Select = localizor.Get("Format_Please_Select");
+}
+@if (Model!.UIItemFeatures.ShowListBulkSelectCheckbox)
+{
+    <td class="pt-0 pb-0 nt-list-bulk-select" style="width: 1% !important;">
+    </td>
+}
+@if (Model!.UIItemFeatures.ShowItemButtons)
+{
+    <td class="p-0" style="width: 1% !important;">
+    <div class="btn-group btn-group-nt-action-save">
+        <button type="button" class="btn btn-secondary btn-nt-action-cancel" data-nt-action="@HttpMethods.Put">
+            <i class="fa-solid fa-circle-xmark"></i>
+        </button>
+        <button type="button" class="btn btn-primary btn-nt-action" data-nt-action="@HttpMethods.Put"
+            data-nt-container="@CrudViewContainers.Inline.ToString()"
+            data-nt-template="@ViewItemTemplates.Edit.ToString()">
+            <i class="fa-solid fa-check-circle"></i>
+        </button>
+    </div>
+    </td>
+}
+<td class="form-group p-0">
+    <input asp-for="Model!.SystemInformationID" readonly class="form-control " id="@Model!.HtmlId(nameof(BuildVersionDataModel.SystemInformationID))" name="@Model!.HtmlName(nameof(BuildVersionDataModel.SystemInformationID))" data-nt-value="@Model!.Model!.SystemInformationID"/>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.Database_Version" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(BuildVersionDataModel.Database_Version))" name="@Model!.HtmlName(nameof(BuildVersionDataModel.Database_Version))" data-nt-value="@Model!.Model!.Database_Version"/>
+    <span asp-validation-for="Model!.Database_Version" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(BuildVersionDataModel.Database_Version))"></span>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.VersionDate" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(BuildVersionDataModel.VersionDate))" name="@Model!.HtmlName(nameof(BuildVersionDataModel.VersionDate))" data-nt-value="@Model!.Model!.VersionDate"/>
+    <span asp-validation-for="Model!.VersionDate" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(BuildVersionDataModel.VersionDate))"></span>
+</td>
+<td class="form-group p-0">
+    <input asp-for="Model!.ModifiedDate" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(BuildVersionDataModel.ModifiedDate))" name="@Model!.HtmlName(nameof(BuildVersionDataModel.ModifiedDate))" data-nt-value="@Model!.Model!.ModifiedDate"/>
+    <span asp-validation-for="Model!.ModifiedDate" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(BuildVersionDataModel.ModifiedDate))"></span>
+</td>
+@if (Model!.UIItemFeatures.ShowItemUIStatus)
+{
+    <td class="form-group nt-item-status text-center" style="width: 1% !important;">
+        @if (Model!.Model!.ItemUIStatus______ == ItemUIStatus.NoChange)
+        {
+                <i class="fa-solid fa-circle-notch text-success"></i>
+        }
+        else if (Model!.Model!.ItemUIStatus______ == ItemUIStatus.Updated) // Usually: will be changed by JQuery
+        {
+                <i class="fa-solid fa-circle text-danger"></i>
+        }
+        else // ItemUIStatus.New
+        {
+                    <i class="fa-solid fa-circle text-danger"></i>
+        }
+        <input asp-for="Model!.ItemUIStatus______" class="form-control" data-nt-value="@Model!.Model!.ItemUIStatus______" id="@Model!.HtmlId(nameof(BuildVersionDataModel.ItemUIStatus______))" name="@Model!.HtmlName(nameof(BuildVersionDataModel.ItemUIStatus______))" type="hidden" />
+    </td>
+}
+@if (Model!.UIItemFeatures.ShowEditableListDeleteSelect)
+{
+    <td class="form-group nt-editablelist-delete-select text-center" style="width: 1% !important;">
+        <input asp-for="Model!.IsDeleted______" class="form-check-input nt-form-check ms-1" type="checkbox"  id="@Model!.HtmlId(nameof(BuildVersionDataModel.IsDeleted______))" name="@Model!.HtmlName(nameof(BuildVersionDataModel.IsDeleted______))" data-nt-value="@Model!.Model!.IsDeleted______"/>
+    </td>
+}

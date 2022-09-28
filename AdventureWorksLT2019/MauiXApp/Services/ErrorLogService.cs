@@ -35,6 +35,26 @@ public class ErrorLogService : DataServiceBase<ErrorLogAdvancedQuery, ErrorLogId
         return response;
     }
 
+    public async Task<ErrorLogCompositeModel> GetCompositeModel(
+        ErrorLogIdentifier id)
+    {
+        var response = await _thisApiClient.GetCompositeModel(id);
+        return response;
+    }
+
+    public override async Task<Response> BulkDelete(List<ErrorLogIdentifier> ids)
+    {
+        var response = await _thisApiClient.BulkDelete(ids);
+        return response;
+    }
+
+    public override async Task<Response<MultiItemsCUDRequest<ErrorLogIdentifier, ErrorLogDataModel>>> MultiItemsCUD(
+        MultiItemsCUDRequest<ErrorLogIdentifier, ErrorLogDataModel> input)
+    {
+        var response = await _thisApiClient.MultiItemsCUD(input);
+        return response;
+    }
+
     public override async Task<Response<ErrorLogDataModel>> Update(ErrorLogIdentifier id, ErrorLogDataModel input)
     {
         var response = await _thisApiClient.Update(id, input);
@@ -50,6 +70,12 @@ public class ErrorLogService : DataServiceBase<ErrorLogAdvancedQuery, ErrorLogId
     public override async Task<Response<ErrorLogDataModel>> Create(ErrorLogDataModel input)
     {
         var response = await _thisApiClient.Create(input);
+        return response;
+    }
+
+    public override async Task<Response> Delete(ErrorLogIdentifier id)
+    {
+        var response = await _thisApiClient.Delete(id);
         return response;
     }
 

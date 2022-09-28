@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:l="clr-namespace:AdventureWorksLT2019.MauiXApp.Extensions"
+             x:Class="AdventureWorksLT2019.MauiXApp.Views.ProductModel.EditPage"
+             Title="{l:Localize Edit}">
+    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0,0,0,50">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize ProductModelID}"/>
+        <Entry Grid.Row="0" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.ProductModelID}"/>
+        <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize Name}"/>
+        <Entry Grid.Row="1" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.Name}"/>
+        <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize CatalogDescription}"/>
+        <Entry Grid.Row="2" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.CatalogDescription}"/>
+        <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize rowguid}"/>
+        <Entry Grid.Row="3" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+            Text="{Binding Item.rowguid}"/>
+        <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+            Text="{l:Localize ModifiedDate}"/>
+        <DatePicker Grid.Row="4" Grid.Column="1" Style="{StaticResource ValueDatePickerStyle}"
+            Date="{Binding Item.ModifiedDate}" />
+        </Grid>
+        <mct:UniformItemsLayout VerticalOptions="End">
+            <Button
+                Command="{Binding EditConfirmCommand}"
+                Text="{l:Localize Save}" />
+            <Button
+                Command="{Binding EditCancelCommand}"
+                Text="{l:Localize Cancel}" />
+        </mct:UniformItemsLayout>
+    </Grid>
+</ContentPage>

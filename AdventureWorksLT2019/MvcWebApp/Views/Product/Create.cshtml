@@ -1,0 +1,128 @@
+@using AdventureWorksLT2019.Models.Definitions;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@using Framework.Mvc.Models;
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.Resx;
+@model MvcItemViewModel<ProductDataModel.DefaultView>
+@inject SelectListHelper selectListHelper;
+@inject IUIStrings localizor;
+@{
+    ViewData["Title"] = localizor.Get("Create");
+    var format_Please_Select = localizor.Get("Format_Please_Select");
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h1>@localizor.Get("Create")</h1>
+                <h4>@localizor.Get("Product")</h4>
+            </div>
+            <form asp-action="Create">
+                @if (Model.Status != System.Net.HttpStatusCode.OK)
+                {
+                    <div class="card-body">
+                        <div class="text-danger">@Model.StatusMessage</div>
+                    </div>
+                }
+                <div class="card-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Model!.Name" class="control-label" for="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.Name))"></label>
+                        <input asp-for="Model!.Name" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.Name))" name="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.Name))" data-nt-value="@Model!.Model!.Name"/>
+                        <span asp-validation-for="Model!.Name" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.Name))"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ProductNumber" class="control-label" for="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.ProductNumber))"></label>
+                        <input asp-for="Model!.ProductNumber" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.ProductNumber))" name="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.ProductNumber))" data-nt-value="@Model!.Model!.ProductNumber"/>
+                        <span asp-validation-for="Model!.ProductNumber" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.ProductNumber))"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.Color" class="control-label" for="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.Color))"></label>
+                        <input asp-for="Model!.Color" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.Color))" name="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.Color))" data-nt-value="@Model!.Model!.Color"/>
+                        <span asp-validation-for="Model!.Color" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.Color))"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.StandardCost" class="control-label" for="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.StandardCost))"></label>
+                        <input asp-for="Model!.StandardCost" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.StandardCost))" name="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.StandardCost))" data-nt-value="@Model!.Model!.StandardCost"/>
+                        <span asp-validation-for="Model!.StandardCost" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.StandardCost))"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ListPrice" class="control-label" for="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.ListPrice))"></label>
+                        <input asp-for="Model!.ListPrice" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.ListPrice))" name="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.ListPrice))" data-nt-value="@Model!.Model!.ListPrice"/>
+                        <span asp-validation-for="Model!.ListPrice" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.ListPrice))"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.Size" class="control-label" for="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.Size))"></label>
+                        <input asp-for="Model!.Size" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.Size))" name="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.Size))" data-nt-value="@Model!.Model!.Size"/>
+                        <span asp-validation-for="Model!.Size" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.Size))"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.Weight" class="control-label" for="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.Weight))"></label>
+                        <input asp-for="Model!.Weight" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.Weight))" name="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.Weight))" data-nt-value="@Model!.Model!.Weight"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ProductCategoryID" class="control-label" for="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.ProductCategoryID))"></label>
+                        <select asp-for="Model!.ProductCategoryID" class="form-control form-select nt-form-data"
+                            data-nt-value="@Model!.Model!.ProductCategoryID" id="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.ProductCategoryID))"  name="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.ProductCategoryID))">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ProductModelID" class="control-label" for="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.ProductModelID))"></label>
+                        <select asp-for="Model!.ProductModelID" class="form-control form-select nt-form-data" asp-items="@selectListHelper.GetSelectList(Model?.TopLevelDropDownListsFromDatabase?[TopLevelDropDownLists.ProductModel.ToString()])"
+                            data-nt-value="@Model!.Model!.ProductModelID" id="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.ProductModelID))"  name="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.ProductModelID))">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.SellStartDate" class="control-label" for="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.SellStartDate))"></label>
+                        <input asp-for="Model!.SellStartDate" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.SellStartDate))" name="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.SellStartDate))" data-nt-value="@Model!.Model!.SellStartDate"/>
+                        <span asp-validation-for="Model!.SellStartDate" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.SellStartDate))"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.SellEndDate" class="control-label" for="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.SellEndDate))"></label>
+                        <input asp-for="Model!.SellEndDate" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.SellEndDate))" name="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.SellEndDate))" data-nt-value="@Model!.Model!.SellEndDate"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.DiscontinuedDate" class="control-label" for="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.DiscontinuedDate))"></label>
+                        <input asp-for="Model!.DiscontinuedDate" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.DiscontinuedDate))" name="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.DiscontinuedDate))" data-nt-value="@Model!.Model!.DiscontinuedDate"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ThumbNailPhoto" class="control-label" for="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.ThumbNailPhoto))"></label>
+                        <input asp-for="Model!.ThumbNailPhoto" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.ThumbNailPhoto))" name="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.ThumbNailPhoto))" data-nt-value="@Model!.Model!.ThumbNailPhoto"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ThumbnailPhotoFileName" class="control-label" for="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.ThumbnailPhotoFileName))"></label>
+                        <input asp-for="Model!.ThumbnailPhotoFileName" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.ThumbnailPhotoFileName))" name="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.ThumbnailPhotoFileName))" data-nt-value="@Model!.Model!.ThumbnailPhotoFileName"/>
+                        <span asp-validation-for="Model!.ThumbnailPhotoFileName" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.ThumbnailPhotoFileName))"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ModifiedDate" class="control-label" for="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.ModifiedDate))"></label>
+                        <input asp-for="Model!.ModifiedDate" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.ModifiedDate))" name="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.ModifiedDate))" data-nt-value="@Model!.Model!.ModifiedDate"/>
+                        <span asp-validation-for="Model!.ModifiedDate" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.ModifiedDate))"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ParentID" class="control-label" for="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.ParentID))"></label>
+                        <select asp-for="Model!.ParentID" class="form-control form-select nt-form-data nt-ddlcascading" data-childlisturl="@Url.Action("GetProductCategoryCodeList","SelectListsApi")" data-nt-queryparamname="parentProductCategoryID" data-nt-targetchild="ProductCategoryID"
+                            data-nt-value="@Model!.Model!.ParentID" id="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.ParentID))"  name="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.ParentID))">
+                        </select>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button class="btn btn-primary" role="button" type="submit">
+                            <i class="fa-solid fa-check-circle"></i><span class="nt-submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Create")</span>
+                        </button>
+                        <a asp-area="" asp-controller="Product" asp-action="Create" class="btn btn-secondary" role="button" title="@localizor.Get("Reset")">
+                            <i class="fa-solid fa-refresh"></i><span class="nt-submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Reset")</span>
+                        </a>
+                        <a asp-area="" asp-controller="Product" asp-action="Index" class="btn btn-secondary" role="button" title="@localizor.Get("Back_to_List")">
+                            <i class="fa-solid fa-arrow-left"></i><span class="submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline">@localizor.Get("Back_to_List")</span>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

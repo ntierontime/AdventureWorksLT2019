@@ -1,0 +1,44 @@
+@using Framework.Models;
+@using AdventureWorksLT2019.Models.Definitions;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@using Framework.Mvc.Models;
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.Resx;
+@model MvcItemViewModel<ProductModelProductDescriptionDataModel.DefaultView>
+@inject SelectListHelper selectListHelper;
+@inject IUIStrings localizor;
+@{
+    var format_Please_Select = localizor.Get("Format_Please_Select");
+}
+@if (Model.Status != System.Net.HttpStatusCode.OK)
+{
+    <div class="row">
+        <div class="text-danger">@Model.StatusMessage</div>
+    </div>
+}
+else
+{
+    <input class="nt-hidden-modal-title" value="@Model!.Model!.Culture" type="hidden" />
+    <div class="form-group">
+        <label asp-for="Model!.ProductModelID" class="control-label" for="@Model!.HtmlId(nameof(ProductModelProductDescriptionDataModel.DefaultView.ProductModelID))"></label>    <div class="form-control" readonly>
+        <a asp-area="" asp-controller="ProductModel" asp-action="Dashboard" asp-route-productmodelid="@Model!.Model!.ProductModelID">@Model!.Model!.ProductModel_Name</a>
+    </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.ProductDescriptionID" class="control-label" for="@Model!.HtmlId(nameof(ProductModelProductDescriptionDataModel.DefaultView.ProductDescriptionID))"></label>    <div class="form-control" readonly>
+        <a asp-area="" asp-controller="ProductDescription" asp-action="Dashboard" asp-route-productdescriptionid="@Model!.Model!.ProductDescriptionID">@Model!.Model!.ProductDescription_Name</a>
+    </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.Culture" class="control-label" for="@Model!.HtmlId(nameof(ProductModelProductDescriptionDataModel.DefaultView.Culture))"></label>
+        <input asp-for="Model!.Culture" readonly class="form-control " id="@Model!.HtmlId(nameof(ProductModelProductDescriptionDataModel.DefaultView.Culture))" name="@Model!.HtmlName(nameof(ProductModelProductDescriptionDataModel.DefaultView.Culture))" data-nt-value="@Model!.Model!.Culture"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.rowguid" class="control-label" for="@Model!.HtmlId(nameof(ProductModelProductDescriptionDataModel.DefaultView.rowguid))"></label>
+        <input asp-for="Model!.rowguid" readonly class="form-control " id="@Model!.HtmlId(nameof(ProductModelProductDescriptionDataModel.DefaultView.rowguid))" name="@Model!.HtmlName(nameof(ProductModelProductDescriptionDataModel.DefaultView.rowguid))" data-nt-value="@Model!.Model!.rowguid"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.ModifiedDate" class="control-label" for="@Model!.HtmlId(nameof(ProductModelProductDescriptionDataModel.DefaultView.ModifiedDate))"></label>
+        <input asp-for="Model!.ModifiedDate" readonly class="form-control " id="@Model!.HtmlId(nameof(ProductModelProductDescriptionDataModel.DefaultView.ModifiedDate))" name="@Model!.HtmlName(nameof(ProductModelProductDescriptionDataModel.DefaultView.ModifiedDate))" data-nt-value="@Model!.Model!.ModifiedDate"/>
+    </div>
+}

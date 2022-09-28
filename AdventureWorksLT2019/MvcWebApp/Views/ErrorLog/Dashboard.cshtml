@@ -1,0 +1,47 @@
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@using AdventureWorksLT2019.Resx;
+@using Framework.Models;
+@model ErrorLogCompositeModel;
+@inject ViewFeaturesManager viewFeatureManager;
+@inject DashboardViewModelHelper dashboardViewModelHelper;
+@inject MvcItemViewModelHelper mvcItemViewModelHelper;
+@inject IUIStrings localizor;
+@{
+    ViewData["Title"] = localizor.Get("Dashboard");
+    var routeId = Model.__Master__.ErrorLogID;
+    var masterVM = await dashboardViewModelHelper.GetErrorLogMvcItemViewModel(Model.__Master__, Model.Get(ErrorLogCompositeModel.__DataOptions__.__Master__));
+}
+<div class="row">
+    <div class="col-12 col-md-8 col-lg-9 nopadding">
+        <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
+        </ul>
+        <div class="tab-content" id="dashboardTabContent">
+        </div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-3">
+        <!-- ErrorLogCompositeModel.__DataOptions__.__Master__ -->
+        <div class="nt-list-wrapper"
+             id="master"
+             data-nt-bs-modalsize="Large"
+             data-nt-loaditem-url="@Url.Action("AjaxLoadItem", "ErrorLog")"
+             data-nt-createitem-url="@Url.Action("AjaxCreate", "ErrorLog")"
+             data-nt-updateitem-url="@Url.Action("AjaxEdit", "ErrorLog")"
+             data-nt-deleteitem-url="@Url.Action("AjaxDelete", "ErrorLog")">
+            <div class="nt-listitem" data-nt-route-id="@routeId">
+                @await Html.PartialAsync("~/Views/ErrorLog/_TileDetailsItem.cshtml", masterVM)
+            </div>
+        </div>
+        <!-- ErrorLogCompositeModel.__DataOptions__.__Master__ -->
+    </div>
+</div>
+<partial name="~/Views/Shared/_CrudActionDialog.cshtml" />
+<partial name="~/Views/Shared/_SimpleActionConfirmationDialog.cshtml" />
+@section Scripts
+    {
+    <script>
+        $(document).ready($(function () {
+            documentReadyForPopups(true, true, true);
+        }))
+    </script>
+}

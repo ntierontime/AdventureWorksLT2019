@@ -9,8 +9,8 @@ public class AddressIdentifier: ObservableBaseQuery
 {
 
     // PredicateType:Equals
-    private int m_AddressID;
-    public int AddressID
+    private int? m_AddressID;
+    public int? AddressID
     {
         get => m_AddressID;
         set => SetProperty(ref m_AddressID, value);
@@ -50,10 +50,10 @@ public class AddressAdvancedQuery: ObservableBaseQuery, IClone<AddressAdvancedQu
         return new AddressAdvancedQuery
         {
 
-        // PredicateType:Range
-        m_ModifiedDateRange = m_ModifiedDateRange,
-        m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
-        m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
+            // PredicateType:Range
+            m_ModifiedDateRange = m_ModifiedDateRange,
+            m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
+            m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
         };
     }
 }

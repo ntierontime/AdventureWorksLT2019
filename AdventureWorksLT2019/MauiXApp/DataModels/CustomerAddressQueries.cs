@@ -9,16 +9,16 @@ public class CustomerAddressIdentifier: ObservableBaseQuery
 {
 
     // PredicateType:Equals
-    private int m_CustomerID;
-    public int CustomerID
+    private int? m_CustomerID;
+    public int? CustomerID
     {
         get => m_CustomerID;
         set => SetProperty(ref m_CustomerID, value);
     }
 
     // PredicateType:Equals
-    private int m_AddressID;
-    public int AddressID
+    private int? m_AddressID;
+    public int? AddressID
     {
         get => m_AddressID;
         set => SetProperty(ref m_AddressID, value);
@@ -34,16 +34,16 @@ public class CustomerAddressAdvancedQuery: ObservableBaseQuery, IClone<CustomerA
 {
 
     // PredicateType:Equals
-    private int m_AddressID;
-    public int AddressID
+    private int? m_AddressID;
+    public int? AddressID
     {
         get => m_AddressID;
         set => SetProperty(ref m_AddressID, value);
     }
 
     // PredicateType:Equals
-    private int m_CustomerID;
-    public int CustomerID
+    private int? m_CustomerID;
+    public int? CustomerID
     {
         get => m_CustomerID;
         set => SetProperty(ref m_CustomerID, value);
@@ -74,16 +74,16 @@ public class CustomerAddressAdvancedQuery: ObservableBaseQuery, IClone<CustomerA
         return new CustomerAddressAdvancedQuery
         {
 
-        // PredicateType:Equals
-        m_AddressID = m_AddressID,
+            // PredicateType:Equals
+            m_AddressID = m_AddressID,
 
-        // PredicateType:Equals
-        m_CustomerID = m_CustomerID,
+            // PredicateType:Equals
+            m_CustomerID = m_CustomerID,
 
-        // PredicateType:Range
-        m_ModifiedDateRange = m_ModifiedDateRange,
-        m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
-        m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
+            // PredicateType:Range
+            m_ModifiedDateRange = m_ModifiedDateRange,
+            m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
+            m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
         };
     }
 }
