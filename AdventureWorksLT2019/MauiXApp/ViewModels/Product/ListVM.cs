@@ -1,3 +1,5 @@
+using Framework.MauiX.Helpers;
+using AdventureWorksLT2019.MauiXApp.Common.Services;
 using AdventureWorksLT2019.MauiXApp.Messages;
 using AdventureWorksLT2019.MauiXApp.DataModels;
 using AdventureWorksLT2019.MauiXApp.Common.Helpers;
@@ -12,6 +14,64 @@ namespace AdventureWorksLT2019.MauiXApp.ViewModels.Product;
 public class ListVM : ListVMBase<ProductAdvancedQuery, ProductIdentifier, ProductDataModel, ProductService, ProductItemChangedMessage, ProductItemRequestMessage>
 {
     // AdvancedQuery.Start
+
+    // ForeignKeys.1. ProductCategoryIDList
+    private List<NameValuePair<int>> m_ProductCategoryIDList;
+    public List<NameValuePair<int>> ProductCategoryIDList
+    {
+        get => m_ProductCategoryIDList;
+        set => SetProperty(ref m_ProductCategoryIDList, value);
+    }
+
+    private NameValuePair<int> m_SelectedProductCategoryID;
+    public NameValuePair<int> SelectedProductCategoryID
+    {
+        get => m_SelectedProductCategoryID;
+        set
+        {
+            SetProperty(ref m_SelectedProductCategoryID, value);
+            EditingQuery.ProductCategoryID = value.Value;
+        }
+    }
+
+    // ForeignKeys.2. ParentIDList
+    private List<NameValuePair<int>> m_ParentIDList;
+    public List<NameValuePair<int>> ParentIDList
+    {
+        get => m_ParentIDList;
+        set => SetProperty(ref m_ParentIDList, value);
+    }
+
+    private NameValuePair<int> m_SelectedParentID;
+    public NameValuePair<int> SelectedParentID
+    {
+        get => m_SelectedParentID;
+        set
+        {
+            SetProperty(ref m_SelectedParentID, value);
+            EditingQuery.ParentID = value.Value;
+        }
+    }
+
+    // ForeignKeys.3. ProductModelIDList
+    private List<NameValuePair<int>> m_ProductModelIDList;
+    public List<NameValuePair<int>> ProductModelIDList
+    {
+        get => m_ProductModelIDList;
+        set => SetProperty(ref m_ProductModelIDList, value);
+    }
+
+    private NameValuePair<int> m_SelectedProductModelID;
+    public NameValuePair<int> SelectedProductModelID
+    {
+        get => m_SelectedProductModelID;
+        set
+        {
+            SetProperty(ref m_SelectedProductModelID, value);
+            EditingQuery.ProductModelID = value.Value;
+        }
+    }
+
     private List<NameValuePair> m_DateTimeRangeListPast;
     public List<NameValuePair> DateTimeRangeListPast
     {
@@ -140,6 +200,32 @@ public class ListVM : ListVMBase<ProductAdvancedQuery, ProductIdentifier, Produc
             },
             () => EnableMultiSelectCommands()
         );
+    }
+
+    protected override async Task LoadCodeListsIfAny()
+    {
+
+        // // ForeignKeys.2. ParentIDList
+        {
+            var codeListsApiService = ServiceHelper.GetService<CodeListsApiService>();
+            var response = await codeListsApiService.GetProductCategoryCodeList(new ProductCategoryAdvancedQuery { PageIndex = 1, PageSize = 10000 });
+            if(response.Status == System.Net.HttpStatusCode.OK)
+            {
+                ParentIDList = new List<NameValuePair<int>>(response.ResponseBody);
+                SelectedParentID = ParentIDList.FirstOrDefault(t=>t.Value == EditingQuery.ParentID);
+            }
+        }
+
+        // // ForeignKeys.3. ProductModelIDList
+        {
+            var codeListsApiService = ServiceHelper.GetService<CodeListsApiService>();
+            var response = await codeListsApiService.GetProductModelCodeList(new ProductModelAdvancedQuery { PageIndex = 1, PageSize = 10000 });
+            if(response.Status == System.Net.HttpStatusCode.OK)
+            {
+                ProductModelIDList = new List<NameValuePair<int>>(response.ResponseBody);
+                SelectedProductModelID = ProductModelIDList.FirstOrDefault(t=>t.Value == EditingQuery.ProductModelID);
+            }
+        }
     }
 
     public override void RefreshMultiSelectCommandsCanExecute()

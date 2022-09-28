@@ -50,10 +50,10 @@ public class ErrorLogAdvancedQuery: ObservableBaseQuery, IClone<ErrorLogAdvanced
         return new ErrorLogAdvancedQuery
         {
 
-        // PredicateType:Range
-        m_ErrorTimeRange = m_ErrorTimeRange,
-        m_ErrorTimeRangeLower = m_ErrorTimeRangeLower,
-        m_ErrorTimeRangeUpper = m_ErrorTimeRangeUpper,
+            // PredicateType:Range
+            m_ErrorTimeRange = m_ErrorTimeRange,
+            m_ErrorTimeRangeLower = m_ErrorTimeRangeLower,
+            m_ErrorTimeRangeUpper = m_ErrorTimeRangeUpper,
         };
     }
 }

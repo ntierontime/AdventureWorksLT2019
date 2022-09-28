@@ -74,16 +74,16 @@ public class CustomerAddressAdvancedQuery: ObservableBaseQuery, IClone<CustomerA
         return new CustomerAddressAdvancedQuery
         {
 
-        // PredicateType:Equals
-        m_AddressID = m_AddressID,
+            // PredicateType:Equals
+            m_AddressID = m_AddressID,
 
-        // PredicateType:Equals
-        m_CustomerID = m_CustomerID,
+            // PredicateType:Equals
+            m_CustomerID = m_CustomerID,
 
-        // PredicateType:Range
-        m_ModifiedDateRange = m_ModifiedDateRange,
-        m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
-        m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
+            // PredicateType:Range
+            m_ModifiedDateRange = m_ModifiedDateRange,
+            m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
+            m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
         };
     }
 }

@@ -86,15 +86,15 @@ public class BuildVersionAdvancedQuery: ObservableBaseQuery, IClone<BuildVersion
         return new BuildVersionAdvancedQuery
         {
 
-        // PredicateType:Range
-        m_VersionDateRange = m_VersionDateRange,
-        m_VersionDateRangeLower = m_VersionDateRangeLower,
-        m_VersionDateRangeUpper = m_VersionDateRangeUpper,
+            // PredicateType:Range
+            m_VersionDateRange = m_VersionDateRange,
+            m_VersionDateRangeLower = m_VersionDateRangeLower,
+            m_VersionDateRangeUpper = m_VersionDateRangeUpper,
 
-        // PredicateType:Range
-        m_ModifiedDateRange = m_ModifiedDateRange,
-        m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
-        m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
+            // PredicateType:Range
+            m_ModifiedDateRange = m_ModifiedDateRange,
+            m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
+            m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
         };
     }
 }

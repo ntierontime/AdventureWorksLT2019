@@ -82,16 +82,16 @@ public class ProductModelProductDescriptionAdvancedQuery: ObservableBaseQuery, I
         return new ProductModelProductDescriptionAdvancedQuery
         {
 
-        // PredicateType:Equals
-        m_ProductDescriptionID = m_ProductDescriptionID,
+            // PredicateType:Equals
+            m_ProductDescriptionID = m_ProductDescriptionID,
 
-        // PredicateType:Equals
-        m_ProductModelID = m_ProductModelID,
+            // PredicateType:Equals
+            m_ProductModelID = m_ProductModelID,
 
-        // PredicateType:Range
-        m_ModifiedDateRange = m_ModifiedDateRange,
-        m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
-        m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
+            // PredicateType:Range
+            m_ModifiedDateRange = m_ModifiedDateRange,
+            m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
+            m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
         };
     }
 }

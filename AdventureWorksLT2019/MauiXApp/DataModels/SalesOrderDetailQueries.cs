@@ -122,34 +122,34 @@ public class SalesOrderDetailAdvancedQuery: ObservableBaseQuery, IClone<SalesOrd
         return new SalesOrderDetailAdvancedQuery
         {
 
-        // PredicateType:Equals
-        m_ProductID = m_ProductID,
+            // PredicateType:Equals
+            m_ProductID = m_ProductID,
 
-        // PredicateType:Equals
-        m_ProductCategoryID = m_ProductCategoryID,
+            // PredicateType:Equals
+            m_ProductCategoryID = m_ProductCategoryID,
 
-        // PredicateType:Equals
-        m_ProductCategory_ParentID = m_ProductCategory_ParentID,
+            // PredicateType:Equals
+            m_ProductCategory_ParentID = m_ProductCategory_ParentID,
 
-        // PredicateType:Equals
-        m_ProductModelID = m_ProductModelID,
+            // PredicateType:Equals
+            m_ProductModelID = m_ProductModelID,
 
-        // PredicateType:Equals
-        m_SalesOrderID = m_SalesOrderID,
+            // PredicateType:Equals
+            m_SalesOrderID = m_SalesOrderID,
 
-        // PredicateType:Equals
-        m_BillToID = m_BillToID,
+            // PredicateType:Equals
+            m_BillToID = m_BillToID,
 
-        // PredicateType:Equals
-        m_ShipToID = m_ShipToID,
+            // PredicateType:Equals
+            m_ShipToID = m_ShipToID,
 
-        // PredicateType:Equals
-        m_CustomerID = m_CustomerID,
+            // PredicateType:Equals
+            m_CustomerID = m_CustomerID,
 
-        // PredicateType:Range
-        m_ModifiedDateRange = m_ModifiedDateRange,
-        m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
-        m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
+            // PredicateType:Range
+            m_ModifiedDateRange = m_ModifiedDateRange,
+            m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
+            m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
         };
     }
 }

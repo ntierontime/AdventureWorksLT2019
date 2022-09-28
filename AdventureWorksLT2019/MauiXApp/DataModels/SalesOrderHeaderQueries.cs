@@ -142,37 +142,37 @@ public class SalesOrderHeaderAdvancedQuery: ObservableBaseQuery, IClone<SalesOrd
         return new SalesOrderHeaderAdvancedQuery
         {
 
-        // PredicateType:Equals
-        m_BillToAddressID = m_BillToAddressID,
+            // PredicateType:Equals
+            m_BillToAddressID = m_BillToAddressID,
 
-        // PredicateType:Equals
-        m_ShipToAddressID = m_ShipToAddressID,
+            // PredicateType:Equals
+            m_ShipToAddressID = m_ShipToAddressID,
 
-        // PredicateType:Equals
-        m_CustomerID = m_CustomerID,
+            // PredicateType:Equals
+            m_CustomerID = m_CustomerID,
 
-        // PredicateType:Equals
-        m_OnlineOrderFlag = m_OnlineOrderFlag,
+            // PredicateType:Equals
+            m_OnlineOrderFlag = m_OnlineOrderFlag,
 
-        // PredicateType:Range
-        m_OrderDateRange = m_OrderDateRange,
-        m_OrderDateRangeLower = m_OrderDateRangeLower,
-        m_OrderDateRangeUpper = m_OrderDateRangeUpper,
+            // PredicateType:Range
+            m_OrderDateRange = m_OrderDateRange,
+            m_OrderDateRangeLower = m_OrderDateRangeLower,
+            m_OrderDateRangeUpper = m_OrderDateRangeUpper,
 
-        // PredicateType:Range
-        m_DueDateRange = m_DueDateRange,
-        m_DueDateRangeLower = m_DueDateRangeLower,
-        m_DueDateRangeUpper = m_DueDateRangeUpper,
+            // PredicateType:Range
+            m_DueDateRange = m_DueDateRange,
+            m_DueDateRangeLower = m_DueDateRangeLower,
+            m_DueDateRangeUpper = m_DueDateRangeUpper,
 
-        // PredicateType:Range
-        m_ShipDateRange = m_ShipDateRange,
-        m_ShipDateRangeLower = m_ShipDateRangeLower,
-        m_ShipDateRangeUpper = m_ShipDateRangeUpper,
+            // PredicateType:Range
+            m_ShipDateRange = m_ShipDateRange,
+            m_ShipDateRangeLower = m_ShipDateRangeLower,
+            m_ShipDateRangeUpper = m_ShipDateRangeUpper,
 
-        // PredicateType:Range
-        m_ModifiedDateRange = m_ModifiedDateRange,
-        m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
-        m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
+            // PredicateType:Range
+            m_ModifiedDateRange = m_ModifiedDateRange,
+            m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
+            m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
         };
     }
 }

@@ -262,9 +262,11 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         LaunchItemPopupViewCommand = launchItemPopupViewCommand;
     }
 
-    public void AttachAdvancedSearchPopupCommands(
+    public async void AttachAdvancedSearchPopupCommands(
         ICommand cancelCommand)
     {
+        await LoadCodeListsIfAny();
+
         AdvancedSearchCancelCommand = new Command(() =>
         {
             EditingQuery = Query.Clone();// put back original Query if AdvancedSearch cancelled
@@ -323,6 +325,12 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
             cancelCommand.Execute(null);
         });
         ListOrderBysCancelCommand = cancelCommand;
+    }
+
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+    protected virtual async Task LoadCodeListsIfAny()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+    {
     }
 
     public abstract void RegisterRequestSelectedItemMessage();

@@ -53,6 +53,7 @@ namespace AdventureWorksLT2019.MauiXApp
             // 2.2. AdventureWorksLT2019.MauiX.WebApiClients
             builder.Services.AddScoped<WebApiConfig>();
             builder.Services.AddScoped<AuthenticationApiClient>();
+            builder.Services.AddScoped<CodeListsApiClient>();
 
             // 2.3. AdventureWorksLT2019.MauiX.Services
             builder.Services.AddScoped<AuthenticationService>();
@@ -60,6 +61,7 @@ namespace AdventureWorksLT2019.MauiXApp
             builder.Services.AddScoped<AppLoadingService>();
             builder.Services.AddScoped<GeoLocationService>();
             builder.Services.AddScoped<AppShellService>();
+            builder.Services.AddScoped<CodeListsApiService>();
 
             // 2.4. DataModels
             builder.Services.AddSingleton<AppStates>();

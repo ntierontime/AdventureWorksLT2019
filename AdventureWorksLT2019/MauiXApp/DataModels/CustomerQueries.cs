@@ -58,13 +58,13 @@ public class CustomerAdvancedQuery: ObservableBaseQuery, IClone<CustomerAdvanced
         return new CustomerAdvancedQuery
         {
 
-        // PredicateType:Equals
-        m_NameStyle = m_NameStyle,
+            // PredicateType:Equals
+            m_NameStyle = m_NameStyle,
 
-        // PredicateType:Range
-        m_ModifiedDateRange = m_ModifiedDateRange,
-        m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
-        m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
+            // PredicateType:Range
+            m_ModifiedDateRange = m_ModifiedDateRange,
+            m_ModifiedDateRangeLower = m_ModifiedDateRangeLower,
+            m_ModifiedDateRangeUpper = m_ModifiedDateRangeUpper,
         };
     }
 }
