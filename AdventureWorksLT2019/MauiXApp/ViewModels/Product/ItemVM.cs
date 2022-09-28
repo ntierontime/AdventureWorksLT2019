@@ -37,8 +37,8 @@ public class ItemVM : ItemVMBase<ProductIdentifier, ProductDataModel, ProductSer
     {
         // 1. ProductCategoryList
         {
-            var productCategoryService = Framework.MauiX.Helpers.ServiceHelper.GetService<AdventureWorksLT2019.MauiXApp.Services.ProductCategoryService>();
-            var response = await productCategoryService.GetCodeList(new AdventureWorksLT2019.MauiXApp.DataModels.ProductCategoryAdvancedQuery { PageIndex = 1, PageSize = 10000 });
+            var codeListsApiService = Framework.MauiX.Helpers.ServiceHelper.GetService<AdventureWorksLT2019.MauiXApp.Common.Services.CodeListsApiService>();
+            var response = await codeListsApiService.GetProductCategoryCodeList(new AdventureWorksLT2019.MauiXApp.DataModels.ProductCategoryAdvancedQuery { PageIndex = 1, PageSize = 10000 });
             if(response.Status == System.Net.HttpStatusCode.OK)
             {
                 ProductCategoryList = new List<Framework.Models.NameValuePair<int>>(response.ResponseBody);
