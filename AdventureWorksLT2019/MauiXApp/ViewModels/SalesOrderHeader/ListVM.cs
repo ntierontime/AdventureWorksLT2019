@@ -29,8 +29,11 @@ public class ListVM : ListVMBase<SalesOrderHeaderAdvancedQuery, SalesOrderHeader
         get => m_SelectedBillToAddressID;
         set
         {
-            SetProperty(ref m_SelectedBillToAddressID, value);
-            EditingQuery.BillToAddressID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedBillToAddressID, value);
+                EditingQuery.BillToAddressID = value.Value;
+            }
         }
     }
 
@@ -48,8 +51,11 @@ public class ListVM : ListVMBase<SalesOrderHeaderAdvancedQuery, SalesOrderHeader
         get => m_SelectedShipToAddressID;
         set
         {
-            SetProperty(ref m_SelectedShipToAddressID, value);
-            EditingQuery.ShipToAddressID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedShipToAddressID, value);
+                EditingQuery.ShipToAddressID = value.Value;
+            }
         }
     }
 
@@ -67,8 +73,11 @@ public class ListVM : ListVMBase<SalesOrderHeaderAdvancedQuery, SalesOrderHeader
         get => m_SelectedCustomerID;
         set
         {
-            SetProperty(ref m_SelectedCustomerID, value);
-            EditingQuery.CustomerID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedCustomerID, value);
+                EditingQuery.CustomerID = value.Value;
+            }
         }
     }
 

@@ -24,31 +24,31 @@
             </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize CustomerID}"/>
-        <Entry Grid.Row="0" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+        <Entry Grid.Row="0" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
             Text="{Binding Item.CustomerID}"/>
         <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize AddressID}"/>
-        <Entry Grid.Row="1" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+        <Entry Grid.Row="1" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
             Text="{Binding Item.AddressID}"/>
         <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize AddressType}"/>
-        <Entry Grid.Row="2" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+        <Entry Grid.Row="2" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
             Text="{Binding Item.AddressType}"/>
         <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize rowguid}"/>
-        <Entry Grid.Row="3" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+        <Entry Grid.Row="3" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
             Text="{Binding Item.rowguid}"/>
         <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize ModifiedDate}"/>
-        <DatePicker Grid.Row="4" Grid.Column="1" Style="{StaticResource ValueDatePickerStyle}"
-            Date="{Binding Item.ModifiedDate}" />
+        <Entry Grid.Row="4" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+            Text="{Binding Item.ModifiedDate}"/>
         <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize Address_Name}"/>
-        <Entry Grid.Row="5" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+        <Entry Grid.Row="5" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
             Text="{Binding Item.Address_Name}"/>
         <Label Grid.Row="6" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize Customer_Name}"/>
-        <Entry Grid.Row="6" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+        <Entry Grid.Row="6" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
             Text="{Binding Item.Customer_Name}"/>
         </Grid>
         <mct:UniformItemsLayout VerticalOptions="End">
@@ -56,7 +56,7 @@
                 Command="{Binding DeleteConfirmCommand}"
                 Text="{l:Localize Delete}" />
             <Button
-                Command="{Binding CreateCancelCommand}"
+                Command="{Binding DeleteCancelCommand}"
                 Text="{l:Localize Cancel}" />
         </mct:UniformItemsLayout>
     </Grid>

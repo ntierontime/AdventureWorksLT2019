@@ -29,8 +29,11 @@ public class ListVM : ListVMBase<ProductModelProductDescriptionAdvancedQuery, Pr
         get => m_SelectedProductDescriptionID;
         set
         {
-            SetProperty(ref m_SelectedProductDescriptionID, value);
-            EditingQuery.ProductDescriptionID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedProductDescriptionID, value);
+                EditingQuery.ProductDescriptionID = value.Value;
+            }
         }
     }
 
@@ -48,8 +51,11 @@ public class ListVM : ListVMBase<ProductModelProductDescriptionAdvancedQuery, Pr
         get => m_SelectedProductModelID;
         set
         {
-            SetProperty(ref m_SelectedProductModelID, value);
-            EditingQuery.ProductModelID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedProductModelID, value);
+                EditingQuery.ProductModelID = value.Value;
+            }
         }
     }
 

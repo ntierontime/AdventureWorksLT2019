@@ -81,16 +81,22 @@
             Text="{Binding Item.AccountNumber}"/>
         <Label Grid.Row="10" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize CustomerID}"/>
-        <Entry Grid.Row="10" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.CustomerID}"/>
+        <Picker Grid.Row="10" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+            ItemsSource="{Binding Path=CustomerIDList}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding Path=SelectedCustomerID}" />
         <Label Grid.Row="11" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize ShipToAddressID}"/>
-        <Entry Grid.Row="11" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.ShipToAddressID}"/>
+        <Picker Grid.Row="11" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+            ItemsSource="{Binding Path=ShipToAddressIDList}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding Path=SelectedShipToAddressID}" />
         <Label Grid.Row="12" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize BillToAddressID}"/>
-        <Entry Grid.Row="12" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.BillToAddressID}"/>
+        <Picker Grid.Row="12" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+            ItemsSource="{Binding Path=BillToAddressIDList}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding Path=SelectedBillToAddressID}" />
         <Label Grid.Row="13" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize ShipMethod}"/>
         <Entry Grid.Row="13" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
@@ -127,25 +133,13 @@
             Text="{l:Localize ModifiedDate}"/>
         <DatePicker Grid.Row="21" Grid.Column="1" Style="{StaticResource ValueDatePickerStyle}"
             Date="{Binding Item.ModifiedDate}" />
-        <Label Grid.Row="22" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize BillTo_Name}"/>
-        <Entry Grid.Row="22" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.BillTo_Name}"/>
-        <Label Grid.Row="23" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize Customer_Name}"/>
-        <Entry Grid.Row="23" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.Customer_Name}"/>
-        <Label Grid.Row="24" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize ShipTo_Name}"/>
-        <Entry Grid.Row="24" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.ShipTo_Name}"/>
         </Grid>
         <mct:UniformItemsLayout VerticalOptions="End">
             <Button
-                Command="{Binding CreateConfirmCommand}"
+                Command="{Binding EditConfirmCommand}"
                 Text="{l:Localize Save}" />
             <Button
-                Command="{Binding CreateCancelCommand}"
+                Command="{Binding EditCancelCommand}"
                 Text="{l:Localize Cancel}" />
         </mct:UniformItemsLayout>
     </Grid>

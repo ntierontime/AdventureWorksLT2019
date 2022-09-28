@@ -62,10 +62,10 @@
         </Grid>
         <mct:UniformItemsLayout VerticalOptions="End">
             <Button
-                Command="{Binding CreateConfirmCommand}"
+                Command="{Binding EditConfirmCommand}"
                 Text="{l:Localize Save}" />
             <Button
-                Command="{Binding CreateCancelCommand}"
+                Command="{Binding EditCancelCommand}"
                 Text="{l:Localize Cancel}" />
         </mct:UniformItemsLayout>
     </Grid>

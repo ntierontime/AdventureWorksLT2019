@@ -29,8 +29,11 @@ public class ListVM : ListVMBase<CustomerAddressAdvancedQuery, CustomerAddressId
         get => m_SelectedAddressID;
         set
         {
-            SetProperty(ref m_SelectedAddressID, value);
-            EditingQuery.AddressID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedAddressID, value);
+                EditingQuery.AddressID = value.Value;
+            }
         }
     }
 
@@ -48,8 +51,11 @@ public class ListVM : ListVMBase<CustomerAddressAdvancedQuery, CustomerAddressId
         get => m_SelectedCustomerID;
         set
         {
-            SetProperty(ref m_SelectedCustomerID, value);
-            EditingQuery.CustomerID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedCustomerID, value);
+                EditingQuery.CustomerID = value.Value;
+            }
         }
     }
 

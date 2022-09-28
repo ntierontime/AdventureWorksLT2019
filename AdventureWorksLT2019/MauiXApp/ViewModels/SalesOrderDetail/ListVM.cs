@@ -29,8 +29,11 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
         get => m_SelectedProductID;
         set
         {
-            SetProperty(ref m_SelectedProductID, value);
-            EditingQuery.ProductID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedProductID, value);
+                EditingQuery.ProductID = value.Value;
+            }
         }
     }
 
@@ -48,8 +51,11 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
         get => m_SelectedProductCategoryID;
         set
         {
-            SetProperty(ref m_SelectedProductCategoryID, value);
-            EditingQuery.ProductCategoryID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedProductCategoryID, value);
+                EditingQuery.ProductCategoryID = value.Value;
+            }
         }
     }
 
@@ -67,8 +73,11 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
         get => m_SelectedProductCategory_ParentID;
         set
         {
-            SetProperty(ref m_SelectedProductCategory_ParentID, value);
-            EditingQuery.ProductCategory_ParentID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedProductCategory_ParentID, value);
+                EditingQuery.ProductCategory_ParentID = value.Value;
+            }
         }
     }
 
@@ -86,8 +95,11 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
         get => m_SelectedProductModelID;
         set
         {
-            SetProperty(ref m_SelectedProductModelID, value);
-            EditingQuery.ProductModelID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedProductModelID, value);
+                EditingQuery.ProductModelID = value.Value;
+            }
         }
     }
 
@@ -105,8 +117,11 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
         get => m_SelectedSalesOrderID;
         set
         {
-            SetProperty(ref m_SelectedSalesOrderID, value);
-            EditingQuery.SalesOrderID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedSalesOrderID, value);
+                EditingQuery.SalesOrderID = value.Value;
+            }
         }
     }
 
@@ -124,8 +139,11 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
         get => m_SelectedBillToID;
         set
         {
-            SetProperty(ref m_SelectedBillToID, value);
-            EditingQuery.BillToID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedBillToID, value);
+                EditingQuery.BillToID = value.Value;
+            }
         }
     }
 
@@ -143,8 +161,11 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
         get => m_SelectedShipToID;
         set
         {
-            SetProperty(ref m_SelectedShipToID, value);
-            EditingQuery.ShipToID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedShipToID, value);
+                EditingQuery.ShipToID = value.Value;
+            }
         }
     }
 
@@ -162,8 +183,11 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
         get => m_SelectedCustomerID;
         set
         {
-            SetProperty(ref m_SelectedCustomerID, value);
-            EditingQuery.CustomerID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedCustomerID, value);
+                EditingQuery.CustomerID = value.Value;
+            }
         }
     }
 

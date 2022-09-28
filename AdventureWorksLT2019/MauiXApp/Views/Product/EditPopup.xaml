@@ -6,7 +6,9 @@
              CanBeDismissedByTappingOutsideOfPopup="False"
              x:Class="AdventureWorksLT2019.MauiXApp.Views.Product.EditPopup">
     <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0,0,0,50">
+        <ScrollView Margin="20">
+
+            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0,0,0,50">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -69,12 +71,16 @@
             Text="{Binding Item.Weight}"/>
         <Label Grid.Row="8" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize ProductCategoryID}"/>
-        <Entry Grid.Row="8" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.ProductCategoryID}"/>
+        <Picker Grid.Row="8" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+            ItemsSource="{Binding Path=ProductCategoryIDList}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding Path=SelectedProductCategoryID}" />
         <Label Grid.Row="9" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize ProductModelID}"/>
-        <Entry Grid.Row="9" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.ProductModelID}"/>
+        <Picker Grid.Row="9" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+            ItemsSource="{Binding Path=ProductModelIDList}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding Path=SelectedProductModelID}" />
         <Label Grid.Row="10" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize SellStartDate}"/>
         <DatePicker Grid.Row="10" Grid.Column="1" Style="{StaticResource ValueDatePickerStyle}"
@@ -103,29 +109,20 @@
             Text="{l:Localize ModifiedDate}"/>
         <DatePicker Grid.Row="16" Grid.Column="1" Style="{StaticResource ValueDatePickerStyle}"
             Date="{Binding Item.ModifiedDate}" />
-        <Label Grid.Row="17" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize ProductCategory_Name}"/>
-        <Entry Grid.Row="17" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.ProductCategory_Name}"/>
         <Label Grid.Row="18" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize ParentID}"/>
-        <Entry Grid.Row="18" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.ParentID}"/>
-        <Label Grid.Row="19" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize Parent_Name}"/>
-        <Entry Grid.Row="19" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.Parent_Name}"/>
-        <Label Grid.Row="20" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize ProductModel_Name}"/>
-        <Entry Grid.Row="20" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.ProductModel_Name}"/>
+        <Picker Grid.Row="18" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+            ItemsSource="{Binding Path=ParentIDList}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding Path=SelectedParentID}" />
         </Grid>
+        </ScrollView>
         <mct:UniformItemsLayout VerticalOptions="End">
             <Button
-                Command="{Binding CreateConfirmCommand}"
+                Command="{Binding EditConfirmCommand}"
                 Text="{l:Localize Save}" />
             <Button
-                Command="{Binding CreateCancelCommand}"
+                Command="{Binding EditCancelCommand}"
                 Text="{l:Localize Cancel}" />
         </mct:UniformItemsLayout>
     </Grid>

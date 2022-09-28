@@ -29,8 +29,11 @@ public class ListVM : ListVMBase<ProductCategoryAdvancedQuery, ProductCategoryId
         get => m_SelectedParentProductCategoryID;
         set
         {
-            SetProperty(ref m_SelectedParentProductCategoryID, value);
-            EditingQuery.ParentProductCategoryID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedParentProductCategoryID, value);
+                EditingQuery.ParentProductCategoryID = value.Value;
+            }
         }
     }
 

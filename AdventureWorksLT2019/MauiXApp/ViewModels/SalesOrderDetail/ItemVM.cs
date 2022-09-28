@@ -27,8 +27,11 @@ public class ItemVM : ItemVMBase<SalesOrderDetailIdentifier, SalesOrderDetailDat
         get => m_SelectedSalesOrderID;
         set
         {
-            SetProperty(ref m_SelectedSalesOrderID, value);
-            Item.SalesOrderID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedSalesOrderID, value);
+                Item.SalesOrderID = value.Value;
+            }
         }
     }
 
@@ -46,8 +49,11 @@ public class ItemVM : ItemVMBase<SalesOrderDetailIdentifier, SalesOrderDetailDat
         get => m_SelectedProductID;
         set
         {
-            SetProperty(ref m_SelectedProductID, value);
-            Item.ProductID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedProductID, value);
+                Item.ProductID = value.Value;
+            }
         }
     }
 
@@ -65,8 +71,11 @@ public class ItemVM : ItemVMBase<SalesOrderDetailIdentifier, SalesOrderDetailDat
         get => m_SelectedProductCategoryID;
         set
         {
-            SetProperty(ref m_SelectedProductCategoryID, value);
-            Item.ProductCategoryID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedProductCategoryID, value);
+                Item.ProductCategoryID = value.Value;
+            }
         }
     }
 
@@ -84,8 +93,11 @@ public class ItemVM : ItemVMBase<SalesOrderDetailIdentifier, SalesOrderDetailDat
         get => m_SelectedProductCategory_ParentID;
         set
         {
-            SetProperty(ref m_SelectedProductCategory_ParentID, value);
-            Item.ProductCategory_ParentID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedProductCategory_ParentID, value);
+                Item.ProductCategory_ParentID = value.Value;
+            }
         }
     }
 
@@ -103,8 +115,11 @@ public class ItemVM : ItemVMBase<SalesOrderDetailIdentifier, SalesOrderDetailDat
         get => m_SelectedProductModelID;
         set
         {
-            SetProperty(ref m_SelectedProductModelID, value);
-            Item.ProductModelID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedProductModelID, value);
+                Item.ProductModelID = value.Value;
+            }
         }
     }
 
@@ -122,8 +137,11 @@ public class ItemVM : ItemVMBase<SalesOrderDetailIdentifier, SalesOrderDetailDat
         get => m_SelectedBillToID;
         set
         {
-            SetProperty(ref m_SelectedBillToID, value);
-            Item.BillToID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedBillToID, value);
+                Item.BillToID = value.Value;
+            }
         }
     }
 
@@ -141,8 +159,11 @@ public class ItemVM : ItemVMBase<SalesOrderDetailIdentifier, SalesOrderDetailDat
         get => m_SelectedCustomerID;
         set
         {
-            SetProperty(ref m_SelectedCustomerID, value);
-            Item.CustomerID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedCustomerID, value);
+                Item.CustomerID = value.Value;
+            }
         }
     }
 
@@ -160,8 +181,11 @@ public class ItemVM : ItemVMBase<SalesOrderDetailIdentifier, SalesOrderDetailDat
         get => m_SelectedShipToID;
         set
         {
-            SetProperty(ref m_SelectedShipToID, value);
-            Item.ShipToID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedShipToID, value);
+                Item.ShipToID = value.Value;
+            }
         }
     }
     public ItemVM(SalesOrderDetailService dataService)

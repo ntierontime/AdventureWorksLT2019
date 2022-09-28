@@ -27,8 +27,11 @@ public class ItemVM : ItemVMBase<ProductCategoryIdentifier, ProductCategoryDataM
         get => m_SelectedParentProductCategoryID;
         set
         {
-            SetProperty(ref m_SelectedParentProductCategoryID, value);
-            Item.ParentProductCategoryID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedParentProductCategoryID, value);
+                Item.ParentProductCategoryID = value.Value;
+            }
         }
     }
     public ItemVM(ProductCategoryService dataService)

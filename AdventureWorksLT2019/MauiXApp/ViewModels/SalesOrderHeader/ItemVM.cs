@@ -27,8 +27,11 @@ public class ItemVM : ItemVMBase<SalesOrderHeaderIdentifier, SalesOrderHeaderDat
         get => m_SelectedCustomerID;
         set
         {
-            SetProperty(ref m_SelectedCustomerID, value);
-            Item.CustomerID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedCustomerID, value);
+                Item.CustomerID = value.Value;
+            }
         }
     }
 
@@ -46,8 +49,11 @@ public class ItemVM : ItemVMBase<SalesOrderHeaderIdentifier, SalesOrderHeaderDat
         get => m_SelectedShipToAddressID;
         set
         {
-            SetProperty(ref m_SelectedShipToAddressID, value);
-            Item.ShipToAddressID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedShipToAddressID, value);
+                Item.ShipToAddressID = value.Value;
+            }
         }
     }
 
@@ -65,8 +71,11 @@ public class ItemVM : ItemVMBase<SalesOrderHeaderIdentifier, SalesOrderHeaderDat
         get => m_SelectedBillToAddressID;
         set
         {
-            SetProperty(ref m_SelectedBillToAddressID, value);
-            Item.BillToAddressID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedBillToAddressID, value);
+                Item.BillToAddressID = value.Value;
+            }
         }
     }
     public ItemVM(SalesOrderHeaderService dataService)

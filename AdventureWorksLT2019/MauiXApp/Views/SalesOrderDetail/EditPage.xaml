@@ -39,8 +39,10 @@
             </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize SalesOrderID}"/>
-        <Entry Grid.Row="0" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.SalesOrderID}"/>
+        <Picker Grid.Row="0" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+            ItemsSource="{Binding Path=SalesOrderIDList}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding Path=SelectedSalesOrderID}" />
         <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize SalesOrderDetailID}"/>
         <Entry Grid.Row="1" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
@@ -51,8 +53,10 @@
             Text="{Binding Item.OrderQty}"/>
         <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize ProductID}"/>
-        <Entry Grid.Row="3" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.ProductID}"/>
+        <Picker Grid.Row="3" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+            ItemsSource="{Binding Path=ProductIDList}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding Path=SelectedProductID}" />
         <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize UnitPrice}"/>
         <Entry Grid.Row="4" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
@@ -73,69 +77,49 @@
             Text="{l:Localize ModifiedDate}"/>
         <DatePicker Grid.Row="8" Grid.Column="1" Style="{StaticResource ValueDatePickerStyle}"
             Date="{Binding Item.ModifiedDate}" />
-        <Label Grid.Row="9" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize Product_Name}"/>
-        <Entry Grid.Row="9" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.Product_Name}"/>
         <Label Grid.Row="10" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize ProductCategoryID}"/>
-        <Entry Grid.Row="10" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.ProductCategoryID}"/>
-        <Label Grid.Row="11" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize ProductCategory_Name}"/>
-        <Entry Grid.Row="11" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.ProductCategory_Name}"/>
+        <Picker Grid.Row="10" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+            ItemsSource="{Binding Path=ProductCategoryIDList}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding Path=SelectedProductCategoryID}" />
         <Label Grid.Row="12" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize ProductCategory_ParentID}"/>
-        <Entry Grid.Row="12" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.ProductCategory_ParentID}"/>
-        <Label Grid.Row="13" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize ProductCategory_Parent_Name}"/>
-        <Entry Grid.Row="13" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.ProductCategory_Parent_Name}"/>
+        <Picker Grid.Row="12" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+            ItemsSource="{Binding Path=ProductCategory_ParentIDList}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding Path=SelectedProductCategory_ParentID}" />
         <Label Grid.Row="14" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize ProductModelID}"/>
-        <Entry Grid.Row="14" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.ProductModelID}"/>
-        <Label Grid.Row="15" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize ProductModel_Name}"/>
-        <Entry Grid.Row="15" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.ProductModel_Name}"/>
-        <Label Grid.Row="16" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize SalesOrderHeader_Name}"/>
-        <Entry Grid.Row="16" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.SalesOrderHeader_Name}"/>
+        <Picker Grid.Row="14" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+            ItemsSource="{Binding Path=ProductModelIDList}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding Path=SelectedProductModelID}" />
         <Label Grid.Row="17" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize BillToID}"/>
-        <Entry Grid.Row="17" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.BillToID}"/>
-        <Label Grid.Row="18" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize BillTo_Name}"/>
-        <Entry Grid.Row="18" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.BillTo_Name}"/>
+        <Picker Grid.Row="17" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+            ItemsSource="{Binding Path=BillToIDList}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding Path=SelectedBillToID}" />
         <Label Grid.Row="19" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize CustomerID}"/>
-        <Entry Grid.Row="19" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.CustomerID}"/>
-        <Label Grid.Row="20" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize Customer_Name}"/>
-        <Entry Grid.Row="20" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.Customer_Name}"/>
+        <Picker Grid.Row="19" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+            ItemsSource="{Binding Path=CustomerIDList}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding Path=SelectedCustomerID}" />
         <Label Grid.Row="21" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
             Text="{l:Localize ShipToID}"/>
-        <Entry Grid.Row="21" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.ShipToID}"/>
-        <Label Grid.Row="22" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize ShipTo_Name}"/>
-        <Entry Grid.Row="22" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.ShipTo_Name}"/>
+        <Picker Grid.Row="21" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+            ItemsSource="{Binding Path=ShipToIDList}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding Path=SelectedShipToID}" />
         </Grid>
         <mct:UniformItemsLayout VerticalOptions="End">
             <Button
-                Command="{Binding CreateConfirmCommand}"
+                Command="{Binding EditConfirmCommand}"
                 Text="{l:Localize Save}" />
             <Button
-                Command="{Binding CreateCancelCommand}"
+                Command="{Binding EditCancelCommand}"
                 Text="{l:Localize Cancel}" />
         </mct:UniformItemsLayout>
     </Grid>

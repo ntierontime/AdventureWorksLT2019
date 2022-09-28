@@ -27,8 +27,11 @@ public class ItemVM : ItemVMBase<CustomerAddressIdentifier, CustomerAddressDataM
         get => m_SelectedCustomerID;
         set
         {
-            SetProperty(ref m_SelectedCustomerID, value);
-            Item.CustomerID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedCustomerID, value);
+                Item.CustomerID = value.Value;
+            }
         }
     }
 
@@ -46,8 +49,11 @@ public class ItemVM : ItemVMBase<CustomerAddressIdentifier, CustomerAddressDataM
         get => m_SelectedAddressID;
         set
         {
-            SetProperty(ref m_SelectedAddressID, value);
-            Item.AddressID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedAddressID, value);
+                Item.AddressID = value.Value;
+            }
         }
     }
     public ItemVM(CustomerAddressService dataService)

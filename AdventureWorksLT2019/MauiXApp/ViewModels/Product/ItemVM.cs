@@ -27,8 +27,11 @@ public class ItemVM : ItemVMBase<ProductIdentifier, ProductDataModel, ProductSer
         get => m_SelectedProductCategoryID;
         set
         {
-            SetProperty(ref m_SelectedProductCategoryID, value);
-            Item.ProductCategoryID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedProductCategoryID, value);
+                Item.ProductCategoryID = value.Value;
+            }
         }
     }
 
@@ -46,8 +49,11 @@ public class ItemVM : ItemVMBase<ProductIdentifier, ProductDataModel, ProductSer
         get => m_SelectedProductModelID;
         set
         {
-            SetProperty(ref m_SelectedProductModelID, value);
-            Item.ProductModelID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedProductModelID, value);
+                Item.ProductModelID = value.Value;
+            }
         }
     }
 
@@ -65,8 +71,11 @@ public class ItemVM : ItemVMBase<ProductIdentifier, ProductDataModel, ProductSer
         get => m_SelectedParentID;
         set
         {
-            SetProperty(ref m_SelectedParentID, value);
-            Item.ParentID = value.Value;
+            if (value != null)
+            {
+                SetProperty(ref m_SelectedParentID, value);
+                Item.ParentID = value.Value;
+            }
         }
     }
     public ItemVM(ProductService dataService)
