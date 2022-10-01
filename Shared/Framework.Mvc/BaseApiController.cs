@@ -1,8 +1,5 @@
 using Framework.Models;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System.Net;
 
 namespace Framework.Mvc
@@ -35,8 +32,10 @@ namespace Framework.Mvc
             return StatusCode((int)serviceResponse.Status);
         }
 
-        protected ActionResult<Response<T>> ReturnActionResult<T>(Response<T> serviceResponse)
+        protected ActionResult<Response<T>> ReturnActionResult<T>(Response<T>? serviceResponse)
         {
+            if (serviceResponse == null)
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             if (serviceResponse.Status == HttpStatusCode.OK)
                 return Ok(serviceResponse);
             else if (serviceResponse.Status == HttpStatusCode.BadRequest)

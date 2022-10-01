@@ -140,7 +140,7 @@ app.MapControllers();
 
 app.Run();
 
-static string GetSwaggerCustomizedSchemaId(Type x)
+static string? GetSwaggerCustomizedSchemaId(Type x)
 {
     // 1.
     if(x == typeof(Response<PaginationResponse>))

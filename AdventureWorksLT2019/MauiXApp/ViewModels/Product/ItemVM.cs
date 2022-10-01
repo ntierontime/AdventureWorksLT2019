@@ -7,11 +7,15 @@ using Framework.MauiX.Helpers;
 using AdventureWorksLT2019.MauiXApp.Common.Services;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Windows.Input;
+using CommunityToolkit.Maui.Views;
 
 namespace AdventureWorksLT2019.MauiXApp.ViewModels.Product;
 
 public class ItemVM : ItemVMBase<ProductIdentifier, ProductDataModel, ProductService, ProductItemChangedMessage, ProductItemRequestMessage>
 {
+    #region Foreign Key SelectLists
+
+    #endregion Foreign Key SelectLists
 
     // ForeignKeys.1. ProductCategoryIDList
     private List<NameValuePair<int>> m_ProductCategoryIDList;
@@ -78,9 +82,15 @@ public class ItemVM : ItemVMBase<ProductIdentifier, ProductDataModel, ProductSer
             }
         }
     }
+
+    public ICommand LaunchProductCategoryFKItemViewCommand { get; private set; }
+    public ICommand LaunchProductCategoryPageCommand { get; private set; }
+
     public ItemVM(ProductService dataService)
         : base(dataService)
     {
+        LaunchProductCategoryFKItemViewCommand = AdventureWorksLT2019.MauiXApp.Common.Helpers.LaunchViewCommandsHelper.GetLaunchProductCategoryDetailsPopupCommand();
+        LaunchProductCategoryPageCommand = AdventureWorksLT2019.MauiXApp.Common.Helpers.LaunchViewCommandsHelper.GetLaunchProductCategoryDetailsPageCommand(AdventureWorksLT2019.MauiXApp.Common.Services.AppShellRoutes.ProductListPage);
     }
 
     protected override async Task LoadCodeListsIfAny(ViewItemTemplates itemView)

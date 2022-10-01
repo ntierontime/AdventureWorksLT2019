@@ -37,6 +37,27 @@ public class ItemVM : ItemVMBase<ProductCategoryIdentifier, ProductCategoryDataM
     public ItemVM(ProductCategoryService dataService)
         : base(dataService)
     {
+        WeakReferenceMessenger.Default.Register<ItemVM, AdventureWorksLT2019.MauiXApp.Messages.ProductCategoryIdentifierMessage>(
+           this, async (r, m) =>
+        {
+            if (m.ItemView == Framework.Models.ViewItemTemplates.Create)
+            {
+                Item = _dataService.GetDefault();
+            }
+            else
+            {
+                var response = await _dataService.Get(m.Value);
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    Item = response.ResponseBody;
+                }
+            }
+            if (m.ItemView == Framework.Models.ViewItemTemplates.Create || m.ItemView == Framework.Models.ViewItemTemplates.Edit)
+            {
+                await LoadCodeListsIfAny(m.ItemView);
+            }
+        });
     }
 
     protected override async Task LoadCodeListsIfAny(ViewItemTemplates itemView)
@@ -63,7 +84,7 @@ public class ItemVM : ItemVMBase<ProductCategoryIdentifier, ProductCategoryDataM
 
     protected override void SendDataChangedMessage(ViewItemTemplates itemView)
     {
-        WeakReferenceMessenger.Default.Send<ProductCategoryItemChangedMessage>(new ProductCategoryItemChangedMessage(Item, itemView));
+        // WeakReferenceMessenger.Default.Send<ProductCategoryItemChangedMessage>(new ProductCategoryItemChangedMessage(Item, itemView));
     }
 }
 

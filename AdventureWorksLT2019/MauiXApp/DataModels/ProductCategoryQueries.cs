@@ -20,6 +20,14 @@ public class ProductCategoryIdentifier: ObservableBaseQuery
     {
         return $"{ProductCategoryID}";
     }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null || !(obj is ProductCategoryIdentifier))
+            return false;
+        var typedObj = (ProductCategoryIdentifier)obj;
+        return ProductCategoryID == typedObj.ProductCategoryID;
+    }
 }
 
 public class ProductCategoryAdvancedQuery: ObservableBaseQuery, IClone<ProductCategoryAdvancedQuery>

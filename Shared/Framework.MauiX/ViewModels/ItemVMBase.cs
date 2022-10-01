@@ -10,17 +10,17 @@ namespace Framework.MauiX.ViewModels;
 
 public abstract class ItemVMBase<TIdentifier, TDataModel, TDataService, TDataChangedMessage, TItemRequestMessage>: ObservableObject
     where TIdentifier : class
-    where TDataModel : class, IClone<TDataModel>
+    where TDataModel : class, IClone<TDataModel>, Framework.Models.IGetIdentifier<TIdentifier>
     where TDataService : class, IDataServiceBase<TIdentifier, TDataModel>
     where TDataChangedMessage : ValueChangedMessageExt<TDataModel>
     where TItemRequestMessage : RequestMessage<TDataModel>, new()
 {
-    private TIdentifier m_Identifier;
-    public TIdentifier Identifier
-    {
-        get => m_Identifier;
-        set => SetProperty(ref m_Identifier, value);
-    }
+    //private TIdentifier m_Identifier;
+    //public TIdentifier Identifier
+    //{
+    //    get => m_Identifier;
+    //    set => SetProperty(ref m_Identifier, value);
+    //}
 
     private TDataModel m_Item;
     public TDataModel Item
@@ -111,7 +111,7 @@ public abstract class ItemVMBase<TIdentifier, TDataModel, TDataService, TDataCha
     {
         EditConfirmCommand = new Command(async () =>
         {
-            await _dataService.Update(Identifier, Item);
+            await _dataService.Update(Item.GetIdentifier(), Item);
             SendDataChangedMessage(ViewItemTemplates.Edit);
             cancelCommand.Execute(commandParameter);
             EditConfirmCommand = null;
@@ -130,7 +130,7 @@ public abstract class ItemVMBase<TIdentifier, TDataModel, TDataService, TDataCha
     {
         DeleteConfirmCommand = new Command(async () =>
         {
-            await _dataService.Delete(Identifier);
+            await _dataService.Delete(Item.GetIdentifier());
             SendDataChangedMessage(ViewItemTemplates.Delete);
             cancelCommand.Execute(commandParameter);
             DeleteConfirmCommand = null;

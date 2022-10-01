@@ -12,7 +12,7 @@ namespace Framework.MauiX.ViewModels;
 
 public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataService, TDataChangedMessage, TItemRequestMessage> : ObservableObject
     where TAdvancedQuery : ObservableBaseQuery, IClone<TAdvancedQuery>, new()
-    where TDataModel : class, IClone<TDataModel>, ICopyTo<TDataModel>
+    where TDataModel : class, IClone<TDataModel>, ICopyTo<TDataModel>, Framework.Models.IGetIdentifier<TIdentifier>
     where TDataService : class, IDataServiceBase<TAdvancedQuery, TIdentifier, TDataModel>
     where TDataChangedMessage : ValueChangedMessageExt<TDataModel>
     where TItemRequestMessage : RequestMessage<TDataModel>, new()
