@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace AdventureWorksLT2019.Models.Definitions
 {
     public enum TopLevelDropDownLists
@@ -12,6 +6,7 @@ namespace AdventureWorksLT2019.Models.Definitions
         ErrorLog,
         Address,
         Customer,
+        ProductCategory,
         ProductDescription,
         ProductModel,
     }

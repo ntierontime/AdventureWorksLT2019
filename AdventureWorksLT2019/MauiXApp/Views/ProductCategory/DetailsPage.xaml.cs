@@ -14,7 +14,6 @@ public partial class DetailsPage : ContentPage
         var viewModel = ServiceHelper.GetService<ItemVM>();
         BindingContext = viewModel;
         viewModel.AttachDetailsViewCommands(AppShellService.ShellGotoAbsoluteCommand, AppShellRoutes.ProductCategoryListPage);
-        viewModel.RequestItem(ViewItemTemplates.Details);
         InitializeComponent();
     }
 }

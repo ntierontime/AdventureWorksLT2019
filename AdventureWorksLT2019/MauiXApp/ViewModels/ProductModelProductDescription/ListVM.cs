@@ -11,11 +11,11 @@ using System.Windows.Input;
 
 namespace AdventureWorksLT2019.MauiXApp.ViewModels.ProductModelProductDescription;
 
-public class ListVM : ListVMBase<ProductModelProductDescriptionAdvancedQuery, ProductModelProductDescriptionIdentifier, ProductModelProductDescriptionDataModel, ProductModelProductDescriptionService, ProductModelProductDescriptionItemChangedMessage, ProductModelProductDescriptionItemRequestMessage>
+public class ListVM : ListVMBase<ProductModelProductDescriptionAdvancedQuery, ProductModelProductDescriptionIdentifier, ProductModelProductDescriptionDataModel, ProductModelProductDescriptionService, ProductModelProductDescriptionItemChangedMessage>
 {
-    // AdvancedQuery.Start
+    #region AdvancedQuery.Start ForeignKey SelectLists and DateTimeRanges
 
-    // ForeignKeys.1. ProductDescriptionIDList
+    // AdvancedQuery.ForeignKeys.1. ProductDescriptionIDList
     private List<NameValuePair<int>> m_ProductDescriptionIDList;
     public List<NameValuePair<int>> ProductDescriptionIDList
     {
@@ -37,7 +37,7 @@ public class ListVM : ListVMBase<ProductModelProductDescriptionAdvancedQuery, Pr
         }
     }
 
-    // ForeignKeys.2. ProductModelIDList
+    // AdvancedQuery.ForeignKeys.2. ProductModelIDList
     private List<NameValuePair<int>> m_ProductModelIDList;
     public List<NameValuePair<int>> ProductModelIDList
     {
@@ -59,6 +59,7 @@ public class ListVM : ListVMBase<ProductModelProductDescriptionAdvancedQuery, Pr
         }
     }
 
+    // AdvancedQuery.DateTimeRangeList: DateTimeRangeListPast/DateTimeRangeListFuture/DateTimeRangeListAll
     private List<NameValuePair> m_DateTimeRangeListPast;
     public List<NameValuePair> DateTimeRangeListPast
     {
@@ -80,6 +81,7 @@ public class ListVM : ListVMBase<ProductModelProductDescriptionAdvancedQuery, Pr
     }
     */
 
+    // AdvancedQuery.DateTimeRange.2 ModifiedDateRange
     private NameValuePair m_SelectedModifiedDateRange;
     public NameValuePair SelectedModifiedDateRange
     {
@@ -92,26 +94,29 @@ public class ListVM : ListVMBase<ProductModelProductDescriptionAdvancedQuery, Pr
             EditingQuery.ModifiedDateRangeLower = PreDefinedDateTimeRangesHelper.GetUpperBound(value.Value);
         }
     }
-    // AdvancedQuery.End
+
+    #endregion AdvancedQuery.End ForeignKey SelectLists and DateTimeRanges
 
     public ICommand BulkDeleteCommand { get; private set; }
 
     public ListVM(ProductModelProductDescriptionService dataService)
         : base(dataService)
     {
-        // AdvancedQuery.Start
+        // AdvancedQuery.Start DateTimeRanges
+        // AdvancedQuery.DateTimeRangeList: DateTimeRangeListPast/DateTimeRangeListFuture/DateTimeRangeListAll
         DateTimeRangeListPast = SelectListHelper.GetDefaultPredefinedDateTimeRange();
         /*
         DateTimeRangeListFuture = SelectListHelper.GetDefaultPredefinedDateTimeRange(false, true);
         DateTimeRangeListAll = SelectListHelper.GetDefaultPredefinedDateTimeRange(true, true);
         */
 
+        // AdvancedQuery.DateTimeRange.2 ModifiedDateRange
         SelectedModifiedDateRange = DateTimeRangeListPast.FirstOrDefault(t => t.Value == EditingQuery.ModifiedDateRange);
         /*
         SelectedModifiedDateRange = DateTimeRangeListFuture.FirstOrDefault(t => t.Value == EditingQuery.ModifiedDateRange);
         SelectedModifiedDateRange = DateTimeRangeListAll.FirstOrDefault(t => t.Value == EditingQuery.ModifiedDateRange);
         */
-        // AdvancedQuery.End
+        // AdvancedQuery.End DateTimeRanges
 
         BulkDeleteCommand = new Command(
             async () =>
@@ -162,11 +167,6 @@ public class ListVM : ListVMBase<ProductModelProductDescriptionAdvancedQuery, Pr
     {
         base.RefreshMultiSelectCommandsCanExecute();
         ((Command)BulkDeleteCommand).ChangeCanExecute();
-    }
-
-    public override void RegisterRequestSelectedItemMessage()
-    {
-        RegisterRequestSelectedItemMessage<ListVM>(this);
     }
 
     public override void RegisterItemDataChangedMessage()

@@ -11,11 +11,11 @@ using System.Windows.Input;
 
 namespace AdventureWorksLT2019.MauiXApp.ViewModels.Product;
 
-public class ListVM : ListVMBase<ProductAdvancedQuery, ProductIdentifier, ProductDataModel, ProductService, ProductItemChangedMessage, ProductItemRequestMessage>
+public class ListVM : ListVMBase<ProductAdvancedQuery, ProductIdentifier, ProductDataModel, ProductService, ProductItemChangedMessage>
 {
-    // AdvancedQuery.Start
+    #region AdvancedQuery.Start ForeignKey SelectLists and DateTimeRanges
 
-    // ForeignKeys.1. ProductCategoryIDList
+    // AdvancedQuery.ForeignKeys.1. ProductCategoryIDList
     private List<NameValuePair<int>> m_ProductCategoryIDList;
     public List<NameValuePair<int>> ProductCategoryIDList
     {
@@ -37,7 +37,7 @@ public class ListVM : ListVMBase<ProductAdvancedQuery, ProductIdentifier, Produc
         }
     }
 
-    // ForeignKeys.2. ParentIDList
+    // AdvancedQuery.ForeignKeys.2. ParentIDList
     private List<NameValuePair<int>> m_ParentIDList;
     public List<NameValuePair<int>> ParentIDList
     {
@@ -59,7 +59,7 @@ public class ListVM : ListVMBase<ProductAdvancedQuery, ProductIdentifier, Produc
         }
     }
 
-    // ForeignKeys.3. ProductModelIDList
+    // AdvancedQuery.ForeignKeys.3. ProductModelIDList
     private List<NameValuePair<int>> m_ProductModelIDList;
     public List<NameValuePair<int>> ProductModelIDList
     {
@@ -81,6 +81,7 @@ public class ListVM : ListVMBase<ProductAdvancedQuery, ProductIdentifier, Produc
         }
     }
 
+    // AdvancedQuery.DateTimeRangeList: DateTimeRangeListPast/DateTimeRangeListFuture/DateTimeRangeListAll
     private List<NameValuePair> m_DateTimeRangeListPast;
     public List<NameValuePair> DateTimeRangeListPast
     {
@@ -102,6 +103,7 @@ public class ListVM : ListVMBase<ProductAdvancedQuery, ProductIdentifier, Produc
     }
     */
 
+    // AdvancedQuery.DateTimeRange.3 SellStartDateRange
     private NameValuePair m_SelectedSellStartDateRange;
     public NameValuePair SelectedSellStartDateRange
     {
@@ -115,6 +117,7 @@ public class ListVM : ListVMBase<ProductAdvancedQuery, ProductIdentifier, Produc
         }
     }
 
+    // AdvancedQuery.DateTimeRange.4 SellEndDateRange
     private NameValuePair m_SelectedSellEndDateRange;
     public NameValuePair SelectedSellEndDateRange
     {
@@ -128,6 +131,7 @@ public class ListVM : ListVMBase<ProductAdvancedQuery, ProductIdentifier, Produc
         }
     }
 
+    // AdvancedQuery.DateTimeRange.5 DiscontinuedDateRange
     private NameValuePair m_SelectedDiscontinuedDateRange;
     public NameValuePair SelectedDiscontinuedDateRange
     {
@@ -141,6 +145,7 @@ public class ListVM : ListVMBase<ProductAdvancedQuery, ProductIdentifier, Produc
         }
     }
 
+    // AdvancedQuery.DateTimeRange.6 ModifiedDateRange
     private NameValuePair m_SelectedModifiedDateRange;
     public NameValuePair SelectedModifiedDateRange
     {
@@ -153,44 +158,50 @@ public class ListVM : ListVMBase<ProductAdvancedQuery, ProductIdentifier, Produc
             EditingQuery.ModifiedDateRangeLower = PreDefinedDateTimeRangesHelper.GetUpperBound(value.Value);
         }
     }
-    // AdvancedQuery.End
+
+    #endregion AdvancedQuery.End ForeignKey SelectLists and DateTimeRanges
 
     public ICommand BulkDeleteCommand { get; private set; }
 
     public ListVM(ProductService dataService)
         : base(dataService)
     {
-        // AdvancedQuery.Start
+        // AdvancedQuery.Start DateTimeRanges
+        // AdvancedQuery.DateTimeRangeList: DateTimeRangeListPast/DateTimeRangeListFuture/DateTimeRangeListAll
         DateTimeRangeListPast = SelectListHelper.GetDefaultPredefinedDateTimeRange();
         /*
         DateTimeRangeListFuture = SelectListHelper.GetDefaultPredefinedDateTimeRange(false, true);
         DateTimeRangeListAll = SelectListHelper.GetDefaultPredefinedDateTimeRange(true, true);
         */
 
+        // AdvancedQuery.DateTimeRange.3 SellStartDateRange
         SelectedSellStartDateRange = DateTimeRangeListPast.FirstOrDefault(t => t.Value == EditingQuery.SellStartDateRange);
         /*
         SelectedSellStartDateRange = DateTimeRangeListFuture.FirstOrDefault(t => t.Value == EditingQuery.SellStartDateRange);
         SelectedSellStartDateRange = DateTimeRangeListAll.FirstOrDefault(t => t.Value == EditingQuery.SellStartDateRange);
         */
 
+        // AdvancedQuery.DateTimeRange.4 SellEndDateRange
         SelectedSellEndDateRange = DateTimeRangeListPast.FirstOrDefault(t => t.Value == EditingQuery.SellEndDateRange);
         /*
         SelectedSellEndDateRange = DateTimeRangeListFuture.FirstOrDefault(t => t.Value == EditingQuery.SellEndDateRange);
         SelectedSellEndDateRange = DateTimeRangeListAll.FirstOrDefault(t => t.Value == EditingQuery.SellEndDateRange);
         */
 
+        // AdvancedQuery.DateTimeRange.5 DiscontinuedDateRange
         SelectedDiscontinuedDateRange = DateTimeRangeListPast.FirstOrDefault(t => t.Value == EditingQuery.DiscontinuedDateRange);
         /*
         SelectedDiscontinuedDateRange = DateTimeRangeListFuture.FirstOrDefault(t => t.Value == EditingQuery.DiscontinuedDateRange);
         SelectedDiscontinuedDateRange = DateTimeRangeListAll.FirstOrDefault(t => t.Value == EditingQuery.DiscontinuedDateRange);
         */
 
+        // AdvancedQuery.DateTimeRange.6 ModifiedDateRange
         SelectedModifiedDateRange = DateTimeRangeListPast.FirstOrDefault(t => t.Value == EditingQuery.ModifiedDateRange);
         /*
         SelectedModifiedDateRange = DateTimeRangeListFuture.FirstOrDefault(t => t.Value == EditingQuery.ModifiedDateRange);
         SelectedModifiedDateRange = DateTimeRangeListAll.FirstOrDefault(t => t.Value == EditingQuery.ModifiedDateRange);
         */
-        // AdvancedQuery.End
+        // AdvancedQuery.End DateTimeRanges
 
         BulkDeleteCommand = new Command(
             async () =>
@@ -241,11 +252,6 @@ public class ListVM : ListVMBase<ProductAdvancedQuery, ProductIdentifier, Produc
     {
         base.RefreshMultiSelectCommandsCanExecute();
         ((Command)BulkDeleteCommand).ChangeCanExecute();
-    }
-
-    public override void RegisterRequestSelectedItemMessage()
-    {
-        RegisterRequestSelectedItemMessage<ListVM>(this);
     }
 
     public override void RegisterItemDataChangedMessage()

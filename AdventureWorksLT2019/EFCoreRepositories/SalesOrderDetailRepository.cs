@@ -205,12 +205,12 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         if (existing != null)
                         {
                             // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
-                existing.SalesOrderID = item.SalesOrderID;
-                existing.OrderQty = item.OrderQty;
-                existing.ProductID = item.ProductID;
-                existing.UnitPrice = item.UnitPrice;
-                existing.UnitPriceDiscount = item.UnitPriceDiscount;
-                existing.ModifiedDate = item.ModifiedDate;
+                            existing.SalesOrderID = item.SalesOrderID;
+                            existing.OrderQty = item.OrderQty;
+                            existing.ProductID = item.ProductID;
+                            existing.UnitPrice = item.UnitPrice;
+                            existing.UnitPriceDiscount = item.UnitPriceDiscount;
+                            existing.ModifiedDate = item.ModifiedDate;
                         }
                     }
                 }

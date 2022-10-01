@@ -86,7 +86,7 @@
                     <span class="visually-hidden">Toggle Dropdown</span>
                 </button>
                 <ul class="dropdown-menu">
-@*                    @foreach (var item in Model!.TopLevelDropDownListsFromDatabase![TopLevelDropDownLists.ProductCategory.ToString()])
+                    @foreach (var item in Model!.TopLevelDropDownListsFromDatabase![TopLevelDropDownLists.ProductCategory.ToString()])
                     {
                         <li>
                             <a class="dropdown-item nt-quick-bulk-select" href="#"
@@ -94,7 +94,7 @@
                                 data-nt-filtervalue="@item.Value"
                                 data-nt-checkbox-checked="true">@item.Name</a>
                         </li>
-                    }*@
+                    }
                 </ul>
             </div>
         }

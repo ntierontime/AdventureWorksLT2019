@@ -11,9 +11,10 @@ using System.Windows.Input;
 
 namespace AdventureWorksLT2019.MauiXApp.ViewModels.ErrorLog;
 
-public class ListVM : ListVMBase<ErrorLogAdvancedQuery, ErrorLogIdentifier, ErrorLogDataModel, ErrorLogService, ErrorLogItemChangedMessage, ErrorLogItemRequestMessage>
+public class ListVM : ListVMBase<ErrorLogAdvancedQuery, ErrorLogIdentifier, ErrorLogDataModel, ErrorLogService, ErrorLogItemChangedMessage>
 {
-    // AdvancedQuery.Start
+    #region AdvancedQuery.Start ForeignKey SelectLists and DateTimeRanges
+    // AdvancedQuery.DateTimeRangeList: DateTimeRangeListPast/DateTimeRangeListFuture/DateTimeRangeListAll
     private List<NameValuePair> m_DateTimeRangeListPast;
     public List<NameValuePair> DateTimeRangeListPast
     {
@@ -35,6 +36,7 @@ public class ListVM : ListVMBase<ErrorLogAdvancedQuery, ErrorLogIdentifier, Erro
     }
     */
 
+    // AdvancedQuery.DateTimeRange.0 ErrorTimeRange
     private NameValuePair m_SelectedErrorTimeRange;
     public NameValuePair SelectedErrorTimeRange
     {
@@ -47,26 +49,29 @@ public class ListVM : ListVMBase<ErrorLogAdvancedQuery, ErrorLogIdentifier, Erro
             EditingQuery.ErrorTimeRangeLower = PreDefinedDateTimeRangesHelper.GetUpperBound(value.Value);
         }
     }
-    // AdvancedQuery.End
+
+    #endregion AdvancedQuery.End ForeignKey SelectLists and DateTimeRanges
 
     public ICommand BulkDeleteCommand { get; private set; }
 
     public ListVM(ErrorLogService dataService)
         : base(dataService)
     {
-        // AdvancedQuery.Start
+        // AdvancedQuery.Start DateTimeRanges
+        // AdvancedQuery.DateTimeRangeList: DateTimeRangeListPast/DateTimeRangeListFuture/DateTimeRangeListAll
         DateTimeRangeListPast = SelectListHelper.GetDefaultPredefinedDateTimeRange();
         /*
         DateTimeRangeListFuture = SelectListHelper.GetDefaultPredefinedDateTimeRange(false, true);
         DateTimeRangeListAll = SelectListHelper.GetDefaultPredefinedDateTimeRange(true, true);
         */
 
+        // AdvancedQuery.DateTimeRange.0 ErrorTimeRange
         SelectedErrorTimeRange = DateTimeRangeListPast.FirstOrDefault(t => t.Value == EditingQuery.ErrorTimeRange);
         /*
         SelectedErrorTimeRange = DateTimeRangeListFuture.FirstOrDefault(t => t.Value == EditingQuery.ErrorTimeRange);
         SelectedErrorTimeRange = DateTimeRangeListAll.FirstOrDefault(t => t.Value == EditingQuery.ErrorTimeRange);
         */
-        // AdvancedQuery.End
+        // AdvancedQuery.End DateTimeRanges
 
         BulkDeleteCommand = new Command(
             async () =>
@@ -91,11 +96,6 @@ public class ListVM : ListVMBase<ErrorLogAdvancedQuery, ErrorLogIdentifier, Erro
     {
         base.RefreshMultiSelectCommandsCanExecute();
         ((Command)BulkDeleteCommand).ChangeCanExecute();
-    }
-
-    public override void RegisterRequestSelectedItemMessage()
-    {
-        RegisterRequestSelectedItemMessage<ListVM>(this);
     }
 
     public override void RegisterItemDataChangedMessage()

@@ -57,27 +57,27 @@ namespace AdventureWorksLT2019.WebApiControllers
         // [Authorize]
         [Route("{CustomerID}/{AddressID}")]
         [HttpPut]
-        public async Task<ActionResult<CustomerAddressDataModel.DefaultView>> Put([FromRoute]CustomerAddressIdentifier id, [FromBody]CustomerAddressDataModel input)
+        public async Task<ActionResult<Response<CustomerAddressDataModel.DefaultView>>> Put([FromRoute]CustomerAddressIdentifier id, [FromBody]CustomerAddressDataModel input)
         {
             var serviceResponse = await _thisService.Update(id, input);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnActionResult(serviceResponse);
         }
 
         // [Authorize]
         [Route("{CustomerID}/{AddressID}")]
         [HttpGet]
-        public async Task<ActionResult<CustomerAddressDataModel.DefaultView>> Get([FromRoute]CustomerAddressIdentifier id)
+        public async Task<ActionResult<Response<CustomerAddressDataModel.DefaultView>>> Get([FromRoute]CustomerAddressIdentifier id)
         {
             var serviceResponse = await _thisService.Get(id);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnActionResult(serviceResponse);
         }
 
         // [Authorize]
         [HttpPost]
-        public async Task<ActionResult<CustomerAddressDataModel.DefaultView>> Post(CustomerAddressDataModel input)
+        public async Task<ActionResult<Response<CustomerAddressDataModel.DefaultView>>> Post(CustomerAddressDataModel input)
         {
             var serviceResponse = await _thisService.Create(input);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnActionResult(serviceResponse);
         }
 
         // [Authorize]

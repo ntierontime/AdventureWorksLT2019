@@ -57,27 +57,27 @@ namespace AdventureWorksLT2019.WebApiControllers
         // [Authorize]
         [Route("{SystemInformationID}/{VersionDate}/{ModifiedDate}")]
         [HttpPut]
-        public async Task<ActionResult<BuildVersionDataModel>> Put([FromRoute]BuildVersionIdentifier id, [FromBody]BuildVersionDataModel input)
+        public async Task<ActionResult<Response<BuildVersionDataModel>>> Put([FromRoute]BuildVersionIdentifier id, [FromBody]BuildVersionDataModel input)
         {
             var serviceResponse = await _thisService.Update(id, input);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnActionResult(serviceResponse);
         }
 
         // [Authorize]
         [Route("{SystemInformationID}/{VersionDate}/{ModifiedDate}")]
         [HttpGet]
-        public async Task<ActionResult<BuildVersionDataModel>> Get([FromRoute]BuildVersionIdentifier id)
+        public async Task<ActionResult<Response<BuildVersionDataModel>>> Get([FromRoute]BuildVersionIdentifier id)
         {
             var serviceResponse = await _thisService.Get(id);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnActionResult(serviceResponse);
         }
 
         // [Authorize]
         [HttpPost]
-        public async Task<ActionResult<BuildVersionDataModel>> Post(BuildVersionDataModel input)
+        public async Task<ActionResult<Response<BuildVersionDataModel>>> Post(BuildVersionDataModel input)
         {
             var serviceResponse = await _thisService.Create(input);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnActionResult(serviceResponse);
         }
 
         // [Authorize]

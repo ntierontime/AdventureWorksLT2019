@@ -324,19 +324,19 @@ private IQueryable<CustomerDataModel> GetIQueryableAsBulkUpdateResponse(
                         if (existing != null)
                         {
                             // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
-                existing.NameStyle = item.NameStyle;
-                existing.Title = item.Title;
-                existing.FirstName = item.FirstName;
-                existing.MiddleName = item.MiddleName;
-                existing.LastName = item.LastName;
-                existing.Suffix = item.Suffix;
-                existing.CompanyName = item.CompanyName;
-                existing.SalesPerson = item.SalesPerson;
-                existing.EmailAddress = item.EmailAddress;
-                existing.Phone = item.Phone;
-                existing.PasswordHash = item.PasswordHash;
-                existing.PasswordSalt = item.PasswordSalt;
-                existing.ModifiedDate = item.ModifiedDate;
+                            existing.NameStyle = item.NameStyle;
+                            existing.Title = item.Title;
+                            existing.FirstName = item.FirstName;
+                            existing.MiddleName = item.MiddleName;
+                            existing.LastName = item.LastName;
+                            existing.Suffix = item.Suffix;
+                            existing.CompanyName = item.CompanyName;
+                            existing.SalesPerson = item.SalesPerson;
+                            existing.EmailAddress = item.EmailAddress;
+                            existing.Phone = item.Phone;
+                            existing.PasswordHash = item.PasswordHash;
+                            existing.PasswordSalt = item.PasswordSalt;
+                            existing.ModifiedDate = item.ModifiedDate;
                         }
                     }
                 }
@@ -451,21 +451,21 @@ private IQueryable<CustomerDataModel> GetIQueryableAsBulkUpdateResponse(
                         Status = HttpStatusCode.OK,
                         ResponseBody = new CustomerDataModel
                         {
-                            CustomerID = existing.CustomerID,
-                            NameStyle = existing.NameStyle,
-                            Title = existing.Title,
-                            FirstName = existing.FirstName,
-                            MiddleName = existing.MiddleName,
-                            LastName = existing.LastName,
-                            Suffix = existing.Suffix,
-                            CompanyName = existing.CompanyName,
-                            SalesPerson = existing.SalesPerson,
-                            EmailAddress = existing.EmailAddress,
-                            Phone = existing.Phone,
-                            PasswordHash = existing.PasswordHash,
-                            PasswordSalt = existing.PasswordSalt,
-                            rowguid = existing.rowguid,
-                            ModifiedDate = existing.ModifiedDate,
+                    CustomerID = existing.CustomerID,
+                    NameStyle = existing.NameStyle,
+                    Title = existing.Title,
+                    FirstName = existing.FirstName,
+                    MiddleName = existing.MiddleName,
+                    LastName = existing.LastName,
+                    Suffix = existing.Suffix,
+                    CompanyName = existing.CompanyName,
+                    SalesPerson = existing.SalesPerson,
+                    EmailAddress = existing.EmailAddress,
+                    Phone = existing.Phone,
+                    PasswordHash = existing.PasswordHash,
+                    PasswordSalt = existing.PasswordSalt,
+                    rowguid = existing.rowguid,
+                    ModifiedDate = existing.ModifiedDate,
                         }
                     });
 
@@ -498,21 +498,21 @@ private IQueryable<CustomerDataModel> GetIQueryableAsBulkUpdateResponse(
                         Status = HttpStatusCode.OK,
                         ResponseBody = new CustomerDataModel
                         {
-                            CustomerID = existing.CustomerID,
-                            NameStyle = existing.NameStyle,
-                            Title = existing.Title,
-                            FirstName = existing.FirstName,
-                            MiddleName = existing.MiddleName,
-                            LastName = existing.LastName,
-                            Suffix = existing.Suffix,
-                            CompanyName = existing.CompanyName,
-                            SalesPerson = existing.SalesPerson,
-                            EmailAddress = existing.EmailAddress,
-                            Phone = existing.Phone,
-                            PasswordHash = existing.PasswordHash,
-                            PasswordSalt = existing.PasswordSalt,
-                            rowguid = existing.rowguid,
-                            ModifiedDate = existing.ModifiedDate,
+                    CustomerID = existing.CustomerID,
+                    NameStyle = existing.NameStyle,
+                    Title = existing.Title,
+                    FirstName = existing.FirstName,
+                    MiddleName = existing.MiddleName,
+                    LastName = existing.LastName,
+                    Suffix = existing.Suffix,
+                    CompanyName = existing.CompanyName,
+                    SalesPerson = existing.SalesPerson,
+                    EmailAddress = existing.EmailAddress,
+                    Phone = existing.Phone,
+                    PasswordHash = existing.PasswordHash,
+                    PasswordSalt = existing.PasswordSalt,
+                    rowguid = existing.rowguid,
+                    ModifiedDate = existing.ModifiedDate,
                         }
                     });
 
@@ -554,21 +554,21 @@ private IQueryable<CustomerDataModel> GetIQueryableAsBulkUpdateResponse(
                         Status = HttpStatusCode.OK,
                         ResponseBody = new CustomerDataModel
                         {
-                            CustomerID = toInsert.CustomerID,
-                            NameStyle = toInsert.NameStyle,
-                            Title = toInsert.Title,
-                            FirstName = toInsert.FirstName,
-                            MiddleName = toInsert.MiddleName,
-                            LastName = toInsert.LastName,
-                            Suffix = toInsert.Suffix,
-                            CompanyName = toInsert.CompanyName,
-                            SalesPerson = toInsert.SalesPerson,
-                            EmailAddress = toInsert.EmailAddress,
-                            Phone = toInsert.Phone,
-                            PasswordHash = toInsert.PasswordHash,
-                            PasswordSalt = toInsert.PasswordSalt,
-                            rowguid = toInsert.rowguid,
-                            ModifiedDate = toInsert.ModifiedDate,
+                    CustomerID = toInsert.CustomerID,
+                    NameStyle = toInsert.NameStyle,
+                    Title = toInsert.Title,
+                    FirstName = toInsert.FirstName,
+                    MiddleName = toInsert.MiddleName,
+                    LastName = toInsert.LastName,
+                    Suffix = toInsert.Suffix,
+                    CompanyName = toInsert.CompanyName,
+                    SalesPerson = toInsert.SalesPerson,
+                    EmailAddress = toInsert.EmailAddress,
+                    Phone = toInsert.Phone,
+                    PasswordHash = toInsert.PasswordHash,
+                    PasswordSalt = toInsert.PasswordSalt,
+                    rowguid = toInsert.rowguid,
+                    ModifiedDate = toInsert.ModifiedDate,
                         }
                     });
 

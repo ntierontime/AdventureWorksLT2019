@@ -11,11 +11,11 @@ using System.Windows.Input;
 
 namespace AdventureWorksLT2019.MauiXApp.ViewModels.CustomerAddress;
 
-public class ListVM : ListVMBase<CustomerAddressAdvancedQuery, CustomerAddressIdentifier, CustomerAddressDataModel, CustomerAddressService, CustomerAddressItemChangedMessage, CustomerAddressItemRequestMessage>
+public class ListVM : ListVMBase<CustomerAddressAdvancedQuery, CustomerAddressIdentifier, CustomerAddressDataModel, CustomerAddressService, CustomerAddressItemChangedMessage>
 {
-    // AdvancedQuery.Start
+    #region AdvancedQuery.Start ForeignKey SelectLists and DateTimeRanges
 
-    // ForeignKeys.1. AddressIDList
+    // AdvancedQuery.ForeignKeys.1. AddressIDList
     private List<NameValuePair<int>> m_AddressIDList;
     public List<NameValuePair<int>> AddressIDList
     {
@@ -37,7 +37,7 @@ public class ListVM : ListVMBase<CustomerAddressAdvancedQuery, CustomerAddressId
         }
     }
 
-    // ForeignKeys.2. CustomerIDList
+    // AdvancedQuery.ForeignKeys.2. CustomerIDList
     private List<NameValuePair<int>> m_CustomerIDList;
     public List<NameValuePair<int>> CustomerIDList
     {
@@ -59,6 +59,7 @@ public class ListVM : ListVMBase<CustomerAddressAdvancedQuery, CustomerAddressId
         }
     }
 
+    // AdvancedQuery.DateTimeRangeList: DateTimeRangeListPast/DateTimeRangeListFuture/DateTimeRangeListAll
     private List<NameValuePair> m_DateTimeRangeListPast;
     public List<NameValuePair> DateTimeRangeListPast
     {
@@ -80,6 +81,7 @@ public class ListVM : ListVMBase<CustomerAddressAdvancedQuery, CustomerAddressId
     }
     */
 
+    // AdvancedQuery.DateTimeRange.2 ModifiedDateRange
     private NameValuePair m_SelectedModifiedDateRange;
     public NameValuePair SelectedModifiedDateRange
     {
@@ -92,26 +94,29 @@ public class ListVM : ListVMBase<CustomerAddressAdvancedQuery, CustomerAddressId
             EditingQuery.ModifiedDateRangeLower = PreDefinedDateTimeRangesHelper.GetUpperBound(value.Value);
         }
     }
-    // AdvancedQuery.End
+
+    #endregion AdvancedQuery.End ForeignKey SelectLists and DateTimeRanges
 
     public ICommand BulkDeleteCommand { get; private set; }
 
     public ListVM(CustomerAddressService dataService)
         : base(dataService)
     {
-        // AdvancedQuery.Start
+        // AdvancedQuery.Start DateTimeRanges
+        // AdvancedQuery.DateTimeRangeList: DateTimeRangeListPast/DateTimeRangeListFuture/DateTimeRangeListAll
         DateTimeRangeListPast = SelectListHelper.GetDefaultPredefinedDateTimeRange();
         /*
         DateTimeRangeListFuture = SelectListHelper.GetDefaultPredefinedDateTimeRange(false, true);
         DateTimeRangeListAll = SelectListHelper.GetDefaultPredefinedDateTimeRange(true, true);
         */
 
+        // AdvancedQuery.DateTimeRange.2 ModifiedDateRange
         SelectedModifiedDateRange = DateTimeRangeListPast.FirstOrDefault(t => t.Value == EditingQuery.ModifiedDateRange);
         /*
         SelectedModifiedDateRange = DateTimeRangeListFuture.FirstOrDefault(t => t.Value == EditingQuery.ModifiedDateRange);
         SelectedModifiedDateRange = DateTimeRangeListAll.FirstOrDefault(t => t.Value == EditingQuery.ModifiedDateRange);
         */
-        // AdvancedQuery.End
+        // AdvancedQuery.End DateTimeRanges
 
         BulkDeleteCommand = new Command(
             async () =>
@@ -162,11 +167,6 @@ public class ListVM : ListVMBase<CustomerAddressAdvancedQuery, CustomerAddressId
     {
         base.RefreshMultiSelectCommandsCanExecute();
         ((Command)BulkDeleteCommand).ChangeCanExecute();
-    }
-
-    public override void RegisterRequestSelectedItemMessage()
-    {
-        RegisterRequestSelectedItemMessage<ListVM>(this);
     }
 
     public override void RegisterItemDataChangedMessage()

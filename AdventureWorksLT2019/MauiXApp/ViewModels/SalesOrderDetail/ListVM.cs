@@ -11,11 +11,11 @@ using System.Windows.Input;
 
 namespace AdventureWorksLT2019.MauiXApp.ViewModels.SalesOrderDetail;
 
-public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetailIdentifier, SalesOrderDetailDataModel, SalesOrderDetailService, SalesOrderDetailItemChangedMessage, SalesOrderDetailItemRequestMessage>
+public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetailIdentifier, SalesOrderDetailDataModel, SalesOrderDetailService, SalesOrderDetailItemChangedMessage>
 {
-    // AdvancedQuery.Start
+    #region AdvancedQuery.Start ForeignKey SelectLists and DateTimeRanges
 
-    // ForeignKeys.1. ProductIDList
+    // AdvancedQuery.ForeignKeys.1. ProductIDList
     private List<NameValuePair<int>> m_ProductIDList;
     public List<NameValuePair<int>> ProductIDList
     {
@@ -37,7 +37,7 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
         }
     }
 
-    // ForeignKeys.2. ProductCategoryIDList
+    // AdvancedQuery.ForeignKeys.2. ProductCategoryIDList
     private List<NameValuePair<int>> m_ProductCategoryIDList;
     public List<NameValuePair<int>> ProductCategoryIDList
     {
@@ -59,7 +59,7 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
         }
     }
 
-    // ForeignKeys.3. ProductCategory_ParentIDList
+    // AdvancedQuery.ForeignKeys.3. ProductCategory_ParentIDList
     private List<NameValuePair<int>> m_ProductCategory_ParentIDList;
     public List<NameValuePair<int>> ProductCategory_ParentIDList
     {
@@ -81,7 +81,7 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
         }
     }
 
-    // ForeignKeys.4. ProductModelIDList
+    // AdvancedQuery.ForeignKeys.4. ProductModelIDList
     private List<NameValuePair<int>> m_ProductModelIDList;
     public List<NameValuePair<int>> ProductModelIDList
     {
@@ -103,7 +103,7 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
         }
     }
 
-    // ForeignKeys.5. SalesOrderIDList
+    // AdvancedQuery.ForeignKeys.5. SalesOrderIDList
     private List<NameValuePair<int>> m_SalesOrderIDList;
     public List<NameValuePair<int>> SalesOrderIDList
     {
@@ -125,7 +125,7 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
         }
     }
 
-    // ForeignKeys.6. BillToIDList
+    // AdvancedQuery.ForeignKeys.6. BillToIDList
     private List<NameValuePair<int>> m_BillToIDList;
     public List<NameValuePair<int>> BillToIDList
     {
@@ -147,7 +147,7 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
         }
     }
 
-    // ForeignKeys.7. ShipToIDList
+    // AdvancedQuery.ForeignKeys.7. ShipToIDList
     private List<NameValuePair<int>> m_ShipToIDList;
     public List<NameValuePair<int>> ShipToIDList
     {
@@ -169,7 +169,7 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
         }
     }
 
-    // ForeignKeys.8. CustomerIDList
+    // AdvancedQuery.ForeignKeys.8. CustomerIDList
     private List<NameValuePair<int>> m_CustomerIDList;
     public List<NameValuePair<int>> CustomerIDList
     {
@@ -191,6 +191,7 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
         }
     }
 
+    // AdvancedQuery.DateTimeRangeList: DateTimeRangeListPast/DateTimeRangeListFuture/DateTimeRangeListAll
     private List<NameValuePair> m_DateTimeRangeListPast;
     public List<NameValuePair> DateTimeRangeListPast
     {
@@ -212,6 +213,7 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
     }
     */
 
+    // AdvancedQuery.DateTimeRange.8 ModifiedDateRange
     private NameValuePair m_SelectedModifiedDateRange;
     public NameValuePair SelectedModifiedDateRange
     {
@@ -224,26 +226,29 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
             EditingQuery.ModifiedDateRangeLower = PreDefinedDateTimeRangesHelper.GetUpperBound(value.Value);
         }
     }
-    // AdvancedQuery.End
+
+    #endregion AdvancedQuery.End ForeignKey SelectLists and DateTimeRanges
 
     public ICommand BulkDeleteCommand { get; private set; }
 
     public ListVM(SalesOrderDetailService dataService)
         : base(dataService)
     {
-        // AdvancedQuery.Start
+        // AdvancedQuery.Start DateTimeRanges
+        // AdvancedQuery.DateTimeRangeList: DateTimeRangeListPast/DateTimeRangeListFuture/DateTimeRangeListAll
         DateTimeRangeListPast = SelectListHelper.GetDefaultPredefinedDateTimeRange();
         /*
         DateTimeRangeListFuture = SelectListHelper.GetDefaultPredefinedDateTimeRange(false, true);
         DateTimeRangeListAll = SelectListHelper.GetDefaultPredefinedDateTimeRange(true, true);
         */
 
+        // AdvancedQuery.DateTimeRange.8 ModifiedDateRange
         SelectedModifiedDateRange = DateTimeRangeListPast.FirstOrDefault(t => t.Value == EditingQuery.ModifiedDateRange);
         /*
         SelectedModifiedDateRange = DateTimeRangeListFuture.FirstOrDefault(t => t.Value == EditingQuery.ModifiedDateRange);
         SelectedModifiedDateRange = DateTimeRangeListAll.FirstOrDefault(t => t.Value == EditingQuery.ModifiedDateRange);
         */
-        // AdvancedQuery.End
+        // AdvancedQuery.End DateTimeRanges
 
         BulkDeleteCommand = new Command(
             async () =>
@@ -327,11 +332,6 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
     {
         base.RefreshMultiSelectCommandsCanExecute();
         ((Command)BulkDeleteCommand).ChangeCanExecute();
-    }
-
-    public override void RegisterRequestSelectedItemMessage()
-    {
-        RegisterRequestSelectedItemMessage<ListVM>(this);
     }
 
     public override void RegisterItemDataChangedMessage()

@@ -184,9 +184,9 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         if (existing != null)
                         {
                             // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
-                existing.Name = item.Name;
-                existing.CatalogDescription = item.CatalogDescription;
-                existing.ModifiedDate = item.ModifiedDate;
+                            existing.Name = item.Name;
+                            existing.CatalogDescription = item.CatalogDescription;
+                            existing.ModifiedDate = item.ModifiedDate;
                         }
                     }
                 }
@@ -281,11 +281,11 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         Status = HttpStatusCode.OK,
                         ResponseBody = new ProductModelDataModel
                         {
-                            ProductModelID = existing.ProductModelID,
-                            Name = existing.Name,
-                            CatalogDescription = existing.CatalogDescription,
-                            rowguid = existing.rowguid,
-                            ModifiedDate = existing.ModifiedDate,
+                    ProductModelID = existing.ProductModelID,
+                    Name = existing.Name,
+                    CatalogDescription = existing.CatalogDescription,
+                    rowguid = existing.rowguid,
+                    ModifiedDate = existing.ModifiedDate,
                         }
                     });
 
@@ -318,11 +318,11 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         Status = HttpStatusCode.OK,
                         ResponseBody = new ProductModelDataModel
                         {
-                            ProductModelID = existing.ProductModelID,
-                            Name = existing.Name,
-                            CatalogDescription = existing.CatalogDescription,
-                            rowguid = existing.rowguid,
-                            ModifiedDate = existing.ModifiedDate,
+                    ProductModelID = existing.ProductModelID,
+                    Name = existing.Name,
+                    CatalogDescription = existing.CatalogDescription,
+                    rowguid = existing.rowguid,
+                    ModifiedDate = existing.ModifiedDate,
                         }
                     });
 
@@ -354,11 +354,11 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         Status = HttpStatusCode.OK,
                         ResponseBody = new ProductModelDataModel
                         {
-                            ProductModelID = toInsert.ProductModelID,
-                            Name = toInsert.Name,
-                            CatalogDescription = toInsert.CatalogDescription,
-                            rowguid = toInsert.rowguid,
-                            ModifiedDate = toInsert.ModifiedDate,
+                    ProductModelID = toInsert.ProductModelID,
+                    Name = toInsert.Name,
+                    CatalogDescription = toInsert.CatalogDescription,
+                    rowguid = toInsert.rowguid,
+                    ModifiedDate = toInsert.ModifiedDate,
                         }
                     });
 

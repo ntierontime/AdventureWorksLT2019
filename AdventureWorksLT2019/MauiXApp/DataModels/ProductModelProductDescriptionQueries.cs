@@ -36,6 +36,19 @@ public class ProductModelProductDescriptionIdentifier: ObservableBaseQuery
     {
         return $"{ProductModelID}/{ProductDescriptionID}/{Culture}";
     }
+
+    public override int GetHashCode()
+    {
+        return ($"{ProductModelID}/{ProductDescriptionID}/{Culture}").GetHashCode();
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null || !(obj is ProductModelProductDescriptionIdentifier))
+            return false;
+        var typedObj = (ProductModelProductDescriptionIdentifier)obj;
+        return ProductModelID == typedObj.ProductModelID && ProductDescriptionID == typedObj.ProductDescriptionID && Culture == typedObj.Culture;
+    }
 }
 
 public class ProductModelProductDescriptionAdvancedQuery: ObservableBaseQuery, IClone<ProductModelProductDescriptionAdvancedQuery>

@@ -21,30 +21,31 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize ProductCategoryID}"/>
-        <Entry Grid.Row="0" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-            Text="{Binding Item.ProductCategoryID}"/>
-        <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize ParentProductCategoryID}"/>
-        <Entry Grid.Row="1" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-            Text="{Binding Item.ParentProductCategoryID}"/>
-        <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize Name}"/>
-        <Entry Grid.Row="2" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-            Text="{Binding Item.Name}"/>
-        <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize rowguid}"/>
-        <Entry Grid.Row="3" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-            Text="{Binding Item.rowguid}"/>
-        <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize ModifiedDate}"/>
-        <Entry Grid.Row="4" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-            Text="{Binding Item.ModifiedDate}"/>
-        <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize Parent_Name}"/>
-        <Entry Grid.Row="5" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-            Text="{Binding Item.Parent_Name}"/>
+            <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                Text="{l:Localize ProductCategoryID}"/>
+            <Entry Grid.Row="0" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                Text="{Binding Item.ProductCategoryID}"/>
+            <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                Text="{l:Localize ParentProductCategoryID}"/>
+            <Button Grid.Row="1" Grid.Column="1"
+                Command="{Binding LaunchAdventureWorksLT2019Model:ProductCategoryFKItemViewCommand}" CommandParameter="{Binding Item.ParentProductCategoryID}"
+                Text="{Binding Item.Parent_Name}" />
+            <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                Text="{l:Localize Name}"/>
+            <Entry Grid.Row="2" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                Text="{Binding Item.Name}"/>
+            <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                Text="{l:Localize rowguid}"/>
+            <Entry Grid.Row="3" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                Text="{Binding Item.rowguid}"/>
+            <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                Text="{l:Localize ModifiedDate}"/>
+            <Entry Grid.Row="4" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                Text="{Binding Item.ModifiedDate}"/>
+            <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                Text="{l:Localize Parent_Name}"/>
+            <Entry Grid.Row="5" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                Text="{Binding Item.Parent_Name}"/>
         </Grid>
         <mct:UniformItemsLayout VerticalOptions="End">
             <Button

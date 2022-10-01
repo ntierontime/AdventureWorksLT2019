@@ -36,6 +36,19 @@ public class BuildVersionIdentifier: ObservableBaseQuery
     {
         return $"{SystemInformationID}/{VersionDate}/{ModifiedDate}";
     }
+
+    public override int GetHashCode()
+    {
+        return ($"{SystemInformationID}/{VersionDate}/{ModifiedDate}").GetHashCode();
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null || !(obj is BuildVersionIdentifier))
+            return false;
+        var typedObj = (BuildVersionIdentifier)obj;
+        return SystemInformationID == typedObj.SystemInformationID && VersionDate == typedObj.VersionDate && ModifiedDate == typedObj.ModifiedDate;
+    }
 }
 
 public class BuildVersionAdvancedQuery: ObservableBaseQuery, IClone<BuildVersionAdvancedQuery>

@@ -193,10 +193,10 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         if (existing != null)
                         {
                             // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
-                existing.CustomerID = item.CustomerID;
-                existing.AddressID = item.AddressID;
-                existing.AddressType = item.AddressType;
-                existing.ModifiedDate = item.ModifiedDate;
+                            existing.CustomerID = item.CustomerID;
+                            existing.AddressID = item.AddressID;
+                            existing.AddressType = item.AddressType;
+                            existing.ModifiedDate = item.ModifiedDate;
                         }
                     }
                 }

@@ -20,6 +20,19 @@ public class ProductIdentifier: ObservableBaseQuery
     {
         return $"{ProductID}";
     }
+
+    public override int GetHashCode()
+    {
+        return ($"{ProductID}").GetHashCode();
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null || !(obj is ProductIdentifier))
+            return false;
+        var typedObj = (ProductIdentifier)obj;
+        return ProductID == typedObj.ProductID;
+    }
 }
 
 public class ProductAdvancedQuery: ObservableBaseQuery, IClone<ProductAdvancedQuery>

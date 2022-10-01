@@ -248,21 +248,21 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         if (existing != null)
                         {
                             // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
-                existing.Name = item.Name;
-                existing.ProductNumber = item.ProductNumber;
-                existing.Color = item.Color;
-                existing.StandardCost = item.StandardCost;
-                existing.ListPrice = item.ListPrice;
-                existing.Size = item.Size;
-                existing.Weight = item.Weight;
-                existing.ProductCategoryID = item.ProductCategoryID;
-                existing.ProductModelID = item.ProductModelID;
-                existing.SellStartDate = item.SellStartDate;
-                existing.SellEndDate = item.SellEndDate;
-                existing.DiscontinuedDate = item.DiscontinuedDate;
-                existing.ThumbNailPhoto = item.ThumbNailPhoto;
-                existing.ThumbnailPhotoFileName = item.ThumbnailPhotoFileName;
-                existing.ModifiedDate = item.ModifiedDate;
+                            existing.Name = item.Name;
+                            existing.ProductNumber = item.ProductNumber;
+                            existing.Color = item.Color;
+                            existing.StandardCost = item.StandardCost;
+                            existing.ListPrice = item.ListPrice;
+                            existing.Size = item.Size;
+                            existing.Weight = item.Weight;
+                            existing.ProductCategoryID = item.ProductCategoryID;
+                            existing.ProductModelID = item.ProductModelID;
+                            existing.SellStartDate = item.SellStartDate;
+                            existing.SellEndDate = item.SellEndDate;
+                            existing.DiscontinuedDate = item.DiscontinuedDate;
+                            existing.ThumbNailPhoto = item.ThumbNailPhoto;
+                            existing.ThumbnailPhotoFileName = item.ThumbnailPhotoFileName;
+                            existing.ModifiedDate = item.ModifiedDate;
                         }
                     }
                 }

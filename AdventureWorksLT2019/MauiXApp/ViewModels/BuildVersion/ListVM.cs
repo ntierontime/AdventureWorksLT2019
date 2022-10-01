@@ -11,9 +11,10 @@ using System.Windows.Input;
 
 namespace AdventureWorksLT2019.MauiXApp.ViewModels.BuildVersion;
 
-public class ListVM : ListVMBase<BuildVersionAdvancedQuery, BuildVersionIdentifier, BuildVersionDataModel, BuildVersionService, BuildVersionItemChangedMessage, BuildVersionItemRequestMessage>
+public class ListVM : ListVMBase<BuildVersionAdvancedQuery, BuildVersionIdentifier, BuildVersionDataModel, BuildVersionService, BuildVersionItemChangedMessage>
 {
-    // AdvancedQuery.Start
+    #region AdvancedQuery.Start ForeignKey SelectLists and DateTimeRanges
+    // AdvancedQuery.DateTimeRangeList: DateTimeRangeListPast/DateTimeRangeListFuture/DateTimeRangeListAll
     private List<NameValuePair> m_DateTimeRangeListPast;
     public List<NameValuePair> DateTimeRangeListPast
     {
@@ -35,6 +36,7 @@ public class ListVM : ListVMBase<BuildVersionAdvancedQuery, BuildVersionIdentifi
     }
     */
 
+    // AdvancedQuery.DateTimeRange.0 VersionDateRange
     private NameValuePair m_SelectedVersionDateRange;
     public NameValuePair SelectedVersionDateRange
     {
@@ -48,6 +50,7 @@ public class ListVM : ListVMBase<BuildVersionAdvancedQuery, BuildVersionIdentifi
         }
     }
 
+    // AdvancedQuery.DateTimeRange.1 ModifiedDateRange
     private NameValuePair m_SelectedModifiedDateRange;
     public NameValuePair SelectedModifiedDateRange
     {
@@ -60,32 +63,36 @@ public class ListVM : ListVMBase<BuildVersionAdvancedQuery, BuildVersionIdentifi
             EditingQuery.ModifiedDateRangeLower = PreDefinedDateTimeRangesHelper.GetUpperBound(value.Value);
         }
     }
-    // AdvancedQuery.End
+
+    #endregion AdvancedQuery.End ForeignKey SelectLists and DateTimeRanges
 
     public ICommand BulkDeleteCommand { get; private set; }
 
     public ListVM(BuildVersionService dataService)
         : base(dataService)
     {
-        // AdvancedQuery.Start
+        // AdvancedQuery.Start DateTimeRanges
+        // AdvancedQuery.DateTimeRangeList: DateTimeRangeListPast/DateTimeRangeListFuture/DateTimeRangeListAll
         DateTimeRangeListPast = SelectListHelper.GetDefaultPredefinedDateTimeRange();
         /*
         DateTimeRangeListFuture = SelectListHelper.GetDefaultPredefinedDateTimeRange(false, true);
         DateTimeRangeListAll = SelectListHelper.GetDefaultPredefinedDateTimeRange(true, true);
         */
 
+        // AdvancedQuery.DateTimeRange.0 VersionDateRange
         SelectedVersionDateRange = DateTimeRangeListPast.FirstOrDefault(t => t.Value == EditingQuery.VersionDateRange);
         /*
         SelectedVersionDateRange = DateTimeRangeListFuture.FirstOrDefault(t => t.Value == EditingQuery.VersionDateRange);
         SelectedVersionDateRange = DateTimeRangeListAll.FirstOrDefault(t => t.Value == EditingQuery.VersionDateRange);
         */
 
+        // AdvancedQuery.DateTimeRange.1 ModifiedDateRange
         SelectedModifiedDateRange = DateTimeRangeListPast.FirstOrDefault(t => t.Value == EditingQuery.ModifiedDateRange);
         /*
         SelectedModifiedDateRange = DateTimeRangeListFuture.FirstOrDefault(t => t.Value == EditingQuery.ModifiedDateRange);
         SelectedModifiedDateRange = DateTimeRangeListAll.FirstOrDefault(t => t.Value == EditingQuery.ModifiedDateRange);
         */
-        // AdvancedQuery.End
+        // AdvancedQuery.End DateTimeRanges
 
         BulkDeleteCommand = new Command(
             async () =>
@@ -110,11 +117,6 @@ public class ListVM : ListVMBase<BuildVersionAdvancedQuery, BuildVersionIdentifi
     {
         base.RefreshMultiSelectCommandsCanExecute();
         ((Command)BulkDeleteCommand).ChangeCanExecute();
-    }
-
-    public override void RegisterRequestSelectedItemMessage()
-    {
-        RegisterRequestSelectedItemMessage<ListVM>(this);
     }
 
     public override void RegisterItemDataChangedMessage()

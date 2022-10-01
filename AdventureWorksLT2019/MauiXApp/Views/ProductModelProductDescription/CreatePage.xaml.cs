@@ -14,7 +14,6 @@ public partial class CreatePage : ContentPage
         var viewModel = ServiceHelper.GetService<ItemVM>();
         BindingContext = viewModel;
         viewModel.AttachCreateViewCommands(AppShellService.ShellGotoAbsoluteCommand, AppShellRoutes.ProductModelProductDescriptionListPage);
-        viewModel.RequestItem(ViewItemTemplates.Create);
         InitializeComponent();
     }
 }

@@ -182,8 +182,8 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         if (existing != null)
                         {
                             // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
-                existing.Description = item.Description;
-                existing.ModifiedDate = item.ModifiedDate;
+                            existing.Description = item.Description;
+                            existing.ModifiedDate = item.ModifiedDate;
                         }
                     }
                 }
@@ -276,10 +276,10 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         Status = HttpStatusCode.OK,
                         ResponseBody = new ProductDescriptionDataModel
                         {
-                            ProductDescriptionID = existing.ProductDescriptionID,
-                            Description = existing.Description,
-                            rowguid = existing.rowguid,
-                            ModifiedDate = existing.ModifiedDate,
+                    ProductDescriptionID = existing.ProductDescriptionID,
+                    Description = existing.Description,
+                    rowguid = existing.rowguid,
+                    ModifiedDate = existing.ModifiedDate,
                         }
                     });
 
@@ -312,10 +312,10 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         Status = HttpStatusCode.OK,
                         ResponseBody = new ProductDescriptionDataModel
                         {
-                            ProductDescriptionID = existing.ProductDescriptionID,
-                            Description = existing.Description,
-                            rowguid = existing.rowguid,
-                            ModifiedDate = existing.ModifiedDate,
+                    ProductDescriptionID = existing.ProductDescriptionID,
+                    Description = existing.Description,
+                    rowguid = existing.rowguid,
+                    ModifiedDate = existing.ModifiedDate,
                         }
                     });
 
@@ -346,10 +346,10 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         Status = HttpStatusCode.OK,
                         ResponseBody = new ProductDescriptionDataModel
                         {
-                            ProductDescriptionID = toInsert.ProductDescriptionID,
-                            Description = toInsert.Description,
-                            rowguid = toInsert.rowguid,
-                            ModifiedDate = toInsert.ModifiedDate,
+                    ProductDescriptionID = toInsert.ProductDescriptionID,
+                    Description = toInsert.Description,
+                    rowguid = toInsert.rowguid,
+                    ModifiedDate = toInsert.ModifiedDate,
                         }
                     });
 

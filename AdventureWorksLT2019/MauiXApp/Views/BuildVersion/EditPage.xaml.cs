@@ -14,7 +14,6 @@ public partial class EditPage : ContentPage
         var viewModel = ServiceHelper.GetService<ItemVM>();
         BindingContext = viewModel;
         viewModel.AttachEditViewCommands(AppShellService.ShellGotoAbsoluteCommand, AppShellRoutes.BuildVersionListPage);
-        viewModel.RequestItem(ViewItemTemplates.Edit);
         InitializeComponent();
     }
 }

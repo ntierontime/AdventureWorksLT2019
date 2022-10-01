@@ -28,6 +28,19 @@ public class SalesOrderDetailIdentifier: ObservableBaseQuery
     {
         return $"{SalesOrderID}/{SalesOrderDetailID}";
     }
+
+    public override int GetHashCode()
+    {
+        return ($"{SalesOrderID}/{SalesOrderDetailID}").GetHashCode();
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null || !(obj is SalesOrderDetailIdentifier))
+            return false;
+        var typedObj = (SalesOrderDetailIdentifier)obj;
+        return SalesOrderID == typedObj.SalesOrderID && SalesOrderDetailID == typedObj.SalesOrderDetailID;
+    }
 }
 
 public class SalesOrderDetailAdvancedQuery: ObservableBaseQuery, IClone<SalesOrderDetailAdvancedQuery>

@@ -12,7 +12,6 @@ public partial class DetailsPopup : Popup
         var viewModel = ServiceHelper.GetService<ItemVM>();
         BindingContext = viewModel;
         viewModel.AttachDetailsViewCommands(new Command(OnCancelled));
-        viewModel.RequestItem(ViewItemTemplates.Details);
 
         InitializeComponent();
         // WinUI Size is not correct.

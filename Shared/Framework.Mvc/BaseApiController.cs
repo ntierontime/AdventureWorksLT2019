@@ -24,11 +24,13 @@ namespace Framework.Mvc
 
         protected ActionResult<T> ReturnResultOnlyActionResult<T>(Response<T> serviceResponse)
         {
+            if (serviceResponse == null)
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             if (serviceResponse.Status == HttpStatusCode.OK)
                 return Ok(serviceResponse.ResponseBody);
-            else if (serviceResponse.Status == HttpStatusCode.BadRequest)
+            if (serviceResponse.Status == HttpStatusCode.BadRequest)
                 return BadRequest(serviceResponse.StatusMessage);
-            else if (serviceResponse.Status == HttpStatusCode.NotFound)
+            if (serviceResponse.Status == HttpStatusCode.NotFound)
                 return NotFound(serviceResponse.StatusMessage);
             // else if (result.Status == HttpStatusCode.InternalServerError)
 
@@ -37,11 +39,13 @@ namespace Framework.Mvc
 
         protected ActionResult<Response<T>> ReturnActionResult<T>(Response<T> serviceResponse)
         {
+            if (serviceResponse == null)
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             if (serviceResponse.Status == HttpStatusCode.OK)
                 return Ok(serviceResponse);
-            else if (serviceResponse.Status == HttpStatusCode.BadRequest)
+            if (serviceResponse.Status == HttpStatusCode.BadRequest)
                 return BadRequest(serviceResponse.StatusMessage);
-            else if (serviceResponse.Status == HttpStatusCode.NotFound)
+            if (serviceResponse.Status == HttpStatusCode.NotFound)
                 return NotFound(serviceResponse.StatusMessage);
             // else if (result.Status == HttpStatusCode.InternalServerError)
 
@@ -50,11 +54,13 @@ namespace Framework.Mvc
 
         protected ActionResult<ListResponse<T>> ReturnActionResult<T>(ListResponse<T> serviceResponse)
         {
+            if (serviceResponse == null)
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             if (serviceResponse.Status == HttpStatusCode.OK)
                 return Ok(serviceResponse);
-            else if (serviceResponse.Status == HttpStatusCode.BadRequest)
+            if (serviceResponse.Status == HttpStatusCode.BadRequest)
                 return BadRequest(serviceResponse.StatusMessage);
-            else if (serviceResponse.Status == HttpStatusCode.NotFound)
+            if (serviceResponse.Status == HttpStatusCode.NotFound)
                 return NotFound(serviceResponse.StatusMessage);
             // else if (result.Status == HttpStatusCode.InternalServerError)
 

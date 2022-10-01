@@ -14,7 +14,6 @@ public partial class DeletePage : ContentPage
         var viewModel = ServiceHelper.GetService<ItemVM>();
         BindingContext = viewModel;
         viewModel.AttachDeleteViewCommands(AppShellService.ShellGotoAbsoluteCommand, AppShellRoutes.SalesOrderDetailListPage);
-        viewModel.RequestItem(ViewItemTemplates.Delete);
         InitializeComponent();
     }
 }

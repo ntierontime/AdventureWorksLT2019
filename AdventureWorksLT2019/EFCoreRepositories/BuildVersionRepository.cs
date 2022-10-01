@@ -184,9 +184,9 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         if (existing != null)
                         {
                             // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
-                existing.Database_Version = item.Database_Version;
-                existing.VersionDate = item.VersionDate;
-                existing.ModifiedDate = item.ModifiedDate;
+                            existing.Database_Version = item.Database_Version;
+                            existing.VersionDate = item.VersionDate;
+                            existing.ModifiedDate = item.ModifiedDate;
                         }
                     }
                 }
@@ -284,10 +284,10 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         Status = HttpStatusCode.OK,
                         ResponseBody = new BuildVersionDataModel
                         {
-                            SystemInformationID = existing.SystemInformationID,
-                            Database_Version = existing.Database_Version,
-                            VersionDate = existing.VersionDate,
-                            ModifiedDate = existing.ModifiedDate,
+                    SystemInformationID = existing.SystemInformationID,
+                    Database_Version = existing.Database_Version,
+                    VersionDate = existing.VersionDate,
+                    ModifiedDate = existing.ModifiedDate,
                         }
                     });
 
@@ -324,10 +324,10 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         Status = HttpStatusCode.OK,
                         ResponseBody = new BuildVersionDataModel
                         {
-                            SystemInformationID = existing.SystemInformationID,
-                            Database_Version = existing.Database_Version,
-                            VersionDate = existing.VersionDate,
-                            ModifiedDate = existing.ModifiedDate,
+                    SystemInformationID = existing.SystemInformationID,
+                    Database_Version = existing.Database_Version,
+                    VersionDate = existing.VersionDate,
+                    ModifiedDate = existing.ModifiedDate,
                         }
                     });
 
@@ -359,10 +359,10 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         Status = HttpStatusCode.OK,
                         ResponseBody = new BuildVersionDataModel
                         {
-                            SystemInformationID = toInsert.SystemInformationID,
-                            Database_Version = toInsert.Database_Version,
-                            VersionDate = toInsert.VersionDate,
-                            ModifiedDate = toInsert.ModifiedDate,
+                    SystemInformationID = toInsert.SystemInformationID,
+                    Database_Version = toInsert.Database_Version,
+                    VersionDate = toInsert.VersionDate,
+                    ModifiedDate = toInsert.ModifiedDate,
                         }
                     });
 

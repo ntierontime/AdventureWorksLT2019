@@ -1,3 +1,4 @@
+using AdventureWorksLT2019.MauiXApp.Common.Helpers;
 using AdventureWorksLT2019.MauiXApp.Messages;
 using AdventureWorksLT2019.MauiXApp.DataModels;
 using AdventureWorksLT2019.MauiXApp.Services;
@@ -10,12 +11,31 @@ using System.Windows.Input;
 
 namespace AdventureWorksLT2019.MauiXApp.ViewModels.Customer;
 
-public class ItemVM : ItemVMBase<CustomerIdentifier, CustomerDataModel, CustomerService, CustomerItemChangedMessage, CustomerItemRequestMessage>
+public class ItemVM : ItemVMBase<CustomerIdentifier, CustomerDataModel, CustomerService, CustomerItemChangedMessage>
 {
 
     public ItemVM(CustomerService dataService)
         : base(dataService)
     {
+
+        WeakReferenceMessenger.Default.Register<ItemVM, CustomerIdentifierMessage>(
+           this, async (r, m) =>
+        {
+            if (m.ItemView == ViewItemTemplates.Create)
+            {
+                Item = _dataService.GetDefault();
+            }
+            else
+            {
+                var response = await _dataService.Get(m.Value);
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    Item = response.ResponseBody;
+                }
+            }
+
+        });
     }
 
     protected override void SendDataChangedMessage(ViewItemTemplates itemView)

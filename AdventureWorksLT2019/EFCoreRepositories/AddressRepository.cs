@@ -217,13 +217,13 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         if (existing != null)
                         {
                             // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
-                existing.AddressLine1 = item.AddressLine1;
-                existing.AddressLine2 = item.AddressLine2;
-                existing.City = item.City;
-                existing.StateProvince = item.StateProvince;
-                existing.CountryRegion = item.CountryRegion;
-                existing.PostalCode = item.PostalCode;
-                existing.ModifiedDate = item.ModifiedDate;
+                            existing.AddressLine1 = item.AddressLine1;
+                            existing.AddressLine2 = item.AddressLine2;
+                            existing.City = item.City;
+                            existing.StateProvince = item.StateProvince;
+                            existing.CountryRegion = item.CountryRegion;
+                            existing.PostalCode = item.PostalCode;
+                            existing.ModifiedDate = item.ModifiedDate;
                         }
                     }
                 }
@@ -326,15 +326,15 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         Status = HttpStatusCode.OK,
                         ResponseBody = new AddressDataModel
                         {
-                            AddressID = existing.AddressID,
-                            AddressLine1 = existing.AddressLine1,
-                            AddressLine2 = existing.AddressLine2,
-                            City = existing.City,
-                            StateProvince = existing.StateProvince,
-                            CountryRegion = existing.CountryRegion,
-                            PostalCode = existing.PostalCode,
-                            rowguid = existing.rowguid,
-                            ModifiedDate = existing.ModifiedDate,
+                    AddressID = existing.AddressID,
+                    AddressLine1 = existing.AddressLine1,
+                    AddressLine2 = existing.AddressLine2,
+                    City = existing.City,
+                    StateProvince = existing.StateProvince,
+                    CountryRegion = existing.CountryRegion,
+                    PostalCode = existing.PostalCode,
+                    rowguid = existing.rowguid,
+                    ModifiedDate = existing.ModifiedDate,
                         }
                     });
 
@@ -367,15 +367,15 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         Status = HttpStatusCode.OK,
                         ResponseBody = new AddressDataModel
                         {
-                            AddressID = existing.AddressID,
-                            AddressLine1 = existing.AddressLine1,
-                            AddressLine2 = existing.AddressLine2,
-                            City = existing.City,
-                            StateProvince = existing.StateProvince,
-                            CountryRegion = existing.CountryRegion,
-                            PostalCode = existing.PostalCode,
-                            rowguid = existing.rowguid,
-                            ModifiedDate = existing.ModifiedDate,
+                    AddressID = existing.AddressID,
+                    AddressLine1 = existing.AddressLine1,
+                    AddressLine2 = existing.AddressLine2,
+                    City = existing.City,
+                    StateProvince = existing.StateProvince,
+                    CountryRegion = existing.CountryRegion,
+                    PostalCode = existing.PostalCode,
+                    rowguid = existing.rowguid,
+                    ModifiedDate = existing.ModifiedDate,
                         }
                     });
 
@@ -411,15 +411,15 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         Status = HttpStatusCode.OK,
                         ResponseBody = new AddressDataModel
                         {
-                            AddressID = toInsert.AddressID,
-                            AddressLine1 = toInsert.AddressLine1,
-                            AddressLine2 = toInsert.AddressLine2,
-                            City = toInsert.City,
-                            StateProvince = toInsert.StateProvince,
-                            CountryRegion = toInsert.CountryRegion,
-                            PostalCode = toInsert.PostalCode,
-                            rowguid = toInsert.rowguid,
-                            ModifiedDate = toInsert.ModifiedDate,
+                    AddressID = toInsert.AddressID,
+                    AddressLine1 = toInsert.AddressLine1,
+                    AddressLine2 = toInsert.AddressLine2,
+                    City = toInsert.City,
+                    StateProvince = toInsert.StateProvince,
+                    CountryRegion = toInsert.CountryRegion,
+                    PostalCode = toInsert.PostalCode,
+                    rowguid = toInsert.rowguid,
+                    ModifiedDate = toInsert.ModifiedDate,
                         }
                     });
 

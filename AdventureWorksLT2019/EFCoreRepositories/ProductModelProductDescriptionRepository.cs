@@ -193,10 +193,10 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         if (existing != null)
                         {
                             // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
-                existing.ProductModelID = item.ProductModelID;
-                existing.ProductDescriptionID = item.ProductDescriptionID;
-                existing.Culture = item.Culture;
-                existing.ModifiedDate = item.ModifiedDate;
+                            existing.ProductModelID = item.ProductModelID;
+                            existing.ProductDescriptionID = item.ProductDescriptionID;
+                            existing.Culture = item.Culture;
+                            existing.ModifiedDate = item.ModifiedDate;
                         }
                     }
                 }

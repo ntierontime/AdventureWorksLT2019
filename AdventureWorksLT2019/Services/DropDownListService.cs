@@ -40,6 +40,7 @@ namespace AdventureWorksLT2019.Services
             var  _topLevelDropDownLists =
                 new TopLevelDropDownLists[]
                 {
+                    TopLevelDropDownLists.ProductCategory,
                     TopLevelDropDownLists.ProductModel,
                 };
             return await GetTopLevelDropDownListsFromDatabase(_topLevelDropDownLists);
@@ -50,7 +51,7 @@ namespace AdventureWorksLT2019.Services
             var  _topLevelDropDownLists =
                 new TopLevelDropDownLists[]
                 {
-
+                    TopLevelDropDownLists.ProductCategory,
                 };
             return await GetTopLevelDropDownListsFromDatabase(_topLevelDropDownLists);
         }
@@ -73,6 +74,7 @@ namespace AdventureWorksLT2019.Services
                 {
                     TopLevelDropDownLists.Address,
                     TopLevelDropDownLists.Customer,
+                    TopLevelDropDownLists.ProductCategory,
                     TopLevelDropDownLists.ProductModel,
                 };
             return await GetTopLevelDropDownListsFromDatabase(_topLevelDropDownLists);

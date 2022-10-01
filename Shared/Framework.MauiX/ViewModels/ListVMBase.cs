@@ -10,12 +10,11 @@ using System.Windows.Input;
 
 namespace Framework.MauiX.ViewModels;
 
-public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataService, TDataChangedMessage, TItemRequestMessage> : ObservableObject
+public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataService, TDataChangedMessage> : ObservableObject
     where TAdvancedQuery : ObservableBaseQuery, IClone<TAdvancedQuery>, new()
-    where TDataModel : class, IClone<TDataModel>, ICopyTo<TDataModel>
+    where TDataModel : class, IClone<TDataModel>, ICopyTo<TDataModel>, IGetIdentifier<TIdentifier>
     where TDataService : class, IDataServiceBase<TAdvancedQuery, TIdentifier, TDataModel>
     where TDataChangedMessage : ValueChangedMessageExt<TDataModel>
-    where TItemRequestMessage : RequestMessage<TDataModel>, new()
 {
     private TAdvancedQuery m_Query = new();
     public TAdvancedQuery Query
@@ -189,7 +188,6 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
             }
         );
 
-        RegisterRequestSelectedItemMessage();
         RegisterItemDataChangedMessage();
     }
 
@@ -333,29 +331,20 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
     {
     }
 
-    public abstract void RegisterRequestSelectedItemMessage();
-
-    public static void RegisterRequestSelectedItemMessage<TListVM>(TListVM listVM)
-        where TListVM : ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataService, TDataChangedMessage, TItemRequestMessage>
-    {
-        WeakReferenceMessenger.Default.Register<TListVM, TItemRequestMessage>(
-            listVM, (r, m) =>
-            {
-                m.Reply(listVM.SelectedItem.Clone());
-                //WeakReferenceMessenger.Default.Unregister<TItemRequestMessage>(listVM);
-            });
-    }
-
     public abstract void RegisterItemDataChangedMessage();
     public static void RegisterItemDataChangedMessage<TListVM>(TListVM listVM)
-        where TListVM : ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataService, TDataChangedMessage, TItemRequestMessage>
+        where TListVM : ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataService, TDataChangedMessage>
     {
         WeakReferenceMessenger.Default.Register<TListVM, TDataChangedMessage>(
             listVM, (r, m) =>
             {
                 if (m.ItemView == ViewItemTemplates.Delete)
                 {
-                    listVM.Result.Remove(listVM.SelectedItem);
+                    var theItem = listVM.Result.FirstOrDefault(t => t.GetIdentifier().Equals(m.Value.GetIdentifier()));
+                    if (theItem != null)
+                    {
+                        listVM.Result.Remove(theItem);
+                    }
                 }
                 else if (m.ItemView == ViewItemTemplates.Create)
                 {
@@ -363,10 +352,12 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
                 }
                 else if (m.ItemView == ViewItemTemplates.Edit)
                 {
-                    m.Value.CopyTo(listVM.SelectedItem);
+                    var theItem = listVM.Result.FirstOrDefault(t => t.GetIdentifier().Equals(m.Value.GetIdentifier()));
+                    if (theItem != null)
+                    {
+                        m.Value.CopyTo(theItem);
+                    }
                 }
-
-                //WeakReferenceMessenger.Default.Unregister<TDataChangedMessage>(listVM);
             });
     }
 }

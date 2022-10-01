@@ -20,6 +20,19 @@ public class CustomerIdentifier: ObservableBaseQuery
     {
         return $"{CustomerID}";
     }
+
+    public override int GetHashCode()
+    {
+        return ($"{CustomerID}").GetHashCode();
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null || !(obj is CustomerIdentifier))
+            return false;
+        var typedObj = (CustomerIdentifier)obj;
+        return CustomerID == typedObj.CustomerID;
+    }
 }
 
 public class CustomerAdvancedQuery: ObservableBaseQuery, IClone<CustomerAdvancedQuery>

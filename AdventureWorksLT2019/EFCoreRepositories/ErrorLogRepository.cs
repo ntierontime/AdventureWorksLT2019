@@ -203,14 +203,14 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         if (existing != null)
                         {
                             // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
-                existing.ErrorTime = item.ErrorTime;
-                existing.UserName = item.UserName;
-                existing.ErrorNumber = item.ErrorNumber;
-                existing.ErrorSeverity = item.ErrorSeverity;
-                existing.ErrorState = item.ErrorState;
-                existing.ErrorProcedure = item.ErrorProcedure;
-                existing.ErrorLine = item.ErrorLine;
-                existing.ErrorMessage = item.ErrorMessage;
+                            existing.ErrorTime = item.ErrorTime;
+                            existing.UserName = item.UserName;
+                            existing.ErrorNumber = item.ErrorNumber;
+                            existing.ErrorSeverity = item.ErrorSeverity;
+                            existing.ErrorState = item.ErrorState;
+                            existing.ErrorProcedure = item.ErrorProcedure;
+                            existing.ErrorLine = item.ErrorLine;
+                            existing.ErrorMessage = item.ErrorMessage;
                         }
                     }
                 }
@@ -314,15 +314,15 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         Status = HttpStatusCode.OK,
                         ResponseBody = new ErrorLogDataModel
                         {
-                            ErrorLogID = existing.ErrorLogID,
-                            ErrorTime = existing.ErrorTime,
-                            UserName = existing.UserName,
-                            ErrorNumber = existing.ErrorNumber,
-                            ErrorSeverity = existing.ErrorSeverity,
-                            ErrorState = existing.ErrorState,
-                            ErrorProcedure = existing.ErrorProcedure,
-                            ErrorLine = existing.ErrorLine,
-                            ErrorMessage = existing.ErrorMessage,
+                    ErrorLogID = existing.ErrorLogID,
+                    ErrorTime = existing.ErrorTime,
+                    UserName = existing.UserName,
+                    ErrorNumber = existing.ErrorNumber,
+                    ErrorSeverity = existing.ErrorSeverity,
+                    ErrorState = existing.ErrorState,
+                    ErrorProcedure = existing.ErrorProcedure,
+                    ErrorLine = existing.ErrorLine,
+                    ErrorMessage = existing.ErrorMessage,
                         }
                     });
 
@@ -355,15 +355,15 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         Status = HttpStatusCode.OK,
                         ResponseBody = new ErrorLogDataModel
                         {
-                            ErrorLogID = existing.ErrorLogID,
-                            ErrorTime = existing.ErrorTime,
-                            UserName = existing.UserName,
-                            ErrorNumber = existing.ErrorNumber,
-                            ErrorSeverity = existing.ErrorSeverity,
-                            ErrorState = existing.ErrorState,
-                            ErrorProcedure = existing.ErrorProcedure,
-                            ErrorLine = existing.ErrorLine,
-                            ErrorMessage = existing.ErrorMessage,
+                    ErrorLogID = existing.ErrorLogID,
+                    ErrorTime = existing.ErrorTime,
+                    UserName = existing.UserName,
+                    ErrorNumber = existing.ErrorNumber,
+                    ErrorSeverity = existing.ErrorSeverity,
+                    ErrorState = existing.ErrorState,
+                    ErrorProcedure = existing.ErrorProcedure,
+                    ErrorLine = existing.ErrorLine,
+                    ErrorMessage = existing.ErrorMessage,
                         }
                     });
 
@@ -400,15 +400,15 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         Status = HttpStatusCode.OK,
                         ResponseBody = new ErrorLogDataModel
                         {
-                            ErrorLogID = toInsert.ErrorLogID,
-                            ErrorTime = toInsert.ErrorTime,
-                            UserName = toInsert.UserName,
-                            ErrorNumber = toInsert.ErrorNumber,
-                            ErrorSeverity = toInsert.ErrorSeverity,
-                            ErrorState = toInsert.ErrorState,
-                            ErrorProcedure = toInsert.ErrorProcedure,
-                            ErrorLine = toInsert.ErrorLine,
-                            ErrorMessage = toInsert.ErrorMessage,
+                    ErrorLogID = toInsert.ErrorLogID,
+                    ErrorTime = toInsert.ErrorTime,
+                    UserName = toInsert.UserName,
+                    ErrorNumber = toInsert.ErrorNumber,
+                    ErrorSeverity = toInsert.ErrorSeverity,
+                    ErrorState = toInsert.ErrorState,
+                    ErrorProcedure = toInsert.ErrorProcedure,
+                    ErrorLine = toInsert.ErrorLine,
+                    ErrorMessage = toInsert.ErrorMessage,
                         }
                     });
 

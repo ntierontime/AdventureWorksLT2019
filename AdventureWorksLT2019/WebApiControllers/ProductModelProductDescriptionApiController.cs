@@ -57,27 +57,27 @@ namespace AdventureWorksLT2019.WebApiControllers
         // [Authorize]
         [Route("{ProductModelID}/{ProductDescriptionID}/{Culture}")]
         [HttpPut]
-        public async Task<ActionResult<ProductModelProductDescriptionDataModel.DefaultView>> Put([FromRoute]ProductModelProductDescriptionIdentifier id, [FromBody]ProductModelProductDescriptionDataModel input)
+        public async Task<ActionResult<Response<ProductModelProductDescriptionDataModel.DefaultView>>> Put([FromRoute]ProductModelProductDescriptionIdentifier id, [FromBody]ProductModelProductDescriptionDataModel input)
         {
             var serviceResponse = await _thisService.Update(id, input);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnActionResult(serviceResponse);
         }
 
         // [Authorize]
         [Route("{ProductModelID}/{ProductDescriptionID}/{Culture}")]
         [HttpGet]
-        public async Task<ActionResult<ProductModelProductDescriptionDataModel.DefaultView>> Get([FromRoute]ProductModelProductDescriptionIdentifier id)
+        public async Task<ActionResult<Response<ProductModelProductDescriptionDataModel.DefaultView>>> Get([FromRoute]ProductModelProductDescriptionIdentifier id)
         {
             var serviceResponse = await _thisService.Get(id);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnActionResult(serviceResponse);
         }
 
         // [Authorize]
         [HttpPost]
-        public async Task<ActionResult<ProductModelProductDescriptionDataModel.DefaultView>> Post(ProductModelProductDescriptionDataModel input)
+        public async Task<ActionResult<Response<ProductModelProductDescriptionDataModel.DefaultView>>> Post(ProductModelProductDescriptionDataModel input)
         {
             var serviceResponse = await _thisService.Create(input);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnActionResult(serviceResponse);
         }
 
         // [Authorize]

@@ -20,6 +20,19 @@ public class ErrorLogIdentifier: ObservableBaseQuery
     {
         return $"{ErrorLogID}";
     }
+
+    public override int GetHashCode()
+    {
+        return ($"{ErrorLogID}").GetHashCode();
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null || !(obj is ErrorLogIdentifier))
+            return false;
+        var typedObj = (ErrorLogIdentifier)obj;
+        return ErrorLogID == typedObj.ErrorLogID;
+    }
 }
 
 public class ErrorLogAdvancedQuery: ObservableBaseQuery, IClone<ErrorLogAdvancedQuery>

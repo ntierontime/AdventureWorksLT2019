@@ -12,7 +12,6 @@ public partial class CreatePopup : Popup
         var viewModel = ServiceHelper.GetService<ItemVM>();
         BindingContext = viewModel;
         viewModel.AttachCreateViewCommands(new Command(OnCancelled));
-        viewModel.RequestItem(ViewItemTemplates.Create);
 
         InitializeComponent();
         // WinUI Size is not correct.

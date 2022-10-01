@@ -28,6 +28,19 @@ public class CustomerAddressIdentifier: ObservableBaseQuery
     {
         return $"{CustomerID}/{AddressID}";
     }
+
+    public override int GetHashCode()
+    {
+        return ($"{CustomerID}/{AddressID}").GetHashCode();
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null || !(obj is CustomerAddressIdentifier))
+            return false;
+        var typedObj = (CustomerAddressIdentifier)obj;
+        return CustomerID == typedObj.CustomerID && AddressID == typedObj.AddressID;
+    }
 }
 
 public class CustomerAddressAdvancedQuery: ObservableBaseQuery, IClone<CustomerAddressAdvancedQuery>

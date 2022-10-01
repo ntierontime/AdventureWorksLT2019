@@ -57,27 +57,27 @@ namespace AdventureWorksLT2019.WebApiControllers
         // [Authorize]
         [Route("{ProductCategoryID}")]
         [HttpPut]
-        public async Task<ActionResult<ProductCategoryDataModel.DefaultView>> Put([FromRoute]ProductCategoryIdentifier id, [FromBody]ProductCategoryDataModel input)
+        public async Task<ActionResult<Response<ProductCategoryDataModel.DefaultView>>> Put([FromRoute]ProductCategoryIdentifier id, [FromBody]ProductCategoryDataModel input)
         {
             var serviceResponse = await _thisService.Update(id, input);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnActionResult(serviceResponse);
         }
 
         // [Authorize]
         [Route("{ProductCategoryID}")]
         [HttpGet]
-        public async Task<ActionResult<ProductCategoryDataModel.DefaultView>> Get([FromRoute]ProductCategoryIdentifier id)
+        public async Task<ActionResult<Response<ProductCategoryDataModel.DefaultView>>> Get([FromRoute]ProductCategoryIdentifier id)
         {
             var serviceResponse = await _thisService.Get(id);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnActionResult(serviceResponse);
         }
 
         // [Authorize]
         [HttpPost]
-        public async Task<ActionResult<ProductCategoryDataModel.DefaultView>> Post(ProductCategoryDataModel input)
+        public async Task<ActionResult<Response<ProductCategoryDataModel.DefaultView>>> Post(ProductCategoryDataModel input)
         {
             var serviceResponse = await _thisService.Create(input);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnActionResult(serviceResponse);
         }
 
         // [Authorize]

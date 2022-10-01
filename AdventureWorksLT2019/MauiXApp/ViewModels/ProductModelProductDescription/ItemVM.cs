@@ -1,3 +1,4 @@
+using AdventureWorksLT2019.MauiXApp.Common.Helpers;
 using AdventureWorksLT2019.MauiXApp.Messages;
 using AdventureWorksLT2019.MauiXApp.DataModels;
 using AdventureWorksLT2019.MauiXApp.Services;
@@ -10,8 +11,9 @@ using System.Windows.Input;
 
 namespace AdventureWorksLT2019.MauiXApp.ViewModels.ProductModelProductDescription;
 
-public class ItemVM : ItemVMBase<ProductModelProductDescriptionIdentifier, ProductModelProductDescriptionDataModel, ProductModelProductDescriptionService, ProductModelProductDescriptionItemChangedMessage, ProductModelProductDescriptionItemRequestMessage>
+public class ItemVM : ItemVMBase<ProductModelProductDescriptionIdentifier, ProductModelProductDescriptionDataModel, ProductModelProductDescriptionService, ProductModelProductDescriptionItemChangedMessage>
 {
+    #region Foreign Key SelectLists
 
     // ForeignKeys.1. ProductModelIDList
     private List<NameValuePair<int>> m_ProductModelIDList;
@@ -56,9 +58,42 @@ public class ItemVM : ItemVMBase<ProductModelProductDescriptionIdentifier, Produ
             }
         }
     }
+#endregion Foreign Key SelectLists
+
+    public ICommand LaunchProductModelFKItemViewCommand { get; private set; }
+
+    public ICommand LaunchProductDescriptionFKItemViewCommand { get; private set; }
     public ItemVM(ProductModelProductDescriptionService dataService)
         : base(dataService)
     {
+
+        LaunchProductModelFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductModelEditPopupCommand();
+        //LaunchProductModelFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductModelEditPageCommand(AppShellRoutes.ProductModelProductDescriptionListPage);
+
+        LaunchProductDescriptionFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionEditPopupCommand();
+        //LaunchProductDescriptionFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionEditPageCommand(AppShellRoutes.ProductModelProductDescriptionListPage);
+
+        WeakReferenceMessenger.Default.Register<ItemVM, ProductModelProductDescriptionIdentifierMessage>(
+           this, async (r, m) =>
+        {
+            if (m.ItemView == ViewItemTemplates.Create)
+            {
+                Item = _dataService.GetDefault();
+            }
+            else
+            {
+                var response = await _dataService.Get(m.Value);
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    Item = response.ResponseBody;
+                }
+            }
+            if (m.ItemView == ViewItemTemplates.Create || m.ItemView == ViewItemTemplates.Edit)
+            {
+                await LoadCodeListsIfAny(m.ItemView);
+            }
+        });
     }
 
     protected override async Task LoadCodeListsIfAny(ViewItemTemplates itemView)

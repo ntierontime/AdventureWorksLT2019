@@ -57,27 +57,27 @@ namespace AdventureWorksLT2019.WebApiControllers
         // [Authorize]
         [Route("{AddressID}")]
         [HttpPut]
-        public async Task<ActionResult<AddressDataModel>> Put([FromRoute]AddressIdentifier id, [FromBody]AddressDataModel input)
+        public async Task<ActionResult<Response<AddressDataModel>>> Put([FromRoute]AddressIdentifier id, [FromBody]AddressDataModel input)
         {
             var serviceResponse = await _thisService.Update(id, input);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnActionResult(serviceResponse);
         }
 
         // [Authorize]
         [Route("{AddressID}")]
         [HttpGet]
-        public async Task<ActionResult<AddressDataModel>> Get([FromRoute]AddressIdentifier id)
+        public async Task<ActionResult<Response<AddressDataModel>>> Get([FromRoute]AddressIdentifier id)
         {
             var serviceResponse = await _thisService.Get(id);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnActionResult(serviceResponse);
         }
 
         // [Authorize]
         [HttpPost]
-        public async Task<ActionResult<AddressDataModel>> Post(AddressDataModel input)
+        public async Task<ActionResult<Response<AddressDataModel>>> Post(AddressDataModel input)
         {
             var serviceResponse = await _thisService.Create(input);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnActionResult(serviceResponse);
         }
 
         // [Authorize]

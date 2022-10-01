@@ -189,9 +189,9 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         if (existing != null)
                         {
                             // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
-                existing.ParentProductCategoryID = item.ParentProductCategoryID;
-                existing.Name = item.Name;
-                existing.ModifiedDate = item.ModifiedDate;
+                            existing.ParentProductCategoryID = item.ParentProductCategoryID;
+                            existing.Name = item.Name;
+                            existing.ModifiedDate = item.ModifiedDate;
                         }
                     }
                 }

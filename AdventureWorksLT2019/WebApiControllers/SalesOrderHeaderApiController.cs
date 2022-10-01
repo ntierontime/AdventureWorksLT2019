@@ -65,27 +65,27 @@ namespace AdventureWorksLT2019.WebApiControllers
         // [Authorize]
         [Route("{SalesOrderID}")]
         [HttpPut]
-        public async Task<ActionResult<SalesOrderHeaderDataModel.DefaultView>> Put([FromRoute]SalesOrderHeaderIdentifier id, [FromBody]SalesOrderHeaderDataModel input)
+        public async Task<ActionResult<Response<SalesOrderHeaderDataModel.DefaultView>>> Put([FromRoute]SalesOrderHeaderIdentifier id, [FromBody]SalesOrderHeaderDataModel input)
         {
             var serviceResponse = await _thisService.Update(id, input);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnActionResult(serviceResponse);
         }
 
         // [Authorize]
         [Route("{SalesOrderID}")]
         [HttpGet]
-        public async Task<ActionResult<SalesOrderHeaderDataModel.DefaultView>> Get([FromRoute]SalesOrderHeaderIdentifier id)
+        public async Task<ActionResult<Response<SalesOrderHeaderDataModel.DefaultView>>> Get([FromRoute]SalesOrderHeaderIdentifier id)
         {
             var serviceResponse = await _thisService.Get(id);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnActionResult(serviceResponse);
         }
 
         // [Authorize]
         [HttpPost]
-        public async Task<ActionResult<SalesOrderHeaderDataModel.DefaultView>> Post(SalesOrderHeaderDataModel input)
+        public async Task<ActionResult<Response<SalesOrderHeaderDataModel.DefaultView>>> Post(SalesOrderHeaderDataModel input)
         {
             var serviceResponse = await _thisService.Create(input);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnActionResult(serviceResponse);
         }
 
         // [Authorize]

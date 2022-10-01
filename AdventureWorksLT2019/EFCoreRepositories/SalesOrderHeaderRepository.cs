@@ -343,24 +343,24 @@ private IQueryable<SalesOrderHeaderDataModel.DefaultView> GetIQueryableAsBulkUpd
                         if (existing != null)
                         {
                             // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
-                existing.RevisionNumber = item.RevisionNumber;
-                existing.OrderDate = item.OrderDate;
-                existing.DueDate = item.DueDate;
-                existing.ShipDate = item.ShipDate;
-                existing.Status = item.Status;
-                existing.OnlineOrderFlag = item.OnlineOrderFlag;
-                existing.PurchaseOrderNumber = item.PurchaseOrderNumber;
-                existing.AccountNumber = item.AccountNumber;
-                existing.CustomerID = item.CustomerID;
-                existing.ShipToAddressID = item.ShipToAddressID;
-                existing.BillToAddressID = item.BillToAddressID;
-                existing.ShipMethod = item.ShipMethod;
-                existing.CreditCardApprovalCode = item.CreditCardApprovalCode;
-                existing.SubTotal = item.SubTotal;
-                existing.TaxAmt = item.TaxAmt;
-                existing.Freight = item.Freight;
-                existing.Comment = item.Comment;
-                existing.ModifiedDate = item.ModifiedDate;
+                            existing.RevisionNumber = item.RevisionNumber;
+                            existing.OrderDate = item.OrderDate;
+                            existing.DueDate = item.DueDate;
+                            existing.ShipDate = item.ShipDate;
+                            existing.Status = item.Status;
+                            existing.OnlineOrderFlag = item.OnlineOrderFlag;
+                            existing.PurchaseOrderNumber = item.PurchaseOrderNumber;
+                            existing.AccountNumber = item.AccountNumber;
+                            existing.CustomerID = item.CustomerID;
+                            existing.ShipToAddressID = item.ShipToAddressID;
+                            existing.BillToAddressID = item.BillToAddressID;
+                            existing.ShipMethod = item.ShipMethod;
+                            existing.CreditCardApprovalCode = item.CreditCardApprovalCode;
+                            existing.SubTotal = item.SubTotal;
+                            existing.TaxAmt = item.TaxAmt;
+                            existing.Freight = item.Freight;
+                            existing.Comment = item.Comment;
+                            existing.ModifiedDate = item.ModifiedDate;
                         }
                     }
                 }

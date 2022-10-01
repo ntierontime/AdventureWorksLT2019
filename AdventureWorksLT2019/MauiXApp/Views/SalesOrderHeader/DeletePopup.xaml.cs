@@ -12,7 +12,6 @@ public partial class DeletePopup : Popup
         var viewModel = ServiceHelper.GetService<ItemVM>();
         BindingContext = viewModel;
         viewModel.AttachDeleteViewCommands(new Command(OnCancelled));
-        viewModel.RequestItem(ViewItemTemplates.Delete);
 
         InitializeComponent();
         // WinUI Size is not correct.

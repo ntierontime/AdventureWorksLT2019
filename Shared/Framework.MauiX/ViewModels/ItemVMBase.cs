@@ -8,20 +8,12 @@ using System.Windows.Input;
 
 namespace Framework.MauiX.ViewModels;
 
-public abstract class ItemVMBase<TIdentifier, TDataModel, TDataService, TDataChangedMessage, TItemRequestMessage>: ObservableObject
+public abstract class ItemVMBase<TIdentifier, TDataModel, TDataService, TDataChangedMessage>: ObservableObject
     where TIdentifier : class
-    where TDataModel : class, IClone<TDataModel>
+    where TDataModel : class, IClone<TDataModel>, IGetIdentifier<TIdentifier>
     where TDataService : class, IDataServiceBase<TIdentifier, TDataModel>
     where TDataChangedMessage : ValueChangedMessageExt<TDataModel>
-    where TItemRequestMessage : RequestMessage<TDataModel>, new()
 {
-    private TIdentifier m_Identifier;
-    public TIdentifier Identifier
-    {
-        get => m_Identifier;
-        set => SetProperty(ref m_Identifier, value);
-    }
-
     private TDataModel m_Item;
     public TDataModel Item
     {
@@ -66,20 +58,6 @@ public abstract class ItemVMBase<TIdentifier, TDataModel, TDataService, TDataCha
         _dataService = dataService;
     }
 
-    public async void RequestItem(ViewItemTemplates itemView)
-    {
-        if (itemView == ViewItemTemplates.Create)
-        {
-            Item = _dataService.GetDefault();
-        }
-        else
-        {
-            var messagge = WeakReferenceMessenger.Default.Send<TItemRequestMessage>();
-            Item = messagge.Response.Clone();
-        }
-        await LoadCodeListsIfAny(itemView);
-    }
-
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
     protected virtual async Task LoadCodeListsIfAny(ViewItemTemplates itemView)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
@@ -111,7 +89,7 @@ public abstract class ItemVMBase<TIdentifier, TDataModel, TDataService, TDataCha
     {
         EditConfirmCommand = new Command(async () =>
         {
-            await _dataService.Update(Identifier, Item);
+            await _dataService.Update(Item.GetIdentifier(), Item);
             SendDataChangedMessage(ViewItemTemplates.Edit);
             cancelCommand.Execute(commandParameter);
             EditConfirmCommand = null;
@@ -130,7 +108,7 @@ public abstract class ItemVMBase<TIdentifier, TDataModel, TDataService, TDataCha
     {
         DeleteConfirmCommand = new Command(async () =>
         {
-            await _dataService.Delete(Identifier);
+            await _dataService.Delete(Item.GetIdentifier());
             SendDataChangedMessage(ViewItemTemplates.Delete);
             cancelCommand.Execute(commandParameter);
             DeleteConfirmCommand = null;

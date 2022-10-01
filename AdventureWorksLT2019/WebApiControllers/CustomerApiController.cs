@@ -65,27 +65,27 @@ namespace AdventureWorksLT2019.WebApiControllers
         // [Authorize]
         [Route("{CustomerID}")]
         [HttpPut]
-        public async Task<ActionResult<CustomerDataModel>> Put([FromRoute]CustomerIdentifier id, [FromBody]CustomerDataModel input)
+        public async Task<ActionResult<Response<CustomerDataModel>>> Put([FromRoute]CustomerIdentifier id, [FromBody]CustomerDataModel input)
         {
             var serviceResponse = await _thisService.Update(id, input);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnActionResult(serviceResponse);
         }
 
         // [Authorize]
         [Route("{CustomerID}")]
         [HttpGet]
-        public async Task<ActionResult<CustomerDataModel>> Get([FromRoute]CustomerIdentifier id)
+        public async Task<ActionResult<Response<CustomerDataModel>>> Get([FromRoute]CustomerIdentifier id)
         {
             var serviceResponse = await _thisService.Get(id);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnActionResult(serviceResponse);
         }
 
         // [Authorize]
         [HttpPost]
-        public async Task<ActionResult<CustomerDataModel>> Post(CustomerDataModel input)
+        public async Task<ActionResult<Response<CustomerDataModel>>> Post(CustomerDataModel input)
         {
             var serviceResponse = await _thisService.Create(input);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnActionResult(serviceResponse);
         }
 
         // [Authorize]

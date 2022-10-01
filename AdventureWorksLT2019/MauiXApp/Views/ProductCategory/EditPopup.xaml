@@ -20,28 +20,28 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize ProductCategoryID}"/>
-        <Entry Grid.Row="0" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.ProductCategoryID}"/>
-        <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize ParentProductCategoryID}"/>
-        <Picker Grid.Row="1" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
-            ItemsSource="{Binding Path=ParentProductCategoryIDList}"
-            ItemDisplayBinding="{Binding Name}"
-            SelectedItem="{Binding Path=SelectedParentProductCategoryID}" />
-        <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize Name}"/>
-        <Entry Grid.Row="2" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.Name}"/>
-        <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize rowguid}"/>
-        <Entry Grid.Row="3" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.rowguid}"/>
-        <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize ModifiedDate}"/>
-        <DatePicker Grid.Row="4" Grid.Column="1" Style="{StaticResource ValueDatePickerStyle}"
-            Date="{Binding Item.ModifiedDate}" />
+            <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                Text="{l:Localize ProductCategoryID}"/>
+            <Entry Grid.Row="0" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+                Text="{Binding Item.ProductCategoryID}"/>
+            <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                Text="{l:Localize ParentProductCategoryID}"/>
+            <Picker Grid.Row="1" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+                ItemsSource="{Binding Path=ParentProductCategoryIDList}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding Path=SelectedParentProductCategoryID}" />
+            <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                Text="{l:Localize Name}"/>
+            <Entry Grid.Row="2" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+                Text="{Binding Item.Name}"/>
+            <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                Text="{l:Localize rowguid}"/>
+            <Entry Grid.Row="3" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+                Text="{Binding Item.rowguid}"/>
+            <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                Text="{l:Localize ModifiedDate}"/>
+            <DatePicker Grid.Row="4" Grid.Column="1" Style="{StaticResource ValueDatePickerStyle}"
+                Date="{Binding Item.ModifiedDate}" />
         </Grid>
         <mct:UniformItemsLayout VerticalOptions="End">
             <Button

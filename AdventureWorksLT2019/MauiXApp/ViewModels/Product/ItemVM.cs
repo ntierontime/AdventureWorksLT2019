@@ -1,3 +1,4 @@
+using AdventureWorksLT2019.MauiXApp.Common.Helpers;
 using AdventureWorksLT2019.MauiXApp.Messages;
 using AdventureWorksLT2019.MauiXApp.DataModels;
 using AdventureWorksLT2019.MauiXApp.Services;
@@ -10,8 +11,9 @@ using System.Windows.Input;
 
 namespace AdventureWorksLT2019.MauiXApp.ViewModels.Product;
 
-public class ItemVM : ItemVMBase<ProductIdentifier, ProductDataModel, ProductService, ProductItemChangedMessage, ProductItemRequestMessage>
+public class ItemVM : ItemVMBase<ProductIdentifier, ProductDataModel, ProductService, ProductItemChangedMessage>
 {
+    #region Foreign Key SelectLists
 
     // ForeignKeys.1. ProductCategoryIDList
     private List<NameValuePair<int>> m_ProductCategoryIDList;
@@ -78,9 +80,42 @@ public class ItemVM : ItemVMBase<ProductIdentifier, ProductDataModel, ProductSer
             }
         }
     }
+#endregion Foreign Key SelectLists
+
+    public ICommand LaunchProductCategoryFKItemViewCommand { get; private set; }
+
+    public ICommand LaunchProductModelFKItemViewCommand { get; private set; }
     public ItemVM(ProductService dataService)
         : base(dataService)
     {
+
+        LaunchProductCategoryFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryEditPopupCommand();
+        //LaunchProductCategoryFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryEditPageCommand(AppShellRoutes.ProductListPage);
+
+        LaunchProductModelFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductModelEditPopupCommand();
+        //LaunchProductModelFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductModelEditPageCommand(AppShellRoutes.ProductListPage);
+
+        WeakReferenceMessenger.Default.Register<ItemVM, ProductIdentifierMessage>(
+           this, async (r, m) =>
+        {
+            if (m.ItemView == ViewItemTemplates.Create)
+            {
+                Item = _dataService.GetDefault();
+            }
+            else
+            {
+                var response = await _dataService.Get(m.Value);
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    Item = response.ResponseBody;
+                }
+            }
+            if (m.ItemView == ViewItemTemplates.Create || m.ItemView == ViewItemTemplates.Edit)
+            {
+                await LoadCodeListsIfAny(m.ItemView);
+            }
+        });
     }
 
     protected override async Task LoadCodeListsIfAny(ViewItemTemplates itemView)

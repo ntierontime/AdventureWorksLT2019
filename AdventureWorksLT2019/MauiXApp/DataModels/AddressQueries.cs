@@ -20,6 +20,19 @@ public class AddressIdentifier: ObservableBaseQuery
     {
         return $"{AddressID}";
     }
+
+    public override int GetHashCode()
+    {
+        return ($"{AddressID}").GetHashCode();
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null || !(obj is AddressIdentifier))
+            return false;
+        var typedObj = (AddressIdentifier)obj;
+        return AddressID == typedObj.AddressID;
+    }
 }
 
 public class AddressAdvancedQuery: ObservableBaseQuery, IClone<AddressAdvancedQuery>

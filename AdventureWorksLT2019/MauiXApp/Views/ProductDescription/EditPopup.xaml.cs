@@ -12,7 +12,6 @@ public partial class EditPopup : Popup
         var viewModel = ServiceHelper.GetService<ItemVM>();
         BindingContext = viewModel;
         viewModel.AttachEditViewCommands(new Command(OnCancelled));
-        viewModel.RequestItem(ViewItemTemplates.Edit);
 
         InitializeComponent();
         // WinUI Size is not correct.

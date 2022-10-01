@@ -1,3 +1,4 @@
+using AdventureWorksLT2019.MauiXApp.Common.Helpers;
 using AdventureWorksLT2019.MauiXApp.Messages;
 using AdventureWorksLT2019.MauiXApp.DataModels;
 using AdventureWorksLT2019.MauiXApp.Services;
@@ -10,8 +11,9 @@ using System.Windows.Input;
 
 namespace AdventureWorksLT2019.MauiXApp.ViewModels.ProductCategory;
 
-public class ItemVM : ItemVMBase<ProductCategoryIdentifier, ProductCategoryDataModel, ProductCategoryService, ProductCategoryItemChangedMessage, ProductCategoryItemRequestMessage>
+public class ItemVM : ItemVMBase<ProductCategoryIdentifier, ProductCategoryDataModel, ProductCategoryService, ProductCategoryItemChangedMessage>
 {
+    #region Foreign Key SelectLists
 
     // ForeignKeys.1. ParentProductCategoryIDList
     private List<NameValuePair<int>> m_ParentProductCategoryIDList;
@@ -34,9 +36,37 @@ public class ItemVM : ItemVMBase<ProductCategoryIdentifier, ProductCategoryDataM
             }
         }
     }
+#endregion Foreign Key SelectLists
+
+    public ICommand LaunchProductCategoryFKItemViewCommand { get; private set; }
     public ItemVM(ProductCategoryService dataService)
         : base(dataService)
     {
+
+        LaunchProductCategoryFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryEditPopupCommand();
+        //LaunchProductCategoryFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryEditPageCommand(AppShellRoutes.ProductCategoryListPage);
+
+        WeakReferenceMessenger.Default.Register<ItemVM, ProductCategoryIdentifierMessage>(
+           this, async (r, m) =>
+        {
+            if (m.ItemView == ViewItemTemplates.Create)
+            {
+                Item = _dataService.GetDefault();
+            }
+            else
+            {
+                var response = await _dataService.Get(m.Value);
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    Item = response.ResponseBody;
+                }
+            }
+            if (m.ItemView == ViewItemTemplates.Create || m.ItemView == ViewItemTemplates.Edit)
+            {
+                await LoadCodeListsIfAny(m.ItemView);
+            }
+        });
     }
 
     protected override async Task LoadCodeListsIfAny(ViewItemTemplates itemView)

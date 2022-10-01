@@ -20,26 +20,26 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize ProductModelID}"/>
-        <Picker Grid.Row="0" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
-            ItemsSource="{Binding Path=ProductModelIDList}"
-            ItemDisplayBinding="{Binding Name}"
-            SelectedItem="{Binding Path=SelectedProductModelID}" />
-        <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize ProductDescriptionID}"/>
-        <Picker Grid.Row="1" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
-            ItemsSource="{Binding Path=ProductDescriptionIDList}"
-            ItemDisplayBinding="{Binding Name}"
-            SelectedItem="{Binding Path=SelectedProductDescriptionID}" />
-        <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize Culture}"/>
-        <Entry Grid.Row="2" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-            Text="{Binding Item.Culture}"/>
-        <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-            Text="{l:Localize ModifiedDate}"/>
-        <DatePicker Grid.Row="3" Grid.Column="1" Style="{StaticResource ValueDatePickerStyle}"
-            Date="{Binding Item.ModifiedDate}" />
+            <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                Text="{l:Localize ProductModelID}"/>
+            <Picker Grid.Row="0" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+                ItemsSource="{Binding Path=ProductModelIDList}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding Path=SelectedProductModelID}" />
+            <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                Text="{l:Localize ProductDescriptionID}"/>
+            <Picker Grid.Row="1" Grid.Column="1"  Style="{StaticResource ValuePickerStyle}"
+                ItemsSource="{Binding Path=ProductDescriptionIDList}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding Path=SelectedProductDescriptionID}" />
+            <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                Text="{l:Localize Culture}"/>
+            <Entry Grid.Row="2" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+                Text="{Binding Item.Culture}"/>
+            <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                Text="{l:Localize ModifiedDate}"/>
+            <DatePicker Grid.Row="3" Grid.Column="1" Style="{StaticResource ValueDatePickerStyle}"
+                Date="{Binding Item.ModifiedDate}" />
         </Grid>
         <mct:UniformItemsLayout VerticalOptions="End">
             <Button

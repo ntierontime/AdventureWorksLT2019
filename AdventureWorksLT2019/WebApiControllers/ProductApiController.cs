@@ -57,27 +57,27 @@ namespace AdventureWorksLT2019.WebApiControllers
         // [Authorize]
         [Route("{ProductID}")]
         [HttpPut]
-        public async Task<ActionResult<ProductDataModel.DefaultView>> Put([FromRoute]ProductIdentifier id, [FromBody]ProductDataModel input)
+        public async Task<ActionResult<Response<ProductDataModel.DefaultView>>> Put([FromRoute]ProductIdentifier id, [FromBody]ProductDataModel input)
         {
             var serviceResponse = await _thisService.Update(id, input);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnActionResult(serviceResponse);
         }
 
         // [Authorize]
         [Route("{ProductID}")]
         [HttpGet]
-        public async Task<ActionResult<ProductDataModel.DefaultView>> Get([FromRoute]ProductIdentifier id)
+        public async Task<ActionResult<Response<ProductDataModel.DefaultView>>> Get([FromRoute]ProductIdentifier id)
         {
             var serviceResponse = await _thisService.Get(id);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnActionResult(serviceResponse);
         }
 
         // [Authorize]
         [HttpPost]
-        public async Task<ActionResult<ProductDataModel.DefaultView>> Post(ProductDataModel input)
+        public async Task<ActionResult<Response<ProductDataModel.DefaultView>>> Post(ProductDataModel input)
         {
             var serviceResponse = await _thisService.Create(input);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnActionResult(serviceResponse);
         }
 
         // [Authorize]
