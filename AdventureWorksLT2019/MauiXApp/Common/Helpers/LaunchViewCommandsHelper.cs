@@ -5,6 +5,31 @@ namespace AdventureWorksLT2019.MauiXApp.Common.Helpers;
 
 public static class LaunchViewCommandsHelper
 {
+    public static Command GetLaunchProductCategoryAdvancedSearchPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductCategory.AdvancedSearchPopup();
+            await AdventureWorksLT2019.MauiXApp.AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+    public static Command GetLaunchProductCategoryListOrderBysPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductCategory.ListOrderBysPopup();
+            await AdventureWorksLT2019.MauiXApp.AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+    public static Command GetLaunchProductCategoryListQuickActionsPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductCategory.ListQuickActionsPopup();
+            await AdventureWorksLT2019.MauiXApp.AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
     public static Command<int> GetLaunchProductCategoryDetailsPopupCommand()
     {
         return new Command<int>(async (productCategoryID) =>

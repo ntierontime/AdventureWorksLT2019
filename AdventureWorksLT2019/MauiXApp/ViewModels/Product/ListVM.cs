@@ -192,6 +192,9 @@ public class ListVM : ListVMBase<ProductAdvancedQuery, ProductIdentifier, Produc
         */
         // AdvancedQuery.End
 
+        LaunchDetailsPageCommand = AdventureWorksLT2019.MauiXApp.Common.Helpers.LaunchViewCommandsHelper.GetLaunchProductCategoryDetailsPageCommand(AdventureWorksLT2019.MauiXApp.Common.Services.AppShellRoutes.ProductCategoryListPage);
+        LaunchDetailsPopupCommand = AdventureWorksLT2019.MauiXApp.Common.Helpers.LaunchViewCommandsHelper.GetLaunchProductCategoryDetailsPopupCommand();
+
         BulkDeleteCommand = new Command(
             async () =>
             {

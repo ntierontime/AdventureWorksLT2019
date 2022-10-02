@@ -120,6 +120,16 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
     public ICommand LaunchItemPopupViewCommand { get; protected set; }
     public ICommand LaunchItemPageCommand { get; protected set; }
 
+    public ICommand LaunchCreatePopupCommand { get; protected set; }
+    public ICommand LaunchDeletePopupCommand { get; protected set; }
+    public ICommand LaunchDetailsPopupCommand { get; protected set; }
+    public ICommand LaunchEditPopupCommand { get; protected set; }
+
+    public ICommand LaunchCreatePageCommand { get; protected set; }
+    public ICommand LaunchDeletePageCommand { get; protected set; }
+    public ICommand LaunchDetailsPageCommand { get; protected set; }
+    public ICommand LaunchEditPageCommand { get; protected set; }
+
     public ICommand ToggleSelectModeCommand { get; protected set; }
     public ICommand ClearSelectedItemsCommand { get; protected set; }
     public ICommand SelectionChangedCommand { get; protected set; }
