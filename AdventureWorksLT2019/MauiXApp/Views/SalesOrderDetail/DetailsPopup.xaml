@@ -7,138 +7,100 @@
              CanBeDismissedByTappingOutsideOfPopup="False"
              x:Class="AdventureWorksLT2019.MauiXApp.Views.SalesOrderDetail.DetailsPopup">
     <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0,0,0,50">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="2*" />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize SalesOrderID}"/>
-            <Button Grid.Row="0" Grid.Column="1"
-                Command="{Binding LaunchAdventureWorksLT2019Model:SalesOrderHeaderFKItemViewCommand}" CommandParameter="{Binding Item.SalesOrderID}"
-                Text="{Binding Item.SalesOrderHeader_Name}" />
-            <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize SalesOrderDetailID}"/>
-            <Entry Grid.Row="1" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                Text="{Binding Item.SalesOrderDetailID}"/>
-            <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize OrderQty}"/>
-            <Entry Grid.Row="2" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                Text="{Binding Item.OrderQty}"/>
-            <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize ProductID}"/>
-            <Button Grid.Row="3" Grid.Column="1"
-                Command="{Binding LaunchAdventureWorksLT2019Model:ProductFKItemViewCommand}" CommandParameter="{Binding Item.ProductID}"
-                Text="{Binding Item.Product_Name}" />
-            <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize UnitPrice}"/>
-            <Entry Grid.Row="4" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                Text="{Binding Item.UnitPrice}"/>
-            <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize UnitPriceDiscount}"/>
-            <Entry Grid.Row="5" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                Text="{Binding Item.UnitPriceDiscount}"/>
-            <Label Grid.Row="6" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize LineTotal}"/>
-            <Entry Grid.Row="6" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                Text="{Binding Item.LineTotal}"/>
-            <Label Grid.Row="7" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize rowguid}"/>
-            <Entry Grid.Row="7" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                Text="{Binding Item.rowguid}"/>
-            <Label Grid.Row="8" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize ModifiedDate}"/>
-            <Entry Grid.Row="8" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                Text="{Binding Item.ModifiedDate}"/>
-            <Label Grid.Row="9" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize Product_Name}"/>
-            <Entry Grid.Row="9" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                Text="{Binding Item.Product_Name}"/>
-            <Label Grid.Row="10" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize ProductCategoryID}"/>
-            <Button Grid.Row="10" Grid.Column="1"
-                Command="{Binding LaunchAdventureWorksLT2019Model:ProductCategoryFKItemViewCommand}" CommandParameter="{Binding Item.ProductCategoryID}"
-                Text="{Binding Item.ProductCategory_Name}" />
-            <Label Grid.Row="11" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize ProductCategory_Name}"/>
-            <Entry Grid.Row="11" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                Text="{Binding Item.ProductCategory_Name}"/>
-            <Label Grid.Row="12" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize ProductCategory_ParentID}"/>
-            <Button Grid.Row="12" Grid.Column="1"
-                Command="{Binding LaunchAdventureWorksLT2019Model:ProductCategoryFKItemViewCommand}" CommandParameter="{Binding Item.ProductCategory_ParentID}"
-                Text="{Binding Item.ProductCategory_Parent_Name}" />
-            <Label Grid.Row="13" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize ProductCategory_Parent_Name}"/>
-            <Entry Grid.Row="13" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                Text="{Binding Item.ProductCategory_Parent_Name}"/>
-            <Label Grid.Row="14" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize ProductModelID}"/>
-            <Button Grid.Row="14" Grid.Column="1"
-                Command="{Binding LaunchAdventureWorksLT2019Model:ProductModelFKItemViewCommand}" CommandParameter="{Binding Item.ProductModelID}"
-                Text="{Binding Item.ProductModel_Name}" />
-            <Label Grid.Row="15" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize ProductModel_Name}"/>
-            <Entry Grid.Row="15" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                Text="{Binding Item.ProductModel_Name}"/>
-            <Label Grid.Row="16" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize SalesOrderHeader_Name}"/>
-            <Entry Grid.Row="16" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                Text="{Binding Item.SalesOrderHeader_Name}"/>
-            <Label Grid.Row="17" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize BillToID}"/>
-            <Button Grid.Row="17" Grid.Column="1"
-                Command="{Binding LaunchAdventureWorksLT2019Model:AddressFKItemViewCommand}" CommandParameter="{Binding Item.BillToID}"
-                Text="{Binding Item.BillTo_Name}" />
-            <Label Grid.Row="18" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize BillTo_Name}"/>
-            <Entry Grid.Row="18" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                Text="{Binding Item.BillTo_Name}"/>
-            <Label Grid.Row="19" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize CustomerID}"/>
-            <Button Grid.Row="19" Grid.Column="1"
-                Command="{Binding LaunchAdventureWorksLT2019Model:CustomerFKItemViewCommand}" CommandParameter="{Binding Item.CustomerID}"
-                Text="{Binding Item.Customer_Name}" />
-            <Label Grid.Row="20" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize Customer_Name}"/>
-            <Entry Grid.Row="20" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                Text="{Binding Item.Customer_Name}"/>
-            <Label Grid.Row="21" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize ShipToID}"/>
-            <Button Grid.Row="21" Grid.Column="1"
-                Command="{Binding LaunchAdventureWorksLT2019Model:AddressFKItemViewCommand}" CommandParameter="{Binding Item.ShipToID}"
-                Text="{Binding Item.ShipTo_Name}" />
-            <Label Grid.Row="22" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize ShipTo_Name}"/>
-            <Entry Grid.Row="22" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                Text="{Binding Item.ShipTo_Name}"/>
-        </Grid>
+        <ScrollView Margin="20">
+            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0,0,0,50">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                    Text="{l:Localize SalesOrderID}"/>
+                <Button Grid.Row="0" Grid.Column="1"
+                    Command="{Binding LaunchSalesOrderHeaderFKItemViewCommand}" CommandParameter="{Binding Item.SalesOrderID}"
+                    Text="{Binding Item.SalesOrderHeader_Name}" />
+                <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                    Text="{l:Localize SalesOrderDetailID}"/>
+                <Entry Grid.Row="1" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                    Text="{Binding Item.SalesOrderDetailID}"/>
+                <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                    Text="{l:Localize OrderQty}"/>
+                <Entry Grid.Row="2" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                    Text="{Binding Item.OrderQty}"/>
+                <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                    Text="{l:Localize ProductID}"/>
+                <Button Grid.Row="3" Grid.Column="1"
+                    Command="{Binding LaunchProductFKItemViewCommand}" CommandParameter="{Binding Item.ProductID}"
+                    Text="{Binding Item.Product_Name}" />
+                <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                    Text="{l:Localize UnitPrice}"/>
+                <Entry Grid.Row="4" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                    Text="{Binding Item.UnitPrice}"/>
+                <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                    Text="{l:Localize UnitPriceDiscount}"/>
+                <Entry Grid.Row="5" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                    Text="{Binding Item.UnitPriceDiscount}"/>
+                <Label Grid.Row="6" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                    Text="{l:Localize LineTotal}"/>
+                <Entry Grid.Row="6" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                    Text="{Binding Item.LineTotal}"/>
+                <Label Grid.Row="7" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                    Text="{l:Localize rowguid}"/>
+                <Entry Grid.Row="7" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                    Text="{Binding Item.rowguid}"/>
+                <Label Grid.Row="8" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                    Text="{l:Localize ModifiedDate}"/>
+                <Entry Grid.Row="8" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                    Text="{Binding Item.ModifiedDate}"/>
+                <Label Grid.Row="9" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                    Text="{l:Localize ProductCategoryID}"/>
+                <Button Grid.Row="9" Grid.Column="1"
+                    Command="{Binding LaunchProductCategoryFKItemViewCommand}" CommandParameter="{Binding Item.ProductCategoryID}"
+                    Text="{Binding Item.ProductCategory_Name}" />
+                <Label Grid.Row="10" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                    Text="{l:Localize ProductCategory_ParentID}"/>
+                <Button Grid.Row="10" Grid.Column="1"
+                    Command="{Binding LaunchProductCategoryFKItemViewCommand}" CommandParameter="{Binding Item.ProductCategory_ParentID}"
+                    Text="{Binding Item.ProductCategory_Parent_Name}" />
+                <Label Grid.Row="11" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                    Text="{l:Localize ProductModelID}"/>
+                <Button Grid.Row="11" Grid.Column="1"
+                    Command="{Binding LaunchProductModelFKItemViewCommand}" CommandParameter="{Binding Item.ProductModelID}"
+                    Text="{Binding Item.ProductModel_Name}" />
+                <Label Grid.Row="12" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                    Text="{l:Localize BillToID}"/>
+                <Button Grid.Row="12" Grid.Column="1"
+                    Command="{Binding LaunchAddressFKItemViewCommand}" CommandParameter="{Binding Item.BillToID}"
+                    Text="{Binding Item.BillTo_Name}" />
+                <Label Grid.Row="13" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                    Text="{l:Localize CustomerID}"/>
+                <Button Grid.Row="13" Grid.Column="1"
+                    Command="{Binding LaunchCustomerFKItemViewCommand}" CommandParameter="{Binding Item.CustomerID}"
+                    Text="{Binding Item.Customer_Name}" />
+                <Label Grid.Row="14" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                    Text="{l:Localize ShipToID}"/>
+                <Button Grid.Row="14" Grid.Column="1"
+                    Command="{Binding LaunchAddressFKItemViewCommand}" CommandParameter="{Binding Item.ShipToID}"
+                    Text="{Binding Item.ShipTo_Name}" />
+            </Grid>
+        </ScrollView>
         <mct:UniformItemsLayout VerticalOptions="End">
             <Button
                 Command="{Binding DetailsCloseCommand}"

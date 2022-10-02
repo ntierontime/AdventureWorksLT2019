@@ -11,8 +11,9 @@ namespace AdventureWorksLT2019.MauiXApp.Common.Helpers;
 public static class LaunchViewCommandsHelper
 {
 
-    //1. BuildVersion
+    //2. BuildVersion
 
+    // 1.1. GetLaunchBuildVersionCreatePageCommand
     public static Command GetLaunchBuildVersionCreatePageCommand(string returnPath)
     {
         return new Command(async () =>
@@ -22,6 +23,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 1.2. GetLaunchBuildVersionDeletePageCommand
     public static Command<byte> GetLaunchBuildVersionDeletePageCommand(string returnPath)
     {
         return new Command<byte>(async (systemInformationID) =>
@@ -31,6 +33,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 1.3. GetLaunchBuildVersionDetailsPageCommand
     public static Command<byte> GetLaunchBuildVersionDetailsPageCommand(string returnPath)
     {
         return new Command<byte>(async (systemInformationID) =>
@@ -40,6 +43,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 1.4. GetLaunchBuildVersionEditPageCommand
     public static Command<byte> GetLaunchBuildVersionEditPageCommand(string returnPath)
     {
         return new Command<byte>(async (systemInformationID) =>
@@ -49,6 +53,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 1.5. GetLaunchBuildVersionCreatePopupCommand
     public static Command GetLaunchBuildVersionCreatePopupCommand()
     {
         return new Command(async () =>
@@ -59,6 +64,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 1.6. GetLaunchBuildVersionDeletePopupCommand
     public static Command<byte> GetLaunchBuildVersionDeletePopupCommand()
     {
         return new Command<byte>(async (systemInformationID) =>
@@ -69,6 +75,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 1.7. GetLaunchBuildVersionDetailsPopupCommand
     public static Command<byte> GetLaunchBuildVersionDetailsPopupCommand()
     {
         return new Command<byte>(async (systemInformationID) =>
@@ -79,6 +86,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 1.8. GetLaunchBuildVersionEditPopupCommand
     public static Command<byte> GetLaunchBuildVersionEditPopupCommand()
     {
         return new Command<byte>(async (systemInformationID) =>
@@ -89,8 +97,39 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    //2. ErrorLog
+    // 1.9. GetLaunchBuildVersionAdvancedSearchPopupCommand
+    public static Command GetLaunchBuildVersionAdvancedSearchPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.BuildVersion.AdvancedSearchPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
 
+    // 1.10. GetLaunchBuildVersionListQuickActionsPopupCommand
+    public static Command GetLaunchBuildVersionListQuickActionsPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.BuildVersion.ListQuickActionsPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    // 1.11. GetLaunchBuildVersionListOrderBysPopupCommand
+    public static Command GetLaunchBuildVersionListOrderBysPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.BuildVersion.ListOrderBysPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    //3. ErrorLog
+
+    // 2.1. GetLaunchErrorLogCreatePageCommand
     public static Command GetLaunchErrorLogCreatePageCommand(string returnPath)
     {
         return new Command(async () =>
@@ -100,6 +139,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 2.2. GetLaunchErrorLogDeletePageCommand
     public static Command<int> GetLaunchErrorLogDeletePageCommand(string returnPath)
     {
         return new Command<int>(async (errorLogID) =>
@@ -109,6 +149,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 2.3. GetLaunchErrorLogDetailsPageCommand
     public static Command<int> GetLaunchErrorLogDetailsPageCommand(string returnPath)
     {
         return new Command<int>(async (errorLogID) =>
@@ -118,6 +159,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 2.4. GetLaunchErrorLogEditPageCommand
     public static Command<int> GetLaunchErrorLogEditPageCommand(string returnPath)
     {
         return new Command<int>(async (errorLogID) =>
@@ -127,6 +169,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 2.5. GetLaunchErrorLogCreatePopupCommand
     public static Command GetLaunchErrorLogCreatePopupCommand()
     {
         return new Command(async () =>
@@ -137,6 +180,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 2.6. GetLaunchErrorLogDeletePopupCommand
     public static Command<int> GetLaunchErrorLogDeletePopupCommand()
     {
         return new Command<int>(async (errorLogID) =>
@@ -147,6 +191,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 2.7. GetLaunchErrorLogDetailsPopupCommand
     public static Command<int> GetLaunchErrorLogDetailsPopupCommand()
     {
         return new Command<int>(async (errorLogID) =>
@@ -157,6 +202,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 2.8. GetLaunchErrorLogEditPopupCommand
     public static Command<int> GetLaunchErrorLogEditPopupCommand()
     {
         return new Command<int>(async (errorLogID) =>
@@ -167,8 +213,39 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    //3. Address
+    // 2.9. GetLaunchErrorLogAdvancedSearchPopupCommand
+    public static Command GetLaunchErrorLogAdvancedSearchPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.ErrorLog.AdvancedSearchPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
 
+    // 2.10. GetLaunchErrorLogListQuickActionsPopupCommand
+    public static Command GetLaunchErrorLogListQuickActionsPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.ErrorLog.ListQuickActionsPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    // 2.11. GetLaunchErrorLogListOrderBysPopupCommand
+    public static Command GetLaunchErrorLogListOrderBysPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.ErrorLog.ListOrderBysPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    //4. Address
+
+    // 3.1. GetLaunchAddressCreatePageCommand
     public static Command GetLaunchAddressCreatePageCommand(string returnPath)
     {
         return new Command(async () =>
@@ -178,6 +255,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 3.2. GetLaunchAddressDeletePageCommand
     public static Command<int> GetLaunchAddressDeletePageCommand(string returnPath)
     {
         return new Command<int>(async (addressID) =>
@@ -187,6 +265,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 3.3. GetLaunchAddressDetailsPageCommand
     public static Command<int> GetLaunchAddressDetailsPageCommand(string returnPath)
     {
         return new Command<int>(async (addressID) =>
@@ -196,6 +275,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 3.4. GetLaunchAddressEditPageCommand
     public static Command<int> GetLaunchAddressEditPageCommand(string returnPath)
     {
         return new Command<int>(async (addressID) =>
@@ -205,6 +285,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 3.5. GetLaunchAddressCreatePopupCommand
     public static Command GetLaunchAddressCreatePopupCommand()
     {
         return new Command(async () =>
@@ -215,6 +296,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 3.6. GetLaunchAddressDeletePopupCommand
     public static Command<int> GetLaunchAddressDeletePopupCommand()
     {
         return new Command<int>(async (addressID) =>
@@ -225,6 +307,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 3.7. GetLaunchAddressDetailsPopupCommand
     public static Command<int> GetLaunchAddressDetailsPopupCommand()
     {
         return new Command<int>(async (addressID) =>
@@ -235,6 +318,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 3.8. GetLaunchAddressEditPopupCommand
     public static Command<int> GetLaunchAddressEditPopupCommand()
     {
         return new Command<int>(async (addressID) =>
@@ -245,8 +329,39 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    //4. Customer
+    // 3.9. GetLaunchAddressAdvancedSearchPopupCommand
+    public static Command GetLaunchAddressAdvancedSearchPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.Address.AdvancedSearchPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
 
+    // 3.10. GetLaunchAddressListQuickActionsPopupCommand
+    public static Command GetLaunchAddressListQuickActionsPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.Address.ListQuickActionsPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    // 3.11. GetLaunchAddressListOrderBysPopupCommand
+    public static Command GetLaunchAddressListOrderBysPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.Address.ListOrderBysPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    //5. Customer
+
+    // 4.1. GetLaunchCustomerCreatePageCommand
     public static Command GetLaunchCustomerCreatePageCommand(string returnPath)
     {
         return new Command(async () =>
@@ -256,6 +371,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 4.2. GetLaunchCustomerDeletePageCommand
     public static Command<int> GetLaunchCustomerDeletePageCommand(string returnPath)
     {
         return new Command<int>(async (customerID) =>
@@ -265,6 +381,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 4.3. GetLaunchCustomerDetailsPageCommand
     public static Command<int> GetLaunchCustomerDetailsPageCommand(string returnPath)
     {
         return new Command<int>(async (customerID) =>
@@ -274,6 +391,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 4.4. GetLaunchCustomerEditPageCommand
     public static Command<int> GetLaunchCustomerEditPageCommand(string returnPath)
     {
         return new Command<int>(async (customerID) =>
@@ -283,6 +401,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 4.5. GetLaunchCustomerCreatePopupCommand
     public static Command GetLaunchCustomerCreatePopupCommand()
     {
         return new Command(async () =>
@@ -293,6 +412,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 4.6. GetLaunchCustomerDeletePopupCommand
     public static Command<int> GetLaunchCustomerDeletePopupCommand()
     {
         return new Command<int>(async (customerID) =>
@@ -303,6 +423,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 4.7. GetLaunchCustomerDetailsPopupCommand
     public static Command<int> GetLaunchCustomerDetailsPopupCommand()
     {
         return new Command<int>(async (customerID) =>
@@ -313,6 +434,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 4.8. GetLaunchCustomerEditPopupCommand
     public static Command<int> GetLaunchCustomerEditPopupCommand()
     {
         return new Command<int>(async (customerID) =>
@@ -323,8 +445,39 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    //5. CustomerAddress
+    // 4.9. GetLaunchCustomerAdvancedSearchPopupCommand
+    public static Command GetLaunchCustomerAdvancedSearchPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.Customer.AdvancedSearchPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
 
+    // 4.10. GetLaunchCustomerListQuickActionsPopupCommand
+    public static Command GetLaunchCustomerListQuickActionsPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.Customer.ListQuickActionsPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    // 4.11. GetLaunchCustomerListOrderBysPopupCommand
+    public static Command GetLaunchCustomerListOrderBysPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.Customer.ListOrderBysPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    //6. CustomerAddress
+
+    // 5.1. GetLaunchCustomerAddressCreatePageCommand
     public static Command GetLaunchCustomerAddressCreatePageCommand(string returnPath)
     {
         return new Command(async () =>
@@ -334,6 +487,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 5.2. GetLaunchCustomerAddressDeletePageCommand
     public static Command<int> GetLaunchCustomerAddressDeletePageCommand(string returnPath)
     {
         return new Command<int>(async (customerID) =>
@@ -343,6 +497,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 5.3. GetLaunchCustomerAddressDetailsPageCommand
     public static Command<int> GetLaunchCustomerAddressDetailsPageCommand(string returnPath)
     {
         return new Command<int>(async (customerID) =>
@@ -352,6 +507,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 5.4. GetLaunchCustomerAddressEditPageCommand
     public static Command<int> GetLaunchCustomerAddressEditPageCommand(string returnPath)
     {
         return new Command<int>(async (customerID) =>
@@ -361,6 +517,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 5.5. GetLaunchCustomerAddressCreatePopupCommand
     public static Command GetLaunchCustomerAddressCreatePopupCommand()
     {
         return new Command(async () =>
@@ -371,6 +528,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 5.6. GetLaunchCustomerAddressDeletePopupCommand
     public static Command<int> GetLaunchCustomerAddressDeletePopupCommand()
     {
         return new Command<int>(async (customerID) =>
@@ -381,6 +539,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 5.7. GetLaunchCustomerAddressDetailsPopupCommand
     public static Command<int> GetLaunchCustomerAddressDetailsPopupCommand()
     {
         return new Command<int>(async (customerID) =>
@@ -391,6 +550,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 5.8. GetLaunchCustomerAddressEditPopupCommand
     public static Command<int> GetLaunchCustomerAddressEditPopupCommand()
     {
         return new Command<int>(async (customerID) =>
@@ -401,8 +561,39 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    //6. Product
+    // 5.9. GetLaunchCustomerAddressAdvancedSearchPopupCommand
+    public static Command GetLaunchCustomerAddressAdvancedSearchPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.AdvancedSearchPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
 
+    // 5.10. GetLaunchCustomerAddressListQuickActionsPopupCommand
+    public static Command GetLaunchCustomerAddressListQuickActionsPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.ListQuickActionsPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    // 5.11. GetLaunchCustomerAddressListOrderBysPopupCommand
+    public static Command GetLaunchCustomerAddressListOrderBysPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.ListOrderBysPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    //7. Product
+
+    // 6.1. GetLaunchProductCreatePageCommand
     public static Command GetLaunchProductCreatePageCommand(string returnPath)
     {
         return new Command(async () =>
@@ -412,6 +603,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 6.2. GetLaunchProductDeletePageCommand
     public static Command<int> GetLaunchProductDeletePageCommand(string returnPath)
     {
         return new Command<int>(async (productID) =>
@@ -421,6 +613,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 6.3. GetLaunchProductDetailsPageCommand
     public static Command<int> GetLaunchProductDetailsPageCommand(string returnPath)
     {
         return new Command<int>(async (productID) =>
@@ -430,6 +623,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 6.4. GetLaunchProductEditPageCommand
     public static Command<int> GetLaunchProductEditPageCommand(string returnPath)
     {
         return new Command<int>(async (productID) =>
@@ -439,6 +633,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 6.5. GetLaunchProductCreatePopupCommand
     public static Command GetLaunchProductCreatePopupCommand()
     {
         return new Command(async () =>
@@ -449,6 +644,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 6.6. GetLaunchProductDeletePopupCommand
     public static Command<int> GetLaunchProductDeletePopupCommand()
     {
         return new Command<int>(async (productID) =>
@@ -459,6 +655,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 6.7. GetLaunchProductDetailsPopupCommand
     public static Command<int> GetLaunchProductDetailsPopupCommand()
     {
         return new Command<int>(async (productID) =>
@@ -469,6 +666,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 6.8. GetLaunchProductEditPopupCommand
     public static Command<int> GetLaunchProductEditPopupCommand()
     {
         return new Command<int>(async (productID) =>
@@ -479,8 +677,39 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    //7. ProductCategory
+    // 6.9. GetLaunchProductAdvancedSearchPopupCommand
+    public static Command GetLaunchProductAdvancedSearchPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.Product.AdvancedSearchPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
 
+    // 6.10. GetLaunchProductListQuickActionsPopupCommand
+    public static Command GetLaunchProductListQuickActionsPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.Product.ListQuickActionsPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    // 6.11. GetLaunchProductListOrderBysPopupCommand
+    public static Command GetLaunchProductListOrderBysPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.Product.ListOrderBysPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    //8. ProductCategory
+
+    // 7.1. GetLaunchProductCategoryCreatePageCommand
     public static Command GetLaunchProductCategoryCreatePageCommand(string returnPath)
     {
         return new Command(async () =>
@@ -490,6 +719,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 7.2. GetLaunchProductCategoryDeletePageCommand
     public static Command<int> GetLaunchProductCategoryDeletePageCommand(string returnPath)
     {
         return new Command<int>(async (productCategoryID) =>
@@ -499,6 +729,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 7.3. GetLaunchProductCategoryDetailsPageCommand
     public static Command<int> GetLaunchProductCategoryDetailsPageCommand(string returnPath)
     {
         return new Command<int>(async (productCategoryID) =>
@@ -508,6 +739,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 7.4. GetLaunchProductCategoryEditPageCommand
     public static Command<int> GetLaunchProductCategoryEditPageCommand(string returnPath)
     {
         return new Command<int>(async (productCategoryID) =>
@@ -517,6 +749,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 7.5. GetLaunchProductCategoryCreatePopupCommand
     public static Command GetLaunchProductCategoryCreatePopupCommand()
     {
         return new Command(async () =>
@@ -527,6 +760,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 7.6. GetLaunchProductCategoryDeletePopupCommand
     public static Command<int> GetLaunchProductCategoryDeletePopupCommand()
     {
         return new Command<int>(async (productCategoryID) =>
@@ -537,6 +771,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 7.7. GetLaunchProductCategoryDetailsPopupCommand
     public static Command<int> GetLaunchProductCategoryDetailsPopupCommand()
     {
         return new Command<int>(async (productCategoryID) =>
@@ -547,6 +782,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 7.8. GetLaunchProductCategoryEditPopupCommand
     public static Command<int> GetLaunchProductCategoryEditPopupCommand()
     {
         return new Command<int>(async (productCategoryID) =>
@@ -557,8 +793,39 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    //8. ProductDescription
+    // 7.9. GetLaunchProductCategoryAdvancedSearchPopupCommand
+    public static Command GetLaunchProductCategoryAdvancedSearchPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductCategory.AdvancedSearchPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
 
+    // 7.10. GetLaunchProductCategoryListQuickActionsPopupCommand
+    public static Command GetLaunchProductCategoryListQuickActionsPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductCategory.ListQuickActionsPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    // 7.11. GetLaunchProductCategoryListOrderBysPopupCommand
+    public static Command GetLaunchProductCategoryListOrderBysPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductCategory.ListOrderBysPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    //9. ProductDescription
+
+    // 8.1. GetLaunchProductDescriptionCreatePageCommand
     public static Command GetLaunchProductDescriptionCreatePageCommand(string returnPath)
     {
         return new Command(async () =>
@@ -568,6 +835,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 8.2. GetLaunchProductDescriptionDeletePageCommand
     public static Command<int> GetLaunchProductDescriptionDeletePageCommand(string returnPath)
     {
         return new Command<int>(async (productDescriptionID) =>
@@ -577,6 +845,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 8.3. GetLaunchProductDescriptionDetailsPageCommand
     public static Command<int> GetLaunchProductDescriptionDetailsPageCommand(string returnPath)
     {
         return new Command<int>(async (productDescriptionID) =>
@@ -586,6 +855,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 8.4. GetLaunchProductDescriptionEditPageCommand
     public static Command<int> GetLaunchProductDescriptionEditPageCommand(string returnPath)
     {
         return new Command<int>(async (productDescriptionID) =>
@@ -595,6 +865,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 8.5. GetLaunchProductDescriptionCreatePopupCommand
     public static Command GetLaunchProductDescriptionCreatePopupCommand()
     {
         return new Command(async () =>
@@ -605,6 +876,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 8.6. GetLaunchProductDescriptionDeletePopupCommand
     public static Command<int> GetLaunchProductDescriptionDeletePopupCommand()
     {
         return new Command<int>(async (productDescriptionID) =>
@@ -615,6 +887,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 8.7. GetLaunchProductDescriptionDetailsPopupCommand
     public static Command<int> GetLaunchProductDescriptionDetailsPopupCommand()
     {
         return new Command<int>(async (productDescriptionID) =>
@@ -625,6 +898,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 8.8. GetLaunchProductDescriptionEditPopupCommand
     public static Command<int> GetLaunchProductDescriptionEditPopupCommand()
     {
         return new Command<int>(async (productDescriptionID) =>
@@ -635,8 +909,39 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    //9. ProductModel
+    // 8.9. GetLaunchProductDescriptionAdvancedSearchPopupCommand
+    public static Command GetLaunchProductDescriptionAdvancedSearchPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductDescription.AdvancedSearchPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
 
+    // 8.10. GetLaunchProductDescriptionListQuickActionsPopupCommand
+    public static Command GetLaunchProductDescriptionListQuickActionsPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductDescription.ListQuickActionsPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    // 8.11. GetLaunchProductDescriptionListOrderBysPopupCommand
+    public static Command GetLaunchProductDescriptionListOrderBysPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductDescription.ListOrderBysPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    //10. ProductModel
+
+    // 9.1. GetLaunchProductModelCreatePageCommand
     public static Command GetLaunchProductModelCreatePageCommand(string returnPath)
     {
         return new Command(async () =>
@@ -646,6 +951,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 9.2. GetLaunchProductModelDeletePageCommand
     public static Command<int> GetLaunchProductModelDeletePageCommand(string returnPath)
     {
         return new Command<int>(async (productModelID) =>
@@ -655,6 +961,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 9.3. GetLaunchProductModelDetailsPageCommand
     public static Command<int> GetLaunchProductModelDetailsPageCommand(string returnPath)
     {
         return new Command<int>(async (productModelID) =>
@@ -664,6 +971,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 9.4. GetLaunchProductModelEditPageCommand
     public static Command<int> GetLaunchProductModelEditPageCommand(string returnPath)
     {
         return new Command<int>(async (productModelID) =>
@@ -673,6 +981,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 9.5. GetLaunchProductModelCreatePopupCommand
     public static Command GetLaunchProductModelCreatePopupCommand()
     {
         return new Command(async () =>
@@ -683,6 +992,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 9.6. GetLaunchProductModelDeletePopupCommand
     public static Command<int> GetLaunchProductModelDeletePopupCommand()
     {
         return new Command<int>(async (productModelID) =>
@@ -693,6 +1003,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 9.7. GetLaunchProductModelDetailsPopupCommand
     public static Command<int> GetLaunchProductModelDetailsPopupCommand()
     {
         return new Command<int>(async (productModelID) =>
@@ -703,6 +1014,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 9.8. GetLaunchProductModelEditPopupCommand
     public static Command<int> GetLaunchProductModelEditPopupCommand()
     {
         return new Command<int>(async (productModelID) =>
@@ -713,8 +1025,39 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    //10. ProductModelProductDescription
+    // 9.9. GetLaunchProductModelAdvancedSearchPopupCommand
+    public static Command GetLaunchProductModelAdvancedSearchPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductModel.AdvancedSearchPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
 
+    // 9.10. GetLaunchProductModelListQuickActionsPopupCommand
+    public static Command GetLaunchProductModelListQuickActionsPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductModel.ListQuickActionsPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    // 9.11. GetLaunchProductModelListOrderBysPopupCommand
+    public static Command GetLaunchProductModelListOrderBysPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductModel.ListOrderBysPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    //11. ProductModelProductDescription
+
+    // 10.1. GetLaunchProductModelProductDescriptionCreatePageCommand
     public static Command GetLaunchProductModelProductDescriptionCreatePageCommand(string returnPath)
     {
         return new Command(async () =>
@@ -724,6 +1067,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 10.2. GetLaunchProductModelProductDescriptionDeletePageCommand
     public static Command<int> GetLaunchProductModelProductDescriptionDeletePageCommand(string returnPath)
     {
         return new Command<int>(async (productModelID) =>
@@ -733,6 +1077,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 10.3. GetLaunchProductModelProductDescriptionDetailsPageCommand
     public static Command<int> GetLaunchProductModelProductDescriptionDetailsPageCommand(string returnPath)
     {
         return new Command<int>(async (productModelID) =>
@@ -742,6 +1087,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 10.4. GetLaunchProductModelProductDescriptionEditPageCommand
     public static Command<int> GetLaunchProductModelProductDescriptionEditPageCommand(string returnPath)
     {
         return new Command<int>(async (productModelID) =>
@@ -751,6 +1097,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 10.5. GetLaunchProductModelProductDescriptionCreatePopupCommand
     public static Command GetLaunchProductModelProductDescriptionCreatePopupCommand()
     {
         return new Command(async () =>
@@ -761,6 +1108,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 10.6. GetLaunchProductModelProductDescriptionDeletePopupCommand
     public static Command<int> GetLaunchProductModelProductDescriptionDeletePopupCommand()
     {
         return new Command<int>(async (productModelID) =>
@@ -771,6 +1119,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 10.7. GetLaunchProductModelProductDescriptionDetailsPopupCommand
     public static Command<int> GetLaunchProductModelProductDescriptionDetailsPopupCommand()
     {
         return new Command<int>(async (productModelID) =>
@@ -781,6 +1130,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 10.8. GetLaunchProductModelProductDescriptionEditPopupCommand
     public static Command<int> GetLaunchProductModelProductDescriptionEditPopupCommand()
     {
         return new Command<int>(async (productModelID) =>
@@ -791,8 +1141,39 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    //11. SalesOrderDetail
+    // 10.9. GetLaunchProductModelProductDescriptionAdvancedSearchPopupCommand
+    public static Command GetLaunchProductModelProductDescriptionAdvancedSearchPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductModelProductDescription.AdvancedSearchPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
 
+    // 10.10. GetLaunchProductModelProductDescriptionListQuickActionsPopupCommand
+    public static Command GetLaunchProductModelProductDescriptionListQuickActionsPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductModelProductDescription.ListQuickActionsPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    // 10.11. GetLaunchProductModelProductDescriptionListOrderBysPopupCommand
+    public static Command GetLaunchProductModelProductDescriptionListOrderBysPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductModelProductDescription.ListOrderBysPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    //12. SalesOrderDetail
+
+    // 11.1. GetLaunchSalesOrderDetailCreatePageCommand
     public static Command GetLaunchSalesOrderDetailCreatePageCommand(string returnPath)
     {
         return new Command(async () =>
@@ -802,6 +1183,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 11.2. GetLaunchSalesOrderDetailDeletePageCommand
     public static Command<int> GetLaunchSalesOrderDetailDeletePageCommand(string returnPath)
     {
         return new Command<int>(async (salesOrderID) =>
@@ -811,6 +1193,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 11.3. GetLaunchSalesOrderDetailDetailsPageCommand
     public static Command<int> GetLaunchSalesOrderDetailDetailsPageCommand(string returnPath)
     {
         return new Command<int>(async (salesOrderID) =>
@@ -820,6 +1203,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 11.4. GetLaunchSalesOrderDetailEditPageCommand
     public static Command<int> GetLaunchSalesOrderDetailEditPageCommand(string returnPath)
     {
         return new Command<int>(async (salesOrderID) =>
@@ -829,6 +1213,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 11.5. GetLaunchSalesOrderDetailCreatePopupCommand
     public static Command GetLaunchSalesOrderDetailCreatePopupCommand()
     {
         return new Command(async () =>
@@ -839,6 +1224,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 11.6. GetLaunchSalesOrderDetailDeletePopupCommand
     public static Command<int> GetLaunchSalesOrderDetailDeletePopupCommand()
     {
         return new Command<int>(async (salesOrderID) =>
@@ -849,6 +1235,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 11.7. GetLaunchSalesOrderDetailDetailsPopupCommand
     public static Command<int> GetLaunchSalesOrderDetailDetailsPopupCommand()
     {
         return new Command<int>(async (salesOrderID) =>
@@ -859,6 +1246,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 11.8. GetLaunchSalesOrderDetailEditPopupCommand
     public static Command<int> GetLaunchSalesOrderDetailEditPopupCommand()
     {
         return new Command<int>(async (salesOrderID) =>
@@ -869,8 +1257,39 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    //12. SalesOrderHeader
+    // 11.9. GetLaunchSalesOrderDetailAdvancedSearchPopupCommand
+    public static Command GetLaunchSalesOrderDetailAdvancedSearchPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.SalesOrderDetail.AdvancedSearchPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
 
+    // 11.10. GetLaunchSalesOrderDetailListQuickActionsPopupCommand
+    public static Command GetLaunchSalesOrderDetailListQuickActionsPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.SalesOrderDetail.ListQuickActionsPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    // 11.11. GetLaunchSalesOrderDetailListOrderBysPopupCommand
+    public static Command GetLaunchSalesOrderDetailListOrderBysPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.SalesOrderDetail.ListOrderBysPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    //13. SalesOrderHeader
+
+    // 12.1. GetLaunchSalesOrderHeaderCreatePageCommand
     public static Command GetLaunchSalesOrderHeaderCreatePageCommand(string returnPath)
     {
         return new Command(async () =>
@@ -880,6 +1299,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 12.2. GetLaunchSalesOrderHeaderDeletePageCommand
     public static Command<int> GetLaunchSalesOrderHeaderDeletePageCommand(string returnPath)
     {
         return new Command<int>(async (salesOrderID) =>
@@ -889,6 +1309,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 12.3. GetLaunchSalesOrderHeaderDetailsPageCommand
     public static Command<int> GetLaunchSalesOrderHeaderDetailsPageCommand(string returnPath)
     {
         return new Command<int>(async (salesOrderID) =>
@@ -898,6 +1319,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 12.4. GetLaunchSalesOrderHeaderEditPageCommand
     public static Command<int> GetLaunchSalesOrderHeaderEditPageCommand(string returnPath)
     {
         return new Command<int>(async (salesOrderID) =>
@@ -907,6 +1329,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 12.5. GetLaunchSalesOrderHeaderCreatePopupCommand
     public static Command GetLaunchSalesOrderHeaderCreatePopupCommand()
     {
         return new Command(async () =>
@@ -917,6 +1340,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 12.6. GetLaunchSalesOrderHeaderDeletePopupCommand
     public static Command<int> GetLaunchSalesOrderHeaderDeletePopupCommand()
     {
         return new Command<int>(async (salesOrderID) =>
@@ -927,6 +1351,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 12.7. GetLaunchSalesOrderHeaderDetailsPopupCommand
     public static Command<int> GetLaunchSalesOrderHeaderDetailsPopupCommand()
     {
         return new Command<int>(async (salesOrderID) =>
@@ -937,12 +1362,43 @@ public static class LaunchViewCommandsHelper
         });
     }
 
+    // 12.8. GetLaunchSalesOrderHeaderEditPopupCommand
     public static Command<int> GetLaunchSalesOrderHeaderEditPopupCommand()
     {
         return new Command<int>(async (salesOrderID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.SalesOrderHeader.EditPopup();
             WeakReferenceMessenger.Default.Send<SalesOrderHeaderIdentifierMessage>(new SalesOrderHeaderIdentifierMessage(new SalesOrderHeaderIdentifier { SalesOrderID = salesOrderID }, ViewItemTemplates.Edit));
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    // 12.9. GetLaunchSalesOrderHeaderAdvancedSearchPopupCommand
+    public static Command GetLaunchSalesOrderHeaderAdvancedSearchPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.SalesOrderHeader.AdvancedSearchPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    // 12.10. GetLaunchSalesOrderHeaderListQuickActionsPopupCommand
+    public static Command GetLaunchSalesOrderHeaderListQuickActionsPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.SalesOrderHeader.ListQuickActionsPopup();
+            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+        });
+    }
+
+    // 12.11. GetLaunchSalesOrderHeaderListOrderBysPopupCommand
+    public static Command GetLaunchSalesOrderHeaderListOrderBysPopupCommand()
+    {
+        return new Command(async () =>
+        {
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.SalesOrderHeader.ListOrderBysPopup();
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
         });
     }

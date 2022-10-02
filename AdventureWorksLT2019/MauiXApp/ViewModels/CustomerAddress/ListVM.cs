@@ -118,6 +118,29 @@ public class ListVM : ListVMBase<CustomerAddressAdvancedQuery, CustomerAddressId
         */
         // AdvancedQuery.End DateTimeRanges
 
+        // 1. Init LaunchCustomerAddressCreatePageCommand
+        LaunchCreatePageCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressCreatePageCommand(AppShellRoutes.CustomerAddressListPage);
+        // 2. Init LaunchCustomerAddressDeletePageCommand
+        LaunchDeletePageCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressDeletePageCommand(AppShellRoutes.CustomerAddressListPage);
+        // 3. Init LaunchCustomerAddressDetailsPageCommand
+        LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressDetailsPageCommand(AppShellRoutes.CustomerAddressListPage);
+        // 4. Init LaunchCustomerAddressEditPageCommand
+        LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressEditPageCommand(AppShellRoutes.CustomerAddressListPage);
+        // 5. Init LaunchCustomerAddressCreatePopupCommand
+        LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressCreatePopupCommand();
+        // 6. Init LaunchCustomerAddressDeletePopupCommand
+        LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressDeletePopupCommand();
+        // 7. Init LaunchCustomerAddressDetailsPopupCommand
+        LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressDetailsPopupCommand();
+        // 8. Init LaunchCustomerAddressEditPopupCommand
+        LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressEditPopupCommand();
+        // 9. Init LaunchCustomerAddressAdvancedSearchPopupCommand
+        AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressAdvancedSearchPopupCommand();
+        // 10. Init LaunchCustomerAddressListQuickActionsPopupCommand
+        ListQuickActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressListQuickActionsPopupCommand();
+        // 11. Init LaunchCustomerAddressListOrderBysPopupCommand
+        ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressListOrderBysPopupCommand();
+
         BulkDeleteCommand = new Command(
             async () =>
             {

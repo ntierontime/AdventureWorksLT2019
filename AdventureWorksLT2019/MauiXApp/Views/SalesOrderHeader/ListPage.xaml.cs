@@ -19,69 +19,12 @@ public partial class ListPage : ContentPage
         // SelectedItems="{Binding Path=SelectedItems, Mode=TwoWay}"
         viewModel.AttachClearSelectedItemsCommand(new Command(OnClearSelectedItems, ()=> viewModel.EnableMultiSelectCommands()));
 
-        viewModel.AttachPopupLaunchCommands(
-            new Command(OnLaunchAdvancedSearchPopup),
-            new Command(OnLaunchListQuickActionsPopup),
-            new Command(OnLaunchListOrderBysPopup),
-            new Command<ViewItemTemplates>(OnLaunchItemPopupView)
-            );
-
         InitializeComponent();
     }
     protected override async void OnAppearing()
     {
         base.OnAppearing();
         await viewModel.DoSearch(true, true);
-    }
-
-    private async void OnLaunchAdvancedSearchPopup()
-    {
-        var popup = new AdvancedSearchPopup();
-        await this.ShowPopupAsync(popup);
-    }
-
-    private async void OnLaunchListQuickActionsPopup()
-    {
-        var popup = new ListQuickActionsPopup();
-        await this.ShowPopupAsync(popup);
-    }
-
-    private async void OnLaunchListOrderBysPopup()
-    {
-        var popup = new ListOrderBysPopup();
-        await this.ShowPopupAsync(popup);
-    }
-
-    private async void OnLaunchItemPopupView(ViewItemTemplates itemView)
-    {
-
-        if (itemView == ViewItemTemplates.Create)
-        {
-            var popup = new CreatePopup();
-            await this.ShowPopupAsync(popup);
-            return;
-        }
-
-        if (itemView == ViewItemTemplates.Delete)
-        {
-            var popup = new DeletePopup();
-            await this.ShowPopupAsync(popup);
-            return;
-        }
-
-        if (itemView == ViewItemTemplates.Details)
-        {
-            var popup = new DetailsPopup();
-            await this.ShowPopupAsync(popup);
-            return;
-        }
-
-        if (itemView == ViewItemTemplates.Edit)
-        {
-            var popup = new EditPopup();
-            await this.ShowPopupAsync(popup);
-            return;
-        }
     }
 
     /// <summary>

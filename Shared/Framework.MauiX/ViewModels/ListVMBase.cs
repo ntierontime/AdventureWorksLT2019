@@ -116,8 +116,15 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
     public ICommand LoadMoreCommand { get; protected set; }
     public ICommand RefreshCommand { get; protected set; }
 
-    public ICommand LaunchItemPopupViewCommand { get; protected set; }
-    public ICommand LaunchItemPageCommand { get; protected set; }
+    public ICommand LaunchCreatePopupCommand { get; protected set; }
+    public ICommand LaunchDeletePopupCommand { get; protected set; }
+    public ICommand LaunchDetailsPopupCommand { get; protected set; }
+    public ICommand LaunchEditPopupCommand { get; protected set; }
+
+    public ICommand LaunchCreatePageCommand { get; protected set; }
+    public ICommand LaunchDeletePageCommand { get; protected set; }
+    public ICommand LaunchDetailsPageCommand { get; protected set; }
+    public ICommand LaunchEditPageCommand { get; protected set; }
 
     public ICommand ToggleSelectModeCommand { get; protected set; }
     public ICommand ClearSelectedItemsCommand { get; protected set; }
@@ -207,7 +214,7 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         var response = await _dataService.Search(Query, CurrentQueryOrderBySetting);
         if (response.Status == System.Net.HttpStatusCode.OK)
         {
-            if (isLoadMore)
+            if (!isLoadMore)
             {
                 Result = new System.Collections.ObjectModel.ObservableCollection<TDataModel>(response.ResponseBody);
             }
@@ -248,23 +255,9 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         ClearSelectedItemsCommand = clearSelectedItemsCommand;
     }
 
-    public void AttachPopupLaunchCommands(
-        ICommand launchAdvancedSearchCommand,
-        ICommand launchListQuickActionsCommand,
-        ICommand listOrderBysLaunchCommand,
-        ICommand launchItemPopupViewCommand)
-    {
-        AdvancedSearchLaunchCommand = launchAdvancedSearchCommand;
-        ListQuickActionsLaunchCommand = launchListQuickActionsCommand;
-        ListOrderBysLaunchCommand = listOrderBysLaunchCommand;
-        LaunchItemPopupViewCommand = launchItemPopupViewCommand;
-    }
-
     public async void AttachAdvancedSearchPopupCommands(
         ICommand cancelCommand)
     {
-        await LoadCodeListsIfAny();
-
         AdvancedSearchCancelCommand = new Command(() =>
         {
             EditingQuery = Query.Clone();// put back original Query if AdvancedSearch cancelled
@@ -276,6 +269,16 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
             await DoSearch(true, true);
             cancelCommand.Execute(null);
         });
+
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+        LoadCodeListsIfAny();
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+    }
+
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+    protected virtual async Task LoadCodeListsIfAny()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+    {
     }
 
     public void AttachListQuickActionsPopupCommands(
@@ -323,12 +326,6 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
             cancelCommand.Execute(null);
         });
         ListOrderBysCancelCommand = cancelCommand;
-    }
-
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-    protected virtual async Task LoadCodeListsIfAny()
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
-    {
     }
 
     public abstract void RegisterItemDataChangedMessage();

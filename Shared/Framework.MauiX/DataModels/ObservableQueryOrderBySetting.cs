@@ -98,7 +98,7 @@ public class ObservableQueryOrderBySetting: ObservableObject
         var orderByExpressions =
             from t in orderBys
             let propertyName = t.PropertyName ?? t.DisplayName
-            select t.Direction == QueryOrderDirections.Ascending ? propertyName : propertyName + " DESC";
+            select t.Direction == QueryOrderDirections.Ascending ? propertyName : propertyName + "~DESC";
         return string.Join(",", orderByExpressions);
     }
 

@@ -24,50 +24,54 @@
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
                 Text="{l:Localize AddressID}" />
-            <Entry Grid.Row="0" Grid.Column="1"
-                Text="{Binding BillToAddressID}"
-                HorizontalOptions="End"
-                VerticalOptions="Center" />
+            <Picker Grid.Row="0" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
+                ItemsSource="{Binding Path=BillToAddressIDList}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding Path=SelectedBillToAddressID}" />
             <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
                 Text="{l:Localize AddressID}" />
-            <Entry Grid.Row="1" Grid.Column="1"
-                Text="{Binding ShipToAddressID}"
-                HorizontalOptions="End"
-                VerticalOptions="Center" />
+            <Picker Grid.Row="1" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
+                ItemsSource="{Binding Path=ShipToAddressIDList}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding Path=SelectedShipToAddressID}" />
             <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
                 Text="{l:Localize CustomerID}" />
-            <Entry Grid.Row="2" Grid.Column="1"
-                Text="{Binding CustomerID}"
-                HorizontalOptions="End"
-                VerticalOptions="Center" />
+            <Picker Grid.Row="2" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
+                ItemsSource="{Binding Path=CustomerIDList}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding Path=SelectedCustomerID}" />
             <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
                 Text="{l:Localize OnlineOrderFlag}" />
-            <Picker Grid.Row="3" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
-                ItemsSource="{Binding Path=OnlineOrderFlagList}"
-                ItemDisplayBinding="{Binding Name}"
-                SelectedItem="{Binding Path=SelectedOnlineOrderFlag}" />
+            <HorizontalStackLayout Grid.Row="3" Grid.Column="1" RadioButtonGroup.SelectedValue="{Binding EditingQuery.OnlineOrderFlag}" RadioButtonGroup.GroupName="OnlineOrderFlag" HorizontalOptions="FillAndExpand">
+                <RadioButton Content="{l:Localize All}" Value="All" Style="{StaticResource SearchRadioButtonStyle}"
+                        GroupName="OnlineOrderFlag" HorizontalOptions="End" />
+                <RadioButton Content="True" Value="True" Style="{StaticResource SearchRadioButtonStyle}"
+                        GroupName="OnlineOrderFlag" HorizontalOptions="End" />
+                <RadioButton Content="False" Value="False" Style="{StaticResource SearchRadioButtonStyle}"
+                        GroupName="OnlineOrderFlag" HorizontalOptions="End" />
+            </HorizontalStackLayout>
             <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
                 Text="{l:Localize OrderDate}" />
             <Picker Grid.Row="4" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
-                ItemsSource="{Binding Path=DateTimeRangePast}"
+                ItemsSource="{Binding Path=DateTimeRangeListPast}"
                 ItemDisplayBinding="{Binding Name}"
                 SelectedItem="{Binding Path=SelectedOrderDateRange}" />
             <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
                 Text="{l:Localize DueDate}" />
             <Picker Grid.Row="5" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
-                ItemsSource="{Binding Path=DateTimeRangePast}"
+                ItemsSource="{Binding Path=DateTimeRangeListPast}"
                 ItemDisplayBinding="{Binding Name}"
                 SelectedItem="{Binding Path=SelectedDueDateRange}" />
             <Label Grid.Row="6" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
                 Text="{l:Localize ShipDate}" />
             <Picker Grid.Row="6" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
-                ItemsSource="{Binding Path=DateTimeRangePast}"
+                ItemsSource="{Binding Path=DateTimeRangeListPast}"
                 ItemDisplayBinding="{Binding Name}"
                 SelectedItem="{Binding Path=SelectedShipDateRange}" />
             <Label Grid.Row="7" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
                 Text="{l:Localize ModifiedDate}" />
             <Picker Grid.Row="7" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
-                ItemsSource="{Binding Path=DateTimeRangePast}"
+                ItemsSource="{Binding Path=DateTimeRangeListPast}"
                 ItemDisplayBinding="{Binding Name}"
                 SelectedItem="{Binding Path=SelectedModifiedDateRange}" />
         </Grid>

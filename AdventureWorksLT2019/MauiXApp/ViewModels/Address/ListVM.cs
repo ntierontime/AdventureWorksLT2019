@@ -73,6 +73,29 @@ public class ListVM : ListVMBase<AddressAdvancedQuery, AddressIdentifier, Addres
         */
         // AdvancedQuery.End DateTimeRanges
 
+        // 1. Init LaunchAddressCreatePageCommand
+        LaunchCreatePageCommand = LaunchViewCommandsHelper.GetLaunchAddressCreatePageCommand(AppShellRoutes.AddressListPage);
+        // 2. Init LaunchAddressDeletePageCommand
+        LaunchDeletePageCommand = LaunchViewCommandsHelper.GetLaunchAddressDeletePageCommand(AppShellRoutes.AddressListPage);
+        // 3. Init LaunchAddressDetailsPageCommand
+        LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchAddressDetailsPageCommand(AppShellRoutes.AddressListPage);
+        // 4. Init LaunchAddressEditPageCommand
+        LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchAddressEditPageCommand(AppShellRoutes.AddressListPage);
+        // 5. Init LaunchAddressCreatePopupCommand
+        LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchAddressCreatePopupCommand();
+        // 6. Init LaunchAddressDeletePopupCommand
+        LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchAddressDeletePopupCommand();
+        // 7. Init LaunchAddressDetailsPopupCommand
+        LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchAddressDetailsPopupCommand();
+        // 8. Init LaunchAddressEditPopupCommand
+        LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchAddressEditPopupCommand();
+        // 9. Init LaunchAddressAdvancedSearchPopupCommand
+        AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchAddressAdvancedSearchPopupCommand();
+        // 10. Init LaunchAddressListQuickActionsPopupCommand
+        ListQuickActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchAddressListQuickActionsPopupCommand();
+        // 11. Init LaunchAddressListOrderBysPopupCommand
+        ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchAddressListOrderBysPopupCommand();
+
         BulkDeleteCommand = new Command(
             async () =>
             {

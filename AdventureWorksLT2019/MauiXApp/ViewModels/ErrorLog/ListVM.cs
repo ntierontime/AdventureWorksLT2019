@@ -73,6 +73,29 @@ public class ListVM : ListVMBase<ErrorLogAdvancedQuery, ErrorLogIdentifier, Erro
         */
         // AdvancedQuery.End DateTimeRanges
 
+        // 1. Init LaunchErrorLogCreatePageCommand
+        LaunchCreatePageCommand = LaunchViewCommandsHelper.GetLaunchErrorLogCreatePageCommand(AppShellRoutes.ErrorLogListPage);
+        // 2. Init LaunchErrorLogDeletePageCommand
+        LaunchDeletePageCommand = LaunchViewCommandsHelper.GetLaunchErrorLogDeletePageCommand(AppShellRoutes.ErrorLogListPage);
+        // 3. Init LaunchErrorLogDetailsPageCommand
+        LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchErrorLogDetailsPageCommand(AppShellRoutes.ErrorLogListPage);
+        // 4. Init LaunchErrorLogEditPageCommand
+        LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchErrorLogEditPageCommand(AppShellRoutes.ErrorLogListPage);
+        // 5. Init LaunchErrorLogCreatePopupCommand
+        LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchErrorLogCreatePopupCommand();
+        // 6. Init LaunchErrorLogDeletePopupCommand
+        LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchErrorLogDeletePopupCommand();
+        // 7. Init LaunchErrorLogDetailsPopupCommand
+        LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchErrorLogDetailsPopupCommand();
+        // 8. Init LaunchErrorLogEditPopupCommand
+        LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchErrorLogEditPopupCommand();
+        // 9. Init LaunchErrorLogAdvancedSearchPopupCommand
+        AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchErrorLogAdvancedSearchPopupCommand();
+        // 10. Init LaunchErrorLogListQuickActionsPopupCommand
+        ListQuickActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchErrorLogListQuickActionsPopupCommand();
+        // 11. Init LaunchErrorLogListOrderBysPopupCommand
+        ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchErrorLogListOrderBysPopupCommand();
+
         BulkDeleteCommand = new Command(
             async () =>
             {

@@ -73,6 +73,29 @@ public class ListVM : ListVMBase<ProductDescriptionAdvancedQuery, ProductDescrip
         */
         // AdvancedQuery.End DateTimeRanges
 
+        // 1. Init LaunchProductDescriptionCreatePageCommand
+        LaunchCreatePageCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionCreatePageCommand(AppShellRoutes.ProductDescriptionListPage);
+        // 2. Init LaunchProductDescriptionDeletePageCommand
+        LaunchDeletePageCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionDeletePageCommand(AppShellRoutes.ProductDescriptionListPage);
+        // 3. Init LaunchProductDescriptionDetailsPageCommand
+        LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionDetailsPageCommand(AppShellRoutes.ProductDescriptionListPage);
+        // 4. Init LaunchProductDescriptionEditPageCommand
+        LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionEditPageCommand(AppShellRoutes.ProductDescriptionListPage);
+        // 5. Init LaunchProductDescriptionCreatePopupCommand
+        LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionCreatePopupCommand();
+        // 6. Init LaunchProductDescriptionDeletePopupCommand
+        LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionDeletePopupCommand();
+        // 7. Init LaunchProductDescriptionDetailsPopupCommand
+        LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionDetailsPopupCommand();
+        // 8. Init LaunchProductDescriptionEditPopupCommand
+        LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionEditPopupCommand();
+        // 9. Init LaunchProductDescriptionAdvancedSearchPopupCommand
+        AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionAdvancedSearchPopupCommand();
+        // 10. Init LaunchProductDescriptionListQuickActionsPopupCommand
+        ListQuickActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionListQuickActionsPopupCommand();
+        // 11. Init LaunchProductDescriptionListOrderBysPopupCommand
+        ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionListOrderBysPopupCommand();
+
         BulkDeleteCommand = new Command(
             async () =>
             {

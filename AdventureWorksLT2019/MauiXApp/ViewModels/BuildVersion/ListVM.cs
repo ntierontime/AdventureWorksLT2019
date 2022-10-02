@@ -94,6 +94,29 @@ public class ListVM : ListVMBase<BuildVersionAdvancedQuery, BuildVersionIdentifi
         */
         // AdvancedQuery.End DateTimeRanges
 
+        // 1. Init LaunchBuildVersionCreatePageCommand
+        LaunchCreatePageCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionCreatePageCommand(AppShellRoutes.BuildVersionListPage);
+        // 2. Init LaunchBuildVersionDeletePageCommand
+        LaunchDeletePageCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionDeletePageCommand(AppShellRoutes.BuildVersionListPage);
+        // 3. Init LaunchBuildVersionDetailsPageCommand
+        LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionDetailsPageCommand(AppShellRoutes.BuildVersionListPage);
+        // 4. Init LaunchBuildVersionEditPageCommand
+        LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionEditPageCommand(AppShellRoutes.BuildVersionListPage);
+        // 5. Init LaunchBuildVersionCreatePopupCommand
+        LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionCreatePopupCommand();
+        // 6. Init LaunchBuildVersionDeletePopupCommand
+        LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionDeletePopupCommand();
+        // 7. Init LaunchBuildVersionDetailsPopupCommand
+        LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionDetailsPopupCommand();
+        // 8. Init LaunchBuildVersionEditPopupCommand
+        LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionEditPopupCommand();
+        // 9. Init LaunchBuildVersionAdvancedSearchPopupCommand
+        AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionAdvancedSearchPopupCommand();
+        // 10. Init LaunchBuildVersionListQuickActionsPopupCommand
+        ListQuickActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionListQuickActionsPopupCommand();
+        // 11. Init LaunchBuildVersionListOrderBysPopupCommand
+        ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionListOrderBysPopupCommand();
+
         BulkDeleteCommand = new Command(
             async () =>
             {

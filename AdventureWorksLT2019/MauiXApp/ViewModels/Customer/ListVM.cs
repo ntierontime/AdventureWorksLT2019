@@ -73,6 +73,29 @@ public class ListVM : ListVMBase<CustomerAdvancedQuery, CustomerIdentifier, Cust
         */
         // AdvancedQuery.End DateTimeRanges
 
+        // 1. Init LaunchCustomerCreatePageCommand
+        LaunchCreatePageCommand = LaunchViewCommandsHelper.GetLaunchCustomerCreatePageCommand(AppShellRoutes.CustomerListPage);
+        // 2. Init LaunchCustomerDeletePageCommand
+        LaunchDeletePageCommand = LaunchViewCommandsHelper.GetLaunchCustomerDeletePageCommand(AppShellRoutes.CustomerListPage);
+        // 3. Init LaunchCustomerDetailsPageCommand
+        LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchCustomerDetailsPageCommand(AppShellRoutes.CustomerListPage);
+        // 4. Init LaunchCustomerEditPageCommand
+        LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchCustomerEditPageCommand(AppShellRoutes.CustomerListPage);
+        // 5. Init LaunchCustomerCreatePopupCommand
+        LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchCustomerCreatePopupCommand();
+        // 6. Init LaunchCustomerDeletePopupCommand
+        LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchCustomerDeletePopupCommand();
+        // 7. Init LaunchCustomerDetailsPopupCommand
+        LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchCustomerDetailsPopupCommand();
+        // 8. Init LaunchCustomerEditPopupCommand
+        LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchCustomerEditPopupCommand();
+        // 9. Init LaunchCustomerAdvancedSearchPopupCommand
+        AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchCustomerAdvancedSearchPopupCommand();
+        // 10. Init LaunchCustomerListQuickActionsPopupCommand
+        ListQuickActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchCustomerListQuickActionsPopupCommand();
+        // 11. Init LaunchCustomerListOrderBysPopupCommand
+        ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchCustomerListOrderBysPopupCommand();
+
         BulkDeleteCommand = new Command(
             async () =>
             {

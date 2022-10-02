@@ -25,56 +25,56 @@
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
                 Text="{l:Localize ProductID}" />
-            <Entry Grid.Row="0" Grid.Column="1"
-                Text="{Binding ProductID}"
-                HorizontalOptions="End"
-                VerticalOptions="Center" />
+            <Picker Grid.Row="0" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
+                ItemsSource="{Binding Path=ProductIDList}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding Path=SelectedProductID}" />
             <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
                 Text="{l:Localize ProductCategoryID}" />
-            <Entry Grid.Row="1" Grid.Column="1"
-                Text="{Binding ProductCategoryID}"
-                HorizontalOptions="End"
-                VerticalOptions="Center" />
+            <Picker Grid.Row="1" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
+                ItemsSource="{Binding Path=ProductCategoryIDList}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding Path=SelectedProductCategoryID}" />
             <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
                 Text="{l:Localize ProductCategoryID}" />
-            <Entry Grid.Row="2" Grid.Column="1"
-                Text="{Binding ProductCategory_ParentID}"
-                HorizontalOptions="End"
-                VerticalOptions="Center" />
+            <Picker Grid.Row="2" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
+                ItemsSource="{Binding Path=ProductCategory_ParentIDList}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding Path=SelectedProductCategory_ParentID}" />
             <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
                 Text="{l:Localize ProductModelID}" />
-            <Entry Grid.Row="3" Grid.Column="1"
-                Text="{Binding ProductModelID}"
-                HorizontalOptions="End"
-                VerticalOptions="Center" />
+            <Picker Grid.Row="3" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
+                ItemsSource="{Binding Path=ProductModelIDList}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding Path=SelectedProductModelID}" />
             <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
                 Text="{l:Localize SalesOrderID}" />
-            <Entry Grid.Row="4" Grid.Column="1"
-                Text="{Binding SalesOrderID}"
-                HorizontalOptions="End"
-                VerticalOptions="Center" />
+            <Picker Grid.Row="4" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
+                ItemsSource="{Binding Path=SalesOrderIDList}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding Path=SelectedSalesOrderID}" />
             <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
                 Text="{l:Localize AddressID}" />
-            <Entry Grid.Row="5" Grid.Column="1"
-                Text="{Binding BillToID}"
-                HorizontalOptions="End"
-                VerticalOptions="Center" />
+            <Picker Grid.Row="5" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
+                ItemsSource="{Binding Path=BillToIDList}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding Path=SelectedBillToID}" />
             <Label Grid.Row="6" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
                 Text="{l:Localize AddressID}" />
-            <Entry Grid.Row="6" Grid.Column="1"
-                Text="{Binding ShipToID}"
-                HorizontalOptions="End"
-                VerticalOptions="Center" />
+            <Picker Grid.Row="6" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
+                ItemsSource="{Binding Path=ShipToIDList}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding Path=SelectedShipToID}" />
             <Label Grid.Row="7" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
                 Text="{l:Localize CustomerID}" />
-            <Entry Grid.Row="7" Grid.Column="1"
-                Text="{Binding CustomerID}"
-                HorizontalOptions="End"
-                VerticalOptions="Center" />
+            <Picker Grid.Row="7" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
+                ItemsSource="{Binding Path=CustomerIDList}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding Path=SelectedCustomerID}" />
             <Label Grid.Row="8" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
                 Text="{l:Localize ModifiedDate}" />
             <Picker Grid.Row="8" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
-                ItemsSource="{Binding Path=DateTimeRangePast}"
+                ItemsSource="{Binding Path=DateTimeRangeListPast}"
                 ItemDisplayBinding="{Binding Name}"
                 SelectedItem="{Binding Path=SelectedModifiedDateRange}" />
         </Grid>

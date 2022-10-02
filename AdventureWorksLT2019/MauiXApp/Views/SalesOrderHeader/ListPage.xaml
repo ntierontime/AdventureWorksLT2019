@@ -43,39 +43,27 @@
                             <SwipeView.LeftItems>
                                 <SwipeItems>
                                     <SwipeItem Text="{l:Localize Delete}"
-                                            BackgroundColor="LightPink"
-                                            Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
-                                            CommandParameter="{x:Static fm:ViewItemTemplates.Delete}"
-                                            />
+                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDeletePopupCommand}"
+                                        CommandParameter="{Binding SalesOrderID}" />
                                     <SwipeItem Text="{l:Localize Details}"
-                                            BackgroundColor="LightPink"
-                                            Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
-                                            CommandParameter="{x:Static fm:ViewItemTemplates.Details}"
-                                            />
+                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDetailsPopupCommand}"
+                                        CommandParameter="{Binding SalesOrderID}" />
                                     <SwipeItem Text="{l:Localize Edit}"
-                                            BackgroundColor="LightPink"
-                                            Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
-                                            CommandParameter="{x:Static fm:ViewItemTemplates.Edit}"
-                                            />
+                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchEditPopupCommand}"
+                                        CommandParameter="{Binding SalesOrderID}" />
                                 </SwipeItems>
                             </SwipeView.LeftItems>
                             <SwipeView.RightItems>
                                 <SwipeItems>
                                     <SwipeItem Text="{l:Localize Delete}"
-                                            BackgroundColor="LightPink"
-                                            Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
-                                            CommandParameter="{x:Static cs:AppShellRoutes.SalesOrderHeaderDeletePage}"
-                                            />
+                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDeletePageCommand}"
+                                        CommandParameter="{Binding SalesOrderID}" />
                                     <SwipeItem Text="{l:Localize Details}"
-                                            BackgroundColor="LightPink"
-                                            Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
-                                            CommandParameter="{x:Static cs:AppShellRoutes.SalesOrderHeaderDetailsPage}"
-                                            />
+                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDetailsPageCommand}"
+                                        CommandParameter="{Binding SalesOrderID}" />
                                     <SwipeItem Text="{l:Localize Edit}"
-                                            BackgroundColor="LightPink"
-                                            Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
-                                            CommandParameter="{x:Static cs:AppShellRoutes.SalesOrderHeaderEditPage}"
-                                            />
+                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchEditPageCommand}"
+                                        CommandParameter="{Binding SalesOrderID}" />
                                 </SwipeItems>
                             </SwipeView.RightItems>
                             <Grid Padding="10" HorizontalOptions="FillAndExpand">
@@ -104,29 +92,23 @@
                                     Text="{Binding OrderDate}" />
                                 <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"  Margin="0" Padding="5,0,10,0">
                                     <Button Style="{StaticResource ToolbarDeleteIconButtonStyle}" Margin="0"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
-                                        CommandParameter="{x:Static fm:ViewItemTemplates.Delete}"
-                                        />
+                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDeletePopupCommand}"
+                                        CommandParameter="{Binding SalesOrderID}" />
                                     <Button Style="{StaticResource ToolbarDetailsIconButtonStyle}" Margin="0"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
-                                        CommandParameter="{x:Static fm:ViewItemTemplates.Details}"
-                                        />
+                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDetailsPopupCommand}"
+                                        CommandParameter="{Binding SalesOrderID}" />
                                     <Button Style="{StaticResource ToolbarEditIconButtonStyle}" Margin="0"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchItemPopupViewCommand}"
-                                        CommandParameter="{x:Static fm:ViewItemTemplates.Edit}"
-                                        />
+                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchEditPopupCommand}"
+                                        CommandParameter="{Binding SalesOrderID}" />
                                     <Button Style="{StaticResource ToolbarDeleteIconButtonStyle}" Margin="0"
-                                        Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
-                                        CommandParameter="{x:Static cs:AppShellRoutes.SalesOrderHeaderDeletePage}"
-                                        />
+                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDeletePageCommand}"
+                                        CommandParameter="{Binding SalesOrderID}" />
                                     <Button Style="{StaticResource ToolbarDetailsIconButtonStyle}" Margin="0"
-                                        Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
-                                        CommandParameter="{x:Static cs:AppShellRoutes.SalesOrderHeaderDetailsPage}"
-                                        />
+                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDetailsPageCommand}"
+                                        CommandParameter="{Binding SalesOrderID}" />
                                     <Button Style="{StaticResource ToolbarEditIconButtonStyle}" Margin="0"
-                                        Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
-                                        CommandParameter="{x:Static cs:AppShellRoutes.SalesOrderHeaderEditPage}"
-                                        />
+                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchEditPageCommand}"
+                                        CommandParameter="{Binding SalesOrderID}" />
                                 </HorizontalStackLayout>
                             </Grid>
                         </SwipeView>
@@ -136,13 +118,9 @@
         </RefreshView>
         <HorizontalStackLayout x:Name="ButtonsWhenNonMultipleSelection" HorizontalOptions="End" VerticalOptions="End" Margin="0,0,20,20" IsVisible="{Binding CurrentSelectionMode, Converter={StaticResource ListSelectModeSingleConverter}}" >
             <Button Style="{StaticResource AddIconButtonStyle}"
-                    Command="{Binding LaunchItemPopupViewCommand}"
-                    CommandParameter="{x:Static fm:ViewItemTemplates.Create}"
-                    />
+                Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchCreatePopupCommand}" />
             <Button Style="{StaticResource AddIconButtonStyle}"
-                    Command="{x:Static cs:AppShellService.ShellGotoAbsoluteCommand}"
-                    CommandParameter="{x:Static cs:AppShellRoutes.SalesOrderHeaderCreatePage}"
-                    />
+                Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchCreatePageCommand}" />
             <Button Grid.Column="2" Style="{StaticResource LaunchAdvancedSearchIconButtonStyle}"
                     Command="{Binding AdvancedSearchLaunchCommand}"
                     />

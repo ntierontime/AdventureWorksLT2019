@@ -18,14 +18,18 @@
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
                 Text="{l:Localize NameStyle}" />
-            <Picker Grid.Row="0" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
-                ItemsSource="{Binding Path=NameStyleList}"
-                ItemDisplayBinding="{Binding Name}"
-                SelectedItem="{Binding Path=SelectedNameStyle}" />
+            <HorizontalStackLayout Grid.Row="0" Grid.Column="1" RadioButtonGroup.SelectedValue="{Binding EditingQuery.NameStyle}" RadioButtonGroup.GroupName="NameStyle" HorizontalOptions="FillAndExpand">
+                <RadioButton Content="{l:Localize All}" Value="All" Style="{StaticResource SearchRadioButtonStyle}"
+                        GroupName="NameStyle" HorizontalOptions="End" />
+                <RadioButton Content="True" Value="True" Style="{StaticResource SearchRadioButtonStyle}"
+                        GroupName="NameStyle" HorizontalOptions="End" />
+                <RadioButton Content="False" Value="False" Style="{StaticResource SearchRadioButtonStyle}"
+                        GroupName="NameStyle" HorizontalOptions="End" />
+            </HorizontalStackLayout>
             <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
                 Text="{l:Localize ModifiedDate}" />
             <Picker Grid.Row="1" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
-                ItemsSource="{Binding Path=DateTimeRangePast}"
+                ItemsSource="{Binding Path=DateTimeRangeListPast}"
                 ItemDisplayBinding="{Binding Name}"
                 SelectedItem="{Binding Path=SelectedModifiedDateRange}" />
         </Grid>

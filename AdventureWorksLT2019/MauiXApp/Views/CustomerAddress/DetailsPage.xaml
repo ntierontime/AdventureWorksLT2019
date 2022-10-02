@@ -7,52 +7,44 @@
              x:Class="AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.DetailsPage"
              Title="{l:Localize Details}">
     <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0,0,0,50">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="2*" />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize CustomerID}"/>
-            <Button Grid.Row="0" Grid.Column="1"
-                Command="{Binding LaunchAdventureWorksLT2019Model:CustomerFKItemViewCommand}" CommandParameter="{Binding Item.CustomerID}"
-                Text="{Binding Item.Customer_Name}" />
-            <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize AddressID}"/>
-            <Button Grid.Row="1" Grid.Column="1"
-                Command="{Binding LaunchAdventureWorksLT2019Model:AddressFKItemViewCommand}" CommandParameter="{Binding Item.AddressID}"
-                Text="{Binding Item.Address_Name}" />
-            <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize AddressType}"/>
-            <Entry Grid.Row="2" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                Text="{Binding Item.AddressType}"/>
-            <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize rowguid}"/>
-            <Entry Grid.Row="3" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                Text="{Binding Item.rowguid}"/>
-            <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize ModifiedDate}"/>
-            <Entry Grid.Row="4" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                Text="{Binding Item.ModifiedDate}"/>
-            <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize Address_Name}"/>
-            <Entry Grid.Row="5" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                Text="{Binding Item.Address_Name}"/>
-            <Label Grid.Row="6" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize Customer_Name}"/>
-            <Entry Grid.Row="6" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                Text="{Binding Item.Customer_Name}"/>
-        </Grid>
+        <ScrollView Margin="20">
+            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0,0,0,50">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                    Text="{l:Localize CustomerID}"/>
+                <Button Grid.Row="0" Grid.Column="1"
+                    Command="{Binding LaunchCustomerFKItemViewCommand}" CommandParameter="{Binding Item.CustomerID}"
+                    Text="{Binding Item.Customer_Name}" />
+                <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                    Text="{l:Localize AddressID}"/>
+                <Button Grid.Row="1" Grid.Column="1"
+                    Command="{Binding LaunchAddressFKItemViewCommand}" CommandParameter="{Binding Item.AddressID}"
+                    Text="{Binding Item.Address_Name}" />
+                <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                    Text="{l:Localize AddressType}"/>
+                <Entry Grid.Row="2" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                    Text="{Binding Item.AddressType}"/>
+                <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                    Text="{l:Localize rowguid}"/>
+                <Entry Grid.Row="3" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                    Text="{Binding Item.rowguid}"/>
+                <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                    Text="{l:Localize ModifiedDate}"/>
+                <Entry Grid.Row="4" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                    Text="{Binding Item.ModifiedDate}"/>
+            </Grid>
+        </ScrollView>
         <mct:UniformItemsLayout VerticalOptions="End">
             <Button
                 Command="{Binding DetailsCloseCommand}"

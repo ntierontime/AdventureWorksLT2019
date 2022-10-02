@@ -18,14 +18,14 @@
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
                 Text="{l:Localize ProductCategoryID}" />
-            <Entry Grid.Row="0" Grid.Column="1"
-                Text="{Binding ParentProductCategoryID}"
-                HorizontalOptions="End"
-                VerticalOptions="Center" />
+            <Picker Grid.Row="0" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
+                ItemsSource="{Binding Path=ParentProductCategoryIDList}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding Path=SelectedParentProductCategoryID}" />
             <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
                 Text="{l:Localize ModifiedDate}" />
             <Picker Grid.Row="1" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
-                ItemsSource="{Binding Path=DateTimeRangePast}"
+                ItemsSource="{Binding Path=DateTimeRangeListPast}"
                 ItemDisplayBinding="{Binding Name}"
                 SelectedItem="{Binding Path=SelectedModifiedDateRange}" />
         </Grid>

@@ -203,6 +203,29 @@ public class ListVM : ListVMBase<SalesOrderHeaderAdvancedQuery, SalesOrderHeader
         */
         // AdvancedQuery.End DateTimeRanges
 
+        // 1. Init LaunchSalesOrderHeaderCreatePageCommand
+        LaunchCreatePageCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderCreatePageCommand(AppShellRoutes.SalesOrderHeaderListPage);
+        // 2. Init LaunchSalesOrderHeaderDeletePageCommand
+        LaunchDeletePageCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderDeletePageCommand(AppShellRoutes.SalesOrderHeaderListPage);
+        // 3. Init LaunchSalesOrderHeaderDetailsPageCommand
+        LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderDetailsPageCommand(AppShellRoutes.SalesOrderHeaderListPage);
+        // 4. Init LaunchSalesOrderHeaderEditPageCommand
+        LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderEditPageCommand(AppShellRoutes.SalesOrderHeaderListPage);
+        // 5. Init LaunchSalesOrderHeaderCreatePopupCommand
+        LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderCreatePopupCommand();
+        // 6. Init LaunchSalesOrderHeaderDeletePopupCommand
+        LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderDeletePopupCommand();
+        // 7. Init LaunchSalesOrderHeaderDetailsPopupCommand
+        LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderDetailsPopupCommand();
+        // 8. Init LaunchSalesOrderHeaderEditPopupCommand
+        LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderEditPopupCommand();
+        // 9. Init LaunchSalesOrderHeaderAdvancedSearchPopupCommand
+        AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderAdvancedSearchPopupCommand();
+        // 10. Init LaunchSalesOrderHeaderListQuickActionsPopupCommand
+        ListQuickActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderListQuickActionsPopupCommand();
+        // 11. Init LaunchSalesOrderHeaderListOrderBysPopupCommand
+        ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderListOrderBysPopupCommand();
+
         BulkDeleteCommand = new Command(
             async () =>
             {

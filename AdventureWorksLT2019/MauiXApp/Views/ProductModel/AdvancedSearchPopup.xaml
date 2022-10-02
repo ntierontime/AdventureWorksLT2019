@@ -18,7 +18,7 @@
             <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource SearchNameLabelStyle}"
                 Text="{l:Localize ModifiedDate}" />
             <Picker Grid.Row="0" Grid.Column="1" Style="{StaticResource ValuePickerStyle}"
-                ItemsSource="{Binding Path=DateTimeRangePast}"
+                ItemsSource="{Binding Path=DateTimeRangeListPast}"
                 ItemDisplayBinding="{Binding Name}"
                 SelectedItem="{Binding Path=SelectedModifiedDateRange}" />
         </Grid>

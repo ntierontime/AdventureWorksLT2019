@@ -6,35 +6,37 @@
              x:Class="AdventureWorksLT2019.MauiXApp.Views.BuildVersion.EditPage"
              Title="{l:Localize Edit}">
     <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0,0,0,50">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="2*" />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize SystemInformationID}"/>
-            <Entry Grid.Row="0" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-                Text="{Binding Item.SystemInformationID}"/>
-            <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize Database_Version}"/>
-            <Entry Grid.Row="1" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
-                Text="{Binding Item.Database_Version}"/>
-            <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize VersionDate}"/>
-            <DatePicker Grid.Row="2" Grid.Column="1" Style="{StaticResource ValueDatePickerStyle}"
-                Date="{Binding Item.VersionDate}" />
-            <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
-                Text="{l:Localize ModifiedDate}"/>
-            <DatePicker Grid.Row="3" Grid.Column="1" Style="{StaticResource ValueDatePickerStyle}"
-                Date="{Binding Item.ModifiedDate}" />
-        </Grid>
+        <ScrollView Margin="20">
+            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0,0,0,50">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                    Text="{l:Localize SystemInformationID}"/>
+                <Entry Grid.Row="0" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+                    Text="{Binding Item.SystemInformationID}"/>
+                <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                    Text="{l:Localize Database_Version}"/>
+                <Entry Grid.Row="1" Grid.Column="1" Style="{StaticResource ValueEntryStyle}"
+                    Text="{Binding Item.Database_Version}"/>
+                <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                    Text="{l:Localize VersionDate}"/>
+                <DatePicker Grid.Row="2" Grid.Column="1" Style="{StaticResource ValueDatePickerStyle}"
+                    Date="{Binding Item.VersionDate}" />
+                <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                    Text="{l:Localize ModifiedDate}"/>
+                <DatePicker Grid.Row="3" Grid.Column="1" Style="{StaticResource ValueDatePickerStyle}"
+                    Date="{Binding Item.ModifiedDate}" />
+            </Grid>
+        </ScrollView>
         <mct:UniformItemsLayout VerticalOptions="End">
             <Button
                 Command="{Binding EditConfirmCommand}"

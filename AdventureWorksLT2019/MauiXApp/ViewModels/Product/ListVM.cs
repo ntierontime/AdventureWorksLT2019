@@ -203,6 +203,29 @@ public class ListVM : ListVMBase<ProductAdvancedQuery, ProductIdentifier, Produc
         */
         // AdvancedQuery.End DateTimeRanges
 
+        // 1. Init LaunchProductCreatePageCommand
+        LaunchCreatePageCommand = LaunchViewCommandsHelper.GetLaunchProductCreatePageCommand(AppShellRoutes.ProductListPage);
+        // 2. Init LaunchProductDeletePageCommand
+        LaunchDeletePageCommand = LaunchViewCommandsHelper.GetLaunchProductDeletePageCommand(AppShellRoutes.ProductListPage);
+        // 3. Init LaunchProductDetailsPageCommand
+        LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchProductDetailsPageCommand(AppShellRoutes.ProductListPage);
+        // 4. Init LaunchProductEditPageCommand
+        LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchProductEditPageCommand(AppShellRoutes.ProductListPage);
+        // 5. Init LaunchProductCreatePopupCommand
+        LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchProductCreatePopupCommand();
+        // 6. Init LaunchProductDeletePopupCommand
+        LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchProductDeletePopupCommand();
+        // 7. Init LaunchProductDetailsPopupCommand
+        LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchProductDetailsPopupCommand();
+        // 8. Init LaunchProductEditPopupCommand
+        LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchProductEditPopupCommand();
+        // 9. Init LaunchProductAdvancedSearchPopupCommand
+        AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductAdvancedSearchPopupCommand();
+        // 10. Init LaunchProductListQuickActionsPopupCommand
+        ListQuickActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductListQuickActionsPopupCommand();
+        // 11. Init LaunchProductListOrderBysPopupCommand
+        ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductListOrderBysPopupCommand();
+
         BulkDeleteCommand = new Command(
             async () =>
             {
