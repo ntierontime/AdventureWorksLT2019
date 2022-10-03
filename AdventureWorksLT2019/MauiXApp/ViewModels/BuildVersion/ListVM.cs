@@ -113,7 +113,7 @@ public class ListVM : ListVMBase<BuildVersionAdvancedQuery, BuildVersionIdentifi
         // 9. Init LaunchBuildVersionAdvancedSearchPopupCommand
         AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionAdvancedSearchPopupCommand();
         // 10. Init LaunchBuildVersionListQuickActionsPopupCommand
-        ListQuickActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionListQuickActionsPopupCommand();
+        ListBulkActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionListQuickActionsPopupCommand();
         // 11. Init LaunchBuildVersionListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionListOrderBysPopupCommand();
 

@@ -137,7 +137,7 @@ public class ListVM : ListVMBase<CustomerAddressAdvancedQuery, CustomerAddressId
         // 9. Init LaunchCustomerAddressAdvancedSearchPopupCommand
         AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressAdvancedSearchPopupCommand();
         // 10. Init LaunchCustomerAddressListQuickActionsPopupCommand
-        ListQuickActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressListQuickActionsPopupCommand();
+        ListBulkActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressListQuickActionsPopupCommand();
         // 11. Init LaunchCustomerAddressListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressListOrderBysPopupCommand();
 

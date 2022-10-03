@@ -40,10 +40,18 @@ public partial class CustomerApiClient : WebApiClientBase
 
     public async Task<ListResponse<CustomerDataModel[]>> BulkUpdate(BatchActionRequest<CustomerIdentifier, CustomerDataModel> data)
     {
-        const string actionName = nameof(BulkUpdate);
-        string url = GetHttpRequestUrl(actionName);
-        var response = await Post<BatchActionRequest<CustomerIdentifier, CustomerDataModel>, ListResponse<CustomerDataModel[]>>(url, data);
-        return response;
+        try
+        {
+            const string actionName = nameof(BulkUpdate);
+            string url = GetHttpRequestUrl(actionName);
+            var response = await Put<BatchActionRequest<CustomerIdentifier, CustomerDataModel>, ListResponse<CustomerDataModel[]>>(url, data);
+            return response;
+        }
+        catch(Exception ex)
+        {
+            return new ListResponse<CustomerDataModel[]> { Status = System.Net.HttpStatusCode.InternalServerError, StatusMessage = ex.Message };
+        }
+
     }
 
     public async Task<Response<MultiItemsCUDRequest<CustomerIdentifier, CustomerDataModel>>> MultiItemsCUD(

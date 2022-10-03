@@ -92,7 +92,7 @@ public class ListVM : ListVMBase<AddressAdvancedQuery, AddressIdentifier, Addres
         // 9. Init LaunchAddressAdvancedSearchPopupCommand
         AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchAddressAdvancedSearchPopupCommand();
         // 10. Init LaunchAddressListQuickActionsPopupCommand
-        ListQuickActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchAddressListQuickActionsPopupCommand();
+        ListBulkActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchAddressListQuickActionsPopupCommand();
         // 11. Init LaunchAddressListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchAddressListOrderBysPopupCommand();
 

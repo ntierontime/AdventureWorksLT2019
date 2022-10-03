@@ -76,14 +76,6 @@
         <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
         <Setter Property="Padding" Value="5" />
     </Style>
-    <Style x:Key="LaunchListQuickActionsIconButtonStyle" TargetType="Button">
-        <Setter Property="Text" Value="{x:Static fmif:MaterialIcons.FilterAlt}" />
-        <Setter Property="FontFamily" Value="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}" />
-        <Setter Property="FontSize" Value="Large" />
-        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
-        <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
-        <Setter Property="Padding" Value="5" />
-    </Style>
     <Style x:Key="LaunchListOrderBysIconButtonStyle" TargetType="Button">
         <Setter Property="FontSize" Value="Large" />
         <Setter Property="VerticalOptions" Value="CenterAndExpand" />

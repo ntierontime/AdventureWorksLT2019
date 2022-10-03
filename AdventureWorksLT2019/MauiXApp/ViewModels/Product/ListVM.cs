@@ -32,7 +32,10 @@ public class ListVM : ListVMBase<ProductAdvancedQuery, ProductIdentifier, Produc
             if (value != null)
             {
                 SetProperty(ref m_SelectedProductCategoryID, value);
-                EditingQuery.ProductCategoryID = value.Value;
+                if(EditingQuery != null)
+                    EditingQuery.ProductCategoryID = value.Value;
+                if(BulkUpdateItem != null)
+                    BulkUpdateItem.ProductCategoryID = value.Value;
             }
         }
     }
@@ -161,7 +164,7 @@ public class ListVM : ListVMBase<ProductAdvancedQuery, ProductIdentifier, Produc
 
     #endregion AdvancedQuery.End ForeignKey SelectLists and DateTimeRanges
 
-    public ICommand BulkDeleteCommand { get; private set; }
+    // public ICommand BulkDeleteCommand { get; private set; }
 
     public ListVM(ProductService dataService)
         : base(dataService)
@@ -222,27 +225,27 @@ public class ListVM : ListVMBase<ProductAdvancedQuery, ProductIdentifier, Produc
         // 9. Init LaunchProductAdvancedSearchPopupCommand
         AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductAdvancedSearchPopupCommand();
         // 10. Init LaunchProductListQuickActionsPopupCommand
-        ListQuickActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductListQuickActionsPopupCommand();
+        ListBulkActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductListQuickActionsPopupCommand();
         // 11. Init LaunchProductListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductListOrderBysPopupCommand();
 
-        BulkDeleteCommand = new Command(
-            async () =>
-            {
-                // TODO: can add popup to confirm, and popup to show status OK/Failed
-                var response = await _dataService.BulkDelete(SelectedItems.Select(t => t.GetIdentifier()).ToList());
-                if (response.Status == System.Net.HttpStatusCode.OK)
-                {
-                    foreach (var item in SelectedItems)
-                    {
-                        Result.Remove(item);
-                    }
-                    SelectedItems.Clear();
-                    RefreshMultiSelectCommandsCanExecute();
-                }
-            },
-            () => EnableMultiSelectCommands()
-        );
+        //BulkDeleteCommand = new Command(
+        //    async () =>
+        //    {
+        //        // TODO: can add popup to confirm, and popup to show status OK/Failed
+        //        var response = await _dataService.BulkDelete(SelectedItems.Select(t => t.GetIdentifier()).ToList());
+        //        if (response.Status == System.Net.HttpStatusCode.OK)
+        //        {
+        //            foreach (var item in SelectedItems)
+        //            {
+        //                Result.Remove(item);
+        //            }
+        //            SelectedItems.Clear();
+        //            RefreshMultiSelectCommandsCanExecute();
+        //        }
+        //    },
+        //    () => EnableMultiSelectCommands()
+        //);
     }
 
     protected override async Task LoadCodeListsIfAny()
@@ -271,11 +274,11 @@ public class ListVM : ListVMBase<ProductAdvancedQuery, ProductIdentifier, Produc
         }
     }
 
-    public override void RefreshMultiSelectCommandsCanExecute()
-    {
-        base.RefreshMultiSelectCommandsCanExecute();
-        ((Command)BulkDeleteCommand).ChangeCanExecute();
-    }
+    //public override void RefreshMultiSelectCommandsCanExecute()
+    //{
+    //    base.RefreshMultiSelectCommandsCanExecute();
+    //    ((Command)BulkDeleteCommand).ChangeCanExecute();
+    //}
 
     public override void RegisterItemDataChangedMessage()
     {

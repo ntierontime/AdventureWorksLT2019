@@ -222,7 +222,7 @@ public class ListVM : ListVMBase<SalesOrderHeaderAdvancedQuery, SalesOrderHeader
         // 9. Init LaunchSalesOrderHeaderAdvancedSearchPopupCommand
         AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderAdvancedSearchPopupCommand();
         // 10. Init LaunchSalesOrderHeaderListQuickActionsPopupCommand
-        ListQuickActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderListQuickActionsPopupCommand();
+        ListBulkActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderListQuickActionsPopupCommand();
         // 11. Init LaunchSalesOrderHeaderListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderListOrderBysPopupCommand();
 

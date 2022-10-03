@@ -125,7 +125,7 @@
                     Command="{Binding AdvancedSearchLaunchCommand}"
                     />
             <Button Style="{StaticResource LaunchListQuickActionsIconButtonStyle}"
-                    Command="{Binding ListQuickActionsLaunchCommand}"
+                    Command="{Binding ListBulkActionsLaunchCommand}"
                     />
             <Grid VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
                 <Button Style="{StaticResource LaunchListOrderBysIconButtonStyle}"

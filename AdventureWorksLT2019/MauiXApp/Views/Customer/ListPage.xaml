@@ -125,7 +125,7 @@
                     Command="{Binding AdvancedSearchLaunchCommand}"
                     />
             <Button Style="{StaticResource LaunchListQuickActionsIconButtonStyle}"
-                    Command="{Binding ListQuickActionsLaunchCommand}"
+                    Command="{Binding ListBulkActionsLaunchCommand}"
                     />
             <Grid VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
                 <Button Style="{StaticResource LaunchListOrderBysIconButtonStyle}"
@@ -141,6 +141,10 @@
             x:Name="ButtonsWhenMultipleSelection"
             HorizontalOptions="End" VerticalOptions="End" Margin="0,0,20,20"
             IsVisible="{Binding CurrentSelectionMode, Converter={StaticResource ListSelectModeMultipleConverter}}" >
+            <Button
+                Command="{Binding ListBulkActionsLaunchCommand}"
+                CommandParameter="NameStyle"
+                Text="{l:Localize NameStyle}" />
             <Button
                 Command="{Binding BulkDeleteCommand}"
                 Text="{l:Localize Delete}" />

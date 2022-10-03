@@ -115,7 +115,7 @@ public class ListVM : ListVMBase<ProductCategoryAdvancedQuery, ProductCategoryId
         // 9. Init LaunchProductCategoryAdvancedSearchPopupCommand
         AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryAdvancedSearchPopupCommand();
         // 10. Init LaunchProductCategoryListQuickActionsPopupCommand
-        ListQuickActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryListQuickActionsPopupCommand();
+        ListBulkActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryListQuickActionsPopupCommand();
         // 11. Init LaunchProductCategoryListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryListOrderBysPopupCommand();
 

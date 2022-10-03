@@ -92,7 +92,7 @@ public class ListVM : ListVMBase<ErrorLogAdvancedQuery, ErrorLogIdentifier, Erro
         // 9. Init LaunchErrorLogAdvancedSearchPopupCommand
         AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchErrorLogAdvancedSearchPopupCommand();
         // 10. Init LaunchErrorLogListQuickActionsPopupCommand
-        ListQuickActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchErrorLogListQuickActionsPopupCommand();
+        ListBulkActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchErrorLogListQuickActionsPopupCommand();
         // 11. Init LaunchErrorLogListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchErrorLogListOrderBysPopupCommand();
 

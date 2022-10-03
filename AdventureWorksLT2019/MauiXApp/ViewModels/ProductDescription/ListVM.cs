@@ -92,7 +92,7 @@ public class ListVM : ListVMBase<ProductDescriptionAdvancedQuery, ProductDescrip
         // 9. Init LaunchProductDescriptionAdvancedSearchPopupCommand
         AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionAdvancedSearchPopupCommand();
         // 10. Init LaunchProductDescriptionListQuickActionsPopupCommand
-        ListQuickActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionListQuickActionsPopupCommand();
+        ListBulkActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionListQuickActionsPopupCommand();
         // 11. Init LaunchProductDescriptionListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionListOrderBysPopupCommand();
 

@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.ComponentModel;
 using Framework.MauiX.DataModels;
 using Framework.Models;
 
@@ -5,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdventureWorksLT2019.MauiXApp.DataModels;
 
-public class CustomerIdentifier: ObservableBaseQuery
+public class CustomerIdentifier: ObservableObject
 {
 
     // PredicateType:Equals
