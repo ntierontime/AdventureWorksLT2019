@@ -124,9 +124,6 @@
             <Button Grid.Column="2" Style="{StaticResource LaunchAdvancedSearchIconButtonStyle}"
                     Command="{Binding AdvancedSearchLaunchCommand}"
                     />
-            <Button Style="{StaticResource LaunchListQuickActionsIconButtonStyle}"
-                    Command="{Binding ListQuickActionsLaunchCommand}"
-                    />
             <Grid VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
                 <Button Style="{StaticResource LaunchListOrderBysIconButtonStyle}"
                     Text="{Binding Path=CurrentQueryOrderBySetting.FontIcon}"

@@ -1,6 +1,5 @@
 using AdventureWorksLT2019.MauiXApp.ViewModels.SalesOrderDetail;
 using Framework.MauiX.Helpers;
-using Framework.Models;
 using CommunityToolkit.Maui.Views;
 using System.Windows.Input;
 

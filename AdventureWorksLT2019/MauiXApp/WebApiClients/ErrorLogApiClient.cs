@@ -34,7 +34,7 @@ public partial class ErrorLogApiClient : WebApiClientBase
     {
         const string actionName = nameof(BulkDelete);
         string url = GetHttpRequestUrl(actionName);
-        var response = await Post<List<ErrorLogIdentifier>, Response>(url, ids);
+        var response = await Put<List<ErrorLogIdentifier>, Response>(url, ids);
         return response;
     }
 

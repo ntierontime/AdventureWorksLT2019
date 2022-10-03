@@ -32,7 +32,10 @@ public class ListVM : ListVMBase<CustomerAddressAdvancedQuery, CustomerAddressId
             if (value != null)
             {
                 SetProperty(ref m_SelectedAddressID, value);
-                EditingQuery.AddressID = value.Value;
+                if(EditingQuery != null)
+                    EditingQuery.AddressID = value.Value;
+                if(BulkUpdateItem != null)
+                    BulkUpdateItem.AddressID = value.Value;
             }
         }
     }
@@ -54,7 +57,10 @@ public class ListVM : ListVMBase<CustomerAddressAdvancedQuery, CustomerAddressId
             if (value != null)
             {
                 SetProperty(ref m_SelectedCustomerID, value);
-                EditingQuery.CustomerID = value.Value;
+                if(EditingQuery != null)
+                    EditingQuery.CustomerID = value.Value;
+                if(BulkUpdateItem != null)
+                    BulkUpdateItem.CustomerID = value.Value;
             }
         }
     }
@@ -97,10 +103,8 @@ public class ListVM : ListVMBase<CustomerAddressAdvancedQuery, CustomerAddressId
 
     #endregion AdvancedQuery.End ForeignKey SelectLists and DateTimeRanges
 
-    public ICommand BulkDeleteCommand { get; private set; }
-
     public ListVM(CustomerAddressService dataService)
-        : base(dataService)
+        : base(dataService, true)
     {
         // AdvancedQuery.Start DateTimeRanges
         // AdvancedQuery.DateTimeRangeList: DateTimeRangeListPast/DateTimeRangeListFuture/DateTimeRangeListAll
@@ -136,28 +140,20 @@ public class ListVM : ListVMBase<CustomerAddressAdvancedQuery, CustomerAddressId
         LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressEditPopupCommand();
         // 9. Init LaunchCustomerAddressAdvancedSearchPopupCommand
         AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressAdvancedSearchPopupCommand();
-        // 10. Init LaunchCustomerAddressListQuickActionsPopupCommand
-        ListQuickActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressListQuickActionsPopupCommand();
+        // 10. Init LaunchCustomerAddressListBulkActionsPopupCommand
+        ListBulkActionsLaunchCommand = new Command<string>(
+            (currentBulkActionName) =>
+            {
+                BulkUpdateItem = _dataService.GetDefault();
+                CurrentBulkActionName = currentBulkActionName;
+                var launchCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressListBulkActionsPopupCommand();
+                launchCommand.Execute(null);
+            },
+            (currentBulkActionName) => EnableMultiSelectCommands()
+            );
         // 11. Init LaunchCustomerAddressListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressListOrderBysPopupCommand();
 
-        BulkDeleteCommand = new Command(
-            async () =>
-            {
-                // TODO: can add popup to confirm, and popup to show status OK/Failed
-                var response = await _dataService.BulkDelete(SelectedItems.Select(t => t.GetIdentifier()).ToList());
-                if (response.Status == System.Net.HttpStatusCode.OK)
-                {
-                    foreach (var item in SelectedItems)
-                    {
-                        Result.Remove(item);
-                    }
-                    SelectedItems.Clear();
-                    RefreshMultiSelectCommandsCanExecute();
-                }
-            },
-            () => EnableMultiSelectCommands()
-        );
     }
 
     protected override async Task LoadCodeListsIfAny()
@@ -184,12 +180,6 @@ public class ListVM : ListVMBase<CustomerAddressAdvancedQuery, CustomerAddressId
                 SelectedCustomerID = CustomerIDList.FirstOrDefault(t=>t.Value == EditingQuery.CustomerID);
             }
         }
-    }
-
-    public override void RefreshMultiSelectCommandsCanExecute()
-    {
-        base.RefreshMultiSelectCommandsCanExecute();
-        ((Command)BulkDeleteCommand).ChangeCanExecute();
     }
 
     public override void RegisterItemDataChangedMessage()

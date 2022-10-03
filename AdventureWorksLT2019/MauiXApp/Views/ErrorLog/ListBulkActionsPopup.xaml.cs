@@ -1,14 +1,14 @@
-using AdventureWorksLT2019.MauiXApp.ViewModels.Product;
+using AdventureWorksLT2019.MauiXApp.ViewModels.ErrorLog;
 using Framework.MauiX.Helpers;
-namespace AdventureWorksLT2019.MauiXApp.Views.Product;
+namespace AdventureWorksLT2019.MauiXApp.Views.ErrorLog;
 
-public partial class ListQuickActionsPopup : CommunityToolkit.Maui.Views.Popup
+public partial class ListBulkActionsPopup : CommunityToolkit.Maui.Views.Popup
 {
-    public ListQuickActionsPopup()
+    public ListBulkActionsPopup()
     {
         var viewModel = ServiceHelper.GetService<ListVM>();
         BindingContext = viewModel;
-        viewModel.AttachListQuickActionsPopupCommands(new Command(OnCancelled));
+        viewModel.AttachListBulkActionsPopupCommands(new Command(OnCancelled));
 
         InitializeComponent();
         // WinUI Size is not correct.

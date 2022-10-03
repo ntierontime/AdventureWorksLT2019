@@ -26,4 +26,5 @@
     </mct:EnumToBoolConverter>
     <mct:IsListNotNullOrEmptyConverter x:Key="IsListNotNullOrEmptyConverter" />
     <mct:IsListNullOrEmptyConverter x:Key="IsListNullOrEmptyConverter" />
+    <mct:IsEqualConverter x:Key="IsEqualConverter" />
 </ResourceDictionary>

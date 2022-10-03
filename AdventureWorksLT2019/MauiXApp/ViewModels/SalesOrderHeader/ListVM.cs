@@ -32,7 +32,10 @@ public class ListVM : ListVMBase<SalesOrderHeaderAdvancedQuery, SalesOrderHeader
             if (value != null)
             {
                 SetProperty(ref m_SelectedBillToAddressID, value);
-                EditingQuery.BillToAddressID = value.Value;
+                if(EditingQuery != null)
+                    EditingQuery.BillToAddressID = value.Value;
+                if(BulkUpdateItem != null)
+                    BulkUpdateItem.BillToAddressID = value.Value;
             }
         }
     }
@@ -54,7 +57,10 @@ public class ListVM : ListVMBase<SalesOrderHeaderAdvancedQuery, SalesOrderHeader
             if (value != null)
             {
                 SetProperty(ref m_SelectedShipToAddressID, value);
-                EditingQuery.ShipToAddressID = value.Value;
+                if(EditingQuery != null)
+                    EditingQuery.ShipToAddressID = value.Value;
+                if(BulkUpdateItem != null)
+                    BulkUpdateItem.ShipToAddressID = value.Value;
             }
         }
     }
@@ -76,7 +82,10 @@ public class ListVM : ListVMBase<SalesOrderHeaderAdvancedQuery, SalesOrderHeader
             if (value != null)
             {
                 SetProperty(ref m_SelectedCustomerID, value);
-                EditingQuery.CustomerID = value.Value;
+                if(EditingQuery != null)
+                    EditingQuery.CustomerID = value.Value;
+                if(BulkUpdateItem != null)
+                    BulkUpdateItem.CustomerID = value.Value;
             }
         }
     }
@@ -161,10 +170,8 @@ public class ListVM : ListVMBase<SalesOrderHeaderAdvancedQuery, SalesOrderHeader
 
     #endregion AdvancedQuery.End ForeignKey SelectLists and DateTimeRanges
 
-    public ICommand BulkDeleteCommand { get; private set; }
-
     public ListVM(SalesOrderHeaderService dataService)
-        : base(dataService)
+        : base(dataService, true)
     {
         // AdvancedQuery.Start DateTimeRanges
         // AdvancedQuery.DateTimeRangeList: DateTimeRangeListPast/DateTimeRangeListFuture/DateTimeRangeListAll
@@ -221,28 +228,20 @@ public class ListVM : ListVMBase<SalesOrderHeaderAdvancedQuery, SalesOrderHeader
         LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderEditPopupCommand();
         // 9. Init LaunchSalesOrderHeaderAdvancedSearchPopupCommand
         AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderAdvancedSearchPopupCommand();
-        // 10. Init LaunchSalesOrderHeaderListQuickActionsPopupCommand
-        ListQuickActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderListQuickActionsPopupCommand();
+        // 10. Init LaunchSalesOrderHeaderListBulkActionsPopupCommand
+        ListBulkActionsLaunchCommand = new Command<string>(
+            (currentBulkActionName) =>
+            {
+                BulkUpdateItem = _dataService.GetDefault();
+                CurrentBulkActionName = currentBulkActionName;
+                var launchCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderListBulkActionsPopupCommand();
+                launchCommand.Execute(null);
+            },
+            (currentBulkActionName) => EnableMultiSelectCommands()
+            );
         // 11. Init LaunchSalesOrderHeaderListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderListOrderBysPopupCommand();
 
-        BulkDeleteCommand = new Command(
-            async () =>
-            {
-                // TODO: can add popup to confirm, and popup to show status OK/Failed
-                var response = await _dataService.BulkDelete(SelectedItems.Select(t => t.GetIdentifier()).ToList());
-                if (response.Status == System.Net.HttpStatusCode.OK)
-                {
-                    foreach (var item in SelectedItems)
-                    {
-                        Result.Remove(item);
-                    }
-                    SelectedItems.Clear();
-                    RefreshMultiSelectCommandsCanExecute();
-                }
-            },
-            () => EnableMultiSelectCommands()
-        );
     }
 
     protected override async Task LoadCodeListsIfAny()
@@ -282,10 +281,14 @@ public class ListVM : ListVMBase<SalesOrderHeaderAdvancedQuery, SalesOrderHeader
         }
     }
 
-    public override void RefreshMultiSelectCommandsCanExecute()
+    protected override void CopyBulkUpdateResult(SalesOrderHeaderDataModel source, SalesOrderHeaderDataModel destination)
     {
-        base.RefreshMultiSelectCommandsCanExecute();
-        ((Command)BulkDeleteCommand).ChangeCanExecute();
+
+        if(CurrentBulkActionName == "OnlineOrderFlag")
+        {
+            destination.OnlineOrderFlag = source.OnlineOrderFlag;
+            return;
+        }
     }
 
     public override void RegisterItemDataChangedMessage()

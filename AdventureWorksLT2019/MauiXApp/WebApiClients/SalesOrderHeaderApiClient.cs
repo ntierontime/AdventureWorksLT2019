@@ -34,7 +34,7 @@ public partial class SalesOrderHeaderApiClient : WebApiClientBase
     {
         const string actionName = nameof(BulkDelete);
         string url = GetHttpRequestUrl(actionName);
-        var response = await Post<List<SalesOrderHeaderIdentifier>, Response>(url, ids);
+        var response = await Put<List<SalesOrderHeaderIdentifier>, Response>(url, ids);
         return response;
     }
 
@@ -42,7 +42,7 @@ public partial class SalesOrderHeaderApiClient : WebApiClientBase
     {
         const string actionName = nameof(BulkUpdate);
         string url = GetHttpRequestUrl(actionName);
-        var response = await Post<BatchActionRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel>, ListResponse<SalesOrderHeaderDataModel[]>>(url, data);
+        var response = await Put<BatchActionRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel>, ListResponse<SalesOrderHeaderDataModel[]>>(url, data);
         return response;
     }
 

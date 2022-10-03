@@ -52,10 +52,8 @@ public class ListVM : ListVMBase<ErrorLogAdvancedQuery, ErrorLogIdentifier, Erro
 
     #endregion AdvancedQuery.End ForeignKey SelectLists and DateTimeRanges
 
-    public ICommand BulkDeleteCommand { get; private set; }
-
     public ListVM(ErrorLogService dataService)
-        : base(dataService)
+        : base(dataService, true)
     {
         // AdvancedQuery.Start DateTimeRanges
         // AdvancedQuery.DateTimeRangeList: DateTimeRangeListPast/DateTimeRangeListFuture/DateTimeRangeListAll
@@ -91,34 +89,20 @@ public class ListVM : ListVMBase<ErrorLogAdvancedQuery, ErrorLogIdentifier, Erro
         LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchErrorLogEditPopupCommand();
         // 9. Init LaunchErrorLogAdvancedSearchPopupCommand
         AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchErrorLogAdvancedSearchPopupCommand();
-        // 10. Init LaunchErrorLogListQuickActionsPopupCommand
-        ListQuickActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchErrorLogListQuickActionsPopupCommand();
+        // 10. Init LaunchErrorLogListBulkActionsPopupCommand
+        ListBulkActionsLaunchCommand = new Command<string>(
+            (currentBulkActionName) =>
+            {
+                BulkUpdateItem = _dataService.GetDefault();
+                CurrentBulkActionName = currentBulkActionName;
+                var launchCommand = LaunchViewCommandsHelper.GetLaunchErrorLogListBulkActionsPopupCommand();
+                launchCommand.Execute(null);
+            },
+            (currentBulkActionName) => EnableMultiSelectCommands()
+            );
         // 11. Init LaunchErrorLogListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchErrorLogListOrderBysPopupCommand();
 
-        BulkDeleteCommand = new Command(
-            async () =>
-            {
-                // TODO: can add popup to confirm, and popup to show status OK/Failed
-                var response = await _dataService.BulkDelete(SelectedItems.Select(t => t.GetIdentifier()).ToList());
-                if (response.Status == System.Net.HttpStatusCode.OK)
-                {
-                    foreach (var item in SelectedItems)
-                    {
-                        Result.Remove(item);
-                    }
-                    SelectedItems.Clear();
-                    RefreshMultiSelectCommandsCanExecute();
-                }
-            },
-            () => EnableMultiSelectCommands()
-        );
-    }
-
-    public override void RefreshMultiSelectCommandsCanExecute()
-    {
-        base.RefreshMultiSelectCommandsCanExecute();
-        ((Command)BulkDeleteCommand).ChangeCanExecute();
     }
 
     public override void RegisterItemDataChangedMessage()

@@ -107,12 +107,12 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 1.10. GetLaunchBuildVersionListQuickActionsPopupCommand
-    public static Command GetLaunchBuildVersionListQuickActionsPopupCommand()
+    // 1.10. GetLaunchBuildVersionListBulkActionsPopupCommand
+    public static Command GetLaunchBuildVersionListBulkActionsPopupCommand()
     {
         return new Command(async () =>
         {
-            var popup = new AdventureWorksLT2019.MauiXApp.Views.BuildVersion.ListQuickActionsPopup();
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.BuildVersion.ListBulkActionsPopup();
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
         });
     }
@@ -223,12 +223,12 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 2.10. GetLaunchErrorLogListQuickActionsPopupCommand
-    public static Command GetLaunchErrorLogListQuickActionsPopupCommand()
+    // 2.10. GetLaunchErrorLogListBulkActionsPopupCommand
+    public static Command GetLaunchErrorLogListBulkActionsPopupCommand()
     {
         return new Command(async () =>
         {
-            var popup = new AdventureWorksLT2019.MauiXApp.Views.ErrorLog.ListQuickActionsPopup();
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.ErrorLog.ListBulkActionsPopup();
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
         });
     }
@@ -339,12 +339,12 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 3.10. GetLaunchAddressListQuickActionsPopupCommand
-    public static Command GetLaunchAddressListQuickActionsPopupCommand()
+    // 3.10. GetLaunchAddressListBulkActionsPopupCommand
+    public static Command GetLaunchAddressListBulkActionsPopupCommand()
     {
         return new Command(async () =>
         {
-            var popup = new AdventureWorksLT2019.MauiXApp.Views.Address.ListQuickActionsPopup();
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.Address.ListBulkActionsPopup();
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
         });
     }
@@ -455,12 +455,12 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 4.10. GetLaunchCustomerListQuickActionsPopupCommand
-    public static Command GetLaunchCustomerListQuickActionsPopupCommand()
+    // 4.10. GetLaunchCustomerListBulkActionsPopupCommand
+    public static Command GetLaunchCustomerListBulkActionsPopupCommand()
     {
         return new Command(async () =>
         {
-            var popup = new AdventureWorksLT2019.MauiXApp.Views.Customer.ListQuickActionsPopup();
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.Customer.ListBulkActionsPopup();
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
         });
     }
@@ -571,12 +571,12 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 5.10. GetLaunchCustomerAddressListQuickActionsPopupCommand
-    public static Command GetLaunchCustomerAddressListQuickActionsPopupCommand()
+    // 5.10. GetLaunchCustomerAddressListBulkActionsPopupCommand
+    public static Command GetLaunchCustomerAddressListBulkActionsPopupCommand()
     {
         return new Command(async () =>
         {
-            var popup = new AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.ListQuickActionsPopup();
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.ListBulkActionsPopup();
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
         });
     }
@@ -687,12 +687,12 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 6.10. GetLaunchProductListQuickActionsPopupCommand
-    public static Command GetLaunchProductListQuickActionsPopupCommand()
+    // 6.10. GetLaunchProductListBulkActionsPopupCommand
+    public static Command GetLaunchProductListBulkActionsPopupCommand()
     {
         return new Command(async () =>
         {
-            var popup = new AdventureWorksLT2019.MauiXApp.Views.Product.ListQuickActionsPopup();
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.Product.ListBulkActionsPopup();
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
         });
     }
@@ -803,12 +803,12 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 7.10. GetLaunchProductCategoryListQuickActionsPopupCommand
-    public static Command GetLaunchProductCategoryListQuickActionsPopupCommand()
+    // 7.10. GetLaunchProductCategoryListBulkActionsPopupCommand
+    public static Command GetLaunchProductCategoryListBulkActionsPopupCommand()
     {
         return new Command(async () =>
         {
-            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductCategory.ListQuickActionsPopup();
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductCategory.ListBulkActionsPopup();
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
         });
     }
@@ -919,12 +919,12 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 8.10. GetLaunchProductDescriptionListQuickActionsPopupCommand
-    public static Command GetLaunchProductDescriptionListQuickActionsPopupCommand()
+    // 8.10. GetLaunchProductDescriptionListBulkActionsPopupCommand
+    public static Command GetLaunchProductDescriptionListBulkActionsPopupCommand()
     {
         return new Command(async () =>
         {
-            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductDescription.ListQuickActionsPopup();
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductDescription.ListBulkActionsPopup();
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
         });
     }
@@ -1035,12 +1035,12 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 9.10. GetLaunchProductModelListQuickActionsPopupCommand
-    public static Command GetLaunchProductModelListQuickActionsPopupCommand()
+    // 9.10. GetLaunchProductModelListBulkActionsPopupCommand
+    public static Command GetLaunchProductModelListBulkActionsPopupCommand()
     {
         return new Command(async () =>
         {
-            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductModel.ListQuickActionsPopup();
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductModel.ListBulkActionsPopup();
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
         });
     }
@@ -1151,12 +1151,12 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 10.10. GetLaunchProductModelProductDescriptionListQuickActionsPopupCommand
-    public static Command GetLaunchProductModelProductDescriptionListQuickActionsPopupCommand()
+    // 10.10. GetLaunchProductModelProductDescriptionListBulkActionsPopupCommand
+    public static Command GetLaunchProductModelProductDescriptionListBulkActionsPopupCommand()
     {
         return new Command(async () =>
         {
-            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductModelProductDescription.ListQuickActionsPopup();
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductModelProductDescription.ListBulkActionsPopup();
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
         });
     }
@@ -1267,12 +1267,12 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 11.10. GetLaunchSalesOrderDetailListQuickActionsPopupCommand
-    public static Command GetLaunchSalesOrderDetailListQuickActionsPopupCommand()
+    // 11.10. GetLaunchSalesOrderDetailListBulkActionsPopupCommand
+    public static Command GetLaunchSalesOrderDetailListBulkActionsPopupCommand()
     {
         return new Command(async () =>
         {
-            var popup = new AdventureWorksLT2019.MauiXApp.Views.SalesOrderDetail.ListQuickActionsPopup();
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.SalesOrderDetail.ListBulkActionsPopup();
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
         });
     }
@@ -1383,12 +1383,12 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 12.10. GetLaunchSalesOrderHeaderListQuickActionsPopupCommand
-    public static Command GetLaunchSalesOrderHeaderListQuickActionsPopupCommand()
+    // 12.10. GetLaunchSalesOrderHeaderListBulkActionsPopupCommand
+    public static Command GetLaunchSalesOrderHeaderListBulkActionsPopupCommand()
     {
         return new Command(async () =>
         {
-            var popup = new AdventureWorksLT2019.MauiXApp.Views.SalesOrderHeader.ListQuickActionsPopup();
+            var popup = new AdventureWorksLT2019.MauiXApp.Views.SalesOrderHeader.ListBulkActionsPopup();
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
         });
     }

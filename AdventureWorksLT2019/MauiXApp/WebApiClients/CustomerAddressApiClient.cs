@@ -34,7 +34,7 @@ public partial class CustomerAddressApiClient : WebApiClientBase
     {
         const string actionName = nameof(BulkDelete);
         string url = GetHttpRequestUrl(actionName);
-        var response = await Post<List<CustomerAddressIdentifier>, Response>(url, ids);
+        var response = await Put<List<CustomerAddressIdentifier>, Response>(url, ids);
         return response;
     }
 

@@ -34,7 +34,7 @@ public partial class BuildVersionApiClient : WebApiClientBase
     {
         const string actionName = nameof(BulkDelete);
         string url = GetHttpRequestUrl(actionName);
-        var response = await Post<List<BuildVersionIdentifier>, Response>(url, ids);
+        var response = await Put<List<BuildVersionIdentifier>, Response>(url, ids);
         return response;
     }
 

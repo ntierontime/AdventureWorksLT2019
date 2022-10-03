@@ -1,11 +1,11 @@
 using Framework.MauiX.DataModels;
 using Framework.Models;
 
-using System.ComponentModel.DataAnnotations;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AdventureWorksLT2019.MauiXApp.DataModels;
 
-public class ProductCategoryIdentifier: ObservableBaseQuery
+public class ProductCategoryIdentifier: ObservableObject
 {
 
     // PredicateType:Equals

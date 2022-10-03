@@ -32,7 +32,10 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
             if (value != null)
             {
                 SetProperty(ref m_SelectedProductID, value);
-                EditingQuery.ProductID = value.Value;
+                if(EditingQuery != null)
+                    EditingQuery.ProductID = value.Value;
+                if(BulkUpdateItem != null)
+                    BulkUpdateItem.ProductID = value.Value;
             }
         }
     }
@@ -54,7 +57,10 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
             if (value != null)
             {
                 SetProperty(ref m_SelectedProductCategoryID, value);
-                EditingQuery.ProductCategoryID = value.Value;
+                if(EditingQuery != null)
+                    EditingQuery.ProductCategoryID = value.Value;
+                if(BulkUpdateItem != null)
+                    BulkUpdateItem.ProductCategoryID = value.Value;
             }
         }
     }
@@ -76,7 +82,10 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
             if (value != null)
             {
                 SetProperty(ref m_SelectedProductCategory_ParentID, value);
-                EditingQuery.ProductCategory_ParentID = value.Value;
+                if(EditingQuery != null)
+                    EditingQuery.ProductCategory_ParentID = value.Value;
+                if(BulkUpdateItem != null)
+                    BulkUpdateItem.ProductCategory_ParentID = value.Value;
             }
         }
     }
@@ -98,7 +107,10 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
             if (value != null)
             {
                 SetProperty(ref m_SelectedProductModelID, value);
-                EditingQuery.ProductModelID = value.Value;
+                if(EditingQuery != null)
+                    EditingQuery.ProductModelID = value.Value;
+                if(BulkUpdateItem != null)
+                    BulkUpdateItem.ProductModelID = value.Value;
             }
         }
     }
@@ -120,7 +132,10 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
             if (value != null)
             {
                 SetProperty(ref m_SelectedSalesOrderID, value);
-                EditingQuery.SalesOrderID = value.Value;
+                if(EditingQuery != null)
+                    EditingQuery.SalesOrderID = value.Value;
+                if(BulkUpdateItem != null)
+                    BulkUpdateItem.SalesOrderID = value.Value;
             }
         }
     }
@@ -142,7 +157,10 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
             if (value != null)
             {
                 SetProperty(ref m_SelectedBillToID, value);
-                EditingQuery.BillToID = value.Value;
+                if(EditingQuery != null)
+                    EditingQuery.BillToID = value.Value;
+                if(BulkUpdateItem != null)
+                    BulkUpdateItem.BillToID = value.Value;
             }
         }
     }
@@ -164,7 +182,10 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
             if (value != null)
             {
                 SetProperty(ref m_SelectedShipToID, value);
-                EditingQuery.ShipToID = value.Value;
+                if(EditingQuery != null)
+                    EditingQuery.ShipToID = value.Value;
+                if(BulkUpdateItem != null)
+                    BulkUpdateItem.ShipToID = value.Value;
             }
         }
     }
@@ -186,7 +207,10 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
             if (value != null)
             {
                 SetProperty(ref m_SelectedCustomerID, value);
-                EditingQuery.CustomerID = value.Value;
+                if(EditingQuery != null)
+                    EditingQuery.CustomerID = value.Value;
+                if(BulkUpdateItem != null)
+                    BulkUpdateItem.CustomerID = value.Value;
             }
         }
     }
@@ -229,10 +253,8 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
 
     #endregion AdvancedQuery.End ForeignKey SelectLists and DateTimeRanges
 
-    public ICommand BulkDeleteCommand { get; private set; }
-
     public ListVM(SalesOrderDetailService dataService)
-        : base(dataService)
+        : base(dataService, true)
     {
         // AdvancedQuery.Start DateTimeRanges
         // AdvancedQuery.DateTimeRangeList: DateTimeRangeListPast/DateTimeRangeListFuture/DateTimeRangeListAll
@@ -268,28 +290,20 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
         LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderDetailEditPopupCommand();
         // 9. Init LaunchSalesOrderDetailAdvancedSearchPopupCommand
         AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderDetailAdvancedSearchPopupCommand();
-        // 10. Init LaunchSalesOrderDetailListQuickActionsPopupCommand
-        ListQuickActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderDetailListQuickActionsPopupCommand();
+        // 10. Init LaunchSalesOrderDetailListBulkActionsPopupCommand
+        ListBulkActionsLaunchCommand = new Command<string>(
+            (currentBulkActionName) =>
+            {
+                BulkUpdateItem = _dataService.GetDefault();
+                CurrentBulkActionName = currentBulkActionName;
+                var launchCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderDetailListBulkActionsPopupCommand();
+                launchCommand.Execute(null);
+            },
+            (currentBulkActionName) => EnableMultiSelectCommands()
+            );
         // 11. Init LaunchSalesOrderDetailListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderDetailListOrderBysPopupCommand();
 
-        BulkDeleteCommand = new Command(
-            async () =>
-            {
-                // TODO: can add popup to confirm, and popup to show status OK/Failed
-                var response = await _dataService.BulkDelete(SelectedItems.Select(t => t.GetIdentifier()).ToList());
-                if (response.Status == System.Net.HttpStatusCode.OK)
-                {
-                    foreach (var item in SelectedItems)
-                    {
-                        Result.Remove(item);
-                    }
-                    SelectedItems.Clear();
-                    RefreshMultiSelectCommandsCanExecute();
-                }
-            },
-            () => EnableMultiSelectCommands()
-        );
     }
 
     protected override async Task LoadCodeListsIfAny()
@@ -349,12 +363,6 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
                 SelectedCustomerID = CustomerIDList.FirstOrDefault(t=>t.Value == EditingQuery.CustomerID);
             }
         }
-    }
-
-    public override void RefreshMultiSelectCommandsCanExecute()
-    {
-        base.RefreshMultiSelectCommandsCanExecute();
-        ((Command)BulkDeleteCommand).ChangeCanExecute();
     }
 
     public override void RegisterItemDataChangedMessage()

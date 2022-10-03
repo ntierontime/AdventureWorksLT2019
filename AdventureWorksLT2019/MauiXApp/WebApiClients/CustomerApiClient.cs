@@ -34,7 +34,7 @@ public partial class CustomerApiClient : WebApiClientBase
     {
         const string actionName = nameof(BulkDelete);
         string url = GetHttpRequestUrl(actionName);
-        var response = await Post<List<CustomerIdentifier>, Response>(url, ids);
+        var response = await Put<List<CustomerIdentifier>, Response>(url, ids);
         return response;
     }
 
@@ -42,7 +42,7 @@ public partial class CustomerApiClient : WebApiClientBase
     {
         const string actionName = nameof(BulkUpdate);
         string url = GetHttpRequestUrl(actionName);
-        var response = await Post<BatchActionRequest<CustomerIdentifier, CustomerDataModel>, ListResponse<CustomerDataModel[]>>(url, data);
+        var response = await Put<BatchActionRequest<CustomerIdentifier, CustomerDataModel>, ListResponse<CustomerDataModel[]>>(url, data);
         return response;
     }
 

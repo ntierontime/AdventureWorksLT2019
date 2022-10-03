@@ -47,8 +47,8 @@ namespace AdventureWorksLT2019.WebApiControllers
         }
 
         // [Authorize]
-        [HttpDelete]
-        public async Task<ActionResult> BulkDelete(List<SalesOrderHeaderIdentifier> ids)
+        [HttpPut]
+        public async Task<ActionResult> BulkDelete([FromBody]List<SalesOrderHeaderIdentifier> ids)
         {
             var serviceResponse = await _thisService.BulkDelete(ids);
             return ReturnWithoutBodyActionResult(serviceResponse);
@@ -56,7 +56,7 @@ namespace AdventureWorksLT2019.WebApiControllers
 
         // [Authorize]
         [HttpPut]
-        public async Task<ActionResult<ListResponse<SalesOrderHeaderDataModel.DefaultView[]>>> BulkUpdate(BatchActionRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView> data)
+        public async Task<ActionResult<ListResponse<SalesOrderHeaderDataModel.DefaultView[]>>> BulkUpdate([FromBody]BatchActionRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView> data)
         {
             var serviceResponse = await _thisService.BulkUpdate(data);
             return ReturnActionResult(serviceResponse);

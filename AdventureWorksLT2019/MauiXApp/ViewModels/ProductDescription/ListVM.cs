@@ -52,10 +52,8 @@ public class ListVM : ListVMBase<ProductDescriptionAdvancedQuery, ProductDescrip
 
     #endregion AdvancedQuery.End ForeignKey SelectLists and DateTimeRanges
 
-    public ICommand BulkDeleteCommand { get; private set; }
-
     public ListVM(ProductDescriptionService dataService)
-        : base(dataService)
+        : base(dataService, true)
     {
         // AdvancedQuery.Start DateTimeRanges
         // AdvancedQuery.DateTimeRangeList: DateTimeRangeListPast/DateTimeRangeListFuture/DateTimeRangeListAll
@@ -91,34 +89,20 @@ public class ListVM : ListVMBase<ProductDescriptionAdvancedQuery, ProductDescrip
         LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionEditPopupCommand();
         // 9. Init LaunchProductDescriptionAdvancedSearchPopupCommand
         AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionAdvancedSearchPopupCommand();
-        // 10. Init LaunchProductDescriptionListQuickActionsPopupCommand
-        ListQuickActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionListQuickActionsPopupCommand();
+        // 10. Init LaunchProductDescriptionListBulkActionsPopupCommand
+        ListBulkActionsLaunchCommand = new Command<string>(
+            (currentBulkActionName) =>
+            {
+                BulkUpdateItem = _dataService.GetDefault();
+                CurrentBulkActionName = currentBulkActionName;
+                var launchCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionListBulkActionsPopupCommand();
+                launchCommand.Execute(null);
+            },
+            (currentBulkActionName) => EnableMultiSelectCommands()
+            );
         // 11. Init LaunchProductDescriptionListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionListOrderBysPopupCommand();
 
-        BulkDeleteCommand = new Command(
-            async () =>
-            {
-                // TODO: can add popup to confirm, and popup to show status OK/Failed
-                var response = await _dataService.BulkDelete(SelectedItems.Select(t => t.GetIdentifier()).ToList());
-                if (response.Status == System.Net.HttpStatusCode.OK)
-                {
-                    foreach (var item in SelectedItems)
-                    {
-                        Result.Remove(item);
-                    }
-                    SelectedItems.Clear();
-                    RefreshMultiSelectCommandsCanExecute();
-                }
-            },
-            () => EnableMultiSelectCommands()
-        );
-    }
-
-    public override void RefreshMultiSelectCommandsCanExecute()
-    {
-        base.RefreshMultiSelectCommandsCanExecute();
-        ((Command)BulkDeleteCommand).ChangeCanExecute();
     }
 
     public override void RegisterItemDataChangedMessage()

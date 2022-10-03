@@ -34,7 +34,7 @@ public partial class ProductModelProductDescriptionApiClient : WebApiClientBase
     {
         const string actionName = nameof(BulkDelete);
         string url = GetHttpRequestUrl(actionName);
-        var response = await Post<List<ProductModelProductDescriptionIdentifier>, Response>(url, ids);
+        var response = await Put<List<ProductModelProductDescriptionIdentifier>, Response>(url, ids);
         return response;
     }
 

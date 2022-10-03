@@ -47,8 +47,8 @@ namespace AdventureWorksLT2019.WebApiControllers
         }
 
         // [Authorize]
-        [HttpDelete]
-        public async Task<ActionResult> BulkDelete(List<ProductIdentifier> ids)
+        [HttpPut]
+        public async Task<ActionResult> BulkDelete([FromBody]List<ProductIdentifier> ids)
         {
             var serviceResponse = await _thisService.BulkDelete(ids);
             return ReturnWithoutBodyActionResult(serviceResponse);

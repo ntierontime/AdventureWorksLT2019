@@ -32,7 +32,10 @@ public class ListVM : ListVMBase<ProductCategoryAdvancedQuery, ProductCategoryId
             if (value != null)
             {
                 SetProperty(ref m_SelectedParentProductCategoryID, value);
-                EditingQuery.ParentProductCategoryID = value.Value;
+                if(EditingQuery != null)
+                    EditingQuery.ParentProductCategoryID = value.Value;
+                if(BulkUpdateItem != null)
+                    BulkUpdateItem.ParentProductCategoryID = value.Value;
             }
         }
     }
@@ -75,10 +78,8 @@ public class ListVM : ListVMBase<ProductCategoryAdvancedQuery, ProductCategoryId
 
     #endregion AdvancedQuery.End ForeignKey SelectLists and DateTimeRanges
 
-    public ICommand BulkDeleteCommand { get; private set; }
-
     public ListVM(ProductCategoryService dataService)
-        : base(dataService)
+        : base(dataService, true)
     {
         // AdvancedQuery.Start DateTimeRanges
         // AdvancedQuery.DateTimeRangeList: DateTimeRangeListPast/DateTimeRangeListFuture/DateTimeRangeListAll
@@ -114,28 +115,20 @@ public class ListVM : ListVMBase<ProductCategoryAdvancedQuery, ProductCategoryId
         LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryEditPopupCommand();
         // 9. Init LaunchProductCategoryAdvancedSearchPopupCommand
         AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryAdvancedSearchPopupCommand();
-        // 10. Init LaunchProductCategoryListQuickActionsPopupCommand
-        ListQuickActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryListQuickActionsPopupCommand();
+        // 10. Init LaunchProductCategoryListBulkActionsPopupCommand
+        ListBulkActionsLaunchCommand = new Command<string>(
+            (currentBulkActionName) =>
+            {
+                BulkUpdateItem = _dataService.GetDefault();
+                CurrentBulkActionName = currentBulkActionName;
+                var launchCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryListBulkActionsPopupCommand();
+                launchCommand.Execute(null);
+            },
+            (currentBulkActionName) => EnableMultiSelectCommands()
+            );
         // 11. Init LaunchProductCategoryListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryListOrderBysPopupCommand();
 
-        BulkDeleteCommand = new Command(
-            async () =>
-            {
-                // TODO: can add popup to confirm, and popup to show status OK/Failed
-                var response = await _dataService.BulkDelete(SelectedItems.Select(t => t.GetIdentifier()).ToList());
-                if (response.Status == System.Net.HttpStatusCode.OK)
-                {
-                    foreach (var item in SelectedItems)
-                    {
-                        Result.Remove(item);
-                    }
-                    SelectedItems.Clear();
-                    RefreshMultiSelectCommandsCanExecute();
-                }
-            },
-            () => EnableMultiSelectCommands()
-        );
     }
 
     protected override async Task LoadCodeListsIfAny()
@@ -151,12 +144,6 @@ public class ListVM : ListVMBase<ProductCategoryAdvancedQuery, ProductCategoryId
                 SelectedParentProductCategoryID = ParentProductCategoryIDList.FirstOrDefault(t=>t.Value == EditingQuery.ParentProductCategoryID);
             }
         }
-    }
-
-    public override void RefreshMultiSelectCommandsCanExecute()
-    {
-        base.RefreshMultiSelectCommandsCanExecute();
-        ((Command)BulkDeleteCommand).ChangeCanExecute();
     }
 
     public override void RegisterItemDataChangedMessage()

@@ -101,6 +101,20 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         set => SetProperty(ref m_CurrentSelectionModeText, value);
     }
 
+    private string m_CurrentBulkActionName;
+    public string CurrentBulkActionName
+    {
+        get => m_CurrentBulkActionName;
+        set => SetProperty(ref m_CurrentBulkActionName, value);
+    }
+
+    private TDataModel m_BulkUpdateItem;
+    public TDataModel BulkUpdateItem
+    {
+        get => m_BulkUpdateItem;
+        set => SetProperty(ref m_BulkUpdateItem, value);
+    }
+
     public ICommand TextSearchCommand { get; protected set; }
     public ICommand AdvancedSearchLaunchCommand { get; protected set; }
     public ICommand AdvancedSearchConfirmCommand { get; protected set; }
@@ -109,9 +123,6 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
     public ICommand ListOrderBysLaunchCommand { get; protected set; }
     public ICommand ListOrderByChangedCommand { get; protected set; }
     public ICommand ListOrderBysCancelCommand { get; protected set; }
-
-    public ICommand ListQuickActionsLaunchCommand { get; protected set; }
-    public ICommand ListQuickActionsCancelCommand { get; protected set; }
 
     public ICommand LoadMoreCommand { get; protected set; }
     public ICommand RefreshCommand { get; protected set; }
@@ -130,9 +141,21 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
     public ICommand ClearSelectedItemsCommand { get; protected set; }
     public ICommand SelectionChangedCommand { get; protected set; }
 
+    /// <summary>
+    /// BulkDelete on SelectedItems in List
+    /// </summary>
+    public ICommand BulkDeleteCommand { get; private set; }
+    /// <summary>
+    /// BulkUpdate on SelectedItems in List, changed to value in BulkActionItem, can be multiple actions, current action is CurrentBulkUpdateActionName
+    /// </summary>
+
+    public ICommand ListBulkActionsLaunchCommand { get; protected set; }
+    public ICommand ListBulkActionsConfirmCommand { get; protected set; }
+    public ICommand ListBulkActionsCancelCommand { get; protected set; }
+
     protected readonly TDataService _dataService;
 
-    public ListVMBase(TDataService dataService)
+    public ListVMBase(TDataService dataService, bool canBulkDelete = false)
     {
         _dataService = dataService;
 
@@ -195,6 +218,27 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
             }
         );
 
+        if(canBulkDelete)
+        {
+            BulkDeleteCommand = new Command(
+                async () =>
+                {
+                    // TODO: can add popup to confirm, and popup to show status OK/Failed
+                    var response = await _dataService.BulkDelete(SelectedItems.Select(t => t.GetIdentifier()).ToList());
+                    if (response.Status == System.Net.HttpStatusCode.OK)
+                    {
+                        foreach (var item in SelectedItems)
+                        {
+                            Result.Remove(item);
+                        }
+                        SelectedItems.Clear();
+                        RefreshMultiSelectCommandsCanExecute();
+                    }
+                },
+                () => EnableMultiSelectCommands()
+            );
+        }
+
         RegisterItemDataChangedMessage();
     }
 
@@ -239,6 +283,14 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
     public virtual void RefreshMultiSelectCommandsCanExecute()
     {
         ((Command)ClearSelectedItemsCommand).ChangeCanExecute();
+        if (BulkDeleteCommand != null)
+        {
+            ((Command)BulkDeleteCommand).ChangeCanExecute();
+        }
+        if (ListBulkActionsLaunchCommand != null)
+        {
+            ((Command)ListBulkActionsLaunchCommand).ChangeCanExecute();
+        }
     }
 
     public bool EnableMultiSelectCommands()
@@ -255,7 +307,7 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
         ClearSelectedItemsCommand = clearSelectedItemsCommand;
     }
 
-    public async void AttachAdvancedSearchPopupCommands(
+    public void AttachAdvancedSearchPopupCommands(
         ICommand cancelCommand)
     {
         AdvancedSearchCancelCommand = new Command(() =>
@@ -281,10 +333,27 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
     {
     }
 
-    public void AttachListQuickActionsPopupCommands(
-        ICommand cancelCommand)
+    public void AttachListBulkActionsPopupCommands(ICommand cancelCommand)
     {
-        ListQuickActionsCancelCommand = cancelCommand;
+        ListBulkActionsConfirmCommand = new Command(
+            async () =>
+            {
+                // TODO: can add popup to confirm, and popup to show status OK/Failed
+                var response = await _dataService.BulkUpdate(new BatchActionRequest<TIdentifier, TDataModel> { Ids = SelectedItems.Select(t => t.GetIdentifier()).ToList(), ActionName = CurrentBulkActionName, ActionData = BulkUpdateItem });
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    foreach (var item in SelectedItems)
+                    {
+                        CopyBulkUpdateResult(BulkUpdateItem, item);
+                    }
+                    SelectedItems.Clear();
+                    RefreshMultiSelectCommandsCanExecute();
+                    cancelCommand.Execute(null);
+                }
+            },
+            () => EnableMultiSelectCommands()
+        );
+        ListBulkActionsCancelCommand = cancelCommand;
     }
 
     public void AttachListOrderBysPopupCommand(
@@ -356,6 +425,11 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
                     }
                 }
             });
+    }
+
+    protected virtual void CopyBulkUpdateResult(TDataModel source, TDataModel destination)
+    {
+        throw new NotImplementedException();
     }
 }
 

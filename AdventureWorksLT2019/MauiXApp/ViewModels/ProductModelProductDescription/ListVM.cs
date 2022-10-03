@@ -32,7 +32,10 @@ public class ListVM : ListVMBase<ProductModelProductDescriptionAdvancedQuery, Pr
             if (value != null)
             {
                 SetProperty(ref m_SelectedProductDescriptionID, value);
-                EditingQuery.ProductDescriptionID = value.Value;
+                if(EditingQuery != null)
+                    EditingQuery.ProductDescriptionID = value.Value;
+                if(BulkUpdateItem != null)
+                    BulkUpdateItem.ProductDescriptionID = value.Value;
             }
         }
     }
@@ -54,7 +57,10 @@ public class ListVM : ListVMBase<ProductModelProductDescriptionAdvancedQuery, Pr
             if (value != null)
             {
                 SetProperty(ref m_SelectedProductModelID, value);
-                EditingQuery.ProductModelID = value.Value;
+                if(EditingQuery != null)
+                    EditingQuery.ProductModelID = value.Value;
+                if(BulkUpdateItem != null)
+                    BulkUpdateItem.ProductModelID = value.Value;
             }
         }
     }
@@ -97,10 +103,8 @@ public class ListVM : ListVMBase<ProductModelProductDescriptionAdvancedQuery, Pr
 
     #endregion AdvancedQuery.End ForeignKey SelectLists and DateTimeRanges
 
-    public ICommand BulkDeleteCommand { get; private set; }
-
     public ListVM(ProductModelProductDescriptionService dataService)
-        : base(dataService)
+        : base(dataService, true)
     {
         // AdvancedQuery.Start DateTimeRanges
         // AdvancedQuery.DateTimeRangeList: DateTimeRangeListPast/DateTimeRangeListFuture/DateTimeRangeListAll
@@ -136,28 +140,20 @@ public class ListVM : ListVMBase<ProductModelProductDescriptionAdvancedQuery, Pr
         LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionEditPopupCommand();
         // 9. Init LaunchProductModelProductDescriptionAdvancedSearchPopupCommand
         AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionAdvancedSearchPopupCommand();
-        // 10. Init LaunchProductModelProductDescriptionListQuickActionsPopupCommand
-        ListQuickActionsLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionListQuickActionsPopupCommand();
+        // 10. Init LaunchProductModelProductDescriptionListBulkActionsPopupCommand
+        ListBulkActionsLaunchCommand = new Command<string>(
+            (currentBulkActionName) =>
+            {
+                BulkUpdateItem = _dataService.GetDefault();
+                CurrentBulkActionName = currentBulkActionName;
+                var launchCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionListBulkActionsPopupCommand();
+                launchCommand.Execute(null);
+            },
+            (currentBulkActionName) => EnableMultiSelectCommands()
+            );
         // 11. Init LaunchProductModelProductDescriptionListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionListOrderBysPopupCommand();
 
-        BulkDeleteCommand = new Command(
-            async () =>
-            {
-                // TODO: can add popup to confirm, and popup to show status OK/Failed
-                var response = await _dataService.BulkDelete(SelectedItems.Select(t => t.GetIdentifier()).ToList());
-                if (response.Status == System.Net.HttpStatusCode.OK)
-                {
-                    foreach (var item in SelectedItems)
-                    {
-                        Result.Remove(item);
-                    }
-                    SelectedItems.Clear();
-                    RefreshMultiSelectCommandsCanExecute();
-                }
-            },
-            () => EnableMultiSelectCommands()
-        );
     }
 
     protected override async Task LoadCodeListsIfAny()
@@ -184,12 +180,6 @@ public class ListVM : ListVMBase<ProductModelProductDescriptionAdvancedQuery, Pr
                 SelectedProductModelID = ProductModelIDList.FirstOrDefault(t=>t.Value == EditingQuery.ProductModelID);
             }
         }
-    }
-
-    public override void RefreshMultiSelectCommandsCanExecute()
-    {
-        base.RefreshMultiSelectCommandsCanExecute();
-        ((Command)BulkDeleteCommand).ChangeCanExecute();
     }
 
     public override void RegisterItemDataChangedMessage()
