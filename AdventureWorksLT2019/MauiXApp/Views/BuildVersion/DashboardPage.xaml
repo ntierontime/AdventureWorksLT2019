@@ -6,6 +6,7 @@
              xmlns:fm="clr-namespace:Framework.Models;assembly=Framework"
              xmlns:l="clr-namespace:AdventureWorksLT2019.MauiXApp.Extensions"
              x:Class="AdventureWorksLT2019.MauiXApp.Views.BuildVersion.DashboardPage"
+             x:Name="thisPage"
              Title="DashboardPage">
     <Grid Margin="0">
         <ScrollView Margin="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
@@ -25,19 +26,19 @@
                     <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize SystemInformationID}"/>
                     <Entry Grid.Row="0" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.SystemInformationID}"/>
+                        Text="{Binding __Master__.SystemInformationID}"/>
                     <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize Database_Version}"/>
                     <Entry Grid.Row="1" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.Database_Version}"/>
+                        Text="{Binding __Master__.Database_Version}"/>
                     <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize VersionDate}"/>
                     <Entry Grid.Row="2" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.VersionDate}"/>
+                        Text="{Binding __Master__.VersionDate}"/>
                     <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize ModifiedDate}"/>
                     <Entry Grid.Row="3" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.ModifiedDate}"/>
+                        Text="{Binding __Master__.ModifiedDate}"/>
                 </Grid>
                 <VerticalStackLayout x:Name="masterForeignKeyToolbar">
                 </VerticalStackLayout>

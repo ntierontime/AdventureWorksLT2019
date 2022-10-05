@@ -6,6 +6,7 @@
              xmlns:fm="clr-namespace:Framework.Models;assembly=Framework"
              xmlns:l="clr-namespace:AdventureWorksLT2019.MauiXApp.Extensions"
              x:Class="AdventureWorksLT2019.MauiXApp.Views.ProductModel.DashboardPage"
+             x:Name="thisPage"
              Title="DashboardPage">
     <Grid Margin="0">
         <ScrollView Margin="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
@@ -26,23 +27,23 @@
                     <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize ProductModelID}"/>
                     <Entry Grid.Row="0" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.ProductModelID}"/>
+                        Text="{Binding __Master__.ProductModelID}"/>
                     <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize Name}"/>
                     <Entry Grid.Row="1" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.Name}"/>
+                        Text="{Binding __Master__.Name}"/>
                     <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize CatalogDescription}"/>
                     <Entry Grid.Row="2" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.CatalogDescription}"/>
+                        Text="{Binding __Master__.CatalogDescription}"/>
                     <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize rowguid}"/>
                     <Entry Grid.Row="3" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.rowguid}"/>
+                        Text="{Binding __Master__.rowguid}"/>
                     <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize ModifiedDate}"/>
                     <Entry Grid.Row="4" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.ModifiedDate}"/>
+                        Text="{Binding __Master__.ModifiedDate}"/>
                 </Grid>
                 <VerticalStackLayout x:Name="masterForeignKeyToolbar">
                 </VerticalStackLayout>
@@ -54,19 +55,11 @@
                         <ColumnDefinition Width="5*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <BoxView Color="CornflowerBlue"
-                            CornerRadius="2"
-                            HeightRequest="5"
-                            VerticalOptions="Center"
-                            HorizontalOptions="FillAndExpand" />
+                    <BoxView Style="{StaticResource HorizontalSeparator}" />
                     <Label Grid.Column="1" Style="{StaticResource NameLabelStyle}"
                             HorizontalOptions="Center"
-                            Text="{l:Localize AdventureWorksLT2019Model:Product}"/>
-                    <BoxView Grid.Column="2" Color="CornflowerBlue"
-                            CornerRadius="2"
-                            HeightRequest="5"
-                            VerticalOptions="Center"
-                            HorizontalOptions="FillAndExpand" />
+                            Text="{l:Localize Product}"/>
+                    <BoxView Style="{StaticResource HorizontalSeparator}" />
                 </Grid>
                 <CollectionView
                     x:Name="products_Via_ProductModelID" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
@@ -76,7 +69,7 @@
                         <DataTemplate>
                             <Grid Padding="10" HorizontalOptions="FillAndExpand">
                                 <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Source={x:Reference thisRoot}, Path=BindingContext.LaunchList_ProductItemViewCommand}" CommandParameter="{Binding ProductID}" />
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Source={x:Reference thisPage}, Path=BindingContext.LaunchList_ProductItemViewCommand}" CommandParameter="{Binding ProductID}" />
                                 </Grid.GestureRecognizers>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="60" />
@@ -110,19 +103,11 @@
                         <ColumnDefinition Width="5*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <BoxView Color="CornflowerBlue"
-                            CornerRadius="2"
-                            HeightRequest="5"
-                            VerticalOptions="Center"
-                            HorizontalOptions="FillAndExpand" />
+                    <BoxView Style="{StaticResource HorizontalSeparator}" />
                     <Label Grid.Column="1" Style="{StaticResource NameLabelStyle}"
                             HorizontalOptions="Center"
-                            Text="{l:Localize AdventureWorksLT2019Model:ProductModelProductDescription}"/>
-                    <BoxView Grid.Column="2" Color="CornflowerBlue"
-                            CornerRadius="2"
-                            HeightRequest="5"
-                            VerticalOptions="Center"
-                            HorizontalOptions="FillAndExpand" />
+                            Text="{l:Localize ProductModelProductDescription}"/>
+                    <BoxView Style="{StaticResource HorizontalSeparator}" />
                 </Grid>
                 <CollectionView
                     x:Name="productModelProductDescriptions_Via_ProductModelID" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
@@ -132,7 +117,7 @@
                         <DataTemplate>
                             <Grid Padding="10" HorizontalOptions="FillAndExpand">
                                 <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Source={x:Reference thisRoot}, Path=BindingContext.LaunchList_ProductModelProductDescriptionItemViewCommand}" CommandParameter="{Binding ProductModelID}" />
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Source={x:Reference thisPage}, Path=BindingContext.LaunchList_ProductModelProductDescriptionItemViewCommand}" CommandParameter="{Binding ProductModelID}" />
                                 </Grid.GestureRecognizers>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="60" />

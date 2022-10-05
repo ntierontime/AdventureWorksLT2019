@@ -6,6 +6,7 @@
              xmlns:fm="clr-namespace:Framework.Models;assembly=Framework"
              xmlns:l="clr-namespace:AdventureWorksLT2019.MauiXApp.Extensions"
              x:Class="AdventureWorksLT2019.MauiXApp.Views.ErrorLog.DashboardPage"
+             x:Name="thisPage"
              Title="DashboardPage">
     <Grid Margin="0">
         <ScrollView Margin="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
@@ -30,39 +31,39 @@
                     <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize ErrorLogID}"/>
                     <Entry Grid.Row="0" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.ErrorLogID}"/>
+                        Text="{Binding __Master__.ErrorLogID}"/>
                     <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize ErrorTime}"/>
                     <Entry Grid.Row="1" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.ErrorTime}"/>
+                        Text="{Binding __Master__.ErrorTime}"/>
                     <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize UserName}"/>
                     <Entry Grid.Row="2" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.UserName}"/>
+                        Text="{Binding __Master__.UserName}"/>
                     <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize ErrorNumber}"/>
                     <Entry Grid.Row="3" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.ErrorNumber}"/>
+                        Text="{Binding __Master__.ErrorNumber}"/>
                     <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize ErrorSeverity}"/>
                     <Entry Grid.Row="4" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.ErrorSeverity}"/>
+                        Text="{Binding __Master__.ErrorSeverity}"/>
                     <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize ErrorState}"/>
                     <Entry Grid.Row="5" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.ErrorState}"/>
+                        Text="{Binding __Master__.ErrorState}"/>
                     <Label Grid.Row="6" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize ErrorProcedure}"/>
                     <Entry Grid.Row="6" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.ErrorProcedure}"/>
+                        Text="{Binding __Master__.ErrorProcedure}"/>
                     <Label Grid.Row="7" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize ErrorLine}"/>
                     <Entry Grid.Row="7" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.ErrorLine}"/>
+                        Text="{Binding __Master__.ErrorLine}"/>
                     <Label Grid.Row="8" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize ErrorMessage}"/>
                     <Entry Grid.Row="8" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.ErrorMessage}"/>
+                        Text="{Binding __Master__.ErrorMessage}"/>
                 </Grid>
                 <VerticalStackLayout x:Name="masterForeignKeyToolbar">
                 </VerticalStackLayout>
