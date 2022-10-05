@@ -11,7 +11,7 @@ namespace AdventureWorksLT2019.MauiXApp.Common.Helpers;
 public static class LaunchViewCommandsHelper
 {
 
-    //2. BuildVersion
+    //1. BuildVersion
 
     // 1.1. GetLaunchBuildVersionCreatePageCommand
     public static Command GetLaunchBuildVersionCreatePageCommand(string returnPath)
@@ -19,6 +19,7 @@ public static class LaunchViewCommandsHelper
         return new Command(async () =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.BuildVersionCreatePage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<BuildVersionIdentifierMessage>(new BuildVersionIdentifierMessage(null, ViewItemTemplates.Create, returnPath));
         });
     }
@@ -29,6 +30,7 @@ public static class LaunchViewCommandsHelper
         return new Command<byte>(async (systemInformationID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.BuildVersionDeletePage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<BuildVersionIdentifierMessage>(new BuildVersionIdentifierMessage(new BuildVersionIdentifier { SystemInformationID = systemInformationID }, ViewItemTemplates.Delete, returnPath));
         });
     }
@@ -39,6 +41,7 @@ public static class LaunchViewCommandsHelper
         return new Command<byte>(async (systemInformationID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.BuildVersionDetailsPage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<BuildVersionIdentifierMessage>(new BuildVersionIdentifierMessage(new BuildVersionIdentifier { SystemInformationID = systemInformationID }, ViewItemTemplates.Details, returnPath));
         });
     }
@@ -49,6 +52,7 @@ public static class LaunchViewCommandsHelper
         return new Command<byte>(async (systemInformationID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.BuildVersionEditPage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<BuildVersionIdentifierMessage>(new BuildVersionIdentifierMessage(new BuildVersionIdentifier { SystemInformationID = systemInformationID }, ViewItemTemplates.Edit, returnPath));
         });
     }
@@ -70,8 +74,9 @@ public static class LaunchViewCommandsHelper
         return new Command(async () =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.BuildVersion.CreatePopup();
-            WeakReferenceMessenger.Default.Send<BuildVersionIdentifierMessage>(new BuildVersionIdentifierMessage(null, ViewItemTemplates.Create));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<BuildVersionIdentifierMessage>(new BuildVersionIdentifierMessage(null, ViewItemTemplates.Create));
         });
     }
 
@@ -81,8 +86,9 @@ public static class LaunchViewCommandsHelper
         return new Command<byte>(async (systemInformationID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.BuildVersion.DeletePopup();
-            WeakReferenceMessenger.Default.Send<BuildVersionIdentifierMessage>(new BuildVersionIdentifierMessage(new BuildVersionIdentifier { SystemInformationID = systemInformationID }, ViewItemTemplates.Delete));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<BuildVersionIdentifierMessage>(new BuildVersionIdentifierMessage(new BuildVersionIdentifier { SystemInformationID = systemInformationID }, ViewItemTemplates.Delete));
         });
     }
 
@@ -92,8 +98,9 @@ public static class LaunchViewCommandsHelper
         return new Command<byte>(async (systemInformationID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.BuildVersion.DetailsPopup();
-            WeakReferenceMessenger.Default.Send<BuildVersionIdentifierMessage>(new BuildVersionIdentifierMessage(new BuildVersionIdentifier { SystemInformationID = systemInformationID }, ViewItemTemplates.Details));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<BuildVersionIdentifierMessage>(new BuildVersionIdentifierMessage(new BuildVersionIdentifier { SystemInformationID = systemInformationID }, ViewItemTemplates.Details));
         });
     }
 
@@ -103,8 +110,9 @@ public static class LaunchViewCommandsHelper
         return new Command<byte>(async (systemInformationID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.BuildVersion.EditPopup();
-            WeakReferenceMessenger.Default.Send<BuildVersionIdentifierMessage>(new BuildVersionIdentifierMessage(new BuildVersionIdentifier { SystemInformationID = systemInformationID }, ViewItemTemplates.Edit));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<BuildVersionIdentifierMessage>(new BuildVersionIdentifierMessage(new BuildVersionIdentifier { SystemInformationID = systemInformationID }, ViewItemTemplates.Edit));
         });
     }
 
@@ -138,7 +146,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    //3. ErrorLog
+    //2. ErrorLog
 
     // 2.1. GetLaunchErrorLogCreatePageCommand
     public static Command GetLaunchErrorLogCreatePageCommand(string returnPath)
@@ -146,6 +154,7 @@ public static class LaunchViewCommandsHelper
         return new Command(async () =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ErrorLogCreatePage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<ErrorLogIdentifierMessage>(new ErrorLogIdentifierMessage(null, ViewItemTemplates.Create, returnPath));
         });
     }
@@ -156,6 +165,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (errorLogID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ErrorLogDeletePage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<ErrorLogIdentifierMessage>(new ErrorLogIdentifierMessage(new ErrorLogIdentifier { ErrorLogID = errorLogID }, ViewItemTemplates.Delete, returnPath));
         });
     }
@@ -166,6 +176,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (errorLogID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ErrorLogDetailsPage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<ErrorLogIdentifierMessage>(new ErrorLogIdentifierMessage(new ErrorLogIdentifier { ErrorLogID = errorLogID }, ViewItemTemplates.Details, returnPath));
         });
     }
@@ -176,6 +187,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (errorLogID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ErrorLogEditPage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<ErrorLogIdentifierMessage>(new ErrorLogIdentifierMessage(new ErrorLogIdentifier { ErrorLogID = errorLogID }, ViewItemTemplates.Edit, returnPath));
         });
     }
@@ -197,8 +209,9 @@ public static class LaunchViewCommandsHelper
         return new Command(async () =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.ErrorLog.CreatePopup();
-            WeakReferenceMessenger.Default.Send<ErrorLogIdentifierMessage>(new ErrorLogIdentifierMessage(null, ViewItemTemplates.Create));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ErrorLogIdentifierMessage>(new ErrorLogIdentifierMessage(null, ViewItemTemplates.Create));
         });
     }
 
@@ -208,8 +221,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (errorLogID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.ErrorLog.DeletePopup();
-            WeakReferenceMessenger.Default.Send<ErrorLogIdentifierMessage>(new ErrorLogIdentifierMessage(new ErrorLogIdentifier { ErrorLogID = errorLogID }, ViewItemTemplates.Delete));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ErrorLogIdentifierMessage>(new ErrorLogIdentifierMessage(new ErrorLogIdentifier { ErrorLogID = errorLogID }, ViewItemTemplates.Delete));
         });
     }
 
@@ -219,8 +233,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (errorLogID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.ErrorLog.DetailsPopup();
-            WeakReferenceMessenger.Default.Send<ErrorLogIdentifierMessage>(new ErrorLogIdentifierMessage(new ErrorLogIdentifier { ErrorLogID = errorLogID }, ViewItemTemplates.Details));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ErrorLogIdentifierMessage>(new ErrorLogIdentifierMessage(new ErrorLogIdentifier { ErrorLogID = errorLogID }, ViewItemTemplates.Details));
         });
     }
 
@@ -230,8 +245,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (errorLogID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.ErrorLog.EditPopup();
-            WeakReferenceMessenger.Default.Send<ErrorLogIdentifierMessage>(new ErrorLogIdentifierMessage(new ErrorLogIdentifier { ErrorLogID = errorLogID }, ViewItemTemplates.Edit));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ErrorLogIdentifierMessage>(new ErrorLogIdentifierMessage(new ErrorLogIdentifier { ErrorLogID = errorLogID }, ViewItemTemplates.Edit));
         });
     }
 
@@ -265,7 +281,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    //4. Address
+    //3. Address
 
     // 3.1. GetLaunchAddressCreatePageCommand
     public static Command GetLaunchAddressCreatePageCommand(string returnPath)
@@ -273,6 +289,7 @@ public static class LaunchViewCommandsHelper
         return new Command(async () =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.AddressCreatePage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<AddressIdentifierMessage>(new AddressIdentifierMessage(null, ViewItemTemplates.Create, returnPath));
         });
     }
@@ -283,6 +300,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (addressID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.AddressDeletePage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<AddressIdentifierMessage>(new AddressIdentifierMessage(new AddressIdentifier { AddressID = addressID }, ViewItemTemplates.Delete, returnPath));
         });
     }
@@ -293,6 +311,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (addressID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.AddressDetailsPage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<AddressIdentifierMessage>(new AddressIdentifierMessage(new AddressIdentifier { AddressID = addressID }, ViewItemTemplates.Details, returnPath));
         });
     }
@@ -303,6 +322,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (addressID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.AddressEditPage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<AddressIdentifierMessage>(new AddressIdentifierMessage(new AddressIdentifier { AddressID = addressID }, ViewItemTemplates.Edit, returnPath));
         });
     }
@@ -324,8 +344,9 @@ public static class LaunchViewCommandsHelper
         return new Command(async () =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.Address.CreatePopup();
-            WeakReferenceMessenger.Default.Send<AddressIdentifierMessage>(new AddressIdentifierMessage(null, ViewItemTemplates.Create));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<AddressIdentifierMessage>(new AddressIdentifierMessage(null, ViewItemTemplates.Create));
         });
     }
 
@@ -335,8 +356,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (addressID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.Address.DeletePopup();
-            WeakReferenceMessenger.Default.Send<AddressIdentifierMessage>(new AddressIdentifierMessage(new AddressIdentifier { AddressID = addressID }, ViewItemTemplates.Delete));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<AddressIdentifierMessage>(new AddressIdentifierMessage(new AddressIdentifier { AddressID = addressID }, ViewItemTemplates.Delete));
         });
     }
 
@@ -346,8 +368,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (addressID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.Address.DetailsPopup();
-            WeakReferenceMessenger.Default.Send<AddressIdentifierMessage>(new AddressIdentifierMessage(new AddressIdentifier { AddressID = addressID }, ViewItemTemplates.Details));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<AddressIdentifierMessage>(new AddressIdentifierMessage(new AddressIdentifier { AddressID = addressID }, ViewItemTemplates.Details));
         });
     }
 
@@ -357,8 +380,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (addressID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.Address.EditPopup();
-            WeakReferenceMessenger.Default.Send<AddressIdentifierMessage>(new AddressIdentifierMessage(new AddressIdentifier { AddressID = addressID }, ViewItemTemplates.Edit));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<AddressIdentifierMessage>(new AddressIdentifierMessage(new AddressIdentifier { AddressID = addressID }, ViewItemTemplates.Edit));
         });
     }
 
@@ -392,7 +416,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    //5. Customer
+    //4. Customer
 
     // 4.1. GetLaunchCustomerCreatePageCommand
     public static Command GetLaunchCustomerCreatePageCommand(string returnPath)
@@ -400,6 +424,7 @@ public static class LaunchViewCommandsHelper
         return new Command(async () =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.CustomerCreatePage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<CustomerIdentifierMessage>(new CustomerIdentifierMessage(null, ViewItemTemplates.Create, returnPath));
         });
     }
@@ -410,6 +435,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (customerID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.CustomerDeletePage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<CustomerIdentifierMessage>(new CustomerIdentifierMessage(new CustomerIdentifier { CustomerID = customerID }, ViewItemTemplates.Delete, returnPath));
         });
     }
@@ -420,6 +446,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (customerID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.CustomerDetailsPage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<CustomerIdentifierMessage>(new CustomerIdentifierMessage(new CustomerIdentifier { CustomerID = customerID }, ViewItemTemplates.Details, returnPath));
         });
     }
@@ -430,6 +457,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (customerID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.CustomerEditPage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<CustomerIdentifierMessage>(new CustomerIdentifierMessage(new CustomerIdentifier { CustomerID = customerID }, ViewItemTemplates.Edit, returnPath));
         });
     }
@@ -451,8 +479,9 @@ public static class LaunchViewCommandsHelper
         return new Command(async () =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.Customer.CreatePopup();
-            WeakReferenceMessenger.Default.Send<CustomerIdentifierMessage>(new CustomerIdentifierMessage(null, ViewItemTemplates.Create));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<CustomerIdentifierMessage>(new CustomerIdentifierMessage(null, ViewItemTemplates.Create));
         });
     }
 
@@ -462,8 +491,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (customerID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.Customer.DeletePopup();
-            WeakReferenceMessenger.Default.Send<CustomerIdentifierMessage>(new CustomerIdentifierMessage(new CustomerIdentifier { CustomerID = customerID }, ViewItemTemplates.Delete));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<CustomerIdentifierMessage>(new CustomerIdentifierMessage(new CustomerIdentifier { CustomerID = customerID }, ViewItemTemplates.Delete));
         });
     }
 
@@ -473,8 +503,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (customerID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.Customer.DetailsPopup();
-            WeakReferenceMessenger.Default.Send<CustomerIdentifierMessage>(new CustomerIdentifierMessage(new CustomerIdentifier { CustomerID = customerID }, ViewItemTemplates.Details));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<CustomerIdentifierMessage>(new CustomerIdentifierMessage(new CustomerIdentifier { CustomerID = customerID }, ViewItemTemplates.Details));
         });
     }
 
@@ -484,8 +515,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (customerID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.Customer.EditPopup();
-            WeakReferenceMessenger.Default.Send<CustomerIdentifierMessage>(new CustomerIdentifierMessage(new CustomerIdentifier { CustomerID = customerID }, ViewItemTemplates.Edit));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<CustomerIdentifierMessage>(new CustomerIdentifierMessage(new CustomerIdentifier { CustomerID = customerID }, ViewItemTemplates.Edit));
         });
     }
 
@@ -519,7 +551,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    //6. CustomerAddress
+    //5. CustomerAddress
 
     // 5.1. GetLaunchCustomerAddressCreatePageCommand
     public static Command GetLaunchCustomerAddressCreatePageCommand(string returnPath)
@@ -527,6 +559,7 @@ public static class LaunchViewCommandsHelper
         return new Command(async () =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.CustomerAddressCreatePage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<CustomerAddressIdentifierMessage>(new CustomerAddressIdentifierMessage(null, ViewItemTemplates.Create, returnPath));
         });
     }
@@ -537,6 +570,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (customerID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.CustomerAddressDeletePage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<CustomerAddressIdentifierMessage>(new CustomerAddressIdentifierMessage(new CustomerAddressIdentifier { CustomerID = customerID }, ViewItemTemplates.Delete, returnPath));
         });
     }
@@ -547,6 +581,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (customerID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.CustomerAddressDetailsPage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<CustomerAddressIdentifierMessage>(new CustomerAddressIdentifierMessage(new CustomerAddressIdentifier { CustomerID = customerID }, ViewItemTemplates.Details, returnPath));
         });
     }
@@ -557,6 +592,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (customerID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.CustomerAddressEditPage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<CustomerAddressIdentifierMessage>(new CustomerAddressIdentifierMessage(new CustomerAddressIdentifier { CustomerID = customerID }, ViewItemTemplates.Edit, returnPath));
         });
     }
@@ -578,8 +614,9 @@ public static class LaunchViewCommandsHelper
         return new Command(async () =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.CreatePopup();
-            WeakReferenceMessenger.Default.Send<CustomerAddressIdentifierMessage>(new CustomerAddressIdentifierMessage(null, ViewItemTemplates.Create));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<CustomerAddressIdentifierMessage>(new CustomerAddressIdentifierMessage(null, ViewItemTemplates.Create));
         });
     }
 
@@ -589,8 +626,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (customerID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.DeletePopup();
-            WeakReferenceMessenger.Default.Send<CustomerAddressIdentifierMessage>(new CustomerAddressIdentifierMessage(new CustomerAddressIdentifier { CustomerID = customerID }, ViewItemTemplates.Delete));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<CustomerAddressIdentifierMessage>(new CustomerAddressIdentifierMessage(new CustomerAddressIdentifier { CustomerID = customerID }, ViewItemTemplates.Delete));
         });
     }
 
@@ -600,8 +638,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (customerID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.DetailsPopup();
-            WeakReferenceMessenger.Default.Send<CustomerAddressIdentifierMessage>(new CustomerAddressIdentifierMessage(new CustomerAddressIdentifier { CustomerID = customerID }, ViewItemTemplates.Details));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<CustomerAddressIdentifierMessage>(new CustomerAddressIdentifierMessage(new CustomerAddressIdentifier { CustomerID = customerID }, ViewItemTemplates.Details));
         });
     }
 
@@ -611,8 +650,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (customerID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.EditPopup();
-            WeakReferenceMessenger.Default.Send<CustomerAddressIdentifierMessage>(new CustomerAddressIdentifierMessage(new CustomerAddressIdentifier { CustomerID = customerID }, ViewItemTemplates.Edit));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<CustomerAddressIdentifierMessage>(new CustomerAddressIdentifierMessage(new CustomerAddressIdentifier { CustomerID = customerID }, ViewItemTemplates.Edit));
         });
     }
 
@@ -646,7 +686,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    //7. Product
+    //6. Product
 
     // 6.1. GetLaunchProductCreatePageCommand
     public static Command GetLaunchProductCreatePageCommand(string returnPath)
@@ -654,6 +694,7 @@ public static class LaunchViewCommandsHelper
         return new Command(async () =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductCreatePage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<ProductIdentifierMessage>(new ProductIdentifierMessage(null, ViewItemTemplates.Create, returnPath));
         });
     }
@@ -664,6 +705,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductDeletePage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<ProductIdentifierMessage>(new ProductIdentifierMessage(new ProductIdentifier { ProductID = productID }, ViewItemTemplates.Delete, returnPath));
         });
     }
@@ -674,6 +716,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductDetailsPage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<ProductIdentifierMessage>(new ProductIdentifierMessage(new ProductIdentifier { ProductID = productID }, ViewItemTemplates.Details, returnPath));
         });
     }
@@ -684,6 +727,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductEditPage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<ProductIdentifierMessage>(new ProductIdentifierMessage(new ProductIdentifier { ProductID = productID }, ViewItemTemplates.Edit, returnPath));
         });
     }
@@ -705,8 +749,9 @@ public static class LaunchViewCommandsHelper
         return new Command(async () =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.Product.CreatePopup();
-            WeakReferenceMessenger.Default.Send<ProductIdentifierMessage>(new ProductIdentifierMessage(null, ViewItemTemplates.Create));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductIdentifierMessage>(new ProductIdentifierMessage(null, ViewItemTemplates.Create));
         });
     }
 
@@ -716,8 +761,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.Product.DeletePopup();
-            WeakReferenceMessenger.Default.Send<ProductIdentifierMessage>(new ProductIdentifierMessage(new ProductIdentifier { ProductID = productID }, ViewItemTemplates.Delete));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductIdentifierMessage>(new ProductIdentifierMessage(new ProductIdentifier { ProductID = productID }, ViewItemTemplates.Delete));
         });
     }
 
@@ -727,8 +773,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.Product.DetailsPopup();
-            WeakReferenceMessenger.Default.Send<ProductIdentifierMessage>(new ProductIdentifierMessage(new ProductIdentifier { ProductID = productID }, ViewItemTemplates.Details));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductIdentifierMessage>(new ProductIdentifierMessage(new ProductIdentifier { ProductID = productID }, ViewItemTemplates.Details));
         });
     }
 
@@ -738,8 +785,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.Product.EditPopup();
-            WeakReferenceMessenger.Default.Send<ProductIdentifierMessage>(new ProductIdentifierMessage(new ProductIdentifier { ProductID = productID }, ViewItemTemplates.Edit));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductIdentifierMessage>(new ProductIdentifierMessage(new ProductIdentifier { ProductID = productID }, ViewItemTemplates.Edit));
         });
     }
 
@@ -773,7 +821,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    //8. ProductCategory
+    //7. ProductCategory
 
     // 7.1. GetLaunchProductCategoryCreatePageCommand
     public static Command GetLaunchProductCategoryCreatePageCommand(string returnPath)
@@ -781,6 +829,7 @@ public static class LaunchViewCommandsHelper
         return new Command(async () =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductCategoryCreatePage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<ProductCategoryIdentifierMessage>(new ProductCategoryIdentifierMessage(null, ViewItemTemplates.Create, returnPath));
         });
     }
@@ -791,6 +840,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productCategoryID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductCategoryDeletePage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<ProductCategoryIdentifierMessage>(new ProductCategoryIdentifierMessage(new ProductCategoryIdentifier { ProductCategoryID = productCategoryID }, ViewItemTemplates.Delete, returnPath));
         });
     }
@@ -801,6 +851,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productCategoryID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductCategoryDetailsPage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<ProductCategoryIdentifierMessage>(new ProductCategoryIdentifierMessage(new ProductCategoryIdentifier { ProductCategoryID = productCategoryID }, ViewItemTemplates.Details, returnPath));
         });
     }
@@ -811,6 +862,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productCategoryID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductCategoryEditPage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<ProductCategoryIdentifierMessage>(new ProductCategoryIdentifierMessage(new ProductCategoryIdentifier { ProductCategoryID = productCategoryID }, ViewItemTemplates.Edit, returnPath));
         });
     }
@@ -832,8 +884,9 @@ public static class LaunchViewCommandsHelper
         return new Command(async () =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductCategory.CreatePopup();
-            WeakReferenceMessenger.Default.Send<ProductCategoryIdentifierMessage>(new ProductCategoryIdentifierMessage(null, ViewItemTemplates.Create));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductCategoryIdentifierMessage>(new ProductCategoryIdentifierMessage(null, ViewItemTemplates.Create));
         });
     }
 
@@ -843,8 +896,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productCategoryID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductCategory.DeletePopup();
-            WeakReferenceMessenger.Default.Send<ProductCategoryIdentifierMessage>(new ProductCategoryIdentifierMessage(new ProductCategoryIdentifier { ProductCategoryID = productCategoryID }, ViewItemTemplates.Delete));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductCategoryIdentifierMessage>(new ProductCategoryIdentifierMessage(new ProductCategoryIdentifier { ProductCategoryID = productCategoryID }, ViewItemTemplates.Delete));
         });
     }
 
@@ -854,8 +908,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productCategoryID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductCategory.DetailsPopup();
-            WeakReferenceMessenger.Default.Send<ProductCategoryIdentifierMessage>(new ProductCategoryIdentifierMessage(new ProductCategoryIdentifier { ProductCategoryID = productCategoryID }, ViewItemTemplates.Details));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductCategoryIdentifierMessage>(new ProductCategoryIdentifierMessage(new ProductCategoryIdentifier { ProductCategoryID = productCategoryID }, ViewItemTemplates.Details));
         });
     }
 
@@ -865,8 +920,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productCategoryID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductCategory.EditPopup();
-            WeakReferenceMessenger.Default.Send<ProductCategoryIdentifierMessage>(new ProductCategoryIdentifierMessage(new ProductCategoryIdentifier { ProductCategoryID = productCategoryID }, ViewItemTemplates.Edit));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductCategoryIdentifierMessage>(new ProductCategoryIdentifierMessage(new ProductCategoryIdentifier { ProductCategoryID = productCategoryID }, ViewItemTemplates.Edit));
         });
     }
 
@@ -900,7 +956,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    //9. ProductDescription
+    //8. ProductDescription
 
     // 8.1. GetLaunchProductDescriptionCreatePageCommand
     public static Command GetLaunchProductDescriptionCreatePageCommand(string returnPath)
@@ -908,6 +964,7 @@ public static class LaunchViewCommandsHelper
         return new Command(async () =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductDescriptionCreatePage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<ProductDescriptionIdentifierMessage>(new ProductDescriptionIdentifierMessage(null, ViewItemTemplates.Create, returnPath));
         });
     }
@@ -918,6 +975,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productDescriptionID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductDescriptionDeletePage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<ProductDescriptionIdentifierMessage>(new ProductDescriptionIdentifierMessage(new ProductDescriptionIdentifier { ProductDescriptionID = productDescriptionID }, ViewItemTemplates.Delete, returnPath));
         });
     }
@@ -928,6 +986,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productDescriptionID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductDescriptionDetailsPage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<ProductDescriptionIdentifierMessage>(new ProductDescriptionIdentifierMessage(new ProductDescriptionIdentifier { ProductDescriptionID = productDescriptionID }, ViewItemTemplates.Details, returnPath));
         });
     }
@@ -938,6 +997,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productDescriptionID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductDescriptionEditPage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<ProductDescriptionIdentifierMessage>(new ProductDescriptionIdentifierMessage(new ProductDescriptionIdentifier { ProductDescriptionID = productDescriptionID }, ViewItemTemplates.Edit, returnPath));
         });
     }
@@ -959,8 +1019,9 @@ public static class LaunchViewCommandsHelper
         return new Command(async () =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductDescription.CreatePopup();
-            WeakReferenceMessenger.Default.Send<ProductDescriptionIdentifierMessage>(new ProductDescriptionIdentifierMessage(null, ViewItemTemplates.Create));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductDescriptionIdentifierMessage>(new ProductDescriptionIdentifierMessage(null, ViewItemTemplates.Create));
         });
     }
 
@@ -970,8 +1031,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productDescriptionID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductDescription.DeletePopup();
-            WeakReferenceMessenger.Default.Send<ProductDescriptionIdentifierMessage>(new ProductDescriptionIdentifierMessage(new ProductDescriptionIdentifier { ProductDescriptionID = productDescriptionID }, ViewItemTemplates.Delete));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductDescriptionIdentifierMessage>(new ProductDescriptionIdentifierMessage(new ProductDescriptionIdentifier { ProductDescriptionID = productDescriptionID }, ViewItemTemplates.Delete));
         });
     }
 
@@ -981,8 +1043,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productDescriptionID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductDescription.DetailsPopup();
-            WeakReferenceMessenger.Default.Send<ProductDescriptionIdentifierMessage>(new ProductDescriptionIdentifierMessage(new ProductDescriptionIdentifier { ProductDescriptionID = productDescriptionID }, ViewItemTemplates.Details));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductDescriptionIdentifierMessage>(new ProductDescriptionIdentifierMessage(new ProductDescriptionIdentifier { ProductDescriptionID = productDescriptionID }, ViewItemTemplates.Details));
         });
     }
 
@@ -992,8 +1055,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productDescriptionID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductDescription.EditPopup();
-            WeakReferenceMessenger.Default.Send<ProductDescriptionIdentifierMessage>(new ProductDescriptionIdentifierMessage(new ProductDescriptionIdentifier { ProductDescriptionID = productDescriptionID }, ViewItemTemplates.Edit));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductDescriptionIdentifierMessage>(new ProductDescriptionIdentifierMessage(new ProductDescriptionIdentifier { ProductDescriptionID = productDescriptionID }, ViewItemTemplates.Edit));
         });
     }
 
@@ -1027,7 +1091,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    //10. ProductModel
+    //9. ProductModel
 
     // 9.1. GetLaunchProductModelCreatePageCommand
     public static Command GetLaunchProductModelCreatePageCommand(string returnPath)
@@ -1035,6 +1099,7 @@ public static class LaunchViewCommandsHelper
         return new Command(async () =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductModelCreatePage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<ProductModelIdentifierMessage>(new ProductModelIdentifierMessage(null, ViewItemTemplates.Create, returnPath));
         });
     }
@@ -1045,6 +1110,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productModelID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductModelDeletePage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<ProductModelIdentifierMessage>(new ProductModelIdentifierMessage(new ProductModelIdentifier { ProductModelID = productModelID }, ViewItemTemplates.Delete, returnPath));
         });
     }
@@ -1055,6 +1121,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productModelID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductModelDetailsPage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<ProductModelIdentifierMessage>(new ProductModelIdentifierMessage(new ProductModelIdentifier { ProductModelID = productModelID }, ViewItemTemplates.Details, returnPath));
         });
     }
@@ -1065,6 +1132,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productModelID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductModelEditPage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<ProductModelIdentifierMessage>(new ProductModelIdentifierMessage(new ProductModelIdentifier { ProductModelID = productModelID }, ViewItemTemplates.Edit, returnPath));
         });
     }
@@ -1086,8 +1154,9 @@ public static class LaunchViewCommandsHelper
         return new Command(async () =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductModel.CreatePopup();
-            WeakReferenceMessenger.Default.Send<ProductModelIdentifierMessage>(new ProductModelIdentifierMessage(null, ViewItemTemplates.Create));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductModelIdentifierMessage>(new ProductModelIdentifierMessage(null, ViewItemTemplates.Create));
         });
     }
 
@@ -1097,8 +1166,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productModelID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductModel.DeletePopup();
-            WeakReferenceMessenger.Default.Send<ProductModelIdentifierMessage>(new ProductModelIdentifierMessage(new ProductModelIdentifier { ProductModelID = productModelID }, ViewItemTemplates.Delete));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductModelIdentifierMessage>(new ProductModelIdentifierMessage(new ProductModelIdentifier { ProductModelID = productModelID }, ViewItemTemplates.Delete));
         });
     }
 
@@ -1108,8 +1178,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productModelID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductModel.DetailsPopup();
-            WeakReferenceMessenger.Default.Send<ProductModelIdentifierMessage>(new ProductModelIdentifierMessage(new ProductModelIdentifier { ProductModelID = productModelID }, ViewItemTemplates.Details));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductModelIdentifierMessage>(new ProductModelIdentifierMessage(new ProductModelIdentifier { ProductModelID = productModelID }, ViewItemTemplates.Details));
         });
     }
 
@@ -1119,8 +1190,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productModelID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductModel.EditPopup();
-            WeakReferenceMessenger.Default.Send<ProductModelIdentifierMessage>(new ProductModelIdentifierMessage(new ProductModelIdentifier { ProductModelID = productModelID }, ViewItemTemplates.Edit));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductModelIdentifierMessage>(new ProductModelIdentifierMessage(new ProductModelIdentifier { ProductModelID = productModelID }, ViewItemTemplates.Edit));
         });
     }
 
@@ -1154,7 +1226,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    //11. ProductModelProductDescription
+    //10. ProductModelProductDescription
 
     // 10.1. GetLaunchProductModelProductDescriptionCreatePageCommand
     public static Command GetLaunchProductModelProductDescriptionCreatePageCommand(string returnPath)
@@ -1162,6 +1234,7 @@ public static class LaunchViewCommandsHelper
         return new Command(async () =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductModelProductDescriptionCreatePage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<ProductModelProductDescriptionIdentifierMessage>(new ProductModelProductDescriptionIdentifierMessage(null, ViewItemTemplates.Create, returnPath));
         });
     }
@@ -1172,6 +1245,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productModelID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductModelProductDescriptionDeletePage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<ProductModelProductDescriptionIdentifierMessage>(new ProductModelProductDescriptionIdentifierMessage(new ProductModelProductDescriptionIdentifier { ProductModelID = productModelID }, ViewItemTemplates.Delete, returnPath));
         });
     }
@@ -1182,6 +1256,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productModelID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductModelProductDescriptionDetailsPage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<ProductModelProductDescriptionIdentifierMessage>(new ProductModelProductDescriptionIdentifierMessage(new ProductModelProductDescriptionIdentifier { ProductModelID = productModelID }, ViewItemTemplates.Details, returnPath));
         });
     }
@@ -1192,6 +1267,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productModelID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductModelProductDescriptionEditPage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<ProductModelProductDescriptionIdentifierMessage>(new ProductModelProductDescriptionIdentifierMessage(new ProductModelProductDescriptionIdentifier { ProductModelID = productModelID }, ViewItemTemplates.Edit, returnPath));
         });
     }
@@ -1213,8 +1289,9 @@ public static class LaunchViewCommandsHelper
         return new Command(async () =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductModelProductDescription.CreatePopup();
-            WeakReferenceMessenger.Default.Send<ProductModelProductDescriptionIdentifierMessage>(new ProductModelProductDescriptionIdentifierMessage(null, ViewItemTemplates.Create));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductModelProductDescriptionIdentifierMessage>(new ProductModelProductDescriptionIdentifierMessage(null, ViewItemTemplates.Create));
         });
     }
 
@@ -1224,8 +1301,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productModelID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductModelProductDescription.DeletePopup();
-            WeakReferenceMessenger.Default.Send<ProductModelProductDescriptionIdentifierMessage>(new ProductModelProductDescriptionIdentifierMessage(new ProductModelProductDescriptionIdentifier { ProductModelID = productModelID }, ViewItemTemplates.Delete));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductModelProductDescriptionIdentifierMessage>(new ProductModelProductDescriptionIdentifierMessage(new ProductModelProductDescriptionIdentifier { ProductModelID = productModelID }, ViewItemTemplates.Delete));
         });
     }
 
@@ -1235,8 +1313,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productModelID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductModelProductDescription.DetailsPopup();
-            WeakReferenceMessenger.Default.Send<ProductModelProductDescriptionIdentifierMessage>(new ProductModelProductDescriptionIdentifierMessage(new ProductModelProductDescriptionIdentifier { ProductModelID = productModelID }, ViewItemTemplates.Details));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductModelProductDescriptionIdentifierMessage>(new ProductModelProductDescriptionIdentifierMessage(new ProductModelProductDescriptionIdentifier { ProductModelID = productModelID }, ViewItemTemplates.Details));
         });
     }
 
@@ -1246,8 +1325,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (productModelID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductModelProductDescription.EditPopup();
-            WeakReferenceMessenger.Default.Send<ProductModelProductDescriptionIdentifierMessage>(new ProductModelProductDescriptionIdentifierMessage(new ProductModelProductDescriptionIdentifier { ProductModelID = productModelID }, ViewItemTemplates.Edit));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductModelProductDescriptionIdentifierMessage>(new ProductModelProductDescriptionIdentifierMessage(new ProductModelProductDescriptionIdentifier { ProductModelID = productModelID }, ViewItemTemplates.Edit));
         });
     }
 
@@ -1281,7 +1361,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    //12. SalesOrderDetail
+    //11. SalesOrderDetail
 
     // 11.1. GetLaunchSalesOrderDetailCreatePageCommand
     public static Command GetLaunchSalesOrderDetailCreatePageCommand(string returnPath)
@@ -1289,6 +1369,7 @@ public static class LaunchViewCommandsHelper
         return new Command(async () =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.SalesOrderDetailCreatePage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<SalesOrderDetailIdentifierMessage>(new SalesOrderDetailIdentifierMessage(null, ViewItemTemplates.Create, returnPath));
         });
     }
@@ -1299,6 +1380,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (salesOrderID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.SalesOrderDetailDeletePage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<SalesOrderDetailIdentifierMessage>(new SalesOrderDetailIdentifierMessage(new SalesOrderDetailIdentifier { SalesOrderID = salesOrderID }, ViewItemTemplates.Delete, returnPath));
         });
     }
@@ -1309,6 +1391,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (salesOrderID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.SalesOrderDetailDetailsPage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<SalesOrderDetailIdentifierMessage>(new SalesOrderDetailIdentifierMessage(new SalesOrderDetailIdentifier { SalesOrderID = salesOrderID }, ViewItemTemplates.Details, returnPath));
         });
     }
@@ -1319,6 +1402,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (salesOrderID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.SalesOrderDetailEditPage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<SalesOrderDetailIdentifierMessage>(new SalesOrderDetailIdentifierMessage(new SalesOrderDetailIdentifier { SalesOrderID = salesOrderID }, ViewItemTemplates.Edit, returnPath));
         });
     }
@@ -1340,8 +1424,9 @@ public static class LaunchViewCommandsHelper
         return new Command(async () =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.SalesOrderDetail.CreatePopup();
-            WeakReferenceMessenger.Default.Send<SalesOrderDetailIdentifierMessage>(new SalesOrderDetailIdentifierMessage(null, ViewItemTemplates.Create));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<SalesOrderDetailIdentifierMessage>(new SalesOrderDetailIdentifierMessage(null, ViewItemTemplates.Create));
         });
     }
 
@@ -1351,8 +1436,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (salesOrderID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.SalesOrderDetail.DeletePopup();
-            WeakReferenceMessenger.Default.Send<SalesOrderDetailIdentifierMessage>(new SalesOrderDetailIdentifierMessage(new SalesOrderDetailIdentifier { SalesOrderID = salesOrderID }, ViewItemTemplates.Delete));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<SalesOrderDetailIdentifierMessage>(new SalesOrderDetailIdentifierMessage(new SalesOrderDetailIdentifier { SalesOrderID = salesOrderID }, ViewItemTemplates.Delete));
         });
     }
 
@@ -1362,8 +1448,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (salesOrderID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.SalesOrderDetail.DetailsPopup();
-            WeakReferenceMessenger.Default.Send<SalesOrderDetailIdentifierMessage>(new SalesOrderDetailIdentifierMessage(new SalesOrderDetailIdentifier { SalesOrderID = salesOrderID }, ViewItemTemplates.Details));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<SalesOrderDetailIdentifierMessage>(new SalesOrderDetailIdentifierMessage(new SalesOrderDetailIdentifier { SalesOrderID = salesOrderID }, ViewItemTemplates.Details));
         });
     }
 
@@ -1373,8 +1460,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (salesOrderID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.SalesOrderDetail.EditPopup();
-            WeakReferenceMessenger.Default.Send<SalesOrderDetailIdentifierMessage>(new SalesOrderDetailIdentifierMessage(new SalesOrderDetailIdentifier { SalesOrderID = salesOrderID }, ViewItemTemplates.Edit));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<SalesOrderDetailIdentifierMessage>(new SalesOrderDetailIdentifierMessage(new SalesOrderDetailIdentifier { SalesOrderID = salesOrderID }, ViewItemTemplates.Edit));
         });
     }
 
@@ -1408,7 +1496,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    //13. SalesOrderHeader
+    //12. SalesOrderHeader
 
     // 12.1. GetLaunchSalesOrderHeaderCreatePageCommand
     public static Command GetLaunchSalesOrderHeaderCreatePageCommand(string returnPath)
@@ -1416,6 +1504,7 @@ public static class LaunchViewCommandsHelper
         return new Command(async () =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.SalesOrderHeaderCreatePage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<SalesOrderHeaderIdentifierMessage>(new SalesOrderHeaderIdentifierMessage(null, ViewItemTemplates.Create, returnPath));
         });
     }
@@ -1426,6 +1515,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (salesOrderID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.SalesOrderHeaderDeletePage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<SalesOrderHeaderIdentifierMessage>(new SalesOrderHeaderIdentifierMessage(new SalesOrderHeaderIdentifier { SalesOrderID = salesOrderID }, ViewItemTemplates.Delete, returnPath));
         });
     }
@@ -1436,6 +1526,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (salesOrderID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.SalesOrderHeaderDetailsPage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<SalesOrderHeaderIdentifierMessage>(new SalesOrderHeaderIdentifierMessage(new SalesOrderHeaderIdentifier { SalesOrderID = salesOrderID }, ViewItemTemplates.Details, returnPath));
         });
     }
@@ -1446,6 +1537,7 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (salesOrderID) =>
         {
             await AppShellService.GoToAbsoluteAsync(AppShellRoutes.SalesOrderHeaderEditPage);
+            await Task.Delay(200);
             WeakReferenceMessenger.Default.Send<SalesOrderHeaderIdentifierMessage>(new SalesOrderHeaderIdentifierMessage(new SalesOrderHeaderIdentifier { SalesOrderID = salesOrderID }, ViewItemTemplates.Edit, returnPath));
         });
     }
@@ -1467,8 +1559,9 @@ public static class LaunchViewCommandsHelper
         return new Command(async () =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.SalesOrderHeader.CreatePopup();
-            WeakReferenceMessenger.Default.Send<SalesOrderHeaderIdentifierMessage>(new SalesOrderHeaderIdentifierMessage(null, ViewItemTemplates.Create));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<SalesOrderHeaderIdentifierMessage>(new SalesOrderHeaderIdentifierMessage(null, ViewItemTemplates.Create));
         });
     }
 
@@ -1478,8 +1571,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (salesOrderID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.SalesOrderHeader.DeletePopup();
-            WeakReferenceMessenger.Default.Send<SalesOrderHeaderIdentifierMessage>(new SalesOrderHeaderIdentifierMessage(new SalesOrderHeaderIdentifier { SalesOrderID = salesOrderID }, ViewItemTemplates.Delete));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<SalesOrderHeaderIdentifierMessage>(new SalesOrderHeaderIdentifierMessage(new SalesOrderHeaderIdentifier { SalesOrderID = salesOrderID }, ViewItemTemplates.Delete));
         });
     }
 
@@ -1489,8 +1583,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (salesOrderID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.SalesOrderHeader.DetailsPopup();
-            WeakReferenceMessenger.Default.Send<SalesOrderHeaderIdentifierMessage>(new SalesOrderHeaderIdentifierMessage(new SalesOrderHeaderIdentifier { SalesOrderID = salesOrderID }, ViewItemTemplates.Details));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<SalesOrderHeaderIdentifierMessage>(new SalesOrderHeaderIdentifierMessage(new SalesOrderHeaderIdentifier { SalesOrderID = salesOrderID }, ViewItemTemplates.Details));
         });
     }
 
@@ -1500,8 +1595,9 @@ public static class LaunchViewCommandsHelper
         return new Command<int>(async (salesOrderID) =>
         {
             var popup = new AdventureWorksLT2019.MauiXApp.Views.SalesOrderHeader.EditPopup();
-            WeakReferenceMessenger.Default.Send<SalesOrderHeaderIdentifierMessage>(new SalesOrderHeaderIdentifierMessage(new SalesOrderHeaderIdentifier { SalesOrderID = salesOrderID }, ViewItemTemplates.Edit));
             await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<SalesOrderHeaderIdentifierMessage>(new SalesOrderHeaderIdentifierMessage(new SalesOrderHeaderIdentifier { SalesOrderID = salesOrderID }, ViewItemTemplates.Edit));
         });
     }
 
