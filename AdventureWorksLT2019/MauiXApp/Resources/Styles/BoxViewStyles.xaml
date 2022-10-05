@@ -8,7 +8,7 @@
         <Setter Property="Color" Value="CornflowerBlue" />
         <Setter Property="CornerRadius" Value="2" />
         <Setter Property="HeightRequest" Value="5" />
-        <Setter Property="VerticalOptions" Value="CornflowerBlue" />
-        <Setter Property="Center" Value="FillAndExpand" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
     </Style>
 </ResourceDictionary>

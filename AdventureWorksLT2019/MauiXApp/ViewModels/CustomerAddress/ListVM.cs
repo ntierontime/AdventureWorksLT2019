@@ -130,17 +130,19 @@ public class ListVM : ListVMBase<CustomerAddressAdvancedQuery, CustomerAddressId
         LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressDetailsPageCommand(AppShellRoutes.CustomerAddressListPage);
         // 4. Init LaunchCustomerAddressEditPageCommand
         LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressEditPageCommand(AppShellRoutes.CustomerAddressListPage);
-        // 5. Init LaunchCustomerAddressCreatePopupCommand
+        // 5. Init LaunchCustomerAddressDashboardPageCommand
+        LaunchDashboardPageCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressDashboardPageCommand(AppShellRoutes.CustomerAddressListPage);
+        // 6. Init LaunchCustomerAddressCreatePopupCommand
         LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressCreatePopupCommand();
-        // 6. Init LaunchCustomerAddressDeletePopupCommand
+        // 7. Init LaunchCustomerAddressDeletePopupCommand
         LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressDeletePopupCommand();
-        // 7. Init LaunchCustomerAddressDetailsPopupCommand
+        // 8. Init LaunchCustomerAddressDetailsPopupCommand
         LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressDetailsPopupCommand();
-        // 8. Init LaunchCustomerAddressEditPopupCommand
+        // 9. Init LaunchCustomerAddressEditPopupCommand
         LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressEditPopupCommand();
-        // 9. Init LaunchCustomerAddressAdvancedSearchPopupCommand
+        // 10. Init LaunchCustomerAddressAdvancedSearchPopupCommand
         AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressAdvancedSearchPopupCommand();
-        // 10. Init LaunchCustomerAddressListBulkActionsPopupCommand
+        // 11. Init LaunchCustomerAddressListBulkActionsPopupCommand
         ListBulkActionsLaunchCommand = new Command<string>(
             (currentBulkActionName) =>
             {
@@ -151,7 +153,7 @@ public class ListVM : ListVMBase<CustomerAddressAdvancedQuery, CustomerAddressId
             },
             (currentBulkActionName) => EnableMultiSelectCommands()
             );
-        // 11. Init LaunchCustomerAddressListOrderBysPopupCommand
+        // 12. Init LaunchCustomerAddressListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressListOrderBysPopupCommand();
 
     }

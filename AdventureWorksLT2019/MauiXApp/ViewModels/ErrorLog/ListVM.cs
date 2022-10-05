@@ -79,17 +79,19 @@ public class ListVM : ListVMBase<ErrorLogAdvancedQuery, ErrorLogIdentifier, Erro
         LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchErrorLogDetailsPageCommand(AppShellRoutes.ErrorLogListPage);
         // 4. Init LaunchErrorLogEditPageCommand
         LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchErrorLogEditPageCommand(AppShellRoutes.ErrorLogListPage);
-        // 5. Init LaunchErrorLogCreatePopupCommand
+        // 5. Init LaunchErrorLogDashboardPageCommand
+        LaunchDashboardPageCommand = LaunchViewCommandsHelper.GetLaunchErrorLogDashboardPageCommand(AppShellRoutes.ErrorLogListPage);
+        // 6. Init LaunchErrorLogCreatePopupCommand
         LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchErrorLogCreatePopupCommand();
-        // 6. Init LaunchErrorLogDeletePopupCommand
+        // 7. Init LaunchErrorLogDeletePopupCommand
         LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchErrorLogDeletePopupCommand();
-        // 7. Init LaunchErrorLogDetailsPopupCommand
+        // 8. Init LaunchErrorLogDetailsPopupCommand
         LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchErrorLogDetailsPopupCommand();
-        // 8. Init LaunchErrorLogEditPopupCommand
+        // 9. Init LaunchErrorLogEditPopupCommand
         LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchErrorLogEditPopupCommand();
-        // 9. Init LaunchErrorLogAdvancedSearchPopupCommand
+        // 10. Init LaunchErrorLogAdvancedSearchPopupCommand
         AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchErrorLogAdvancedSearchPopupCommand();
-        // 10. Init LaunchErrorLogListBulkActionsPopupCommand
+        // 11. Init LaunchErrorLogListBulkActionsPopupCommand
         ListBulkActionsLaunchCommand = new Command<string>(
             (currentBulkActionName) =>
             {
@@ -100,7 +102,7 @@ public class ListVM : ListVMBase<ErrorLogAdvancedQuery, ErrorLogIdentifier, Erro
             },
             (currentBulkActionName) => EnableMultiSelectCommands()
             );
-        // 11. Init LaunchErrorLogListOrderBysPopupCommand
+        // 12. Init LaunchErrorLogListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchErrorLogListOrderBysPopupCommand();
 
     }

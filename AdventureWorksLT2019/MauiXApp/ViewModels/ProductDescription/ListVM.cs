@@ -79,17 +79,19 @@ public class ListVM : ListVMBase<ProductDescriptionAdvancedQuery, ProductDescrip
         LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionDetailsPageCommand(AppShellRoutes.ProductDescriptionListPage);
         // 4. Init LaunchProductDescriptionEditPageCommand
         LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionEditPageCommand(AppShellRoutes.ProductDescriptionListPage);
-        // 5. Init LaunchProductDescriptionCreatePopupCommand
+        // 5. Init LaunchProductDescriptionDashboardPageCommand
+        LaunchDashboardPageCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionDashboardPageCommand(AppShellRoutes.ProductDescriptionListPage);
+        // 6. Init LaunchProductDescriptionCreatePopupCommand
         LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionCreatePopupCommand();
-        // 6. Init LaunchProductDescriptionDeletePopupCommand
+        // 7. Init LaunchProductDescriptionDeletePopupCommand
         LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionDeletePopupCommand();
-        // 7. Init LaunchProductDescriptionDetailsPopupCommand
+        // 8. Init LaunchProductDescriptionDetailsPopupCommand
         LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionDetailsPopupCommand();
-        // 8. Init LaunchProductDescriptionEditPopupCommand
+        // 9. Init LaunchProductDescriptionEditPopupCommand
         LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionEditPopupCommand();
-        // 9. Init LaunchProductDescriptionAdvancedSearchPopupCommand
+        // 10. Init LaunchProductDescriptionAdvancedSearchPopupCommand
         AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionAdvancedSearchPopupCommand();
-        // 10. Init LaunchProductDescriptionListBulkActionsPopupCommand
+        // 11. Init LaunchProductDescriptionListBulkActionsPopupCommand
         ListBulkActionsLaunchCommand = new Command<string>(
             (currentBulkActionName) =>
             {
@@ -100,7 +102,7 @@ public class ListVM : ListVMBase<ProductDescriptionAdvancedQuery, ProductDescrip
             },
             (currentBulkActionName) => EnableMultiSelectCommands()
             );
-        // 11. Init LaunchProductDescriptionListOrderBysPopupCommand
+        // 12. Init LaunchProductDescriptionListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionListOrderBysPopupCommand();
 
     }

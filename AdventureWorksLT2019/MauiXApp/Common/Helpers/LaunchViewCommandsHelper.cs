@@ -53,7 +53,18 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 1.5. GetLaunchBuildVersionCreatePopupCommand
+    // 1.5. GetLaunchBuildVersionDashboardPageCommand
+    public static Command GetLaunchBuildVersionDashboardPageCommand(string returnPath)
+    {
+        return new Command<byte>(async (systemInformationID) =>
+        {
+            await AppShellService.GoToAbsoluteAsync(AppShellRoutes.BuildVersionDashboardPage);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<BuildVersionIdentifierMessage>(new BuildVersionIdentifierMessage(new BuildVersionIdentifier { SystemInformationID = systemInformationID }, ViewItemTemplates.Dashboard, returnPath));
+        });
+    }
+
+    // 1.6. GetLaunchBuildVersionCreatePopupCommand
     public static Command GetLaunchBuildVersionCreatePopupCommand()
     {
         return new Command(async () =>
@@ -64,7 +75,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 1.6. GetLaunchBuildVersionDeletePopupCommand
+    // 1.7. GetLaunchBuildVersionDeletePopupCommand
     public static Command<byte> GetLaunchBuildVersionDeletePopupCommand()
     {
         return new Command<byte>(async (systemInformationID) =>
@@ -75,7 +86,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 1.7. GetLaunchBuildVersionDetailsPopupCommand
+    // 1.8. GetLaunchBuildVersionDetailsPopupCommand
     public static Command<byte> GetLaunchBuildVersionDetailsPopupCommand()
     {
         return new Command<byte>(async (systemInformationID) =>
@@ -86,7 +97,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 1.8. GetLaunchBuildVersionEditPopupCommand
+    // 1.9. GetLaunchBuildVersionEditPopupCommand
     public static Command<byte> GetLaunchBuildVersionEditPopupCommand()
     {
         return new Command<byte>(async (systemInformationID) =>
@@ -97,7 +108,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 1.9. GetLaunchBuildVersionAdvancedSearchPopupCommand
+    // 1.10. GetLaunchBuildVersionAdvancedSearchPopupCommand
     public static Command GetLaunchBuildVersionAdvancedSearchPopupCommand()
     {
         return new Command(async () =>
@@ -107,7 +118,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 1.10. GetLaunchBuildVersionListBulkActionsPopupCommand
+    // 1.11. GetLaunchBuildVersionListBulkActionsPopupCommand
     public static Command GetLaunchBuildVersionListBulkActionsPopupCommand()
     {
         return new Command(async () =>
@@ -117,7 +128,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 1.11. GetLaunchBuildVersionListOrderBysPopupCommand
+    // 1.12. GetLaunchBuildVersionListOrderBysPopupCommand
     public static Command GetLaunchBuildVersionListOrderBysPopupCommand()
     {
         return new Command(async () =>
@@ -169,7 +180,18 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 2.5. GetLaunchErrorLogCreatePopupCommand
+    // 2.5. GetLaunchErrorLogDashboardPageCommand
+    public static Command GetLaunchErrorLogDashboardPageCommand(string returnPath)
+    {
+        return new Command<int>(async (errorLogID) =>
+        {
+            await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ErrorLogDashboardPage);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ErrorLogIdentifierMessage>(new ErrorLogIdentifierMessage(new ErrorLogIdentifier { ErrorLogID = errorLogID }, ViewItemTemplates.Dashboard, returnPath));
+        });
+    }
+
+    // 2.6. GetLaunchErrorLogCreatePopupCommand
     public static Command GetLaunchErrorLogCreatePopupCommand()
     {
         return new Command(async () =>
@@ -180,7 +202,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 2.6. GetLaunchErrorLogDeletePopupCommand
+    // 2.7. GetLaunchErrorLogDeletePopupCommand
     public static Command<int> GetLaunchErrorLogDeletePopupCommand()
     {
         return new Command<int>(async (errorLogID) =>
@@ -191,7 +213,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 2.7. GetLaunchErrorLogDetailsPopupCommand
+    // 2.8. GetLaunchErrorLogDetailsPopupCommand
     public static Command<int> GetLaunchErrorLogDetailsPopupCommand()
     {
         return new Command<int>(async (errorLogID) =>
@@ -202,7 +224,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 2.8. GetLaunchErrorLogEditPopupCommand
+    // 2.9. GetLaunchErrorLogEditPopupCommand
     public static Command<int> GetLaunchErrorLogEditPopupCommand()
     {
         return new Command<int>(async (errorLogID) =>
@@ -213,7 +235,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 2.9. GetLaunchErrorLogAdvancedSearchPopupCommand
+    // 2.10. GetLaunchErrorLogAdvancedSearchPopupCommand
     public static Command GetLaunchErrorLogAdvancedSearchPopupCommand()
     {
         return new Command(async () =>
@@ -223,7 +245,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 2.10. GetLaunchErrorLogListBulkActionsPopupCommand
+    // 2.11. GetLaunchErrorLogListBulkActionsPopupCommand
     public static Command GetLaunchErrorLogListBulkActionsPopupCommand()
     {
         return new Command(async () =>
@@ -233,7 +255,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 2.11. GetLaunchErrorLogListOrderBysPopupCommand
+    // 2.12. GetLaunchErrorLogListOrderBysPopupCommand
     public static Command GetLaunchErrorLogListOrderBysPopupCommand()
     {
         return new Command(async () =>
@@ -285,7 +307,18 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 3.5. GetLaunchAddressCreatePopupCommand
+    // 3.5. GetLaunchAddressDashboardPageCommand
+    public static Command GetLaunchAddressDashboardPageCommand(string returnPath)
+    {
+        return new Command<int>(async (addressID) =>
+        {
+            await AppShellService.GoToAbsoluteAsync(AppShellRoutes.AddressDashboardPage);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<AddressIdentifierMessage>(new AddressIdentifierMessage(new AddressIdentifier { AddressID = addressID }, ViewItemTemplates.Dashboard, returnPath));
+        });
+    }
+
+    // 3.6. GetLaunchAddressCreatePopupCommand
     public static Command GetLaunchAddressCreatePopupCommand()
     {
         return new Command(async () =>
@@ -296,7 +329,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 3.6. GetLaunchAddressDeletePopupCommand
+    // 3.7. GetLaunchAddressDeletePopupCommand
     public static Command<int> GetLaunchAddressDeletePopupCommand()
     {
         return new Command<int>(async (addressID) =>
@@ -307,7 +340,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 3.7. GetLaunchAddressDetailsPopupCommand
+    // 3.8. GetLaunchAddressDetailsPopupCommand
     public static Command<int> GetLaunchAddressDetailsPopupCommand()
     {
         return new Command<int>(async (addressID) =>
@@ -318,7 +351,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 3.8. GetLaunchAddressEditPopupCommand
+    // 3.9. GetLaunchAddressEditPopupCommand
     public static Command<int> GetLaunchAddressEditPopupCommand()
     {
         return new Command<int>(async (addressID) =>
@@ -329,7 +362,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 3.9. GetLaunchAddressAdvancedSearchPopupCommand
+    // 3.10. GetLaunchAddressAdvancedSearchPopupCommand
     public static Command GetLaunchAddressAdvancedSearchPopupCommand()
     {
         return new Command(async () =>
@@ -339,7 +372,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 3.10. GetLaunchAddressListBulkActionsPopupCommand
+    // 3.11. GetLaunchAddressListBulkActionsPopupCommand
     public static Command GetLaunchAddressListBulkActionsPopupCommand()
     {
         return new Command(async () =>
@@ -349,7 +382,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 3.11. GetLaunchAddressListOrderBysPopupCommand
+    // 3.12. GetLaunchAddressListOrderBysPopupCommand
     public static Command GetLaunchAddressListOrderBysPopupCommand()
     {
         return new Command(async () =>
@@ -401,7 +434,18 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 4.5. GetLaunchCustomerCreatePopupCommand
+    // 4.5. GetLaunchCustomerDashboardPageCommand
+    public static Command GetLaunchCustomerDashboardPageCommand(string returnPath)
+    {
+        return new Command<int>(async (customerID) =>
+        {
+            await AppShellService.GoToAbsoluteAsync(AppShellRoutes.CustomerDashboardPage);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<CustomerIdentifierMessage>(new CustomerIdentifierMessage(new CustomerIdentifier { CustomerID = customerID }, ViewItemTemplates.Dashboard, returnPath));
+        });
+    }
+
+    // 4.6. GetLaunchCustomerCreatePopupCommand
     public static Command GetLaunchCustomerCreatePopupCommand()
     {
         return new Command(async () =>
@@ -412,7 +456,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 4.6. GetLaunchCustomerDeletePopupCommand
+    // 4.7. GetLaunchCustomerDeletePopupCommand
     public static Command<int> GetLaunchCustomerDeletePopupCommand()
     {
         return new Command<int>(async (customerID) =>
@@ -423,7 +467,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 4.7. GetLaunchCustomerDetailsPopupCommand
+    // 4.8. GetLaunchCustomerDetailsPopupCommand
     public static Command<int> GetLaunchCustomerDetailsPopupCommand()
     {
         return new Command<int>(async (customerID) =>
@@ -434,7 +478,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 4.8. GetLaunchCustomerEditPopupCommand
+    // 4.9. GetLaunchCustomerEditPopupCommand
     public static Command<int> GetLaunchCustomerEditPopupCommand()
     {
         return new Command<int>(async (customerID) =>
@@ -445,7 +489,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 4.9. GetLaunchCustomerAdvancedSearchPopupCommand
+    // 4.10. GetLaunchCustomerAdvancedSearchPopupCommand
     public static Command GetLaunchCustomerAdvancedSearchPopupCommand()
     {
         return new Command(async () =>
@@ -455,7 +499,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 4.10. GetLaunchCustomerListBulkActionsPopupCommand
+    // 4.11. GetLaunchCustomerListBulkActionsPopupCommand
     public static Command GetLaunchCustomerListBulkActionsPopupCommand()
     {
         return new Command(async () =>
@@ -465,7 +509,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 4.11. GetLaunchCustomerListOrderBysPopupCommand
+    // 4.12. GetLaunchCustomerListOrderBysPopupCommand
     public static Command GetLaunchCustomerListOrderBysPopupCommand()
     {
         return new Command(async () =>
@@ -517,7 +561,18 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 5.5. GetLaunchCustomerAddressCreatePopupCommand
+    // 5.5. GetLaunchCustomerAddressDashboardPageCommand
+    public static Command GetLaunchCustomerAddressDashboardPageCommand(string returnPath)
+    {
+        return new Command<int>(async (customerID) =>
+        {
+            await AppShellService.GoToAbsoluteAsync(AppShellRoutes.CustomerAddressDashboardPage);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<CustomerAddressIdentifierMessage>(new CustomerAddressIdentifierMessage(new CustomerAddressIdentifier { CustomerID = customerID }, ViewItemTemplates.Dashboard, returnPath));
+        });
+    }
+
+    // 5.6. GetLaunchCustomerAddressCreatePopupCommand
     public static Command GetLaunchCustomerAddressCreatePopupCommand()
     {
         return new Command(async () =>
@@ -528,7 +583,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 5.6. GetLaunchCustomerAddressDeletePopupCommand
+    // 5.7. GetLaunchCustomerAddressDeletePopupCommand
     public static Command<int> GetLaunchCustomerAddressDeletePopupCommand()
     {
         return new Command<int>(async (customerID) =>
@@ -539,7 +594,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 5.7. GetLaunchCustomerAddressDetailsPopupCommand
+    // 5.8. GetLaunchCustomerAddressDetailsPopupCommand
     public static Command<int> GetLaunchCustomerAddressDetailsPopupCommand()
     {
         return new Command<int>(async (customerID) =>
@@ -550,7 +605,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 5.8. GetLaunchCustomerAddressEditPopupCommand
+    // 5.9. GetLaunchCustomerAddressEditPopupCommand
     public static Command<int> GetLaunchCustomerAddressEditPopupCommand()
     {
         return new Command<int>(async (customerID) =>
@@ -561,7 +616,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 5.9. GetLaunchCustomerAddressAdvancedSearchPopupCommand
+    // 5.10. GetLaunchCustomerAddressAdvancedSearchPopupCommand
     public static Command GetLaunchCustomerAddressAdvancedSearchPopupCommand()
     {
         return new Command(async () =>
@@ -571,7 +626,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 5.10. GetLaunchCustomerAddressListBulkActionsPopupCommand
+    // 5.11. GetLaunchCustomerAddressListBulkActionsPopupCommand
     public static Command GetLaunchCustomerAddressListBulkActionsPopupCommand()
     {
         return new Command(async () =>
@@ -581,7 +636,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 5.11. GetLaunchCustomerAddressListOrderBysPopupCommand
+    // 5.12. GetLaunchCustomerAddressListOrderBysPopupCommand
     public static Command GetLaunchCustomerAddressListOrderBysPopupCommand()
     {
         return new Command(async () =>
@@ -633,7 +688,18 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 6.5. GetLaunchProductCreatePopupCommand
+    // 6.5. GetLaunchProductDashboardPageCommand
+    public static Command GetLaunchProductDashboardPageCommand(string returnPath)
+    {
+        return new Command<int>(async (productID) =>
+        {
+            await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductDashboardPage);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductIdentifierMessage>(new ProductIdentifierMessage(new ProductIdentifier { ProductID = productID }, ViewItemTemplates.Dashboard, returnPath));
+        });
+    }
+
+    // 6.6. GetLaunchProductCreatePopupCommand
     public static Command GetLaunchProductCreatePopupCommand()
     {
         return new Command(async () =>
@@ -644,7 +710,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 6.6. GetLaunchProductDeletePopupCommand
+    // 6.7. GetLaunchProductDeletePopupCommand
     public static Command<int> GetLaunchProductDeletePopupCommand()
     {
         return new Command<int>(async (productID) =>
@@ -655,7 +721,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 6.7. GetLaunchProductDetailsPopupCommand
+    // 6.8. GetLaunchProductDetailsPopupCommand
     public static Command<int> GetLaunchProductDetailsPopupCommand()
     {
         return new Command<int>(async (productID) =>
@@ -666,7 +732,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 6.8. GetLaunchProductEditPopupCommand
+    // 6.9. GetLaunchProductEditPopupCommand
     public static Command<int> GetLaunchProductEditPopupCommand()
     {
         return new Command<int>(async (productID) =>
@@ -677,7 +743,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 6.9. GetLaunchProductAdvancedSearchPopupCommand
+    // 6.10. GetLaunchProductAdvancedSearchPopupCommand
     public static Command GetLaunchProductAdvancedSearchPopupCommand()
     {
         return new Command(async () =>
@@ -687,7 +753,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 6.10. GetLaunchProductListBulkActionsPopupCommand
+    // 6.11. GetLaunchProductListBulkActionsPopupCommand
     public static Command GetLaunchProductListBulkActionsPopupCommand()
     {
         return new Command(async () =>
@@ -697,7 +763,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 6.11. GetLaunchProductListOrderBysPopupCommand
+    // 6.12. GetLaunchProductListOrderBysPopupCommand
     public static Command GetLaunchProductListOrderBysPopupCommand()
     {
         return new Command(async () =>
@@ -749,7 +815,18 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 7.5. GetLaunchProductCategoryCreatePopupCommand
+    // 7.5. GetLaunchProductCategoryDashboardPageCommand
+    public static Command GetLaunchProductCategoryDashboardPageCommand(string returnPath)
+    {
+        return new Command<int>(async (productCategoryID) =>
+        {
+            await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductCategoryDashboardPage);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductCategoryIdentifierMessage>(new ProductCategoryIdentifierMessage(new ProductCategoryIdentifier { ProductCategoryID = productCategoryID }, ViewItemTemplates.Dashboard, returnPath));
+        });
+    }
+
+    // 7.6. GetLaunchProductCategoryCreatePopupCommand
     public static Command GetLaunchProductCategoryCreatePopupCommand()
     {
         return new Command(async () =>
@@ -760,7 +837,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 7.6. GetLaunchProductCategoryDeletePopupCommand
+    // 7.7. GetLaunchProductCategoryDeletePopupCommand
     public static Command<int> GetLaunchProductCategoryDeletePopupCommand()
     {
         return new Command<int>(async (productCategoryID) =>
@@ -771,7 +848,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 7.7. GetLaunchProductCategoryDetailsPopupCommand
+    // 7.8. GetLaunchProductCategoryDetailsPopupCommand
     public static Command<int> GetLaunchProductCategoryDetailsPopupCommand()
     {
         return new Command<int>(async (productCategoryID) =>
@@ -782,7 +859,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 7.8. GetLaunchProductCategoryEditPopupCommand
+    // 7.9. GetLaunchProductCategoryEditPopupCommand
     public static Command<int> GetLaunchProductCategoryEditPopupCommand()
     {
         return new Command<int>(async (productCategoryID) =>
@@ -793,7 +870,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 7.9. GetLaunchProductCategoryAdvancedSearchPopupCommand
+    // 7.10. GetLaunchProductCategoryAdvancedSearchPopupCommand
     public static Command GetLaunchProductCategoryAdvancedSearchPopupCommand()
     {
         return new Command(async () =>
@@ -803,7 +880,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 7.10. GetLaunchProductCategoryListBulkActionsPopupCommand
+    // 7.11. GetLaunchProductCategoryListBulkActionsPopupCommand
     public static Command GetLaunchProductCategoryListBulkActionsPopupCommand()
     {
         return new Command(async () =>
@@ -813,7 +890,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 7.11. GetLaunchProductCategoryListOrderBysPopupCommand
+    // 7.12. GetLaunchProductCategoryListOrderBysPopupCommand
     public static Command GetLaunchProductCategoryListOrderBysPopupCommand()
     {
         return new Command(async () =>
@@ -865,7 +942,18 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 8.5. GetLaunchProductDescriptionCreatePopupCommand
+    // 8.5. GetLaunchProductDescriptionDashboardPageCommand
+    public static Command GetLaunchProductDescriptionDashboardPageCommand(string returnPath)
+    {
+        return new Command<int>(async (productDescriptionID) =>
+        {
+            await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductDescriptionDashboardPage);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductDescriptionIdentifierMessage>(new ProductDescriptionIdentifierMessage(new ProductDescriptionIdentifier { ProductDescriptionID = productDescriptionID }, ViewItemTemplates.Dashboard, returnPath));
+        });
+    }
+
+    // 8.6. GetLaunchProductDescriptionCreatePopupCommand
     public static Command GetLaunchProductDescriptionCreatePopupCommand()
     {
         return new Command(async () =>
@@ -876,7 +964,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 8.6. GetLaunchProductDescriptionDeletePopupCommand
+    // 8.7. GetLaunchProductDescriptionDeletePopupCommand
     public static Command<int> GetLaunchProductDescriptionDeletePopupCommand()
     {
         return new Command<int>(async (productDescriptionID) =>
@@ -887,7 +975,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 8.7. GetLaunchProductDescriptionDetailsPopupCommand
+    // 8.8. GetLaunchProductDescriptionDetailsPopupCommand
     public static Command<int> GetLaunchProductDescriptionDetailsPopupCommand()
     {
         return new Command<int>(async (productDescriptionID) =>
@@ -898,7 +986,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 8.8. GetLaunchProductDescriptionEditPopupCommand
+    // 8.9. GetLaunchProductDescriptionEditPopupCommand
     public static Command<int> GetLaunchProductDescriptionEditPopupCommand()
     {
         return new Command<int>(async (productDescriptionID) =>
@@ -909,7 +997,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 8.9. GetLaunchProductDescriptionAdvancedSearchPopupCommand
+    // 8.10. GetLaunchProductDescriptionAdvancedSearchPopupCommand
     public static Command GetLaunchProductDescriptionAdvancedSearchPopupCommand()
     {
         return new Command(async () =>
@@ -919,7 +1007,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 8.10. GetLaunchProductDescriptionListBulkActionsPopupCommand
+    // 8.11. GetLaunchProductDescriptionListBulkActionsPopupCommand
     public static Command GetLaunchProductDescriptionListBulkActionsPopupCommand()
     {
         return new Command(async () =>
@@ -929,7 +1017,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 8.11. GetLaunchProductDescriptionListOrderBysPopupCommand
+    // 8.12. GetLaunchProductDescriptionListOrderBysPopupCommand
     public static Command GetLaunchProductDescriptionListOrderBysPopupCommand()
     {
         return new Command(async () =>
@@ -981,7 +1069,18 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 9.5. GetLaunchProductModelCreatePopupCommand
+    // 9.5. GetLaunchProductModelDashboardPageCommand
+    public static Command GetLaunchProductModelDashboardPageCommand(string returnPath)
+    {
+        return new Command<int>(async (productModelID) =>
+        {
+            await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductModelDashboardPage);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductModelIdentifierMessage>(new ProductModelIdentifierMessage(new ProductModelIdentifier { ProductModelID = productModelID }, ViewItemTemplates.Dashboard, returnPath));
+        });
+    }
+
+    // 9.6. GetLaunchProductModelCreatePopupCommand
     public static Command GetLaunchProductModelCreatePopupCommand()
     {
         return new Command(async () =>
@@ -992,7 +1091,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 9.6. GetLaunchProductModelDeletePopupCommand
+    // 9.7. GetLaunchProductModelDeletePopupCommand
     public static Command<int> GetLaunchProductModelDeletePopupCommand()
     {
         return new Command<int>(async (productModelID) =>
@@ -1003,7 +1102,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 9.7. GetLaunchProductModelDetailsPopupCommand
+    // 9.8. GetLaunchProductModelDetailsPopupCommand
     public static Command<int> GetLaunchProductModelDetailsPopupCommand()
     {
         return new Command<int>(async (productModelID) =>
@@ -1014,7 +1113,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 9.8. GetLaunchProductModelEditPopupCommand
+    // 9.9. GetLaunchProductModelEditPopupCommand
     public static Command<int> GetLaunchProductModelEditPopupCommand()
     {
         return new Command<int>(async (productModelID) =>
@@ -1025,7 +1124,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 9.9. GetLaunchProductModelAdvancedSearchPopupCommand
+    // 9.10. GetLaunchProductModelAdvancedSearchPopupCommand
     public static Command GetLaunchProductModelAdvancedSearchPopupCommand()
     {
         return new Command(async () =>
@@ -1035,7 +1134,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 9.10. GetLaunchProductModelListBulkActionsPopupCommand
+    // 9.11. GetLaunchProductModelListBulkActionsPopupCommand
     public static Command GetLaunchProductModelListBulkActionsPopupCommand()
     {
         return new Command(async () =>
@@ -1045,7 +1144,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 9.11. GetLaunchProductModelListOrderBysPopupCommand
+    // 9.12. GetLaunchProductModelListOrderBysPopupCommand
     public static Command GetLaunchProductModelListOrderBysPopupCommand()
     {
         return new Command(async () =>
@@ -1097,7 +1196,18 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 10.5. GetLaunchProductModelProductDescriptionCreatePopupCommand
+    // 10.5. GetLaunchProductModelProductDescriptionDashboardPageCommand
+    public static Command GetLaunchProductModelProductDescriptionDashboardPageCommand(string returnPath)
+    {
+        return new Command<int>(async (productModelID) =>
+        {
+            await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductModelProductDescriptionDashboardPage);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductModelProductDescriptionIdentifierMessage>(new ProductModelProductDescriptionIdentifierMessage(new ProductModelProductDescriptionIdentifier { ProductModelID = productModelID }, ViewItemTemplates.Dashboard, returnPath));
+        });
+    }
+
+    // 10.6. GetLaunchProductModelProductDescriptionCreatePopupCommand
     public static Command GetLaunchProductModelProductDescriptionCreatePopupCommand()
     {
         return new Command(async () =>
@@ -1108,7 +1218,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 10.6. GetLaunchProductModelProductDescriptionDeletePopupCommand
+    // 10.7. GetLaunchProductModelProductDescriptionDeletePopupCommand
     public static Command<int> GetLaunchProductModelProductDescriptionDeletePopupCommand()
     {
         return new Command<int>(async (productModelID) =>
@@ -1119,7 +1229,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 10.7. GetLaunchProductModelProductDescriptionDetailsPopupCommand
+    // 10.8. GetLaunchProductModelProductDescriptionDetailsPopupCommand
     public static Command<int> GetLaunchProductModelProductDescriptionDetailsPopupCommand()
     {
         return new Command<int>(async (productModelID) =>
@@ -1130,7 +1240,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 10.8. GetLaunchProductModelProductDescriptionEditPopupCommand
+    // 10.9. GetLaunchProductModelProductDescriptionEditPopupCommand
     public static Command<int> GetLaunchProductModelProductDescriptionEditPopupCommand()
     {
         return new Command<int>(async (productModelID) =>
@@ -1141,7 +1251,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 10.9. GetLaunchProductModelProductDescriptionAdvancedSearchPopupCommand
+    // 10.10. GetLaunchProductModelProductDescriptionAdvancedSearchPopupCommand
     public static Command GetLaunchProductModelProductDescriptionAdvancedSearchPopupCommand()
     {
         return new Command(async () =>
@@ -1151,7 +1261,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 10.10. GetLaunchProductModelProductDescriptionListBulkActionsPopupCommand
+    // 10.11. GetLaunchProductModelProductDescriptionListBulkActionsPopupCommand
     public static Command GetLaunchProductModelProductDescriptionListBulkActionsPopupCommand()
     {
         return new Command(async () =>
@@ -1161,7 +1271,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 10.11. GetLaunchProductModelProductDescriptionListOrderBysPopupCommand
+    // 10.12. GetLaunchProductModelProductDescriptionListOrderBysPopupCommand
     public static Command GetLaunchProductModelProductDescriptionListOrderBysPopupCommand()
     {
         return new Command(async () =>
@@ -1213,7 +1323,18 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 11.5. GetLaunchSalesOrderDetailCreatePopupCommand
+    // 11.5. GetLaunchSalesOrderDetailDashboardPageCommand
+    public static Command GetLaunchSalesOrderDetailDashboardPageCommand(string returnPath)
+    {
+        return new Command<int>(async (salesOrderID) =>
+        {
+            await AppShellService.GoToAbsoluteAsync(AppShellRoutes.SalesOrderDetailDashboardPage);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<SalesOrderDetailIdentifierMessage>(new SalesOrderDetailIdentifierMessage(new SalesOrderDetailIdentifier { SalesOrderID = salesOrderID }, ViewItemTemplates.Dashboard, returnPath));
+        });
+    }
+
+    // 11.6. GetLaunchSalesOrderDetailCreatePopupCommand
     public static Command GetLaunchSalesOrderDetailCreatePopupCommand()
     {
         return new Command(async () =>
@@ -1224,7 +1345,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 11.6. GetLaunchSalesOrderDetailDeletePopupCommand
+    // 11.7. GetLaunchSalesOrderDetailDeletePopupCommand
     public static Command<int> GetLaunchSalesOrderDetailDeletePopupCommand()
     {
         return new Command<int>(async (salesOrderID) =>
@@ -1235,7 +1356,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 11.7. GetLaunchSalesOrderDetailDetailsPopupCommand
+    // 11.8. GetLaunchSalesOrderDetailDetailsPopupCommand
     public static Command<int> GetLaunchSalesOrderDetailDetailsPopupCommand()
     {
         return new Command<int>(async (salesOrderID) =>
@@ -1246,7 +1367,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 11.8. GetLaunchSalesOrderDetailEditPopupCommand
+    // 11.9. GetLaunchSalesOrderDetailEditPopupCommand
     public static Command<int> GetLaunchSalesOrderDetailEditPopupCommand()
     {
         return new Command<int>(async (salesOrderID) =>
@@ -1257,7 +1378,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 11.9. GetLaunchSalesOrderDetailAdvancedSearchPopupCommand
+    // 11.10. GetLaunchSalesOrderDetailAdvancedSearchPopupCommand
     public static Command GetLaunchSalesOrderDetailAdvancedSearchPopupCommand()
     {
         return new Command(async () =>
@@ -1267,7 +1388,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 11.10. GetLaunchSalesOrderDetailListBulkActionsPopupCommand
+    // 11.11. GetLaunchSalesOrderDetailListBulkActionsPopupCommand
     public static Command GetLaunchSalesOrderDetailListBulkActionsPopupCommand()
     {
         return new Command(async () =>
@@ -1277,7 +1398,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 11.11. GetLaunchSalesOrderDetailListOrderBysPopupCommand
+    // 11.12. GetLaunchSalesOrderDetailListOrderBysPopupCommand
     public static Command GetLaunchSalesOrderDetailListOrderBysPopupCommand()
     {
         return new Command(async () =>
@@ -1329,7 +1450,18 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 12.5. GetLaunchSalesOrderHeaderCreatePopupCommand
+    // 12.5. GetLaunchSalesOrderHeaderDashboardPageCommand
+    public static Command GetLaunchSalesOrderHeaderDashboardPageCommand(string returnPath)
+    {
+        return new Command<int>(async (salesOrderID) =>
+        {
+            await AppShellService.GoToAbsoluteAsync(AppShellRoutes.SalesOrderHeaderDashboardPage);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<SalesOrderHeaderIdentifierMessage>(new SalesOrderHeaderIdentifierMessage(new SalesOrderHeaderIdentifier { SalesOrderID = salesOrderID }, ViewItemTemplates.Dashboard, returnPath));
+        });
+    }
+
+    // 12.6. GetLaunchSalesOrderHeaderCreatePopupCommand
     public static Command GetLaunchSalesOrderHeaderCreatePopupCommand()
     {
         return new Command(async () =>
@@ -1340,7 +1472,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 12.6. GetLaunchSalesOrderHeaderDeletePopupCommand
+    // 12.7. GetLaunchSalesOrderHeaderDeletePopupCommand
     public static Command<int> GetLaunchSalesOrderHeaderDeletePopupCommand()
     {
         return new Command<int>(async (salesOrderID) =>
@@ -1351,7 +1483,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 12.7. GetLaunchSalesOrderHeaderDetailsPopupCommand
+    // 12.8. GetLaunchSalesOrderHeaderDetailsPopupCommand
     public static Command<int> GetLaunchSalesOrderHeaderDetailsPopupCommand()
     {
         return new Command<int>(async (salesOrderID) =>
@@ -1362,7 +1494,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 12.8. GetLaunchSalesOrderHeaderEditPopupCommand
+    // 12.9. GetLaunchSalesOrderHeaderEditPopupCommand
     public static Command<int> GetLaunchSalesOrderHeaderEditPopupCommand()
     {
         return new Command<int>(async (salesOrderID) =>
@@ -1373,7 +1505,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 12.9. GetLaunchSalesOrderHeaderAdvancedSearchPopupCommand
+    // 12.10. GetLaunchSalesOrderHeaderAdvancedSearchPopupCommand
     public static Command GetLaunchSalesOrderHeaderAdvancedSearchPopupCommand()
     {
         return new Command(async () =>
@@ -1383,7 +1515,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 12.10. GetLaunchSalesOrderHeaderListBulkActionsPopupCommand
+    // 12.11. GetLaunchSalesOrderHeaderListBulkActionsPopupCommand
     public static Command GetLaunchSalesOrderHeaderListBulkActionsPopupCommand()
     {
         return new Command(async () =>
@@ -1393,7 +1525,7 @@ public static class LaunchViewCommandsHelper
         });
     }
 
-    // 12.11. GetLaunchSalesOrderHeaderListOrderBysPopupCommand
+    // 12.12. GetLaunchSalesOrderHeaderListOrderBysPopupCommand
     public static Command GetLaunchSalesOrderHeaderListOrderBysPopupCommand()
     {
         return new Command(async () =>
