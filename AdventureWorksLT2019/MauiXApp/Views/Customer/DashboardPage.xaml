@@ -6,6 +6,7 @@
              xmlns:fm="clr-namespace:Framework.Models;assembly=Framework"
              xmlns:l="clr-namespace:AdventureWorksLT2019.MauiXApp.Extensions"
              x:Class="AdventureWorksLT2019.MauiXApp.Views.Customer.DashboardPage"
+             x:Name="thisPage"
              Title="DashboardPage">
     <Grid Margin="0">
         <ScrollView Margin="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
@@ -36,63 +37,63 @@
                     <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize CustomerID}"/>
                     <Entry Grid.Row="0" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.CustomerID}"/>
+                        Text="{Binding __Master__.CustomerID}"/>
                     <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize NameStyle}"/>
                     <Switch Grid.Row="1" Grid.Column="1" Style="{StaticResource ReadonlySwitchStyle}"
-                        IsToggled="{Binding Item.NameStyle}" />
+                        IsToggled="{Binding __Master__.NameStyle}" />
                     <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize Title}"/>
                     <Entry Grid.Row="2" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.Title}"/>
+                        Text="{Binding __Master__.Title}"/>
                     <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize FirstName}"/>
                     <Entry Grid.Row="3" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.FirstName}"/>
+                        Text="{Binding __Master__.FirstName}"/>
                     <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize MiddleName}"/>
                     <Entry Grid.Row="4" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.MiddleName}"/>
+                        Text="{Binding __Master__.MiddleName}"/>
                     <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize LastName}"/>
                     <Entry Grid.Row="5" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.LastName}"/>
+                        Text="{Binding __Master__.LastName}"/>
                     <Label Grid.Row="6" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize Suffix}"/>
                     <Entry Grid.Row="6" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.Suffix}"/>
+                        Text="{Binding __Master__.Suffix}"/>
                     <Label Grid.Row="7" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize CompanyName}"/>
                     <Entry Grid.Row="7" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.CompanyName}"/>
+                        Text="{Binding __Master__.CompanyName}"/>
                     <Label Grid.Row="8" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize SalesPerson}"/>
                     <Entry Grid.Row="8" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.SalesPerson}"/>
+                        Text="{Binding __Master__.SalesPerson}"/>
                     <Label Grid.Row="9" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize EmailAddress}"/>
                     <Entry Grid.Row="9" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.EmailAddress}"/>
+                        Text="{Binding __Master__.EmailAddress}"/>
                     <Label Grid.Row="10" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize Phone}"/>
                     <Entry Grid.Row="10" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.Phone}"/>
+                        Text="{Binding __Master__.Phone}"/>
                     <Label Grid.Row="11" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize PasswordHash}"/>
                     <Entry Grid.Row="11" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.PasswordHash}"/>
+                        Text="{Binding __Master__.PasswordHash}"/>
                     <Label Grid.Row="12" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize PasswordSalt}"/>
                     <Entry Grid.Row="12" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.PasswordSalt}"/>
+                        Text="{Binding __Master__.PasswordSalt}"/>
                     <Label Grid.Row="13" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize rowguid}"/>
                     <Entry Grid.Row="13" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.rowguid}"/>
+                        Text="{Binding __Master__.rowguid}"/>
                     <Label Grid.Row="14" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
                         Text="{l:Localize ModifiedDate}"/>
                     <Entry Grid.Row="14" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
-                        Text="{Binding Item.ModifiedDate}"/>
+                        Text="{Binding __Master__.ModifiedDate}"/>
                 </Grid>
                 <VerticalStackLayout x:Name="masterForeignKeyToolbar">
                 </VerticalStackLayout>
@@ -104,19 +105,11 @@
                         <ColumnDefinition Width="5*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <BoxView Color="CornflowerBlue"
-                            CornerRadius="2"
-                            HeightRequest="5"
-                            VerticalOptions="Center"
-                            HorizontalOptions="FillAndExpand" />
+                    <BoxView Style="{StaticResource HorizontalSeparator}" />
                     <Label Grid.Column="1" Style="{StaticResource NameLabelStyle}"
                             HorizontalOptions="Center"
-                            Text="{l:Localize AdventureWorksLT2019Model:CustomerAddress}"/>
-                    <BoxView Grid.Column="2" Color="CornflowerBlue"
-                            CornerRadius="2"
-                            HeightRequest="5"
-                            VerticalOptions="Center"
-                            HorizontalOptions="FillAndExpand" />
+                            Text="{l:Localize CustomerAddress}"/>
+                    <BoxView Style="{StaticResource HorizontalSeparator}" />
                 </Grid>
                 <CollectionView
                     x:Name="customerAddresses_Via_CustomerID" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
@@ -126,7 +119,7 @@
                         <DataTemplate>
                             <Grid Padding="10" HorizontalOptions="FillAndExpand">
                                 <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Source={x:Reference thisRoot}, Path=BindingContext.LaunchList_CustomerAddressItemViewCommand}" CommandParameter="{Binding CustomerID}" />
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Source={x:Reference thisPage}, Path=BindingContext.LaunchList_CustomerAddressItemViewCommand}" CommandParameter="{Binding CustomerID}" />
                                 </Grid.GestureRecognizers>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="60" />
@@ -160,19 +153,11 @@
                         <ColumnDefinition Width="5*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <BoxView Color="CornflowerBlue"
-                            CornerRadius="2"
-                            HeightRequest="5"
-                            VerticalOptions="Center"
-                            HorizontalOptions="FillAndExpand" />
+                    <BoxView Style="{StaticResource HorizontalSeparator}" />
                     <Label Grid.Column="1" Style="{StaticResource NameLabelStyle}"
                             HorizontalOptions="Center"
-                            Text="{l:Localize AdventureWorksLT2019Model:SalesOrderHeader}"/>
-                    <BoxView Grid.Column="2" Color="CornflowerBlue"
-                            CornerRadius="2"
-                            HeightRequest="5"
-                            VerticalOptions="Center"
-                            HorizontalOptions="FillAndExpand" />
+                            Text="{l:Localize SalesOrderHeader}"/>
+                    <BoxView Style="{StaticResource HorizontalSeparator}" />
                 </Grid>
                 <CollectionView
                     x:Name="salesOrderHeaders_Via_CustomerID" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
@@ -182,7 +167,7 @@
                         <DataTemplate>
                             <Grid Padding="10" HorizontalOptions="FillAndExpand">
                                 <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Source={x:Reference thisRoot}, Path=BindingContext.LaunchList_SalesOrderHeaderItemViewCommand}" CommandParameter="{Binding SalesOrderID}" />
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Source={x:Reference thisPage}, Path=BindingContext.LaunchList_SalesOrderHeaderItemViewCommand}" CommandParameter="{Binding SalesOrderID}" />
                                 </Grid.GestureRecognizers>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="60" />

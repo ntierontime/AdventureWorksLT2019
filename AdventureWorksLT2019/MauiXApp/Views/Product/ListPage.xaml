@@ -35,7 +35,7 @@
                 SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}"
                 SelectionChangedCommand="{Binding Path=SelectionChangedCommand}"
                 SelectionChangedCommandParameter="{Binding Source={x:Reference collectionView}, Path=SelectedItems}"
-                RemainingItemsThreshold="2"
+                RemainingItemsThreshold="5"
                 RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
@@ -43,12 +43,15 @@
                             <SwipeView.LeftItems>
                                 <SwipeItems>
                                     <SwipeItem Text="{l:Localize Delete}"
+                                        BackgroundColor="LightPink"
                                         Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDeletePopupCommand}"
                                         CommandParameter="{Binding ProductID}" />
                                     <SwipeItem Text="{l:Localize Details}"
+                                        BackgroundColor="LightPink"
                                         Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDetailsPopupCommand}"
                                         CommandParameter="{Binding ProductID}" />
                                     <SwipeItem Text="{l:Localize Edit}"
+                                        BackgroundColor="LightPink"
                                         Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchEditPopupCommand}"
                                         CommandParameter="{Binding ProductID}" />
                                 </SwipeItems>
@@ -56,15 +59,19 @@
                             <SwipeView.RightItems>
                                 <SwipeItems>
                                     <SwipeItem Text="{l:Localize Delete}"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDashboardPageCommand}"
+                                        BackgroundColor="LightPink"
+                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDeletePageCommand}"
                                         CommandParameter="{Binding ProductID}" />
                                     <SwipeItem Text="{l:Localize Details}"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDashboardPageCommand}"
+                                        BackgroundColor="LightPink"
+                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDetailsPageCommand}"
                                         CommandParameter="{Binding ProductID}" />
                                     <SwipeItem Text="{l:Localize Edit}"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDashboardPageCommand}"
+                                        BackgroundColor="LightPink"
+                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchEditPageCommand}"
                                         CommandParameter="{Binding ProductID}" />
-                                    <SwipeItem Text="{l:Localize Edit}"
+                                    <SwipeItem Text="{l:Localize Dashboard}"
+                                        BackgroundColor="LightPink"
                                         Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDashboardPageCommand}"
                                         CommandParameter="{Binding ProductID}" />
                                 </SwipeItems>
@@ -104,9 +111,6 @@
                                         Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchEditPopupCommand}"
                                         CommandParameter="{Binding ProductID}" />
                                     <Button Style="{StaticResource ToolbarDeleteIconButtonStyle}" Margin="0"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDashboardPageCommand}"
-                                        CommandParameter="{Binding ProductID}" />
-                                    <Button Style="{StaticResource ToolbarDeleteIconButtonStyle}" Margin="0"
                                         Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDeletePageCommand}"
                                         CommandParameter="{Binding ProductID}" />
                                     <Button Style="{StaticResource ToolbarDetailsIconButtonStyle}" Margin="0"
@@ -114,6 +118,9 @@
                                         CommandParameter="{Binding ProductID}" />
                                     <Button Style="{StaticResource ToolbarEditIconButtonStyle}" Margin="0"
                                         Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchEditPageCommand}"
+                                        CommandParameter="{Binding ProductID}" />
+                                    <Button Style="{StaticResource ToolbarDashboardIconButtonStyle}" Margin="0"
+                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDashboardPageCommand}"
                                         CommandParameter="{Binding ProductID}" />
                                 </HorizontalStackLayout>
                             </Grid>

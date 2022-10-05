@@ -43,12 +43,15 @@
                             <SwipeView.LeftItems>
                                 <SwipeItems>
                                     <SwipeItem Text="{l:Localize Delete}"
+                                        BackgroundColor="LightPink"
                                         Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDeletePopupCommand}"
                                         CommandParameter="{Binding ProductDescriptionID}" />
                                     <SwipeItem Text="{l:Localize Details}"
+                                        BackgroundColor="LightPink"
                                         Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDetailsPopupCommand}"
                                         CommandParameter="{Binding ProductDescriptionID}" />
                                     <SwipeItem Text="{l:Localize Edit}"
+                                        BackgroundColor="LightPink"
                                         Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchEditPopupCommand}"
                                         CommandParameter="{Binding ProductDescriptionID}" />
                                 </SwipeItems>
@@ -56,13 +59,20 @@
                             <SwipeView.RightItems>
                                 <SwipeItems>
                                     <SwipeItem Text="{l:Localize Delete}"
+                                        BackgroundColor="LightPink"
                                         Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDeletePageCommand}"
                                         CommandParameter="{Binding ProductDescriptionID}" />
                                     <SwipeItem Text="{l:Localize Details}"
+                                        BackgroundColor="LightPink"
                                         Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDetailsPageCommand}"
                                         CommandParameter="{Binding ProductDescriptionID}" />
                                     <SwipeItem Text="{l:Localize Edit}"
+                                        BackgroundColor="LightPink"
                                         Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchEditPageCommand}"
+                                        CommandParameter="{Binding ProductDescriptionID}" />
+                                    <SwipeItem Text="{l:Localize Dashboard}"
+                                        BackgroundColor="LightPink"
+                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDashboardPageCommand}"
                                         CommandParameter="{Binding ProductDescriptionID}" />
                                 </SwipeItems>
                             </SwipeView.RightItems>
@@ -108,6 +118,9 @@
                                         CommandParameter="{Binding ProductDescriptionID}" />
                                     <Button Style="{StaticResource ToolbarEditIconButtonStyle}" Margin="0"
                                         Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchEditPageCommand}"
+                                        CommandParameter="{Binding ProductDescriptionID}" />
+                                    <Button Style="{StaticResource ToolbarDashboardIconButtonStyle}" Margin="0"
+                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDashboardPageCommand}"
                                         CommandParameter="{Binding ProductDescriptionID}" />
                                 </HorizontalStackLayout>
                             </Grid>
