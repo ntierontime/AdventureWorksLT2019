@@ -134,8 +134,10 @@ namespace AdventureWorksLT2019.MauiXApp
             builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.SalesOrderDetail.ItemVM>();
             builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.SalesOrderHeader.ItemVM>();
 
+            // 3.4.2. View Models. DashboardVM
+            builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.Product.DashboardVM>();
+
             return builder.Build();
         }
     }
 }
-

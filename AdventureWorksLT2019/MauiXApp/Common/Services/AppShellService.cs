@@ -140,6 +140,7 @@ public class AppShellService
         AddShellContent(false, AppShellRoutes.CustomerAddressDetailsPage, typeof(AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.DetailsPage), UIStrings.Details);
         AddShellContent(false, AppShellRoutes.CustomerAddressEditPage, typeof(AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.EditPage), UIStrings.Edit);
         // 6. Product
+        AddShellContent(false, AppShellRoutes.ProductDashboardPage, typeof(AdventureWorksLT2019.MauiXApp.Views.Product.DashboardPage), UIStrings.Dashboard);
         AddShellContent(false, AppShellRoutes.ProductCreatePage, typeof(AdventureWorksLT2019.MauiXApp.Views.Product.CreatePage), UIStrings.Create_New);
         AddShellContent(false, AppShellRoutes.ProductDeletePage, typeof(AdventureWorksLT2019.MauiXApp.Views.Product.DeletePage), UIStrings.Delete);
         AddShellContent(false, AppShellRoutes.ProductDetailsPage, typeof(AdventureWorksLT2019.MauiXApp.Views.Product.DetailsPage), UIStrings.Details);

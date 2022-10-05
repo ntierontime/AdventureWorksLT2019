@@ -49,6 +49,7 @@ namespace AdventureWorksLT2019.MauiXApp.Common.Services
 
         // 2.6. Product
         public const string ProductListPage = "ProductListPage";
+        public const string ProductDashboardPage = "ProductDashboardPage";
         public const string ProductCreatePage = "ProductCreatePage";
         public const string ProductDeletePage = "ProductDeletePage";
         public const string ProductDetailsPage = "ProductDetailsPage";

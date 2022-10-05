@@ -4,6 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:fmif="clr-namespace:Framework.MauiX.Icons;assembly=Framework.MauiX"
     >
+    <Style x:Key="DashboardCloseIconButtonStyle" TargetType="Button">
+        <Setter Property="Text" Value="{x:Static fmif:MaterialIcons.Close}" />
+        <Setter Property="FontFamily" Value="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}" />
+        <Setter Property="FontSize" Value="Small" />
+        <Setter Property="Padding" Value="5" />
+    </Style>
     <Style x:Key="PopupCloseIconButtonStyle" TargetType="Button">
         <Setter Property="Text" Value="{x:Static fmif:MaterialIcons.Close}" />
         <Setter Property="FontFamily" Value="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}" />
@@ -51,14 +57,6 @@
         <Setter Property="Padding" Value="0" />
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-    </Style>
-    <Style x:Key="CloseIconButtonStyle" TargetType="Button">
-        <Setter Property="Text" Value="{x:Static fmif:MaterialIcons.Cancel}" />
-        <Setter Property="FontFamily" Value="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}" />
-        <Setter Property="FontSize" Value="Large" />
-        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
-        <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
-        <Setter Property="Padding" Value="5" />
     </Style>
     <Style x:Key="AddIconButtonStyle" TargetType="Button">
         <Setter Property="Text" Value="{x:Static fmif:MaterialIcons.Add}" />

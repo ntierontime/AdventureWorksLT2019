@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Http.Headers;
 
 namespace Framework.MauiX;
 
@@ -93,6 +94,8 @@ public abstract class WebApiClientBase
                 _client.DefaultRequestHeaders.Remove("Authorization");
             _client.DefaultRequestHeaders.Add("Authorization", "Bearer " + GetToken());
         }
+
+        _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
         var response = await _client.GetAsync(url);
 

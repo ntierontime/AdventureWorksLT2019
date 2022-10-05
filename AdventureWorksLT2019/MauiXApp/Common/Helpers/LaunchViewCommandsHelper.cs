@@ -594,6 +594,17 @@ public static class LaunchViewCommandsHelper
     //7. Product
 
     // 6.1. GetLaunchProductCreatePageCommand
+    public static Command GetLaunchProductDashboardPageCommand(string returnPath)
+    {
+        return new Command<int>(async (productID) =>
+        {
+            await AppShellService.GoToAbsoluteAsync(AppShellRoutes.ProductDashboardPage);
+            await Task.Delay(200);
+            WeakReferenceMessenger.Default.Send<ProductIdentifierMessage>(new ProductIdentifierMessage(new ProductIdentifier { ProductID = productID }, ViewItemTemplates.Dashboard, returnPath));
+        });
+    }
+
+    // 6.1. GetLaunchProductCreatePageCommand
     public static Command GetLaunchProductCreatePageCommand(string returnPath)
     {
         return new Command(async () =>

@@ -16,6 +16,16 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
     where TDataService : class, IDataServiceBase<TAdvancedQuery, TIdentifier, TDataModel>
     where TDataChangedMessage : ValueChangedMessageExt<TDataModel>
 {
+    private string m_ReturnPath;
+    /// <summary>
+    /// where to go, if we have Close button
+    /// </summary>
+    public string ReturnPath
+    {
+        get => m_ReturnPath;
+        set => SetProperty(ref m_ReturnPath, value);
+    }
+
     private TAdvancedQuery m_Query = new();
     public TAdvancedQuery Query
     {
@@ -132,6 +142,7 @@ public abstract class ListVMBase<TAdvancedQuery, TIdentifier, TDataModel, TDataS
     public ICommand LaunchDetailsPopupCommand { get; protected set; }
     public ICommand LaunchEditPopupCommand { get; protected set; }
 
+    public ICommand LaunchDashboardPageCommand { get; protected set; }
     public ICommand LaunchCreatePageCommand { get; protected set; }
     public ICommand LaunchDeletePageCommand { get; protected set; }
     public ICommand LaunchDetailsPageCommand { get; protected set; }

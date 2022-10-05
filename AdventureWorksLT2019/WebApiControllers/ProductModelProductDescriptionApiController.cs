@@ -42,7 +42,7 @@ namespace AdventureWorksLT2019.WebApiControllers
         [HttpGet]
         public async Task<ActionResult<ProductModelProductDescriptionCompositeModel>> GetCompositeModel(ProductModelProductDescriptionIdentifier id)
         {
-            var serviceResponse = await _thisService.GetCompositeModel(id, null);
+            var serviceResponse = await _thisService.GetCompositeModel(id, new Dictionary<ProductModelProductDescriptionCompositeModel.__DataOptions__, CompositeListItemRequest>());
             return Ok(serviceResponse);
         }
 

@@ -210,6 +210,7 @@ public class ListVM : ListVMBase<ProductAdvancedQuery, ProductIdentifier, Produc
         */
         // AdvancedQuery.End DateTimeRanges
 
+        LaunchDashboardPageCommand = LaunchViewCommandsHelper.GetLaunchProductDashboardPageCommand(AppShellRoutes.ProductListPage);
         // 1. Init LaunchProductCreatePageCommand
         LaunchCreatePageCommand = LaunchViewCommandsHelper.GetLaunchProductCreatePageCommand(AppShellRoutes.ProductListPage);
         // 2. Init LaunchProductDeletePageCommand

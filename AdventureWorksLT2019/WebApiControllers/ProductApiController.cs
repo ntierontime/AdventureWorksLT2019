@@ -16,11 +16,14 @@ namespace AdventureWorksLT2019.WebApiControllers
     [Route("/api/[controller]/[action]")]
     public partial class ProductApiController : BaseApiController
     {
-        IProductService _thisService { get; set; }
+        private readonly IProductService _thisService;
         private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<ProductApiController> _logger;
 
-        public ProductApiController(IProductService thisService, IServiceProvider serviceProvider, ILogger<ProductApiController> logger)
+        public ProductApiController(
+            IProductService thisService,
+            IServiceProvider serviceProvider, 
+            ILogger<ProductApiController> logger)
         {
             this._serviceProvider = serviceProvider;
             this._thisService = thisService;
@@ -40,9 +43,19 @@ namespace AdventureWorksLT2019.WebApiControllers
         // [Authorize]
         [Route("{ProductID}")]
         [HttpGet]
-        public async Task<ActionResult<ProductCompositeModel>> GetCompositeModel(ProductIdentifier id)
+        public async Task<ActionResult<ProductCompositeModel>> GetCompositeModel([FromRoute]ProductIdentifier id)
         {
-            var serviceResponse = await _thisService.GetCompositeModel(id, null);
+            var listItemRequests = new Dictionary<ProductCompositeModel.__DataOptions__, CompositeListItemRequest>();
+
+            listItemRequests.Add(ProductCompositeModel.__DataOptions__.SalesOrderDetails_Via_ProductID,
+                new CompositeListItemRequest()
+                {
+                    PageSize = 100,
+                    OrderBys = "ModifiedDate",
+                    PaginationOption = Framework.Models.PaginationOptions.NoPagination,
+                });
+
+            var serviceResponse = await _thisService.GetCompositeModel(id, listItemRequests);
             return Ok(serviceResponse);
         }
 

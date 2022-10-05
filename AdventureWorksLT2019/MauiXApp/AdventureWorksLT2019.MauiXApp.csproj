@@ -66,5 +66,10 @@
     <ProjectReference Include="..\..\Shared\Framework.MauiX\Framework.MauiX.csproj" />
     <ProjectReference Include="..\Resx\AdventureWorksLT2019.Resx.csproj" />
 </ItemGroup>
+<ItemGroup>
+  <MauiXaml Update="Views\Product\DashboardPage.xaml">
+    <Generator>MSBuild:Compile</Generator>
+  </MauiXaml>
+</ItemGroup>
 	
 </Project>
