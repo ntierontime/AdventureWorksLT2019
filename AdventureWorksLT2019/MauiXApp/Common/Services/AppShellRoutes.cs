@@ -18,6 +18,7 @@ namespace AdventureWorksLT2019.MauiXApp.Common.Services
         public const string BuildVersionDeletePage = "BuildVersionDeletePage";
         public const string BuildVersionDetailsPage = "BuildVersionDetailsPage";
         public const string BuildVersionEditPage = "BuildVersionEditPage";
+        public const string BuildVersionDashboard = "BuildVersionDashboard";
 
         // 2.2. ErrorLog
         public const string ErrorLogListPage = "ErrorLogListPage";
@@ -25,6 +26,7 @@ namespace AdventureWorksLT2019.MauiXApp.Common.Services
         public const string ErrorLogDeletePage = "ErrorLogDeletePage";
         public const string ErrorLogDetailsPage = "ErrorLogDetailsPage";
         public const string ErrorLogEditPage = "ErrorLogEditPage";
+        public const string ErrorLogDashboard = "ErrorLogDashboard";
 
         // 2.3. Address
         public const string AddressListPage = "AddressListPage";
@@ -32,6 +34,7 @@ namespace AdventureWorksLT2019.MauiXApp.Common.Services
         public const string AddressDeletePage = "AddressDeletePage";
         public const string AddressDetailsPage = "AddressDetailsPage";
         public const string AddressEditPage = "AddressEditPage";
+        public const string AddressDashboard = "AddressDashboard";
 
         // 2.4. Customer
         public const string CustomerListPage = "CustomerListPage";
@@ -39,6 +42,7 @@ namespace AdventureWorksLT2019.MauiXApp.Common.Services
         public const string CustomerDeletePage = "CustomerDeletePage";
         public const string CustomerDetailsPage = "CustomerDetailsPage";
         public const string CustomerEditPage = "CustomerEditPage";
+        public const string CustomerDashboard = "CustomerDashboard";
 
         // 2.5. CustomerAddress
         public const string CustomerAddressListPage = "CustomerAddressListPage";
@@ -46,6 +50,7 @@ namespace AdventureWorksLT2019.MauiXApp.Common.Services
         public const string CustomerAddressDeletePage = "CustomerAddressDeletePage";
         public const string CustomerAddressDetailsPage = "CustomerAddressDetailsPage";
         public const string CustomerAddressEditPage = "CustomerAddressEditPage";
+        public const string CustomerAddressDashboard = "CustomerAddressDashboard";
 
         // 2.6. Product
         public const string ProductListPage = "ProductListPage";
@@ -53,6 +58,7 @@ namespace AdventureWorksLT2019.MauiXApp.Common.Services
         public const string ProductDeletePage = "ProductDeletePage";
         public const string ProductDetailsPage = "ProductDetailsPage";
         public const string ProductEditPage = "ProductEditPage";
+        public const string ProductDashboard = "ProductDashboard";
 
         // 2.7. ProductCategory
         public const string ProductCategoryListPage = "ProductCategoryListPage";
@@ -60,6 +66,7 @@ namespace AdventureWorksLT2019.MauiXApp.Common.Services
         public const string ProductCategoryDeletePage = "ProductCategoryDeletePage";
         public const string ProductCategoryDetailsPage = "ProductCategoryDetailsPage";
         public const string ProductCategoryEditPage = "ProductCategoryEditPage";
+        public const string ProductCategoryDashboard = "ProductCategoryDashboard";
 
         // 2.8. ProductDescription
         public const string ProductDescriptionListPage = "ProductDescriptionListPage";
@@ -67,6 +74,7 @@ namespace AdventureWorksLT2019.MauiXApp.Common.Services
         public const string ProductDescriptionDeletePage = "ProductDescriptionDeletePage";
         public const string ProductDescriptionDetailsPage = "ProductDescriptionDetailsPage";
         public const string ProductDescriptionEditPage = "ProductDescriptionEditPage";
+        public const string ProductDescriptionDashboard = "ProductDescriptionDashboard";
 
         // 2.9. ProductModel
         public const string ProductModelListPage = "ProductModelListPage";
@@ -74,6 +82,7 @@ namespace AdventureWorksLT2019.MauiXApp.Common.Services
         public const string ProductModelDeletePage = "ProductModelDeletePage";
         public const string ProductModelDetailsPage = "ProductModelDetailsPage";
         public const string ProductModelEditPage = "ProductModelEditPage";
+        public const string ProductModelDashboard = "ProductModelDashboard";
 
         // 2.10. ProductModelProductDescription
         public const string ProductModelProductDescriptionListPage = "ProductModelProductDescriptionListPage";
@@ -81,6 +90,7 @@ namespace AdventureWorksLT2019.MauiXApp.Common.Services
         public const string ProductModelProductDescriptionDeletePage = "ProductModelProductDescriptionDeletePage";
         public const string ProductModelProductDescriptionDetailsPage = "ProductModelProductDescriptionDetailsPage";
         public const string ProductModelProductDescriptionEditPage = "ProductModelProductDescriptionEditPage";
+        public const string ProductModelProductDescriptionDashboard = "ProductModelProductDescriptionDashboard";
 
         // 2.11. SalesOrderDetail
         public const string SalesOrderDetailListPage = "SalesOrderDetailListPage";
@@ -88,6 +98,7 @@ namespace AdventureWorksLT2019.MauiXApp.Common.Services
         public const string SalesOrderDetailDeletePage = "SalesOrderDetailDeletePage";
         public const string SalesOrderDetailDetailsPage = "SalesOrderDetailDetailsPage";
         public const string SalesOrderDetailEditPage = "SalesOrderDetailEditPage";
+        public const string SalesOrderDetailDashboard = "SalesOrderDetailDashboard";
 
         // 2.12. SalesOrderHeader
         public const string SalesOrderHeaderListPage = "SalesOrderHeaderListPage";
@@ -95,6 +106,7 @@ namespace AdventureWorksLT2019.MauiXApp.Common.Services
         public const string SalesOrderHeaderDeletePage = "SalesOrderHeaderDeletePage";
         public const string SalesOrderHeaderDetailsPage = "SalesOrderHeaderDetailsPage";
         public const string SalesOrderHeaderEditPage = "SalesOrderHeaderEditPage";
+        public const string SalesOrderHeaderDashboard = "SalesOrderHeaderDashboard";
     }
 }
 

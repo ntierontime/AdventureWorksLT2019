@@ -14,6 +14,23 @@ public abstract class ItemVMBase<TIdentifier, TDataModel, TDataService, TDataCha
     where TDataService : class, IDataServiceBase<TIdentifier, TDataModel>
     where TDataChangedMessage : ValueChangedMessageExt<TDataModel>
 {
+    private string m_ReturnPath;
+    /// <summary>
+    /// where to go, if we have Close button
+    /// </summary>
+    public string ReturnPath
+    {
+        get => m_ReturnPath;
+        set => SetProperty(ref m_ReturnPath, value);
+    }
+
+    private ViewItemTemplates m_ItemView;
+    public ViewItemTemplates ItemView
+    {
+        get => m_ItemView;
+        set => SetProperty(ref m_ItemView, value);
+    }
+
     private TDataModel m_Item;
     public TDataModel Item
     {

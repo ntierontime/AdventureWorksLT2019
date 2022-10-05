@@ -16,7 +16,7 @@ namespace AdventureWorksLT2019.WebApiControllers
     [Route("/api/[controller]/[action]")]
     public partial class CustomerApiController : BaseApiController
     {
-        ICustomerService _thisService { get; set; }
+        private readonly ICustomerService _thisService;
         private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<CustomerApiController> _logger;
 
@@ -40,9 +40,27 @@ namespace AdventureWorksLT2019.WebApiControllers
         // [Authorize]
         [Route("{CustomerID}")]
         [HttpGet]
-        public async Task<ActionResult<CustomerCompositeModel>> GetCompositeModel(CustomerIdentifier id)
+        public async Task<ActionResult<CustomerCompositeModel>> GetCompositeModel([FromRoute]CustomerIdentifier id)
         {
-            var serviceResponse = await _thisService.GetCompositeModel(id, null);
+            var listItemRequests = new Dictionary<CustomerCompositeModel.__DataOptions__, CompositeListItemRequest>();
+
+            listItemRequests.Add(CustomerCompositeModel.__DataOptions__.CustomerAddresses_Via_CustomerID,
+                new CompositeListItemRequest()
+                {
+                    PageSize = 100,
+                    OrderBys = "ModifiedDate",
+                    PaginationOption = PaginationOptions.NoPagination,
+                });
+
+            listItemRequests.Add(CustomerCompositeModel.__DataOptions__.SalesOrderHeaders_Via_CustomerID,
+                new CompositeListItemRequest()
+                {
+                    PageSize = 100,
+                    OrderBys = "OrderDate",
+                    PaginationOption = PaginationOptions.NoPagination,
+                });
+
+            var serviceResponse = await _thisService.GetCompositeModel(id, listItemRequests);
             return Ok(serviceResponse);
         }
 

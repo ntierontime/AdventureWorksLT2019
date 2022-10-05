@@ -21,6 +21,12 @@ public class ItemVM : ItemVMBase<ProductModelIdentifier, ProductModelDataModel, 
         WeakReferenceMessenger.Default.Register<ItemVM, ProductModelIdentifierMessage>(
            this, async (r, m) =>
         {
+            if (m.ItemView == ViewItemTemplates.Dashboard)
+                return;
+
+            ItemView = m.ItemView;
+            ReturnPath = m.ReturnPath;
+
             if (m.ItemView == ViewItemTemplates.Create)
             {
                 Item = _dataService.GetDefault();

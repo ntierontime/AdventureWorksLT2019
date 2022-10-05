@@ -190,7 +190,7 @@ public class ItemVM : ItemVMBase<SalesOrderDetailIdentifier, SalesOrderDetailDat
             }
         }
     }
-#endregion Foreign Key SelectLists
+    #endregion Foreign Key SelectLists
 
     public ICommand LaunchSalesOrderHeaderFKItemViewCommand { get; private set; }
 
@@ -228,6 +228,12 @@ public class ItemVM : ItemVMBase<SalesOrderDetailIdentifier, SalesOrderDetailDat
         WeakReferenceMessenger.Default.Register<ItemVM, SalesOrderDetailIdentifierMessage>(
            this, async (r, m) =>
         {
+            if (m.ItemView == ViewItemTemplates.Dashboard)
+                return;
+
+            ItemView = m.ItemView;
+            ReturnPath = m.ReturnPath;
+
             if (m.ItemView == ViewItemTemplates.Create)
             {
                 Item = _dataService.GetDefault();

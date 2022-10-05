@@ -16,7 +16,7 @@ namespace AdventureWorksLT2019.WebApiControllers
     [Route("/api/[controller]/[action]")]
     public partial class ProductCategoryApiController : BaseApiController
     {
-        IProductCategoryService _thisService { get; set; }
+        private readonly IProductCategoryService _thisService;
         private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<ProductCategoryApiController> _logger;
 
@@ -40,9 +40,27 @@ namespace AdventureWorksLT2019.WebApiControllers
         // [Authorize]
         [Route("{ProductCategoryID}")]
         [HttpGet]
-        public async Task<ActionResult<ProductCategoryCompositeModel>> GetCompositeModel(ProductCategoryIdentifier id)
+        public async Task<ActionResult<ProductCategoryCompositeModel>> GetCompositeModel([FromRoute]ProductCategoryIdentifier id)
         {
-            var serviceResponse = await _thisService.GetCompositeModel(id, null);
+            var listItemRequests = new Dictionary<ProductCategoryCompositeModel.__DataOptions__, CompositeListItemRequest>();
+
+            listItemRequests.Add(ProductCategoryCompositeModel.__DataOptions__.Products_Via_ProductCategoryID,
+                new CompositeListItemRequest()
+                {
+                    PageSize = 100,
+                    OrderBys = "SellStartDate",
+                    PaginationOption = PaginationOptions.NoPagination,
+                });
+
+            listItemRequests.Add(ProductCategoryCompositeModel.__DataOptions__.ProductCategories_Via_ParentProductCategoryID,
+                new CompositeListItemRequest()
+                {
+                    PageSize = 100,
+                    OrderBys = "ModifiedDate",
+                    PaginationOption = PaginationOptions.NoPagination,
+                });
+
+            var serviceResponse = await _thisService.GetCompositeModel(id, listItemRequests);
             return Ok(serviceResponse);
         }
 

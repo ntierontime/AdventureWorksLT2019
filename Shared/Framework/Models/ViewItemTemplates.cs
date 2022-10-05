@@ -2,6 +2,7 @@ namespace Framework.Models
 {
     public enum ViewItemTemplates
     {
+        Dashboard,
         Create,
         Delete,
         Details,

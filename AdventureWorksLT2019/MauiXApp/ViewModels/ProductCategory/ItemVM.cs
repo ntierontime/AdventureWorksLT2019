@@ -36,7 +36,7 @@ public class ItemVM : ItemVMBase<ProductCategoryIdentifier, ProductCategoryDataM
             }
         }
     }
-#endregion Foreign Key SelectLists
+    #endregion Foreign Key SelectLists
 
     public ICommand LaunchProductCategoryFKItemViewCommand { get; private set; }
     public ItemVM(ProductCategoryService dataService)
@@ -49,6 +49,12 @@ public class ItemVM : ItemVMBase<ProductCategoryIdentifier, ProductCategoryDataM
         WeakReferenceMessenger.Default.Register<ItemVM, ProductCategoryIdentifierMessage>(
            this, async (r, m) =>
         {
+            if (m.ItemView == ViewItemTemplates.Dashboard)
+                return;
+
+            ItemView = m.ItemView;
+            ReturnPath = m.ReturnPath;
+
             if (m.ItemView == ViewItemTemplates.Create)
             {
                 Item = _dataService.GetDefault();
