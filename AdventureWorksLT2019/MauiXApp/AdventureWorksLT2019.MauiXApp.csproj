@@ -67,6 +67,9 @@
     <ProjectReference Include="..\Resx\AdventureWorksLT2019.Resx.csproj" />
 </ItemGroup>
 <ItemGroup>
+  <MauiXaml Update="Resources\Styles\BoxViewStyles.xaml">
+    <Generator>MSBuild:Compile</Generator>
+  </MauiXaml>
   <MauiXaml Update="Views\Product\DashboardPage.xaml">
     <Generator>MSBuild:Compile</Generator>
   </MauiXaml>
