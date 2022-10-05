@@ -82,7 +82,7 @@ public class AppShellService
         AddCRUDPagesShellContents();
 
         // TODO: for testing purpose
-        //gotoRoute = AppShellRoutes.;
+        gotoRoute = AppShellRoutes.ProductListPage;
 
         if (!string.IsNullOrEmpty(gotoRoute))
         {
