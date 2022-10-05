@@ -29,8 +29,8 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             var queryable =
                 from t in _dbcontext.SalesOrderHeader
 
-                    join BillTo in _dbcontext.Address on t.BillToAddressID equals BillTo.AddressID// \BillToAddressID
-                    join ShipTo in _dbcontext.Address on t.ShipToAddressID equals ShipTo.AddressID// \ShipToAddressID
+                    join BillTo_A in _dbcontext.Address on t.BillToAddressID equals BillTo_A.AddressID into BillTo_G from BillTo in BillTo_G.DefaultIfEmpty()// \BillToAddressID
+                    join ShipTo_A in _dbcontext.Address on t.ShipToAddressID equals ShipTo_A.AddressID into ShipTo_G from ShipTo in ShipTo_G.DefaultIfEmpty()// \ShipToAddressID
                     join Customer in _dbcontext.Customer on t.CustomerID equals Customer.CustomerID// \CustomerID
                 where
 
@@ -236,8 +236,8 @@ private IQueryable<SalesOrderHeaderDataModel.DefaultView> GetIQueryableAsBulkUpd
             var idList = ids.Select(t => t.SalesOrderID).ToList();
             var queryable =
                 from t in _dbcontext.SalesOrderHeader
-                    join BillTo in _dbcontext.Address on t.BillToAddressID equals BillTo.AddressID// \BillToAddressID
-                    join ShipTo in _dbcontext.Address on t.ShipToAddressID equals ShipTo.AddressID// \ShipToAddressID
+                    join BillTo_A in _dbcontext.Address on t.BillToAddressID equals BillTo_A.AddressID into BillTo_G from BillTo in BillTo_G.DefaultIfEmpty()// \BillToAddressID
+                    join ShipTo_A in _dbcontext.Address on t.ShipToAddressID equals ShipTo_A.AddressID into ShipTo_G from ShipTo in ShipTo_G.DefaultIfEmpty()// \ShipToAddressID
                     join Customer in _dbcontext.Customer on t.CustomerID equals Customer.CustomerID// \CustomerID
                 where idList.Contains(t.SalesOrderID)
 
@@ -384,8 +384,8 @@ private IQueryable<SalesOrderHeaderDataModel.DefaultView> GetIQueryableAsBulkUpd
 
                 var responseBodyWithNewAndUpdatedItems =
                     (from t in _dbcontext.SalesOrderHeader
-                    join BillTo in _dbcontext.Address on t.BillToAddressID equals BillTo.AddressID// \BillToAddressID
-                    join ShipTo in _dbcontext.Address on t.ShipToAddressID equals ShipTo.AddressID// \ShipToAddressID
+                    join BillTo_A in _dbcontext.Address on t.BillToAddressID equals BillTo_A.AddressID into BillTo_G from BillTo in BillTo_G.DefaultIfEmpty()// \BillToAddressID
+                    join ShipTo_A in _dbcontext.Address on t.ShipToAddressID equals ShipTo_A.AddressID into ShipTo_G from ShipTo in ShipTo_G.DefaultIfEmpty()// \ShipToAddressID
                     join Customer in _dbcontext.Customer on t.CustomerID equals Customer.CustomerID// \CustomerID
                     where identifierListToloadResponseItems.Contains(t.SalesOrderID)
 
@@ -491,8 +491,8 @@ private IQueryable<SalesOrderHeaderDataModel.DefaultView> GetIQueryableAsBulkUpd
                     (
                     from t in _dbcontext.SalesOrderHeader
 
-                    join BillTo in _dbcontext.Address on t.BillToAddressID equals BillTo.AddressID// \BillToAddressID
-                    join ShipTo in _dbcontext.Address on t.ShipToAddressID equals ShipTo.AddressID// \ShipToAddressID
+                    join BillTo_A in _dbcontext.Address on t.BillToAddressID equals BillTo_A.AddressID into BillTo_G from BillTo in BillTo_G.DefaultIfEmpty()// \BillToAddressID
+                    join ShipTo_A in _dbcontext.Address on t.ShipToAddressID equals ShipTo_A.AddressID into ShipTo_G from ShipTo in ShipTo_G.DefaultIfEmpty()// \ShipToAddressID
                     join Customer in _dbcontext.Customer on t.CustomerID equals Customer.CustomerID// \CustomerID
                     where t.SalesOrderID == existing.SalesOrderID
 
@@ -553,8 +553,8 @@ private IQueryable<SalesOrderHeaderDataModel.DefaultView> GetIQueryableAsBulkUpd
                     (
                     from t in _dbcontext.SalesOrderHeader
 
-                    join BillTo in _dbcontext.Address on t.BillToAddressID equals BillTo.AddressID// \BillToAddressID
-                    join ShipTo in _dbcontext.Address on t.ShipToAddressID equals ShipTo.AddressID// \ShipToAddressID
+                    join BillTo_A in _dbcontext.Address on t.BillToAddressID equals BillTo_A.AddressID into BillTo_G from BillTo in BillTo_G.DefaultIfEmpty()// \BillToAddressID
+                    join ShipTo_A in _dbcontext.Address on t.ShipToAddressID equals ShipTo_A.AddressID into ShipTo_G from ShipTo in ShipTo_G.DefaultIfEmpty()// \ShipToAddressID
                     join Customer in _dbcontext.Customer on t.CustomerID equals Customer.CustomerID// \CustomerID
                     where
 
@@ -640,8 +640,8 @@ private IQueryable<SalesOrderHeaderDataModel.DefaultView> GetIQueryableAsBulkUpd
                     (
                     from t in _dbcontext.SalesOrderHeader
 
-                    join BillTo in _dbcontext.Address on t.BillToAddressID equals BillTo.AddressID// \BillToAddressID
-                    join ShipTo in _dbcontext.Address on t.ShipToAddressID equals ShipTo.AddressID// \ShipToAddressID
+                    join BillTo_A in _dbcontext.Address on t.BillToAddressID equals BillTo_A.AddressID into BillTo_G from BillTo in BillTo_G.DefaultIfEmpty()// \BillToAddressID
+                    join ShipTo_A in _dbcontext.Address on t.ShipToAddressID equals ShipTo_A.AddressID into ShipTo_G from ShipTo in ShipTo_G.DefaultIfEmpty()// \ShipToAddressID
                     join Customer in _dbcontext.Customer on t.CustomerID equals Customer.CustomerID// \CustomerID
                     where t.SalesOrderID == toInsert.SalesOrderID
 
@@ -729,8 +729,8 @@ private IQueryable<SalesOrderHeaderDataModel.DefaultView> GetIQueryableAsBulkUpd
             var queryable =
                 from t in _dbcontext.SalesOrderHeader
 
-                    join BillTo in _dbcontext.Address on t.BillToAddressID equals BillTo.AddressID// \BillToAddressID
-                    join ShipTo in _dbcontext.Address on t.ShipToAddressID equals ShipTo.AddressID// \ShipToAddressID
+                    join BillTo_A in _dbcontext.Address on t.BillToAddressID equals BillTo_A.AddressID into BillTo_G from BillTo in BillTo_G.DefaultIfEmpty()// \BillToAddressID
+                    join ShipTo_A in _dbcontext.Address on t.ShipToAddressID equals ShipTo_A.AddressID into ShipTo_G from ShipTo in ShipTo_G.DefaultIfEmpty()// \ShipToAddressID
                     join Customer in _dbcontext.Customer on t.CustomerID equals Customer.CustomerID// \CustomerID
                 where
 
