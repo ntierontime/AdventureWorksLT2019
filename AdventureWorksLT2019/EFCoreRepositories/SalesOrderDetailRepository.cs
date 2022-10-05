@@ -30,12 +30,12 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                 from t in _dbcontext.SalesOrderDetail
 
                     join Product in _dbcontext.Product on t.ProductID equals Product.ProductID// \ProductID
-                    join ProductCategory in _dbcontext.ProductCategory on Product.ProductCategoryID equals ProductCategory.ProductCategoryID// \ProductID\ProductCategoryID
-                    join ProductCategory_Parent in _dbcontext.ProductCategory on ProductCategory.ParentProductCategoryID equals ProductCategory_Parent.ProductCategoryID// \ProductID\ProductCategoryID\ParentProductCategoryID
-                    join ProductModel in _dbcontext.ProductModel on Product.ProductModelID equals ProductModel.ProductModelID// \ProductID\ProductModelID
+                    join ProductCategory_A in _dbcontext.ProductCategory on Product.ProductCategoryID equals ProductCategory_A.ProductCategoryID into ProductCategory_G from ProductCategory in ProductCategory_G.DefaultIfEmpty()// \ProductID\ProductCategoryID
+                    join ProductCategory_Parent_A in _dbcontext.ProductCategory on ProductCategory.ParentProductCategoryID equals ProductCategory_Parent_A.ProductCategoryID into ProductCategory_Parent_G from ProductCategory_Parent in ProductCategory_Parent_G.DefaultIfEmpty()// \ProductID\ProductCategoryID\ParentProductCategoryID
+                    join ProductModel_A in _dbcontext.ProductModel on Product.ProductModelID equals ProductModel_A.ProductModelID into ProductModel_G from ProductModel in ProductModel_G.DefaultIfEmpty()// \ProductID\ProductModelID
                     join SalesOrderHeader in _dbcontext.SalesOrderHeader on t.SalesOrderID equals SalesOrderHeader.SalesOrderID// \SalesOrderID
-                    join BillTo in _dbcontext.Address on SalesOrderHeader.BillToAddressID equals BillTo.AddressID// \SalesOrderID\BillToAddressID
-                    join ShipTo in _dbcontext.Address on SalesOrderHeader.ShipToAddressID equals ShipTo.AddressID// \SalesOrderID\ShipToAddressID
+                    join BillTo_A in _dbcontext.Address on SalesOrderHeader.BillToAddressID equals BillTo_A.AddressID into BillTo_G from BillTo in BillTo_G.DefaultIfEmpty()// \SalesOrderID\BillToAddressID
+                    join ShipTo_A in _dbcontext.Address on SalesOrderHeader.ShipToAddressID equals ShipTo_A.AddressID into ShipTo_G from ShipTo in ShipTo_G.DefaultIfEmpty()// \SalesOrderID\ShipToAddressID
                     join Customer in _dbcontext.Customer on SalesOrderHeader.CustomerID equals Customer.CustomerID// \SalesOrderID\CustomerID
                 where
 
@@ -502,12 +502,12 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                 from t in _dbcontext.SalesOrderDetail
 
                     join Product in _dbcontext.Product on t.ProductID equals Product.ProductID// \ProductID
-                    join ProductCategory in _dbcontext.ProductCategory on Product.ProductCategoryID equals ProductCategory.ProductCategoryID// \ProductID\ProductCategoryID
-                    join ProductCategory_Parent in _dbcontext.ProductCategory on ProductCategory.ParentProductCategoryID equals ProductCategory_Parent.ProductCategoryID// \ProductID\ProductCategoryID\ParentProductCategoryID
-                    join ProductModel in _dbcontext.ProductModel on Product.ProductModelID equals ProductModel.ProductModelID// \ProductID\ProductModelID
+                    join ProductCategory_A in _dbcontext.ProductCategory on Product.ProductCategoryID equals ProductCategory_A.ProductCategoryID into ProductCategory_G from ProductCategory in ProductCategory_G.DefaultIfEmpty()// \ProductID\ProductCategoryID
+                    join ProductCategory_Parent_A in _dbcontext.ProductCategory on ProductCategory.ParentProductCategoryID equals ProductCategory_Parent_A.ProductCategoryID into ProductCategory_Parent_G from ProductCategory_Parent in ProductCategory_Parent_G.DefaultIfEmpty()// \ProductID\ProductCategoryID\ParentProductCategoryID
+                    join ProductModel_A in _dbcontext.ProductModel on Product.ProductModelID equals ProductModel_A.ProductModelID into ProductModel_G from ProductModel in ProductModel_G.DefaultIfEmpty()// \ProductID\ProductModelID
                     join SalesOrderHeader in _dbcontext.SalesOrderHeader on t.SalesOrderID equals SalesOrderHeader.SalesOrderID// \SalesOrderID
-                    join BillTo in _dbcontext.Address on SalesOrderHeader.BillToAddressID equals BillTo.AddressID// \SalesOrderID\BillToAddressID
-                    join ShipTo in _dbcontext.Address on SalesOrderHeader.ShipToAddressID equals ShipTo.AddressID// \SalesOrderID\ShipToAddressID
+                    join BillTo_A in _dbcontext.Address on SalesOrderHeader.BillToAddressID equals BillTo_A.AddressID into BillTo_G from BillTo in BillTo_G.DefaultIfEmpty()// \SalesOrderID\BillToAddressID
+                    join ShipTo_A in _dbcontext.Address on SalesOrderHeader.ShipToAddressID equals ShipTo_A.AddressID into ShipTo_G from ShipTo in ShipTo_G.DefaultIfEmpty()// \SalesOrderID\ShipToAddressID
                     join Customer in _dbcontext.Customer on SalesOrderHeader.CustomerID equals Customer.CustomerID// \SalesOrderID\CustomerID
                 where
 

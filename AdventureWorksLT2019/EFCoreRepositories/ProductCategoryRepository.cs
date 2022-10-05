@@ -29,7 +29,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             var queryable =
                 from t in _dbcontext.ProductCategory
 
-                    join Parent in _dbcontext.ProductCategory on t.ParentProductCategoryID equals Parent.ProductCategoryID// \ParentProductCategoryID
+                    join Parent_A in _dbcontext.ProductCategory on t.ParentProductCategoryID equals Parent_A.ProductCategoryID into Parent_G from Parent in Parent_G.DefaultIfEmpty()// \ParentProductCategoryID
                 where
 
                     (string.IsNullOrEmpty(query.TextSearch) ||
@@ -215,7 +215,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
 
                 var responseBodyWithNewAndUpdatedItems =
                     (from t in _dbcontext.ProductCategory
-                    join Parent in _dbcontext.ProductCategory on t.ParentProductCategoryID equals Parent.ProductCategoryID// \ParentProductCategoryID
+                    join Parent_A in _dbcontext.ProductCategory on t.ParentProductCategoryID equals Parent_A.ProductCategoryID into Parent_G from Parent in Parent_G.DefaultIfEmpty()// \ParentProductCategoryID
                     where identifierListToloadResponseItems.Contains(t.ProductCategoryID)
 
                     select new ProductCategoryDataModel.DefaultView
@@ -286,7 +286,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     (
                     from t in _dbcontext.ProductCategory
 
-                    join Parent in _dbcontext.ProductCategory on t.ParentProductCategoryID equals Parent.ProductCategoryID// \ParentProductCategoryID
+                    join Parent_A in _dbcontext.ProductCategory on t.ParentProductCategoryID equals Parent_A.ProductCategoryID into Parent_G from Parent in Parent_G.DefaultIfEmpty()// \ParentProductCategoryID
                     where t.ProductCategoryID == existing.ProductCategoryID
 
                     select new ProductCategoryDataModel.DefaultView
@@ -327,7 +327,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     (
                     from t in _dbcontext.ProductCategory
 
-                    join Parent in _dbcontext.ProductCategory on t.ParentProductCategoryID equals Parent.ProductCategoryID// \ParentProductCategoryID
+                    join Parent_A in _dbcontext.ProductCategory on t.ParentProductCategoryID equals Parent_A.ProductCategoryID into Parent_G from Parent in Parent_G.DefaultIfEmpty()// \ParentProductCategoryID
                     where
 
                     t.ProductCategoryID == id.ProductCategoryID
@@ -378,7 +378,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     (
                     from t in _dbcontext.ProductCategory
 
-                    join Parent in _dbcontext.ProductCategory on t.ParentProductCategoryID equals Parent.ProductCategoryID// \ParentProductCategoryID
+                    join Parent_A in _dbcontext.ProductCategory on t.ParentProductCategoryID equals Parent_A.ProductCategoryID into Parent_G from Parent in Parent_G.DefaultIfEmpty()// \ParentProductCategoryID
                     where t.ProductCategoryID == toInsert.ProductCategoryID
 
                     select new ProductCategoryDataModel.DefaultView
@@ -446,7 +446,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             var queryable =
                 from t in _dbcontext.ProductCategory
 
-                    join Parent in _dbcontext.ProductCategory on t.ParentProductCategoryID equals Parent.ProductCategoryID// \ParentProductCategoryID
+                    join Parent_A in _dbcontext.ProductCategory on t.ParentProductCategoryID equals Parent_A.ProductCategoryID into Parent_G from Parent in Parent_G.DefaultIfEmpty()// \ParentProductCategoryID
                 where
 
                     (string.IsNullOrEmpty(query.TextSearch) ||
