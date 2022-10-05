@@ -79,17 +79,19 @@ public class ListVM : ListVMBase<CustomerAdvancedQuery, CustomerIdentifier, Cust
         LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchCustomerDetailsPageCommand(AppShellRoutes.CustomerListPage);
         // 4. Init LaunchCustomerEditPageCommand
         LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchCustomerEditPageCommand(AppShellRoutes.CustomerListPage);
-        // 5. Init LaunchCustomerCreatePopupCommand
+        // 5. Init LaunchCustomerDashboardPageCommand
+        LaunchDashboardPageCommand = LaunchViewCommandsHelper.GetLaunchCustomerDashboardPageCommand(AppShellRoutes.CustomerListPage);
+        // 6. Init LaunchCustomerCreatePopupCommand
         LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchCustomerCreatePopupCommand();
-        // 6. Init LaunchCustomerDeletePopupCommand
+        // 7. Init LaunchCustomerDeletePopupCommand
         LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchCustomerDeletePopupCommand();
-        // 7. Init LaunchCustomerDetailsPopupCommand
+        // 8. Init LaunchCustomerDetailsPopupCommand
         LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchCustomerDetailsPopupCommand();
-        // 8. Init LaunchCustomerEditPopupCommand
+        // 9. Init LaunchCustomerEditPopupCommand
         LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchCustomerEditPopupCommand();
-        // 9. Init LaunchCustomerAdvancedSearchPopupCommand
+        // 10. Init LaunchCustomerAdvancedSearchPopupCommand
         AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchCustomerAdvancedSearchPopupCommand();
-        // 10. Init LaunchCustomerListBulkActionsPopupCommand
+        // 11. Init LaunchCustomerListBulkActionsPopupCommand
         ListBulkActionsLaunchCommand = new Command<string>(
             (currentBulkActionName) =>
             {
@@ -100,7 +102,7 @@ public class ListVM : ListVMBase<CustomerAdvancedQuery, CustomerIdentifier, Cust
             },
             (currentBulkActionName) => EnableMultiSelectCommands()
             );
-        // 11. Init LaunchCustomerListOrderBysPopupCommand
+        // 12. Init LaunchCustomerListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchCustomerListOrderBysPopupCommand();
 
     }

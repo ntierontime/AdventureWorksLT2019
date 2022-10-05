@@ -218,17 +218,19 @@ public class ListVM : ListVMBase<SalesOrderHeaderAdvancedQuery, SalesOrderHeader
         LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderDetailsPageCommand(AppShellRoutes.SalesOrderHeaderListPage);
         // 4. Init LaunchSalesOrderHeaderEditPageCommand
         LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderEditPageCommand(AppShellRoutes.SalesOrderHeaderListPage);
-        // 5. Init LaunchSalesOrderHeaderCreatePopupCommand
+        // 5. Init LaunchSalesOrderHeaderDashboardPageCommand
+        LaunchDashboardPageCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderDashboardPageCommand(AppShellRoutes.SalesOrderHeaderListPage);
+        // 6. Init LaunchSalesOrderHeaderCreatePopupCommand
         LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderCreatePopupCommand();
-        // 6. Init LaunchSalesOrderHeaderDeletePopupCommand
+        // 7. Init LaunchSalesOrderHeaderDeletePopupCommand
         LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderDeletePopupCommand();
-        // 7. Init LaunchSalesOrderHeaderDetailsPopupCommand
+        // 8. Init LaunchSalesOrderHeaderDetailsPopupCommand
         LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderDetailsPopupCommand();
-        // 8. Init LaunchSalesOrderHeaderEditPopupCommand
+        // 9. Init LaunchSalesOrderHeaderEditPopupCommand
         LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderEditPopupCommand();
-        // 9. Init LaunchSalesOrderHeaderAdvancedSearchPopupCommand
+        // 10. Init LaunchSalesOrderHeaderAdvancedSearchPopupCommand
         AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderAdvancedSearchPopupCommand();
-        // 10. Init LaunchSalesOrderHeaderListBulkActionsPopupCommand
+        // 11. Init LaunchSalesOrderHeaderListBulkActionsPopupCommand
         ListBulkActionsLaunchCommand = new Command<string>(
             (currentBulkActionName) =>
             {
@@ -239,7 +241,7 @@ public class ListVM : ListVMBase<SalesOrderHeaderAdvancedQuery, SalesOrderHeader
             },
             (currentBulkActionName) => EnableMultiSelectCommands()
             );
-        // 11. Init LaunchSalesOrderHeaderListOrderBysPopupCommand
+        // 12. Init LaunchSalesOrderHeaderListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderListOrderBysPopupCommand();
 
     }

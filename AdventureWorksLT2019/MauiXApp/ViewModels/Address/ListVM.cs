@@ -79,17 +79,19 @@ public class ListVM : ListVMBase<AddressAdvancedQuery, AddressIdentifier, Addres
         LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchAddressDetailsPageCommand(AppShellRoutes.AddressListPage);
         // 4. Init LaunchAddressEditPageCommand
         LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchAddressEditPageCommand(AppShellRoutes.AddressListPage);
-        // 5. Init LaunchAddressCreatePopupCommand
+        // 5. Init LaunchAddressDashboardPageCommand
+        LaunchDashboardPageCommand = LaunchViewCommandsHelper.GetLaunchAddressDashboardPageCommand(AppShellRoutes.AddressListPage);
+        // 6. Init LaunchAddressCreatePopupCommand
         LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchAddressCreatePopupCommand();
-        // 6. Init LaunchAddressDeletePopupCommand
+        // 7. Init LaunchAddressDeletePopupCommand
         LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchAddressDeletePopupCommand();
-        // 7. Init LaunchAddressDetailsPopupCommand
+        // 8. Init LaunchAddressDetailsPopupCommand
         LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchAddressDetailsPopupCommand();
-        // 8. Init LaunchAddressEditPopupCommand
+        // 9. Init LaunchAddressEditPopupCommand
         LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchAddressEditPopupCommand();
-        // 9. Init LaunchAddressAdvancedSearchPopupCommand
+        // 10. Init LaunchAddressAdvancedSearchPopupCommand
         AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchAddressAdvancedSearchPopupCommand();
-        // 10. Init LaunchAddressListBulkActionsPopupCommand
+        // 11. Init LaunchAddressListBulkActionsPopupCommand
         ListBulkActionsLaunchCommand = new Command<string>(
             (currentBulkActionName) =>
             {
@@ -100,7 +102,7 @@ public class ListVM : ListVMBase<AddressAdvancedQuery, AddressIdentifier, Addres
             },
             (currentBulkActionName) => EnableMultiSelectCommands()
             );
-        // 11. Init LaunchAddressListOrderBysPopupCommand
+        // 12. Init LaunchAddressListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchAddressListOrderBysPopupCommand();
 
     }

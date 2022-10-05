@@ -100,17 +100,19 @@ public class ListVM : ListVMBase<BuildVersionAdvancedQuery, BuildVersionIdentifi
         LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionDetailsPageCommand(AppShellRoutes.BuildVersionListPage);
         // 4. Init LaunchBuildVersionEditPageCommand
         LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionEditPageCommand(AppShellRoutes.BuildVersionListPage);
-        // 5. Init LaunchBuildVersionCreatePopupCommand
+        // 5. Init LaunchBuildVersionDashboardPageCommand
+        LaunchDashboardPageCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionDashboardPageCommand(AppShellRoutes.BuildVersionListPage);
+        // 6. Init LaunchBuildVersionCreatePopupCommand
         LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionCreatePopupCommand();
-        // 6. Init LaunchBuildVersionDeletePopupCommand
+        // 7. Init LaunchBuildVersionDeletePopupCommand
         LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionDeletePopupCommand();
-        // 7. Init LaunchBuildVersionDetailsPopupCommand
+        // 8. Init LaunchBuildVersionDetailsPopupCommand
         LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionDetailsPopupCommand();
-        // 8. Init LaunchBuildVersionEditPopupCommand
+        // 9. Init LaunchBuildVersionEditPopupCommand
         LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionEditPopupCommand();
-        // 9. Init LaunchBuildVersionAdvancedSearchPopupCommand
+        // 10. Init LaunchBuildVersionAdvancedSearchPopupCommand
         AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionAdvancedSearchPopupCommand();
-        // 10. Init LaunchBuildVersionListBulkActionsPopupCommand
+        // 11. Init LaunchBuildVersionListBulkActionsPopupCommand
         ListBulkActionsLaunchCommand = new Command<string>(
             (currentBulkActionName) =>
             {
@@ -121,7 +123,7 @@ public class ListVM : ListVMBase<BuildVersionAdvancedQuery, BuildVersionIdentifi
             },
             (currentBulkActionName) => EnableMultiSelectCommands()
             );
-        // 11. Init LaunchBuildVersionListOrderBysPopupCommand
+        // 12. Init LaunchBuildVersionListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionListOrderBysPopupCommand();
 
     }

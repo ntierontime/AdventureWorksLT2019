@@ -219,17 +219,19 @@ public class ListVM : ListVMBase<ProductAdvancedQuery, ProductIdentifier, Produc
         LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchProductDetailsPageCommand(AppShellRoutes.ProductListPage);
         // 4. Init LaunchProductEditPageCommand
         LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchProductEditPageCommand(AppShellRoutes.ProductListPage);
-        // 5. Init LaunchProductCreatePopupCommand
+        // 5. Init LaunchProductDashboardPageCommand
+        LaunchDashboardPageCommand = LaunchViewCommandsHelper.GetLaunchProductDashboardPageCommand(AppShellRoutes.ProductListPage);
+        // 6. Init LaunchProductCreatePopupCommand
         LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchProductCreatePopupCommand();
-        // 6. Init LaunchProductDeletePopupCommand
+        // 7. Init LaunchProductDeletePopupCommand
         LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchProductDeletePopupCommand();
-        // 7. Init LaunchProductDetailsPopupCommand
+        // 8. Init LaunchProductDetailsPopupCommand
         LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchProductDetailsPopupCommand();
-        // 8. Init LaunchProductEditPopupCommand
+        // 9. Init LaunchProductEditPopupCommand
         LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchProductEditPopupCommand();
-        // 9. Init LaunchProductAdvancedSearchPopupCommand
+        // 10. Init LaunchProductAdvancedSearchPopupCommand
         AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductAdvancedSearchPopupCommand();
-        // 10. Init LaunchProductListBulkActionsPopupCommand
+        // 11. Init LaunchProductListBulkActionsPopupCommand
         ListBulkActionsLaunchCommand = new Command<string>(
             (currentBulkActionName) =>
             {
@@ -240,7 +242,7 @@ public class ListVM : ListVMBase<ProductAdvancedQuery, ProductIdentifier, Produc
             },
             (currentBulkActionName) => EnableMultiSelectCommands()
             );
-        // 11. Init LaunchProductListOrderBysPopupCommand
+        // 12. Init LaunchProductListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductListOrderBysPopupCommand();
 
     }
