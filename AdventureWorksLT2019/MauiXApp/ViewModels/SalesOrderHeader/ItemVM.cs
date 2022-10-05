@@ -80,7 +80,7 @@ public class ItemVM : ItemVMBase<SalesOrderHeaderIdentifier, SalesOrderHeaderDat
             }
         }
     }
-#endregion Foreign Key SelectLists
+    #endregion Foreign Key SelectLists
 
     public ICommand LaunchCustomerFKItemViewCommand { get; private set; }
 
@@ -98,6 +98,12 @@ public class ItemVM : ItemVMBase<SalesOrderHeaderIdentifier, SalesOrderHeaderDat
         WeakReferenceMessenger.Default.Register<ItemVM, SalesOrderHeaderIdentifierMessage>(
            this, async (r, m) =>
         {
+            if (m.ItemView == ViewItemTemplates.Dashboard)
+                return;
+
+            ItemView = m.ItemView;
+            ReturnPath = m.ReturnPath;
+
             if (m.ItemView == ViewItemTemplates.Create)
             {
                 Item = _dataService.GetDefault();

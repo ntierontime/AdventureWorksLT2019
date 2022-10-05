@@ -16,7 +16,7 @@ namespace AdventureWorksLT2019.WebApiControllers
     [Route("/api/[controller]/[action]")]
     public partial class ProductModelProductDescriptionApiController : BaseApiController
     {
-        IProductModelProductDescriptionService _thisService { get; set; }
+        private readonly IProductModelProductDescriptionService _thisService;
         private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<ProductModelProductDescriptionApiController> _logger;
 
@@ -40,9 +40,11 @@ namespace AdventureWorksLT2019.WebApiControllers
         // [Authorize]
         [Route("{ProductModelID}/{ProductDescriptionID}/{Culture}")]
         [HttpGet]
-        public async Task<ActionResult<ProductModelProductDescriptionCompositeModel>> GetCompositeModel(ProductModelProductDescriptionIdentifier id)
+        public async Task<ActionResult<ProductModelProductDescriptionCompositeModel>> GetCompositeModel([FromRoute]ProductModelProductDescriptionIdentifier id)
         {
-            var serviceResponse = await _thisService.GetCompositeModel(id, new Dictionary<ProductModelProductDescriptionCompositeModel.__DataOptions__, CompositeListItemRequest>());
+            var listItemRequests = new Dictionary<ProductModelProductDescriptionCompositeModel.__DataOptions__, CompositeListItemRequest>();
+
+            var serviceResponse = await _thisService.GetCompositeModel(id, listItemRequests);
             return Ok(serviceResponse);
         }
 

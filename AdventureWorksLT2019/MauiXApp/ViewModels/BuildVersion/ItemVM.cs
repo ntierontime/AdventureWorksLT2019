@@ -21,6 +21,12 @@ public class ItemVM : ItemVMBase<BuildVersionIdentifier, BuildVersionDataModel, 
         WeakReferenceMessenger.Default.Register<ItemVM, BuildVersionIdentifierMessage>(
            this, async (r, m) =>
         {
+            if (m.ItemView == ViewItemTemplates.Dashboard)
+                return;
+
+            ItemView = m.ItemView;
+            ReturnPath = m.ReturnPath;
+
             if (m.ItemView == ViewItemTemplates.Create)
             {
                 Item = _dataService.GetDefault();

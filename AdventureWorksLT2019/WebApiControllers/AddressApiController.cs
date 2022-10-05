@@ -16,7 +16,7 @@ namespace AdventureWorksLT2019.WebApiControllers
     [Route("/api/[controller]/[action]")]
     public partial class AddressApiController : BaseApiController
     {
-        IAddressService _thisService { get; set; }
+        private readonly IAddressService _thisService;
         private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<AddressApiController> _logger;
 
@@ -40,9 +40,35 @@ namespace AdventureWorksLT2019.WebApiControllers
         // [Authorize]
         [Route("{AddressID}")]
         [HttpGet]
-        public async Task<ActionResult<AddressCompositeModel>> GetCompositeModel(AddressIdentifier id)
+        public async Task<ActionResult<AddressCompositeModel>> GetCompositeModel([FromRoute]AddressIdentifier id)
         {
-            var serviceResponse = await _thisService.GetCompositeModel(id, null);
+            var listItemRequests = new Dictionary<AddressCompositeModel.__DataOptions__, CompositeListItemRequest>();
+
+            listItemRequests.Add(AddressCompositeModel.__DataOptions__.CustomerAddresses_Via_AddressID,
+                new CompositeListItemRequest()
+                {
+                    PageSize = 100,
+                    OrderBys = "ModifiedDate",
+                    PaginationOption = PaginationOptions.NoPagination,
+                });
+
+            listItemRequests.Add(AddressCompositeModel.__DataOptions__.SalesOrderHeaders_Via_BillToAddressID,
+                new CompositeListItemRequest()
+                {
+                    PageSize = 100,
+                    OrderBys = "OrderDate",
+                    PaginationOption = PaginationOptions.NoPagination,
+                });
+
+            listItemRequests.Add(AddressCompositeModel.__DataOptions__.SalesOrderHeaders_Via_ShipToAddressID,
+                new CompositeListItemRequest()
+                {
+                    PageSize = 100,
+                    OrderBys = "OrderDate",
+                    PaginationOption = PaginationOptions.NoPagination,
+                });
+
+            var serviceResponse = await _thisService.GetCompositeModel(id, listItemRequests);
             return Ok(serviceResponse);
         }
 

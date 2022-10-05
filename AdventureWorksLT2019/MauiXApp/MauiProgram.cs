@@ -134,10 +134,22 @@ namespace AdventureWorksLT2019.MauiXApp
             builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.SalesOrderDetail.ItemVM>();
             builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.SalesOrderHeader.ItemVM>();
 
-            // 3.4.2. View Models. DashboardVM
+            // 3.4.3. View Models. DashboardVM
+            builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.BuildVersion.DashboardVM>();
+            builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.ErrorLog.DashboardVM>();
+            builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.Address.DashboardVM>();
+            builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.Customer.DashboardVM>();
+            builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.CustomerAddress.DashboardVM>();
             builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.Product.DashboardVM>();
+            builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.ProductCategory.DashboardVM>();
+            builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.ProductDescription.DashboardVM>();
+            builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.ProductModel.DashboardVM>();
+            builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.ProductModelProductDescription.DashboardVM>();
+            builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.SalesOrderDetail.DashboardVM>();
+            builder.Services.AddSingleton<AdventureWorksLT2019.MauiXApp.ViewModels.SalesOrderHeader.DashboardVM>();
 
             return builder.Build();
         }
     }
 }
+

@@ -16,7 +16,7 @@ namespace AdventureWorksLT2019.WebApiControllers
     [Route("/api/[controller]/[action]")]
     public partial class CustomerAddressApiController : BaseApiController
     {
-        ICustomerAddressService _thisService { get; set; }
+        private readonly ICustomerAddressService _thisService;
         private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<CustomerAddressApiController> _logger;
 
@@ -40,9 +40,11 @@ namespace AdventureWorksLT2019.WebApiControllers
         // [Authorize]
         [Route("{CustomerID}/{AddressID}")]
         [HttpGet]
-        public async Task<ActionResult<CustomerAddressCompositeModel>> GetCompositeModel(CustomerAddressIdentifier id)
+        public async Task<ActionResult<CustomerAddressCompositeModel>> GetCompositeModel([FromRoute]CustomerAddressIdentifier id)
         {
-            var serviceResponse = await _thisService.GetCompositeModel(id, null);
+            var listItemRequests = new Dictionary<CustomerAddressCompositeModel.__DataOptions__, CompositeListItemRequest>();
+
+            var serviceResponse = await _thisService.GetCompositeModel(id, listItemRequests);
             return Ok(serviceResponse);
         }
 

@@ -58,7 +58,7 @@ public class ItemVM : ItemVMBase<CustomerAddressIdentifier, CustomerAddressDataM
             }
         }
     }
-#endregion Foreign Key SelectLists
+    #endregion Foreign Key SelectLists
 
     public ICommand LaunchCustomerFKItemViewCommand { get; private set; }
 
@@ -76,6 +76,12 @@ public class ItemVM : ItemVMBase<CustomerAddressIdentifier, CustomerAddressDataM
         WeakReferenceMessenger.Default.Register<ItemVM, CustomerAddressIdentifierMessage>(
            this, async (r, m) =>
         {
+            if (m.ItemView == ViewItemTemplates.Dashboard)
+                return;
+
+            ItemView = m.ItemView;
+            ReturnPath = m.ReturnPath;
+
             if (m.ItemView == ViewItemTemplates.Create)
             {
                 Item = _dataService.GetDefault();

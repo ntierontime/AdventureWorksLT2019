@@ -20,10 +20,7 @@ namespace AdventureWorksLT2019.WebApiControllers
         private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<ProductApiController> _logger;
 
-        public ProductApiController(
-            IProductService thisService,
-            IServiceProvider serviceProvider, 
-            ILogger<ProductApiController> logger)
+        public ProductApiController(IProductService thisService, IServiceProvider serviceProvider, ILogger<ProductApiController> logger)
         {
             this._serviceProvider = serviceProvider;
             this._thisService = thisService;
@@ -52,7 +49,7 @@ namespace AdventureWorksLT2019.WebApiControllers
                 {
                     PageSize = 100,
                     OrderBys = "ModifiedDate",
-                    PaginationOption = Framework.Models.PaginationOptions.NoPagination,
+                    PaginationOption = PaginationOptions.NoPagination,
                 });
 
             var serviceResponse = await _thisService.GetCompositeModel(id, listItemRequests);

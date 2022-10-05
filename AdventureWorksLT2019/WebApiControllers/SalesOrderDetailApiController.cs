@@ -16,7 +16,7 @@ namespace AdventureWorksLT2019.WebApiControllers
     [Route("/api/[controller]/[action]")]
     public partial class SalesOrderDetailApiController : BaseApiController
     {
-        ISalesOrderDetailService _thisService { get; set; }
+        private readonly ISalesOrderDetailService _thisService;
         private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<SalesOrderDetailApiController> _logger;
 
@@ -40,9 +40,11 @@ namespace AdventureWorksLT2019.WebApiControllers
         // [Authorize]
         [Route("{SalesOrderID}/{SalesOrderDetailID}")]
         [HttpGet]
-        public async Task<ActionResult<SalesOrderDetailCompositeModel>> GetCompositeModel(SalesOrderDetailIdentifier id)
+        public async Task<ActionResult<SalesOrderDetailCompositeModel>> GetCompositeModel([FromRoute]SalesOrderDetailIdentifier id)
         {
-            var serviceResponse = await _thisService.GetCompositeModel(id, null);
+            var listItemRequests = new Dictionary<SalesOrderDetailCompositeModel.__DataOptions__, CompositeListItemRequest>();
+
+            var serviceResponse = await _thisService.GetCompositeModel(id, listItemRequests);
             return Ok(serviceResponse);
         }
 

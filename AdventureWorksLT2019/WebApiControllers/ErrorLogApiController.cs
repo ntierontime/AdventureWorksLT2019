@@ -16,7 +16,7 @@ namespace AdventureWorksLT2019.WebApiControllers
     [Route("/api/[controller]/[action]")]
     public partial class ErrorLogApiController : BaseApiController
     {
-        IErrorLogService _thisService { get; set; }
+        private readonly IErrorLogService _thisService;
         private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<ErrorLogApiController> _logger;
 
@@ -40,9 +40,11 @@ namespace AdventureWorksLT2019.WebApiControllers
         // [Authorize]
         [Route("{ErrorLogID}")]
         [HttpGet]
-        public async Task<ActionResult<ErrorLogCompositeModel>> GetCompositeModel(ErrorLogIdentifier id)
+        public async Task<ActionResult<ErrorLogCompositeModel>> GetCompositeModel([FromRoute]ErrorLogIdentifier id)
         {
-            var serviceResponse = await _thisService.GetCompositeModel(id, null);
+            var listItemRequests = new Dictionary<ErrorLogCompositeModel.__DataOptions__, CompositeListItemRequest>();
+
+            var serviceResponse = await _thisService.GetCompositeModel(id, listItemRequests);
             return Ok(serviceResponse);
         }
 

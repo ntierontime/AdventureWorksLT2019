@@ -16,7 +16,7 @@ namespace AdventureWorksLT2019.WebApiControllers
     [Route("/api/[controller]/[action]")]
     public partial class BuildVersionApiController : BaseApiController
     {
-        IBuildVersionService _thisService { get; set; }
+        private readonly IBuildVersionService _thisService;
         private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<BuildVersionApiController> _logger;
 
@@ -40,9 +40,11 @@ namespace AdventureWorksLT2019.WebApiControllers
         // [Authorize]
         [Route("{SystemInformationID}/{VersionDate}/{ModifiedDate}")]
         [HttpGet]
-        public async Task<ActionResult<BuildVersionCompositeModel>> GetCompositeModel(BuildVersionIdentifier id)
+        public async Task<ActionResult<BuildVersionCompositeModel>> GetCompositeModel([FromRoute]BuildVersionIdentifier id)
         {
-            var serviceResponse = await _thisService.GetCompositeModel(id, null);
+            var listItemRequests = new Dictionary<BuildVersionCompositeModel.__DataOptions__, CompositeListItemRequest>();
+
+            var serviceResponse = await _thisService.GetCompositeModel(id, listItemRequests);
             return Ok(serviceResponse);
         }
 

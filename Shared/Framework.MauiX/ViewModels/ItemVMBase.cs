@@ -24,8 +24,8 @@ public abstract class ItemVMBase<TIdentifier, TDataModel, TDataService, TDataCha
         set => SetProperty(ref m_ReturnPath, value);
     }
 
-    private Framework.Models.ViewItemTemplates m_ItemView;
-    public Framework.Models.ViewItemTemplates ItemView
+    private ViewItemTemplates m_ItemView;
+    public ViewItemTemplates ItemView
     {
         get => m_ItemView;
         set => SetProperty(ref m_ItemView, value);

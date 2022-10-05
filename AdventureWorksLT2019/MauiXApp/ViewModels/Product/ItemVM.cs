@@ -100,7 +100,7 @@ public class ItemVM : ItemVMBase<ProductIdentifier, ProductDataModel, ProductSer
         {
             if (m.ItemView == ViewItemTemplates.Dashboard)
                 return;
-            
+
             ItemView = m.ItemView;
             ReturnPath = m.ReturnPath;
 

@@ -1,3 +1,9 @@
+using AdventureWorksLT2019.MauiXApp.Common.Helpers;
+using AdventureWorksLT2019.MauiXApp.Messages;
+using AdventureWorksLT2019.MauiXApp.DataModels;
+using AdventureWorksLT2019.MauiXApp.Common.Services;
+using AdventureWorksLT2019.MauiXApp.Services;
+using Framework.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
@@ -17,60 +23,72 @@ public class DashboardVM : ObservableObject
         set => SetProperty(ref m_ReturnPath, value);
     }
 
-    private AdventureWorksLT2019.MauiXApp.DataModels.ProductDataModel m___Master__;
-    public AdventureWorksLT2019.MauiXApp.DataModels.ProductDataModel __Master__
+    private ProductDataModel m___Master__;
+    public ProductDataModel __Master__
     {
         get => m___Master__;
         set => SetProperty(ref m___Master__, value);
     }
 
     // 4. ListTable = 4,
-    private ObservableCollection<AdventureWorksLT2019.MauiXApp.DataModels.SalesOrderDetailDataModel> m_SalesOrderDetails_Via_ProductID;
-    public ObservableCollection<AdventureWorksLT2019.MauiXApp.DataModels.SalesOrderDetailDataModel> SalesOrderDetails_Via_ProductID
+    private ObservableCollection<SalesOrderDetailDataModel> m_SalesOrderDetails_Via_ProductID = new();
+    public ObservableCollection<SalesOrderDetailDataModel> SalesOrderDetails_Via_ProductID
     {
         get => m_SalesOrderDetails_Via_ProductID;
         set => SetProperty(ref m_SalesOrderDetails_Via_ProductID, value);
     }
 
-    private readonly AdventureWorksLT2019.MauiXApp.Services.ProductService _dataService;
+    private readonly ProductService _dataService;
 
-    public ICommand LaunchProductCategoryFKItemViewCommand { get; private set; }
+    public ICommand LaunchMaster_ProductCategoryFKItemViewCommand { get; private set; }
 
-    public ICommand LaunchProductSalesOrderDetailItemViewCommand { get; private set; }
+    public ICommand LaunchMaster_ProductModelFKItemViewCommand { get; private set; }
+
+    // 4. ListTable = 4,
+    public ICommand LaunchList_SalesOrderDetailItemViewCommand { get; private set; }
+
     public ICommand CloseCommand { get; private set; }
 
-    public DashboardVM(AdventureWorksLT2019.MauiXApp.Services.ProductService dataService)
+    public DashboardVM(ProductService dataService)
     {
         _dataService = dataService;
 
-        WeakReferenceMessenger.Default.Register<DashboardVM, AdventureWorksLT2019.MauiXApp.Messages.ProductIdentifierMessage>(
+        WeakReferenceMessenger.Default.Register<DashboardVM, ProductIdentifierMessage>(
             this, async (r, m) =>
             {
-                if (m.ItemView != Framework.Models.ViewItemTemplates.Dashboard)
+                if (m.ItemView != ViewItemTemplates.Dashboard)
                     return;
                 ReturnPath = m.ReturnPath;
                 await LoadData(m.Value);
             });
 
-        LaunchProductCategoryFKItemViewCommand = AdventureWorksLT2019.MauiXApp.Common.Helpers.LaunchViewCommandsHelper.GetLaunchProductCategoryDetailsPopupCommand();
-        LaunchProductSalesOrderDetailItemViewCommand = AdventureWorksLT2019.MauiXApp.Common.Helpers.LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderDetailsPopupCommand();
-        CloseCommand = AdventureWorksLT2019.MauiXApp.Common.Services.AppShellService.ShellGotoAbsoluteCommand;
+        LaunchMaster_ProductCategoryFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryDetailsPopupCommand();
+        //LaunchMaster_ProductCategoryFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryDetailsPageCommand(AppShellRoutes.ProductListPage);
+
+        LaunchMaster_ProductModelFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductModelDetailsPopupCommand();
+        //LaunchMaster_ProductModelFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductModelDetailsPageCommand(AppShellRoutes.ProductListPage);
+
+    // 4. ListTable = 4,
+            LaunchList_SalesOrderDetailItemViewCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderDetailDetailsPopupCommand();
+            //LaunchList_SalesOrderDetailItemViewCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderDetailDetailsPageCommand(AppShellRoutes.ProductDashboardPage);
+
+        CloseCommand = AppShellService.ShellGotoAbsoluteCommand;
 
     }
 
-    public async Task LoadData(AdventureWorksLT2019.MauiXApp.DataModels.ProductIdentifier identifier)
+    public async Task LoadData(ProductIdentifier identifier)
     {
         var response = await _dataService.GetCompositeModel(identifier);
 
         // 1. MasterData - ProductCompositeModel
-        if (response == null || response.Responses == null || 
-            !response.Responses.ContainsKey(AdventureWorksLT2019.MauiXApp.DataModels.ProductCompositeModel.__DataOptions__.__Master__))
+        if (response == null || response.Responses == null ||
+            !response.Responses.ContainsKey(ProductCompositeModel.__DataOptions__.__Master__))
         {
             //TODO: __Master__ Failed
             return;
         }
 
-        var masterResponse = response.Responses[AdventureWorksLT2019.MauiXApp.DataModels.ProductCompositeModel.__DataOptions__.__Master__];
+        var masterResponse = response.Responses[ProductCompositeModel.__DataOptions__.__Master__];
         if(masterResponse.Status != System.Net.HttpStatusCode.OK)
         {
             //TODO: __Master__ Failed
@@ -79,11 +97,14 @@ public class DashboardVM : ObservableObject
 
         __Master__ = response.__Master__;
 
-        // 4. SalesOrderDetails_Via_ProductID
-        if(response.Responses.ContainsKey(AdventureWorksLT2019.MauiXApp.DataModels.ProductCompositeModel.__DataOptions__.SalesOrderDetails_Via_ProductID) &&
-            response.Responses[AdventureWorksLT2019.MauiXApp.DataModels.ProductCompositeModel.__DataOptions__.SalesOrderDetails_Via_ProductID].Status == System.Net.HttpStatusCode.OK)
+        // 4. ListTable = 4,
+
+        if(response.Responses.ContainsKey(ProductCompositeModel.__DataOptions__.SalesOrderDetails_Via_ProductID) &&
+            response.Responses[ProductCompositeModel.__DataOptions__.SalesOrderDetails_Via_ProductID].Status == System.Net.HttpStatusCode.OK)
         {
-            SalesOrderDetails_Via_ProductID = new ObservableCollection<AdventureWorksLT2019.MauiXApp.DataModels.SalesOrderDetailDataModel>(response.SalesOrderDetails_Via_ProductID);
+            SalesOrderDetails_Via_ProductID = new ObservableCollection<SalesOrderDetailDataModel>(response.SalesOrderDetails_Via_ProductID);
         }
+
     }
 }
+
