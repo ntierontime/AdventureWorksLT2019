@@ -1,0 +1,385 @@
+import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, IconButton, Stack, TextField, Typography, useTheme } from '@mui/material';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import CloseIcon from '@mui/icons-material/Close';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
+
+import { Link } from 'react-router-dom';
+import { DatePicker } from '@mui/x-date-pickers';
+
+// un-comment /*getCurrency,*/ if you display money
+import { /*getCurrency,*/ i18nFormats } from 'src/i18n';
+import { CrudViewContainers } from 'src/shared/viewModels/CrudViewContainers';
+import { ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps';
+import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
+import { getAvatarStyle } from 'src/shared/views/ThemeRelated';
+
+import { getSalesOrderDetailAvatar, ISalesOrderDetailDataModel } from 'src/dataModels/ISalesOrderDetailDataModel';
+
+export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDetailDataModel>): JSX.Element {
+    const navigate = useNavigate();
+    const { crudViewContainer, item, itemIndex, isItemSelected, handleSelectItemClick, changeViewItemTemplate, handleItemDialogOpen } = props; // item
+    const { doneAction, previousAction, nextAction } = props; // dialog
+    const { t } = useTranslation();
+
+    const theme = useTheme();
+    const avatar = getSalesOrderDetailAvatar(item);
+    const avatarStyle = getAvatarStyle(item.itemUIStatus______, theme);
+
+    return (
+        <Card sx={{ minHeight: '100%' }}>
+            <CardHeader
+                avatar={
+                    <Avatar sx={avatarStyle} aria-label={item.salesOrderID.toString()}>
+                        {avatar}
+                    </Avatar>
+                }
+                action={
+                    <>
+                        {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Inline) && <>
+                            {!!handleSelectItemClick && <Checkbox
+                                color="primary"
+                                checked={isItemSelected}
+                                onChange={() => { handleSelectItemClick(item) }}
+                            />}
+                            {!!handleItemDialogOpen && <>
+                                <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, itemIndex) }}>
+                                    <DeleteIcon />
+                                </IconButton>
+                                <IconButton aria-label="details" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Details, itemIndex) }}>
+                                    <BusinessCenterIcon />
+                                </IconButton>
+                                <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit, itemIndex) }}>
+                                    <EditIcon />
+                                </IconButton>
+                            </>}
+                            <IconButton aria-label="delete" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete) }}>
+                                <DeleteIcon />
+                            </IconButton>
+                            <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Edit) }}>
+                                <EditIcon />
+                            </IconButton>
+                            <IconButton aria-label="more">
+                                <MoreVertIcon />
+                            </IconButton>
+                            {crudViewContainer === CrudViewContainers.Dialog && <IconButton aria-label="close" onClick={() => { doneAction() }}>
+                                <CloseIcon />
+                            </IconButton>}
+                        </>}
+                        {(crudViewContainer === CrudViewContainers.StandaloneView) && <>
+                            <IconButton aria-label="close"
+                                onClick={() => {
+                                    navigate(-1);
+                                }}
+                            >
+                                <CloseIcon />
+                            </IconButton>
+                        </>}
+                    </>
+                }
+                title={item.salesOrderID}
+                subheader={t('{{val, datetime}}', { val: new Date(item.modifiedDate) })}
+            />
+            <CardContent>
+                <Stack sx={{ p: 2 }}
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    spacing={2}
+                >
+                    <Typography>{t("SalesOrderID")}</Typography>
+                    <Link to={"/salesOrderHeader/Details/" + item.salesOrderID}>{item.salesOrderHeader_Name}</Link>
+                </Stack>
+                <TextField
+                    name='salesOrderDetailID'
+                    label={t('SalesOrderDetailID')}
+                	value={item.salesOrderDetailID}
+                    variant='outlined'
+                    margin='normal'
+                    fullWidth
+                    autoFocus
+                    InputProps={{
+                        readOnly: true
+                    }}
+                />
+                <TextField
+                    name='orderQty'
+                    label={t('OrderQty')}
+                	value={t(i18nFormats.number.format, { val: item.orderQty })}
+                    variant='outlined'
+                    margin='normal'
+                    fullWidth
+                    autoFocus
+                    InputProps={{
+                        readOnly: true
+                    }}
+                />
+                <Stack sx={{ p: 2 }}
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    spacing={2}
+                >
+                    <Typography>{t("ProductID")}</Typography>
+                    <Link to={"/product/Details/" + item.productID}>{item.product_Name}</Link>
+                </Stack>
+                <TextField
+                    name='unitPrice'
+                    label={t('UnitPrice')}
+                	value={t(i18nFormats.double.format, { val: item.unitPrice })}
+                    variant='outlined'
+                    margin='normal'
+                    fullWidth
+                    autoFocus
+                    InputProps={{
+                        readOnly: true
+                    }}
+                />
+                <TextField
+                    name='unitPriceDiscount'
+                    label={t('UnitPriceDiscount')}
+                	value={t(i18nFormats.double.format, { val: item.unitPriceDiscount })}
+                    variant='outlined'
+                    margin='normal'
+                    fullWidth
+                    autoFocus
+                    InputProps={{
+                        readOnly: true
+                    }}
+                />
+                <TextField
+                    name='lineTotal'
+                    label={t('LineTotal')}
+                	value={t(i18nFormats.double.format, { val: item.lineTotal })}
+                    variant='outlined'
+                    margin='normal'
+                    fullWidth
+                    autoFocus
+                    InputProps={{
+                        readOnly: true
+                    }}
+                />
+                <TextField
+                    name='_rowguid'
+                    label={t('rowguid')}
+                	value={item._rowguid}
+                    variant='outlined'
+                    margin='normal'
+                    fullWidth
+                    autoFocus
+                    InputProps={{
+                        readOnly: true
+                    }}
+                />
+                <DatePicker
+                    label={t('ModifiedDate')}
+                    value={t(i18nFormats.dateTime.format, { val: new Date(item.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
+                    autoFocus
+                    onChange={() => {}}
+                    renderInput={(params) =>
+                        <TextField
+                            fullWidth
+                            autoComplete='modifiedDate'
+                            {...params}
+                            InputProps={{
+                                readOnly: true
+                            }}
+                        />}
+                />
+                <TextField
+                    name='product_Name'
+                    label={t('Product_Name')}
+                    value={item.product_Name}
+                    variant='outlined'
+                    margin='normal'
+                    fullWidth
+                    autoFocus
+                    InputProps={{
+                        readOnly: true
+                    }}
+                />
+                <Stack sx={{ p: 2 }}
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    spacing={2}
+                >
+                    <Typography>{t("ProductCategoryID")}</Typography>
+                    <Link to={"/productCategory/Details/" + item.productCategoryID}>{item.productCategory_Name}</Link>
+                </Stack>
+                <TextField
+                    name='productCategory_Name'
+                    label={t('ProductCategory_Name')}
+                    value={item.productCategory_Name}
+                    variant='outlined'
+                    margin='normal'
+                    fullWidth
+                    autoFocus
+                    InputProps={{
+                        readOnly: true
+                    }}
+                />
+                <Stack sx={{ p: 2 }}
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    spacing={2}
+                >
+                    <Typography>{t("ProductCategory_ParentID")}</Typography>
+                    <Link to={"/productCategory/Details/" + item.productCategory_ParentID}>{item.productCategory_Parent_Name}</Link>
+                </Stack>
+                <TextField
+                    name='productCategory_Parent_Name'
+                    label={t('ProductCategory_Parent_Name')}
+                    value={item.productCategory_Parent_Name}
+                    variant='outlined'
+                    margin='normal'
+                    fullWidth
+                    autoFocus
+                    InputProps={{
+                        readOnly: true
+                    }}
+                />
+                <Stack sx={{ p: 2 }}
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    spacing={2}
+                >
+                    <Typography>{t("ProductModelID")}</Typography>
+                    <Link to={"/productModel/Details/" + item.productModelID}>{item.productModel_Name}</Link>
+                </Stack>
+                <TextField
+                    name='productModel_Name'
+                    label={t('ProductModel_Name')}
+                    value={item.productModel_Name}
+                    variant='outlined'
+                    margin='normal'
+                    fullWidth
+                    autoFocus
+                    InputProps={{
+                        readOnly: true
+                    }}
+                />
+                <TextField
+                    name='salesOrderHeader_Name'
+                    label={t('SalesOrderHeader_Name')}
+                    value={item.salesOrderHeader_Name}
+                    variant='outlined'
+                    margin='normal'
+                    fullWidth
+                    autoFocus
+                    InputProps={{
+                        readOnly: true
+                    }}
+                />
+                <Stack sx={{ p: 2 }}
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    spacing={2}
+                >
+                    <Typography>{t("BillToID")}</Typography>
+                    <Link to={"/address/Details/" + item.billToID}>{item.billTo_Name}</Link>
+                </Stack>
+                <TextField
+                    name='billTo_Name'
+                    label={t('BillTo_Name')}
+                    value={item.billTo_Name}
+                    variant='outlined'
+                    margin='normal'
+                    fullWidth
+                    autoFocus
+                    InputProps={{
+                        readOnly: true
+                    }}
+                />
+                <Stack sx={{ p: 2 }}
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    spacing={2}
+                >
+                    <Typography>{t("CustomerID")}</Typography>
+                    <Link to={"/customer/Details/" + item.customerID}>{item.customer_Name}</Link>
+                </Stack>
+                <TextField
+                    name='customer_Name'
+                    label={t('Customer_Name')}
+                    value={item.customer_Name}
+                    variant='outlined'
+                    margin='normal'
+                    fullWidth
+                    autoFocus
+                    InputProps={{
+                        readOnly: true
+                    }}
+                />
+                <Stack sx={{ p: 2 }}
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    spacing={2}
+                >
+                    <Typography>{t("ShipToID")}</Typography>
+                    <Link to={"/address/Details/" + item.shipToID}>{item.shipTo_Name}</Link>
+                </Stack>
+                <TextField
+                    name='shipTo_Name'
+                    label={t('ShipTo_Name')}
+                    value={item.shipTo_Name}
+                    variant='outlined'
+                    margin='normal'
+                    fullWidth
+                    autoFocus
+                    InputProps={{
+                        readOnly: true
+                    }}
+                />
+            </CardContent>
+            {crudViewContainer === CrudViewContainers.Dialog && <CardActions disableSpacing>
+                {(!!previousAction || !!nextAction) && <ButtonGroup
+                    disableElevation
+                    variant="contained"
+                    aria-label="navigation buttons"
+                >
+                    {!!previousAction && <Button
+                        color="secondary"
+                        variant='outlined'
+                        startIcon={<NavigateBeforeIcon />}
+                        onClick={() => { previousAction() }}
+                    />}
+                    {!!nextAction && <Button
+                        color="secondary"
+                        variant='outlined'
+                        endIcon={<NavigateNextIcon />}
+                        onClick={() => { nextAction() }}
+                    />}
+                </ButtonGroup>}
+                <ButtonGroup sx={{ marginLeft: 'auto' }}
+                    disableElevation
+                    variant="contained"
+                    aria-label="navigation buttons"
+                >
+                    <Button sx={{ marginLeft: 'auto' }}
+                        color="primary"
+                        autoFocus
+                        variant='contained'
+                        startIcon={<CloseIcon color='action' />}
+                        onClick={() => { doneAction() }}
+                    >
+                        {t('Cancel')}
+                    </Button>
+                </ButtonGroup>
+            </CardActions>}
+        </Card >
+    );
+}
+
+

@@ -160,6 +160,9 @@
   <data name="Create_New" xml:space="preserve">
     <value>(en)Create New</value>
   </data>
+  <data name="CreateAnotherOne" xml:space="preserve">
+    <value>(en)Create Another One</value>
+  </data>
   <data name="Dark" xml:space="preserve">
     <value>(en)Dark</value>
   </data>
@@ -168,6 +171,15 @@
   </data>
   <data name="Delete" xml:space="preserve">
     <value>(en)Delete</value>
+  </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>(en)Deleted</value>
+  </data>
+  <data name="Deleting" xml:space="preserve">
+    <value>(en)Deleting ...</value>
+  </data>
+  <data name="DeletionFailed" xml:space="preserve">
+    <value>(en)Deletion Failed.</value>
   </data>
   <data name="Details" xml:space="preserve">
     <value>(en)Details</value>
@@ -198,6 +210,9 @@
   </data>
   <data name="ExportToExcel" xml:space="preserve">
     <value>(en)Export to Excel</value>
+  </data>
+  <data name="FailedToSave" xml:space="preserve">
+    <value>(en)Failed To Save</value>
   </data>
   <data name="First" xml:space="preserve">
     <value>(en)First</value>
@@ -255,6 +270,9 @@
   </data>
   <data name="Next" xml:space="preserve">
     <value>(en)Next</value>
+  </data>
+  <data name="PageSize" xml:space="preserve">
+    <value>(en)Page Size</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>(en)Password</value>
@@ -364,17 +382,26 @@
   <data name="ShowAdvancedSearch" xml:space="preserve">
     <value>(en)Show Advanced Search</value>
   </data>
+  <data name="Sort" xml:space="preserve">
+    <value>(en)Sort</value>
+  </data>
   <data name="Spanish" xml:space="preserve">
     <value>(en)Española</value>
   </data>
   <data name="StartsWith" xml:space="preserve">
     <value>(en)Starts With</value>
   </data>
+  <data name="SuccessfullySaved" xml:space="preserve">
+    <value>(en)Successfully Saved</value>
+  </data>
   <data name="Tab_AlsoA" xml:space="preserve">
     <value>(en)Also a ...</value>
   </data>
   <data name="Theme" xml:space="preserve">
     <value>(en)Theme</value>
+  </data>
+  <data name="TileSize" xml:space="preserve">
+    <value>(en)Tile Size</value>
   </data>
   <data name="SystemInformationID" xml:space="preserve">
     <value>(en)System Information ID</value>

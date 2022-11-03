@@ -53,7 +53,7 @@ namespace AdventureWorksLT2019.WebApiControllers
         public async Task<ActionResult> BulkDelete([FromBody]List<CustomerAddressIdentifier> ids)
         {
             var serviceResponse = await _thisService.BulkDelete(ids);
-            return ReturnResultOnlyActionResult(serviceResponse);
+            return ReturnWithoutBodyActionResult(serviceResponse);
         }
 
         // [Authorize]

@@ -144,114 +144,46 @@ app.Run();
 
 static string GetSwaggerCustomizedSchemaId(Type x)
 {
-    // 1.
-    if(x == typeof(Response<PaginationResponse>))
-    {
-        return "Framework.Models.ResponsePaginationResponse";
-    }
-    // 2. Customized DefaultView SchemaIds
+    if (x == null || string.IsNullOrEmpty(x.FullName))
+        return String.Empty;
 
-    if (x == typeof(CustomerAddressDataModel.DefaultView))
+    if (!x.IsGenericType)
     {
-        return "AdventureWorksLT2019.Models.CustomerAddressDataModelDefaultView";
+        return x.FullName.Replace("+", "");
     }
 
-    if (x == typeof(ProductDataModel.DefaultView))
+    if(x.Namespace == typeof(Response<int>).Namespace) // same namespace
     {
-        return "AdventureWorksLT2019.Models.ProductDataModelDefaultView";
+        if(x.Name == typeof(Response<int>).Name) // Response'1
+        {
+            if (x.GenericTypeArguments != null && x.GenericTypeArguments.Length == 1 && !string.IsNullOrEmpty(x.GenericTypeArguments[0].FullName))
+            {
+                return x.GenericTypeArguments[0].FullName!.Replace("+", "") + "Response";
+            }
+        }
+        if (x.Name == typeof(ListResponse<int>).Name) // ListResponse'1
+        {
+            if (x.GenericTypeArguments != null && x.GenericTypeArguments.Length == 1 && !string.IsNullOrEmpty(x.GenericTypeArguments[0].FullName))
+            {
+                return x.GenericTypeArguments[0].FullName!.Replace("+", "").Replace("[]", "") + "ListResponse";
+            }
+        }
+        //if (x.Name == typeof(BatchActionRequest<int>).Name) // BatchActionRequest'1
+        //{
+        //    if (x.GenericTypeArguments != null && x.GenericTypeArguments.Length == 1 && !string.IsNullOrEmpty(x.GenericTypeArguments[0].FullName))
+        //    {
+        //        return x.GenericTypeArguments[0].FullName!.Replace("+", "").Replace("Identifier", "") + "BatchActionRequest";
+        //    }
+        //}
+        if (x.Name == typeof(BatchActionRequest<int, int>).Name) // BatchActionRequest'2
+        {
+            if (x.GenericTypeArguments != null && x.GenericTypeArguments.Length == 2 && !string.IsNullOrEmpty(x.GenericTypeArguments[1].FullName))
+            {
+                return x.GenericTypeArguments[1].FullName!.Replace("+", "") + "BatchUpdateRequest";
+            }
+        }
     }
 
-    if (x == typeof(ProductCategoryDataModel.DefaultView))
-    {
-        return "AdventureWorksLT2019.Models.ProductCategoryDataModelDefaultView";
-    }
-
-    if (x == typeof(ProductModelProductDescriptionDataModel.DefaultView))
-    {
-        return "AdventureWorksLT2019.Models.ProductModelProductDescriptionDataModelDefaultView";
-    }
-
-    if (x == typeof(SalesOrderDetailDataModel.DefaultView))
-    {
-        return "AdventureWorksLT2019.Models.SalesOrderDetailDataModelDefaultView";
-    }
-
-    if (x == typeof(SalesOrderHeaderDataModel.DefaultView))
-    {
-        return "AdventureWorksLT2019.Models.SalesOrderHeaderDataModelDefaultView";
-    }
-    // 3. Customized PagedResponse SchemaIds
-
-    if (x == typeof(ListResponse<BuildVersionDataModel[]>))
-    {
-        return "AdventureWorksLT2019.Models.BuildVersionListResponse";
-    }
-
-    if (x == typeof(ListResponse<ErrorLogDataModel[]>))
-    {
-        return "AdventureWorksLT2019.Models.ErrorLogListResponse";
-    }
-
-    if (x == typeof(ListResponse<AddressDataModel[]>))
-    {
-        return "AdventureWorksLT2019.Models.AddressListResponse";
-    }
-
-    if (x == typeof(ListResponse<CustomerDataModel[]>))
-    {
-        return "AdventureWorksLT2019.Models.CustomerListResponse";
-    }
-
-    if (x == typeof(ListResponse<CustomerAddressDataModel.DefaultView[]>))
-    {
-        return "AdventureWorksLT2019.Models.CustomerAddressListResponse";
-    }
-
-    if (x == typeof(ListResponse<ProductDataModel.DefaultView[]>))
-    {
-        return "AdventureWorksLT2019.Models.ProductListResponse";
-    }
-
-    if (x == typeof(ListResponse<ProductCategoryDataModel.DefaultView[]>))
-    {
-        return "AdventureWorksLT2019.Models.ProductCategoryListResponse";
-    }
-
-    if (x == typeof(ListResponse<ProductDescriptionDataModel[]>))
-    {
-        return "AdventureWorksLT2019.Models.ProductDescriptionListResponse";
-    }
-
-    if (x == typeof(ListResponse<ProductModelDataModel[]>))
-    {
-        return "AdventureWorksLT2019.Models.ProductModelListResponse";
-    }
-
-    if (x == typeof(ListResponse<ProductModelProductDescriptionDataModel.DefaultView[]>))
-    {
-        return "AdventureWorksLT2019.Models.ProductModelProductDescriptionListResponse";
-    }
-
-    if (x == typeof(ListResponse<SalesOrderDetailDataModel.DefaultView[]>))
-    {
-        return "AdventureWorksLT2019.Models.SalesOrderDetailListResponse";
-    }
-
-    if (x == typeof(ListResponse<SalesOrderHeaderDataModel.DefaultView[]>))
-    {
-        return "AdventureWorksLT2019.Models.SalesOrderHeaderListResponse";
-    }
-    // 4. Customized BulkActionDynamicParamsRequests SchemaIds
-
-    if (x == typeof(BatchActionRequest<CustomerIdentifier, CustomerDataModel>))
-    {
-        return "AdventureWorksLT2019.Models.CustomerBulkActionDynamicParamsRequest";
-    }
-
-    if (x == typeof(BatchActionRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView>))
-    {
-        return "AdventureWorksLT2019.Models.SalesOrderHeaderBulkActionDynamicParamsRequest";
-    }
-    return x?.FullName;
+    return x.FullName!;
 }
 

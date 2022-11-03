@@ -186,6 +186,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to "Create Another One"".
+        /// </summary>
+        public static string CreateAnotherOne {
+            get {
+                return ResourceManager.GetString("CreateAnotherOne", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to "Dark"".
         /// </summary>
         public static string Dark {
@@ -209,6 +218,33 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Deleted"".
+        /// </summary>
+        public static string Deleted {
+            get {
+                return ResourceManager.GetString("Deleted", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Deleting ..."".
+        /// </summary>
+        public static string Deleting {
+            get {
+                return ResourceManager.GetString("Deleting", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Deletion Failed."".
+        /// </summary>
+        public static string DeletionFailed {
+            get {
+                return ResourceManager.GetString("DeletionFailed", resourceCulture);
             }
         }
 
@@ -299,6 +335,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string ExportToExcel {
             get {
                 return ResourceManager.GetString("ExportToExcel", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Failed To Save"".
+        /// </summary>
+        public static string FailedToSave {
+            get {
+                return ResourceManager.GetString("FailedToSave", resourceCulture);
             }
         }
 
@@ -470,6 +515,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string Next {
             get {
                 return ResourceManager.GetString("Next", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Page Size"".
+        /// </summary>
+        public static string PageSize {
+            get {
+                return ResourceManager.GetString("PageSize", resourceCulture);
             }
         }
 
@@ -798,6 +852,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to "Sort"".
+        /// </summary>
+        public static string Sort {
+            get {
+                return ResourceManager.GetString("Sort", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to "Española"".
         /// </summary>
         public static string Spanish {
@@ -816,6 +879,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to "Successfully Saved"".
+        /// </summary>
+        public static string SuccessfullySaved {
+            get {
+                return ResourceManager.GetString("SuccessfullySaved", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to "Also a ..."".
         /// </summary>
         public static string Tab_AlsoA {
@@ -830,6 +902,15 @@ namespace AdventureWorksLT2019.Resx.Resources {
         public static string Theme {
             get {
                 return ResourceManager.GetString("Theme", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to "Tile Size"".
+        /// </summary>
+        public static string TileSize {
+            get {
+                return ResourceManager.GetString("TileSize", resourceCulture);
             }
         }
 
