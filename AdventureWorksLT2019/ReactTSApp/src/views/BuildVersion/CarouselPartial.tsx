@@ -15,9 +15,10 @@ import { ListPartialViewProps } from 'src/shared/viewModels/ListPartialViewProps
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 
 import { IBuildVersionDataModel } from 'src/dataModels/IBuildVersionDataModel';
+import { IBuildVersionIdentifier, getIBuildVersionIdentifier, compareIBuildVersionIdentifier, getRouteParamsOfIBuildVersionIdentifier } from 'src/dataModels/IBuildVersionQueries';
 import ItemViewsPartial from './ItemViewsPartial';
 
-export default function CarouselPartial(props: ListPartialViewProps<IBuildVersionDataModel, number>): JSX.Element {
+export default function CarouselPartial(props: ListPartialViewProps<IBuildVersionDataModel, IBuildVersionIdentifier>): JSX.Element {
     const { listItems, selected, handleSelectItemClick } = props;
     const { t } = useTranslation();
 
@@ -47,14 +48,15 @@ export default function CarouselPartial(props: ListPartialViewProps<IBuildVersio
     };
 
     const currentItemOnDialog = !!listItems && listItems.length > 0 && currentItemIndex >= 0 && currentItemIndex < listItems.length ? listItems[currentItemIndex] : null;
-    const isSelected = (systemInformationID: number) => selected.indexOf(systemInformationID) !== -1;
+    const isSelected = (identifier: IBuildVersionIdentifier) => selected.findIndex(t=> { return compareIBuildVersionIdentifier(identifier, t); }) !== -1;
 
     const renderCarouselItem = (item: IBuildVersionDataModel, index: number) => {
-        const isItemSelected = isSelected(item.systemInformationID);
-        const labelId = `enhanced-table-checkbox-${index}`;
+        const isItemSelected = isSelected(getIBuildVersionIdentifier(item));
+		const key = getRouteParamsOfIBuildVersionIdentifier(item);
+        const labelId = `enhanced-table-checkbox-${key}`;
 
         return (
-            <Paper elevation={10} key={item.systemInformationID}>
+            <Paper elevation={10} key={key}>
                 <FormControlLabel
                     label={item.database_Version}
                     control={<Checkbox
@@ -92,7 +94,7 @@ export default function CarouselPartial(props: ListPartialViewProps<IBuildVersio
                 })}
             </Carousel>
             <Dialog open={openItemDialog} fullWidth={true} maxWidth={'sm'}>
-                <ItemViewsPartial {...crudItemPartialViewProps} item={currentItemOnDialog} isItemSelected={!!currentItemOnDialog && isSelected(currentItemOnDialog.systemInformationID)} totalCountInList={listItems.length} itemIndex={currentItemIndex} setItemIndex={setCurrentItemIndex} handleSelectItemClick={handleSelectItemClick} />
+                <ItemViewsPartial {...crudItemPartialViewProps} item={currentItemOnDialog} isItemSelected={!!currentItemOnDialog && isSelected(getIBuildVersionIdentifier(currentItemOnDialog))} totalCountInList={listItems.length} itemIndex={currentItemIndex} setItemIndex={setCurrentItemIndex} handleSelectItemClick={handleSelectItemClick} />
             </Dialog>
         </Box>
     );

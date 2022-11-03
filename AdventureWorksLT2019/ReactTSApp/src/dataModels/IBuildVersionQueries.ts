@@ -4,6 +4,8 @@ import { IQueryOrderBySetting } from "src/shared/viewModels/IQueryOrderBySetting
 import { PreDefinedDateTimeRanges } from "src/shared/dataModels/PreDefinedDateTimeRanges";
 import { TextSearchTypes } from "src/shared/views/TextSearchTypes";
 
+import { IBuildVersionDataModel } from 'src/dataModels/IBuildVersionDataModel';
+
 export interface IBuildVersionIdentifier {
 
     // PredicateType:Equals
@@ -14,6 +16,18 @@ export interface IBuildVersionIdentifier {
 
     // PredicateType:Equals
 	modifiedDate: string | null;
+}
+
+export function getIBuildVersionIdentifier(item: IBuildVersionDataModel): IBuildVersionIdentifier {
+    return { systemInformationID: item.systemInformationID, versionDate: item.versionDate, modifiedDate: item.modifiedDate };
+}
+
+export function compareIBuildVersionIdentifier(a: IBuildVersionIdentifier, b: IBuildVersionIdentifier): boolean {
+    return a.systemInformationID === b.systemInformationID && a.versionDate === b.versionDate && a.modifiedDate === b.modifiedDate;
+}
+
+export function getRouteParamsOfIBuildVersionIdentifier(item: IBuildVersionDataModel): string | number {
+    return item.systemInformationID +  '/' + item.versionDate +  '/' + item.modifiedDate;
 }
 
 export interface IBuildVersionAdvancedQuery extends IBaseQuery {

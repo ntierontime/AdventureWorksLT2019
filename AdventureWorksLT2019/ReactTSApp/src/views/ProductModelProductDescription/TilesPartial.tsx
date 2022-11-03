@@ -14,9 +14,10 @@ import { ListPartialViewProps } from 'src/shared/viewModels/ListPartialViewProps
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 
 import { IProductModelProductDescriptionDataModel } from 'src/dataModels/IProductModelProductDescriptionDataModel';
+import { IProductModelProductDescriptionIdentifier, getIProductModelProductDescriptionIdentifier, compareIProductModelProductDescriptionIdentifier, getRouteParamsOfIProductModelProductDescriptionIdentifier } from 'src/dataModels/IProductModelProductDescriptionQueries';
 import ItemViewsPartial from './ItemViewsPartial';
 
-export default function TilesPartial(props: ListPartialViewProps<IProductModelProductDescriptionDataModel, number>): JSX.Element {
+export default function TilesPartial(props: ListPartialViewProps<IProductModelProductDescriptionDataModel, IProductModelProductDescriptionIdentifier>): JSX.Element {
     const { listItems, itemsPerRow, selected, handleSelectItemClick, handleChangePage } = props;
 	const navigate = useNavigate();
     // const { t } = useTranslation();
@@ -47,7 +48,7 @@ export default function TilesPartial(props: ListPartialViewProps<IProductModelPr
     };
 
     const gridItemSpacing = 0.5;
-    const isSelected = (productModelID: number) => selected.indexOf(productModelID) !== -1;
+    const isSelected = (identifier: IProductModelProductDescriptionIdentifier) => selected.findIndex(t=> { return compareIProductModelProductDescriptionIdentifier(identifier, t); }) !== -1;
     const gridItemWidth = 12 / itemsPerRow;
     const currentItemOnDialog = !!listItems && listItems.length > 0 && currentItemIndex >= 0 && currentItemIndex < listItems.length ? listItems[currentItemIndex] : null;
 
@@ -67,10 +68,10 @@ export default function TilesPartial(props: ListPartialViewProps<IProductModelPr
             >
                 <Grid container spacing={gridItemSpacing}>
                     {listItems && listItems.map((row, index) => {
-                        const isItemSelected = isSelected(row.productModelID);
+                        const isItemSelected = isSelected(getIProductModelProductDescriptionIdentifier(row));
 
                         return (
-                            <Grid item xs={gridItemWidth} key={row.productModelID}>
+                            <Grid item xs={gridItemWidth} key={getRouteParamsOfIProductModelProductDescriptionIdentifier(row)}>
                                 <Paper elevation={3} sx={{ p: 1, height: "100%" }}>
                                     <ItemViewsPartial {...crudItemPartialViewPropsInline} item={row} totalCountInList={listItems.length} itemIndex={index} isItemSelected={isItemSelected} handleSelectItemClick={handleSelectItemClick} handleItemDialogOpen={handleItemDialogOpen} />
                                 </Paper>
@@ -102,7 +103,7 @@ export default function TilesPartial(props: ListPartialViewProps<IProductModelPr
                 </ButtonGroup>
             </Snackbar>
             <Dialog open={openItemDialog} fullWidth={true} maxWidth={'sm'}>
-                {!!crudItemPartialViewPropsOnDialog && <ItemViewsPartial {...crudItemPartialViewPropsOnDialog} item={currentItemOnDialog} isItemSelected={!!currentItemOnDialog && isSelected(currentItemOnDialog.productModelID)} totalCountInList={listItems.length} itemIndex={currentItemIndex} setItemIndex={setCurrentItemIndex} handleSelectItemClick={handleSelectItemClick} />}
+                {!!crudItemPartialViewPropsOnDialog && <ItemViewsPartial {...crudItemPartialViewPropsOnDialog} item={currentItemOnDialog} isItemSelected={!!currentItemOnDialog && isSelected(getIProductModelProductDescriptionIdentifier(currentItemOnDialog))} totalCountInList={listItems.length} itemIndex={currentItemIndex} setItemIndex={setCurrentItemIndex} handleSelectItemClick={handleSelectItemClick} />}
             </Dialog>
         </>
     );

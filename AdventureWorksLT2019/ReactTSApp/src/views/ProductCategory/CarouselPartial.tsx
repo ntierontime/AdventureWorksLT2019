@@ -15,9 +15,10 @@ import { ListPartialViewProps } from 'src/shared/viewModels/ListPartialViewProps
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 
 import { IProductCategoryDataModel } from 'src/dataModels/IProductCategoryDataModel';
+import { IProductCategoryIdentifier, getIProductCategoryIdentifier, compareIProductCategoryIdentifier, getRouteParamsOfIProductCategoryIdentifier } from 'src/dataModels/IProductCategoryQueries';
 import ItemViewsPartial from './ItemViewsPartial';
 
-export default function CarouselPartial(props: ListPartialViewProps<IProductCategoryDataModel, number>): JSX.Element {
+export default function CarouselPartial(props: ListPartialViewProps<IProductCategoryDataModel, IProductCategoryIdentifier>): JSX.Element {
     const { listItems, selected, handleSelectItemClick } = props;
     const { t } = useTranslation();
 
@@ -47,14 +48,15 @@ export default function CarouselPartial(props: ListPartialViewProps<IProductCate
     };
 
     const currentItemOnDialog = !!listItems && listItems.length > 0 && currentItemIndex >= 0 && currentItemIndex < listItems.length ? listItems[currentItemIndex] : null;
-    const isSelected = (productCategoryID: number) => selected.indexOf(productCategoryID) !== -1;
+    const isSelected = (identifier: IProductCategoryIdentifier) => selected.findIndex(t=> { return compareIProductCategoryIdentifier(identifier, t); }) !== -1;
 
     const renderCarouselItem = (item: IProductCategoryDataModel, index: number) => {
-        const isItemSelected = isSelected(item.productCategoryID);
-        const labelId = `enhanced-table-checkbox-${index}`;
+        const isItemSelected = isSelected(getIProductCategoryIdentifier(item));
+		const key = getRouteParamsOfIProductCategoryIdentifier(item);
+        const labelId = `enhanced-table-checkbox-${key}`;
 
         return (
-            <Paper elevation={10} key={item.productCategoryID}>
+            <Paper elevation={10} key={key}>
                 <FormControlLabel
                     label={item.name}
                     control={<Checkbox
@@ -92,7 +94,7 @@ export default function CarouselPartial(props: ListPartialViewProps<IProductCate
                 })}
             </Carousel>
             <Dialog open={openItemDialog} fullWidth={true} maxWidth={'sm'}>
-                <ItemViewsPartial {...crudItemPartialViewProps} item={currentItemOnDialog} isItemSelected={!!currentItemOnDialog && isSelected(currentItemOnDialog.productCategoryID)} totalCountInList={listItems.length} itemIndex={currentItemIndex} setItemIndex={setCurrentItemIndex} handleSelectItemClick={handleSelectItemClick} />
+                <ItemViewsPartial {...crudItemPartialViewProps} item={currentItemOnDialog} isItemSelected={!!currentItemOnDialog && isSelected(getIProductCategoryIdentifier(currentItemOnDialog))} totalCountInList={listItems.length} itemIndex={currentItemIndex} setItemIndex={setCurrentItemIndex} handleSelectItemClick={handleSelectItemClick} />
             </Dialog>
         </Box>
     );

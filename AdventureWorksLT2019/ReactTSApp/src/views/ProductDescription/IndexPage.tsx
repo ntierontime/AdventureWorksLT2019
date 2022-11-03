@@ -29,7 +29,7 @@ import { ListViewOptions } from 'src/shared/views/ListViewOptions';
 
 import { IProductDescriptionDataModel } from 'src/dataModels/IProductDescriptionDataModel';
 import { productDescriptionSelectors, search, bulkDelete } from 'src/slices/ProductDescriptionSlice';
-import { defaultIProductDescriptionAdvancedQuery, getProductDescriptionQueryOrderBySettings, IProductDescriptionAdvancedQuery } from 'src/dataModels/IProductDescriptionQueries';
+import { defaultIProductDescriptionAdvancedQuery, getProductDescriptionQueryOrderBySettings, IProductDescriptionAdvancedQuery, IProductDescriptionIdentifier, getIProductDescriptionIdentifier, compareIProductDescriptionIdentifier } from 'src/dataModels/IProductDescriptionQueries';
 
 import AdvancedSearchPartial from './AdvancedSearchPartial'
 import HtmlTablePartial from './HtmlTablePartial'
@@ -45,7 +45,7 @@ export default function IndexPage() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const serverOrderBys = getProductDescriptionQueryOrderBySettings();
     const [advancedQuery, setAdvancedQuery] = useState<IProductDescriptionAdvancedQuery>(defaultIProductDescriptionAdvancedQuery());
-    const [selected, setSelected] = useState<readonly number[]>([]);
+    const [selected, setSelected] = useState<readonly IProductDescriptionIdentifier[]>([]);
     const [itemsPerRow, setItemsPerRow] = useState<number>(3); // only for ListViewOptions.Tiles, should use MediaQuery(windows size)
 
     useEffect(() => {
@@ -60,7 +60,7 @@ export default function IndexPage() {
     // 1.1. Top Toolbar - Select All Checkbox
     const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelected = listItems.map((n) => n.productDescriptionID);
+            const newSelected = listItems.map((n) => getIProductDescriptionIdentifier(n));
             setSelected(newSelected);
             return;
         }
@@ -79,11 +79,8 @@ export default function IndexPage() {
 
     // 1.2. Top Toolbar - Delete Selected Rows/Items
     const handleDeleteSelected = () => {
-		/*
-        const identifiers = selected.map((id) => { return { productDescriptionID: id } });
-        dispatch(bulkDelete(identifiers));
-        console.log("handleDeleteSelected");
-		*/
+        dispatch(bulkDelete(selected.map(t=>t)));
+        // console.log("handleDeleteSelected");
     };
 
     // 1.3. Top Toolbar - Change ListViewOptions
@@ -191,11 +188,11 @@ export default function IndexPage() {
 
     // 2. Selected/De-Select one item
     const handleSelectItemClick = (item: IProductDescriptionDataModel) => {
-        const selectedIndex = selected.indexOf(item.productDescriptionID);
-        let newSelected: readonly number[] = [];
+        const selectedIndex = selected.findIndex(t=>compareIProductDescriptionIdentifier(t, item));
+        let newSelected: readonly IProductDescriptionIdentifier[] = [];
 
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, item.productDescriptionID);
+            newSelected = newSelected.concat(selected, getIProductDescriptionIdentifier(item));
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1));
         } else if (selectedIndex === selected.length - 1) {

@@ -5,10 +5,24 @@ import { BooleanSearchOptions } from "src/shared/dataModels/BooleanSearchOptions
 import { PreDefinedDateTimeRanges } from "src/shared/dataModels/PreDefinedDateTimeRanges";
 import { TextSearchTypes } from "src/shared/views/TextSearchTypes";
 
+import { ICustomerDataModel } from 'src/dataModels/ICustomerDataModel';
+
 export interface ICustomerIdentifier {
 
     // PredicateType:Equals
 	customerID: number | null;
+}
+
+export function getICustomerIdentifier(item: ICustomerDataModel): ICustomerIdentifier {
+    return { customerID: item.customerID };
+}
+
+export function compareICustomerIdentifier(a: ICustomerIdentifier, b: ICustomerIdentifier): boolean {
+    return a.customerID === b.customerID;
+}
+
+export function getRouteParamsOfICustomerIdentifier(item: ICustomerDataModel): string | number {
+    return item.customerID;
 }
 
 export interface ICustomerAdvancedQuery extends IBaseQuery {

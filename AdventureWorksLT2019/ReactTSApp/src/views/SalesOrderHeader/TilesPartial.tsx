@@ -14,9 +14,10 @@ import { ListPartialViewProps } from 'src/shared/viewModels/ListPartialViewProps
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 
 import { ISalesOrderHeaderDataModel } from 'src/dataModels/ISalesOrderHeaderDataModel';
+import { ISalesOrderHeaderIdentifier, getISalesOrderHeaderIdentifier, compareISalesOrderHeaderIdentifier, getRouteParamsOfISalesOrderHeaderIdentifier } from 'src/dataModels/ISalesOrderHeaderQueries';
 import ItemViewsPartial from './ItemViewsPartial';
 
-export default function TilesPartial(props: ListPartialViewProps<ISalesOrderHeaderDataModel, number>): JSX.Element {
+export default function TilesPartial(props: ListPartialViewProps<ISalesOrderHeaderDataModel, ISalesOrderHeaderIdentifier>): JSX.Element {
     const { listItems, itemsPerRow, selected, handleSelectItemClick, handleChangePage } = props;
 	const navigate = useNavigate();
     // const { t } = useTranslation();
@@ -47,7 +48,7 @@ export default function TilesPartial(props: ListPartialViewProps<ISalesOrderHead
     };
 
     const gridItemSpacing = 0.5;
-    const isSelected = (salesOrderID: number) => selected.indexOf(salesOrderID) !== -1;
+    const isSelected = (identifier: ISalesOrderHeaderIdentifier) => selected.findIndex(t=> { return compareISalesOrderHeaderIdentifier(identifier, t); }) !== -1;
     const gridItemWidth = 12 / itemsPerRow;
     const currentItemOnDialog = !!listItems && listItems.length > 0 && currentItemIndex >= 0 && currentItemIndex < listItems.length ? listItems[currentItemIndex] : null;
 
@@ -67,10 +68,10 @@ export default function TilesPartial(props: ListPartialViewProps<ISalesOrderHead
             >
                 <Grid container spacing={gridItemSpacing}>
                     {listItems && listItems.map((row, index) => {
-                        const isItemSelected = isSelected(row.salesOrderID);
+                        const isItemSelected = isSelected(getISalesOrderHeaderIdentifier(row));
 
                         return (
-                            <Grid item xs={gridItemWidth} key={row.salesOrderID}>
+                            <Grid item xs={gridItemWidth} key={getRouteParamsOfISalesOrderHeaderIdentifier(row)}>
                                 <Paper elevation={3} sx={{ p: 1, height: "100%" }}>
                                     <ItemViewsPartial {...crudItemPartialViewPropsInline} item={row} totalCountInList={listItems.length} itemIndex={index} isItemSelected={isItemSelected} handleSelectItemClick={handleSelectItemClick} handleItemDialogOpen={handleItemDialogOpen} />
                                 </Paper>
@@ -102,7 +103,7 @@ export default function TilesPartial(props: ListPartialViewProps<ISalesOrderHead
                 </ButtonGroup>
             </Snackbar>
             <Dialog open={openItemDialog} fullWidth={true} maxWidth={'sm'}>
-                {!!crudItemPartialViewPropsOnDialog && <ItemViewsPartial {...crudItemPartialViewPropsOnDialog} item={currentItemOnDialog} isItemSelected={!!currentItemOnDialog && isSelected(currentItemOnDialog.salesOrderID)} totalCountInList={listItems.length} itemIndex={currentItemIndex} setItemIndex={setCurrentItemIndex} handleSelectItemClick={handleSelectItemClick} />}
+                {!!crudItemPartialViewPropsOnDialog && <ItemViewsPartial {...crudItemPartialViewPropsOnDialog} item={currentItemOnDialog} isItemSelected={!!currentItemOnDialog && isSelected(getISalesOrderHeaderIdentifier(currentItemOnDialog))} totalCountInList={listItems.length} itemIndex={currentItemIndex} setItemIndex={setCurrentItemIndex} handleSelectItemClick={handleSelectItemClick} />}
             </Dialog>
         </>
     );

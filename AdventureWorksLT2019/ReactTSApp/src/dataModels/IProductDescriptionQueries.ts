@@ -4,10 +4,24 @@ import { IQueryOrderBySetting } from "src/shared/viewModels/IQueryOrderBySetting
 import { PreDefinedDateTimeRanges } from "src/shared/dataModels/PreDefinedDateTimeRanges";
 import { TextSearchTypes } from "src/shared/views/TextSearchTypes";
 
+import { IProductDescriptionDataModel } from 'src/dataModels/IProductDescriptionDataModel';
+
 export interface IProductDescriptionIdentifier {
 
     // PredicateType:Equals
 	productDescriptionID: number | null;
+}
+
+export function getIProductDescriptionIdentifier(item: IProductDescriptionDataModel): IProductDescriptionIdentifier {
+    return { productDescriptionID: item.productDescriptionID };
+}
+
+export function compareIProductDescriptionIdentifier(a: IProductDescriptionIdentifier, b: IProductDescriptionIdentifier): boolean {
+    return a.productDescriptionID === b.productDescriptionID;
+}
+
+export function getRouteParamsOfIProductDescriptionIdentifier(item: IProductDescriptionDataModel): string | number {
+    return item.productDescriptionID;
 }
 
 export interface IProductDescriptionAdvancedQuery extends IBaseQuery {

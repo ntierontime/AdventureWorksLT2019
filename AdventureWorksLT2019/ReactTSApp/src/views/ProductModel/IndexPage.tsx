@@ -29,7 +29,7 @@ import { ListViewOptions } from 'src/shared/views/ListViewOptions';
 
 import { IProductModelDataModel } from 'src/dataModels/IProductModelDataModel';
 import { productModelSelectors, search, bulkDelete } from 'src/slices/ProductModelSlice';
-import { defaultIProductModelAdvancedQuery, getProductModelQueryOrderBySettings, IProductModelAdvancedQuery } from 'src/dataModels/IProductModelQueries';
+import { defaultIProductModelAdvancedQuery, getProductModelQueryOrderBySettings, IProductModelAdvancedQuery, IProductModelIdentifier, getIProductModelIdentifier, compareIProductModelIdentifier } from 'src/dataModels/IProductModelQueries';
 
 import AdvancedSearchPartial from './AdvancedSearchPartial'
 import HtmlTablePartial from './HtmlTablePartial'
@@ -45,7 +45,7 @@ export default function IndexPage() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const serverOrderBys = getProductModelQueryOrderBySettings();
     const [advancedQuery, setAdvancedQuery] = useState<IProductModelAdvancedQuery>(defaultIProductModelAdvancedQuery());
-    const [selected, setSelected] = useState<readonly number[]>([]);
+    const [selected, setSelected] = useState<readonly IProductModelIdentifier[]>([]);
     const [itemsPerRow, setItemsPerRow] = useState<number>(3); // only for ListViewOptions.Tiles, should use MediaQuery(windows size)
 
     useEffect(() => {
@@ -60,7 +60,7 @@ export default function IndexPage() {
     // 1.1. Top Toolbar - Select All Checkbox
     const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelected = listItems.map((n) => n.productModelID);
+            const newSelected = listItems.map((n) => getIProductModelIdentifier(n));
             setSelected(newSelected);
             return;
         }
@@ -79,11 +79,8 @@ export default function IndexPage() {
 
     // 1.2. Top Toolbar - Delete Selected Rows/Items
     const handleDeleteSelected = () => {
-		/*
-        const identifiers = selected.map((id) => { return { productModelID: id } });
-        dispatch(bulkDelete(identifiers));
-        console.log("handleDeleteSelected");
-		*/
+        dispatch(bulkDelete(selected.map(t=>t)));
+        // console.log("handleDeleteSelected");
     };
 
     // 1.3. Top Toolbar - Change ListViewOptions
@@ -191,11 +188,11 @@ export default function IndexPage() {
 
     // 2. Selected/De-Select one item
     const handleSelectItemClick = (item: IProductModelDataModel) => {
-        const selectedIndex = selected.indexOf(item.productModelID);
-        let newSelected: readonly number[] = [];
+        const selectedIndex = selected.findIndex(t=>compareIProductModelIdentifier(t, item));
+        let newSelected: readonly IProductModelIdentifier[] = [];
 
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, item.productModelID);
+            newSelected = newSelected.concat(selected, getIProductModelIdentifier(item));
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1));
         } else if (selectedIndex === selected.length - 1) {

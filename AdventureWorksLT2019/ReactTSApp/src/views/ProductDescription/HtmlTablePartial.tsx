@@ -23,9 +23,10 @@ import { getComparator, HeadCell, stableSort } from 'src/shared/views/TableFeatu
 import { RootState } from 'src/store/CombinedReducers';
 
 import { IProductDescriptionDataModel } from 'src/dataModels/IProductDescriptionDataModel';
+import { IProductDescriptionIdentifier, getIProductDescriptionIdentifier, compareIProductDescriptionIdentifier, getRouteParamsOfIProductDescriptionIdentifier } from 'src/dataModels/IProductDescriptionQueries';
 import ItemViewsPartial from './ItemViewsPartial';
 
-export default function HtmlTablePartial(props: ListPartialViewProps<IProductDescriptionDataModel, number>): JSX.Element {
+export default function HtmlTablePartial(props: ListPartialViewProps<IProductDescriptionDataModel, IProductDescriptionIdentifier>): JSX.Element {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { listItems, selected, numSelected, handleChangePage, handleSelectItemClick } = props;
@@ -83,7 +84,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDes
 
     const orderedListItems = !!listItems ? stableSort(listItems, getComparator(order, orderBy)) as IProductDescriptionDataModel[] : [];
     const currentItemOnDialog = !!orderedListItems && orderedListItems.length > 0 && currentItemIndex >= 0 && currentItemIndex < orderedListItems.length ? orderedListItems[currentItemIndex] : null;
-    const isSelected = (productDescriptionID: number) => selected.indexOf(productDescriptionID) !== -1;
+    const isSelected = (identifier: IProductDescriptionIdentifier) => selected.findIndex(t=> { return compareIProductDescriptionIdentifier(identifier, t); }) !== -1;
     const headCells: HeadCell[] = [
 
         {
@@ -134,7 +135,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDes
                         {orderedListItems
                             //.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row, index) => {
-                                const isItemSelected = isSelected(row.productDescriptionID);
+                                const isItemSelected = isSelected(getIProductDescriptionIdentifier(row));
                                 const labelId = `enhanced-table-checkbox-${index}`;
 
                                 return (
@@ -143,7 +144,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDes
                                         role="checkbox"
                                         aria-checked={isItemSelected}
                                         tabIndex={-1}
-                                        key={row.productDescriptionID}
+                                        key={getRouteParamsOfIProductDescriptionIdentifier(row)}
                                         selected={isItemSelected}
                                     >
                                         <TableCell padding="checkbox">
@@ -214,13 +215,13 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDes
                 }}
                 disableRestoreFocus
             >
-                <IconButton aria-label="delete" color="primary" onClick={() => { navigate("/productDescription/delete/" + currentItemOnDialog.productDescriptionID) }}>
+                <IconButton aria-label="delete" color="primary" onClick={() => { navigate("/productDescription/delete/" + getRouteParamsOfIProductDescriptionIdentifier(currentItemOnDialog)) }}>
                     <DeleteIcon />
                 </IconButton>
-                <IconButton aria-label="details" color="primary" onClick={() => { navigate("/productDescription/details/" + currentItemOnDialog.productDescriptionID) }}>
+                <IconButton aria-label="details" color="primary" onClick={() => { navigate("/productDescription/details/" + getRouteParamsOfIProductDescriptionIdentifier(currentItemOnDialog)) }}>
                     <BusinessCenterIcon />
                 </IconButton>
-                <IconButton aria-label="edit" color="primary" onClick={() => { navigate("/productDescription/edit/" + currentItemOnDialog.productDescriptionID) }}>
+                <IconButton aria-label="edit" color="primary" onClick={() => { navigate("/productDescription/edit/" + getRouteParamsOfIProductDescriptionIdentifier(currentItemOnDialog)) }}>
                     <EditIcon />
                 </IconButton>
                 <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete) }}>
@@ -234,7 +235,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDes
                 </IconButton>
             </Popover>
             <Dialog open={openItemDialog} fullWidth={true} maxWidth={'sm'}>
-                <ItemViewsPartial {...crudItemPartialViewProps} item={currentItemOnDialog} isItemSelected={!!currentItemOnDialog && isSelected(currentItemOnDialog.productDescriptionID)} totalCountInList={listItems.length} itemIndex={currentItemIndex} setItemIndex={setCurrentItemIndex} handleSelectItemClick={handleSelectItemClick} />
+                <ItemViewsPartial {...crudItemPartialViewProps} item={currentItemOnDialog} isItemSelected={!!currentItemOnDialog && isSelected(getIProductDescriptionIdentifier(currentItemOnDialog))} totalCountInList={listItems.length} itemIndex={currentItemIndex} setItemIndex={setCurrentItemIndex} handleSelectItemClick={handleSelectItemClick} />
             </Dialog>
             {!numSelected && <Stack direction="row" onMouseEnter={() => { handleItemActionsPopoverClose(); }}>
                 <Item sx={{ width: 1 }}>

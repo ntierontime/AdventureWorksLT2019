@@ -14,9 +14,10 @@ import { ListPartialViewProps } from 'src/shared/viewModels/ListPartialViewProps
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 
 import { ICustomerAddressDataModel } from 'src/dataModels/ICustomerAddressDataModel';
+import { ICustomerAddressIdentifier, getICustomerAddressIdentifier, compareICustomerAddressIdentifier, getRouteParamsOfICustomerAddressIdentifier } from 'src/dataModels/ICustomerAddressQueries';
 import ItemViewsPartial from './ItemViewsPartial';
 
-export default function TilesPartial(props: ListPartialViewProps<ICustomerAddressDataModel, number>): JSX.Element {
+export default function TilesPartial(props: ListPartialViewProps<ICustomerAddressDataModel, ICustomerAddressIdentifier>): JSX.Element {
     const { listItems, itemsPerRow, selected, handleSelectItemClick, handleChangePage } = props;
 	const navigate = useNavigate();
     // const { t } = useTranslation();
@@ -47,7 +48,7 @@ export default function TilesPartial(props: ListPartialViewProps<ICustomerAddres
     };
 
     const gridItemSpacing = 0.5;
-    const isSelected = (customerID: number) => selected.indexOf(customerID) !== -1;
+    const isSelected = (identifier: ICustomerAddressIdentifier) => selected.findIndex(t=> { return compareICustomerAddressIdentifier(identifier, t); }) !== -1;
     const gridItemWidth = 12 / itemsPerRow;
     const currentItemOnDialog = !!listItems && listItems.length > 0 && currentItemIndex >= 0 && currentItemIndex < listItems.length ? listItems[currentItemIndex] : null;
 
@@ -67,10 +68,10 @@ export default function TilesPartial(props: ListPartialViewProps<ICustomerAddres
             >
                 <Grid container spacing={gridItemSpacing}>
                     {listItems && listItems.map((row, index) => {
-                        const isItemSelected = isSelected(row.customerID);
+                        const isItemSelected = isSelected(getICustomerAddressIdentifier(row));
 
                         return (
-                            <Grid item xs={gridItemWidth} key={row.customerID}>
+                            <Grid item xs={gridItemWidth} key={getRouteParamsOfICustomerAddressIdentifier(row)}>
                                 <Paper elevation={3} sx={{ p: 1, height: "100%" }}>
                                     <ItemViewsPartial {...crudItemPartialViewPropsInline} item={row} totalCountInList={listItems.length} itemIndex={index} isItemSelected={isItemSelected} handleSelectItemClick={handleSelectItemClick} handleItemDialogOpen={handleItemDialogOpen} />
                                 </Paper>
@@ -102,7 +103,7 @@ export default function TilesPartial(props: ListPartialViewProps<ICustomerAddres
                 </ButtonGroup>
             </Snackbar>
             <Dialog open={openItemDialog} fullWidth={true} maxWidth={'sm'}>
-                {!!crudItemPartialViewPropsOnDialog && <ItemViewsPartial {...crudItemPartialViewPropsOnDialog} item={currentItemOnDialog} isItemSelected={!!currentItemOnDialog && isSelected(currentItemOnDialog.customerID)} totalCountInList={listItems.length} itemIndex={currentItemIndex} setItemIndex={setCurrentItemIndex} handleSelectItemClick={handleSelectItemClick} />}
+                {!!crudItemPartialViewPropsOnDialog && <ItemViewsPartial {...crudItemPartialViewPropsOnDialog} item={currentItemOnDialog} isItemSelected={!!currentItemOnDialog && isSelected(getICustomerAddressIdentifier(currentItemOnDialog))} totalCountInList={listItems.length} itemIndex={currentItemIndex} setItemIndex={setCurrentItemIndex} handleSelectItemClick={handleSelectItemClick} />}
             </Dialog>
         </>
     );

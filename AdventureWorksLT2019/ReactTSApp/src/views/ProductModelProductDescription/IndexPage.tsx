@@ -29,7 +29,7 @@ import { ListViewOptions } from 'src/shared/views/ListViewOptions';
 
 import { IProductModelProductDescriptionDataModel } from 'src/dataModels/IProductModelProductDescriptionDataModel';
 import { productModelProductDescriptionSelectors, search, bulkDelete } from 'src/slices/ProductModelProductDescriptionSlice';
-import { defaultIProductModelProductDescriptionAdvancedQuery, getProductModelProductDescriptionQueryOrderBySettings, IProductModelProductDescriptionAdvancedQuery } from 'src/dataModels/IProductModelProductDescriptionQueries';
+import { defaultIProductModelProductDescriptionAdvancedQuery, getProductModelProductDescriptionQueryOrderBySettings, IProductModelProductDescriptionAdvancedQuery, IProductModelProductDescriptionIdentifier, getIProductModelProductDescriptionIdentifier, compareIProductModelProductDescriptionIdentifier } from 'src/dataModels/IProductModelProductDescriptionQueries';
 
 import AdvancedSearchPartial from './AdvancedSearchPartial'
 import HtmlTablePartial from './HtmlTablePartial'
@@ -45,7 +45,7 @@ export default function IndexPage() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const serverOrderBys = getProductModelProductDescriptionQueryOrderBySettings();
     const [advancedQuery, setAdvancedQuery] = useState<IProductModelProductDescriptionAdvancedQuery>(defaultIProductModelProductDescriptionAdvancedQuery());
-    const [selected, setSelected] = useState<readonly number[]>([]);
+    const [selected, setSelected] = useState<readonly IProductModelProductDescriptionIdentifier[]>([]);
     const [itemsPerRow, setItemsPerRow] = useState<number>(3); // only for ListViewOptions.Tiles, should use MediaQuery(windows size)
 
     useEffect(() => {
@@ -60,7 +60,7 @@ export default function IndexPage() {
     // 1.1. Top Toolbar - Select All Checkbox
     const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelected = listItems.map((n) => n.productModelID);
+            const newSelected = listItems.map((n) => getIProductModelProductDescriptionIdentifier(n));
             setSelected(newSelected);
             return;
         }
@@ -79,11 +79,8 @@ export default function IndexPage() {
 
     // 1.2. Top Toolbar - Delete Selected Rows/Items
     const handleDeleteSelected = () => {
-		/*
-        const identifiers = selected.map((id) => { return { productModelID: id } });
-        dispatch(bulkDelete(identifiers));
-        console.log("handleDeleteSelected");
-		*/
+        dispatch(bulkDelete(selected.map(t=>t)));
+        // console.log("handleDeleteSelected");
     };
 
     // 1.3. Top Toolbar - Change ListViewOptions
@@ -191,11 +188,11 @@ export default function IndexPage() {
 
     // 2. Selected/De-Select one item
     const handleSelectItemClick = (item: IProductModelProductDescriptionDataModel) => {
-        const selectedIndex = selected.indexOf(item.productModelID);
-        let newSelected: readonly number[] = [];
+        const selectedIndex = selected.findIndex(t=>compareIProductModelProductDescriptionIdentifier(t, item));
+        let newSelected: readonly IProductModelProductDescriptionIdentifier[] = [];
 
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, item.productModelID);
+            newSelected = newSelected.concat(selected, getIProductModelProductDescriptionIdentifier(item));
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1));
         } else if (selectedIndex === selected.length - 1) {

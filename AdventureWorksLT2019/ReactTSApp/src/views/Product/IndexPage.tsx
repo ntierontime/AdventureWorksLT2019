@@ -29,7 +29,7 @@ import { ListViewOptions } from 'src/shared/views/ListViewOptions';
 
 import { IProductDataModel } from 'src/dataModels/IProductDataModel';
 import { productSelectors, search, bulkDelete } from 'src/slices/ProductSlice';
-import { defaultIProductAdvancedQuery, getProductQueryOrderBySettings, IProductAdvancedQuery, IProductIdentifier } from 'src/dataModels/IProductQueries';
+import { defaultIProductAdvancedQuery, getProductQueryOrderBySettings, IProductAdvancedQuery, IProductIdentifier, getIProductIdentifier, compareIProductIdentifier } from 'src/dataModels/IProductQueries';
 
 import AdvancedSearchPartial from './AdvancedSearchPartial'
 import HtmlTablePartial from './HtmlTablePartial'
@@ -60,7 +60,7 @@ export default function IndexPage() {
     // 1.1. Top Toolbar - Select All Checkbox
     const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelected = listItems.map((n) => { return { productID: n.productID };});
+            const newSelected = listItems.map((n) => getIProductIdentifier(n));
             setSelected(newSelected);
             return;
         }
@@ -79,11 +79,8 @@ export default function IndexPage() {
 
     // 1.2. Top Toolbar - Delete Selected Rows/Items
     const handleDeleteSelected = () => {
-		/*
-        const identifiers = selected.map((id) => { return { productID: id } });
-        dispatch(bulkDelete(identifiers));
-        console.log("handleDeleteSelected");
-		*/
+        dispatch(bulkDelete(selected.map(t=>t)));
+        // console.log("handleDeleteSelected");
     };
 
     // 1.3. Top Toolbar - Change ListViewOptions
@@ -191,11 +188,11 @@ export default function IndexPage() {
 
     // 2. Selected/De-Select one item
     const handleSelectItemClick = (item: IProductDataModel) => {
-        const selectedIndex = selected.findIndex(t=>t.productID == item.productID);
+        const selectedIndex = selected.findIndex(t=>compareIProductIdentifier(t, item));
         let newSelected: readonly IProductIdentifier[] = [];
 
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, { productID: item.productID });
+            newSelected = newSelected.concat(selected, getIProductIdentifier(item));
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1));
         } else if (selectedIndex === selected.length - 1) {

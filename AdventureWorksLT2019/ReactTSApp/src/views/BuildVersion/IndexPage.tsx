@@ -29,7 +29,7 @@ import { ListViewOptions } from 'src/shared/views/ListViewOptions';
 
 import { IBuildVersionDataModel } from 'src/dataModels/IBuildVersionDataModel';
 import { buildVersionSelectors, search, bulkDelete } from 'src/slices/BuildVersionSlice';
-import { defaultIBuildVersionAdvancedQuery, getBuildVersionQueryOrderBySettings, IBuildVersionAdvancedQuery } from 'src/dataModels/IBuildVersionQueries';
+import { defaultIBuildVersionAdvancedQuery, getBuildVersionQueryOrderBySettings, IBuildVersionAdvancedQuery, IBuildVersionIdentifier, getIBuildVersionIdentifier, compareIBuildVersionIdentifier } from 'src/dataModels/IBuildVersionQueries';
 
 import AdvancedSearchPartial from './AdvancedSearchPartial'
 import HtmlTablePartial from './HtmlTablePartial'
@@ -45,7 +45,7 @@ export default function IndexPage() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const serverOrderBys = getBuildVersionQueryOrderBySettings();
     const [advancedQuery, setAdvancedQuery] = useState<IBuildVersionAdvancedQuery>(defaultIBuildVersionAdvancedQuery());
-    const [selected, setSelected] = useState<readonly number[]>([]);
+    const [selected, setSelected] = useState<readonly IBuildVersionIdentifier[]>([]);
     const [itemsPerRow, setItemsPerRow] = useState<number>(3); // only for ListViewOptions.Tiles, should use MediaQuery(windows size)
 
     useEffect(() => {
@@ -60,7 +60,7 @@ export default function IndexPage() {
     // 1.1. Top Toolbar - Select All Checkbox
     const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelected = listItems.map((n) => n.systemInformationID);
+            const newSelected = listItems.map((n) => getIBuildVersionIdentifier(n));
             setSelected(newSelected);
             return;
         }
@@ -79,11 +79,8 @@ export default function IndexPage() {
 
     // 1.2. Top Toolbar - Delete Selected Rows/Items
     const handleDeleteSelected = () => {
-		/*
-        const identifiers = selected.map((id) => { return { systemInformationID: id } });
-        dispatch(bulkDelete(identifiers));
-        console.log("handleDeleteSelected");
-		*/
+        dispatch(bulkDelete(selected.map(t=>t)));
+        // console.log("handleDeleteSelected");
     };
 
     // 1.3. Top Toolbar - Change ListViewOptions
@@ -191,11 +188,11 @@ export default function IndexPage() {
 
     // 2. Selected/De-Select one item
     const handleSelectItemClick = (item: IBuildVersionDataModel) => {
-        const selectedIndex = selected.indexOf(item.systemInformationID);
-        let newSelected: readonly number[] = [];
+        const selectedIndex = selected.findIndex(t=>compareIBuildVersionIdentifier(t, item));
+        let newSelected: readonly IBuildVersionIdentifier[] = [];
 
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, item.systemInformationID);
+            newSelected = newSelected.concat(selected, getIBuildVersionIdentifier(item));
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1));
         } else if (selectedIndex === selected.length - 1) {

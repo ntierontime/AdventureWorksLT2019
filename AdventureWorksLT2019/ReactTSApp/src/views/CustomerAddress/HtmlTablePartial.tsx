@@ -24,9 +24,10 @@ import { getComparator, HeadCell, stableSort } from 'src/shared/views/TableFeatu
 import { RootState } from 'src/store/CombinedReducers';
 
 import { ICustomerAddressDataModel } from 'src/dataModels/ICustomerAddressDataModel';
+import { ICustomerAddressIdentifier, getICustomerAddressIdentifier, compareICustomerAddressIdentifier, getRouteParamsOfICustomerAddressIdentifier } from 'src/dataModels/ICustomerAddressQueries';
 import ItemViewsPartial from './ItemViewsPartial';
 
-export default function HtmlTablePartial(props: ListPartialViewProps<ICustomerAddressDataModel, number>): JSX.Element {
+export default function HtmlTablePartial(props: ListPartialViewProps<ICustomerAddressDataModel, ICustomerAddressIdentifier>): JSX.Element {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { listItems, selected, numSelected, handleChangePage, handleSelectItemClick } = props;
@@ -84,7 +85,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ICustomerAd
 
     const orderedListItems = !!listItems ? stableSort(listItems, getComparator(order, orderBy)) as ICustomerAddressDataModel[] : [];
     const currentItemOnDialog = !!orderedListItems && orderedListItems.length > 0 && currentItemIndex >= 0 && currentItemIndex < orderedListItems.length ? orderedListItems[currentItemIndex] : null;
-    const isSelected = (customerID: number) => selected.indexOf(customerID) !== -1;
+    const isSelected = (identifier: ICustomerAddressIdentifier) => selected.findIndex(t=> { return compareICustomerAddressIdentifier(identifier, t); }) !== -1;
     const headCells: HeadCell[] = [
 
         {
@@ -141,7 +142,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ICustomerAd
                         {orderedListItems
                             //.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row, index) => {
-                                const isItemSelected = isSelected(row.customerID);
+                                const isItemSelected = isSelected(getICustomerAddressIdentifier(row));
                                 const labelId = `enhanced-table-checkbox-${index}`;
 
                                 return (
@@ -150,7 +151,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ICustomerAd
                                         role="checkbox"
                                         aria-checked={isItemSelected}
                                         tabIndex={-1}
-                                        key={row.customerID}
+                                        key={getRouteParamsOfICustomerAddressIdentifier(row)}
                                         selected={isItemSelected}
                                     >
                                         <TableCell padding="checkbox">
@@ -222,13 +223,13 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ICustomerAd
                 }}
                 disableRestoreFocus
             >
-                <IconButton aria-label="delete" color="primary" onClick={() => { navigate("/customerAddress/delete/" + currentItemOnDialog.customerID) }}>
+                <IconButton aria-label="delete" color="primary" onClick={() => { navigate("/customerAddress/delete/" + getRouteParamsOfICustomerAddressIdentifier(currentItemOnDialog)) }}>
                     <DeleteIcon />
                 </IconButton>
-                <IconButton aria-label="details" color="primary" onClick={() => { navigate("/customerAddress/details/" + currentItemOnDialog.customerID) }}>
+                <IconButton aria-label="details" color="primary" onClick={() => { navigate("/customerAddress/details/" + getRouteParamsOfICustomerAddressIdentifier(currentItemOnDialog)) }}>
                     <BusinessCenterIcon />
                 </IconButton>
-                <IconButton aria-label="edit" color="primary" onClick={() => { navigate("/customerAddress/edit/" + currentItemOnDialog.customerID) }}>
+                <IconButton aria-label="edit" color="primary" onClick={() => { navigate("/customerAddress/edit/" + getRouteParamsOfICustomerAddressIdentifier(currentItemOnDialog)) }}>
                     <EditIcon />
                 </IconButton>
                 <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete) }}>
@@ -242,7 +243,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ICustomerAd
                 </IconButton>
             </Popover>
             <Dialog open={openItemDialog} fullWidth={true} maxWidth={'sm'}>
-                <ItemViewsPartial {...crudItemPartialViewProps} item={currentItemOnDialog} isItemSelected={!!currentItemOnDialog && isSelected(currentItemOnDialog.customerID)} totalCountInList={listItems.length} itemIndex={currentItemIndex} setItemIndex={setCurrentItemIndex} handleSelectItemClick={handleSelectItemClick} />
+                <ItemViewsPartial {...crudItemPartialViewProps} item={currentItemOnDialog} isItemSelected={!!currentItemOnDialog && isSelected(getICustomerAddressIdentifier(currentItemOnDialog))} totalCountInList={listItems.length} itemIndex={currentItemIndex} setItemIndex={setCurrentItemIndex} handleSelectItemClick={handleSelectItemClick} />
             </Dialog>
             {!numSelected && <Stack direction="row" onMouseEnter={() => { handleItemActionsPopoverClose(); }}>
                 <Item sx={{ width: 1 }}>

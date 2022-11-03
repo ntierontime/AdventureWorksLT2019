@@ -23,9 +23,10 @@ import { getComparator, HeadCell, stableSort } from 'src/shared/views/TableFeatu
 import { RootState } from 'src/store/CombinedReducers';
 
 import { IErrorLogDataModel } from 'src/dataModels/IErrorLogDataModel';
+import { IErrorLogIdentifier, getIErrorLogIdentifier, compareIErrorLogIdentifier, getRouteParamsOfIErrorLogIdentifier } from 'src/dataModels/IErrorLogQueries';
 import ItemViewsPartial from './ItemViewsPartial';
 
-export default function HtmlTablePartial(props: ListPartialViewProps<IErrorLogDataModel, number>): JSX.Element {
+export default function HtmlTablePartial(props: ListPartialViewProps<IErrorLogDataModel, IErrorLogIdentifier>): JSX.Element {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { listItems, selected, numSelected, handleChangePage, handleSelectItemClick } = props;
@@ -83,7 +84,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IErrorLogDa
 
     const orderedListItems = !!listItems ? stableSort(listItems, getComparator(order, orderBy)) as IErrorLogDataModel[] : [];
     const currentItemOnDialog = !!orderedListItems && orderedListItems.length > 0 && currentItemIndex >= 0 && currentItemIndex < orderedListItems.length ? orderedListItems[currentItemIndex] : null;
-    const isSelected = (errorLogID: number) => selected.indexOf(errorLogID) !== -1;
+    const isSelected = (identifier: IErrorLogIdentifier) => selected.findIndex(t=> { return compareIErrorLogIdentifier(identifier, t); }) !== -1;
     const headCells: HeadCell[] = [
 
         {
@@ -164,7 +165,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IErrorLogDa
                         {orderedListItems
                             //.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row, index) => {
-                                const isItemSelected = isSelected(row.errorLogID);
+                                const isItemSelected = isSelected(getIErrorLogIdentifier(row));
                                 const labelId = `enhanced-table-checkbox-${index}`;
 
                                 return (
@@ -173,7 +174,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IErrorLogDa
                                         role="checkbox"
                                         aria-checked={isItemSelected}
                                         tabIndex={-1}
-                                        key={row.errorLogID}
+                                        key={getRouteParamsOfIErrorLogIdentifier(row)}
                                         selected={isItemSelected}
                                     >
                                         <TableCell padding="checkbox">
@@ -249,13 +250,13 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IErrorLogDa
                 }}
                 disableRestoreFocus
             >
-                <IconButton aria-label="delete" color="primary" onClick={() => { navigate("/errorLog/delete/" + currentItemOnDialog.errorLogID) }}>
+                <IconButton aria-label="delete" color="primary" onClick={() => { navigate("/errorLog/delete/" + getRouteParamsOfIErrorLogIdentifier(currentItemOnDialog)) }}>
                     <DeleteIcon />
                 </IconButton>
-                <IconButton aria-label="details" color="primary" onClick={() => { navigate("/errorLog/details/" + currentItemOnDialog.errorLogID) }}>
+                <IconButton aria-label="details" color="primary" onClick={() => { navigate("/errorLog/details/" + getRouteParamsOfIErrorLogIdentifier(currentItemOnDialog)) }}>
                     <BusinessCenterIcon />
                 </IconButton>
-                <IconButton aria-label="edit" color="primary" onClick={() => { navigate("/errorLog/edit/" + currentItemOnDialog.errorLogID) }}>
+                <IconButton aria-label="edit" color="primary" onClick={() => { navigate("/errorLog/edit/" + getRouteParamsOfIErrorLogIdentifier(currentItemOnDialog)) }}>
                     <EditIcon />
                 </IconButton>
                 <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete) }}>
@@ -269,7 +270,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IErrorLogDa
                 </IconButton>
             </Popover>
             <Dialog open={openItemDialog} fullWidth={true} maxWidth={'sm'}>
-                <ItemViewsPartial {...crudItemPartialViewProps} item={currentItemOnDialog} isItemSelected={!!currentItemOnDialog && isSelected(currentItemOnDialog.errorLogID)} totalCountInList={listItems.length} itemIndex={currentItemIndex} setItemIndex={setCurrentItemIndex} handleSelectItemClick={handleSelectItemClick} />
+                <ItemViewsPartial {...crudItemPartialViewProps} item={currentItemOnDialog} isItemSelected={!!currentItemOnDialog && isSelected(getIErrorLogIdentifier(currentItemOnDialog))} totalCountInList={listItems.length} itemIndex={currentItemIndex} setItemIndex={setCurrentItemIndex} handleSelectItemClick={handleSelectItemClick} />
             </Dialog>
             {!numSelected && <Stack direction="row" onMouseEnter={() => { handleItemActionsPopoverClose(); }}>
                 <Item sx={{ width: 1 }}>

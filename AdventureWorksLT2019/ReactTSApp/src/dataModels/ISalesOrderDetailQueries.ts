@@ -4,6 +4,8 @@ import { IQueryOrderBySetting } from "src/shared/viewModels/IQueryOrderBySetting
 import { PreDefinedDateTimeRanges } from "src/shared/dataModels/PreDefinedDateTimeRanges";
 import { TextSearchTypes } from "src/shared/views/TextSearchTypes";
 
+import { ISalesOrderDetailDataModel } from 'src/dataModels/ISalesOrderDetailDataModel';
+
 export interface ISalesOrderDetailIdentifier {
 
     // PredicateType:Equals
@@ -11,6 +13,18 @@ export interface ISalesOrderDetailIdentifier {
 
     // PredicateType:Equals
 	salesOrderDetailID: number | null;
+}
+
+export function getISalesOrderDetailIdentifier(item: ISalesOrderDetailDataModel): ISalesOrderDetailIdentifier {
+    return { salesOrderID: item.salesOrderID, salesOrderDetailID: item.salesOrderDetailID };
+}
+
+export function compareISalesOrderDetailIdentifier(a: ISalesOrderDetailIdentifier, b: ISalesOrderDetailIdentifier): boolean {
+    return a.salesOrderID === b.salesOrderID && a.salesOrderDetailID === b.salesOrderDetailID;
+}
+
+export function getRouteParamsOfISalesOrderDetailIdentifier(item: ISalesOrderDetailDataModel): string | number {
+    return item.salesOrderID +  '/' + item.salesOrderDetailID;
 }
 
 export interface ISalesOrderDetailAdvancedQuery extends IBaseQuery {

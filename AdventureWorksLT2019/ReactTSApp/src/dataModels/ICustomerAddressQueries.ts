@@ -4,6 +4,8 @@ import { IQueryOrderBySetting } from "src/shared/viewModels/IQueryOrderBySetting
 import { PreDefinedDateTimeRanges } from "src/shared/dataModels/PreDefinedDateTimeRanges";
 import { TextSearchTypes } from "src/shared/views/TextSearchTypes";
 
+import { ICustomerAddressDataModel } from 'src/dataModels/ICustomerAddressDataModel';
+
 export interface ICustomerAddressIdentifier {
 
     // PredicateType:Equals
@@ -11,6 +13,18 @@ export interface ICustomerAddressIdentifier {
 
     // PredicateType:Equals
 	addressID: number | null;
+}
+
+export function getICustomerAddressIdentifier(item: ICustomerAddressDataModel): ICustomerAddressIdentifier {
+    return { customerID: item.customerID, addressID: item.addressID };
+}
+
+export function compareICustomerAddressIdentifier(a: ICustomerAddressIdentifier, b: ICustomerAddressIdentifier): boolean {
+    return a.customerID === b.customerID && a.addressID === b.addressID;
+}
+
+export function getRouteParamsOfICustomerAddressIdentifier(item: ICustomerAddressDataModel): string | number {
+    return item.customerID +  '/' + item.addressID;
 }
 
 export interface ICustomerAddressAdvancedQuery extends IBaseQuery {

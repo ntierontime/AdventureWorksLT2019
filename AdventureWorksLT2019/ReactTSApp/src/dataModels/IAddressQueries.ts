@@ -4,10 +4,24 @@ import { IQueryOrderBySetting } from "src/shared/viewModels/IQueryOrderBySetting
 import { PreDefinedDateTimeRanges } from "src/shared/dataModels/PreDefinedDateTimeRanges";
 import { TextSearchTypes } from "src/shared/views/TextSearchTypes";
 
+import { IAddressDataModel } from 'src/dataModels/IAddressDataModel';
+
 export interface IAddressIdentifier {
 
     // PredicateType:Equals
 	addressID: number | null;
+}
+
+export function getIAddressIdentifier(item: IAddressDataModel): IAddressIdentifier {
+    return { addressID: item.addressID };
+}
+
+export function compareIAddressIdentifier(a: IAddressIdentifier, b: IAddressIdentifier): boolean {
+    return a.addressID === b.addressID;
+}
+
+export function getRouteParamsOfIAddressIdentifier(item: IAddressDataModel): string | number {
+    return item.addressID;
 }
 
 export interface IAddressAdvancedQuery extends IBaseQuery {

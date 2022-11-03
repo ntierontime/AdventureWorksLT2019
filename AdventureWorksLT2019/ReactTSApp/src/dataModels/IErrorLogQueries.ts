@@ -4,10 +4,24 @@ import { IQueryOrderBySetting } from "src/shared/viewModels/IQueryOrderBySetting
 import { PreDefinedDateTimeRanges } from "src/shared/dataModels/PreDefinedDateTimeRanges";
 import { TextSearchTypes } from "src/shared/views/TextSearchTypes";
 
+import { IErrorLogDataModel } from 'src/dataModels/IErrorLogDataModel';
+
 export interface IErrorLogIdentifier {
 
     // PredicateType:Equals
 	errorLogID: number | null;
+}
+
+export function getIErrorLogIdentifier(item: IErrorLogDataModel): IErrorLogIdentifier {
+    return { errorLogID: item.errorLogID };
+}
+
+export function compareIErrorLogIdentifier(a: IErrorLogIdentifier, b: IErrorLogIdentifier): boolean {
+    return a.errorLogID === b.errorLogID;
+}
+
+export function getRouteParamsOfIErrorLogIdentifier(item: IErrorLogDataModel): string | number {
+    return item.errorLogID;
 }
 
 export interface IErrorLogAdvancedQuery extends IBaseQuery {

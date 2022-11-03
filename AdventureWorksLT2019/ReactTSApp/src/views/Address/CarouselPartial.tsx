@@ -15,9 +15,10 @@ import { ListPartialViewProps } from 'src/shared/viewModels/ListPartialViewProps
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 
 import { IAddressDataModel } from 'src/dataModels/IAddressDataModel';
+import { IAddressIdentifier, getIAddressIdentifier, compareIAddressIdentifier, getRouteParamsOfIAddressIdentifier } from 'src/dataModels/IAddressQueries';
 import ItemViewsPartial from './ItemViewsPartial';
 
-export default function CarouselPartial(props: ListPartialViewProps<IAddressDataModel, number>): JSX.Element {
+export default function CarouselPartial(props: ListPartialViewProps<IAddressDataModel, IAddressIdentifier>): JSX.Element {
     const { listItems, selected, handleSelectItemClick } = props;
     const { t } = useTranslation();
 
@@ -47,14 +48,15 @@ export default function CarouselPartial(props: ListPartialViewProps<IAddressData
     };
 
     const currentItemOnDialog = !!listItems && listItems.length > 0 && currentItemIndex >= 0 && currentItemIndex < listItems.length ? listItems[currentItemIndex] : null;
-    const isSelected = (addressID: number) => selected.indexOf(addressID) !== -1;
+    const isSelected = (identifier: IAddressIdentifier) => selected.findIndex(t=> { return compareIAddressIdentifier(identifier, t); }) !== -1;
 
     const renderCarouselItem = (item: IAddressDataModel, index: number) => {
-        const isItemSelected = isSelected(item.addressID);
-        const labelId = `enhanced-table-checkbox-${index}`;
+        const isItemSelected = isSelected(getIAddressIdentifier(item));
+		const key = getRouteParamsOfIAddressIdentifier(item);
+        const labelId = `enhanced-table-checkbox-${key}`;
 
         return (
-            <Paper elevation={10} key={item.addressID}>
+            <Paper elevation={10} key={key}>
                 <FormControlLabel
                     label={item.addressLine1}
                     control={<Checkbox
@@ -92,7 +94,7 @@ export default function CarouselPartial(props: ListPartialViewProps<IAddressData
                 })}
             </Carousel>
             <Dialog open={openItemDialog} fullWidth={true} maxWidth={'sm'}>
-                <ItemViewsPartial {...crudItemPartialViewProps} item={currentItemOnDialog} isItemSelected={!!currentItemOnDialog && isSelected(currentItemOnDialog.addressID)} totalCountInList={listItems.length} itemIndex={currentItemIndex} setItemIndex={setCurrentItemIndex} handleSelectItemClick={handleSelectItemClick} />
+                <ItemViewsPartial {...crudItemPartialViewProps} item={currentItemOnDialog} isItemSelected={!!currentItemOnDialog && isSelected(getIAddressIdentifier(currentItemOnDialog))} totalCountInList={listItems.length} itemIndex={currentItemIndex} setItemIndex={setCurrentItemIndex} handleSelectItemClick={handleSelectItemClick} />
             </Dialog>
         </Box>
     );

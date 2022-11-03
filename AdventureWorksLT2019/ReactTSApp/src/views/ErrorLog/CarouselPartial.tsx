@@ -15,9 +15,10 @@ import { ListPartialViewProps } from 'src/shared/viewModels/ListPartialViewProps
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 
 import { IErrorLogDataModel } from 'src/dataModels/IErrorLogDataModel';
+import { IErrorLogIdentifier, getIErrorLogIdentifier, compareIErrorLogIdentifier, getRouteParamsOfIErrorLogIdentifier } from 'src/dataModels/IErrorLogQueries';
 import ItemViewsPartial from './ItemViewsPartial';
 
-export default function CarouselPartial(props: ListPartialViewProps<IErrorLogDataModel, number>): JSX.Element {
+export default function CarouselPartial(props: ListPartialViewProps<IErrorLogDataModel, IErrorLogIdentifier>): JSX.Element {
     const { listItems, selected, handleSelectItemClick } = props;
     const { t } = useTranslation();
 
@@ -47,14 +48,15 @@ export default function CarouselPartial(props: ListPartialViewProps<IErrorLogDat
     };
 
     const currentItemOnDialog = !!listItems && listItems.length > 0 && currentItemIndex >= 0 && currentItemIndex < listItems.length ? listItems[currentItemIndex] : null;
-    const isSelected = (errorLogID: number) => selected.indexOf(errorLogID) !== -1;
+    const isSelected = (identifier: IErrorLogIdentifier) => selected.findIndex(t=> { return compareIErrorLogIdentifier(identifier, t); }) !== -1;
 
     const renderCarouselItem = (item: IErrorLogDataModel, index: number) => {
-        const isItemSelected = isSelected(item.errorLogID);
-        const labelId = `enhanced-table-checkbox-${index}`;
+        const isItemSelected = isSelected(getIErrorLogIdentifier(item));
+		const key = getRouteParamsOfIErrorLogIdentifier(item);
+        const labelId = `enhanced-table-checkbox-${key}`;
 
         return (
-            <Paper elevation={10} key={item.errorLogID}>
+            <Paper elevation={10} key={key}>
                 <FormControlLabel
                     label={item.userName}
                     control={<Checkbox
@@ -92,7 +94,7 @@ export default function CarouselPartial(props: ListPartialViewProps<IErrorLogDat
                 })}
             </Carousel>
             <Dialog open={openItemDialog} fullWidth={true} maxWidth={'sm'}>
-                <ItemViewsPartial {...crudItemPartialViewProps} item={currentItemOnDialog} isItemSelected={!!currentItemOnDialog && isSelected(currentItemOnDialog.errorLogID)} totalCountInList={listItems.length} itemIndex={currentItemIndex} setItemIndex={setCurrentItemIndex} handleSelectItemClick={handleSelectItemClick} />
+                <ItemViewsPartial {...crudItemPartialViewProps} item={currentItemOnDialog} isItemSelected={!!currentItemOnDialog && isSelected(getIErrorLogIdentifier(currentItemOnDialog))} totalCountInList={listItems.length} itemIndex={currentItemIndex} setItemIndex={setCurrentItemIndex} handleSelectItemClick={handleSelectItemClick} />
             </Dialog>
         </Box>
     );

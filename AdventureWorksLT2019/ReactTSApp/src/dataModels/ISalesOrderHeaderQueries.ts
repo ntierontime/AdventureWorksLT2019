@@ -5,10 +5,24 @@ import { BooleanSearchOptions } from "src/shared/dataModels/BooleanSearchOptions
 import { PreDefinedDateTimeRanges } from "src/shared/dataModels/PreDefinedDateTimeRanges";
 import { TextSearchTypes } from "src/shared/views/TextSearchTypes";
 
+import { ISalesOrderHeaderDataModel } from 'src/dataModels/ISalesOrderHeaderDataModel';
+
 export interface ISalesOrderHeaderIdentifier {
 
     // PredicateType:Equals
 	salesOrderID: number | null;
+}
+
+export function getISalesOrderHeaderIdentifier(item: ISalesOrderHeaderDataModel): ISalesOrderHeaderIdentifier {
+    return { salesOrderID: item.salesOrderID };
+}
+
+export function compareISalesOrderHeaderIdentifier(a: ISalesOrderHeaderIdentifier, b: ISalesOrderHeaderIdentifier): boolean {
+    return a.salesOrderID === b.salesOrderID;
+}
+
+export function getRouteParamsOfISalesOrderHeaderIdentifier(item: ISalesOrderHeaderDataModel): string | number {
+    return item.salesOrderID;
 }
 
 export interface ISalesOrderHeaderAdvancedQuery extends IBaseQuery {
