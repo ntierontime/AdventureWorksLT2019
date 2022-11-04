@@ -53,7 +53,6 @@ export function defaultICustomerAddressAdvancedQuery(): ICustomerAddressAdvanced
         pageIndex: 1,
         orderBys: '',
         paginationOption: PaginationOptions.PageIndexesAndAllButtons,
-        textSearch: '',
         textSearchType: TextSearchTypes.Contains,
 
         addressID: null, // PredicateType:Equals

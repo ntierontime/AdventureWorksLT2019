@@ -7,18 +7,18 @@ import { PaginationOptions } from "src/shared/dataModels/PaginationOptions";
 import { RootState } from "src/store/CombinedReducers";
 
 import { IAddressDataModel } from 'src/dataModels/IAddressDataModel';
-import { IAddressAdvancedQuery, IAddressIdentifier } from 'src/dataModels/IAddressQueries';
+import { getRouteParamsOfIAddressIdentifier, IAddressAdvancedQuery, IAddressIdentifier } from 'src/dataModels/IAddressQueries';
 import { addressApi } from "src/apiClients/AddressApi";
 
 const entityAdapter = createEntityAdapter<IAddressDataModel>({
-    selectId: (item: IAddressDataModel) => item.addressID,
+    selectId: (item: IAddressDataModel) => getRouteParamsOfIAddressIdentifier(item),
     // Keep the "all IDs" array sorted based on book titles
     // sortComparer: (a, b) => a.text.localeCompare(b.text), 
 })
 
 
 export const search = createAsyncThunk(
-    'search',
+    'searchAddress',
     async (advancedQuery: IAddressAdvancedQuery, { dispatch }) => {
         const response = await addressApi.Search(advancedQuery);
         // console.log(response);
@@ -27,7 +27,7 @@ export const search = createAsyncThunk(
 )
 
 export const getCompositeModel = createAsyncThunk(
-    'getCompositeModel',
+    'getAddressCompositeModel',
     async (identifier: IAddressIdentifier, { dispatch }) => {
         const response = await addressApi.GetCompositeModel(identifier);
         return response;
@@ -35,7 +35,7 @@ export const getCompositeModel = createAsyncThunk(
 )
 
 export const bulkDelete = createAsyncThunk(
-    'bulkDelete',
+    'bulkDeleteAddress',
     async (identifiers: IAddressIdentifier[], { dispatch }) => {
         const response = await addressApi.BulkDelete(identifiers);
         return { response, identifiers };
@@ -44,7 +44,7 @@ export const bulkDelete = createAsyncThunk(
 )
 
 export const multiItemsCUD = createAsyncThunk(
-    'multiItemsCUD',
+    'multiItemsCUDAddress',
     async (params: IMultiItemsCUDRequest<IAddressIdentifier, IAddressDataModel>, { dispatch }) => {
         const response = await addressApi.MultiItemsCUD(params);
         return response;
@@ -52,7 +52,7 @@ export const multiItemsCUD = createAsyncThunk(
 )
 
 export const put = createAsyncThunk(
-    'put',
+    'putAddress',
     async (params: { identifier: IAddressIdentifier, data: IAddressDataModel }, { dispatch }) => {
         const response = await addressApi.Put(params.identifier, params.data);
         return response;
@@ -60,7 +60,7 @@ export const put = createAsyncThunk(
 )
 
 export const get = createAsyncThunk(
-    'get',
+    'getAddress',
     async (identifier: IAddressIdentifier, { dispatch }) => {
         const response = await addressApi.Get(identifier);
         return response;
@@ -68,7 +68,7 @@ export const get = createAsyncThunk(
 )
 
 export const post = createAsyncThunk(
-    'post',
+    'postAddress',
     async (data: IAddressDataModel, { dispatch }) => {
         const response = await addressApi.Post(data);
         return response;
@@ -76,7 +76,7 @@ export const post = createAsyncThunk(
 )
 
 export const delete1 = createAsyncThunk(
-    'delete',
+    'deleteAddress',
     async (identifier: IAddressIdentifier, { dispatch }) => {
         const response = await addressApi.Delete(identifier);
         return { response, identifier };

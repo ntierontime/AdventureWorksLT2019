@@ -10,7 +10,7 @@ export interface ISalesOrderDetailDataModel {
     unitPrice: number;
     unitPriceDiscount: number;
     lineTotal: number;
-    _rowguid: any;
+    rowguid: any;
     modifiedDate: string;
     product_Name: string;
     productCategoryID: number;
@@ -39,7 +39,7 @@ export function defaultSalesOrderDetail(): ISalesOrderDetailDataModel {
         unitPrice: 0,
         unitPriceDiscount: 0,
         lineTotal: 0,
-        _rowguid: null,
+        rowguid: null,
         modifiedDate: '',
         product_Name: '',
         productCategoryID: 0,

@@ -6,7 +6,7 @@ export interface ICustomerAddressDataModel {
     customerID: number;
     addressID: number;
     addressType: string;
-    _rowguid: any;
+    rowguid: any;
     modifiedDate: string;
     address_Name: string;
     customer_Name: string;
@@ -19,7 +19,7 @@ export function defaultCustomerAddress(): ICustomerAddressDataModel {
         customerID: 0,
         addressID: 0,
         addressType: '',
-        _rowguid: null,
+        rowguid: null,
         modifiedDate: '',
         address_Name: '',
         customer_Name: '',

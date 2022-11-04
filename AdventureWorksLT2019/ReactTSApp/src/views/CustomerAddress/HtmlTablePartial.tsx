@@ -107,7 +107,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ICustomerAd
             label: t('AddressType'),
         },
         {
-            id: '_rowguid',
+            id: 'rowguid',
             numeric: false,
             disablePadding: true,
             label: t('rowguid'),
@@ -142,8 +142,9 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ICustomerAd
                         {orderedListItems
                             //.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row, index) => {
+								const key = getRouteParamsOfICustomerAddressIdentifier(row);
                                 const isItemSelected = isSelected(getICustomerAddressIdentifier(row));
-                                const labelId = `enhanced-table-checkbox-${index}`;
+                                const labelId = `enhanced-table-checkbox-${key}`;
 
                                 return (
                                     <TableRow
@@ -151,7 +152,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ICustomerAd
                                         role="checkbox"
                                         aria-checked={isItemSelected}
                                         tabIndex={-1}
-                                        key={getRouteParamsOfICustomerAddressIdentifier(row)}
+                                        key={key}
                                         selected={isItemSelected}
                                     >
                                         <TableCell padding="checkbox">
@@ -174,7 +175,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ICustomerAd
                                         </TableCell>
                                         <TableCell align='right'><Link to={"/address/Details/" + row.addressID}>{row.address_Name}</Link></TableCell>
                                         <TableCell align='right'>{row.addressType}</TableCell>
-                                        <TableCell align='right'>{row._rowguid}</TableCell>
+                                        <TableCell align='right'>{row.rowguid}</TableCell>
                                         <TableCell align='right'>{t(i18nFormats.dateTime.format, { val: new Date(row.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}</TableCell>
                                         <TableCell align="right" onMouseOver={(event) => { handleItemActionsPopoverOpen(event, index) }}>
                                             <IconButton aria-label="more" size="small" >

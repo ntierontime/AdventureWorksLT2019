@@ -16,7 +16,7 @@ export interface ICustomerDataModel {
     phone: string;
     passwordHash: string;
     passwordSalt: string;
-    _rowguid: any;
+    rowguid: any;
     modifiedDate: string;
 }
 
@@ -37,7 +37,7 @@ export function defaultCustomer(): ICustomerDataModel {
         phone: '',
         passwordHash: '',
         passwordSalt: '',
-        _rowguid: null,
+        rowguid: null,
         modifiedDate: '',
     } as unknown as ICustomerDataModel;
 }

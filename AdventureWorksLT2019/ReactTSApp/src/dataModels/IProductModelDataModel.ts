@@ -6,7 +6,7 @@ export interface IProductModelDataModel {
     productModelID: number;
     name: string;
     catalogDescription: any;
-    _rowguid: any;
+    rowguid: any;
     modifiedDate: string;
 }
 
@@ -17,7 +17,7 @@ export function defaultProductModel(): IProductModelDataModel {
         productModelID: 0,
         name: '',
         catalogDescription: null,
-        _rowguid: null,
+        rowguid: null,
         modifiedDate: '',
     } as unknown as IProductModelDataModel;
 }

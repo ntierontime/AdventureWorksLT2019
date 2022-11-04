@@ -7,18 +7,18 @@ import { PaginationOptions } from "src/shared/dataModels/PaginationOptions";
 import { RootState } from "src/store/CombinedReducers";
 
 import { IProductCategoryDataModel } from 'src/dataModels/IProductCategoryDataModel';
-import { IProductCategoryAdvancedQuery, IProductCategoryIdentifier } from 'src/dataModels/IProductCategoryQueries';
+import { getRouteParamsOfIProductCategoryIdentifier, IProductCategoryAdvancedQuery, IProductCategoryIdentifier } from 'src/dataModels/IProductCategoryQueries';
 import { productCategoryApi } from "src/apiClients/ProductCategoryApi";
 
 const entityAdapter = createEntityAdapter<IProductCategoryDataModel>({
-    selectId: (item: IProductCategoryDataModel) => item.productCategoryID,
+    selectId: (item: IProductCategoryDataModel) => getRouteParamsOfIProductCategoryIdentifier(item),
     // Keep the "all IDs" array sorted based on book titles
     // sortComparer: (a, b) => a.text.localeCompare(b.text), 
 })
 
 
 export const search = createAsyncThunk(
-    'search',
+    'searchProductCategory',
     async (advancedQuery: IProductCategoryAdvancedQuery, { dispatch }) => {
         const response = await productCategoryApi.Search(advancedQuery);
         // console.log(response);
@@ -27,7 +27,7 @@ export const search = createAsyncThunk(
 )
 
 export const getCompositeModel = createAsyncThunk(
-    'getCompositeModel',
+    'getProductCategoryCompositeModel',
     async (identifier: IProductCategoryIdentifier, { dispatch }) => {
         const response = await productCategoryApi.GetCompositeModel(identifier);
         return response;
@@ -35,7 +35,7 @@ export const getCompositeModel = createAsyncThunk(
 )
 
 export const bulkDelete = createAsyncThunk(
-    'bulkDelete',
+    'bulkDeleteProductCategory',
     async (identifiers: IProductCategoryIdentifier[], { dispatch }) => {
         const response = await productCategoryApi.BulkDelete(identifiers);
         return { response, identifiers };
@@ -44,7 +44,7 @@ export const bulkDelete = createAsyncThunk(
 )
 
 export const multiItemsCUD = createAsyncThunk(
-    'multiItemsCUD',
+    'multiItemsCUDProductCategory',
     async (params: IMultiItemsCUDRequest<IProductCategoryIdentifier, IProductCategoryDataModel>, { dispatch }) => {
         const response = await productCategoryApi.MultiItemsCUD(params);
         return response;
@@ -52,7 +52,7 @@ export const multiItemsCUD = createAsyncThunk(
 )
 
 export const put = createAsyncThunk(
-    'put',
+    'putProductCategory',
     async (params: { identifier: IProductCategoryIdentifier, data: IProductCategoryDataModel }, { dispatch }) => {
         const response = await productCategoryApi.Put(params.identifier, params.data);
         return response;
@@ -60,7 +60,7 @@ export const put = createAsyncThunk(
 )
 
 export const get = createAsyncThunk(
-    'get',
+    'getProductCategory',
     async (identifier: IProductCategoryIdentifier, { dispatch }) => {
         const response = await productCategoryApi.Get(identifier);
         return response;
@@ -68,7 +68,7 @@ export const get = createAsyncThunk(
 )
 
 export const post = createAsyncThunk(
-    'post',
+    'postProductCategory',
     async (data: IProductCategoryDataModel, { dispatch }) => {
         const response = await productCategoryApi.Post(data);
         return response;
@@ -76,7 +76,7 @@ export const post = createAsyncThunk(
 )
 
 export const delete1 = createAsyncThunk(
-    'delete',
+    'deleteProductCategory',
     async (identifier: IProductCategoryIdentifier, { dispatch }) => {
         const response = await productCategoryApi.Delete(identifier);
         return { response, identifier };

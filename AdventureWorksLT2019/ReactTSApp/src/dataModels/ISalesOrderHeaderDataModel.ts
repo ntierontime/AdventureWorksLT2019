@@ -23,7 +23,7 @@ export interface ISalesOrderHeaderDataModel {
     freight: number;
     totalDue: number;
     comment: string;
-    _rowguid: any;
+    rowguid: any;
     modifiedDate: string;
     billTo_Name: string;
     customer_Name: string;
@@ -54,7 +54,7 @@ export function defaultSalesOrderHeader(): ISalesOrderHeaderDataModel {
         freight: 0,
         totalDue: 0,
         comment: '',
-        _rowguid: null,
+        rowguid: null,
         modifiedDate: '',
         billTo_Name: '',
         customer_Name: '',

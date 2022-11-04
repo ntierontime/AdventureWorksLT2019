@@ -7,18 +7,18 @@ import { PaginationOptions } from "src/shared/dataModels/PaginationOptions";
 import { RootState } from "src/store/CombinedReducers";
 
 import { IErrorLogDataModel } from 'src/dataModels/IErrorLogDataModel';
-import { IErrorLogAdvancedQuery, IErrorLogIdentifier } from 'src/dataModels/IErrorLogQueries';
+import { getRouteParamsOfIErrorLogIdentifier, IErrorLogAdvancedQuery, IErrorLogIdentifier } from 'src/dataModels/IErrorLogQueries';
 import { errorLogApi } from "src/apiClients/ErrorLogApi";
 
 const entityAdapter = createEntityAdapter<IErrorLogDataModel>({
-    selectId: (item: IErrorLogDataModel) => item.errorLogID,
+    selectId: (item: IErrorLogDataModel) => getRouteParamsOfIErrorLogIdentifier(item),
     // Keep the "all IDs" array sorted based on book titles
     // sortComparer: (a, b) => a.text.localeCompare(b.text), 
 })
 
 
 export const search = createAsyncThunk(
-    'search',
+    'searchErrorLog',
     async (advancedQuery: IErrorLogAdvancedQuery, { dispatch }) => {
         const response = await errorLogApi.Search(advancedQuery);
         // console.log(response);
@@ -27,7 +27,7 @@ export const search = createAsyncThunk(
 )
 
 export const getCompositeModel = createAsyncThunk(
-    'getCompositeModel',
+    'getErrorLogCompositeModel',
     async (identifier: IErrorLogIdentifier, { dispatch }) => {
         const response = await errorLogApi.GetCompositeModel(identifier);
         return response;
@@ -35,7 +35,7 @@ export const getCompositeModel = createAsyncThunk(
 )
 
 export const bulkDelete = createAsyncThunk(
-    'bulkDelete',
+    'bulkDeleteErrorLog',
     async (identifiers: IErrorLogIdentifier[], { dispatch }) => {
         const response = await errorLogApi.BulkDelete(identifiers);
         return { response, identifiers };
@@ -44,7 +44,7 @@ export const bulkDelete = createAsyncThunk(
 )
 
 export const multiItemsCUD = createAsyncThunk(
-    'multiItemsCUD',
+    'multiItemsCUDErrorLog',
     async (params: IMultiItemsCUDRequest<IErrorLogIdentifier, IErrorLogDataModel>, { dispatch }) => {
         const response = await errorLogApi.MultiItemsCUD(params);
         return response;
@@ -52,7 +52,7 @@ export const multiItemsCUD = createAsyncThunk(
 )
 
 export const put = createAsyncThunk(
-    'put',
+    'putErrorLog',
     async (params: { identifier: IErrorLogIdentifier, data: IErrorLogDataModel }, { dispatch }) => {
         const response = await errorLogApi.Put(params.identifier, params.data);
         return response;
@@ -60,7 +60,7 @@ export const put = createAsyncThunk(
 )
 
 export const get = createAsyncThunk(
-    'get',
+    'getErrorLog',
     async (identifier: IErrorLogIdentifier, { dispatch }) => {
         const response = await errorLogApi.Get(identifier);
         return response;
@@ -68,7 +68,7 @@ export const get = createAsyncThunk(
 )
 
 export const post = createAsyncThunk(
-    'post',
+    'postErrorLog',
     async (data: IErrorLogDataModel, { dispatch }) => {
         const response = await errorLogApi.Post(data);
         return response;
@@ -76,7 +76,7 @@ export const post = createAsyncThunk(
 )
 
 export const delete1 = createAsyncThunk(
-    'delete',
+    'deleteErrorLog',
     async (identifier: IErrorLogIdentifier, { dispatch }) => {
         const response = await errorLogApi.Delete(identifier);
         return { response, identifier };

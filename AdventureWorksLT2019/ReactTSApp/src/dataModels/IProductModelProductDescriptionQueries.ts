@@ -56,7 +56,6 @@ export function defaultIProductModelProductDescriptionAdvancedQuery(): IProductM
         pageIndex: 1,
         orderBys: '',
         paginationOption: PaginationOptions.PageIndexesAndAllButtons,
-        textSearch: '',
         textSearchType: TextSearchTypes.Contains,
 
         productDescriptionID: null, // PredicateType:Equals

@@ -10,7 +10,7 @@ export interface IAddressDataModel {
     stateProvince: string;
     countryRegion: string;
     postalCode: string;
-    _rowguid: any;
+    rowguid: any;
     modifiedDate: string;
 }
 
@@ -25,7 +25,7 @@ export function defaultAddress(): IAddressDataModel {
         stateProvince: '',
         countryRegion: '',
         postalCode: '',
-        _rowguid: null,
+        rowguid: null,
         modifiedDate: '',
     } as unknown as IAddressDataModel;
 }

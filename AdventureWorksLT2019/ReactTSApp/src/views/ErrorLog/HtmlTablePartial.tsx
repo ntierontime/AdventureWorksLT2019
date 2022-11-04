@@ -165,8 +165,9 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IErrorLogDa
                         {orderedListItems
                             //.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row, index) => {
+								const key = getRouteParamsOfIErrorLogIdentifier(row);
                                 const isItemSelected = isSelected(getIErrorLogIdentifier(row));
-                                const labelId = `enhanced-table-checkbox-${index}`;
+                                const labelId = `enhanced-table-checkbox-${key}`;
 
                                 return (
                                     <TableRow
@@ -174,7 +175,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IErrorLogDa
                                         role="checkbox"
                                         aria-checked={isItemSelected}
                                         tabIndex={-1}
-                                        key={getRouteParamsOfIErrorLogIdentifier(row)}
+                                        key={key}
                                         selected={isItemSelected}
                                     >
                                         <TableCell padding="checkbox">

@@ -92,7 +92,6 @@ export function defaultISalesOrderHeaderAdvancedQuery(): ISalesOrderHeaderAdvanc
         pageIndex: 1,
         orderBys: '',
         paginationOption: PaginationOptions.PageIndexesAndAllButtons,
-        textSearch: '',
         textSearchType: TextSearchTypes.Contains,
 
         billToAddressID: null, // PredicateType:Equals

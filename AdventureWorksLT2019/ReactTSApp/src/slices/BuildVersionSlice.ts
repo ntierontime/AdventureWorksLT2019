@@ -7,18 +7,18 @@ import { PaginationOptions } from "src/shared/dataModels/PaginationOptions";
 import { RootState } from "src/store/CombinedReducers";
 
 import { IBuildVersionDataModel } from 'src/dataModels/IBuildVersionDataModel';
-import { IBuildVersionAdvancedQuery, IBuildVersionIdentifier } from 'src/dataModels/IBuildVersionQueries';
+import { getRouteParamsOfIBuildVersionIdentifier, IBuildVersionAdvancedQuery, IBuildVersionIdentifier } from 'src/dataModels/IBuildVersionQueries';
 import { buildVersionApi } from "src/apiClients/BuildVersionApi";
 
 const entityAdapter = createEntityAdapter<IBuildVersionDataModel>({
-    selectId: (item: IBuildVersionDataModel) => item.systemInformationID,
+    selectId: (item: IBuildVersionDataModel) => getRouteParamsOfIBuildVersionIdentifier(item),
     // Keep the "all IDs" array sorted based on book titles
     // sortComparer: (a, b) => a.text.localeCompare(b.text), 
 })
 
 
 export const search = createAsyncThunk(
-    'search',
+    'searchBuildVersion',
     async (advancedQuery: IBuildVersionAdvancedQuery, { dispatch }) => {
         const response = await buildVersionApi.Search(advancedQuery);
         // console.log(response);
@@ -27,7 +27,7 @@ export const search = createAsyncThunk(
 )
 
 export const getCompositeModel = createAsyncThunk(
-    'getCompositeModel',
+    'getBuildVersionCompositeModel',
     async (identifier: IBuildVersionIdentifier, { dispatch }) => {
         const response = await buildVersionApi.GetCompositeModel(identifier);
         return response;
@@ -35,7 +35,7 @@ export const getCompositeModel = createAsyncThunk(
 )
 
 export const bulkDelete = createAsyncThunk(
-    'bulkDelete',
+    'bulkDeleteBuildVersion',
     async (identifiers: IBuildVersionIdentifier[], { dispatch }) => {
         const response = await buildVersionApi.BulkDelete(identifiers);
         return { response, identifiers };
@@ -44,7 +44,7 @@ export const bulkDelete = createAsyncThunk(
 )
 
 export const multiItemsCUD = createAsyncThunk(
-    'multiItemsCUD',
+    'multiItemsCUDBuildVersion',
     async (params: IMultiItemsCUDRequest<IBuildVersionIdentifier, IBuildVersionDataModel>, { dispatch }) => {
         const response = await buildVersionApi.MultiItemsCUD(params);
         return response;
@@ -52,7 +52,7 @@ export const multiItemsCUD = createAsyncThunk(
 )
 
 export const put = createAsyncThunk(
-    'put',
+    'putBuildVersion',
     async (params: { identifier: IBuildVersionIdentifier, data: IBuildVersionDataModel }, { dispatch }) => {
         const response = await buildVersionApi.Put(params.identifier, params.data);
         return response;
@@ -60,7 +60,7 @@ export const put = createAsyncThunk(
 )
 
 export const get = createAsyncThunk(
-    'get',
+    'getBuildVersion',
     async (identifier: IBuildVersionIdentifier, { dispatch }) => {
         const response = await buildVersionApi.Get(identifier);
         return response;
@@ -68,7 +68,7 @@ export const get = createAsyncThunk(
 )
 
 export const post = createAsyncThunk(
-    'post',
+    'postBuildVersion',
     async (data: IBuildVersionDataModel, { dispatch }) => {
         const response = await buildVersionApi.Post(data);
         return response;
@@ -76,7 +76,7 @@ export const post = createAsyncThunk(
 )
 
 export const delete1 = createAsyncThunk(
-    'delete',
+    'deleteBuildVersion',
     async (identifier: IBuildVersionIdentifier, { dispatch }) => {
         const response = await buildVersionApi.Delete(identifier);
         return { response, identifier };

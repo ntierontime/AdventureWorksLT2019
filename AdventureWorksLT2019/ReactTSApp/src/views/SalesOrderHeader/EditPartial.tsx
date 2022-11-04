@@ -466,9 +466,9 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                     helperText={!!errors.comment ? t(errors.comment.message) : ''}
                 />
                 <TextField
-                    name='_rowguid'
+                    name='rowguid'
                     label={t('rowguid')}
-                	value={item._rowguid}
+                	value={item.rowguid}
                     variant='outlined'
                     margin='normal'
                     fullWidth

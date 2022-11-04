@@ -7,18 +7,18 @@ import { PaginationOptions } from "src/shared/dataModels/PaginationOptions";
 import { RootState } from "src/store/CombinedReducers";
 
 import { IProductDescriptionDataModel } from 'src/dataModels/IProductDescriptionDataModel';
-import { IProductDescriptionAdvancedQuery, IProductDescriptionIdentifier } from 'src/dataModels/IProductDescriptionQueries';
+import { getRouteParamsOfIProductDescriptionIdentifier, IProductDescriptionAdvancedQuery, IProductDescriptionIdentifier } from 'src/dataModels/IProductDescriptionQueries';
 import { productDescriptionApi } from "src/apiClients/ProductDescriptionApi";
 
 const entityAdapter = createEntityAdapter<IProductDescriptionDataModel>({
-    selectId: (item: IProductDescriptionDataModel) => item.productDescriptionID,
+    selectId: (item: IProductDescriptionDataModel) => getRouteParamsOfIProductDescriptionIdentifier(item),
     // Keep the "all IDs" array sorted based on book titles
     // sortComparer: (a, b) => a.text.localeCompare(b.text), 
 })
 
 
 export const search = createAsyncThunk(
-    'search',
+    'searchProductDescription',
     async (advancedQuery: IProductDescriptionAdvancedQuery, { dispatch }) => {
         const response = await productDescriptionApi.Search(advancedQuery);
         // console.log(response);
@@ -27,7 +27,7 @@ export const search = createAsyncThunk(
 )
 
 export const getCompositeModel = createAsyncThunk(
-    'getCompositeModel',
+    'getProductDescriptionCompositeModel',
     async (identifier: IProductDescriptionIdentifier, { dispatch }) => {
         const response = await productDescriptionApi.GetCompositeModel(identifier);
         return response;
@@ -35,7 +35,7 @@ export const getCompositeModel = createAsyncThunk(
 )
 
 export const bulkDelete = createAsyncThunk(
-    'bulkDelete',
+    'bulkDeleteProductDescription',
     async (identifiers: IProductDescriptionIdentifier[], { dispatch }) => {
         const response = await productDescriptionApi.BulkDelete(identifiers);
         return { response, identifiers };
@@ -44,7 +44,7 @@ export const bulkDelete = createAsyncThunk(
 )
 
 export const multiItemsCUD = createAsyncThunk(
-    'multiItemsCUD',
+    'multiItemsCUDProductDescription',
     async (params: IMultiItemsCUDRequest<IProductDescriptionIdentifier, IProductDescriptionDataModel>, { dispatch }) => {
         const response = await productDescriptionApi.MultiItemsCUD(params);
         return response;
@@ -52,7 +52,7 @@ export const multiItemsCUD = createAsyncThunk(
 )
 
 export const put = createAsyncThunk(
-    'put',
+    'putProductDescription',
     async (params: { identifier: IProductDescriptionIdentifier, data: IProductDescriptionDataModel }, { dispatch }) => {
         const response = await productDescriptionApi.Put(params.identifier, params.data);
         return response;
@@ -60,7 +60,7 @@ export const put = createAsyncThunk(
 )
 
 export const get = createAsyncThunk(
-    'get',
+    'getProductDescription',
     async (identifier: IProductDescriptionIdentifier, { dispatch }) => {
         const response = await productDescriptionApi.Get(identifier);
         return response;
@@ -68,7 +68,7 @@ export const get = createAsyncThunk(
 )
 
 export const post = createAsyncThunk(
-    'post',
+    'postProductDescription',
     async (data: IProductDescriptionDataModel, { dispatch }) => {
         const response = await productDescriptionApi.Post(data);
         return response;
@@ -76,7 +76,7 @@ export const post = createAsyncThunk(
 )
 
 export const delete1 = createAsyncThunk(
-    'delete',
+    'deleteProductDescription',
     async (identifier: IProductDescriptionIdentifier, { dispatch }) => {
         const response = await productDescriptionApi.Delete(identifier);
         return { response, identifier };

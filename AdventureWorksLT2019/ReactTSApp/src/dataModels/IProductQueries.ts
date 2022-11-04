@@ -84,7 +84,6 @@ export function defaultIProductAdvancedQuery(): IProductAdvancedQuery {
         pageIndex: 1,
         orderBys: '',
         paginationOption: PaginationOptions.PageIndexesAndAllButtons,
-        textSearch: '',
         textSearchType: TextSearchTypes.Contains,
 
         productCategoryID: null, // PredicateType:Equals

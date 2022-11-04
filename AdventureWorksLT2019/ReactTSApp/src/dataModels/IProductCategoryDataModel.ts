@@ -6,7 +6,7 @@ export interface IProductCategoryDataModel {
     productCategoryID: number;
     parentProductCategoryID: number;
     name: string;
-    _rowguid: any;
+    rowguid: any;
     modifiedDate: string;
     parent_Name: string;
 }
@@ -18,7 +18,7 @@ export function defaultProductCategory(): IProductCategoryDataModel {
         productCategoryID: 0,
         parentProductCategoryID: 0,
         name: '',
-        _rowguid: null,
+        rowguid: null,
         modifiedDate: '',
         parent_Name: '',
     } as unknown as IProductCategoryDataModel;

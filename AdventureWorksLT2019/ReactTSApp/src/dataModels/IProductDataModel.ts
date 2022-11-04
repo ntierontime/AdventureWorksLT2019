@@ -18,7 +18,7 @@ export interface IProductDataModel {
     discontinuedDate: string;
     thumbNailPhoto: any;
     thumbnailPhotoFileName: string;
-    _rowguid: any;
+    rowguid: any;
     modifiedDate: string;
     productCategory_Name: string;
     parentID: number;
@@ -45,7 +45,7 @@ export function defaultProduct(): IProductDataModel {
         discontinuedDate: '',
         thumbNailPhoto: null,
         thumbnailPhotoFileName: '',
-        _rowguid: null,
+        rowguid: null,
         modifiedDate: '',
         productCategory_Name: '',
         parentID: 0,

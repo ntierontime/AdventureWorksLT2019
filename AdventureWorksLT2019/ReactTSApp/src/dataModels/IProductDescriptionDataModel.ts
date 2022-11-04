@@ -5,7 +5,7 @@ export interface IProductDescriptionDataModel {
     isDeleted______: boolean;
     productDescriptionID: number;
     description: string;
-    _rowguid: any;
+    rowguid: any;
     modifiedDate: string;
 }
 
@@ -15,7 +15,7 @@ export function defaultProductDescription(): IProductDescriptionDataModel {
         isDeleted______: false,
         productDescriptionID: 0,
         description: '',
-        _rowguid: null,
+        rowguid: null,
         modifiedDate: '',
     } as unknown as IProductDescriptionDataModel;
 }

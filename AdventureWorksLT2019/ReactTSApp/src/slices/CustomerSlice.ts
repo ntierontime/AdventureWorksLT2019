@@ -7,18 +7,18 @@ import { PaginationOptions } from "src/shared/dataModels/PaginationOptions";
 import { RootState } from "src/store/CombinedReducers";
 
 import { ICustomerDataModel } from 'src/dataModels/ICustomerDataModel';
-import { ICustomerAdvancedQuery, ICustomerIdentifier } from 'src/dataModels/ICustomerQueries';
+import { getRouteParamsOfICustomerIdentifier, ICustomerAdvancedQuery, ICustomerIdentifier } from 'src/dataModels/ICustomerQueries';
 import { customerApi } from "src/apiClients/CustomerApi";
 
 const entityAdapter = createEntityAdapter<ICustomerDataModel>({
-    selectId: (item: ICustomerDataModel) => item.customerID,
+    selectId: (item: ICustomerDataModel) => getRouteParamsOfICustomerIdentifier(item),
     // Keep the "all IDs" array sorted based on book titles
     // sortComparer: (a, b) => a.text.localeCompare(b.text), 
 })
 
 
 export const search = createAsyncThunk(
-    'search',
+    'searchCustomer',
     async (advancedQuery: ICustomerAdvancedQuery, { dispatch }) => {
         const response = await customerApi.Search(advancedQuery);
         // console.log(response);
@@ -27,7 +27,7 @@ export const search = createAsyncThunk(
 )
 
 export const getCompositeModel = createAsyncThunk(
-    'getCompositeModel',
+    'getCustomerCompositeModel',
     async (identifier: ICustomerIdentifier, { dispatch }) => {
         const response = await customerApi.GetCompositeModel(identifier);
         return response;
@@ -35,7 +35,7 @@ export const getCompositeModel = createAsyncThunk(
 )
 
 export const bulkDelete = createAsyncThunk(
-    'bulkDelete',
+    'bulkDeleteCustomer',
     async (identifiers: ICustomerIdentifier[], { dispatch }) => {
         const response = await customerApi.BulkDelete(identifiers);
         return { response, identifiers };
@@ -44,7 +44,7 @@ export const bulkDelete = createAsyncThunk(
 )
 
 export const bulkUpdate = createAsyncThunk(
-    'bulkUpdate',
+    'bulkUpdateCustomer',
     async (params: IBulkUpdateRequest<ICustomerIdentifier, ICustomerDataModel>, { dispatch }) => {
         const response = await customerApi.BulkUpdate(params);
         return response;
@@ -52,7 +52,7 @@ export const bulkUpdate = createAsyncThunk(
 )
 
 export const multiItemsCUD = createAsyncThunk(
-    'multiItemsCUD',
+    'multiItemsCUDCustomer',
     async (params: IMultiItemsCUDRequest<ICustomerIdentifier, ICustomerDataModel>, { dispatch }) => {
         const response = await customerApi.MultiItemsCUD(params);
         return response;
@@ -60,7 +60,7 @@ export const multiItemsCUD = createAsyncThunk(
 )
 
 export const put = createAsyncThunk(
-    'put',
+    'putCustomer',
     async (params: { identifier: ICustomerIdentifier, data: ICustomerDataModel }, { dispatch }) => {
         const response = await customerApi.Put(params.identifier, params.data);
         return response;
@@ -68,7 +68,7 @@ export const put = createAsyncThunk(
 )
 
 export const get = createAsyncThunk(
-    'get',
+    'getCustomer',
     async (identifier: ICustomerIdentifier, { dispatch }) => {
         const response = await customerApi.Get(identifier);
         return response;
@@ -76,7 +76,7 @@ export const get = createAsyncThunk(
 )
 
 export const post = createAsyncThunk(
-    'post',
+    'postCustomer',
     async (data: ICustomerDataModel, { dispatch }) => {
         const response = await customerApi.Post(data);
         return response;
@@ -84,7 +84,7 @@ export const post = createAsyncThunk(
 )
 
 export const delete1 = createAsyncThunk(
-    'delete',
+    'deleteCustomer',
     async (identifier: ICustomerIdentifier, { dispatch }) => {
         const response = await customerApi.Delete(identifier);
         return { response, identifier };

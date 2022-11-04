@@ -6,7 +6,7 @@ export interface IProductModelProductDescriptionDataModel {
     productModelID: number;
     productDescriptionID: number;
     culture: string;
-    _rowguid: any;
+    rowguid: any;
     modifiedDate: string;
     productDescription_Name: string;
     productModel_Name: string;
@@ -19,7 +19,7 @@ export function defaultProductModelProductDescription(): IProductModelProductDes
         productModelID: 0,
         productDescriptionID: 0,
         culture: '',
-        _rowguid: null,
+        rowguid: null,
         modifiedDate: '',
         productDescription_Name: '',
         productModel_Name: '',

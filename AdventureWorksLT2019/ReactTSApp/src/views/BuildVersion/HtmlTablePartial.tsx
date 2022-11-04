@@ -135,8 +135,9 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IBuildVersi
                         {orderedListItems
                             //.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row, index) => {
+								const key = getRouteParamsOfIBuildVersionIdentifier(row);
                                 const isItemSelected = isSelected(getIBuildVersionIdentifier(row));
-                                const labelId = `enhanced-table-checkbox-${index}`;
+                                const labelId = `enhanced-table-checkbox-${key}`;
 
                                 return (
                                     <TableRow
@@ -144,7 +145,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IBuildVersi
                                         role="checkbox"
                                         aria-checked={isItemSelected}
                                         tabIndex={-1}
-                                        key={getRouteParamsOfIBuildVersionIdentifier(row)}
+                                        key={key}
                                         selected={isItemSelected}
                                     >
                                         <TableCell padding="checkbox">

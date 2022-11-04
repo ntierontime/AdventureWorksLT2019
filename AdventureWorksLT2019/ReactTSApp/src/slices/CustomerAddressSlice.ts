@@ -7,18 +7,18 @@ import { PaginationOptions } from "src/shared/dataModels/PaginationOptions";
 import { RootState } from "src/store/CombinedReducers";
 
 import { ICustomerAddressDataModel } from 'src/dataModels/ICustomerAddressDataModel';
-import { ICustomerAddressAdvancedQuery, ICustomerAddressIdentifier } from 'src/dataModels/ICustomerAddressQueries';
+import { getRouteParamsOfICustomerAddressIdentifier, ICustomerAddressAdvancedQuery, ICustomerAddressIdentifier } from 'src/dataModels/ICustomerAddressQueries';
 import { customerAddressApi } from "src/apiClients/CustomerAddressApi";
 
 const entityAdapter = createEntityAdapter<ICustomerAddressDataModel>({
-    selectId: (item: ICustomerAddressDataModel) => item.customerID,
+    selectId: (item: ICustomerAddressDataModel) => getRouteParamsOfICustomerAddressIdentifier(item),
     // Keep the "all IDs" array sorted based on book titles
     // sortComparer: (a, b) => a.text.localeCompare(b.text), 
 })
 
 
 export const search = createAsyncThunk(
-    'search',
+    'searchCustomerAddress',
     async (advancedQuery: ICustomerAddressAdvancedQuery, { dispatch }) => {
         const response = await customerAddressApi.Search(advancedQuery);
         // console.log(response);
@@ -27,7 +27,7 @@ export const search = createAsyncThunk(
 )
 
 export const getCompositeModel = createAsyncThunk(
-    'getCompositeModel',
+    'getCustomerAddressCompositeModel',
     async (identifier: ICustomerAddressIdentifier, { dispatch }) => {
         const response = await customerAddressApi.GetCompositeModel(identifier);
         return response;
@@ -35,7 +35,7 @@ export const getCompositeModel = createAsyncThunk(
 )
 
 export const bulkDelete = createAsyncThunk(
-    'bulkDelete',
+    'bulkDeleteCustomerAddress',
     async (identifiers: ICustomerAddressIdentifier[], { dispatch }) => {
         const response = await customerAddressApi.BulkDelete(identifiers);
         return { response, identifiers };
@@ -44,7 +44,7 @@ export const bulkDelete = createAsyncThunk(
 )
 
 export const multiItemsCUD = createAsyncThunk(
-    'multiItemsCUD',
+    'multiItemsCUDCustomerAddress',
     async (params: IMultiItemsCUDRequest<ICustomerAddressIdentifier, ICustomerAddressDataModel>, { dispatch }) => {
         const response = await customerAddressApi.MultiItemsCUD(params);
         return response;
@@ -52,7 +52,7 @@ export const multiItemsCUD = createAsyncThunk(
 )
 
 export const put = createAsyncThunk(
-    'put',
+    'putCustomerAddress',
     async (params: { identifier: ICustomerAddressIdentifier, data: ICustomerAddressDataModel }, { dispatch }) => {
         const response = await customerAddressApi.Put(params.identifier, params.data);
         return response;
@@ -60,7 +60,7 @@ export const put = createAsyncThunk(
 )
 
 export const get = createAsyncThunk(
-    'get',
+    'getCustomerAddress',
     async (identifier: ICustomerAddressIdentifier, { dispatch }) => {
         const response = await customerAddressApi.Get(identifier);
         return response;
@@ -68,7 +68,7 @@ export const get = createAsyncThunk(
 )
 
 export const post = createAsyncThunk(
-    'post',
+    'postCustomerAddress',
     async (data: ICustomerAddressDataModel, { dispatch }) => {
         const response = await customerAddressApi.Post(data);
         return response;
@@ -76,7 +76,7 @@ export const post = createAsyncThunk(
 )
 
 export const delete1 = createAsyncThunk(
-    'delete',
+    'deleteCustomerAddress',
     async (identifier: ICustomerAddressIdentifier, { dispatch }) => {
         const response = await customerAddressApi.Delete(identifier);
         return { response, identifier };

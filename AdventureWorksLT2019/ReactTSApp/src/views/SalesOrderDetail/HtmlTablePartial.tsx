@@ -131,7 +131,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ISalesOrder
             label: t('LineTotal'),
         },
         {
-            id: '_rowguid',
+            id: 'rowguid',
             numeric: false,
             disablePadding: true,
             label: t('rowguid'),
@@ -202,8 +202,9 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ISalesOrder
                         {orderedListItems
                             //.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row, index) => {
+								const key = getRouteParamsOfISalesOrderDetailIdentifier(row);
                                 const isItemSelected = isSelected(getISalesOrderDetailIdentifier(row));
-                                const labelId = `enhanced-table-checkbox-${index}`;
+                                const labelId = `enhanced-table-checkbox-${key}`;
 
                                 return (
                                     <TableRow
@@ -211,7 +212,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ISalesOrder
                                         role="checkbox"
                                         aria-checked={isItemSelected}
                                         tabIndex={-1}
-                                        key={getRouteParamsOfISalesOrderDetailIdentifier(row)}
+                                        key={key}
                                         selected={isItemSelected}
                                     >
                                         <TableCell padding="checkbox">
@@ -238,7 +239,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ISalesOrder
                                         <TableCell align='right'>{t(i18nFormats.double.format, { val: row.unitPrice })}</TableCell>
                                         <TableCell align='right'>{t(i18nFormats.double.format, { val: row.unitPriceDiscount })}</TableCell>
                                         <TableCell align='right'>{t(i18nFormats.double.format, { val: row.lineTotal })}</TableCell>
-                                        <TableCell align='right'>{row._rowguid}</TableCell>
+                                        <TableCell align='right'>{row.rowguid}</TableCell>
                                         <TableCell align='right'>{t(i18nFormats.dateTime.format, { val: new Date(row.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}</TableCell>
                                         <TableCell align='right'><Link to={"/productCategory/Details/" + row.productCategoryID}>{row.productCategory_Name}</Link></TableCell>
                                         <TableCell align='right'><Link to={"/productCategory/Details/" + row.productCategory_ParentID}>{row.productCategory_Parent_Name}</Link></TableCell>
