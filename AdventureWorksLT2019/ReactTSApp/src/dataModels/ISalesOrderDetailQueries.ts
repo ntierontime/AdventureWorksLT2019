@@ -28,7 +28,6 @@ export function getRouteParamsOfISalesOrderDetailIdentifier(item: ISalesOrderDet
 }
 
 export interface ISalesOrderDetailAdvancedQuery extends IBaseQuery {
-    textSearch: string | null;
     textSearchType: TextSearchTypes;
 
     // PredicateType:Equals
@@ -67,6 +66,7 @@ export function defaultISalesOrderDetailAdvancedQuery(): ISalesOrderDetailAdvanc
         pageIndex: 1,
         orderBys: '',
         paginationOption: PaginationOptions.PageIndexesAndAllButtons,
+		textSearch: '',
         textSearchType: TextSearchTypes.Contains,
 
         productID: null, // PredicateType:Equals

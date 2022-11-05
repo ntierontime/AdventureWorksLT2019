@@ -148,7 +148,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDes
                                         key={key}
                                         selected={isItemSelected}
                                     >
-                                        <TableCell padding="checkbox">
+                                        {!!handleSelectItemClick && <TableCell padding="checkbox">
                                             <Checkbox
                                                 color="primary"
                                                 checked={isItemSelected}
@@ -157,7 +157,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDes
                                                     'aria-labelledby': labelId,
                                                 }}
                                             />
-                                        </TableCell>
+                                        </TableCell>}
                                         <TableCell
                                             component="th"
                                             id={labelId}
@@ -238,7 +238,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDes
             <Dialog open={openItemDialog} fullWidth={true} maxWidth={'sm'}>
                 <ItemViewsPartial {...crudItemPartialViewProps} item={currentItemOnDialog} isItemSelected={!!currentItemOnDialog && isSelected(getIProductDescriptionIdentifier(currentItemOnDialog))} totalCountInList={listItems.length} itemIndex={currentItemIndex} setItemIndex={setCurrentItemIndex} handleSelectItemClick={handleSelectItemClick} />
             </Dialog>
-            {!numSelected && <Stack direction="row" onMouseEnter={() => { handleItemActionsPopoverClose(); }}>
+            {!!handleChangePage && !numSelected && <Stack direction="row" onMouseEnter={() => { handleItemActionsPopoverClose(); }}>
                 <Item sx={{ width: 1 }}>
                     <Pagination count={Math.ceil(pagination.totalCount / ((1.0) * pagination.pageSize))} page={pagination.pageIndex} showFirstButton showLastButton variant="outlined" shape="rounded" onChange={handleChangePage} />
                 </Item>

@@ -26,7 +26,6 @@ export function getRouteParamsOfISalesOrderHeaderIdentifier(item: ISalesOrderHea
 }
 
 export interface ISalesOrderHeaderAdvancedQuery extends IBaseQuery {
-    textSearch: string | null;
     textSearchType: TextSearchTypes;
 
     // PredicateType:Equals
@@ -92,6 +91,7 @@ export function defaultISalesOrderHeaderAdvancedQuery(): ISalesOrderHeaderAdvanc
         pageIndex: 1,
         orderBys: '',
         paginationOption: PaginationOptions.PageIndexesAndAllButtons,
+		textSearch: '',
         textSearchType: TextSearchTypes.Contains,
 
         billToAddressID: null, // PredicateType:Equals

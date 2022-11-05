@@ -149,7 +149,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IErrorLogDataM
                 <TextField
                     name='userName'
                     label={t('UserName')}
-                    value={item.userName}
+                    defaultValue={item.userName}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -197,7 +197,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IErrorLogDataM
                 <TextField
                     name='errorProcedure'
                     label={t('ErrorProcedure')}
-                    value={item.errorProcedure}
+                    defaultValue={item.errorProcedure}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -221,7 +221,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IErrorLogDataM
                 <TextField
                     name='errorMessage'
                     label={t('ErrorMessage')}
-                    value={item.errorMessage}
+                    defaultValue={item.errorMessage}
                     variant='outlined'
                     margin='normal'
                     fullWidth

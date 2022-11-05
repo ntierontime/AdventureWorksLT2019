@@ -102,7 +102,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ICustomerData
                 <TextField
                     name='title'
                     label={t('Title')}
-                    value={item.title}
+                    defaultValue={item.title}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -114,7 +114,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ICustomerData
                 <TextField
                     name='firstName'
                     label={t('FirstName')}
-                    value={item.firstName}
+                    defaultValue={item.firstName}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -126,7 +126,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ICustomerData
                 <TextField
                     name='middleName'
                     label={t('MiddleName')}
-                    value={item.middleName}
+                    defaultValue={item.middleName}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -138,7 +138,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ICustomerData
                 <TextField
                     name='lastName'
                     label={t('LastName')}
-                    value={item.lastName}
+                    defaultValue={item.lastName}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -150,7 +150,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ICustomerData
                 <TextField
                     name='suffix'
                     label={t('Suffix')}
-                    value={item.suffix}
+                    defaultValue={item.suffix}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -162,7 +162,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ICustomerData
                 <TextField
                     name='companyName'
                     label={t('CompanyName')}
-                    value={item.companyName}
+                    defaultValue={item.companyName}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -174,7 +174,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ICustomerData
                 <TextField
                     name='salesPerson'
                     label={t('SalesPerson')}
-                    value={item.salesPerson}
+                    defaultValue={item.salesPerson}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -186,7 +186,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ICustomerData
                 <TextField
                     name='emailAddress'
                     label={t('EmailAddress')}
-                    value={item.emailAddress}
+                    defaultValue={item.emailAddress}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -198,7 +198,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ICustomerData
                 <TextField
                     name='phone'
                     label={t('Phone')}
-                    value={item.phone}
+                    defaultValue={item.phone}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -210,7 +210,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ICustomerData
                 <TextField
                     name='passwordHash'
                     label={t('PasswordHash')}
-                    value={item.passwordHash}
+                    defaultValue={item.passwordHash}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -222,7 +222,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ICustomerData
                 <TextField
                     name='passwordSalt'
                     label={t('PasswordSalt')}
-                    value={item.passwordSalt}
+                    defaultValue={item.passwordSalt}
                     variant='outlined'
                     margin='normal'
                     fullWidth

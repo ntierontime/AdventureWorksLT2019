@@ -25,7 +25,6 @@ export function getRouteParamsOfIProductModelIdentifier(item: IProductModelDataM
 }
 
 export interface IProductModelAdvancedQuery extends IBaseQuery {
-    textSearch: string | null;
     textSearchType: TextSearchTypes;
 
     // PredicateType:Range
@@ -44,6 +43,7 @@ export function defaultIProductModelAdvancedQuery(): IProductModelAdvancedQuery 
         pageIndex: 1,
         orderBys: '',
         paginationOption: PaginationOptions.PageIndexesAndAllButtons,
+		textSearch: '',
         textSearchType: TextSearchTypes.Contains,
 
         // PredicateType:Range

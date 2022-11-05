@@ -428,7 +428,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                 <TextField
                     name='productCategory_Name'
                     label={t('ProductCategory_Name')}
-                    value={item.productCategory_Name}
+                    defaultValue={item.productCategory_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -455,7 +455,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                 <TextField
                     name='parent_Name'
                     label={t('Parent_Name')}
-                    value={item.parent_Name}
+                    defaultValue={item.parent_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -467,7 +467,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                 <TextField
                     name='productModel_Name'
                     label={t('ProductModel_Name')}
-                    value={item.productModel_Name}
+                    defaultValue={item.productModel_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth

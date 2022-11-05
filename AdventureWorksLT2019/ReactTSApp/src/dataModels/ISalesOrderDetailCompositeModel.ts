@@ -5,15 +5,15 @@ import { ISalesOrderHeaderDataModel } from "./ISalesOrderHeaderDataModel";
 
 export interface ISalesOrderDetailCompositeModel extends ICompositeModel<ISalesOrderDetailDataModel, ISalesOrderDetailCompositeModel_DataOptions__> {
     // 2. AncestorTable = 2
-    Product: IProductDataModel;
-    SalesOrderHeader: ISalesOrderHeaderDataModel;
+    product: IProductDataModel;
+    salesOrderHeader: ISalesOrderHeaderDataModel;
 }
 
 export enum ISalesOrderDetailCompositeModel_DataOptions__ {
     __Master__ = '__Master__',
     // 2. AncestorTable
-    Product = 'Product',
-    SalesOrderHeader = 'SalesOrderHeader',
+    product = 'product',
+    salesOrderHeader = 'salesOrderHeader',
 
 }
 

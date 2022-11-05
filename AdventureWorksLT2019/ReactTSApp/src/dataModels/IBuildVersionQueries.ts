@@ -31,7 +31,6 @@ export function getRouteParamsOfIBuildVersionIdentifier(item: IBuildVersionDataM
 }
 
 export interface IBuildVersionAdvancedQuery extends IBaseQuery {
-    textSearch: string | null;
     textSearchType: TextSearchTypes;
 
     // PredicateType:Range
@@ -55,6 +54,7 @@ export function defaultIBuildVersionAdvancedQuery(): IBuildVersionAdvancedQuery 
         pageIndex: 1,
         orderBys: '',
         paginationOption: PaginationOptions.PageIndexesAndAllButtons,
+		textSearch: '',
         textSearchType: TextSearchTypes.Contains,
 
         // PredicateType:Range

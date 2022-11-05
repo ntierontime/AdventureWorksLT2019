@@ -221,7 +221,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductCategory
                 <TextField
                     name='parent_Name'
                     label={t('Parent_Name')}
-                    value={item.parent_Name}
+                    defaultValue={item.parent_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth

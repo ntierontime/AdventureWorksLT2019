@@ -178,7 +178,7 @@ export default function IndexPage() {
                         <AdvancedSearchPartial advancedQuery={advancedQuery} submitAction={submitAdvancedSearch} doneAction={() => { handleAdvancedSearchExpandClose(); }} />
                     </Collapse>
                     {listViewOption === ListViewOptions.SlideShow && <CarouselPartial
-                        listViewOption={ListViewOptions.Tiles}
+                        listViewOption={ListViewOptions.SlideShow}
                         listItems={listItems}
                         itemsPerRow={itemsPerRow}
                         numSelected={numSelected}
@@ -187,7 +187,7 @@ export default function IndexPage() {
                         handleSelectItemClick={handleSelectItemClick}
                     />}
                     {listViewOption === ListViewOptions.Table && <HtmlTablePartial
-                        listViewOption={ListViewOptions.Tiles}
+                        listViewOption={ListViewOptions.Table}
                         listItems={listItems}
                         itemsPerRow={itemsPerRow}
                         numSelected={numSelected}

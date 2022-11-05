@@ -219,7 +219,7 @@ export default function ListToolBar<TAdvancedQuery extends IBaseQuery, TIdentifi
                         >
                             {hasSearch && <OutlinedInput
                                 sx={{ pr: 0.5, }}
-                                value={advancedQuery.textSearch}
+                                defaultValue={advancedQuery.textSearch}
                                 onChange={handleChangedTextToSearch}
                                 placeholder={t("Search") + ' ' + t("Product")}
                                 fullWidth margin='none'

@@ -5,17 +5,17 @@ import { ISalesOrderHeaderDataModel } from "./ISalesOrderHeaderDataModel";
 
 export interface IAddressCompositeModel extends ICompositeModel<IAddressDataModel, IAddressCompositeModel_DataOptions__> {
     // 4. ListTable = 4
-    CustomerAddresses_Via_AddressID: ICustomerAddressDataModel[];
-    SalesOrderHeaders_Via_BillToAddressID: ISalesOrderHeaderDataModel[];
-    SalesOrderHeaders_Via_ShipToAddressID: ISalesOrderHeaderDataModel[];
+    customerAddresses_Via_AddressID: ICustomerAddressDataModel[];
+    salesOrderHeaders_Via_BillToAddressID: ISalesOrderHeaderDataModel[];
+    salesOrderHeaders_Via_ShipToAddressID: ISalesOrderHeaderDataModel[];
 }
 
 export enum IAddressCompositeModel_DataOptions__ {
     __Master__ = '__Master__',
     // 4. ListTable
-    CustomerAddresses_Via_AddressID = 'CustomerAddresses_Via_AddressID',
-    SalesOrderHeaders_Via_BillToAddressID = 'SalesOrderHeaders_Via_BillToAddressID',
-    SalesOrderHeaders_Via_ShipToAddressID = 'SalesOrderHeaders_Via_ShipToAddressID',
+    customerAddresses_Via_AddressID = 'customerAddresses_Via_AddressID',
+    salesOrderHeaders_Via_BillToAddressID = 'salesOrderHeaders_Via_BillToAddressID',
+    salesOrderHeaders_Via_ShipToAddressID = 'salesOrderHeaders_Via_ShipToAddressID',
 
 }
 

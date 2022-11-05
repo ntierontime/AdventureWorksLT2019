@@ -101,7 +101,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IProductModel
                 <TextField
                     name='name'
                     label={t('Name')}
-                    value={item.name}
+                    defaultValue={item.name}
                     variant='outlined'
                     margin='normal'
                     fullWidth

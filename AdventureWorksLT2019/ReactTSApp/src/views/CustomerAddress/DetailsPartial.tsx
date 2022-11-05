@@ -108,7 +108,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ICustomerAddr
                 <TextField
                     name='addressType'
                     label={t('AddressType')}
-                    value={item.addressType}
+                    defaultValue={item.addressType}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -147,7 +147,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ICustomerAddr
                 <TextField
                     name='address_Name'
                     label={t('Address_Name')}
-                    value={item.address_Name}
+                    defaultValue={item.address_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -159,7 +159,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ICustomerAddr
                 <TextField
                     name='customer_Name'
                     label={t('Customer_Name')}
-                    value={item.customer_Name}
+                    defaultValue={item.customer_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth

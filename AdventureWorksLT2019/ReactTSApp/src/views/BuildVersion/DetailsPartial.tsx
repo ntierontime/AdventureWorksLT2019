@@ -101,7 +101,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IBuildVersion
                 <TextField
                     name='database_Version'
                     label={t('Database_Version')}
-                    value={item.database_Version}
+                    defaultValue={item.database_Version}
                     variant='outlined'
                     margin='normal'
                     fullWidth

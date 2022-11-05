@@ -25,7 +25,6 @@ export function getRouteParamsOfIProductCategoryIdentifier(item: IProductCategor
 }
 
 export interface IProductCategoryAdvancedQuery extends IBaseQuery {
-    textSearch: string | null;
     textSearchType: TextSearchTypes;
 
     // PredicateType:Equals
@@ -47,6 +46,7 @@ export function defaultIProductCategoryAdvancedQuery(): IProductCategoryAdvanced
         pageIndex: 1,
         orderBys: '',
         paginationOption: PaginationOptions.PageIndexesAndAllButtons,
+		textSearch: '',
         textSearchType: TextSearchTypes.Contains,
 
         parentProductCategoryID: null, // PredicateType:Equals

@@ -25,7 +25,6 @@ export function getRouteParamsOfIErrorLogIdentifier(item: IErrorLogDataModel): s
 }
 
 export interface IErrorLogAdvancedQuery extends IBaseQuery {
-    textSearch: string | null;
     textSearchType: TextSearchTypes;
 
     // PredicateType:Range
@@ -52,6 +51,7 @@ export function defaultIErrorLogAdvancedQuery(): IErrorLogAdvancedQuery {
         pageIndex: 1,
         orderBys: '',
         paginationOption: PaginationOptions.PageIndexesAndAllButtons,
+		textSearch: '',
         textSearchType: TextSearchTypes.Contains,
 
         // PredicateType:Range

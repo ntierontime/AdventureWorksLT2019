@@ -141,7 +141,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ICustomerAddre
                 <TextField
                     name='addressType'
                     label={t('AddressType')}
-                    value={item.addressType}
+                    defaultValue={item.addressType}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -180,7 +180,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ICustomerAddre
                 <TextField
                     name='address_Name'
                     label={t('Address_Name')}
-                    value={item.address_Name}
+                    defaultValue={item.address_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -192,7 +192,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ICustomerAddre
                 <TextField
                     name='customer_Name'
                     label={t('Customer_Name')}
-                    value={item.customer_Name}
+                    defaultValue={item.customer_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth

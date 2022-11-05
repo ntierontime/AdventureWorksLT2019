@@ -135,7 +135,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IProductDataMo
                 <TextField
                     name='name'
                     label={t('Name')}
-                    value={item.name}
+                    defaultValue={item.name}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -147,7 +147,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IProductDataMo
                 <TextField
                     name='productNumber'
                     label={t('ProductNumber')}
-                    value={item.productNumber}
+                    defaultValue={item.productNumber}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -159,7 +159,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IProductDataMo
                 <TextField
                     name='color'
                     label={t('Color')}
-                    value={item.color}
+                    defaultValue={item.color}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -195,7 +195,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IProductDataMo
                 <TextField
                     name='size'
                     label={t('Size')}
-                    value={item.size}
+                    defaultValue={item.size}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -294,7 +294,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IProductDataMo
                 <TextField
                     name='thumbnailPhotoFileName'
                     label={t('ThumbnailPhotoFileName')}
-                    value={item.thumbnailPhotoFileName}
+                    defaultValue={item.thumbnailPhotoFileName}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -333,7 +333,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IProductDataMo
                 <TextField
                     name='productCategory_Name'
                     label={t('ProductCategory_Name')}
-                    value={item.productCategory_Name}
+                    defaultValue={item.productCategory_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -354,7 +354,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IProductDataMo
                 <TextField
                     name='parent_Name'
                     label={t('Parent_Name')}
-                    value={item.parent_Name}
+                    defaultValue={item.parent_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -366,7 +366,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IProductDataMo
                 <TextField
                     name='productModel_Name'
                     label={t('ProductModel_Name')}
-                    value={item.productModel_Name}
+                    defaultValue={item.productModel_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth

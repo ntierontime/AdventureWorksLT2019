@@ -5,15 +5,15 @@ import { IProductModelProductDescriptionDataModel } from "./IProductModelProduct
 
 export interface IProductModelCompositeModel extends ICompositeModel<IProductModelDataModel, IProductModelCompositeModel_DataOptions__> {
     // 4. ListTable = 4
-    Products_Via_ProductModelID: IProductDataModel[];
-    ProductModelProductDescriptions_Via_ProductModelID: IProductModelProductDescriptionDataModel[];
+    products_Via_ProductModelID: IProductDataModel[];
+    productModelProductDescriptions_Via_ProductModelID: IProductModelProductDescriptionDataModel[];
 }
 
 export enum IProductModelCompositeModel_DataOptions__ {
     __Master__ = '__Master__',
     // 4. ListTable
-    Products_Via_ProductModelID = 'Products_Via_ProductModelID',
-    ProductModelProductDescriptions_Via_ProductModelID = 'ProductModelProductDescriptions_Via_ProductModelID',
+    products_Via_ProductModelID = 'products_Via_ProductModelID',
+    productModelProductDescriptions_Via_ProductModelID = 'productModelProductDescriptions_Via_ProductModelID',
 
 }
 

@@ -101,7 +101,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IAddressDataM
                 <TextField
                     name='addressLine1'
                     label={t('AddressLine1')}
-                    value={item.addressLine1}
+                    defaultValue={item.addressLine1}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -113,7 +113,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IAddressDataM
                 <TextField
                     name='addressLine2'
                     label={t('AddressLine2')}
-                    value={item.addressLine2}
+                    defaultValue={item.addressLine2}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -125,7 +125,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IAddressDataM
                 <TextField
                     name='city'
                     label={t('City')}
-                    value={item.city}
+                    defaultValue={item.city}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -137,7 +137,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IAddressDataM
                 <TextField
                     name='stateProvince'
                     label={t('StateProvince')}
-                    value={item.stateProvince}
+                    defaultValue={item.stateProvince}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -149,7 +149,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IAddressDataM
                 <TextField
                     name='countryRegion'
                     label={t('CountryRegion')}
-                    value={item.countryRegion}
+                    defaultValue={item.countryRegion}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -161,7 +161,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IAddressDataM
                 <TextField
                     name='postalCode'
                     label={t('PostalCode')}
-                    value={item.postalCode}
+                    defaultValue={item.postalCode}
                     variant='outlined'
                     margin='normal'
                     fullWidth

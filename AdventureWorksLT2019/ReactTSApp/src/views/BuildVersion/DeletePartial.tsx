@@ -134,7 +134,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IBuildVersionD
                 <TextField
                     name='database_Version'
                     label={t('Database_Version')}
-                    value={item.database_Version}
+                    defaultValue={item.database_Version}
                     variant='outlined'
                     margin='normal'
                     fullWidth

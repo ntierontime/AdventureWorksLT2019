@@ -26,7 +26,6 @@ export function getRouteParamsOfICustomerIdentifier(item: ICustomerDataModel): s
 }
 
 export interface ICustomerAdvancedQuery extends IBaseQuery {
-    textSearch: string | null;
     textSearchType: TextSearchTypes;
 
     // PredicateType:Equals
@@ -88,6 +87,7 @@ export function defaultICustomerAdvancedQuery(): ICustomerAdvancedQuery {
         pageIndex: 1,
         orderBys: '',
         paginationOption: PaginationOptions.PageIndexesAndAllButtons,
+		textSearch: '',
         textSearchType: TextSearchTypes.Contains,
 
         nameStyle: BooleanSearchOptions.All, // PredicateType:Equals

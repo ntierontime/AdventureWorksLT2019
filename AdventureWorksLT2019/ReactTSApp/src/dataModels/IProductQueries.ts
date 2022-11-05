@@ -25,7 +25,6 @@ export function getRouteParamsOfIProductIdentifier(item: IProductDataModel): str
 }
 
 export interface IProductAdvancedQuery extends IBaseQuery {
-    textSearch: string | null;
     textSearchType: TextSearchTypes;
 
     // PredicateType:Equals
@@ -84,6 +83,7 @@ export function defaultIProductAdvancedQuery(): IProductAdvancedQuery {
         pageIndex: 1,
         orderBys: '',
         paginationOption: PaginationOptions.PageIndexesAndAllButtons,
+		textSearch: '',
         textSearchType: TextSearchTypes.Contains,
 
         productCategoryID: null, // PredicateType:Equals

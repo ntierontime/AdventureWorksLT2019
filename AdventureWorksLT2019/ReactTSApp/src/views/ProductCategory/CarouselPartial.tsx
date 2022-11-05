@@ -8,7 +8,7 @@ import Carousel from 'react-material-ui-carousel';
 import { useTranslation } from 'react-i18next';
 
 // un-comment /*getCurrency,*/ if you display money
-import i18n, { /*getCurrency,*/ i18nFormats } from 'src/i18n';
+import { /*getCurrency,*/ i18nFormats } from 'src/i18n';
 import { defaultCarouselSettings } from 'src/shared/viewModels/CarouselProps';
 import { getCRUDItemPartialViewPropsOnDialog, ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps';
 import { ListPartialViewProps } from 'src/shared/viewModels/ListPartialViewProps';

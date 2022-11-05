@@ -111,7 +111,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IProductCateg
                 <TextField
                     name='name'
                     label={t('Name')}
-                    value={item.name}
+                    defaultValue={item.name}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -150,7 +150,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IProductCateg
                 <TextField
                     name='parent_Name'
                     label={t('Parent_Name')}
-                    value={item.parent_Name}
+                    defaultValue={item.parent_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth

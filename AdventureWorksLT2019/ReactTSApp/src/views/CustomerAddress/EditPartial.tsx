@@ -234,7 +234,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerAddress
                 <TextField
                     name='address_Name'
                     label={t('Address_Name')}
-                    value={item.address_Name}
+                    defaultValue={item.address_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -246,7 +246,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerAddress
                 <TextField
                     name='customer_Name'
                     label={t('Customer_Name')}
-                    value={item.customer_Name}
+                    defaultValue={item.customer_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth

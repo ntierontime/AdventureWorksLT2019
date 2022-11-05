@@ -424,7 +424,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
                 <TextField
                     name='billTo_Name'
                     label={t('BillTo_Name')}
-                    value={item.billTo_Name}
+                    defaultValue={item.billTo_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -436,7 +436,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
                 <TextField
                     name='customer_Name'
                     label={t('Customer_Name')}
-                    value={item.customer_Name}
+                    defaultValue={item.customer_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -448,7 +448,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
                 <TextField
                     name='shipTo_Name'
                     label={t('ShipTo_Name')}
-                    value={item.shipTo_Name}
+                    defaultValue={item.shipTo_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth

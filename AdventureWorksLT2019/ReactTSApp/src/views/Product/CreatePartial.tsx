@@ -371,7 +371,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
                 <TextField
                     name='productCategory_Name'
                     label={t('ProductCategory_Name')}
-                    value={item.productCategory_Name}
+                    defaultValue={item.productCategory_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -398,7 +398,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
                 <TextField
                     name='parent_Name'
                     label={t('Parent_Name')}
-                    value={item.parent_Name}
+                    defaultValue={item.parent_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -410,7 +410,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
                 <TextField
                     name='productModel_Name'
                     label={t('ProductModel_Name')}
-                    value={item.productModel_Name}
+                    defaultValue={item.productModel_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth

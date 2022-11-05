@@ -172,7 +172,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHe
                 <TextField
                     name='salesOrderNumber'
                     label={t('SalesOrderNumber')}
-                    value={item.salesOrderNumber}
+                    defaultValue={item.salesOrderNumber}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -184,7 +184,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHe
                 <TextField
                     name='purchaseOrderNumber'
                     label={t('PurchaseOrderNumber')}
-                    value={item.purchaseOrderNumber}
+                    defaultValue={item.purchaseOrderNumber}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -196,7 +196,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHe
                 <TextField
                     name='accountNumber'
                     label={t('AccountNumber')}
-                    value={item.accountNumber}
+                    defaultValue={item.accountNumber}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -235,7 +235,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHe
                 <TextField
                     name='shipMethod'
                     label={t('ShipMethod')}
-                    value={item.shipMethod}
+                    defaultValue={item.shipMethod}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -247,7 +247,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHe
                 <TextField
                     name='creditCardApprovalCode'
                     label={t('CreditCardApprovalCode')}
-                    value={item.creditCardApprovalCode}
+                    defaultValue={item.creditCardApprovalCode}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -307,7 +307,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHe
                 <TextField
                     name='comment'
                     label={t('Comment')}
-                    value={item.comment}
+                    defaultValue={item.comment}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -346,7 +346,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHe
                 <TextField
                     name='billTo_Name'
                     label={t('BillTo_Name')}
-                    value={item.billTo_Name}
+                    defaultValue={item.billTo_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -358,7 +358,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHe
                 <TextField
                     name='customer_Name'
                     label={t('Customer_Name')}
-                    value={item.customer_Name}
+                    defaultValue={item.customer_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -370,7 +370,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHe
                 <TextField
                     name='shipTo_Name'
                     label={t('ShipTo_Name')}
-                    value={item.shipTo_Name}
+                    defaultValue={item.shipTo_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth

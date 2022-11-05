@@ -234,7 +234,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelPro
                 <TextField
                     name='productDescription_Name'
                     label={t('ProductDescription_Name')}
-                    value={item.productDescription_Name}
+                    defaultValue={item.productDescription_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -246,7 +246,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelPro
                 <TextField
                     name='productModel_Name'
                     label={t('ProductModel_Name')}
-                    value={item.productModel_Name}
+                    defaultValue={item.productModel_Name}
                     variant='outlined'
                     margin='normal'
                     fullWidth

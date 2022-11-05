@@ -134,7 +134,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IProductModelD
                 <TextField
                     name='name'
                     label={t('Name')}
-                    value={item.name}
+                    defaultValue={item.name}
                     variant='outlined'
                     margin='normal'
                     fullWidth
