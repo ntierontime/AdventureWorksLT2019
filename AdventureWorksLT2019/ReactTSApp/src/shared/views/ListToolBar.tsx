@@ -22,6 +22,7 @@ import { ListViewOptions } from 'src/shared/views/ListViewOptions';
 import { IBaseQuery } from '../dataModels/IBaseQuery';
 import { IQueryOrderBySetting } from '../viewModels/IQueryOrderBySetting';
 import { PaginationOptions } from '../dataModels/PaginationOptions';
+import { INameValuePair } from '../dataModels/INameValuePair';
 
 export interface ListToolBarProps<TAdvancedQuery, TIdentifier> {
     advancedQuery: TAdvancedQuery;
@@ -31,6 +32,7 @@ export interface ListToolBarProps<TAdvancedQuery, TIdentifier> {
     submitAdvancedSearch: (query: TAdvancedQuery) => void;
 
     hasListViewOptionsSelect: boolean;
+    availableListViewOptions: ListViewOptions[];
     listViewOption: ListViewOptions;
     setListViewOption: React.Dispatch<React.SetStateAction<ListViewOptions>>;
 
@@ -48,6 +50,7 @@ export interface ListToolBarProps<TAdvancedQuery, TIdentifier> {
     setItemsPerRow: React.Dispatch<React.SetStateAction<number>>;
 
     hasPageSizeSelect: boolean;
+    availablePageSizes: INameValuePair[];
 
     hasOrderBySelect: boolean;
     serverOrderBys: IQueryOrderBySetting[];
@@ -73,9 +76,9 @@ export default function ListToolBar<TAdvancedQuery extends IBaseQuery, TIdentifi
         handleDeleteSelected,
         hasBulkUpdate,
 
-        hasListViewOptionsSelect, listViewOption, setListViewOption,
+        hasListViewOptionsSelect, availableListViewOptions, listViewOption, setListViewOption,
 
-        hasPageSizeSelect,
+        hasPageSizeSelect, availablePageSizes,
 
         hasItemsPerRowSelect, itemsPerRow, setItemsPerRow,
 
@@ -250,7 +253,7 @@ export default function ListToolBar<TAdvancedQuery extends IBaseQuery, TIdentifi
                 <Box sx={{ alignItems: 'center', pt: 0.5 }}>
                     {numSelected === 0 && (
                         <>
-                            {hasListViewOptionsSelect && <ToggleButtonGroup
+                            {hasListViewOptionsSelect && !!availableListViewOptions && availableListViewOptions.length > 1 && <ToggleButtonGroup
                                 size="small"
                                 sx={{ mt: 1 }}
                                 value={listViewOption}
@@ -258,19 +261,20 @@ export default function ListToolBar<TAdvancedQuery extends IBaseQuery, TIdentifi
                                 onChange={handleChangeListViewOptions}
                                 aria-label="list options"
                             >
-                                <ToggleButton value={ListViewOptions.Table} aria-label="htmltable">
-                                    <FormatListBulletedIcon />
-                                </ToggleButton>
-                                <ToggleButton value={ListViewOptions.Tiles} aria-label="tiles">
+                                {availableListViewOptions.indexOf(ListViewOptions.Table) !== -1 &&
+                                    <ToggleButton value={ListViewOptions.Table} aria-label="htmltable">
+                                        <FormatListBulletedIcon />
+                                    </ToggleButton>}
+                                {availableListViewOptions.indexOf(ListViewOptions.Tiles) !== -1 && <ToggleButton value={ListViewOptions.Tiles} aria-label="tiles">
                                     <ViewModuleIcon />
-                                </ToggleButton>
-                                <ToggleButton value={ListViewOptions.SlideShow} aria-label="slideshow">
+                                </ToggleButton>}
+                                {availableListViewOptions.indexOf(ListViewOptions.SlideShow) !== -1 && <ToggleButton value={ListViewOptions.SlideShow} aria-label="slideshow">
                                     <PlayCircleOutlinedIcon />
-                                </ToggleButton>
+                                </ToggleButton>}
                             </ToggleButtonGroup>}
                             {hasPageSizeSelect && listViewOption === ListViewOptions.Table && <FormControl size="small" sx={{ m: 1, minWidth: 120 }}>
                                 <InputLabel id="page-size-select">{t("PageSize")}</InputLabel>
-                                <Select
+                                {(!!!availablePageSizes || availablePageSizes.length == 0) && <Select
                                     labelId="page-size-select"
                                     id="page-size-select"
                                     value={advancedQuery.pageSize}
@@ -280,7 +284,19 @@ export default function ListToolBar<TAdvancedQuery extends IBaseQuery, TIdentifi
                                     <MenuItem value={10}>10</MenuItem>
                                     <MenuItem value={25}>25</MenuItem>
                                     <MenuItem value={100}>100</MenuItem>
-                                </Select>
+                                </Select>}
+                                {(!!availablePageSizes && availablePageSizes.length > 0) && <Select
+                                    labelId="page-size-select"
+                                    id="page-size-select"
+                                    value={advancedQuery.pageSize}
+                                    label={t("PageSize")}
+                                    onChange={handleChangePageSize}
+                                >
+                                    {availablePageSizes.map((availablePageSize) => {
+                                        return (
+                                            <MenuItem key={availablePageSize.value} value={availablePageSize.value}>{availablePageSize.name}</MenuItem>)
+                                    })}
+                                </Select>}
                             </FormControl>}
                             {hasItemsPerRowSelect && listViewOption === ListViewOptions.Tiles && <FormControl size="small" sx={{ m: 1, minWidth: 120 }}>
                                 <InputLabel id="tile-size-select">{t("ItemsPerRow")}</InputLabel>
