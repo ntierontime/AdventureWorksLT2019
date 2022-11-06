@@ -21,9 +21,21 @@ export default function IndexPage() {
 		defaultAdvancedQuery: defaultIProductModelAdvancedQuery(),
         listItems,
         initialLoadFromServer: true,
-        availableListViewOptions: [ListViewOptions.SlideShow, ListViewOptions.Table, ListViewOptions.Tiles],
         hasListToolBar : true,
         hasAdvancedSearch : true,
+        listToolBarSetting: {
+            hasListViewOptionsSelect: true,
+	        availableListViewOptions: [ListViewOptions.SlideShow, ListViewOptions.Table, ListViewOptions.Tiles],
+            hasItemsSelect: true,
+            hasBulkDelete: true,
+            hasBulkUpdate: true,
+            hasItemsPerRowSelect: true,
+            hasPageSizeSelect: true,
+            hasOrderBySelect: true,
+            hasSearch: true,
+            hasAdvancedSearchAccordion: true,
+            hasAdvancedSearchDialog: true,
+        }
     } as ListsPartialViewProps<IProductModelAdvancedQuery, IProductModelDataModel>;
 
     return (

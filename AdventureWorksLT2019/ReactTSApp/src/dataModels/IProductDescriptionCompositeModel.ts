@@ -10,7 +10,7 @@ export interface IProductDescriptionCompositeModel extends ICompositeModel<IProd
 export enum IProductDescriptionCompositeModel_DataOptions__ {
     __Master__ = '__Master__',
     // 4. ListTable
-    productModelProductDescriptions_Via_ProductDescriptionID = 'productModelProductDescriptions_Via_ProductDescriptionID',
+    ProductModelProductDescriptions_Via_ProductDescriptionID = 'ProductModelProductDescriptions_Via_ProductDescriptionID',
 
 }
 

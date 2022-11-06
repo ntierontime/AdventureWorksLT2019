@@ -13,9 +13,9 @@ export interface IAddressCompositeModel extends ICompositeModel<IAddressDataMode
 export enum IAddressCompositeModel_DataOptions__ {
     __Master__ = '__Master__',
     // 4. ListTable
-    customerAddresses_Via_AddressID = 'customerAddresses_Via_AddressID',
-    salesOrderHeaders_Via_BillToAddressID = 'salesOrderHeaders_Via_BillToAddressID',
-    salesOrderHeaders_Via_ShipToAddressID = 'salesOrderHeaders_Via_ShipToAddressID',
+    CustomerAddresses_Via_AddressID = 'CustomerAddresses_Via_AddressID',
+    SalesOrderHeaders_Via_BillToAddressID = 'SalesOrderHeaders_Via_BillToAddressID',
+    SalesOrderHeaders_Via_ShipToAddressID = 'SalesOrderHeaders_Via_ShipToAddressID',
 
 }
 

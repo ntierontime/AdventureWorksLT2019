@@ -12,8 +12,8 @@ export interface ICustomerCompositeModel extends ICompositeModel<ICustomerDataMo
 export enum ICustomerCompositeModel_DataOptions__ {
     __Master__ = '__Master__',
     // 4. ListTable
-    customerAddresses_Via_CustomerID = 'customerAddresses_Via_CustomerID',
-    salesOrderHeaders_Via_CustomerID = 'salesOrderHeaders_Via_CustomerID',
+    CustomerAddresses_Via_CustomerID = 'CustomerAddresses_Via_CustomerID',
+    SalesOrderHeaders_Via_CustomerID = 'SalesOrderHeaders_Via_CustomerID',
 
 }
 

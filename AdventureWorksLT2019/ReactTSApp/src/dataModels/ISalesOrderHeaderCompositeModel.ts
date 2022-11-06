@@ -10,7 +10,7 @@ export interface ISalesOrderHeaderCompositeModel extends ICompositeModel<ISalesO
 export enum ISalesOrderHeaderCompositeModel_DataOptions__ {
     __Master__ = '__Master__',
     // 4. ListTable
-    salesOrderDetails_Via_SalesOrderID = 'salesOrderDetails_Via_SalesOrderID',
+    SalesOrderDetails_Via_SalesOrderID = 'SalesOrderDetails_Via_SalesOrderID',
 
 }
 

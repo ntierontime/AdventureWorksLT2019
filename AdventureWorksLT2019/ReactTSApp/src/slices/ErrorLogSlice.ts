@@ -1,4 +1,5 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
+import { IListResponse } from "src/shared/apis/IListResponse";
 import { IBulkUpdateRequest } from "src/shared/apis/IBulkUpdateRequest";
 import { IMultiItemsCUDRequest } from "src/shared/apis/IMultiItemsCUDRequest";
 import { ItemUIStatus } from "src/shared/dataModels/ItemUIStatus";
@@ -15,6 +16,13 @@ const entityAdapter = createEntityAdapter<IErrorLogDataModel>({
     // Keep the "all IDs" array sorted based on book titles
     // sortComparer: (a, b) => a.text.localeCompare(b.text), 
 })
+
+export const upsertMany = createAsyncThunk(
+    'upsertManyErrorLog',
+    async (listResponse: IListResponse<[IErrorLogDataModel]>, { dispatch }) => {
+        return listResponse;
+    }
+)
 
 
 export const search = createAsyncThunk(
@@ -87,11 +95,33 @@ const ErrorLogSlice = createSlice({
     name: "errorLogSlice",
     initialState: entityAdapter.getInitialState({
         pagination: defaultPaginationResponse(),
-    }), // createEntityAdapter Usage #1
+	}),
     reducers: {
         /* any other state updates here */
     },
     extraReducers: builder => {
+        builder.addCase(upsertMany.pending, (state) => {
+            // console.log("upsertMany.pending");
+        });
+        builder.addCase(upsertMany.fulfilled, (state, { payload }) => {
+            if (!!payload && payload.status === 'OK') {
+                if (payload.pagination.pageIndex === 1 ||
+                    payload.pagination.paginationOption !== PaginationOptions.LoadMore) {
+                    // TODO: update pagination
+                    entityAdapter.removeAll(state);
+                }
+                entityAdapter.upsertMany(state, payload.responseBody);
+                state.pagination = payload.pagination;
+            }
+            else {
+
+            }
+            // console.log("upsertMany.fulfilled");
+        });
+        builder.addCase(upsertMany.rejected, (state, action) => {
+            // console.log("upsertMany.rejected");
+        });
+
 
         builder.addCase(search.pending, (state) => {
             // console.log("search.pending");
@@ -239,7 +269,6 @@ const ErrorLogSlice = createSlice({
     }
 });
 
-// createEntityAdapter Usage #4
 export const errorLogSelectors = entityAdapter.getSelectors<RootState>(
     state => state.errorLogList
 )

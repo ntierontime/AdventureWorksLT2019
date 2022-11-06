@@ -12,8 +12,8 @@ export interface ISalesOrderDetailCompositeModel extends ICompositeModel<ISalesO
 export enum ISalesOrderDetailCompositeModel_DataOptions__ {
     __Master__ = '__Master__',
     // 2. AncestorTable
-    product = 'product',
-    salesOrderHeader = 'salesOrderHeader',
+    Product = 'Product',
+    SalesOrderHeader = 'SalesOrderHeader',
 
 }
 

@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch, } from 'react-redux';
 import { Box,Paper, Dialog, DialogContent, Collapse } from '@mui/material';
 
-import { useTranslation } from 'react-i18next';
-
 import { AppDispatch } from 'src/store/Store';
 import { ListsPartialViewProps } from 'src/shared/viewModels/ListsPartialViewProps';
 import ListToolBar, { ListToolBarProps } from 'src/shared/views/ListToolBar';
@@ -20,9 +18,8 @@ import HtmlTablePartial from './HtmlTablePartial'
 import TilesPartial from './TilesPartial'
 
 export default function ListsPartial(props: ListsPartialViewProps<ICustomerAddressAdvancedQuery, ICustomerAddressDataModel>): JSX.Element {
-    const {advancedQuery, setAdvancedQuery, defaultAdvancedQuery, listItems, initialLoadFromServer, availableListViewOptions, hasListToolBar, hasAdvancedSearch} = props;
+    const {advancedQuery, setAdvancedQuery, defaultAdvancedQuery, listItems, initialLoadFromServer, hasListToolBar, hasAdvancedSearch} = props;
     const dispatch = useDispatch<AppDispatch>();
-    const { t } = useTranslation();
 
     const [listViewOption, setListViewOption] = useState<ListViewOptions>(ListViewOptions.Table);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -134,35 +131,29 @@ export default function ListsPartial(props: ListsPartialViewProps<ICustomerAddre
 
     // Render.1. Top Toolbar
     const renderEnhancedTopToolbar = () => {
-        const props = {
+        const topToolbarProps = {
+            ...props.listToolBarSetting,
             advancedQuery, defaultAdvancedQuery: { ...defaultAdvancedQuery }, setAdvancedQuery,
             rowCount,
             submitAdvancedSearch,
     
-            hasItemsSelect: true, setSelected, numSelected,
+            setSelected, numSelected,
             handleSelectAllClick,
     
-            hasBulkDelete: true,
             handleDeleteSelected,
-            hasBulkUpdate: false,
     
-            hasListViewOptionsSelect: true, availableListViewOptions, listViewOption, setListViewOption,
+            listViewOption, setListViewOption,
     
-            hasPageSizeSelect: true,
+            itemsPerRow, setItemsPerRow,
     
-            hasItemsPerRowSelect: true, itemsPerRow, setItemsPerRow,
+            serverOrderBys,
     
-            hasOrderBySelect: true, serverOrderBys,
-    
-            hasSearch: true,
-            hasAdvancedSearchAccordion: true,
             advancedSearchExpanded,
             handleAdvancedSearchExpandClick,
-            hasAdvancedSearchDialog: true,
             handleAdvancedSearchDialogOpen,
         } as ListToolBarProps<ICustomerAddressAdvancedQuery, ICustomerAddressIdentifier>;
 
-        return <ListToolBar {...props} />
+        return <ListToolBar {...topToolbarProps} />
     }
 
     return (

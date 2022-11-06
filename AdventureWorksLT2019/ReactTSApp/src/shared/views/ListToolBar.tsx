@@ -24,42 +24,45 @@ import { IQueryOrderBySetting } from '../viewModels/IQueryOrderBySetting';
 import { PaginationOptions } from '../dataModels/PaginationOptions';
 import { INameValuePair } from '../dataModels/INameValuePair';
 
-export interface ListToolBarProps<TAdvancedQuery, TIdentifier> {
+export interface ListToolBarSetting {
+    hasListViewOptionsSelect: boolean;
+    availableListViewOptions: ListViewOptions[];
+    hasItemsSelect: boolean;
+    hasBulkDelete: boolean;
+    hasBulkUpdate: boolean;
+    hasItemsPerRowSelect: boolean;
+    hasPageSizeSelect: boolean;
+    hasOrderBySelect: boolean;
+    hasSearch: boolean;
+    hasAdvancedSearchAccordion: boolean;
+    hasAdvancedSearchDialog: boolean;
+}
+
+export interface ListToolBarProps<TAdvancedQuery, TIdentifier> extends ListToolBarSetting {
     advancedQuery: TAdvancedQuery;
     defaultAdvancedQuery: TAdvancedQuery
     setAdvancedQuery: React.Dispatch<React.SetStateAction<TAdvancedQuery>>;
     rowCount: number;
     submitAdvancedSearch: (query: TAdvancedQuery) => void;
 
-    hasListViewOptionsSelect: boolean;
-    availableListViewOptions: ListViewOptions[];
     listViewOption: ListViewOptions;
     setListViewOption: React.Dispatch<React.SetStateAction<ListViewOptions>>;
 
-    hasItemsSelect: boolean;
     setSelected: React.Dispatch<React.SetStateAction<TIdentifier[]>>;
     numSelected: number;
     handleSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
 
-    hasBulkDelete: boolean;
     handleDeleteSelected: () => void;
-    hasBulkUpdate: boolean;
 
-    hasItemsPerRowSelect: boolean;
     itemsPerRow: number;
     setItemsPerRow: React.Dispatch<React.SetStateAction<number>>;
 
-    hasPageSizeSelect: boolean;
     availablePageSizes: INameValuePair[];
 
-    hasOrderBySelect: boolean;
     serverOrderBys: IQueryOrderBySetting[];
 
-    hasSearch: boolean;
-    hasAdvancedSearchAccordion: boolean;
     advancedSearchExpanded: boolean;
     handleAdvancedSearchExpandClick: () => void;
-    hasAdvancedSearchDialog: boolean;
     handleAdvancedSearchDialogOpen: () => void;
 }
 
@@ -211,6 +214,7 @@ export default function ListToolBar<TAdvancedQuery extends IBaseQuery, TIdentifi
                     <Box sx={{ p: 0, display: 'flex', alignItems: 'center' }}>
                         <FormControl variant="outlined"
                             sx={{
+                                pt: 0.5,
                                 pr: 0,
                                 width: { sm: 100, md: 150, lg: 400, xl: 600 },
                                 "& .MuiOutlinedInput-root.Mui-focused": {

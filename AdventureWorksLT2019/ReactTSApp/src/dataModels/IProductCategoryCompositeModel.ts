@@ -11,8 +11,8 @@ export interface IProductCategoryCompositeModel extends ICompositeModel<IProduct
 export enum IProductCategoryCompositeModel_DataOptions__ {
     __Master__ = '__Master__',
     // 4. ListTable
-    products_Via_ProductCategoryID = 'products_Via_ProductCategoryID',
-    productCategories_Via_ParentProductCategoryID = 'productCategories_Via_ParentProductCategoryID',
+    Products_Via_ProductCategoryID = 'Products_Via_ProductCategoryID',
+    ProductCategories_Via_ParentProductCategoryID = 'ProductCategories_Via_ParentProductCategoryID',
 
 }
 

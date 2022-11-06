@@ -18,7 +18,7 @@ import HtmlTablePartial from './HtmlTablePartial'
 import TilesPartial from './TilesPartial'
 
 export default function ListsPartial(props: ListsPartialViewProps<IProductModelProductDescriptionAdvancedQuery, IProductModelProductDescriptionDataModel>): JSX.Element {
-    const {advancedQuery, setAdvancedQuery, defaultAdvancedQuery, listItems, initialLoadFromServer, availableListViewOptions, hasListToolBar, hasAdvancedSearch} = props;
+    const {advancedQuery, setAdvancedQuery, defaultAdvancedQuery, listItems, initialLoadFromServer, hasListToolBar, hasAdvancedSearch} = props;
     const dispatch = useDispatch<AppDispatch>();
 
     const [listViewOption, setListViewOption] = useState<ListViewOptions>(ListViewOptions.Table);
@@ -131,35 +131,29 @@ export default function ListsPartial(props: ListsPartialViewProps<IProductModelP
 
     // Render.1. Top Toolbar
     const renderEnhancedTopToolbar = () => {
-        const props = {
+        const topToolbarProps = {
+            ...props.listToolBarSetting,
             advancedQuery, defaultAdvancedQuery: { ...defaultAdvancedQuery }, setAdvancedQuery,
             rowCount,
             submitAdvancedSearch,
     
-            hasItemsSelect: true, setSelected, numSelected,
+            setSelected, numSelected,
             handleSelectAllClick,
     
-            hasBulkDelete: true,
             handleDeleteSelected,
-            hasBulkUpdate: false,
     
-            hasListViewOptionsSelect: true, availableListViewOptions, listViewOption, setListViewOption,
+            listViewOption, setListViewOption,
     
-            hasPageSizeSelect: true,
+            itemsPerRow, setItemsPerRow,
     
-            hasItemsPerRowSelect: true, itemsPerRow, setItemsPerRow,
+            serverOrderBys,
     
-            hasOrderBySelect: true, serverOrderBys,
-    
-            hasSearch: true,
-            hasAdvancedSearchAccordion: true,
             advancedSearchExpanded,
             handleAdvancedSearchExpandClick,
-            hasAdvancedSearchDialog: true,
             handleAdvancedSearchDialogOpen,
         } as ListToolBarProps<IProductModelProductDescriptionAdvancedQuery, IProductModelProductDescriptionIdentifier>;
 
-        return <ListToolBar {...props} />
+        return <ListToolBar {...topToolbarProps} />
     }
 
     return (

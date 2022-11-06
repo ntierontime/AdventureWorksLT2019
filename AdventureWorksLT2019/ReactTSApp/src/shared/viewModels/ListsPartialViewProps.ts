@@ -1,3 +1,4 @@
+import { ListToolBarSetting } from "../views/ListToolBar";
 import { ListViewOptions } from "../views/ListViewOptions";
 
 export interface ListsPartialViewProps<TAdvancedQuery, TDataModel> {
@@ -6,7 +7,7 @@ export interface ListsPartialViewProps<TAdvancedQuery, TDataModel> {
     defaultAdvancedQuery: TAdvancedQuery;
     listItems: TDataModel[];
     initialLoadFromServer: boolean;
-    availableListViewOptions: ListViewOptions[];
     hasListToolBar: boolean;
     hasAdvancedSearch: boolean;
+    listToolBarSetting: ListToolBarSetting;
 }
