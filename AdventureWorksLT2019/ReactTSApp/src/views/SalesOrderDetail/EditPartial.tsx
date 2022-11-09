@@ -101,6 +101,8 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
             }
         });
 
+        getSalesOrderHeader_SalesOrderIDCodeList(iSalesOrderHeaderAdvancedQuery_SalesOrderID, false, false);
+
 		setIProductModelAdvancedQuery_ProductModelID({ ...defaultIProductModelAdvancedQuery(), pageSize: 10000 });
         codeListsApi.getProductModelCodeList(iProductModelAdvancedQuery_ProductModelID).then((res) => {
             if (res.status === "OK") {
@@ -114,6 +116,10 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
                 setProductCategory_ProductCategory_ParentIDCodeList(res.responseBody);
             }
         });
+
+        getProductCategory_ProductCategoryIDCodeList(iProductCategoryAdvancedQuery_ProductCategoryID, false, false);
+
+        getProduct_ProductIDCodeList(iProductAdvancedQuery_ProductID, false, false);
         reset(item);
         setSaving(false);
         setSaved(false);
