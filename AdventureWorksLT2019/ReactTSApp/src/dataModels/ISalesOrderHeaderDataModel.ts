@@ -13,9 +13,12 @@ export interface ISalesOrderHeaderDataModel {
     salesOrderNumber: string;
     purchaseOrderNumber: string;
     accountNumber: string;
-    customerID: number;
-    shipToAddressID: number;
-    billToAddressID: number;
+    customer_Name: string;
+    customerID: number | string;
+    shipTo_Name: string;
+    shipToAddressID: number | string;
+    billTo_Name: string;
+    billToAddressID: number | string;
     shipMethod: string;
     creditCardApprovalCode: string;
     subTotal: number;
@@ -25,9 +28,6 @@ export interface ISalesOrderHeaderDataModel {
     comment: string;
     rowguid: any;
     modifiedDate: string;
-    billTo_Name: string;
-    customer_Name: string;
-    shipTo_Name: string;
 }
 
 export function defaultSalesOrderHeader(): ISalesOrderHeaderDataModel {
@@ -44,8 +44,11 @@ export function defaultSalesOrderHeader(): ISalesOrderHeaderDataModel {
         salesOrderNumber: '',
         purchaseOrderNumber: '',
         accountNumber: '',
+        customer_Name: '',
         customerID: 0,
+        shipTo_Name: '',
         shipToAddressID: 0,
+        billTo_Name: '',
         billToAddressID: 0,
         shipMethod: '',
         creditCardApprovalCode: '',
@@ -56,9 +59,6 @@ export function defaultSalesOrderHeader(): ISalesOrderHeaderDataModel {
         comment: '',
         rowguid: null,
         modifiedDate: '',
-        billTo_Name: '',
-        customer_Name: '',
-        shipTo_Name: '',
     } as unknown as ISalesOrderHeaderDataModel;
 }
 

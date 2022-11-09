@@ -12,12 +12,12 @@ import { Controller } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers';
 import { INameValuePair } from 'src/shared/dataModels/INameValuePair';
 import { codeListsApi } from 'src/apiClients/CodeListsApi';
-import { defaultISalesOrderHeaderAdvancedQuery } from 'src/dataModels/ISalesOrderHeaderQueries';
-import { defaultIProductAdvancedQuery } from 'src/dataModels/IProductQueries';
-import { defaultIProductCategoryAdvancedQuery } from 'src/dataModels/IProductCategoryQueries';
-import { defaultIProductModelAdvancedQuery } from 'src/dataModels/IProductModelQueries';
-import { defaultIAddressAdvancedQuery } from 'src/dataModels/IAddressQueries';
-import { defaultICustomerAdvancedQuery } from 'src/dataModels/ICustomerQueries';
+import { ISalesOrderHeaderAdvancedQuery, defaultISalesOrderHeaderAdvancedQuery } from 'src/dataModels/ISalesOrderHeaderQueries';
+import { IProductAdvancedQuery, defaultIProductAdvancedQuery } from 'src/dataModels/IProductQueries';
+import { IProductCategoryAdvancedQuery, defaultIProductCategoryAdvancedQuery } from 'src/dataModels/IProductCategoryQueries';
+import { IProductModelAdvancedQuery, defaultIProductModelAdvancedQuery } from 'src/dataModels/IProductModelQueries';
+import { IAddressAdvancedQuery, defaultIAddressAdvancedQuery } from 'src/dataModels/IAddressQueries';
+import { ICustomerAdvancedQuery, defaultICustomerAdvancedQuery } from 'src/dataModels/ICustomerQueries';
 
 import { AppDispatch } from 'src/store/Store';
 
@@ -33,7 +33,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderDet
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { register, control, handleSubmit, reset, formState: { isValid, errors } } = useForm({
+    const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
@@ -50,59 +50,64 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderDet
 
 
 
-    const iSalesOrderHeaderAdvancedQuery_SalesOrderID = defaultISalesOrderHeaderAdvancedQuery();
-    const [salesOrderHeader_SalesOrderIDCodeList, setSalesOrderHeader_SalesOrderIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.salesOrderHeader_Name, value: item.salesOrderID, selected: false }]);
+    const [iAddressAdvancedQuery_ShipToID, setIAddressAdvancedQuery_ShipToID] = useState<IAddressAdvancedQuery>();
+    const [address_ShipToIDCodeList, setAddress_ShipToIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.shipTo_Name, value: item.shipToID, selected: false }]);
 
-    const iProductAdvancedQuery_ProductID = defaultIProductAdvancedQuery();
-    const [product_ProductIDCodeList, setProduct_ProductIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.product_Name, value: item.productID, selected: false }]);
-
-    const iProductCategoryAdvancedQuery_ProductCategoryID = defaultIProductCategoryAdvancedQuery();
-    const [productCategory_ProductCategoryIDCodeList, setProductCategory_ProductCategoryIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productCategory_Name, value: item.productCategoryID, selected: false }]);
-
-    const iProductCategoryAdvancedQuery_ProductCategory_ParentID = defaultIProductCategoryAdvancedQuery();
-    const [productCategory_ProductCategory_ParentIDCodeList, setProductCategory_ProductCategory_ParentIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productCategory_Parent_Name, value: item.productCategory_ParentID, selected: false }]);
-
-    const iProductModelAdvancedQuery_ProductModelID = defaultIProductModelAdvancedQuery();
-    const [productModel_ProductModelIDCodeList, setProductModel_ProductModelIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productModel_Name, value: item.productModelID, selected: false }]);
-
-    const iAddressAdvancedQuery_BillToID = defaultIAddressAdvancedQuery();
-    const [address_BillToIDCodeList, setAddress_BillToIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.billTo_Name, value: item.billToID, selected: false }]);
-
-    const iCustomerAdvancedQuery_CustomerID = defaultICustomerAdvancedQuery();
+    const [iCustomerAdvancedQuery_CustomerID, setICustomerAdvancedQuery_CustomerID] = useState<ICustomerAdvancedQuery>();
     const [customer_CustomerIDCodeList, setCustomer_CustomerIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.customer_Name, value: item.customerID, selected: false }]);
 
-    const iAddressAdvancedQuery_ShipToID = defaultIAddressAdvancedQuery();
-    const [address_ShipToIDCodeList, setAddress_ShipToIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.shipTo_Name, value: item.shipToID, selected: false }]);
+    const [iAddressAdvancedQuery_BillToID, setIAddressAdvancedQuery_BillToID] = useState<IAddressAdvancedQuery>();
+    const [address_BillToIDCodeList, setAddress_BillToIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.billTo_Name, value: item.billToID, selected: false }]);
+
+    const [iSalesOrderHeaderAdvancedQuery_SalesOrderID, setISalesOrderHeaderAdvancedQuery_SalesOrderID] = useState<ISalesOrderHeaderAdvancedQuery>({ ...defaultISalesOrderHeaderAdvancedQuery(), billToAddressID: item.billToID, customerID: item.customerID, shipToAddressID: item.shipToID, pageSize: 10000 });
+    const [salesOrderHeader_SalesOrderIDCodeList, setSalesOrderHeader_SalesOrderIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.salesOrderHeader_Name, value: item.salesOrderID, selected: false }]);
+
+    const [iProductModelAdvancedQuery_ProductModelID, setIProductModelAdvancedQuery_ProductModelID] = useState<IProductModelAdvancedQuery>();
+    const [productModel_ProductModelIDCodeList, setProductModel_ProductModelIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productModel_Name, value: item.productModelID, selected: false }]);
+
+    const [iProductCategoryAdvancedQuery_ProductCategory_ParentID, setIProductCategoryAdvancedQuery_ProductCategory_ParentID] = useState<IProductCategoryAdvancedQuery>();
+    const [productCategory_ProductCategory_ParentIDCodeList, setProductCategory_ProductCategory_ParentIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productCategory_Parent_Name, value: item.productCategory_ParentID, selected: false }]);
+
+    const [iProductCategoryAdvancedQuery_ProductCategoryID, setIProductCategoryAdvancedQuery_ProductCategoryID] = useState<IProductCategoryAdvancedQuery>({ ...defaultIProductCategoryAdvancedQuery(), parentProductCategoryID: item.productCategory_ParentID, pageSize: 10000 });
+    const [productCategory_ProductCategoryIDCodeList, setProductCategory_ProductCategoryIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productCategory_Name, value: item.productCategoryID, selected: false }]);
+
+    const [iProductAdvancedQuery_ProductID, setIProductAdvancedQuery_ProductID] = useState<IProductAdvancedQuery>({ ...defaultIProductAdvancedQuery(), productCategoryID: item.productCategoryID, parentID: item.productCategory_ParentID, productModelID: item.productModelID, pageSize: 10000 });
+    const [product_ProductIDCodeList, setProduct_ProductIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.product_Name, value: item.productID, selected: false }]);
     useEffect(() => {
 
 
-        codeListsApi.getProductCategoryCodeList({ ...iProductCategoryAdvancedQuery_ProductCategory_ParentID, pageSize: 10000 }).then((res) => {
+		setIAddressAdvancedQuery_ShipToID({ ...defaultIAddressAdvancedQuery(), pageSize: 10000 });
+        codeListsApi.getAddressCodeList({ ...iAddressAdvancedQuery_ShipToID }).then((res) => {
             if (res.status === "OK") {
-                setProductCategory_ProductCategory_ParentIDCodeList(res.responseBody);
+                setAddress_ShipToIDCodeList(res.responseBody);
             }
         });
 
-        codeListsApi.getProductModelCodeList({ ...iProductModelAdvancedQuery_ProductModelID, pageSize: 10000 }).then((res) => {
-            if (res.status === "OK") {
-                setProductModel_ProductModelIDCodeList(res.responseBody);
-            }
-        });
-
-        codeListsApi.getAddressCodeList({ ...iAddressAdvancedQuery_BillToID, pageSize: 10000 }).then((res) => {
-            if (res.status === "OK") {
-                setAddress_BillToIDCodeList(res.responseBody);
-            }
-        });
-
-        codeListsApi.getCustomerCodeList({ ...iCustomerAdvancedQuery_CustomerID, pageSize: 10000 }).then((res) => {
+		setICustomerAdvancedQuery_CustomerID({ ...defaultICustomerAdvancedQuery(), pageSize: 10000 });
+        codeListsApi.getCustomerCodeList({ ...iCustomerAdvancedQuery_CustomerID }).then((res) => {
             if (res.status === "OK") {
                 setCustomer_CustomerIDCodeList(res.responseBody);
             }
         });
 
-        codeListsApi.getAddressCodeList({ ...iAddressAdvancedQuery_ShipToID, pageSize: 10000 }).then((res) => {
+		setIAddressAdvancedQuery_BillToID({ ...defaultIAddressAdvancedQuery(), pageSize: 10000 });
+        codeListsApi.getAddressCodeList({ ...iAddressAdvancedQuery_BillToID }).then((res) => {
             if (res.status === "OK") {
-                setAddress_ShipToIDCodeList(res.responseBody);
+                setAddress_BillToIDCodeList(res.responseBody);
+            }
+        });
+
+		setIProductModelAdvancedQuery_ProductModelID({ ...defaultIProductModelAdvancedQuery(), pageSize: 10000 });
+        codeListsApi.getProductModelCodeList({ ...iProductModelAdvancedQuery_ProductModelID }).then((res) => {
+            if (res.status === "OK") {
+                setProductModel_ProductModelIDCodeList(res.responseBody);
+            }
+        });
+
+		setIProductCategoryAdvancedQuery_ProductCategory_ParentID({ ...defaultIProductCategoryAdvancedQuery(), pageSize: 10000 });
+        codeListsApi.getProductCategoryCodeList({ ...iProductCategoryAdvancedQuery_ProductCategory_ParentID }).then((res) => {
+            if (res.status === "OK") {
+                setProductCategory_ProductCategory_ParentIDCodeList(res.responseBody);
             }
         });
         setCreating(false);
@@ -110,6 +115,160 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderDet
         setCreateMessage(null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+
+
+    const onShipToIDChanged = (event: React.PointerEvent<INameValuePair>) => {
+        console.log("ShipToID");
+        // name is the property name, value is the selected value
+        const nameValuePair = event.target as unknown as INameValuePair;
+
+        const shipToID = nameValuePair.value as number;
+
+        setISalesOrderHeaderAdvancedQuery_SalesOrderID({ ...iSalesOrderHeaderAdvancedQuery_SalesOrderID, shipToAddressID: shipToID });
+        getSalesOrderHeader_SalesOrderIDCodeList(iSalesOrderHeaderAdvancedQuery_SalesOrderID, true, false);
+    }
+
+    const onCustomerIDChanged = (event: React.PointerEvent<INameValuePair>) => {
+        console.log("CustomerID");
+        // name is the property name, value is the selected value
+        const nameValuePair = event.target as unknown as INameValuePair;
+
+        const customerID = nameValuePair.value as number;
+
+        setISalesOrderHeaderAdvancedQuery_SalesOrderID({ ...iSalesOrderHeaderAdvancedQuery_SalesOrderID, customerID: customerID });
+        getSalesOrderHeader_SalesOrderIDCodeList(iSalesOrderHeaderAdvancedQuery_SalesOrderID, true, false);
+    }
+
+    const onBillToIDChanged = (event: React.PointerEvent<INameValuePair>) => {
+        console.log("BillToID");
+        // name is the property name, value is the selected value
+        const nameValuePair = event.target as unknown as INameValuePair;
+
+        const billToID = nameValuePair.value as number;
+
+        setISalesOrderHeaderAdvancedQuery_SalesOrderID({ ...iSalesOrderHeaderAdvancedQuery_SalesOrderID, billToAddressID: billToID });
+        getSalesOrderHeader_SalesOrderIDCodeList(iSalesOrderHeaderAdvancedQuery_SalesOrderID, true, false);
+    }
+
+    const onProductModelIDChanged = (event: React.PointerEvent<INameValuePair>) => {
+        console.log("ProductModelID");
+        // name is the property name, value is the selected value
+        const nameValuePair = event.target as unknown as INameValuePair;
+
+        const productModelID = nameValuePair.value as number;
+
+        setIProductAdvancedQuery_ProductID({ ...iProductAdvancedQuery_ProductID, productModelID: productModelID });
+        getProduct_ProductIDCodeList(iProductAdvancedQuery_ProductID, true, false);
+    }
+
+    const onProductCategory_ParentIDChanged = (event: React.PointerEvent<INameValuePair>) => {
+        console.log("ProductCategory_ParentID");
+        // name is the property name, value is the selected value
+        const nameValuePair = event.target as unknown as INameValuePair;
+
+        const productCategory_ParentID = nameValuePair.value as number;
+
+        setIProductAdvancedQuery_ProductID({ ...iProductAdvancedQuery_ProductID, parentID: productCategory_ParentID });
+        getProduct_ProductIDCodeList(iProductAdvancedQuery_ProductID, true, false);
+
+
+        setIProductCategoryAdvancedQuery_ProductCategoryID({ ...iProductCategoryAdvancedQuery_ProductCategoryID, parentProductCategoryID: productCategory_ParentID });
+        getProductCategory_ProductCategoryIDCodeList(iProductCategoryAdvancedQuery_ProductCategoryID, true, false);
+    }
+
+    const onProductCategoryIDChanged = (event: React.PointerEvent<INameValuePair>) => {
+        console.log("ProductCategoryID");
+        // name is the property name, value is the selected value
+        const nameValuePair = event.target as unknown as INameValuePair;
+
+        const productCategoryID = nameValuePair.value as number;
+
+        setIProductAdvancedQuery_ProductID({ ...iProductAdvancedQuery_ProductID, productCategoryID: productCategoryID });
+        getProduct_ProductIDCodeList(iProductAdvancedQuery_ProductID, true, false);
+    }
+
+
+    const getSalesOrderHeader_SalesOrderIDCodeList = (query: ISalesOrderHeaderAdvancedQuery, toSetSelectedValue: boolean, setCodeListToEmpty: boolean) => {
+        if (!setCodeListToEmpty) {
+			codeListsApi.getSalesOrderHeaderCodeList({ ...query, pageSize: 10000 }).then((res) => {
+				if (res.status === "OK") {
+					if (toSetSelectedValue) {
+						if (res.responseBody.findIndex(t => t.value === item.salesOrderID) === -1) {
+							if (res.responseBody.length > 0) {
+								setValue('salesOrderID', res.responseBody[0].value);
+							}
+							else {
+								setValue('salesOrderID', -1);
+							}
+						}
+						else {
+							setValue('salesOrderID', item.salesOrderID);
+						}
+					}
+					setSalesOrderHeader_SalesOrderIDCodeList(res.responseBody);
+				}
+			});
+		}
+        else {
+            setSalesOrderHeader_SalesOrderIDCodeList([]);
+            setValue('salesOrderID', '');
+        }
+    }
+
+    const getProductCategory_ProductCategoryIDCodeList = (query: IProductCategoryAdvancedQuery, toSetSelectedValue: boolean, setCodeListToEmpty: boolean) => {
+        if (!setCodeListToEmpty) {
+			codeListsApi.getProductCategoryCodeList({ ...query, pageSize: 10000 }).then((res) => {
+				if (res.status === "OK") {
+					if (toSetSelectedValue) {
+						if (res.responseBody.findIndex(t => t.value === item.productCategoryID) === -1) {
+							if (res.responseBody.length > 0) {
+								setValue('productCategoryID', res.responseBody[0].value);
+							}
+							else {
+								setValue('productCategoryID', -1);
+							}
+						}
+						else {
+							setValue('productCategoryID', item.productCategoryID);
+						}
+					}
+					setProductCategory_ProductCategoryIDCodeList(res.responseBody);
+				}
+			});
+		}
+        else {
+            setProductCategory_ProductCategoryIDCodeList([]);
+            setValue('productCategoryID', '');
+        }
+    }
+
+    const getProduct_ProductIDCodeList = (query: IProductAdvancedQuery, toSetSelectedValue: boolean, setCodeListToEmpty: boolean) => {
+        if (!setCodeListToEmpty) {
+			codeListsApi.getProductCodeList({ ...query, pageSize: 10000 }).then((res) => {
+				if (res.status === "OK") {
+					if (toSetSelectedValue) {
+						if (res.responseBody.findIndex(t => t.value === item.productID) === -1) {
+							if (res.responseBody.length > 0) {
+								setValue('productID', res.responseBody[0].value);
+							}
+							else {
+								setValue('productID', -1);
+							}
+						}
+						else {
+							setValue('productID', item.productID);
+						}
+					}
+					setProduct_ProductIDCodeList(res.responseBody);
+				}
+			});
+		}
+        else {
+            setProduct_ProductIDCodeList([]);
+            setValue('productID', '');
+        }
+    }
 
     const onSubmit = () => {
         setCreating(true);
@@ -226,6 +385,54 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderDet
             </CardContent>}
             <CardContent>
                 <TextField
+                    label={t("ShipToID")}
+                    id="shipToIDSelect"
+                    select
+                    name='shipToID'
+                    {...register("shipToID", salesOrderDetailFormValidationWhenCreate.shipToID)}
+                    autoComplete='shipToID'
+                    variant="outlined"
+                    fullWidth
+                    defaultValue={item.shipToID}
+                	onChange={(event: any) => { onShipToIDChanged(event) }}
+                >
+                    {address_ShipToIDCodeList && address_ShipToIDCodeList.map((v, index) => {
+                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
+                    })}
+                </TextField>
+                <TextField
+                    label={t("CustomerID")}
+                    id="customerIDSelect"
+                    select
+                    name='customerID'
+                    {...register("customerID", salesOrderDetailFormValidationWhenCreate.customerID)}
+                    autoComplete='customerID'
+                    variant="outlined"
+                    fullWidth
+                    defaultValue={item.customerID}
+                	onChange={(event: any) => { onCustomerIDChanged(event) }}
+                >
+                    {customer_CustomerIDCodeList && customer_CustomerIDCodeList.map((v, index) => {
+                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
+                    })}
+                </TextField>
+                <TextField
+                    label={t("BillToID")}
+                    id="billToIDSelect"
+                    select
+                    name='billToID'
+                    {...register("billToID", salesOrderDetailFormValidationWhenCreate.billToID)}
+                    autoComplete='billToID'
+                    variant="outlined"
+                    fullWidth
+                    defaultValue={item.billToID}
+                	onChange={(event: any) => { onBillToIDChanged(event) }}
+                >
+                    {address_BillToIDCodeList && address_BillToIDCodeList.map((v, index) => {
+                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
+                    })}
+                </TextField>
+                <TextField
                     label={t("SalesOrderID")}
                     id="salesOrderIDSelect"
                     select
@@ -252,6 +459,54 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderDet
                     fullWidth
                     helperText={!!errors.orderQty ? t(errors.orderQty.message) : ''}
                 />
+                <TextField
+                    label={t("ProductModelID")}
+                    id="productModelIDSelect"
+                    select
+                    name='productModelID'
+                    {...register("productModelID", salesOrderDetailFormValidationWhenCreate.productModelID)}
+                    autoComplete='productModelID'
+                    variant="outlined"
+                    fullWidth
+                    defaultValue={item.productModelID}
+                	onChange={(event: any) => { onProductModelIDChanged(event) }}
+                >
+                    {productModel_ProductModelIDCodeList && productModel_ProductModelIDCodeList.map((v, index) => {
+                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
+                    })}
+                </TextField>
+                <TextField
+                    label={t("ProductCategory_ParentID")}
+                    id="productCategory_ParentIDSelect"
+                    select
+                    name='productCategory_ParentID'
+                    {...register("productCategory_ParentID", salesOrderDetailFormValidationWhenCreate.productCategory_ParentID)}
+                    autoComplete='productCategory_ParentID'
+                    variant="outlined"
+                    fullWidth
+                    defaultValue={item.productCategory_ParentID}
+                	onChange={(event: any) => { onProductCategory_ParentIDChanged(event) }}
+                >
+                    {productCategory_ProductCategory_ParentIDCodeList && productCategory_ProductCategory_ParentIDCodeList.map((v, index) => {
+                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
+                    })}
+                </TextField>
+                <TextField
+                    label={t("ProductCategoryID")}
+                    id="productCategoryIDSelect"
+                    select
+                    name='productCategoryID'
+                    {...register("productCategoryID", salesOrderDetailFormValidationWhenCreate.productCategoryID)}
+                    autoComplete='productCategoryID'
+                    variant="outlined"
+                    fullWidth
+                    defaultValue={item.productCategoryID}
+                	onChange={(event: any) => { onProductCategoryIDChanged(event) }}
+                >
+                    {productCategory_ProductCategoryIDCodeList && productCategory_ProductCategoryIDCodeList.map((v, index) => {
+                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
+                    })}
+                </TextField>
                 <TextField
                     label={t("ProductID")}
                     id="productIDSelect"
@@ -315,96 +570,6 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderDet
                             />
                     }
                 />
-                <TextField
-                    label={t("ProductCategoryID")}
-                    id="productCategoryIDSelect"
-                    select
-                    name='productCategoryID'
-                    {...register("productCategoryID", salesOrderDetailFormValidationWhenCreate.productCategoryID)}
-                    autoComplete='productCategoryID'
-                    variant="outlined"
-                    fullWidth
-                    defaultValue={item.productCategoryID}
-                >
-                    {productCategory_ProductCategoryIDCodeList && productCategory_ProductCategoryIDCodeList.map((v, index) => {
-                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
-                    })}
-                </TextField>
-                <TextField
-                    label={t("ProductCategory_ParentID")}
-                    id="productCategory_ParentIDSelect"
-                    select
-                    name='productCategory_ParentID'
-                    {...register("productCategory_ParentID", salesOrderDetailFormValidationWhenCreate.productCategory_ParentID)}
-                    autoComplete='productCategory_ParentID'
-                    variant="outlined"
-                    fullWidth
-                    defaultValue={item.productCategory_ParentID}
-                >
-                    {productCategory_ProductCategory_ParentIDCodeList && productCategory_ProductCategory_ParentIDCodeList.map((v, index) => {
-                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
-                    })}
-                </TextField>
-                <TextField
-                    label={t("ProductModelID")}
-                    id="productModelIDSelect"
-                    select
-                    name='productModelID'
-                    {...register("productModelID", salesOrderDetailFormValidationWhenCreate.productModelID)}
-                    autoComplete='productModelID'
-                    variant="outlined"
-                    fullWidth
-                    defaultValue={item.productModelID}
-                >
-                    {productModel_ProductModelIDCodeList && productModel_ProductModelIDCodeList.map((v, index) => {
-                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
-                    })}
-                </TextField>
-                <TextField
-                    label={t("BillToID")}
-                    id="billToIDSelect"
-                    select
-                    name='billToID'
-                    {...register("billToID", salesOrderDetailFormValidationWhenCreate.billToID)}
-                    autoComplete='billToID'
-                    variant="outlined"
-                    fullWidth
-                    defaultValue={item.billToID}
-                >
-                    {address_BillToIDCodeList && address_BillToIDCodeList.map((v, index) => {
-                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
-                    })}
-                </TextField>
-                <TextField
-                    label={t("CustomerID")}
-                    id="customerIDSelect"
-                    select
-                    name='customerID'
-                    {...register("customerID", salesOrderDetailFormValidationWhenCreate.customerID)}
-                    autoComplete='customerID'
-                    variant="outlined"
-                    fullWidth
-                    defaultValue={item.customerID}
-                >
-                    {customer_CustomerIDCodeList && customer_CustomerIDCodeList.map((v, index) => {
-                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
-                    })}
-                </TextField>
-                <TextField
-                    label={t("ShipToID")}
-                    id="shipToIDSelect"
-                    select
-                    name='shipToID'
-                    {...register("shipToID", salesOrderDetailFormValidationWhenCreate.shipToID)}
-                    autoComplete='shipToID'
-                    variant="outlined"
-                    fullWidth
-                    defaultValue={item.shipToID}
-                >
-                    {address_ShipToIDCodeList && address_ShipToIDCodeList.map((v, index) => {
-                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
-                    })}
-                </TextField>
             </CardContent>
             {(crudViewContainer === CrudViewContainers.Dialog) && <CardActions disableSpacing>
                 {renderButtonGroupWhenDialog()}

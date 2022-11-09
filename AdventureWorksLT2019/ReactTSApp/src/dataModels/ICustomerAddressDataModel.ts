@@ -3,26 +3,26 @@ import { ItemUIStatus } from "src/shared/dataModels/ItemUIStatus";
 export interface ICustomerAddressDataModel {
     itemUIStatus______: ItemUIStatus;
     isDeleted______: boolean;
-    customerID: number;
-    addressID: number;
+    customer_Name: string;
+    customerID: number | string;
+    address_Name: string;
+    addressID: number | string;
     addressType: string;
     rowguid: any;
     modifiedDate: string;
-    address_Name: string;
-    customer_Name: string;
 }
 
 export function defaultCustomerAddress(): ICustomerAddressDataModel {
     return {
         itemUIStatus______: ItemUIStatus.New,
         isDeleted______: false,
+        customer_Name: '',
         customerID: 0,
+        address_Name: '',
         addressID: 0,
         addressType: '',
         rowguid: null,
         modifiedDate: '',
-        address_Name: '',
-        customer_Name: '',
     } as unknown as ICustomerAddressDataModel;
 }
 

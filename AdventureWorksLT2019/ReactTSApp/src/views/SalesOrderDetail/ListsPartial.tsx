@@ -118,7 +118,7 @@ export default function ListsPartial(props: ListsPartialViewProps<ISalesOrderDet
 
     // 2. Selected/De-Select one item
     const handleSelectItemClick = (item: ISalesOrderDetailDataModel) => {
-        const selectedIndex = selected.findIndex(t => compareISalesOrderDetailIdentifier(t, item));
+        const selectedIndex = selected.findIndex(t => compareISalesOrderDetailIdentifier(t, getISalesOrderDetailIdentifier(item)));
         let newSelected: readonly ISalesOrderDetailIdentifier[] = [];
 
         if (selectedIndex === -1) {

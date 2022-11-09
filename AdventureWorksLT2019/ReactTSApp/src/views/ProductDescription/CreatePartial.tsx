@@ -26,7 +26,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDescri
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { register, control, handleSubmit, reset, formState: { isValid, errors } } = useForm({
+    const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
@@ -49,6 +49,9 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDescri
         setCreateMessage(null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+
+
 
     const onSubmit = () => {
         setCreating(true);

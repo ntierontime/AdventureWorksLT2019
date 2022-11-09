@@ -12,7 +12,7 @@ import { Controller } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers';
 import { INameValuePair } from 'src/shared/dataModels/INameValuePair';
 import { codeListsApi } from 'src/apiClients/CodeListsApi';
-import { defaultIProductCategoryAdvancedQuery } from 'src/dataModels/IProductCategoryQueries';
+import { IProductCategoryAdvancedQuery, defaultIProductCategoryAdvancedQuery } from 'src/dataModels/IProductCategoryQueries';
 
 import { AppDispatch } from 'src/store/Store';
 
@@ -28,7 +28,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductCatego
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { register, control, handleSubmit, reset, formState: { isValid, errors } } = useForm({
+    const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
@@ -45,12 +45,13 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductCatego
 
 
 
-    const iProductCategoryAdvancedQuery_ParentProductCategoryID = defaultIProductCategoryAdvancedQuery();
+    const [iProductCategoryAdvancedQuery_ParentProductCategoryID, setIProductCategoryAdvancedQuery_ParentProductCategoryID] = useState<IProductCategoryAdvancedQuery>();
     const [productCategory_ParentProductCategoryIDCodeList, setProductCategory_ParentProductCategoryIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.parent_Name, value: item.parentProductCategoryID, selected: false }]);
     useEffect(() => {
 
 
-        codeListsApi.getProductCategoryCodeList({ ...iProductCategoryAdvancedQuery_ParentProductCategoryID, pageSize: 10000 }).then((res) => {
+		setIProductCategoryAdvancedQuery_ParentProductCategoryID({ ...defaultIProductCategoryAdvancedQuery(), pageSize: 10000 });
+        codeListsApi.getProductCategoryCodeList({ ...iProductCategoryAdvancedQuery_ParentProductCategoryID }).then((res) => {
             if (res.status === "OK") {
                 setProductCategory_ParentProductCategoryIDCodeList(res.responseBody);
             }
@@ -60,6 +61,9 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductCatego
         setCreateMessage(null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+
+
 
     const onSubmit = () => {
         setCreating(true);

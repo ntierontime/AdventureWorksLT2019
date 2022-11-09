@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Checkbox, FormControlLabel, IconButton, Pagination, Popover, Stack, Switch, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -35,9 +35,11 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductMod
     const [anchorElItemActions, setAnchorElItemActions] = useState<HTMLElement | null>(null);
     const openPopoverItemActions = Boolean(anchorElItemActions);
 
+    const orderedListItems = useMemo(() => !!listItems ? stableSort(listItems, getComparator(order, orderBy)) as IProductModelDataModel[] : [], [listItems, order, orderBy]);
+
     useEffect(() => {
         setCurrentItemOnDialog(!!orderedListItems && orderedListItems.length > 0 && currentItemIndex >= 0 && currentItemIndex < orderedListItems.length ? orderedListItems[currentItemIndex] : null);
-    }, [currentItemIndex]);
+    }, [currentItemIndex, orderedListItems, setCurrentItemOnDialog]);
 
     const handleItemActionsPopoverOpen = (event: React.MouseEvent<HTMLElement>, thisIndex: number) => {
         event.stopPropagation();
@@ -64,8 +66,6 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductMod
     const handleChangeTableDense = (event: React.ChangeEvent<HTMLInputElement>) => {
         setDense(event.target.checked);
     };
-
-    const orderedListItems = !!listItems ? stableSort(listItems, getComparator(order, orderBy)) as IProductModelDataModel[] : [];
 
     const headCells: HeadCell[] = [
 

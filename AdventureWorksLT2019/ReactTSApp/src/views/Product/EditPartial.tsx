@@ -16,8 +16,8 @@ import { Controller } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers';
 import { INameValuePair } from 'src/shared/dataModels/INameValuePair';
 import { codeListsApi } from 'src/apiClients/CodeListsApi';
-import { defaultIProductCategoryAdvancedQuery } from 'src/dataModels/IProductCategoryQueries';
-import { defaultIProductModelAdvancedQuery } from 'src/dataModels/IProductModelQueries';
+import { IProductCategoryAdvancedQuery, defaultIProductCategoryAdvancedQuery } from 'src/dataModels/IProductCategoryQueries';
+import { IProductModelAdvancedQuery, defaultIProductModelAdvancedQuery } from 'src/dataModels/IProductModelQueries';
 
 // un-comment /*getCurrency,*/ if you display money
 import { /*getCurrency,*/ i18nFormats } from 'src/i18n';
@@ -27,7 +27,7 @@ import { ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 import { getAvatarStyle } from 'src/shared/views/ThemeRelated';
 
-import { defaultProduct, getProductAvatar, IProductDataModel, productFormValidationWhenEdit } from 'src/dataModels/IProductDataModel';
+import { getProductAvatar, IProductDataModel, productFormValidationWhenEdit } from 'src/dataModels/IProductDataModel';
 import { put } from 'src/slices/ProductSlice';
 
 export default function EditPartial(props: ItemPartialViewProps<IProductDataModel>): JSX.Element {
@@ -37,10 +37,10 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { register, control, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
+    const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
-        defaultValues: defaultProduct(),
+        defaultValues: item,
     },);
 
     const [saving, setSaving] = useState(false);
@@ -50,26 +50,26 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
 
 
 
-    const iProductCategoryAdvancedQuery_ProductCategoryID = defaultIProductCategoryAdvancedQuery();
+    const [iProductCategoryAdvancedQuery_ParentID, setIProductCategoryAdvancedQuery_ParentID] = useState<IProductCategoryAdvancedQuery>();
+    const [productCategory_ParentIDCodeList, setProductCategory_ParentIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.parent_Name, value: item.parentID, selected: false }]);
+
+    const [iProductCategoryAdvancedQuery_ProductCategoryID, setIProductCategoryAdvancedQuery_ProductCategoryID] = useState<IProductCategoryAdvancedQuery>({ ...defaultIProductCategoryAdvancedQuery(), parentProductCategoryID: item.parentID, pageSize: 10000 });
     const [productCategory_ProductCategoryIDCodeList, setProductCategory_ProductCategoryIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productCategory_Name, value: item.productCategoryID, selected: false }]);
 
-    const iProductModelAdvancedQuery_ProductModelID = defaultIProductModelAdvancedQuery();
+    const [iProductModelAdvancedQuery_ProductModelID, setIProductModelAdvancedQuery_ProductModelID] = useState<IProductModelAdvancedQuery>();
     const [productModel_ProductModelIDCodeList, setProductModel_ProductModelIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productModel_Name, value: item.productModelID, selected: false }]);
-
-    const iProductCategoryAdvancedQuery_ParentID = defaultIProductCategoryAdvancedQuery();
-    const [productCategory_ParentIDCodeList, setProductCategory_ParentIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.parent_Name, value: item.parentID, selected: false }]);
     useEffect(() => {
 
 
-        codeListsApi.getProductModelCodeList({ ...iProductModelAdvancedQuery_ProductModelID, pageSize: 10000 }).then((res) => {
+        codeListsApi.getProductCategoryCodeList(iProductCategoryAdvancedQuery_ParentID).then((res) => {
             if (res.status === "OK") {
-                setProductModel_ProductModelIDCodeList(res.responseBody);
+                setProductCategory_ParentIDCodeList(res.responseBody);
             }
         });
 
-        codeListsApi.getProductCategoryCodeList({ ...iProductCategoryAdvancedQuery_ParentID, pageSize: 10000 }).then((res) => {
+        codeListsApi.getProductModelCodeList(iProductModelAdvancedQuery_ProductModelID).then((res) => {
             if (res.status === "OK") {
-                setProductCategory_ParentIDCodeList(res.responseBody);
+                setProductModel_ProductModelIDCodeList(res.responseBody);
             }
         });
         reset(item);
@@ -78,6 +78,47 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
         setSaveMessage(null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+
+
+    const onParentIDChanged = (event: React.PointerEvent<INameValuePair>) => {
+        console.log("ParentID");
+        // name is the property name, value is the selected value
+        const nameValuePair = event.target as unknown as INameValuePair;
+
+        const parentID = nameValuePair.value as number;
+
+        setIProductCategoryAdvancedQuery_ProductCategoryID({ ...iProductCategoryAdvancedQuery_ProductCategoryID, parentProductCategoryID: parentID });
+        getProductCategory_ProductCategoryIDCodeList(iProductCategoryAdvancedQuery_ProductCategoryID, true, false);
+    }
+
+
+    const getProductCategory_ProductCategoryIDCodeList = (query: IProductCategoryAdvancedQuery, toSetSelectedValue: boolean, setCodeListToEmpty: boolean) => {
+        if (!setCodeListToEmpty) {
+			codeListsApi.getProductCategoryCodeList({ ...query, pageSize: 10000 }).then((res) => {
+				if (res.status === "OK") {
+					if (toSetSelectedValue) {
+						if (res.responseBody.findIndex(t => t.value === item.productCategoryID) === -1) {
+							if (res.responseBody.length > 0) {
+								setValue('productCategoryID', res.responseBody[0].value);
+							}
+							else {
+								setValue('productCategoryID', -1);
+							}
+						}
+						else {
+							setValue('productCategoryID', item.productCategoryID);
+						}
+					}
+					setProductCategory_ProductCategoryIDCodeList(res.responseBody);
+				}
+			});
+		}
+        else {
+            setProductCategory_ProductCategoryIDCodeList([]);
+            setValue('productCategoryID', '');
+        }
+    }
 
     const onSubmit = (data: IProductDataModel) => {
         setSaving(true);
@@ -99,8 +140,6 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
     const theme = useTheme();
     const avatar = getProductAvatar(item);
     const avatarStyle = getAvatarStyle(item.itemUIStatus______, theme);
-
-
 
     const renderButtonGroupWhenCard = () => {
         return (
@@ -301,6 +340,22 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                     //helperText={!!errors.weight ? t(errors.weight.message) : ''}
                 />
                 <TextField
+                    label={t("ParentID")}
+                    id="parentIDSelect"
+                    select
+                    name='parentID'
+                    {...register("parentID", productFormValidationWhenEdit.parentID)}
+                    autoComplete='parentID'
+                    variant="outlined"
+                    fullWidth
+                    defaultValue={item.parentID}
+                	onChange={(event: any) => { onParentIDChanged(event) }}
+                >
+                    {productCategory_ParentIDCodeList && productCategory_ParentIDCodeList.map((v, index) => {
+                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
+                    })}
+                </TextField>
+                <TextField
                     label={t("ProductCategoryID")}
                     id="productCategoryIDSelect"
                     select
@@ -461,21 +516,6 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                             />
                     }
                 />
-                <TextField
-                    label={t("ParentID")}
-                    id="parentIDSelect"
-                    select
-                    name='parentID'
-                    {...register("parentID", productFormValidationWhenEdit.parentID)}
-                    autoComplete='parentID'
-                    variant="outlined"
-                    fullWidth
-                    defaultValue={item.parentID}
-                >
-                    {productCategory_ParentIDCodeList && productCategory_ParentIDCodeList.map((v, index) => {
-                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
-                    })}
-                </TextField>
             </CardContent>
             {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Inline) && <CardActions disableSpacing>
                 {(!!previousAction || !!nextAction) && <ButtonGroup

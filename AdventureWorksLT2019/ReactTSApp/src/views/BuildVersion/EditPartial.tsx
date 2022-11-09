@@ -24,7 +24,7 @@ import { ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 import { getAvatarStyle } from 'src/shared/views/ThemeRelated';
 
-import { defaultBuildVersion, getBuildVersionAvatar, IBuildVersionDataModel, buildVersionFormValidationWhenEdit } from 'src/dataModels/IBuildVersionDataModel';
+import { getBuildVersionAvatar, IBuildVersionDataModel, buildVersionFormValidationWhenEdit } from 'src/dataModels/IBuildVersionDataModel';
 import { put } from 'src/slices/BuildVersionSlice';
 
 export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDataModel>): JSX.Element {
@@ -34,10 +34,10 @@ export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDat
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { register, control, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
+    const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
-        defaultValues: defaultBuildVersion(),
+        defaultValues: item,
     },);
 
     const [saving, setSaving] = useState(false);
@@ -54,6 +54,9 @@ export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDat
         setSaveMessage(null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+
+
 
     const onSubmit = (data: IBuildVersionDataModel) => {
         setSaving(true);
@@ -75,8 +78,6 @@ export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDat
     const theme = useTheme();
     const avatar = getBuildVersionAvatar(item);
     const avatarStyle = getAvatarStyle(item.itemUIStatus______, theme);
-
-
 
     const renderButtonGroupWhenCard = () => {
         return (

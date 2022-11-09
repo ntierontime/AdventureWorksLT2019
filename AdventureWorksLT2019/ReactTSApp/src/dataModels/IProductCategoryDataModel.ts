@@ -4,11 +4,11 @@ export interface IProductCategoryDataModel {
     itemUIStatus______: ItemUIStatus;
     isDeleted______: boolean;
     productCategoryID: number;
-    parentProductCategoryID: number;
+    parent_Name: string;
+    parentProductCategoryID: number | string;
     name: string;
     rowguid: any;
     modifiedDate: string;
-    parent_Name: string;
 }
 
 export function defaultProductCategory(): IProductCategoryDataModel {
@@ -16,11 +16,11 @@ export function defaultProductCategory(): IProductCategoryDataModel {
         itemUIStatus______: ItemUIStatus.New,
         isDeleted______: false,
         productCategoryID: 0,
+        parent_Name: '',
         parentProductCategoryID: 0,
         name: '',
         rowguid: null,
         modifiedDate: '',
-        parent_Name: '',
     } as unknown as IProductCategoryDataModel;
 }
 

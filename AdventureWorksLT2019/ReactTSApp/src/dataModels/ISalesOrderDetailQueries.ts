@@ -16,7 +16,7 @@ export interface ISalesOrderDetailIdentifier {
 }
 
 export function getISalesOrderDetailIdentifier(item: ISalesOrderDetailDataModel): ISalesOrderDetailIdentifier {
-    return { salesOrderID: item.salesOrderID, salesOrderDetailID: item.salesOrderDetailID };
+    return { salesOrderID: item.salesOrderID as number, salesOrderDetailID: item.salesOrderDetailID };
 }
 
 export function compareISalesOrderDetailIdentifier(a: ISalesOrderDetailIdentifier, b: ISalesOrderDetailIdentifier): boolean {

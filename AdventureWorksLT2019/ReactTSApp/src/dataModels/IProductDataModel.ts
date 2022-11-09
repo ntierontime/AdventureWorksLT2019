@@ -11,8 +11,12 @@ export interface IProductDataModel {
     listPrice: number;
     size: string;
     weight: number;
-    productCategoryID: number;
-    productModelID: number;
+    parentID: number | string;
+    parent_Name: string;
+    productCategory_Name: string;
+    productCategoryID: number | string;
+    productModel_Name: string;
+    productModelID: number | string;
     sellStartDate: string;
     sellEndDate: string;
     discontinuedDate: string;
@@ -20,10 +24,6 @@ export interface IProductDataModel {
     thumbnailPhotoFileName: string;
     rowguid: any;
     modifiedDate: string;
-    productCategory_Name: string;
-    parentID: number;
-    parent_Name: string;
-    productModel_Name: string;
 }
 
 export function defaultProduct(): IProductDataModel {
@@ -38,7 +38,11 @@ export function defaultProduct(): IProductDataModel {
         listPrice: 0,
         size: '',
         weight: 0,
+        parentID: 0,
+        parent_Name: '',
+        productCategory_Name: '',
         productCategoryID: 0,
+        productModel_Name: '',
         productModelID: 0,
         sellStartDate: '',
         sellEndDate: '',
@@ -47,10 +51,6 @@ export function defaultProduct(): IProductDataModel {
         thumbnailPhotoFileName: '',
         rowguid: null,
         modifiedDate: '',
-        productCategory_Name: '',
-        parentID: 0,
-        parent_Name: '',
-        productModel_Name: '',
     } as unknown as IProductDataModel;
 }
 
@@ -100,6 +100,8 @@ export const productFormValidationWhenCreate = {
     },
     weight: {
     },
+    parentID: {
+    },
     productCategoryID: {
     },
     productModelID: {
@@ -121,8 +123,6 @@ export const productFormValidationWhenCreate = {
     },
     modifiedDate: {
         required: 'ModifiedDate_is_required',
-    },
-    parentID: {
     },
 };
 
@@ -167,6 +167,8 @@ export const productFormValidationWhenEdit = {
     },
     weight: {
     },
+    parentID: {
+    },
     productCategoryID: {
     },
     productModelID: {
@@ -188,8 +190,6 @@ export const productFormValidationWhenEdit = {
     },
     modifiedDate: {
         required: 'ModifiedDate_is_required',
-    },
-    parentID: {
     },
 };
 

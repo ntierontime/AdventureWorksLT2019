@@ -16,8 +16,8 @@ import { Controller } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers';
 import { INameValuePair } from 'src/shared/dataModels/INameValuePair';
 import { codeListsApi } from 'src/apiClients/CodeListsApi';
-import { defaultICustomerAdvancedQuery } from 'src/dataModels/ICustomerQueries';
-import { defaultIAddressAdvancedQuery } from 'src/dataModels/IAddressQueries';
+import { ICustomerAdvancedQuery, defaultICustomerAdvancedQuery } from 'src/dataModels/ICustomerQueries';
+import { IAddressAdvancedQuery, defaultIAddressAdvancedQuery } from 'src/dataModels/IAddressQueries';
 
 // un-comment /*getCurrency,*/ if you display money
 import { /*getCurrency,*/ i18nFormats } from 'src/i18n';
@@ -27,7 +27,7 @@ import { ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 import { getAvatarStyle } from 'src/shared/views/ThemeRelated';
 
-import { defaultSalesOrderHeader, getSalesOrderHeaderAvatar, ISalesOrderHeaderDataModel, salesOrderHeaderFormValidationWhenEdit } from 'src/dataModels/ISalesOrderHeaderDataModel';
+import { getSalesOrderHeaderAvatar, ISalesOrderHeaderDataModel, salesOrderHeaderFormValidationWhenEdit } from 'src/dataModels/ISalesOrderHeaderDataModel';
 import { put } from 'src/slices/SalesOrderHeaderSlice';
 
 export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeaderDataModel>): JSX.Element {
@@ -37,10 +37,10 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { register, control, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
+    const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
-        defaultValues: defaultSalesOrderHeader(),
+        defaultValues: item,
     },);
 
     const [saving, setSaving] = useState(false);
@@ -50,30 +50,30 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
 
 
 
-    const iCustomerAdvancedQuery_CustomerID = defaultICustomerAdvancedQuery();
+    const [iCustomerAdvancedQuery_CustomerID, setICustomerAdvancedQuery_CustomerID] = useState<ICustomerAdvancedQuery>();
     const [customer_CustomerIDCodeList, setCustomer_CustomerIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.customer_Name, value: item.customerID, selected: false }]);
 
-    const iAddressAdvancedQuery_ShipToAddressID = defaultIAddressAdvancedQuery();
+    const [iAddressAdvancedQuery_ShipToAddressID, setIAddressAdvancedQuery_ShipToAddressID] = useState<IAddressAdvancedQuery>();
     const [address_ShipToAddressIDCodeList, setAddress_ShipToAddressIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.shipTo_Name, value: item.shipToAddressID, selected: false }]);
 
-    const iAddressAdvancedQuery_BillToAddressID = defaultIAddressAdvancedQuery();
+    const [iAddressAdvancedQuery_BillToAddressID, setIAddressAdvancedQuery_BillToAddressID] = useState<IAddressAdvancedQuery>();
     const [address_BillToAddressIDCodeList, setAddress_BillToAddressIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.billTo_Name, value: item.billToAddressID, selected: false }]);
     useEffect(() => {
 
 
-        codeListsApi.getCustomerCodeList({ ...iCustomerAdvancedQuery_CustomerID, pageSize: 10000 }).then((res) => {
+        codeListsApi.getCustomerCodeList(iCustomerAdvancedQuery_CustomerID).then((res) => {
             if (res.status === "OK") {
                 setCustomer_CustomerIDCodeList(res.responseBody);
             }
         });
 
-        codeListsApi.getAddressCodeList({ ...iAddressAdvancedQuery_ShipToAddressID, pageSize: 10000 }).then((res) => {
+        codeListsApi.getAddressCodeList(iAddressAdvancedQuery_ShipToAddressID).then((res) => {
             if (res.status === "OK") {
                 setAddress_ShipToAddressIDCodeList(res.responseBody);
             }
         });
 
-        codeListsApi.getAddressCodeList({ ...iAddressAdvancedQuery_BillToAddressID, pageSize: 10000 }).then((res) => {
+        codeListsApi.getAddressCodeList(iAddressAdvancedQuery_BillToAddressID).then((res) => {
             if (res.status === "OK") {
                 setAddress_BillToAddressIDCodeList(res.responseBody);
             }
@@ -84,6 +84,9 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
         setSaveMessage(null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+
+
 
     const onSubmit = (data: ISalesOrderHeaderDataModel) => {
         setSaving(true);
@@ -105,8 +108,6 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
     const theme = useTheme();
     const avatar = getSalesOrderHeaderAvatar(item);
     const avatarStyle = getAvatarStyle(item.itemUIStatus______, theme);
-
-
 
     const renderButtonGroupWhenCard = () => {
         return (

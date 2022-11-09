@@ -16,8 +16,8 @@ import { Controller } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers';
 import { INameValuePair } from 'src/shared/dataModels/INameValuePair';
 import { codeListsApi } from 'src/apiClients/CodeListsApi';
-import { defaultICustomerAdvancedQuery } from 'src/dataModels/ICustomerQueries';
-import { defaultIAddressAdvancedQuery } from 'src/dataModels/IAddressQueries';
+import { ICustomerAdvancedQuery, defaultICustomerAdvancedQuery } from 'src/dataModels/ICustomerQueries';
+import { IAddressAdvancedQuery, defaultIAddressAdvancedQuery } from 'src/dataModels/IAddressQueries';
 
 // un-comment /*getCurrency,*/ if you display money
 import { /*getCurrency,*/ i18nFormats } from 'src/i18n';
@@ -27,7 +27,7 @@ import { ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 import { getAvatarStyle } from 'src/shared/views/ThemeRelated';
 
-import { defaultCustomerAddress, getCustomerAddressAvatar, ICustomerAddressDataModel, customerAddressFormValidationWhenEdit } from 'src/dataModels/ICustomerAddressDataModel';
+import { getCustomerAddressAvatar, ICustomerAddressDataModel, customerAddressFormValidationWhenEdit } from 'src/dataModels/ICustomerAddressDataModel';
 import { put } from 'src/slices/CustomerAddressSlice';
 
 export default function EditPartial(props: ItemPartialViewProps<ICustomerAddressDataModel>): JSX.Element {
@@ -37,10 +37,10 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerAddress
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { register, control, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
+    const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
-        defaultValues: defaultCustomerAddress(),
+        defaultValues: item,
     },);
 
     const [saving, setSaving] = useState(false);
@@ -50,21 +50,21 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerAddress
 
 
 
-    const iCustomerAdvancedQuery_CustomerID = defaultICustomerAdvancedQuery();
+    const [iCustomerAdvancedQuery_CustomerID, setICustomerAdvancedQuery_CustomerID] = useState<ICustomerAdvancedQuery>();
     const [customer_CustomerIDCodeList, setCustomer_CustomerIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.customer_Name, value: item.customerID, selected: false }]);
 
-    const iAddressAdvancedQuery_AddressID = defaultIAddressAdvancedQuery();
+    const [iAddressAdvancedQuery_AddressID, setIAddressAdvancedQuery_AddressID] = useState<IAddressAdvancedQuery>();
     const [address_AddressIDCodeList, setAddress_AddressIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.address_Name, value: item.addressID, selected: false }]);
     useEffect(() => {
 
 
-        codeListsApi.getCustomerCodeList({ ...iCustomerAdvancedQuery_CustomerID, pageSize: 10000 }).then((res) => {
+        codeListsApi.getCustomerCodeList(iCustomerAdvancedQuery_CustomerID).then((res) => {
             if (res.status === "OK") {
                 setCustomer_CustomerIDCodeList(res.responseBody);
             }
         });
 
-        codeListsApi.getAddressCodeList({ ...iAddressAdvancedQuery_AddressID, pageSize: 10000 }).then((res) => {
+        codeListsApi.getAddressCodeList(iAddressAdvancedQuery_AddressID).then((res) => {
             if (res.status === "OK") {
                 setAddress_AddressIDCodeList(res.responseBody);
             }
@@ -75,6 +75,9 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerAddress
         setSaveMessage(null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+
+
 
     const onSubmit = (data: ICustomerAddressDataModel) => {
         setSaving(true);
@@ -96,8 +99,6 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerAddress
     const theme = useTheme();
     const avatar = getCustomerAddressAvatar(item);
     const avatarStyle = getAvatarStyle(item.itemUIStatus______, theme);
-
-
 
     const renderButtonGroupWhenCard = () => {
         return (

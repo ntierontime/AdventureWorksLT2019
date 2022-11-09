@@ -3,26 +3,26 @@ import { ItemUIStatus } from "src/shared/dataModels/ItemUIStatus";
 export interface IProductModelProductDescriptionDataModel {
     itemUIStatus______: ItemUIStatus;
     isDeleted______: boolean;
-    productModelID: number;
-    productDescriptionID: number;
+    productModel_Name: string;
+    productModelID: number | string;
+    productDescription_Name: string;
+    productDescriptionID: number | string;
     culture: string;
     rowguid: any;
     modifiedDate: string;
-    productDescription_Name: string;
-    productModel_Name: string;
 }
 
 export function defaultProductModelProductDescription(): IProductModelProductDescriptionDataModel {
     return {
         itemUIStatus______: ItemUIStatus.New,
         isDeleted______: false,
+        productModel_Name: '',
         productModelID: 0,
+        productDescription_Name: '',
         productDescriptionID: 0,
         culture: '',
         rowguid: null,
         modifiedDate: '',
-        productDescription_Name: '',
-        productModel_Name: '',
     } as unknown as IProductModelProductDescriptionDataModel;
 }
 

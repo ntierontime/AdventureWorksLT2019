@@ -12,8 +12,8 @@ import { Controller } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers';
 import { INameValuePair } from 'src/shared/dataModels/INameValuePair';
 import { codeListsApi } from 'src/apiClients/CodeListsApi';
-import { defaultIProductModelAdvancedQuery } from 'src/dataModels/IProductModelQueries';
-import { defaultIProductDescriptionAdvancedQuery } from 'src/dataModels/IProductDescriptionQueries';
+import { IProductModelAdvancedQuery, defaultIProductModelAdvancedQuery } from 'src/dataModels/IProductModelQueries';
+import { IProductDescriptionAdvancedQuery, defaultIProductDescriptionAdvancedQuery } from 'src/dataModels/IProductDescriptionQueries';
 
 import { AppDispatch } from 'src/store/Store';
 
@@ -29,7 +29,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductModelP
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { register, control, handleSubmit, reset, formState: { isValid, errors } } = useForm({
+    const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
@@ -46,21 +46,23 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductModelP
 
 
 
-    const iProductModelAdvancedQuery_ProductModelID = defaultIProductModelAdvancedQuery();
+    const [iProductModelAdvancedQuery_ProductModelID, setIProductModelAdvancedQuery_ProductModelID] = useState<IProductModelAdvancedQuery>();
     const [productModel_ProductModelIDCodeList, setProductModel_ProductModelIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productModel_Name, value: item.productModelID, selected: false }]);
 
-    const iProductDescriptionAdvancedQuery_ProductDescriptionID = defaultIProductDescriptionAdvancedQuery();
+    const [iProductDescriptionAdvancedQuery_ProductDescriptionID, setIProductDescriptionAdvancedQuery_ProductDescriptionID] = useState<IProductDescriptionAdvancedQuery>();
     const [productDescription_ProductDescriptionIDCodeList, setProductDescription_ProductDescriptionIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productDescription_Name, value: item.productDescriptionID, selected: false }]);
     useEffect(() => {
 
 
-        codeListsApi.getProductModelCodeList({ ...iProductModelAdvancedQuery_ProductModelID, pageSize: 10000 }).then((res) => {
+		setIProductModelAdvancedQuery_ProductModelID({ ...defaultIProductModelAdvancedQuery(), pageSize: 10000 });
+        codeListsApi.getProductModelCodeList({ ...iProductModelAdvancedQuery_ProductModelID }).then((res) => {
             if (res.status === "OK") {
                 setProductModel_ProductModelIDCodeList(res.responseBody);
             }
         });
 
-        codeListsApi.getProductDescriptionCodeList({ ...iProductDescriptionAdvancedQuery_ProductDescriptionID, pageSize: 10000 }).then((res) => {
+		setIProductDescriptionAdvancedQuery_ProductDescriptionID({ ...defaultIProductDescriptionAdvancedQuery(), pageSize: 10000 });
+        codeListsApi.getProductDescriptionCodeList({ ...iProductDescriptionAdvancedQuery_ProductDescriptionID }).then((res) => {
             if (res.status === "OK") {
                 setProductDescription_ProductDescriptionIDCodeList(res.responseBody);
             }
@@ -70,6 +72,9 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductModelP
         setCreateMessage(null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+
+
 
     const onSubmit = () => {
         setCreating(true);

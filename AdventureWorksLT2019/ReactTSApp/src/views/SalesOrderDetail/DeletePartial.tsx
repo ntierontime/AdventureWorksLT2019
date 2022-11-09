@@ -177,6 +177,33 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderDet
                     alignItems="center"
                     spacing={2}
                 >
+                    <Typography>{t("ShipToID")}</Typography>
+                    <Link to={"/address/Details/" + item.shipToID}>{item.shipTo_Name}</Link>
+                </Stack>
+                <Stack sx={{ p: 2 }}
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    spacing={2}
+                >
+                    <Typography>{t("CustomerID")}</Typography>
+                    <Link to={"/customer/Details/" + item.customerID}>{item.customer_Name}</Link>
+                </Stack>
+                <Stack sx={{ p: 2 }}
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    spacing={2}
+                >
+                    <Typography>{t("BillToID")}</Typography>
+                    <Link to={"/address/Details/" + item.billToID}>{item.billTo_Name}</Link>
+                </Stack>
+                <Stack sx={{ p: 2 }}
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    spacing={2}
+                >
                     <Typography>{t("SalesOrderID")}</Typography>
                     <Link to={"/salesOrderHeader/Details/" + item.salesOrderID}>{item.salesOrderHeader_Name}</Link>
                 </Stack>
@@ -202,6 +229,33 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderDet
                         readOnly: true
                     }}
                 />
+                <Stack sx={{ p: 2 }}
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    spacing={2}
+                >
+                    <Typography>{t("ProductModelID")}</Typography>
+                    <Link to={"/productModel/Details/" + item.productModelID}>{item.productModel_Name}</Link>
+                </Stack>
+                <Stack sx={{ p: 2 }}
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    spacing={2}
+                >
+                    <Typography>{t("ProductCategory_ParentID")}</Typography>
+                    <Link to={"/productCategory/Details/" + item.productCategory_ParentID}>{item.productCategory_Parent_Name}</Link>
+                </Stack>
+                <Stack sx={{ p: 2 }}
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    spacing={2}
+                >
+                    <Typography>{t("ProductCategoryID")}</Typography>
+                    <Link to={"/productCategory/Details/" + item.productCategoryID}>{item.productCategory_Name}</Link>
+                </Stack>
                 <Stack sx={{ p: 2 }}
                     direction="row"
                     justifyContent="space-between"
@@ -269,60 +323,6 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderDet
                             }}
                         />}
                 />
-                <Stack sx={{ p: 2 }}
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={2}
-                >
-                    <Typography>{t("ProductCategoryID")}</Typography>
-                    <Link to={"/productCategory/Details/" + item.productCategoryID}>{item.productCategory_Name}</Link>
-                </Stack>
-                <Stack sx={{ p: 2 }}
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={2}
-                >
-                    <Typography>{t("ProductCategory_ParentID")}</Typography>
-                    <Link to={"/productCategory/Details/" + item.productCategory_ParentID}>{item.productCategory_Parent_Name}</Link>
-                </Stack>
-                <Stack sx={{ p: 2 }}
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={2}
-                >
-                    <Typography>{t("ProductModelID")}</Typography>
-                    <Link to={"/productModel/Details/" + item.productModelID}>{item.productModel_Name}</Link>
-                </Stack>
-                <Stack sx={{ p: 2 }}
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={2}
-                >
-                    <Typography>{t("BillToID")}</Typography>
-                    <Link to={"/address/Details/" + item.billToID}>{item.billTo_Name}</Link>
-                </Stack>
-                <Stack sx={{ p: 2 }}
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={2}
-                >
-                    <Typography>{t("CustomerID")}</Typography>
-                    <Link to={"/customer/Details/" + item.customerID}>{item.customer_Name}</Link>
-                </Stack>
-                <Stack sx={{ p: 2 }}
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={2}
-                >
-                    <Typography>{t("ShipToID")}</Typography>
-                    <Link to={"/address/Details/" + item.shipToID}>{item.shipTo_Name}</Link>
-                </Stack>
             </CardContent>
             {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Inline) && <CardActions disableSpacing>
                 {(!!previousAction || !!nextAction) && <ButtonGroup

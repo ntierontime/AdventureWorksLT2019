@@ -16,8 +16,8 @@ import { Controller } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers';
 import { INameValuePair } from 'src/shared/dataModels/INameValuePair';
 import { codeListsApi } from 'src/apiClients/CodeListsApi';
-import { defaultIProductModelAdvancedQuery } from 'src/dataModels/IProductModelQueries';
-import { defaultIProductDescriptionAdvancedQuery } from 'src/dataModels/IProductDescriptionQueries';
+import { IProductModelAdvancedQuery, defaultIProductModelAdvancedQuery } from 'src/dataModels/IProductModelQueries';
+import { IProductDescriptionAdvancedQuery, defaultIProductDescriptionAdvancedQuery } from 'src/dataModels/IProductDescriptionQueries';
 
 // un-comment /*getCurrency,*/ if you display money
 import { /*getCurrency,*/ i18nFormats } from 'src/i18n';
@@ -27,7 +27,7 @@ import { ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 import { getAvatarStyle } from 'src/shared/views/ThemeRelated';
 
-import { defaultProductModelProductDescription, getProductModelProductDescriptionAvatar, IProductModelProductDescriptionDataModel, productModelProductDescriptionFormValidationWhenEdit } from 'src/dataModels/IProductModelProductDescriptionDataModel';
+import { getProductModelProductDescriptionAvatar, IProductModelProductDescriptionDataModel, productModelProductDescriptionFormValidationWhenEdit } from 'src/dataModels/IProductModelProductDescriptionDataModel';
 import { put } from 'src/slices/ProductModelProductDescriptionSlice';
 
 export default function EditPartial(props: ItemPartialViewProps<IProductModelProductDescriptionDataModel>): JSX.Element {
@@ -37,10 +37,10 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelPro
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { register, control, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
+    const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
-        defaultValues: defaultProductModelProductDescription(),
+        defaultValues: item,
     },);
 
     const [saving, setSaving] = useState(false);
@@ -50,21 +50,21 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelPro
 
 
 
-    const iProductModelAdvancedQuery_ProductModelID = defaultIProductModelAdvancedQuery();
+    const [iProductModelAdvancedQuery_ProductModelID, setIProductModelAdvancedQuery_ProductModelID] = useState<IProductModelAdvancedQuery>();
     const [productModel_ProductModelIDCodeList, setProductModel_ProductModelIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productModel_Name, value: item.productModelID, selected: false }]);
 
-    const iProductDescriptionAdvancedQuery_ProductDescriptionID = defaultIProductDescriptionAdvancedQuery();
+    const [iProductDescriptionAdvancedQuery_ProductDescriptionID, setIProductDescriptionAdvancedQuery_ProductDescriptionID] = useState<IProductDescriptionAdvancedQuery>();
     const [productDescription_ProductDescriptionIDCodeList, setProductDescription_ProductDescriptionIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productDescription_Name, value: item.productDescriptionID, selected: false }]);
     useEffect(() => {
 
 
-        codeListsApi.getProductModelCodeList({ ...iProductModelAdvancedQuery_ProductModelID, pageSize: 10000 }).then((res) => {
+        codeListsApi.getProductModelCodeList(iProductModelAdvancedQuery_ProductModelID).then((res) => {
             if (res.status === "OK") {
                 setProductModel_ProductModelIDCodeList(res.responseBody);
             }
         });
 
-        codeListsApi.getProductDescriptionCodeList({ ...iProductDescriptionAdvancedQuery_ProductDescriptionID, pageSize: 10000 }).then((res) => {
+        codeListsApi.getProductDescriptionCodeList(iProductDescriptionAdvancedQuery_ProductDescriptionID).then((res) => {
             if (res.status === "OK") {
                 setProductDescription_ProductDescriptionIDCodeList(res.responseBody);
             }
@@ -75,6 +75,9 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelPro
         setSaveMessage(null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+
+
 
     const onSubmit = (data: IProductModelProductDescriptionDataModel) => {
         setSaving(true);
@@ -96,8 +99,6 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelPro
     const theme = useTheme();
     const avatar = getProductModelProductDescriptionAvatar(item);
     const avatarStyle = getAvatarStyle(item.itemUIStatus______, theme);
-
-
 
     const renderButtonGroupWhenCard = () => {
         return (

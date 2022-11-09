@@ -7,7 +7,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 // un-comment /*getCurrency,*/ if you display money
 import { /*getCurrency,*/ i18nFormats } from 'src/i18n';
 import { RootState } from 'src/store/CombinedReducers';
-import { getCRUDItemPartialViewPropsInline, ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps';
+import { getCRUDItemPartialViewPropsInline } from 'src/shared/viewModels/ItemPartialViewProps';
 import { ListPartialViewProps } from 'src/shared/viewModels/ListPartialViewProps';
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 
@@ -28,12 +28,12 @@ export default function TilesPartial(props: ListPartialViewProps<IProductModelDa
     const gridItemSpacing = 0.5;
     const gridItemWidth = 12 / itemsPerRow;
 
-    const { pagination } = useSelector((state: RootState) => state.productList);
+    const { pagination } = useSelector((state: RootState) => state.productModelList);
     const hasMoreItems = pagination.pageIndex !== pagination.lastPageIndex;
 
     useEffect(() => {
         setCurrentItemOnDialog(!!listItems && listItems.length > 0 && currentItemIndex >= 0 && currentItemIndex < listItems.length ? listItems[currentItemIndex] : null);
-    }, [currentItemIndex]);
+    }, [currentItemIndex, listItems, setCurrentItemOnDialog]);
 
     return (
         <>

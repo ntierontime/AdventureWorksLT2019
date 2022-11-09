@@ -12,8 +12,8 @@ import { Controller } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers';
 import { INameValuePair } from 'src/shared/dataModels/INameValuePair';
 import { codeListsApi } from 'src/apiClients/CodeListsApi';
-import { defaultICustomerAdvancedQuery } from 'src/dataModels/ICustomerQueries';
-import { defaultIAddressAdvancedQuery } from 'src/dataModels/IAddressQueries';
+import { ICustomerAdvancedQuery, defaultICustomerAdvancedQuery } from 'src/dataModels/ICustomerQueries';
+import { IAddressAdvancedQuery, defaultIAddressAdvancedQuery } from 'src/dataModels/IAddressQueries';
 
 import { AppDispatch } from 'src/store/Store';
 
@@ -29,7 +29,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerAddre
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { register, control, handleSubmit, reset, formState: { isValid, errors } } = useForm({
+    const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
@@ -46,21 +46,23 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerAddre
 
 
 
-    const iCustomerAdvancedQuery_CustomerID = defaultICustomerAdvancedQuery();
+    const [iCustomerAdvancedQuery_CustomerID, setICustomerAdvancedQuery_CustomerID] = useState<ICustomerAdvancedQuery>();
     const [customer_CustomerIDCodeList, setCustomer_CustomerIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.customer_Name, value: item.customerID, selected: false }]);
 
-    const iAddressAdvancedQuery_AddressID = defaultIAddressAdvancedQuery();
+    const [iAddressAdvancedQuery_AddressID, setIAddressAdvancedQuery_AddressID] = useState<IAddressAdvancedQuery>();
     const [address_AddressIDCodeList, setAddress_AddressIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.address_Name, value: item.addressID, selected: false }]);
     useEffect(() => {
 
 
-        codeListsApi.getCustomerCodeList({ ...iCustomerAdvancedQuery_CustomerID, pageSize: 10000 }).then((res) => {
+		setICustomerAdvancedQuery_CustomerID({ ...defaultICustomerAdvancedQuery(), pageSize: 10000 });
+        codeListsApi.getCustomerCodeList({ ...iCustomerAdvancedQuery_CustomerID }).then((res) => {
             if (res.status === "OK") {
                 setCustomer_CustomerIDCodeList(res.responseBody);
             }
         });
 
-        codeListsApi.getAddressCodeList({ ...iAddressAdvancedQuery_AddressID, pageSize: 10000 }).then((res) => {
+		setIAddressAdvancedQuery_AddressID({ ...defaultIAddressAdvancedQuery(), pageSize: 10000 });
+        codeListsApi.getAddressCodeList({ ...iAddressAdvancedQuery_AddressID }).then((res) => {
             if (res.status === "OK") {
                 setAddress_AddressIDCodeList(res.responseBody);
             }
@@ -70,6 +72,9 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerAddre
         setCreateMessage(null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+
+
 
     const onSubmit = () => {
         setCreating(true);
