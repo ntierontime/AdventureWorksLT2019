@@ -54,6 +54,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductCategory
     useEffect(() => {
 
 
+		setIProductCategoryAdvancedQuery_ParentProductCategoryID({ ...defaultIProductCategoryAdvancedQuery(), pageSize: 10000 });
         codeListsApi.getProductCategoryCodeList(iProductCategoryAdvancedQuery_ParentProductCategoryID).then((res) => {
             if (res.status === "OK") {
                 setProductCategory_ParentProductCategoryIDCodeList(res.responseBody);

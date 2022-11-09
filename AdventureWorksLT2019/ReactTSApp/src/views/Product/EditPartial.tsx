@@ -61,12 +61,14 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
     useEffect(() => {
 
 
+		setIProductCategoryAdvancedQuery_ParentID({ ...defaultIProductCategoryAdvancedQuery(), pageSize: 10000 });
         codeListsApi.getProductCategoryCodeList(iProductCategoryAdvancedQuery_ParentID).then((res) => {
             if (res.status === "OK") {
                 setProductCategory_ParentIDCodeList(res.responseBody);
             }
         });
 
+		setIProductModelAdvancedQuery_ProductModelID({ ...defaultIProductModelAdvancedQuery(), pageSize: 10000 });
         codeListsApi.getProductModelCodeList(iProductModelAdvancedQuery_ProductModelID).then((res) => {
             if (res.status === "OK") {
                 setProductModel_ProductModelIDCodeList(res.responseBody);

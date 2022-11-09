@@ -28,7 +28,7 @@ export interface IProductCategoryAdvancedQuery extends IBaseQuery {
     textSearchType: TextSearchTypes;
 
     // PredicateType:Equals
-	parentProductCategoryID: number | null;
+	parentProductCategoryID: number | string | null;
 
     // PredicateType:Range
     modifiedDateRange: PreDefinedDateTimeRanges | null;
@@ -49,7 +49,7 @@ export function defaultIProductCategoryAdvancedQuery(): IProductCategoryAdvanced
 		textSearch: '',
         textSearchType: TextSearchTypes.Contains,
 
-        parentProductCategoryID: null, // PredicateType:Equals
+        parentProductCategoryID: '', // PredicateType:Equals
 
         // PredicateType:Range
         modifiedDateRange: PreDefinedDateTimeRanges.AllTime,

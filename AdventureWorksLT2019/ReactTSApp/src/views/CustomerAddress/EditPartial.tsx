@@ -58,12 +58,14 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerAddress
     useEffect(() => {
 
 
+		setICustomerAdvancedQuery_CustomerID({ ...defaultICustomerAdvancedQuery(), pageSize: 10000 });
         codeListsApi.getCustomerCodeList(iCustomerAdvancedQuery_CustomerID).then((res) => {
             if (res.status === "OK") {
                 setCustomer_CustomerIDCodeList(res.responseBody);
             }
         });
 
+		setIAddressAdvancedQuery_AddressID({ ...defaultIAddressAdvancedQuery(), pageSize: 10000 });
         codeListsApi.getAddressCodeList(iAddressAdvancedQuery_AddressID).then((res) => {
             if (res.status === "OK") {
                 setAddress_AddressIDCodeList(res.responseBody);

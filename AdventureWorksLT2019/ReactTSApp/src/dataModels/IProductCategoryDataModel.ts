@@ -17,7 +17,7 @@ export function defaultProductCategory(): IProductCategoryDataModel {
         isDeleted______: false,
         productCategoryID: 0,
         parent_Name: '',
-        parentProductCategoryID: 0,
+        parentProductCategoryID: '',
         name: '',
         rowguid: null,
         modifiedDate: '',

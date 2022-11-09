@@ -58,12 +58,14 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelPro
     useEffect(() => {
 
 
+		setIProductModelAdvancedQuery_ProductModelID({ ...defaultIProductModelAdvancedQuery(), pageSize: 10000 });
         codeListsApi.getProductModelCodeList(iProductModelAdvancedQuery_ProductModelID).then((res) => {
             if (res.status === "OK") {
                 setProductModel_ProductModelIDCodeList(res.responseBody);
             }
         });
 
+		setIProductDescriptionAdvancedQuery_ProductDescriptionID({ ...defaultIProductDescriptionAdvancedQuery(), pageSize: 10000 });
         codeListsApi.getProductDescriptionCodeList(iProductDescriptionAdvancedQuery_ProductDescriptionID).then((res) => {
             if (res.status === "OK") {
                 setProductDescription_ProductDescriptionIDCodeList(res.responseBody);

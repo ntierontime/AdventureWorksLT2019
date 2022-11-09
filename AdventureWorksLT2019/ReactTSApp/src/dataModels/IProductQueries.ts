@@ -28,13 +28,13 @@ export interface IProductAdvancedQuery extends IBaseQuery {
     textSearchType: TextSearchTypes;
 
     // PredicateType:Equals
-	productCategoryID: number | null;
+	productCategoryID: number | string | null;
 
     // PredicateType:Equals
-	parentID: number | null;
+	parentID: number | string | null;
 
     // PredicateType:Equals
-	productModelID: number | null;
+	productModelID: number | string | null;
 
     // PredicateType:Range
     sellStartDateRange: PreDefinedDateTimeRanges | null;
@@ -86,11 +86,11 @@ export function defaultIProductAdvancedQuery(): IProductAdvancedQuery {
 		textSearch: '',
         textSearchType: TextSearchTypes.Contains,
 
-        productCategoryID: null, // PredicateType:Equals
+        productCategoryID: '', // PredicateType:Equals
 
-        parentID: null, // PredicateType:Equals
+        parentID: '', // PredicateType:Equals
 
-        productModelID: null, // PredicateType:Equals
+        productModelID: '', // PredicateType:Equals
 
         // PredicateType:Range
         sellStartDateRange: PreDefinedDateTimeRanges.AllTime,

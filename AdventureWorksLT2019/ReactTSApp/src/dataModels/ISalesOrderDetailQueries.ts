@@ -9,14 +9,14 @@ import { ISalesOrderDetailDataModel } from 'src/dataModels/ISalesOrderDetailData
 export interface ISalesOrderDetailIdentifier {
 
     // PredicateType:Equals
-	salesOrderID: number | null;
+	salesOrderID: number | string | null;
 
     // PredicateType:Equals
 	salesOrderDetailID: number | null;
 }
 
 export function getISalesOrderDetailIdentifier(item: ISalesOrderDetailDataModel): ISalesOrderDetailIdentifier {
-    return { salesOrderID: item.salesOrderID as number, salesOrderDetailID: item.salesOrderDetailID };
+    return { salesOrderID: item.salesOrderID, salesOrderDetailID: item.salesOrderDetailID };
 }
 
 export function compareISalesOrderDetailIdentifier(a: ISalesOrderDetailIdentifier, b: ISalesOrderDetailIdentifier): boolean {
@@ -31,28 +31,28 @@ export interface ISalesOrderDetailAdvancedQuery extends IBaseQuery {
     textSearchType: TextSearchTypes;
 
     // PredicateType:Equals
-	productID: number | null;
+	productID: number | string | null;
 
     // PredicateType:Equals
-	productCategoryID: number | null;
+	productCategoryID: number | string | null;
 
     // PredicateType:Equals
-	productCategory_ParentID: number | null;
+	productCategory_ParentID: number | string | null;
 
     // PredicateType:Equals
-	productModelID: number | null;
+	productModelID: number | string | null;
 
     // PredicateType:Equals
-	salesOrderID: number | null;
+	salesOrderID: number | string | null;
 
     // PredicateType:Equals
-	billToID: number | null;
+	billToID: number | string | null;
 
     // PredicateType:Equals
-	shipToID: number | null;
+	shipToID: number | string | null;
 
     // PredicateType:Equals
-	customerID: number | null;
+	customerID: number | string | null;
 
     // PredicateType:Range
     modifiedDateRange: PreDefinedDateTimeRanges | null;
@@ -69,21 +69,21 @@ export function defaultISalesOrderDetailAdvancedQuery(): ISalesOrderDetailAdvanc
 		textSearch: '',
         textSearchType: TextSearchTypes.Contains,
 
-        productID: null, // PredicateType:Equals
+        productID: '', // PredicateType:Equals
 
-        productCategoryID: null, // PredicateType:Equals
+        productCategoryID: '', // PredicateType:Equals
 
-        productCategory_ParentID: null, // PredicateType:Equals
+        productCategory_ParentID: '', // PredicateType:Equals
 
-        productModelID: null, // PredicateType:Equals
+        productModelID: '', // PredicateType:Equals
 
-        salesOrderID: null, // PredicateType:Equals
+        salesOrderID: '', // PredicateType:Equals
 
-        billToID: null, // PredicateType:Equals
+        billToID: '', // PredicateType:Equals
 
-        shipToID: null, // PredicateType:Equals
+        shipToID: '', // PredicateType:Equals
 
-        customerID: null, // PredicateType:Equals
+        customerID: '', // PredicateType:Equals
 
         // PredicateType:Range
         modifiedDateRange: PreDefinedDateTimeRanges.AllTime,

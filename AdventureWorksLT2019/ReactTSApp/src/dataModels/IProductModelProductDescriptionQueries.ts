@@ -9,10 +9,10 @@ import { IProductModelProductDescriptionDataModel } from 'src/dataModels/IProduc
 export interface IProductModelProductDescriptionIdentifier {
 
     // PredicateType:Equals
-	productModelID: number | null;
+	productModelID: number | string | null;
 
     // PredicateType:Equals
-	productDescriptionID: number | null;
+	productDescriptionID: number | string | null;
 
     // PredicateType:Equals
 	culture: string | null;
@@ -34,10 +34,10 @@ export interface IProductModelProductDescriptionAdvancedQuery extends IBaseQuery
     textSearchType: TextSearchTypes;
 
     // PredicateType:Equals
-	productDescriptionID: number | null;
+	productDescriptionID: number | string | null;
 
     // PredicateType:Equals
-	productModelID: number | null;
+	productModelID: number | string | null;
 
     // PredicateType:Range
     modifiedDateRange: PreDefinedDateTimeRanges | null;
@@ -58,9 +58,9 @@ export function defaultIProductModelProductDescriptionAdvancedQuery(): IProductM
 		textSearch: '',
         textSearchType: TextSearchTypes.Contains,
 
-        productDescriptionID: null, // PredicateType:Equals
+        productDescriptionID: '', // PredicateType:Equals
 
-        productModelID: null, // PredicateType:Equals
+        productModelID: '', // PredicateType:Equals
 
         // PredicateType:Range
         modifiedDateRange: PreDefinedDateTimeRanges.AllTime,

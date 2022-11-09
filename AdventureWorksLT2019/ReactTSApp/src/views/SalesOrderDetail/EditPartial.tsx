@@ -33,7 +33,6 @@ import { getAvatarStyle } from 'src/shared/views/ThemeRelated';
 
 import { getSalesOrderDetailAvatar, ISalesOrderDetailDataModel, salesOrderDetailFormValidationWhenEdit } from 'src/dataModels/ISalesOrderDetailDataModel';
 import { put } from 'src/slices/SalesOrderDetailSlice';
-import { getISalesOrderDetailIdentifier } from 'src/dataModels/ISalesOrderDetailQueries';
 
 export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetailDataModel>): JSX.Element {
     const navigate = useNavigate();
@@ -81,30 +80,35 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
     useEffect(() => {
 
 
+		setIAddressAdvancedQuery_ShipToID({ ...defaultIAddressAdvancedQuery(), pageSize: 10000 });
         codeListsApi.getAddressCodeList(iAddressAdvancedQuery_ShipToID).then((res) => {
             if (res.status === "OK") {
                 setAddress_ShipToIDCodeList(res.responseBody);
             }
         });
 
+		setICustomerAdvancedQuery_CustomerID({ ...defaultICustomerAdvancedQuery(), pageSize: 10000 });
         codeListsApi.getCustomerCodeList(iCustomerAdvancedQuery_CustomerID).then((res) => {
             if (res.status === "OK") {
                 setCustomer_CustomerIDCodeList(res.responseBody);
             }
         });
 
+		setIAddressAdvancedQuery_BillToID({ ...defaultIAddressAdvancedQuery(), pageSize: 10000 });
         codeListsApi.getAddressCodeList(iAddressAdvancedQuery_BillToID).then((res) => {
             if (res.status === "OK") {
                 setAddress_BillToIDCodeList(res.responseBody);
             }
         });
 
+		setIProductModelAdvancedQuery_ProductModelID({ ...defaultIProductModelAdvancedQuery(), pageSize: 10000 });
         codeListsApi.getProductModelCodeList(iProductModelAdvancedQuery_ProductModelID).then((res) => {
             if (res.status === "OK") {
                 setProductModel_ProductModelIDCodeList(res.responseBody);
             }
         });
 
+		setIProductCategoryAdvancedQuery_ProductCategory_ParentID({ ...defaultIProductCategoryAdvancedQuery(), pageSize: 10000 });
         codeListsApi.getProductCategoryCodeList(iProductCategoryAdvancedQuery_ProductCategory_ParentID).then((res) => {
             if (res.status === "OK") {
                 setProductCategory_ProductCategory_ParentIDCodeList(res.responseBody);
@@ -273,7 +277,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
 
     const onSubmit = (data: ISalesOrderDetailDataModel) => {
         setSaving(true);
-        dispatch(put({ identifier: getISalesOrderDetailIdentifier(data), data: { ...data } }))
+        dispatch(put({ identifier: { salesOrderID: data.salesOrderID, salesOrderDetailID: data.salesOrderDetailID }, data: { ...data } }))
             .then((result) => {
                 if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
                     setSaveMessage(t('SuccessfullySaved'));

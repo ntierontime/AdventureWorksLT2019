@@ -61,18 +61,21 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
     useEffect(() => {
 
 
+		setICustomerAdvancedQuery_CustomerID({ ...defaultICustomerAdvancedQuery(), pageSize: 10000 });
         codeListsApi.getCustomerCodeList(iCustomerAdvancedQuery_CustomerID).then((res) => {
             if (res.status === "OK") {
                 setCustomer_CustomerIDCodeList(res.responseBody);
             }
         });
 
+		setIAddressAdvancedQuery_ShipToAddressID({ ...defaultIAddressAdvancedQuery(), pageSize: 10000 });
         codeListsApi.getAddressCodeList(iAddressAdvancedQuery_ShipToAddressID).then((res) => {
             if (res.status === "OK") {
                 setAddress_ShipToAddressIDCodeList(res.responseBody);
             }
         });
 
+		setIAddressAdvancedQuery_BillToAddressID({ ...defaultIAddressAdvancedQuery(), pageSize: 10000 });
         codeListsApi.getAddressCodeList(iAddressAdvancedQuery_BillToAddressID).then((res) => {
             if (res.status === "OK") {
                 setAddress_BillToAddressIDCodeList(res.responseBody);
