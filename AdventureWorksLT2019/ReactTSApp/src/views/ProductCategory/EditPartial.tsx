@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, IconButton, MenuItem, TextField, Typography, useTheme } from '@mui/material';
+import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, MenuItem, TextField, Typography, useTheme } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -36,7 +36,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductCategory
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { register, control, handleSubmit, reset, formState: { isValid, errors } } = useForm({
+    const { register, control, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: defaultProductCategory(),
@@ -50,7 +50,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductCategory
 
 
     const iProductCategoryAdvancedQuery_ParentProductCategoryID = defaultIProductCategoryAdvancedQuery();
-    const [productCategory_ParentProductCategoryIDCodeList, setProductCategory_ParentProductCategoryIDCodeList] = useState<readonly INameValuePair[]>([{name: item.parent_Name, value: item.parentProductCategoryID, selected: false}]);
+    const [productCategory_ParentProductCategoryIDCodeList, setProductCategory_ParentProductCategoryIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.parent_Name, value: item.parentProductCategoryID, selected: false }]);
     useEffect(() => {
 
 
@@ -87,6 +87,83 @@ export default function EditPartial(props: ItemPartialViewProps<IProductCategory
     const avatar = getProductCategoryAvatar(item);
     const avatarStyle = getAvatarStyle(item.itemUIStatus______, theme);
 
+
+
+    const renderButtonGroupWhenCard = () => {
+        return (
+            <>
+                <IconButton
+                    color="primary"
+                    type='submit'
+                    disabled={(!isValid || saving || saved) && !isDirty}
+                    aria-label="save">
+                    <SaveIcon />
+                </IconButton>
+                <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
+                    <CloseIcon />
+                </IconButton>
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenDialog = () => {
+        return (
+            <>
+                {!!handleSelectItemClick && <Checkbox
+                    color="primary"
+                    checked={isItemSelected}
+                    onChange={() => { handleSelectItemClick(item) }}
+                />}
+                {!!changeViewItemTemplate && <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete); }} disabled={saving}>
+                    <DeleteIcon />
+                </IconButton>}
+                {!!doneAction && <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
+                    <CloseIcon />
+                </IconButton>}
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenInline = () => {
+        return (
+            <>
+                {!!handleSelectItemClick && <Checkbox
+                    color="primary"
+                    checked={isItemSelected}
+                    onChange={() => { handleSelectItemClick(item) }}
+                />}
+                {!!changeViewItemTemplate && <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete); }} disabled={saving}>
+                    <DeleteIcon />
+                </IconButton>}
+                {!!doneAction && <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
+                    <CloseIcon />
+                </IconButton>}
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenStandaloneView = () => {
+        return (
+            <>
+                <LoadingButton
+                    color="primary"
+                    type='submit'
+                    variant='contained'
+                    disabled={(!isValid || saving || saved) && !isDirty}
+                    startIcon={<SaveIcon color='action' />}>
+                    {t('Save')}
+                </LoadingButton>
+                <IconButton aria-label="close"
+                    onClick={() => {
+                        navigate(-1);
+                    }} disabled={saving}
+                >
+                    <CloseIcon />
+                </IconButton>
+            </>
+        );
+    }
+
     return (
         <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
             <CardHeader
@@ -97,36 +174,10 @@ export default function EditPartial(props: ItemPartialViewProps<IProductCategory
                 }
                 action={
                     <>
-                        {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Inline) && <>
-                            {!!handleSelectItemClick && <Checkbox
-                                color="primary"
-                                checked={isItemSelected}
-                                onChange={() => { handleSelectItemClick(item) }}
-                            />}
-                            {!!changeViewItemTemplate && <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete); }} disabled={saving}>
-                                <DeleteIcon />
-                            </IconButton>}
-                            {!!doneAction && <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
-                                <CloseIcon />
-                            </IconButton>}
-                        </>}
-                        {(crudViewContainer === CrudViewContainers.StandaloneView) && <>
-                            <LoadingButton
-                                color="primary"
-                                type='submit'
-                                variant='contained'
-                                disabled={!isValid || saving || saved}
-                                startIcon={<SaveIcon color='action' />}>
-                                {t('Save')}
-                            </LoadingButton>
-                            <IconButton aria-label="close"
-                                onClick={() => {
-                                    navigate(-1);
-                                }} disabled={saving}
-                            >
-                                <CloseIcon />
-                            </IconButton>
-                        </>}
+                        {crudViewContainer === CrudViewContainers.Card && (renderButtonGroupWhenCard())}
+                        {crudViewContainer === CrudViewContainers.Dialog && (renderButtonGroupWhenDialog())}
+                        {crudViewContainer === CrudViewContainers.Inline && (renderButtonGroupWhenInline())}
+                        {(crudViewContainer === CrudViewContainers.StandaloneView) && (renderButtonGroupWhenStandaloneView())}
                     </>
                 }
                 title={item.name}
@@ -148,7 +199,6 @@ export default function EditPartial(props: ItemPartialViewProps<IProductCategory
                     variant='outlined'
                     margin='normal'
                     fullWidth
-                    autoFocus
                     InputProps={{
                         readOnly: true
                     }}
@@ -171,14 +221,13 @@ export default function EditPartial(props: ItemPartialViewProps<IProductCategory
                 <TextField
                     name='name'
                     label={t('Name')}
-                	defaultValue={item.name}
+                    defaultValue={item.name}
                     variant='outlined'
                     margin='normal'
                     {...register("name", productCategoryFormValidationWhenEdit.name)}
                     autoComplete='name'
                     error={!!errors.name}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.name ? t(errors.name.message) : ''}
                 />
                 <TextField
@@ -188,7 +237,6 @@ export default function EditPartial(props: ItemPartialViewProps<IProductCategory
                     variant='outlined'
                     margin='normal'
                     fullWidth
-                    autoFocus
                     InputProps={{
                         readOnly: true
                     }}
@@ -201,34 +249,21 @@ export default function EditPartial(props: ItemPartialViewProps<IProductCategory
                     render={
                         ({ field: { onChange, ...restField } }) =>
                             <DatePicker
-                				ref={null}
+                                ref={null}
                                 label={t('ModifiedDate')}
-                                autoFocus
                                 onChange={(event) => { onChange(event); }}
                                 renderInput={(params) =>
                                     <TextField
-                						ref={null}
+                                        ref={null}
                                         fullWidth
                                         autoComplete='modifiedDate'
                                         error={!!errors.modifiedDate}
-                						helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
                                         {...params}
                                     />}
                                 {...restField}
                             />
                     }
-                />
-                <TextField
-                    name='parent_Name'
-                    label={t('Parent_Name')}
-                    defaultValue={item.parent_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
                 />
             </CardContent>
             {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Inline) && <CardActions disableSpacing>

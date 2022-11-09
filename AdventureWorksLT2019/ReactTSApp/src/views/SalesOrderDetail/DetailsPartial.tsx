@@ -1,7 +1,8 @@
-import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, IconButton, Stack, TextField, Typography, useTheme } from '@mui/material';
+import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, Stack, TextField, Typography, useTheme } from '@mui/material';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -32,6 +33,117 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
     const avatar = getSalesOrderDetailAvatar(item);
     const avatarStyle = getAvatarStyle(item.itemUIStatus______, theme);
 
+    const renderButtonGroupWhenCard = () => {
+        return (
+            <>
+                {!!handleItemDialogOpen && <>
+                    <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, itemIndex) }}>
+                        <DeleteIcon />
+                    </IconButton>
+                    <IconButton aria-label="details" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Details, itemIndex) }}>
+                        <BusinessCenterIcon />
+                    </IconButton>
+                    <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit, itemIndex) }}>
+                        <EditIcon />
+                    </IconButton>
+                </>}
+                <IconButton aria-label="delete" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete) }}>
+                    <DeleteIcon />
+                </IconButton>
+                <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Edit) }}>
+                    <EditIcon />
+                </IconButton>
+                <IconButton aria-label="more">
+                    <MoreVertIcon />
+                </IconButton>
+                <IconButton aria-label="close" onClick={() => { doneAction() }}>
+                    <ChevronLeftIcon />
+                </IconButton>
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenDialog = () => {
+        return (
+            <>
+                {!!handleSelectItemClick && <Checkbox
+                    color="primary"
+                    checked={isItemSelected}
+                    onChange={() => { handleSelectItemClick(item) }}
+                />}
+                {!!handleItemDialogOpen && <>
+                    <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, itemIndex) }}>
+                        <DeleteIcon />
+                    </IconButton>
+                    <IconButton aria-label="details" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Details, itemIndex) }}>
+                        <BusinessCenterIcon />
+                    </IconButton>
+                    <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit, itemIndex) }}>
+                        <EditIcon />
+                    </IconButton>
+                </>}
+                <IconButton aria-label="delete" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete) }}>
+                    <DeleteIcon />
+                </IconButton>
+                <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Edit) }}>
+                    <EditIcon />
+                </IconButton>
+                <IconButton aria-label="more">
+                    <MoreVertIcon />
+                </IconButton>
+                {crudViewContainer === CrudViewContainers.Dialog && <IconButton aria-label="close" onClick={() => { doneAction() }}>
+                    <CloseIcon />
+                </IconButton>}
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenInline = () => {
+        return (
+            <>
+                {!!handleSelectItemClick && <Checkbox
+                    color="primary"
+                    checked={isItemSelected}
+                    onChange={() => { handleSelectItemClick(item) }}
+                />}
+                {!!handleItemDialogOpen && <>
+                    <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, itemIndex) }}>
+                        <DeleteIcon />
+                    </IconButton>
+                    <IconButton aria-label="details" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Details, itemIndex) }}>
+                        <BusinessCenterIcon />
+                    </IconButton>
+                    <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit, itemIndex) }}>
+                        <EditIcon />
+                    </IconButton>
+                </>}
+                <IconButton aria-label="delete" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete) }}>
+                    <DeleteIcon />
+                </IconButton>
+                <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Edit) }}>
+                    <EditIcon />
+                </IconButton>
+                <IconButton aria-label="more">
+                    <MoreVertIcon />
+                </IconButton>
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenStandaloneView = () => {
+        return (
+            <>
+                <IconButton aria-label="close"
+                    onClick={() => {
+                        navigate(-1);
+                    }}
+                >
+                    <CloseIcon />
+                </IconButton>
+            </>
+        );
+    }
+
     return (
         <Card sx={{ minHeight: '100%' }}>
             <CardHeader
@@ -42,45 +154,10 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
                 }
                 action={
                     <>
-                        {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Inline) && <>
-                            {!!handleSelectItemClick && <Checkbox
-                                color="primary"
-                                checked={isItemSelected}
-                                onChange={() => { handleSelectItemClick(item) }}
-                            />}
-                            {!!handleItemDialogOpen && <>
-                                <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, itemIndex) }}>
-                                    <DeleteIcon />
-                                </IconButton>
-                                <IconButton aria-label="details" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Details, itemIndex) }}>
-                                    <BusinessCenterIcon />
-                                </IconButton>
-                                <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit, itemIndex) }}>
-                                    <EditIcon />
-                                </IconButton>
-                            </>}
-                            <IconButton aria-label="delete" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete) }}>
-                                <DeleteIcon />
-                            </IconButton>
-                            <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Edit) }}>
-                                <EditIcon />
-                            </IconButton>
-                            <IconButton aria-label="more">
-                                <MoreVertIcon />
-                            </IconButton>
-                            {crudViewContainer === CrudViewContainers.Dialog && <IconButton aria-label="close" onClick={() => { doneAction() }}>
-                                <CloseIcon />
-                            </IconButton>}
-                        </>}
-                        {(crudViewContainer === CrudViewContainers.StandaloneView) && <>
-                            <IconButton aria-label="close"
-                                onClick={() => {
-                                    navigate(-1);
-                                }}
-                            >
-                                <CloseIcon />
-                            </IconButton>
-                        </>}
+                        {crudViewContainer === CrudViewContainers.Card && (renderButtonGroupWhenCard())}
+                        {crudViewContainer === CrudViewContainers.Dialog && (renderButtonGroupWhenDialog())}
+                        {crudViewContainer === CrudViewContainers.Inline && (renderButtonGroupWhenInline())}
+                        {(crudViewContainer === CrudViewContainers.StandaloneView) && (renderButtonGroupWhenStandaloneView())}
                     </>
                 }
                 title={item.salesOrderID}
@@ -103,7 +180,6 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
                     variant='outlined'
                     margin='normal'
                     fullWidth
-                    autoFocus
                     InputProps={{
                         readOnly: true
                     }}
@@ -115,7 +191,6 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
                     variant='outlined'
                     margin='normal'
                     fullWidth
-                    autoFocus
                     InputProps={{
                         readOnly: true
                     }}
@@ -136,7 +211,6 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
                     variant='outlined'
                     margin='normal'
                     fullWidth
-                    autoFocus
                     InputProps={{
                         readOnly: true
                     }}
@@ -148,7 +222,6 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
                     variant='outlined'
                     margin='normal'
                     fullWidth
-                    autoFocus
                     InputProps={{
                         readOnly: true
                     }}
@@ -160,7 +233,6 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
                     variant='outlined'
                     margin='normal'
                     fullWidth
-                    autoFocus
                     InputProps={{
                         readOnly: true
                     }}
@@ -172,7 +244,6 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
                     variant='outlined'
                     margin='normal'
                     fullWidth
-                    autoFocus
                     InputProps={{
                         readOnly: true
                     }}
@@ -180,7 +251,6 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
                 <DatePicker
                     label={t('ModifiedDate')}
                     value={t(i18nFormats.dateTime.format, { val: new Date(item.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-                    autoFocus
                     onChange={() => {}}
                     renderInput={(params) =>
                         <TextField
@@ -192,18 +262,6 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
                             }}
                         />}
                 />
-                <TextField
-                    name='product_Name'
-                    label={t('Product_Name')}
-                    defaultValue={item.product_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
                 <Stack sx={{ p: 2 }}
                     direction="row"
                     justifyContent="space-between"
@@ -213,18 +271,6 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
                     <Typography>{t("ProductCategoryID")}</Typography>
                     <Link to={"/productCategory/Details/" + item.productCategoryID}>{item.productCategory_Name}</Link>
                 </Stack>
-                <TextField
-                    name='productCategory_Name'
-                    label={t('ProductCategory_Name')}
-                    defaultValue={item.productCategory_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
                 <Stack sx={{ p: 2 }}
                     direction="row"
                     justifyContent="space-between"
@@ -234,18 +280,6 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
                     <Typography>{t("ProductCategory_ParentID")}</Typography>
                     <Link to={"/productCategory/Details/" + item.productCategory_ParentID}>{item.productCategory_Parent_Name}</Link>
                 </Stack>
-                <TextField
-                    name='productCategory_Parent_Name'
-                    label={t('ProductCategory_Parent_Name')}
-                    defaultValue={item.productCategory_Parent_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
                 <Stack sx={{ p: 2 }}
                     direction="row"
                     justifyContent="space-between"
@@ -255,30 +289,6 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
                     <Typography>{t("ProductModelID")}</Typography>
                     <Link to={"/productModel/Details/" + item.productModelID}>{item.productModel_Name}</Link>
                 </Stack>
-                <TextField
-                    name='productModel_Name'
-                    label={t('ProductModel_Name')}
-                    defaultValue={item.productModel_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='salesOrderHeader_Name'
-                    label={t('SalesOrderHeader_Name')}
-                    defaultValue={item.salesOrderHeader_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
                 <Stack sx={{ p: 2 }}
                     direction="row"
                     justifyContent="space-between"
@@ -288,18 +298,6 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
                     <Typography>{t("BillToID")}</Typography>
                     <Link to={"/address/Details/" + item.billToID}>{item.billTo_Name}</Link>
                 </Stack>
-                <TextField
-                    name='billTo_Name'
-                    label={t('BillTo_Name')}
-                    defaultValue={item.billTo_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
                 <Stack sx={{ p: 2 }}
                     direction="row"
                     justifyContent="space-between"
@@ -309,18 +307,6 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
                     <Typography>{t("CustomerID")}</Typography>
                     <Link to={"/customer/Details/" + item.customerID}>{item.customer_Name}</Link>
                 </Stack>
-                <TextField
-                    name='customer_Name'
-                    label={t('Customer_Name')}
-                    defaultValue={item.customer_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
                 <Stack sx={{ p: 2 }}
                     direction="row"
                     justifyContent="space-between"
@@ -330,18 +316,6 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
                     <Typography>{t("ShipToID")}</Typography>
                     <Link to={"/address/Details/" + item.shipToID}>{item.shipTo_Name}</Link>
                 </Stack>
-                <TextField
-                    name='shipTo_Name'
-                    label={t('ShipTo_Name')}
-                    defaultValue={item.shipTo_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
             </CardContent>
             {crudViewContainer === CrudViewContainers.Dialog && <CardActions disableSpacing>
                 {(!!previousAction || !!nextAction) && <ButtonGroup
@@ -381,5 +355,4 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
         </Card >
     );
 }
-
 

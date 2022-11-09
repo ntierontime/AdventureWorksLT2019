@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, IconButton, TextField, Typography } from '@mui/material';
+import { Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, TextField, Typography } from '@mui/material';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
 
@@ -75,133 +76,9 @@ export default function CreatePartial(props: ItemPartialViewProps<IAddressDataMo
             .finally(() => { setCreating(false); console.log('finally'); });
     }
 
-    return (
-        <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
-            <CardHeader
-                action={
-                    (crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.StandaloneView) && <>
-                        <IconButton type='submit' aria-label="create" disabled={!isValid || creating || created}>
-                            <SaveIcon />
-                        </IconButton>
-                        <IconButton aria-label="close" onClick={() => { doneAction() }}>
-                            <CloseIcon />
-                        </IconButton>
-                    </>
-                }
-                title={t("Create_New")}
-                subheader={t("Address")}
-            />
-            {!!createMessage && <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
-                <Typography variant="body1" component="span">
-                    {createMessage + " "}
-                </Typography>
-            </CardContent>}
-            <CardContent>
-                <TextField
-                    name='addressLine1'
-                    label={t('AddressLine1')}
-                	defaultValue={item.addressLine1}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("addressLine1", addressFormValidationWhenCreate.addressLine1)}
-                    autoComplete='addressLine1'
-                    error={!!errors.addressLine1}
-                    fullWidth
-                    autoFocus
-                    helperText={!!errors.addressLine1 ? t(errors.addressLine1.message) : ''}
-                />
-                <TextField
-                    name='addressLine2'
-                    label={t('AddressLine2')}
-                	defaultValue={item.addressLine2}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("addressLine2", addressFormValidationWhenCreate.addressLine2)}
-                    autoComplete='addressLine2'
-                    error={!!errors.addressLine2}
-                    fullWidth
-                    autoFocus
-                    helperText={!!errors.addressLine2 ? t(errors.addressLine2.message) : ''}
-                />
-                <TextField
-                    name='city'
-                    label={t('City')}
-                	defaultValue={item.city}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("city", addressFormValidationWhenCreate.city)}
-                    autoComplete='city'
-                    error={!!errors.city}
-                    fullWidth
-                    autoFocus
-                    helperText={!!errors.city ? t(errors.city.message) : ''}
-                />
-                <TextField
-                    name='stateProvince'
-                    label={t('StateProvince')}
-                	defaultValue={item.stateProvince}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("stateProvince", addressFormValidationWhenCreate.stateProvince)}
-                    autoComplete='stateProvince'
-                    error={!!errors.stateProvince}
-                    fullWidth
-                    autoFocus
-                    helperText={!!errors.stateProvince ? t(errors.stateProvince.message) : ''}
-                />
-                <TextField
-                    name='countryRegion'
-                    label={t('CountryRegion')}
-                	defaultValue={item.countryRegion}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("countryRegion", addressFormValidationWhenCreate.countryRegion)}
-                    autoComplete='countryRegion'
-                    error={!!errors.countryRegion}
-                    fullWidth
-                    autoFocus
-                    helperText={!!errors.countryRegion ? t(errors.countryRegion.message) : ''}
-                />
-                <TextField
-                    name='postalCode'
-                    label={t('PostalCode')}
-                	defaultValue={item.postalCode}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("postalCode", addressFormValidationWhenCreate.postalCode)}
-                    autoComplete='postalCode'
-                    error={!!errors.postalCode}
-                    fullWidth
-                    autoFocus
-                    helperText={!!errors.postalCode ? t(errors.postalCode.message) : ''}
-                />
-                <Controller
-                    name="modifiedDate"
-                    defaultValue={item.modifiedDate}
-                    control={control}
-                    {...register("modifiedDate", addressFormValidationWhenCreate.modifiedDate)}
-                    render={
-                        ({ field: { onChange, ...restField } }) =>
-                            <DatePicker
-                				ref={null}
-                                label={t('ModifiedDate')}
-                                autoFocus
-                                onChange={(event) => { onChange(event); }}
-                                renderInput={(params) =>
-                                    <TextField
-                						ref={null}
-                                        fullWidth
-                                        autoComplete='modifiedDate'
-                                        error={!!errors.modifiedDate}
-                						helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                        {...params}
-                                    />}
-                                {...restField}
-                            />
-                    }
-                />
-            </CardContent>
-            {(crudViewContainer === CrudViewContainers.Dialog) && <CardActions disableSpacing>
+    const renderButtonGroupWhenDialog = () => {
+        return (
+            <>
                 <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
                 <ButtonGroup sx={{ marginLeft: 'auto', }}
                     disableElevation
@@ -227,6 +104,165 @@ export default function CreatePartial(props: ItemPartialViewProps<IAddressDataMo
                         {t('Cancel')}
                     </Button>
                 </ButtonGroup>
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenInline = () => {
+        return (
+            <>
+                <IconButton type='submit' aria-label="create" disabled={!isValid || creating || created}>
+                    <SaveIcon />
+                </IconButton>
+                <IconButton aria-label="close" onClick={() => { doneAction() }}>
+                    <CloseIcon />
+                </IconButton>
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenStandaloneView = () => {
+        return (
+            <>
+                <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
+                <ButtonGroup sx={{ marginLeft: 'auto', }}
+                    disableElevation
+                    variant="contained"
+                    aria-label="navigation buttons"
+                >
+                    <Button
+                        type='submit'
+                        fullWidth
+                        variant='contained'
+                        disabled={!isValid || creating || created}
+                        startIcon={<SaveIcon />}>
+                        {t('Create')}
+                    </Button>
+                    <IconButton aria-label="close" onClick={() => { doneAction() }}>
+                        <ChevronLeftIcon />
+                    </IconButton>
+                </ButtonGroup>
+            </>
+        );
+    }
+
+    return (
+        <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
+            <CardHeader
+                action={
+                    <>
+                        {crudViewContainer === CrudViewContainers.Inline && (renderButtonGroupWhenInline())}
+                        {(crudViewContainer === CrudViewContainers.StandaloneView) && (renderButtonGroupWhenStandaloneView())}
+                    </>
+                }
+                title={t("Create_New")}
+                subheader={t("Address")}
+            />
+            {!!createMessage && <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
+                <Typography variant="body1" component="span">
+                    {createMessage + " "}
+                </Typography>
+            </CardContent>}
+            <CardContent>
+                <TextField
+                    name='addressLine1'
+                    label={t('AddressLine1')}
+                    defaultValue={item.addressLine1}
+                    variant='outlined'
+                    margin='normal'
+                    {...register("addressLine1", addressFormValidationWhenCreate.addressLine1)}
+                    autoComplete='addressLine1'
+                    error={!!errors.addressLine1}
+                    fullWidth
+                    helperText={!!errors.addressLine1 ? t(errors.addressLine1.message) : ''}
+                />
+                <TextField
+                    name='addressLine2'
+                    label={t('AddressLine2')}
+                    defaultValue={item.addressLine2}
+                    variant='outlined'
+                    margin='normal'
+                    {...register("addressLine2", addressFormValidationWhenCreate.addressLine2)}
+                    autoComplete='addressLine2'
+                    error={!!errors.addressLine2}
+                    fullWidth
+                    helperText={!!errors.addressLine2 ? t(errors.addressLine2.message) : ''}
+                />
+                <TextField
+                    name='city'
+                    label={t('City')}
+                    defaultValue={item.city}
+                    variant='outlined'
+                    margin='normal'
+                    {...register("city", addressFormValidationWhenCreate.city)}
+                    autoComplete='city'
+                    error={!!errors.city}
+                    fullWidth
+                    helperText={!!errors.city ? t(errors.city.message) : ''}
+                />
+                <TextField
+                    name='stateProvince'
+                    label={t('StateProvince')}
+                    defaultValue={item.stateProvince}
+                    variant='outlined'
+                    margin='normal'
+                    {...register("stateProvince", addressFormValidationWhenCreate.stateProvince)}
+                    autoComplete='stateProvince'
+                    error={!!errors.stateProvince}
+                    fullWidth
+                    helperText={!!errors.stateProvince ? t(errors.stateProvince.message) : ''}
+                />
+                <TextField
+                    name='countryRegion'
+                    label={t('CountryRegion')}
+                    defaultValue={item.countryRegion}
+                    variant='outlined'
+                    margin='normal'
+                    {...register("countryRegion", addressFormValidationWhenCreate.countryRegion)}
+                    autoComplete='countryRegion'
+                    error={!!errors.countryRegion}
+                    fullWidth
+                    helperText={!!errors.countryRegion ? t(errors.countryRegion.message) : ''}
+                />
+                <TextField
+                    name='postalCode'
+                    label={t('PostalCode')}
+                    defaultValue={item.postalCode}
+                    variant='outlined'
+                    margin='normal'
+                    {...register("postalCode", addressFormValidationWhenCreate.postalCode)}
+                    autoComplete='postalCode'
+                    error={!!errors.postalCode}
+                    fullWidth
+                    helperText={!!errors.postalCode ? t(errors.postalCode.message) : ''}
+                />
+                <Controller
+                    name="modifiedDate"
+                    defaultValue={item.modifiedDate}
+                    control={control}
+                    {...register("modifiedDate", addressFormValidationWhenCreate.modifiedDate)}
+                    render={
+                        ({ field: { onChange, ...restField } }) =>
+                            <DatePicker
+                                ref={null}
+                                label={t('ModifiedDate')}
+                                onChange={(event) => { onChange(event); }}
+                                renderInput={(params) =>
+                                    <TextField
+                                        ref={null}
+                                        fullWidth
+                                        autoComplete='modifiedDate'
+                                        error={!!errors.modifiedDate}
+                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                                        {...params}
+                                    />}
+                                {...restField}
+                            />
+                    }
+                />
+            </CardContent>
+            {(crudViewContainer === CrudViewContainers.Dialog) && <CardActions disableSpacing>
+                {renderButtonGroupWhenDialog()}
             </CardActions>}
         </Card >
     );

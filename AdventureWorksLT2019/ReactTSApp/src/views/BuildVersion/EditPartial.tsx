@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, IconButton, TextField, Typography, useTheme } from '@mui/material';
+import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, TextField, Typography, useTheme } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -34,7 +34,7 @@ export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDat
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { register, control, handleSubmit, reset, formState: { isValid, errors } } = useForm({
+    const { register, control, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: defaultBuildVersion(),
@@ -76,6 +76,83 @@ export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDat
     const avatar = getBuildVersionAvatar(item);
     const avatarStyle = getAvatarStyle(item.itemUIStatus______, theme);
 
+
+
+    const renderButtonGroupWhenCard = () => {
+        return (
+            <>
+                <IconButton
+                    color="primary"
+                    type='submit'
+                    disabled={(!isValid || saving || saved) && !isDirty}
+                    aria-label="save">
+                    <SaveIcon />
+                </IconButton>
+                <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
+                    <CloseIcon />
+                </IconButton>
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenDialog = () => {
+        return (
+            <>
+                {!!handleSelectItemClick && <Checkbox
+                    color="primary"
+                    checked={isItemSelected}
+                    onChange={() => { handleSelectItemClick(item) }}
+                />}
+                {!!changeViewItemTemplate && <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete); }} disabled={saving}>
+                    <DeleteIcon />
+                </IconButton>}
+                {!!doneAction && <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
+                    <CloseIcon />
+                </IconButton>}
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenInline = () => {
+        return (
+            <>
+                {!!handleSelectItemClick && <Checkbox
+                    color="primary"
+                    checked={isItemSelected}
+                    onChange={() => { handleSelectItemClick(item) }}
+                />}
+                {!!changeViewItemTemplate && <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete); }} disabled={saving}>
+                    <DeleteIcon />
+                </IconButton>}
+                {!!doneAction && <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
+                    <CloseIcon />
+                </IconButton>}
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenStandaloneView = () => {
+        return (
+            <>
+                <LoadingButton
+                    color="primary"
+                    type='submit'
+                    variant='contained'
+                    disabled={(!isValid || saving || saved) && !isDirty}
+                    startIcon={<SaveIcon color='action' />}>
+                    {t('Save')}
+                </LoadingButton>
+                <IconButton aria-label="close"
+                    onClick={() => {
+                        navigate(-1);
+                    }} disabled={saving}
+                >
+                    <CloseIcon />
+                </IconButton>
+            </>
+        );
+    }
+
     return (
         <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
             <CardHeader
@@ -86,36 +163,10 @@ export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDat
                 }
                 action={
                     <>
-                        {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Inline) && <>
-                            {!!handleSelectItemClick && <Checkbox
-                                color="primary"
-                                checked={isItemSelected}
-                                onChange={() => { handleSelectItemClick(item) }}
-                            />}
-                            {!!changeViewItemTemplate && <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete); }} disabled={saving}>
-                                <DeleteIcon />
-                            </IconButton>}
-                            {!!doneAction && <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
-                                <CloseIcon />
-                            </IconButton>}
-                        </>}
-                        {(crudViewContainer === CrudViewContainers.StandaloneView) && <>
-                            <LoadingButton
-                                color="primary"
-                                type='submit'
-                                variant='contained'
-                                disabled={!isValid || saving || saved}
-                                startIcon={<SaveIcon color='action' />}>
-                                {t('Save')}
-                            </LoadingButton>
-                            <IconButton aria-label="close"
-                                onClick={() => {
-                                    navigate(-1);
-                                }} disabled={saving}
-                            >
-                                <CloseIcon />
-                            </IconButton>
-                        </>}
+                        {crudViewContainer === CrudViewContainers.Card && (renderButtonGroupWhenCard())}
+                        {crudViewContainer === CrudViewContainers.Dialog && (renderButtonGroupWhenDialog())}
+                        {crudViewContainer === CrudViewContainers.Inline && (renderButtonGroupWhenInline())}
+                        {(crudViewContainer === CrudViewContainers.StandaloneView) && (renderButtonGroupWhenStandaloneView())}
                     </>
                 }
                 title={item.database_Version}
@@ -137,7 +188,6 @@ export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDat
                     variant='outlined'
                     margin='normal'
                     fullWidth
-                    autoFocus
                     InputProps={{
                         readOnly: true
                     }}
@@ -145,14 +195,13 @@ export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDat
                 <TextField
                     name='database_Version'
                     label={t('Database_Version')}
-                	defaultValue={item.database_Version}
+                    defaultValue={item.database_Version}
                     variant='outlined'
                     margin='normal'
                     {...register("database_Version", buildVersionFormValidationWhenEdit.database_Version)}
                     autoComplete='database_Version'
                     error={!!errors.database_Version}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.database_Version ? t(errors.database_Version.message) : ''}
                 />
                 <Controller
@@ -163,17 +212,16 @@ export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDat
                     render={
                         ({ field: { onChange, ...restField } }) =>
                             <DatePicker
-                				ref={null}
+                                ref={null}
                                 label={t('VersionDate')}
-                                autoFocus
                                 onChange={(event) => { onChange(event); }}
                                 renderInput={(params) =>
                                     <TextField
-                						ref={null}
+                                        ref={null}
                                         fullWidth
                                         autoComplete='versionDate'
                                         error={!!errors.versionDate}
-                						helperText={!!errors.versionDate ? t(errors.versionDate.message) : ''}
+                                        helperText={!!errors.versionDate ? t(errors.versionDate.message) : ''}
                                         {...params}
                                     />}
                                 {...restField}
@@ -188,17 +236,16 @@ export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDat
                     render={
                         ({ field: { onChange, ...restField } }) =>
                             <DatePicker
-                				ref={null}
+                                ref={null}
                                 label={t('ModifiedDate')}
-                                autoFocus
                                 onChange={(event) => { onChange(event); }}
                                 renderInput={(params) =>
                                     <TextField
-                						ref={null}
+                                        ref={null}
                                         fullWidth
                                         autoComplete='modifiedDate'
                                         error={!!errors.modifiedDate}
-                						helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
                                         {...params}
                                     />}
                                 {...restField}

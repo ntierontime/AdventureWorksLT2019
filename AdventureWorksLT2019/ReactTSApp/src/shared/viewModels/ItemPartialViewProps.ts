@@ -2,6 +2,7 @@ import { CrudViewContainers } from "./CrudViewContainers";
 import { ViewItemTemplates } from "./ViewItemTemplates";
 
 export interface ItemPartialViewProps<TDataModel> {
+    multiColumns: boolean;
     crudViewContainer: CrudViewContainers,
     viewItemTemplate: ViewItemTemplates,
     item: TDataModel,
@@ -30,6 +31,7 @@ export function getCRUDItemPartialViewPropsOnDialog<TDataModel>(
     doneAction: () => void
 ): ItemPartialViewProps<TDataModel> {
     return {
+        multiColumns: true,
         crudViewContainer: CrudViewContainers.Dialog,
         viewItemTemplate,
         isItemSelected: false,
@@ -56,6 +58,7 @@ export function getCRUDItemPartialViewPropsInline<TDataModel>(
     doneAction: () => void
 ): ItemPartialViewProps<TDataModel> {
     return {
+        multiColumns: false,
         crudViewContainer: CrudViewContainers.Inline,
         viewItemTemplate,
         isItemSelected: false,
@@ -82,7 +85,35 @@ export function getCRUDItemPartialViewPropsStandalone<TDataModel>(
     doneAction: () => void
 ): ItemPartialViewProps<TDataModel> {
     return {
+        multiColumns: true,
         crudViewContainer: CrudViewContainers.StandaloneView,
+        viewItemTemplate,
+        isItemSelected: false,
+        handleSelectItemClick: null,
+        totalCountInList: -1,
+        itemIndex: -1,
+        setItemIndex: null,
+        doneAction,
+        item: null,
+        previousAction: null,
+        nextAction: null,
+        changeViewItemTemplate: null,
+
+        // collapsable and collapsed are for Tiles, not for HtmlTable for now
+        collapsable: false,
+        collapsed: false,
+
+        handleItemDialogOpen: null, // to open RUD Dialog
+    };
+}
+
+export function getCRUDItemPartialViewPropsCard<TDataModel>(
+    viewItemTemplate: ViewItemTemplates,
+    doneAction: () => void
+): ItemPartialViewProps<TDataModel> {
+    return {
+        multiColumns: false,
+        crudViewContainer: CrudViewContainers.Card,
         viewItemTemplate,
         isItemSelected: false,
         handleSelectItemClick: null,

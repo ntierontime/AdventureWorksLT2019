@@ -3,4 +3,5 @@ export enum CrudViewContainers {
     StandaloneView = 'StandaloneView',
     Dialog = 'Dialog',
     Inline = 'Inline',
+    Card = 'Card',
 }

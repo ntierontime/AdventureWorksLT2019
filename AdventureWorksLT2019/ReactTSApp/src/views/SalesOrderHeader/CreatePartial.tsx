@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, IconButton, MenuItem, TextField, Typography } from '@mui/material';
+import { Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, MenuItem, TextField, Typography } from '@mui/material';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
 
@@ -46,13 +47,13 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
 
 
     const iCustomerAdvancedQuery_CustomerID = defaultICustomerAdvancedQuery();
-    const [customer_CustomerIDCodeList, setCustomer_CustomerIDCodeList] = useState<readonly INameValuePair[]>([{name: item.customer_Name, value: item.customerID, selected: false}]);
+    const [customer_CustomerIDCodeList, setCustomer_CustomerIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.customer_Name, value: item.customerID, selected: false }]);
 
     const iAddressAdvancedQuery_ShipToAddressID = defaultIAddressAdvancedQuery();
-    const [address_ShipToAddressIDCodeList, setAddress_ShipToAddressIDCodeList] = useState<readonly INameValuePair[]>([{name: item.shipTo_Name, value: item.shipToAddressID, selected: false}]);
+    const [address_ShipToAddressIDCodeList, setAddress_ShipToAddressIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.shipTo_Name, value: item.shipToAddressID, selected: false }]);
 
     const iAddressAdvancedQuery_BillToAddressID = defaultIAddressAdvancedQuery();
-    const [address_BillToAddressIDCodeList, setAddress_BillToAddressIDCodeList] = useState<readonly INameValuePair[]>([{name: item.billTo_Name, value: item.billToAddressID, selected: false}]);
+    const [address_BillToAddressIDCodeList, setAddress_BillToAddressIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.billTo_Name, value: item.billToAddressID, selected: false }]);
     useEffect(() => {
 
 
@@ -105,17 +106,83 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
             .finally(() => { setCreating(false); console.log('finally'); });
     }
 
+    const renderButtonGroupWhenDialog = () => {
+        return (
+            <>
+                <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
+                <ButtonGroup sx={{ marginLeft: 'auto', }}
+                    disableElevation
+                    variant="contained"
+                    aria-label="navigation buttons"
+                >
+                    <Button
+                        type='submit'
+                        fullWidth
+                        variant='contained'
+                        disabled={!isValid || creating || created}
+                        startIcon={<SaveIcon />}>
+                        {t('Create')}
+                    </Button>
+                    <Button
+                        autoFocus
+                        disabled={creating || created}
+                        fullWidth
+                        variant='contained'
+                        startIcon={<CloseIcon />}
+                        onClick={() => { doneAction() }}
+                    >
+                        {t('Cancel')}
+                    </Button>
+                </ButtonGroup>
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenInline = () => {
+        return (
+            <>
+                <IconButton type='submit' aria-label="create" disabled={!isValid || creating || created}>
+                    <SaveIcon />
+                </IconButton>
+                <IconButton aria-label="close" onClick={() => { doneAction() }}>
+                    <CloseIcon />
+                </IconButton>
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenStandaloneView = () => {
+        return (
+            <>
+                <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
+                <ButtonGroup sx={{ marginLeft: 'auto', }}
+                    disableElevation
+                    variant="contained"
+                    aria-label="navigation buttons"
+                >
+                    <Button
+                        type='submit'
+                        fullWidth
+                        variant='contained'
+                        disabled={!isValid || creating || created}
+                        startIcon={<SaveIcon />}>
+                        {t('Create')}
+                    </Button>
+                    <IconButton aria-label="close" onClick={() => { doneAction() }}>
+                        <ChevronLeftIcon />
+                    </IconButton>
+                </ButtonGroup>
+            </>
+        );
+    }
+
     return (
         <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
             <CardHeader
                 action={
-                    (crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.StandaloneView) && <>
-                        <IconButton type='submit' aria-label="create" disabled={!isValid || creating || created}>
-                            <SaveIcon />
-                        </IconButton>
-                        <IconButton aria-label="close" onClick={() => { doneAction() }}>
-                            <CloseIcon />
-                        </IconButton>
+                    <>
+                        {crudViewContainer === CrudViewContainers.Inline && (renderButtonGroupWhenInline())}
+                        {(crudViewContainer === CrudViewContainers.StandaloneView) && (renderButtonGroupWhenStandaloneView())}
                     </>
                 }
                 title={t("Create_New")}
@@ -130,14 +197,13 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
                 <TextField
                     name='revisionNumber'
                     label={t('RevisionNumber')}
-                	defaultValue={item.revisionNumber}
+                    defaultValue={item.revisionNumber}
                     variant='outlined'
                     margin='normal'
                     {...register("revisionNumber", salesOrderHeaderFormValidationWhenCreate.revisionNumber)}
                     autoComplete='revisionNumber'
                     error={!!errors.revisionNumber}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.revisionNumber ? t(errors.revisionNumber.message) : ''}
                 />
                 <Controller
@@ -148,17 +214,16 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
                     render={
                         ({ field: { onChange, ...restField } }) =>
                             <DatePicker
-                				ref={null}
+                                ref={null}
                                 label={t('OrderDate')}
-                                autoFocus
                                 onChange={(event) => { onChange(event); }}
                                 renderInput={(params) =>
                                     <TextField
-                						ref={null}
+                                        ref={null}
                                         fullWidth
                                         autoComplete='orderDate'
                                         error={!!errors.orderDate}
-                						helperText={!!errors.orderDate ? t(errors.orderDate.message) : ''}
+                                        helperText={!!errors.orderDate ? t(errors.orderDate.message) : ''}
                                         {...params}
                                     />}
                                 {...restField}
@@ -173,17 +238,16 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
                     render={
                         ({ field: { onChange, ...restField } }) =>
                             <DatePicker
-                				ref={null}
+                                ref={null}
                                 label={t('DueDate')}
-                                autoFocus
                                 onChange={(event) => { onChange(event); }}
                                 renderInput={(params) =>
                                     <TextField
-                						ref={null}
+                                        ref={null}
                                         fullWidth
                                         autoComplete='dueDate'
                                         error={!!errors.dueDate}
-                						helperText={!!errors.dueDate ? t(errors.dueDate.message) : ''}
+                                        helperText={!!errors.dueDate ? t(errors.dueDate.message) : ''}
                                         {...params}
                                     />}
                                 {...restField}
@@ -198,17 +262,16 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
                     render={
                         ({ field: { onChange, ...restField } }) =>
                             <DatePicker
-                				ref={null}
+                                ref={null}
                                 label={t('ShipDate')}
-                                autoFocus
                                 onChange={(event) => { onChange(event); }}
                                 renderInput={(params) =>
                                     <TextField
-                						ref={null}
+                                        ref={null}
                                         fullWidth
                                         autoComplete='shipDate'
                                         error={!!errors.shipDate}
-                						//helperText={!!errors.shipDate ? t(errors.shipDate.message) : ''}
+                                        //helperText={!!errors.shipDate ? t(errors.shipDate.message) : ''}
                                         {...params}
                                     />}
                                 {...restField}
@@ -218,14 +281,13 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
                 <TextField
                     name='status'
                     label={t('Status')}
-                	defaultValue={item.status}
+                    defaultValue={item.status}
                     variant='outlined'
                     margin='normal'
                     {...register("status", salesOrderHeaderFormValidationWhenCreate.status)}
                     autoComplete='status'
                     error={!!errors.status}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.status ? t(errors.status.message) : ''}
                 />
                 <FormControlLabel
@@ -250,27 +312,25 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
                 <TextField
                     name='purchaseOrderNumber'
                     label={t('PurchaseOrderNumber')}
-                	defaultValue={item.purchaseOrderNumber}
+                    defaultValue={item.purchaseOrderNumber}
                     variant='outlined'
                     margin='normal'
                     {...register("purchaseOrderNumber", salesOrderHeaderFormValidationWhenCreate.purchaseOrderNumber)}
                     autoComplete='purchaseOrderNumber'
                     error={!!errors.purchaseOrderNumber}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.purchaseOrderNumber ? t(errors.purchaseOrderNumber.message) : ''}
                 />
                 <TextField
                     name='accountNumber'
                     label={t('AccountNumber')}
-                	defaultValue={item.accountNumber}
+                    defaultValue={item.accountNumber}
                     variant='outlined'
                     margin='normal'
                     {...register("accountNumber", salesOrderHeaderFormValidationWhenCreate.accountNumber)}
                     autoComplete='accountNumber'
                     error={!!errors.accountNumber}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.accountNumber ? t(errors.accountNumber.message) : ''}
                 />
                 <TextField
@@ -321,79 +381,73 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
                 <TextField
                     name='shipMethod'
                     label={t('ShipMethod')}
-                	defaultValue={item.shipMethod}
+                    defaultValue={item.shipMethod}
                     variant='outlined'
                     margin='normal'
                     {...register("shipMethod", salesOrderHeaderFormValidationWhenCreate.shipMethod)}
                     autoComplete='shipMethod'
                     error={!!errors.shipMethod}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.shipMethod ? t(errors.shipMethod.message) : ''}
                 />
                 <TextField
                     name='creditCardApprovalCode'
                     label={t('CreditCardApprovalCode')}
-                	defaultValue={item.creditCardApprovalCode}
+                    defaultValue={item.creditCardApprovalCode}
                     variant='outlined'
                     margin='normal'
                     {...register("creditCardApprovalCode", salesOrderHeaderFormValidationWhenCreate.creditCardApprovalCode)}
                     autoComplete='creditCardApprovalCode'
                     error={!!errors.creditCardApprovalCode}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.creditCardApprovalCode ? t(errors.creditCardApprovalCode.message) : ''}
                 />
                 <TextField
                     name='subTotal'
                     label={t('SubTotal')}
-                	defaultValue={item.subTotal}
+                    defaultValue={item.subTotal}
                     variant='outlined'
                     margin='normal'
                     {...register("subTotal", salesOrderHeaderFormValidationWhenCreate.subTotal)}
                     autoComplete='subTotal'
                     error={!!errors.subTotal}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.subTotal ? t(errors.subTotal.message) : ''}
                 />
                 <TextField
                     name='taxAmt'
                     label={t('TaxAmt')}
-                	defaultValue={item.taxAmt}
+                    defaultValue={item.taxAmt}
                     variant='outlined'
                     margin='normal'
                     {...register("taxAmt", salesOrderHeaderFormValidationWhenCreate.taxAmt)}
                     autoComplete='taxAmt'
                     error={!!errors.taxAmt}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.taxAmt ? t(errors.taxAmt.message) : ''}
                 />
                 <TextField
                     name='freight'
                     label={t('Freight')}
-                	defaultValue={item.freight}
+                    defaultValue={item.freight}
                     variant='outlined'
                     margin='normal'
                     {...register("freight", salesOrderHeaderFormValidationWhenCreate.freight)}
                     autoComplete='freight'
                     error={!!errors.freight}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.freight ? t(errors.freight.message) : ''}
                 />
                 <TextField
                     name='comment'
                     label={t('Comment')}
-                	defaultValue={item.comment}
+                    defaultValue={item.comment}
                     variant='outlined'
                     margin='normal'
                     {...register("comment", salesOrderHeaderFormValidationWhenCreate.comment)}
                     autoComplete='comment'
                     error={!!errors.comment}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.comment ? t(errors.comment.message) : ''}
                 />
                 <Controller
@@ -404,86 +458,25 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
                     render={
                         ({ field: { onChange, ...restField } }) =>
                             <DatePicker
-                				ref={null}
+                                ref={null}
                                 label={t('ModifiedDate')}
-                                autoFocus
                                 onChange={(event) => { onChange(event); }}
                                 renderInput={(params) =>
                                     <TextField
-                						ref={null}
+                                        ref={null}
                                         fullWidth
                                         autoComplete='modifiedDate'
                                         error={!!errors.modifiedDate}
-                						helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
                                         {...params}
                                     />}
                                 {...restField}
                             />
                     }
                 />
-                <TextField
-                    name='billTo_Name'
-                    label={t('BillTo_Name')}
-                    defaultValue={item.billTo_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='customer_Name'
-                    label={t('Customer_Name')}
-                    defaultValue={item.customer_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='shipTo_Name'
-                    label={t('ShipTo_Name')}
-                    defaultValue={item.shipTo_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
             </CardContent>
             {(crudViewContainer === CrudViewContainers.Dialog) && <CardActions disableSpacing>
-                <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
-                <ButtonGroup sx={{ marginLeft: 'auto', }}
-                    disableElevation
-                    variant="contained"
-                    aria-label="navigation buttons"
-                >
-                    <Button
-                        type='submit'
-                        fullWidth
-                        variant='contained'
-                        disabled={!isValid || creating || created}
-                        startIcon={<SaveIcon />}>
-                        {t('Create')}
-                    </Button>
-                    <Button
-                        autoFocus
-                        disabled={creating || created}
-                        fullWidth
-                        variant='contained'
-                        startIcon={<CloseIcon />}
-                        onClick={() => { doneAction() }}
-                    >
-                        {t('Cancel')}
-                    </Button>
-                </ButtonGroup>
+                {renderButtonGroupWhenDialog()}
             </CardActions>}
         </Card >
     );

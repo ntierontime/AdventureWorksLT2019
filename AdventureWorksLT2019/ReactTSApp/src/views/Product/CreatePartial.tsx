@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, IconButton, MenuItem, TextField, Typography } from '@mui/material';
+import { Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, MenuItem, TextField, Typography } from '@mui/material';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
 
@@ -46,13 +47,13 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
 
 
     const iProductCategoryAdvancedQuery_ProductCategoryID = defaultIProductCategoryAdvancedQuery();
-    const [productCategory_ProductCategoryIDCodeList, setProductCategory_ProductCategoryIDCodeList] = useState<readonly INameValuePair[]>([{name: item.productCategory_Name, value: item.productCategoryID, selected: false}]);
+    const [productCategory_ProductCategoryIDCodeList, setProductCategory_ProductCategoryIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productCategory_Name, value: item.productCategoryID, selected: false }]);
 
     const iProductModelAdvancedQuery_ProductModelID = defaultIProductModelAdvancedQuery();
-    const [productModel_ProductModelIDCodeList, setProductModel_ProductModelIDCodeList] = useState<readonly INameValuePair[]>([{name: item.productModel_Name, value: item.productModelID, selected: false}]);
+    const [productModel_ProductModelIDCodeList, setProductModel_ProductModelIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productModel_Name, value: item.productModelID, selected: false }]);
 
     const iProductCategoryAdvancedQuery_ParentID = defaultIProductCategoryAdvancedQuery();
-    const [productCategory_ParentIDCodeList, setProductCategory_ParentIDCodeList] = useState<readonly INameValuePair[]>([{name: item.parent_Name, value: item.parentID, selected: false}]);
+    const [productCategory_ParentIDCodeList, setProductCategory_ParentIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.parent_Name, value: item.parentID, selected: false }]);
     useEffect(() => {
 
 
@@ -99,17 +100,83 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
             .finally(() => { setCreating(false); console.log('finally'); });
     }
 
+    const renderButtonGroupWhenDialog = () => {
+        return (
+            <>
+                <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
+                <ButtonGroup sx={{ marginLeft: 'auto', }}
+                    disableElevation
+                    variant="contained"
+                    aria-label="navigation buttons"
+                >
+                    <Button
+                        type='submit'
+                        fullWidth
+                        variant='contained'
+                        disabled={!isValid || creating || created}
+                        startIcon={<SaveIcon />}>
+                        {t('Create')}
+                    </Button>
+                    <Button
+                        autoFocus
+                        disabled={creating || created}
+                        fullWidth
+                        variant='contained'
+                        startIcon={<CloseIcon />}
+                        onClick={() => { doneAction() }}
+                    >
+                        {t('Cancel')}
+                    </Button>
+                </ButtonGroup>
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenInline = () => {
+        return (
+            <>
+                <IconButton type='submit' aria-label="create" disabled={!isValid || creating || created}>
+                    <SaveIcon />
+                </IconButton>
+                <IconButton aria-label="close" onClick={() => { doneAction() }}>
+                    <CloseIcon />
+                </IconButton>
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenStandaloneView = () => {
+        return (
+            <>
+                <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
+                <ButtonGroup sx={{ marginLeft: 'auto', }}
+                    disableElevation
+                    variant="contained"
+                    aria-label="navigation buttons"
+                >
+                    <Button
+                        type='submit'
+                        fullWidth
+                        variant='contained'
+                        disabled={!isValid || creating || created}
+                        startIcon={<SaveIcon />}>
+                        {t('Create')}
+                    </Button>
+                    <IconButton aria-label="close" onClick={() => { doneAction() }}>
+                        <ChevronLeftIcon />
+                    </IconButton>
+                </ButtonGroup>
+            </>
+        );
+    }
+
     return (
         <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
             <CardHeader
                 action={
-                    (crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.StandaloneView) && <>
-                        <IconButton type='submit' aria-label="create" disabled={!isValid || creating || created}>
-                            <SaveIcon />
-                        </IconButton>
-                        <IconButton aria-label="close" onClick={() => { doneAction() }}>
-                            <CloseIcon />
-                        </IconButton>
+                    <>
+                        {crudViewContainer === CrudViewContainers.Inline && (renderButtonGroupWhenInline())}
+                        {(crudViewContainer === CrudViewContainers.StandaloneView) && (renderButtonGroupWhenStandaloneView())}
                     </>
                 }
                 title={t("Create_New")}
@@ -124,92 +191,85 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
                 <TextField
                     name='name'
                     label={t('Name')}
-                	defaultValue={item.name}
+                    defaultValue={item.name}
                     variant='outlined'
                     margin='normal'
                     {...register("name", productFormValidationWhenCreate.name)}
                     autoComplete='name'
                     error={!!errors.name}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.name ? t(errors.name.message) : ''}
                 />
                 <TextField
                     name='productNumber'
                     label={t('ProductNumber')}
-                	defaultValue={item.productNumber}
+                    defaultValue={item.productNumber}
                     variant='outlined'
                     margin='normal'
                     {...register("productNumber", productFormValidationWhenCreate.productNumber)}
                     autoComplete='productNumber'
                     error={!!errors.productNumber}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.productNumber ? t(errors.productNumber.message) : ''}
                 />
                 <TextField
                     name='color'
                     label={t('Color')}
-                	defaultValue={item.color}
+                    defaultValue={item.color}
                     variant='outlined'
                     margin='normal'
                     {...register("color", productFormValidationWhenCreate.color)}
                     autoComplete='color'
                     error={!!errors.color}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.color ? t(errors.color.message) : ''}
                 />
                 <TextField
                     name='standardCost'
                     label={t('StandardCost')}
-                	defaultValue={item.standardCost}
+                    defaultValue={item.standardCost}
                     variant='outlined'
                     margin='normal'
                     {...register("standardCost", productFormValidationWhenCreate.standardCost)}
                     autoComplete='standardCost'
                     error={!!errors.standardCost}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.standardCost ? t(errors.standardCost.message) : ''}
                 />
                 <TextField
                     name='listPrice'
                     label={t('ListPrice')}
-                	defaultValue={item.listPrice}
+                    defaultValue={item.listPrice}
                     variant='outlined'
                     margin='normal'
                     {...register("listPrice", productFormValidationWhenCreate.listPrice)}
                     autoComplete='listPrice'
                     error={!!errors.listPrice}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.listPrice ? t(errors.listPrice.message) : ''}
                 />
                 <TextField
                     name='size'
                     label={t('Size')}
-                	defaultValue={item.size}
+                    defaultValue={item.size}
                     variant='outlined'
                     margin='normal'
                     {...register("size", productFormValidationWhenCreate.size)}
                     autoComplete='size'
                     error={!!errors.size}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.size ? t(errors.size.message) : ''}
                 />
                 <TextField
                     name='weight'
                     label={t('Weight')}
-                	defaultValue={item.weight}
+                    defaultValue={item.weight}
                     variant='outlined'
                     margin='normal'
                     {...register("weight", productFormValidationWhenCreate.weight)}
                     autoComplete='weight'
                     error={!!errors.weight}
                     fullWidth
-                    autoFocus
                     //helperText={!!errors.weight ? t(errors.weight.message) : ''}
                 />
                 <TextField
@@ -250,17 +310,16 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
                     render={
                         ({ field: { onChange, ...restField } }) =>
                             <DatePicker
-                				ref={null}
+                                ref={null}
                                 label={t('SellStartDate')}
-                                autoFocus
                                 onChange={(event) => { onChange(event); }}
                                 renderInput={(params) =>
                                     <TextField
-                						ref={null}
+                                        ref={null}
                                         fullWidth
                                         autoComplete='sellStartDate'
                                         error={!!errors.sellStartDate}
-                						helperText={!!errors.sellStartDate ? t(errors.sellStartDate.message) : ''}
+                                        helperText={!!errors.sellStartDate ? t(errors.sellStartDate.message) : ''}
                                         {...params}
                                     />}
                                 {...restField}
@@ -275,17 +334,16 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
                     render={
                         ({ field: { onChange, ...restField } }) =>
                             <DatePicker
-                				ref={null}
+                                ref={null}
                                 label={t('SellEndDate')}
-                                autoFocus
                                 onChange={(event) => { onChange(event); }}
                                 renderInput={(params) =>
                                     <TextField
-                						ref={null}
+                                        ref={null}
                                         fullWidth
                                         autoComplete='sellEndDate'
                                         error={!!errors.sellEndDate}
-                						//helperText={!!errors.sellEndDate ? t(errors.sellEndDate.message) : ''}
+                                        //helperText={!!errors.sellEndDate ? t(errors.sellEndDate.message) : ''}
                                         {...params}
                                     />}
                                 {...restField}
@@ -300,17 +358,16 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
                     render={
                         ({ field: { onChange, ...restField } }) =>
                             <DatePicker
-                				ref={null}
+                                ref={null}
                                 label={t('DiscontinuedDate')}
-                                autoFocus
                                 onChange={(event) => { onChange(event); }}
                                 renderInput={(params) =>
                                     <TextField
-                						ref={null}
+                                        ref={null}
                                         fullWidth
                                         autoComplete='discontinuedDate'
                                         error={!!errors.discontinuedDate}
-                						//helperText={!!errors.discontinuedDate ? t(errors.discontinuedDate.message) : ''}
+                                        //helperText={!!errors.discontinuedDate ? t(errors.discontinuedDate.message) : ''}
                                         {...params}
                                     />}
                                 {...restField}
@@ -320,27 +377,25 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
                 <TextField
                     name='thumbNailPhoto'
                     label={t('ThumbNailPhoto')}
-                	defaultValue={item.thumbNailPhoto}
+                    defaultValue={item.thumbNailPhoto}
                     variant='outlined'
                     margin='normal'
                     {...register("thumbNailPhoto", productFormValidationWhenCreate.thumbNailPhoto)}
                     autoComplete='thumbNailPhoto'
                     error={!!errors.thumbNailPhoto}
                     fullWidth
-                    autoFocus
                     //helperText={!!errors.thumbNailPhoto ? t(errors.thumbNailPhoto.message) : ''}
                 />
                 <TextField
                     name='thumbnailPhotoFileName'
                     label={t('ThumbnailPhotoFileName')}
-                	defaultValue={item.thumbnailPhotoFileName}
+                    defaultValue={item.thumbnailPhotoFileName}
                     variant='outlined'
                     margin='normal'
                     {...register("thumbnailPhotoFileName", productFormValidationWhenCreate.thumbnailPhotoFileName)}
                     autoComplete='thumbnailPhotoFileName'
                     error={!!errors.thumbnailPhotoFileName}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.thumbnailPhotoFileName ? t(errors.thumbnailPhotoFileName.message) : ''}
                 />
                 <Controller
@@ -351,34 +406,21 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
                     render={
                         ({ field: { onChange, ...restField } }) =>
                             <DatePicker
-                				ref={null}
+                                ref={null}
                                 label={t('ModifiedDate')}
-                                autoFocus
                                 onChange={(event) => { onChange(event); }}
                                 renderInput={(params) =>
                                     <TextField
-                						ref={null}
+                                        ref={null}
                                         fullWidth
                                         autoComplete='modifiedDate'
                                         error={!!errors.modifiedDate}
-                						helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
                                         {...params}
                                     />}
                                 {...restField}
                             />
                     }
-                />
-                <TextField
-                    name='productCategory_Name'
-                    label={t('ProductCategory_Name')}
-                    defaultValue={item.productCategory_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
                 />
                 <TextField
                     label={t("ParentID")}
@@ -395,57 +437,9 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
                         return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
                     })}
                 </TextField>
-                <TextField
-                    name='parent_Name'
-                    label={t('Parent_Name')}
-                    defaultValue={item.parent_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='productModel_Name'
-                    label={t('ProductModel_Name')}
-                    defaultValue={item.productModel_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
             </CardContent>
             {(crudViewContainer === CrudViewContainers.Dialog) && <CardActions disableSpacing>
-                <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
-                <ButtonGroup sx={{ marginLeft: 'auto', }}
-                    disableElevation
-                    variant="contained"
-                    aria-label="navigation buttons"
-                >
-                    <Button
-                        type='submit'
-                        fullWidth
-                        variant='contained'
-                        disabled={!isValid || creating || created}
-                        startIcon={<SaveIcon />}>
-                        {t('Create')}
-                    </Button>
-                    <Button
-                        autoFocus
-                        disabled={creating || created}
-                        fullWidth
-                        variant='contained'
-                        startIcon={<CloseIcon />}
-                        onClick={() => { doneAction() }}
-                    >
-                        {t('Cancel')}
-                    </Button>
-                </ButtonGroup>
+                {renderButtonGroupWhenDialog()}
             </CardActions>}
         </Card >
     );

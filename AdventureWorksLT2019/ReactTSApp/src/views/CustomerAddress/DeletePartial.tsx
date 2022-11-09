@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, IconButton, Stack, TextField, Typography, useTheme } from '@mui/material';
+import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, Stack, TextField, Typography, useTheme } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -67,6 +67,85 @@ export default function DeletePartial(props: ItemPartialViewProps<ICustomerAddre
     const avatar = getCustomerAddressAvatar(item);
     const avatarStyle = getAvatarStyle(item.itemUIStatus______, theme);
 
+
+    const renderButtonGroupWhenCard = () => {
+        return (
+            <>
+                <IconButton 
+                    color="primary"
+                    disabled={deleted}
+                    aria-label="delete" 
+                    onClick={() => { onDelete() }}>
+                    <DeleteIcon />
+                </IconButton>
+                <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={deleting}>
+                    <CloseIcon />
+                </IconButton>
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenDialog = () => {
+        return (
+            <>
+                {!!handleSelectItemClick && <Checkbox
+                    color="primary"
+                    checked={isItemSelected}
+                    onChange={() => { handleSelectItemClick(item) }}
+                />}
+
+                {!!changeViewItemTemplate && <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Edit); }} disabled={deleting || deleted}>
+                    <EditIcon />
+                </IconButton>}
+                {!!doneAction && <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={deleting}>
+                    <CloseIcon />
+                </IconButton>}
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenInline = () => {
+        return (
+            <>
+                {!!handleSelectItemClick && <Checkbox
+                    color="primary"
+                    checked={isItemSelected}
+                    onChange={() => { handleSelectItemClick(item) }}
+                />}
+
+                {!!changeViewItemTemplate && <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Edit); }} disabled={deleting || deleted}>
+                    <EditIcon />
+                </IconButton>}
+                {!!doneAction && <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={deleting}>
+                    <CloseIcon />
+                </IconButton>}
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenStandaloneView = () => {
+        return (
+            <>
+                <LoadingButton
+                    color='primary'
+                    variant='contained'
+                    loading={deleting}
+                    disabled={deleted}
+                    startIcon={<DeleteIcon color='action' />}
+                    onClick={() => { onDelete(); }}>
+                    {t('Delete')}
+                </LoadingButton>
+                <IconButton aria-label="close"
+                    onClick={() => {
+                        navigate(-1);
+                    }} disabled={deleting}
+                >
+                    <CloseIcon />
+                </IconButton>
+            </>
+        );
+    }
+
     return (
         <Card>
             <CardHeader
@@ -77,38 +156,10 @@ export default function DeletePartial(props: ItemPartialViewProps<ICustomerAddre
                 }
                 action={
                     <>
-                        {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Inline) && <>
-                            {!!handleSelectItemClick && <Checkbox
-                                color="primary"
-                                checked={isItemSelected}
-                                onChange={() => { handleSelectItemClick(item) }}
-                            />}
-
-                            {!!changeViewItemTemplate && <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Edit); }} disabled={deleting || deleted}>
-                                <EditIcon />
-                            </IconButton>}
-                            {!!doneAction && <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={deleting}>
-                                <CloseIcon />
-                            </IconButton>}
-                        </>}
-                        {(crudViewContainer === CrudViewContainers.StandaloneView) && <>
-                            <LoadingButton
-                                color='primary'
-                                variant='contained'
-                                loading={deleting}
-                                disabled={deleted}
-                                startIcon={<DeleteIcon color='action' />}
-                                onClick={() => { onDelete(); }}>
-                                {t('Delete')}
-                            </LoadingButton>
-                            <IconButton aria-label="close"
-                                onClick={() => {
-                                    navigate(-1);
-                                }} disabled={deleting}
-                            >
-                                <CloseIcon />
-                            </IconButton>
-                        </>}
+                        {crudViewContainer === CrudViewContainers.Card && (renderButtonGroupWhenCard())}
+                        {crudViewContainer === CrudViewContainers.Dialog && (renderButtonGroupWhenDialog())}
+                        {crudViewContainer === CrudViewContainers.Inline && (renderButtonGroupWhenInline())}
+                        {(crudViewContainer === CrudViewContainers.StandaloneView) && (renderButtonGroupWhenStandaloneView())}
                     </>
                 }
                 title={item.addressType}
@@ -145,7 +196,6 @@ export default function DeletePartial(props: ItemPartialViewProps<ICustomerAddre
                     variant='outlined'
                     margin='normal'
                     fullWidth
-                    autoFocus
                     InputProps={{
                         readOnly: true
                     }}
@@ -157,7 +207,6 @@ export default function DeletePartial(props: ItemPartialViewProps<ICustomerAddre
                     variant='outlined'
                     margin='normal'
                     fullWidth
-                    autoFocus
                     InputProps={{
                         readOnly: true
                     }}
@@ -165,7 +214,6 @@ export default function DeletePartial(props: ItemPartialViewProps<ICustomerAddre
                 <DatePicker
                     label={t('ModifiedDate')}
                     value={t(i18nFormats.dateTime.format, { val: new Date(item.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-                    autoFocus
                     onChange={() => {}}
                     renderInput={(params) =>
                         <TextField
@@ -176,30 +224,6 @@ export default function DeletePartial(props: ItemPartialViewProps<ICustomerAddre
                                 readOnly: true
                             }}
                         />}
-                />
-                <TextField
-                    name='address_Name'
-                    label={t('Address_Name')}
-                    defaultValue={item.address_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='customer_Name'
-                    label={t('Customer_Name')}
-                    defaultValue={item.customer_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
                 />
             </CardContent>
             {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Inline) && <CardActions disableSpacing>

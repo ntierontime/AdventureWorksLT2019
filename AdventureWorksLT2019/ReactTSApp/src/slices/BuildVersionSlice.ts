@@ -19,7 +19,7 @@ const entityAdapter = createEntityAdapter<IBuildVersionDataModel>({
 
 export const upsertMany = createAsyncThunk(
     'upsertManyBuildVersion',
-    async (listResponse: IListResponse<[IBuildVersionDataModel]>, { dispatch }) => {
+    async (listResponse: IListResponse<IBuildVersionDataModel[]>, { dispatch }) => {
         return listResponse;
     }
 )

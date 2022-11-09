@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, IconButton, MenuItem, TextField, Typography } from '@mui/material';
+import { Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, MenuItem, TextField, Typography } from '@mui/material';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
 
@@ -50,28 +51,28 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderDet
 
 
     const iSalesOrderHeaderAdvancedQuery_SalesOrderID = defaultISalesOrderHeaderAdvancedQuery();
-    const [salesOrderHeader_SalesOrderIDCodeList, setSalesOrderHeader_SalesOrderIDCodeList] = useState<readonly INameValuePair[]>([{name: item.salesOrderHeader_Name, value: item.salesOrderID, selected: false}]);
+    const [salesOrderHeader_SalesOrderIDCodeList, setSalesOrderHeader_SalesOrderIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.salesOrderHeader_Name, value: item.salesOrderID, selected: false }]);
 
     const iProductAdvancedQuery_ProductID = defaultIProductAdvancedQuery();
-    const [product_ProductIDCodeList, setProduct_ProductIDCodeList] = useState<readonly INameValuePair[]>([{name: item.product_Name, value: item.productID, selected: false}]);
+    const [product_ProductIDCodeList, setProduct_ProductIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.product_Name, value: item.productID, selected: false }]);
 
     const iProductCategoryAdvancedQuery_ProductCategoryID = defaultIProductCategoryAdvancedQuery();
-    const [productCategory_ProductCategoryIDCodeList, setProductCategory_ProductCategoryIDCodeList] = useState<readonly INameValuePair[]>([{name: item.productCategory_Name, value: item.productCategoryID, selected: false}]);
+    const [productCategory_ProductCategoryIDCodeList, setProductCategory_ProductCategoryIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productCategory_Name, value: item.productCategoryID, selected: false }]);
 
     const iProductCategoryAdvancedQuery_ProductCategory_ParentID = defaultIProductCategoryAdvancedQuery();
-    const [productCategory_ProductCategory_ParentIDCodeList, setProductCategory_ProductCategory_ParentIDCodeList] = useState<readonly INameValuePair[]>([{name: item.productCategory_Parent_Name, value: item.productCategory_ParentID, selected: false}]);
+    const [productCategory_ProductCategory_ParentIDCodeList, setProductCategory_ProductCategory_ParentIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productCategory_Parent_Name, value: item.productCategory_ParentID, selected: false }]);
 
     const iProductModelAdvancedQuery_ProductModelID = defaultIProductModelAdvancedQuery();
-    const [productModel_ProductModelIDCodeList, setProductModel_ProductModelIDCodeList] = useState<readonly INameValuePair[]>([{name: item.productModel_Name, value: item.productModelID, selected: false}]);
+    const [productModel_ProductModelIDCodeList, setProductModel_ProductModelIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productModel_Name, value: item.productModelID, selected: false }]);
 
     const iAddressAdvancedQuery_BillToID = defaultIAddressAdvancedQuery();
-    const [address_BillToIDCodeList, setAddress_BillToIDCodeList] = useState<readonly INameValuePair[]>([{name: item.billTo_Name, value: item.billToID, selected: false}]);
+    const [address_BillToIDCodeList, setAddress_BillToIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.billTo_Name, value: item.billToID, selected: false }]);
 
     const iCustomerAdvancedQuery_CustomerID = defaultICustomerAdvancedQuery();
-    const [customer_CustomerIDCodeList, setCustomer_CustomerIDCodeList] = useState<readonly INameValuePair[]>([{name: item.customer_Name, value: item.customerID, selected: false}]);
+    const [customer_CustomerIDCodeList, setCustomer_CustomerIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.customer_Name, value: item.customerID, selected: false }]);
 
     const iAddressAdvancedQuery_ShipToID = defaultIAddressAdvancedQuery();
-    const [address_ShipToIDCodeList, setAddress_ShipToIDCodeList] = useState<readonly INameValuePair[]>([{name: item.shipTo_Name, value: item.shipToID, selected: false}]);
+    const [address_ShipToIDCodeList, setAddress_ShipToIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.shipTo_Name, value: item.shipToID, selected: false }]);
     useEffect(() => {
 
 
@@ -136,17 +137,83 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderDet
             .finally(() => { setCreating(false); console.log('finally'); });
     }
 
+    const renderButtonGroupWhenDialog = () => {
+        return (
+            <>
+                <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
+                <ButtonGroup sx={{ marginLeft: 'auto', }}
+                    disableElevation
+                    variant="contained"
+                    aria-label="navigation buttons"
+                >
+                    <Button
+                        type='submit'
+                        fullWidth
+                        variant='contained'
+                        disabled={!isValid || creating || created}
+                        startIcon={<SaveIcon />}>
+                        {t('Create')}
+                    </Button>
+                    <Button
+                        autoFocus
+                        disabled={creating || created}
+                        fullWidth
+                        variant='contained'
+                        startIcon={<CloseIcon />}
+                        onClick={() => { doneAction() }}
+                    >
+                        {t('Cancel')}
+                    </Button>
+                </ButtonGroup>
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenInline = () => {
+        return (
+            <>
+                <IconButton type='submit' aria-label="create" disabled={!isValid || creating || created}>
+                    <SaveIcon />
+                </IconButton>
+                <IconButton aria-label="close" onClick={() => { doneAction() }}>
+                    <CloseIcon />
+                </IconButton>
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenStandaloneView = () => {
+        return (
+            <>
+                <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
+                <ButtonGroup sx={{ marginLeft: 'auto', }}
+                    disableElevation
+                    variant="contained"
+                    aria-label="navigation buttons"
+                >
+                    <Button
+                        type='submit'
+                        fullWidth
+                        variant='contained'
+                        disabled={!isValid || creating || created}
+                        startIcon={<SaveIcon />}>
+                        {t('Create')}
+                    </Button>
+                    <IconButton aria-label="close" onClick={() => { doneAction() }}>
+                        <ChevronLeftIcon />
+                    </IconButton>
+                </ButtonGroup>
+            </>
+        );
+    }
+
     return (
         <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
             <CardHeader
                 action={
-                    (crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.StandaloneView) && <>
-                        <IconButton type='submit' aria-label="create" disabled={!isValid || creating || created}>
-                            <SaveIcon />
-                        </IconButton>
-                        <IconButton aria-label="close" onClick={() => { doneAction() }}>
-                            <CloseIcon />
-                        </IconButton>
+                    <>
+                        {crudViewContainer === CrudViewContainers.Inline && (renderButtonGroupWhenInline())}
+                        {(crudViewContainer === CrudViewContainers.StandaloneView) && (renderButtonGroupWhenStandaloneView())}
                     </>
                 }
                 title={t("Create_New")}
@@ -176,14 +243,13 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderDet
                 <TextField
                     name='orderQty'
                     label={t('OrderQty')}
-                	defaultValue={item.orderQty}
+                    defaultValue={item.orderQty}
                     variant='outlined'
                     margin='normal'
                     {...register("orderQty", salesOrderDetailFormValidationWhenCreate.orderQty)}
                     autoComplete='orderQty'
                     error={!!errors.orderQty}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.orderQty ? t(errors.orderQty.message) : ''}
                 />
                 <TextField
@@ -204,27 +270,25 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderDet
                 <TextField
                     name='unitPrice'
                     label={t('UnitPrice')}
-                	defaultValue={item.unitPrice}
+                    defaultValue={item.unitPrice}
                     variant='outlined'
                     margin='normal'
                     {...register("unitPrice", salesOrderDetailFormValidationWhenCreate.unitPrice)}
                     autoComplete='unitPrice'
                     error={!!errors.unitPrice}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.unitPrice ? t(errors.unitPrice.message) : ''}
                 />
                 <TextField
                     name='unitPriceDiscount'
                     label={t('UnitPriceDiscount')}
-                	defaultValue={item.unitPriceDiscount}
+                    defaultValue={item.unitPriceDiscount}
                     variant='outlined'
                     margin='normal'
                     {...register("unitPriceDiscount", salesOrderDetailFormValidationWhenCreate.unitPriceDiscount)}
                     autoComplete='unitPriceDiscount'
                     error={!!errors.unitPriceDiscount}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.unitPriceDiscount ? t(errors.unitPriceDiscount.message) : ''}
                 />
                 <Controller
@@ -235,34 +299,21 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderDet
                     render={
                         ({ field: { onChange, ...restField } }) =>
                             <DatePicker
-                				ref={null}
+                                ref={null}
                                 label={t('ModifiedDate')}
-                                autoFocus
                                 onChange={(event) => { onChange(event); }}
                                 renderInput={(params) =>
                                     <TextField
-                						ref={null}
+                                        ref={null}
                                         fullWidth
                                         autoComplete='modifiedDate'
                                         error={!!errors.modifiedDate}
-                						helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
                                         {...params}
                                     />}
                                 {...restField}
                             />
                     }
-                />
-                <TextField
-                    name='product_Name'
-                    label={t('Product_Name')}
-                    defaultValue={item.product_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
                 />
                 <TextField
                     label={t("ProductCategoryID")}
@@ -280,18 +331,6 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderDet
                     })}
                 </TextField>
                 <TextField
-                    name='productCategory_Name'
-                    label={t('ProductCategory_Name')}
-                    defaultValue={item.productCategory_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
                     label={t("ProductCategory_ParentID")}
                     id="productCategory_ParentIDSelect"
                     select
@@ -306,18 +345,6 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderDet
                         return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
                     })}
                 </TextField>
-                <TextField
-                    name='productCategory_Parent_Name'
-                    label={t('ProductCategory_Parent_Name')}
-                    defaultValue={item.productCategory_Parent_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
                 <TextField
                     label={t("ProductModelID")}
                     id="productModelIDSelect"
@@ -334,30 +361,6 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderDet
                     })}
                 </TextField>
                 <TextField
-                    name='productModel_Name'
-                    label={t('ProductModel_Name')}
-                    defaultValue={item.productModel_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='salesOrderHeader_Name'
-                    label={t('SalesOrderHeader_Name')}
-                    defaultValue={item.salesOrderHeader_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
                     label={t("BillToID")}
                     id="billToIDSelect"
                     select
@@ -372,18 +375,6 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderDet
                         return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
                     })}
                 </TextField>
-                <TextField
-                    name='billTo_Name'
-                    label={t('BillTo_Name')}
-                    defaultValue={item.billTo_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
                 <TextField
                     label={t("CustomerID")}
                     id="customerIDSelect"
@@ -400,18 +391,6 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderDet
                     })}
                 </TextField>
                 <TextField
-                    name='customer_Name'
-                    label={t('Customer_Name')}
-                    defaultValue={item.customer_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
                     label={t("ShipToID")}
                     id="shipToIDSelect"
                     select
@@ -426,45 +405,9 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderDet
                         return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
                     })}
                 </TextField>
-                <TextField
-                    name='shipTo_Name'
-                    label={t('ShipTo_Name')}
-                    defaultValue={item.shipTo_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
             </CardContent>
             {(crudViewContainer === CrudViewContainers.Dialog) && <CardActions disableSpacing>
-                <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
-                <ButtonGroup sx={{ marginLeft: 'auto', }}
-                    disableElevation
-                    variant="contained"
-                    aria-label="navigation buttons"
-                >
-                    <Button
-                        type='submit'
-                        fullWidth
-                        variant='contained'
-                        disabled={!isValid || creating || created}
-                        startIcon={<SaveIcon />}>
-                        {t('Create')}
-                    </Button>
-                    <Button
-                        autoFocus
-                        disabled={creating || created}
-                        fullWidth
-                        variant='contained'
-                        startIcon={<CloseIcon />}
-                        onClick={() => { doneAction() }}
-                    >
-                        {t('Cancel')}
-                    </Button>
-                </ButtonGroup>
+                {renderButtonGroupWhenDialog()}
             </CardActions>}
         </Card >
     );

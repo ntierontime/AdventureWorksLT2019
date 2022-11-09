@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import { RootState } from 'src/store/CombinedReducers';
+import { ContainerOptions } from 'src/shared/viewModels/ContainerOptions';
 import { ListsPartialViewProps } from 'src/shared/viewModels/ListsPartialViewProps';
 import { ListViewOptions } from 'src/shared/views/ListViewOptions';
 
@@ -11,6 +13,7 @@ import { defaultICustomerAddressAdvancedQuery, ICustomerAddressAdvancedQuery, } 
 import ListsPartial from './ListsPartial';
 
 export default function IndexPage() {
+    const { t } = useTranslation();
     const [advancedQuery, setAdvancedQuery] = useState<ICustomerAddressAdvancedQuery>(defaultICustomerAddressAdvancedQuery());
     const listItems = useSelector(
         (state: RootState) => customerAddressSelectors.selectAll(state)
@@ -23,7 +26,9 @@ export default function IndexPage() {
         initialLoadFromServer: true,
         hasListToolBar : true,
         hasAdvancedSearch : true,
+        addNewButtonContainer: ContainerOptions.ToolBar, // at bottom-right using SnackBar
         listToolBarSetting: {
+            textSearchPlaceHolder: t("Search") + ' ' +t("CustomerAddress"),
             hasListViewOptionsSelect: true,
 	        availableListViewOptions: [ListViewOptions.SlideShow, ListViewOptions.Table, ListViewOptions.Tiles],
             hasItemsSelect: true,

@@ -4,11 +4,9 @@ import Box from '@mui/material/Box';
 import AppBar from 'src/shared/views/AppBar';
 import AppDrawer from 'src/views/AppDrawer';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeAppDrawer, openAppDrawer } from 'src/slices/appSlice';
 import { RootState } from 'src/store/CombinedReducers';
-import { Link } from 'react-router-dom';
 import MasterRoutes from './MasterRoutes';
-import { Backdrop, CircularProgress } from '@mui/material';
+import { useState } from 'react';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -20,26 +18,25 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function MasterLayout() {
-    const app = useSelector((state: RootState) => state.app);
     const auth = useSelector((state: RootState) => state.auth);
     const dispatch = useDispatch();
 
-    // const [open, setOpen] = React.useState(false);
+    const [drawerOpen, setDrawerOpen] = useState(true);
 
     const handleDrawerOpen = () => {
-        dispatch(openAppDrawer());
+        setDrawerOpen(true);
     };
 
     const handleDrawerClose = () => {
-        dispatch(closeAppDrawer());
+        setDrawerOpen(false);
     };
 
     return (
         <Box sx={{ display: 'flex' }}>
             {(auth && auth.isAuthenticated) &&
                 <>
-                    <AppBar open={app.drawerOpen} title={'abcdefg'} openDrawerHandler={handleDrawerOpen} />
-                    <AppDrawer open={app.drawerOpen} closeDrawerHandler={handleDrawerClose} appDrawerItems={[]} />
+                    <AppBar open={drawerOpen} title={'AdventureWorksLT2019'} openDrawerHandler={handleDrawerOpen} />
+                    <AppDrawer open={drawerOpen} closeDrawerHandler={handleDrawerClose} appDrawerItems={[]} />
                 </>
             }
 
@@ -47,16 +44,9 @@ export default function MasterLayout() {
                 {(auth && auth.isAuthenticated) &&
                     <DrawerHeader />
                 }
-                <nav>
-                    <Link to="/account/login">login</Link>
-                    <Link to="/PrivateRouteTestPage">PrivateRouteTestPage</Link>
-                    <Link to="/product">product</Link>
-                </nav>
                 <MasterRoutes />
             </Box>
-            <Backdrop open={app.loading}>
-                <CircularProgress color="inherit" />
-            </Backdrop>
         </Box>
     );
 }
+

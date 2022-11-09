@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, IconButton, MenuItem, TextField, Typography, useTheme } from '@mui/material';
+import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, MenuItem, TextField, Typography, useTheme } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -41,7 +41,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { register, control, handleSubmit, reset, formState: { isValid, errors } } = useForm({
+    const { register, control, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: defaultSalesOrderDetail(),
@@ -55,28 +55,28 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
 
 
     const iSalesOrderHeaderAdvancedQuery_SalesOrderID = defaultISalesOrderHeaderAdvancedQuery();
-    const [salesOrderHeader_SalesOrderIDCodeList, setSalesOrderHeader_SalesOrderIDCodeList] = useState<readonly INameValuePair[]>([{name: item.salesOrderHeader_Name, value: item.salesOrderID, selected: false}]);
+    const [salesOrderHeader_SalesOrderIDCodeList, setSalesOrderHeader_SalesOrderIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.salesOrderHeader_Name, value: item.salesOrderID, selected: false }]);
 
     const iProductAdvancedQuery_ProductID = defaultIProductAdvancedQuery();
-    const [product_ProductIDCodeList, setProduct_ProductIDCodeList] = useState<readonly INameValuePair[]>([{name: item.product_Name, value: item.productID, selected: false}]);
+    const [product_ProductIDCodeList, setProduct_ProductIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.product_Name, value: item.productID, selected: false }]);
 
     const iProductCategoryAdvancedQuery_ProductCategoryID = defaultIProductCategoryAdvancedQuery();
-    const [productCategory_ProductCategoryIDCodeList, setProductCategory_ProductCategoryIDCodeList] = useState<readonly INameValuePair[]>([{name: item.productCategory_Name, value: item.productCategoryID, selected: false}]);
+    const [productCategory_ProductCategoryIDCodeList, setProductCategory_ProductCategoryIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productCategory_Name, value: item.productCategoryID, selected: false }]);
 
     const iProductCategoryAdvancedQuery_ProductCategory_ParentID = defaultIProductCategoryAdvancedQuery();
-    const [productCategory_ProductCategory_ParentIDCodeList, setProductCategory_ProductCategory_ParentIDCodeList] = useState<readonly INameValuePair[]>([{name: item.productCategory_Parent_Name, value: item.productCategory_ParentID, selected: false}]);
+    const [productCategory_ProductCategory_ParentIDCodeList, setProductCategory_ProductCategory_ParentIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productCategory_Parent_Name, value: item.productCategory_ParentID, selected: false }]);
 
     const iProductModelAdvancedQuery_ProductModelID = defaultIProductModelAdvancedQuery();
-    const [productModel_ProductModelIDCodeList, setProductModel_ProductModelIDCodeList] = useState<readonly INameValuePair[]>([{name: item.productModel_Name, value: item.productModelID, selected: false}]);
+    const [productModel_ProductModelIDCodeList, setProductModel_ProductModelIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productModel_Name, value: item.productModelID, selected: false }]);
 
     const iAddressAdvancedQuery_BillToID = defaultIAddressAdvancedQuery();
-    const [address_BillToIDCodeList, setAddress_BillToIDCodeList] = useState<readonly INameValuePair[]>([{name: item.billTo_Name, value: item.billToID, selected: false}]);
+    const [address_BillToIDCodeList, setAddress_BillToIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.billTo_Name, value: item.billToID, selected: false }]);
 
     const iCustomerAdvancedQuery_CustomerID = defaultICustomerAdvancedQuery();
-    const [customer_CustomerIDCodeList, setCustomer_CustomerIDCodeList] = useState<readonly INameValuePair[]>([{name: item.customer_Name, value: item.customerID, selected: false}]);
+    const [customer_CustomerIDCodeList, setCustomer_CustomerIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.customer_Name, value: item.customerID, selected: false }]);
 
     const iAddressAdvancedQuery_ShipToID = defaultIAddressAdvancedQuery();
-    const [address_ShipToIDCodeList, setAddress_ShipToIDCodeList] = useState<readonly INameValuePair[]>([{name: item.shipTo_Name, value: item.shipToID, selected: false}]);
+    const [address_ShipToIDCodeList, setAddress_ShipToIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.shipTo_Name, value: item.shipToID, selected: false }]);
     useEffect(() => {
 
 
@@ -137,6 +137,83 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
     const avatar = getSalesOrderDetailAvatar(item);
     const avatarStyle = getAvatarStyle(item.itemUIStatus______, theme);
 
+
+
+    const renderButtonGroupWhenCard = () => {
+        return (
+            <>
+                <IconButton
+                    color="primary"
+                    type='submit'
+                    disabled={(!isValid || saving || saved) && !isDirty}
+                    aria-label="save">
+                    <SaveIcon />
+                </IconButton>
+                <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
+                    <CloseIcon />
+                </IconButton>
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenDialog = () => {
+        return (
+            <>
+                {!!handleSelectItemClick && <Checkbox
+                    color="primary"
+                    checked={isItemSelected}
+                    onChange={() => { handleSelectItemClick(item) }}
+                />}
+                {!!changeViewItemTemplate && <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete); }} disabled={saving}>
+                    <DeleteIcon />
+                </IconButton>}
+                {!!doneAction && <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
+                    <CloseIcon />
+                </IconButton>}
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenInline = () => {
+        return (
+            <>
+                {!!handleSelectItemClick && <Checkbox
+                    color="primary"
+                    checked={isItemSelected}
+                    onChange={() => { handleSelectItemClick(item) }}
+                />}
+                {!!changeViewItemTemplate && <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete); }} disabled={saving}>
+                    <DeleteIcon />
+                </IconButton>}
+                {!!doneAction && <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
+                    <CloseIcon />
+                </IconButton>}
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenStandaloneView = () => {
+        return (
+            <>
+                <LoadingButton
+                    color="primary"
+                    type='submit'
+                    variant='contained'
+                    disabled={(!isValid || saving || saved) && !isDirty}
+                    startIcon={<SaveIcon color='action' />}>
+                    {t('Save')}
+                </LoadingButton>
+                <IconButton aria-label="close"
+                    onClick={() => {
+                        navigate(-1);
+                    }} disabled={saving}
+                >
+                    <CloseIcon />
+                </IconButton>
+            </>
+        );
+    }
+
     return (
         <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
             <CardHeader
@@ -147,36 +224,10 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
                 }
                 action={
                     <>
-                        {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Inline) && <>
-                            {!!handleSelectItemClick && <Checkbox
-                                color="primary"
-                                checked={isItemSelected}
-                                onChange={() => { handleSelectItemClick(item) }}
-                            />}
-                            {!!changeViewItemTemplate && <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete); }} disabled={saving}>
-                                <DeleteIcon />
-                            </IconButton>}
-                            {!!doneAction && <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
-                                <CloseIcon />
-                            </IconButton>}
-                        </>}
-                        {(crudViewContainer === CrudViewContainers.StandaloneView) && <>
-                            <LoadingButton
-                                color="primary"
-                                type='submit'
-                                variant='contained'
-                                disabled={!isValid || saving || saved}
-                                startIcon={<SaveIcon color='action' />}>
-                                {t('Save')}
-                            </LoadingButton>
-                            <IconButton aria-label="close"
-                                onClick={() => {
-                                    navigate(-1);
-                                }} disabled={saving}
-                            >
-                                <CloseIcon />
-                            </IconButton>
-                        </>}
+                        {crudViewContainer === CrudViewContainers.Card && (renderButtonGroupWhenCard())}
+                        {crudViewContainer === CrudViewContainers.Dialog && (renderButtonGroupWhenDialog())}
+                        {crudViewContainer === CrudViewContainers.Inline && (renderButtonGroupWhenInline())}
+                        {(crudViewContainer === CrudViewContainers.StandaloneView) && (renderButtonGroupWhenStandaloneView())}
                     </>
                 }
                 title={item.salesOrderID}
@@ -213,7 +264,6 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
                     variant='outlined'
                     margin='normal'
                     fullWidth
-                    autoFocus
                     InputProps={{
                         readOnly: true
                     }}
@@ -221,14 +271,13 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
                 <TextField
                     name='orderQty'
                     label={t('OrderQty')}
-                	defaultValue={item.orderQty}
+                    defaultValue={item.orderQty}
                     variant='outlined'
                     margin='normal'
                     {...register("orderQty", salesOrderDetailFormValidationWhenEdit.orderQty)}
                     autoComplete='orderQty'
                     error={!!errors.orderQty}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.orderQty ? t(errors.orderQty.message) : ''}
                 />
                 <TextField
@@ -249,27 +298,25 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
                 <TextField
                     name='unitPrice'
                     label={t('UnitPrice')}
-                	defaultValue={item.unitPrice}
+                    defaultValue={item.unitPrice}
                     variant='outlined'
                     margin='normal'
                     {...register("unitPrice", salesOrderDetailFormValidationWhenEdit.unitPrice)}
                     autoComplete='unitPrice'
                     error={!!errors.unitPrice}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.unitPrice ? t(errors.unitPrice.message) : ''}
                 />
                 <TextField
                     name='unitPriceDiscount'
                     label={t('UnitPriceDiscount')}
-                	defaultValue={item.unitPriceDiscount}
+                    defaultValue={item.unitPriceDiscount}
                     variant='outlined'
                     margin='normal'
                     {...register("unitPriceDiscount", salesOrderDetailFormValidationWhenEdit.unitPriceDiscount)}
                     autoComplete='unitPriceDiscount'
                     error={!!errors.unitPriceDiscount}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.unitPriceDiscount ? t(errors.unitPriceDiscount.message) : ''}
                 />
                 <TextField
@@ -279,7 +326,6 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
                     variant='outlined'
                     margin='normal'
                     fullWidth
-                    autoFocus
                     InputProps={{
                         readOnly: true
                     }}
@@ -291,7 +337,6 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
                     variant='outlined'
                     margin='normal'
                     fullWidth
-                    autoFocus
                     InputProps={{
                         readOnly: true
                     }}
@@ -304,34 +349,21 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
                     render={
                         ({ field: { onChange, ...restField } }) =>
                             <DatePicker
-                				ref={null}
+                                ref={null}
                                 label={t('ModifiedDate')}
-                                autoFocus
                                 onChange={(event) => { onChange(event); }}
                                 renderInput={(params) =>
                                     <TextField
-                						ref={null}
+                                        ref={null}
                                         fullWidth
                                         autoComplete='modifiedDate'
                                         error={!!errors.modifiedDate}
-                						helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
                                         {...params}
                                     />}
                                 {...restField}
                             />
                     }
-                />
-                <TextField
-                    name='product_Name'
-                    label={t('Product_Name')}
-                    defaultValue={item.product_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
                 />
                 <TextField
                     label={t("ProductCategoryID")}
@@ -349,18 +381,6 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
                     })}
                 </TextField>
                 <TextField
-                    name='productCategory_Name'
-                    label={t('ProductCategory_Name')}
-                    defaultValue={item.productCategory_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
                     label={t("ProductCategory_ParentID")}
                     id="productCategory_ParentIDSelect"
                     select
@@ -375,18 +395,6 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
                         return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
                     })}
                 </TextField>
-                <TextField
-                    name='productCategory_Parent_Name'
-                    label={t('ProductCategory_Parent_Name')}
-                    defaultValue={item.productCategory_Parent_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
                 <TextField
                     label={t("ProductModelID")}
                     id="productModelIDSelect"
@@ -403,30 +411,6 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
                     })}
                 </TextField>
                 <TextField
-                    name='productModel_Name'
-                    label={t('ProductModel_Name')}
-                    defaultValue={item.productModel_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='salesOrderHeader_Name'
-                    label={t('SalesOrderHeader_Name')}
-                    defaultValue={item.salesOrderHeader_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
                     label={t("BillToID")}
                     id="billToIDSelect"
                     select
@@ -441,18 +425,6 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
                         return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
                     })}
                 </TextField>
-                <TextField
-                    name='billTo_Name'
-                    label={t('BillTo_Name')}
-                    defaultValue={item.billTo_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
                 <TextField
                     label={t("CustomerID")}
                     id="customerIDSelect"
@@ -469,18 +441,6 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
                     })}
                 </TextField>
                 <TextField
-                    name='customer_Name'
-                    label={t('Customer_Name')}
-                    defaultValue={item.customer_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
                     label={t("ShipToID")}
                     id="shipToIDSelect"
                     select
@@ -495,18 +455,6 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
                         return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
                     })}
                 </TextField>
-                <TextField
-                    name='shipTo_Name'
-                    label={t('ShipTo_Name')}
-                    defaultValue={item.shipTo_Name}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    autoFocus
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
             </CardContent>
             {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Inline) && <CardActions disableSpacing>
                 {(!!previousAction || !!nextAction) && <ButtonGroup

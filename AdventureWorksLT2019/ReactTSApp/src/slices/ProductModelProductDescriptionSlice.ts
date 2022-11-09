@@ -19,7 +19,7 @@ const entityAdapter = createEntityAdapter<IProductModelProductDescriptionDataMod
 
 export const upsertMany = createAsyncThunk(
     'upsertManyProductModelProductDescription',
-    async (listResponse: IListResponse<[IProductModelProductDescriptionDataModel]>, { dispatch }) => {
+    async (listResponse: IListResponse<IProductModelProductDescriptionDataModel[]>, { dispatch }) => {
         return listResponse;
     }
 )

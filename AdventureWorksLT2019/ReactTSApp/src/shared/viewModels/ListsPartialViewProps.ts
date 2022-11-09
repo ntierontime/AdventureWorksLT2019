@@ -1,5 +1,5 @@
 import { ListToolBarSetting } from "../views/ListToolBar";
-import { ListViewOptions } from "../views/ListViewOptions";
+import { ContainerOptions } from "./ContainerOptions";
 
 export interface ListsPartialViewProps<TAdvancedQuery, TDataModel> {
     advancedQuery: TAdvancedQuery;
@@ -8,6 +8,7 @@ export interface ListsPartialViewProps<TAdvancedQuery, TDataModel> {
     listItems: TDataModel[];
     initialLoadFromServer: boolean;
     hasListToolBar: boolean;
-    hasAdvancedSearch: boolean;
     listToolBarSetting: ListToolBarSetting;
+    hasAdvancedSearch: boolean;
+    addNewButtonContainer: ContainerOptions;
 }

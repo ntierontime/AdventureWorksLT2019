@@ -19,7 +19,7 @@ const entityAdapter = createEntityAdapter<IErrorLogDataModel>({
 
 export const upsertMany = createAsyncThunk(
     'upsertManyErrorLog',
-    async (listResponse: IListResponse<[IErrorLogDataModel]>, { dispatch }) => {
+    async (listResponse: IListResponse<IErrorLogDataModel[]>, { dispatch }) => {
         return listResponse;
     }
 )

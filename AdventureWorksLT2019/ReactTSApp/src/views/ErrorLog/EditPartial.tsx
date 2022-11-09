@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, IconButton, TextField, Typography, useTheme } from '@mui/material';
+import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, TextField, Typography, useTheme } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -34,7 +34,7 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { register, control, handleSubmit, reset, formState: { isValid, errors } } = useForm({
+    const { register, control, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: defaultErrorLog(),
@@ -76,6 +76,83 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
     const avatar = getErrorLogAvatar(item);
     const avatarStyle = getAvatarStyle(item.itemUIStatus______, theme);
 
+
+
+    const renderButtonGroupWhenCard = () => {
+        return (
+            <>
+                <IconButton
+                    color="primary"
+                    type='submit'
+                    disabled={(!isValid || saving || saved) && !isDirty}
+                    aria-label="save">
+                    <SaveIcon />
+                </IconButton>
+                <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
+                    <CloseIcon />
+                </IconButton>
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenDialog = () => {
+        return (
+            <>
+                {!!handleSelectItemClick && <Checkbox
+                    color="primary"
+                    checked={isItemSelected}
+                    onChange={() => { handleSelectItemClick(item) }}
+                />}
+                {!!changeViewItemTemplate && <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete); }} disabled={saving}>
+                    <DeleteIcon />
+                </IconButton>}
+                {!!doneAction && <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
+                    <CloseIcon />
+                </IconButton>}
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenInline = () => {
+        return (
+            <>
+                {!!handleSelectItemClick && <Checkbox
+                    color="primary"
+                    checked={isItemSelected}
+                    onChange={() => { handleSelectItemClick(item) }}
+                />}
+                {!!changeViewItemTemplate && <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete); }} disabled={saving}>
+                    <DeleteIcon />
+                </IconButton>}
+                {!!doneAction && <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
+                    <CloseIcon />
+                </IconButton>}
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenStandaloneView = () => {
+        return (
+            <>
+                <LoadingButton
+                    color="primary"
+                    type='submit'
+                    variant='contained'
+                    disabled={(!isValid || saving || saved) && !isDirty}
+                    startIcon={<SaveIcon color='action' />}>
+                    {t('Save')}
+                </LoadingButton>
+                <IconButton aria-label="close"
+                    onClick={() => {
+                        navigate(-1);
+                    }} disabled={saving}
+                >
+                    <CloseIcon />
+                </IconButton>
+            </>
+        );
+    }
+
     return (
         <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
             <CardHeader
@@ -86,36 +163,10 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
                 }
                 action={
                     <>
-                        {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Inline) && <>
-                            {!!handleSelectItemClick && <Checkbox
-                                color="primary"
-                                checked={isItemSelected}
-                                onChange={() => { handleSelectItemClick(item) }}
-                            />}
-                            {!!changeViewItemTemplate && <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete); }} disabled={saving}>
-                                <DeleteIcon />
-                            </IconButton>}
-                            {!!doneAction && <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
-                                <CloseIcon />
-                            </IconButton>}
-                        </>}
-                        {(crudViewContainer === CrudViewContainers.StandaloneView) && <>
-                            <LoadingButton
-                                color="primary"
-                                type='submit'
-                                variant='contained'
-                                disabled={!isValid || saving || saved}
-                                startIcon={<SaveIcon color='action' />}>
-                                {t('Save')}
-                            </LoadingButton>
-                            <IconButton aria-label="close"
-                                onClick={() => {
-                                    navigate(-1);
-                                }} disabled={saving}
-                            >
-                                <CloseIcon />
-                            </IconButton>
-                        </>}
+                        {crudViewContainer === CrudViewContainers.Card && (renderButtonGroupWhenCard())}
+                        {crudViewContainer === CrudViewContainers.Dialog && (renderButtonGroupWhenDialog())}
+                        {crudViewContainer === CrudViewContainers.Inline && (renderButtonGroupWhenInline())}
+                        {(crudViewContainer === CrudViewContainers.StandaloneView) && (renderButtonGroupWhenStandaloneView())}
                     </>
                 }
                 title={item.userName}
@@ -137,7 +188,6 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
                     variant='outlined'
                     margin='normal'
                     fullWidth
-                    autoFocus
                     InputProps={{
                         readOnly: true
                     }}
@@ -150,17 +200,16 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
                     render={
                         ({ field: { onChange, ...restField } }) =>
                             <DatePicker
-                				ref={null}
+                                ref={null}
                                 label={t('ErrorTime')}
-                                autoFocus
                                 onChange={(event) => { onChange(event); }}
                                 renderInput={(params) =>
                                     <TextField
-                						ref={null}
+                                        ref={null}
                                         fullWidth
                                         autoComplete='errorTime'
                                         error={!!errors.errorTime}
-                						helperText={!!errors.errorTime ? t(errors.errorTime.message) : ''}
+                                        helperText={!!errors.errorTime ? t(errors.errorTime.message) : ''}
                                         {...params}
                                     />}
                                 {...restField}
@@ -170,92 +219,85 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
                 <TextField
                     name='userName'
                     label={t('UserName')}
-                	defaultValue={item.userName}
+                    defaultValue={item.userName}
                     variant='outlined'
                     margin='normal'
                     {...register("userName", errorLogFormValidationWhenEdit.userName)}
                     autoComplete='userName'
                     error={!!errors.userName}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.userName ? t(errors.userName.message) : ''}
                 />
                 <TextField
                     name='errorNumber'
                     label={t('ErrorNumber')}
-                	defaultValue={item.errorNumber}
+                    defaultValue={item.errorNumber}
                     variant='outlined'
                     margin='normal'
                     {...register("errorNumber", errorLogFormValidationWhenEdit.errorNumber)}
                     autoComplete='errorNumber'
                     error={!!errors.errorNumber}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.errorNumber ? t(errors.errorNumber.message) : ''}
                 />
                 <TextField
                     name='errorSeverity'
                     label={t('ErrorSeverity')}
-                	defaultValue={item.errorSeverity}
+                    defaultValue={item.errorSeverity}
                     variant='outlined'
                     margin='normal'
                     {...register("errorSeverity", errorLogFormValidationWhenEdit.errorSeverity)}
                     autoComplete='errorSeverity'
                     error={!!errors.errorSeverity}
                     fullWidth
-                    autoFocus
                     //helperText={!!errors.errorSeverity ? t(errors.errorSeverity.message) : ''}
                 />
                 <TextField
                     name='errorState'
                     label={t('ErrorState')}
-                	defaultValue={item.errorState}
+                    defaultValue={item.errorState}
                     variant='outlined'
                     margin='normal'
                     {...register("errorState", errorLogFormValidationWhenEdit.errorState)}
                     autoComplete='errorState'
                     error={!!errors.errorState}
                     fullWidth
-                    autoFocus
                     //helperText={!!errors.errorState ? t(errors.errorState.message) : ''}
                 />
                 <TextField
                     name='errorProcedure'
                     label={t('ErrorProcedure')}
-                	defaultValue={item.errorProcedure}
+                    defaultValue={item.errorProcedure}
                     variant='outlined'
                     margin='normal'
                     {...register("errorProcedure", errorLogFormValidationWhenEdit.errorProcedure)}
                     autoComplete='errorProcedure'
                     error={!!errors.errorProcedure}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.errorProcedure ? t(errors.errorProcedure.message) : ''}
                 />
                 <TextField
                     name='errorLine'
                     label={t('ErrorLine')}
-                	defaultValue={item.errorLine}
+                    defaultValue={item.errorLine}
                     variant='outlined'
                     margin='normal'
                     {...register("errorLine", errorLogFormValidationWhenEdit.errorLine)}
                     autoComplete='errorLine'
                     error={!!errors.errorLine}
                     fullWidth
-                    autoFocus
                     //helperText={!!errors.errorLine ? t(errors.errorLine.message) : ''}
                 />
                 <TextField
                     name='errorMessage'
                     label={t('ErrorMessage')}
-                	defaultValue={item.errorMessage}
+                    defaultValue={item.errorMessage}
                     variant='outlined'
                     margin='normal'
                     {...register("errorMessage", errorLogFormValidationWhenEdit.errorMessage)}
                     autoComplete='errorMessage'
                     error={!!errors.errorMessage}
                     fullWidth
-                    autoFocus
                     helperText={!!errors.errorMessage ? t(errors.errorMessage.message) : ''}
                 />
             </CardContent>

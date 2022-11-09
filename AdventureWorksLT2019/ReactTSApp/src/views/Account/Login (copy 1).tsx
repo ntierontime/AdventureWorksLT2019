@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 import "src/i18n"
 
 import { RootState } from 'src/store/CombinedReducers';
-import { showSpinner } from 'src/slices/appSlice';
 import { login } from 'src/slices/authenticationSlice';
 import { LoginViewModel } from 'src/shared/viewModels/LoginViewModel';
 import { AppDispatch } from 'src/store/Store';
@@ -31,7 +30,6 @@ export default function LoginPage(): JSX.Element {
     });
 
     const onSubmit = (data: LoginViewModel) => {
-        dispatch(showSpinner());
         dispatch(login(data));
         setValue('password', '');
     }

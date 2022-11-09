@@ -1,10 +1,8 @@
-import { alpha } from '@mui/material/styles';
-
 import {
-    Box, Checkbox, Divider, FormControl, IconButton, InputAdornment, InputLabel, MenuItem, Paper,
-    Select, SelectChangeEvent, OutlinedInput, ToggleButton, ToggleButtonGroup, Toolbar, Tooltip, Typography
+    Box, Checkbox, Divider, FormControl, IconButton, InputAdornment, InputLabel, MenuItem,
+    Select, SelectChangeEvent, OutlinedInput, ToggleButton, ToggleButtonGroup, Toolbar, Tooltip, Typography, ButtonGroup
 } from '@mui/material';
-
+import AddIcon from '@mui/icons-material/Add';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -25,6 +23,7 @@ import { PaginationOptions } from '../dataModels/PaginationOptions';
 import { INameValuePair } from '../dataModels/INameValuePair';
 
 export interface ListToolBarSetting {
+    textSearchPlaceHolder: string;
     hasListViewOptionsSelect: boolean;
     availableListViewOptions: ListViewOptions[];
     hasItemsSelect: boolean;
@@ -64,10 +63,14 @@ export interface ListToolBarProps<TAdvancedQuery, TIdentifier> extends ListToolB
     advancedSearchExpanded: boolean;
     handleAdvancedSearchExpandClick: () => void;
     handleAdvancedSearchDialogOpen: () => void;
+
+    hasAddNewButton: boolean; // this is a calculated value based on ListsPartialViewProps.addNewButtonContainer
+    handleAddNewClick: () => void;
 }
 
 export default function ListToolBar<TAdvancedQuery extends IBaseQuery, TIdentifier>(props: ListToolBarProps<TAdvancedQuery, TIdentifier>): JSX.Element {
     const {
+        textSearchPlaceHolder,
         advancedQuery, defaultAdvancedQuery, setAdvancedQuery,
         rowCount,
         submitAdvancedSearch,
@@ -93,6 +96,9 @@ export default function ListToolBar<TAdvancedQuery extends IBaseQuery, TIdentifi
         handleAdvancedSearchExpandClick,
         hasAdvancedSearchDialog,
         handleAdvancedSearchDialogOpen,
+
+        hasAddNewButton,
+        handleAddNewClick,
     } = props;
     const { t } = useTranslation();
 
@@ -162,32 +168,37 @@ export default function ListToolBar<TAdvancedQuery extends IBaseQuery, TIdentifi
     return (
         <Toolbar
             sx={{
+                m: { sm: 0 },
+                pt: { sm: 0 },
+                pb: { sm: 0 },
                 pl: { sm: 0.5 },
                 pr: { sm: 0.5 },
                 ...(numSelected > 0 && {
-                    bgcolor: (theme) => alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+                    bgcolor: 'transparent',
                 }),
                 width: '100%',
             }}
         >
             <Box
                 sx={{
+                    m: { sm: 0 },
+                    p: { sm: 0 },
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    bgcolor: 'background.paper',
+                    bgcolor: 'transparent',
                     borderRadius: 1,
                     width: '100%',
                 }}
             >
-                <Box>
+                <Box sx={{ m: { sm: 0 }, p: 0, }}>
                     {hasItemsSelect && <Checkbox
                         color="primary"
                         indeterminate={numSelected > 0 && numSelected < rowCount}
                         checked={rowCount > 0 && numSelected === rowCount}
                         onChange={handleSelectAllClick}
                         inputProps={{
-                            'aria-label': 'select All Product',
+                            'aria-label': textSearchPlaceHolder,
                         }} />}
                     <Tooltip title="Refresh">
                         <IconButton onClick={() => handleRefresh()}>
@@ -214,7 +225,6 @@ export default function ListToolBar<TAdvancedQuery extends IBaseQuery, TIdentifi
                     <Box sx={{ p: 0, display: 'flex', alignItems: 'center' }}>
                         <FormControl variant="outlined"
                             sx={{
-                                pt: 0.5,
                                 pr: 0,
                                 width: { sm: 100, md: 150, lg: 400, xl: 600 },
                                 "& .MuiOutlinedInput-root.Mui-focused": {
@@ -228,7 +238,7 @@ export default function ListToolBar<TAdvancedQuery extends IBaseQuery, TIdentifi
                                 sx={{ pr: 0.5, }}
                                 defaultValue={advancedQuery.textSearch}
                                 onChange={handleChangedTextToSearch}
-                                placeholder={t("Search") + ' ' + t("Product")}
+                                placeholder={textSearchPlaceHolder}
                                 fullWidth margin='none'
                                 id="text-search-field"
                                 size="small"
@@ -254,12 +264,16 @@ export default function ListToolBar<TAdvancedQuery extends IBaseQuery, TIdentifi
                         </FormControl>
                     </Box>
                 )}
-                <Box sx={{ alignItems: 'center', pt: 0.5 }}>
+                <Box sx={{ p: 0, alignItems: 'center' }}>
                     {numSelected === 0 && (
                         <>
+                            {hasAddNewButton && <ButtonGroup orientation='horizontal' size="small" sx={{ pr: 1, pl: 1 }}>
+                                <IconButton onClick={() => { handleAddNewClick() }} aria-label="create" component="label" color='primary' sx={{ backgroundColor: 'gray' }}>
+                                    <AddIcon />
+                                </IconButton>
+                            </ButtonGroup >}
                             {hasListViewOptionsSelect && !!availableListViewOptions && availableListViewOptions.length > 1 && <ToggleButtonGroup
                                 size="small"
-                                sx={{ mt: 1 }}
                                 value={listViewOption}
                                 exclusive
                                 onChange={handleChangeListViewOptions}
@@ -276,9 +290,9 @@ export default function ListToolBar<TAdvancedQuery extends IBaseQuery, TIdentifi
                                     <PlayCircleOutlinedIcon />
                                 </ToggleButton>}
                             </ToggleButtonGroup>}
-                            {hasPageSizeSelect && listViewOption === ListViewOptions.Table && <FormControl size="small" sx={{ m: 1, minWidth: 120 }}>
+                            {hasPageSizeSelect && listViewOption === ListViewOptions.Table && <FormControl size="small" sx={{ minWidth: 120 }}>
                                 <InputLabel id="page-size-select">{t("PageSize")}</InputLabel>
-                                {(!!!availablePageSizes || availablePageSizes.length == 0) && <Select
+                                {(!!!availablePageSizes || availablePageSizes.length === 0) && <Select
                                     labelId="page-size-select"
                                     id="page-size-select"
                                     value={advancedQuery.pageSize}
@@ -302,7 +316,7 @@ export default function ListToolBar<TAdvancedQuery extends IBaseQuery, TIdentifi
                                     })}
                                 </Select>}
                             </FormControl>}
-                            {hasItemsPerRowSelect && listViewOption === ListViewOptions.Tiles && <FormControl size="small" sx={{ m: 1, minWidth: 120 }}>
+                            {hasItemsPerRowSelect && listViewOption === ListViewOptions.Tiles && <FormControl size="small" sx={{ minWidth: 120 }}>
                                 <InputLabel id="tile-size-select">{t("ItemsPerRow")}</InputLabel>
                                 <Select
                                     labelId="tile-tile-select"
@@ -318,7 +332,7 @@ export default function ListToolBar<TAdvancedQuery extends IBaseQuery, TIdentifi
                                     <MenuItem value={12}>12</MenuItem>
                                 </Select>
                             </FormControl>}
-                            {hasOrderBySelect && <FormControl size="small" sx={{ m: 1, minWidth: 120 }}>
+                            {hasOrderBySelect && <FormControl size="small" sx={{ minWidth: 120 }}>
                                 <InputLabel id="orderby-select">{t("Sort")}</InputLabel>
                                 <Select
                                     labelId="orderby-select"

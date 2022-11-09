@@ -19,7 +19,7 @@ const entityAdapter = createEntityAdapter<IAddressDataModel>({
 
 export const upsertMany = createAsyncThunk(
     'upsertManyAddress',
-    async (listResponse: IListResponse<[IAddressDataModel]>, { dispatch }) => {
+    async (listResponse: IListResponse<IAddressDataModel[]>, { dispatch }) => {
         return listResponse;
     }
 )

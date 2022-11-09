@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, IconButton, TextField, Typography } from '@mui/material';
+import { Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, TextField, Typography } from '@mui/material';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
 
@@ -75,81 +76,9 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductModelD
             .finally(() => { setCreating(false); console.log('finally'); });
     }
 
-    return (
-        <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
-            <CardHeader
-                action={
-                    (crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.StandaloneView) && <>
-                        <IconButton type='submit' aria-label="create" disabled={!isValid || creating || created}>
-                            <SaveIcon />
-                        </IconButton>
-                        <IconButton aria-label="close" onClick={() => { doneAction() }}>
-                            <CloseIcon />
-                        </IconButton>
-                    </>
-                }
-                title={t("Create_New")}
-                subheader={t("ProductModel")}
-            />
-            {!!createMessage && <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
-                <Typography variant="body1" component="span">
-                    {createMessage + " "}
-                </Typography>
-            </CardContent>}
-            <CardContent>
-                <TextField
-                    name='name'
-                    label={t('Name')}
-                	defaultValue={item.name}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("name", productModelFormValidationWhenCreate.name)}
-                    autoComplete='name'
-                    error={!!errors.name}
-                    fullWidth
-                    autoFocus
-                    helperText={!!errors.name ? t(errors.name.message) : ''}
-                />
-                <TextField
-                    name='catalogDescription'
-                    label={t('CatalogDescription')}
-                	defaultValue={item.catalogDescription}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("catalogDescription", productModelFormValidationWhenCreate.catalogDescription)}
-                    autoComplete='catalogDescription'
-                    error={!!errors.catalogDescription}
-                    fullWidth
-                    autoFocus
-                    //helperText={!!errors.catalogDescription ? t(errors.catalogDescription.message) : ''}
-                />
-                <Controller
-                    name="modifiedDate"
-                    defaultValue={item.modifiedDate}
-                    control={control}
-                    {...register("modifiedDate", productModelFormValidationWhenCreate.modifiedDate)}
-                    render={
-                        ({ field: { onChange, ...restField } }) =>
-                            <DatePicker
-                				ref={null}
-                                label={t('ModifiedDate')}
-                                autoFocus
-                                onChange={(event) => { onChange(event); }}
-                                renderInput={(params) =>
-                                    <TextField
-                						ref={null}
-                                        fullWidth
-                                        autoComplete='modifiedDate'
-                                        error={!!errors.modifiedDate}
-                						helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                        {...params}
-                                    />}
-                                {...restField}
-                            />
-                    }
-                />
-            </CardContent>
-            {(crudViewContainer === CrudViewContainers.Dialog) && <CardActions disableSpacing>
+    const renderButtonGroupWhenDialog = () => {
+        return (
+            <>
                 <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
                 <ButtonGroup sx={{ marginLeft: 'auto', }}
                     disableElevation
@@ -175,6 +104,117 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductModelD
                         {t('Cancel')}
                     </Button>
                 </ButtonGroup>
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenInline = () => {
+        return (
+            <>
+                <IconButton type='submit' aria-label="create" disabled={!isValid || creating || created}>
+                    <SaveIcon />
+                </IconButton>
+                <IconButton aria-label="close" onClick={() => { doneAction() }}>
+                    <CloseIcon />
+                </IconButton>
+            </>
+        );
+    }
+
+    const renderButtonGroupWhenStandaloneView = () => {
+        return (
+            <>
+                <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
+                <ButtonGroup sx={{ marginLeft: 'auto', }}
+                    disableElevation
+                    variant="contained"
+                    aria-label="navigation buttons"
+                >
+                    <Button
+                        type='submit'
+                        fullWidth
+                        variant='contained'
+                        disabled={!isValid || creating || created}
+                        startIcon={<SaveIcon />}>
+                        {t('Create')}
+                    </Button>
+                    <IconButton aria-label="close" onClick={() => { doneAction() }}>
+                        <ChevronLeftIcon />
+                    </IconButton>
+                </ButtonGroup>
+            </>
+        );
+    }
+
+    return (
+        <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
+            <CardHeader
+                action={
+                    <>
+                        {crudViewContainer === CrudViewContainers.Inline && (renderButtonGroupWhenInline())}
+                        {(crudViewContainer === CrudViewContainers.StandaloneView) && (renderButtonGroupWhenStandaloneView())}
+                    </>
+                }
+                title={t("Create_New")}
+                subheader={t("ProductModel")}
+            />
+            {!!createMessage && <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
+                <Typography variant="body1" component="span">
+                    {createMessage + " "}
+                </Typography>
+            </CardContent>}
+            <CardContent>
+                <TextField
+                    name='name'
+                    label={t('Name')}
+                    defaultValue={item.name}
+                    variant='outlined'
+                    margin='normal'
+                    {...register("name", productModelFormValidationWhenCreate.name)}
+                    autoComplete='name'
+                    error={!!errors.name}
+                    fullWidth
+                    helperText={!!errors.name ? t(errors.name.message) : ''}
+                />
+                <TextField
+                    name='catalogDescription'
+                    label={t('CatalogDescription')}
+                    defaultValue={item.catalogDescription}
+                    variant='outlined'
+                    margin='normal'
+                    {...register("catalogDescription", productModelFormValidationWhenCreate.catalogDescription)}
+                    autoComplete='catalogDescription'
+                    error={!!errors.catalogDescription}
+                    fullWidth
+                    //helperText={!!errors.catalogDescription ? t(errors.catalogDescription.message) : ''}
+                />
+                <Controller
+                    name="modifiedDate"
+                    defaultValue={item.modifiedDate}
+                    control={control}
+                    {...register("modifiedDate", productModelFormValidationWhenCreate.modifiedDate)}
+                    render={
+                        ({ field: { onChange, ...restField } }) =>
+                            <DatePicker
+                                ref={null}
+                                label={t('ModifiedDate')}
+                                onChange={(event) => { onChange(event); }}
+                                renderInput={(params) =>
+                                    <TextField
+                                        ref={null}
+                                        fullWidth
+                                        autoComplete='modifiedDate'
+                                        error={!!errors.modifiedDate}
+                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                                        {...params}
+                                    />}
+                                {...restField}
+                            />
+                    }
+                />
+            </CardContent>
+            {(crudViewContainer === CrudViewContainers.Dialog) && <CardActions disableSpacing>
+                {renderButtonGroupWhenDialog()}
             </CardActions>}
         </Card >
     );

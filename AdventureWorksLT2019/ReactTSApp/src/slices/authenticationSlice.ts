@@ -6,7 +6,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Cookies from "universal-cookie";
 
 import { CookieKeys } from "src/shared/CookieKeys";
-import { closeSpinner } from "./appSlice";
 
 import { LoginViewModel } from "src/shared/viewModels/LoginViewModel";
 import { authenticationApi } from "src/apiClients/AuthenticationApi";
@@ -28,8 +27,6 @@ export const login = createAsyncThunk(
         //     roles: ['admin']
         // }
         localStorage.setItem('user', JSON.stringify(response));
-
-        dispatch(closeSpinner());
 
         if (response.succeeded === true) {
             const cookies = new Cookies();

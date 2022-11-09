@@ -217,6 +217,7 @@ export default function AppDrawer(props: AppDrawerProps) {
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                 >
+					<HelpOutlineIcon />
                     <Typography>Index Pages</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
@@ -253,6 +254,7 @@ export default function AppDrawer(props: AppDrawerProps) {
                     aria-controls="panel2a-content"
                     id="panel2a-header"
                 >
+					<HelpOutlineIcon />
                     <Typography>Create New Pages</Typography>
                 </AccordionSummary>
                 <AccordionDetails>

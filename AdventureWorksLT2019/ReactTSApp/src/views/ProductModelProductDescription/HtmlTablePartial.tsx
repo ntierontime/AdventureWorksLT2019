@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { ButtonGroup, Checkbox, Dialog, FormControlLabel, IconButton, Pagination, Popover, Snackbar, Stack, Switch, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
+import { Checkbox, FormControlLabel, IconButton, Pagination, Popover, Stack, Switch, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 import { Link } from 'react-router-dom';
-import AddIcon from '@mui/icons-material/Add';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -13,7 +12,6 @@ import { useTranslation } from 'react-i18next';
 
 // un-comment /*getCurrency,*/ if you display money
 import { /*getCurrency,*/ i18nFormats } from 'src/i18n';
-import { getCRUDItemPartialViewPropsOnDialog, ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps';
 import { ListPartialViewProps } from 'src/shared/viewModels/ListPartialViewProps';
 import { QueryOrderDirections } from 'src/shared/dataModels/QueryOrderDirections';
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
@@ -24,20 +22,22 @@ import { getComparator, HeadCell, stableSort } from 'src/shared/views/TableFeatu
 import { RootState } from 'src/store/CombinedReducers';
 
 import { IProductModelProductDescriptionDataModel } from 'src/dataModels/IProductModelProductDescriptionDataModel';
-import { IProductModelProductDescriptionIdentifier, getIProductModelProductDescriptionIdentifier, compareIProductModelProductDescriptionIdentifier, getRouteParamsOfIProductModelProductDescriptionIdentifier } from 'src/dataModels/IProductModelProductDescriptionQueries';
-import ItemViewsPartial from './ItemViewsPartial';
+import { IProductModelProductDescriptionIdentifier, getIProductModelProductDescriptionIdentifier, getRouteParamsOfIProductModelProductDescriptionIdentifier } from 'src/dataModels/IProductModelProductDescriptionQueries';
 
 export default function HtmlTablePartial(props: ListPartialViewProps<IProductModelProductDescriptionDataModel, IProductModelProductDescriptionIdentifier>): JSX.Element {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { listItems, selected, numSelected, handleChangePage, handleSelectItemClick } = props;
+    const { listItems, numSelected, isSelected, handleChangePage, handleSelectItemClick, handleItemDialogOpen, currentItemOnDialog, setCurrentItemOnDialog, currentItemIndex, setCurrentItemIndex } = props;
     const [order, setOrder] = useState<QueryOrderDirections>('asc');
     const [orderBy, setOrderBy] = useState<keyof IProductModelProductDescriptionDataModel>('modifiedDate');
     const [dense, setDense] = useState(true);
     const { pagination } = useSelector((state: RootState) => state.productModelProductDescriptionList);
-    const [currentItemIndex, setCurrentItemIndex] = useState<number>();
     const [anchorElItemActions, setAnchorElItemActions] = useState<HTMLElement | null>(null);
     const openPopoverItemActions = Boolean(anchorElItemActions);
+
+    useEffect(() => {
+        setCurrentItemOnDialog(!!orderedListItems && orderedListItems.length > 0 && currentItemIndex >= 0 && currentItemIndex < orderedListItems.length ? orderedListItems[currentItemIndex] : null);
+    }, [currentItemIndex]);
 
     const handleItemActionsPopoverOpen = (event: React.MouseEvent<HTMLElement>, thisIndex: number) => {
         event.stopPropagation();
@@ -65,27 +65,8 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductMod
         setDense(event.target.checked);
     };
 
-    const [openItemDialog, setOpenItemDialog] = useState(false);
-    const [crudItemPartialViewProps, setCRUDItemPartialViewProps] = useState<ItemPartialViewProps<IProductModelProductDescriptionDataModel> | null>(null);
-
-    const handleItemDialogOpen = (viewItemTemplate: ViewItemTemplates) => {
-        const dialogProps = getCRUDItemPartialViewPropsOnDialog<IProductModelProductDescriptionDataModel>(
-            viewItemTemplate,
-            handleItemDialogClose
-        );
-        setCRUDItemPartialViewProps(dialogProps);
-        handleItemActionsPopoverClose();
-        setOpenItemDialog(true);
-    };
-
-    const handleItemDialogClose = () => {
-        setOpenItemDialog(false);
-        setCRUDItemPartialViewProps(null);
-    };
-
     const orderedListItems = !!listItems ? stableSort(listItems, getComparator(order, orderBy)) as IProductModelProductDescriptionDataModel[] : [];
-    const currentItemOnDialog = !!orderedListItems && orderedListItems.length > 0 && currentItemIndex >= 0 && currentItemIndex < orderedListItems.length ? orderedListItems[currentItemIndex] : null;
-    const isSelected = (identifier: IProductModelProductDescriptionIdentifier) => selected.findIndex(t=> { return compareIProductModelProductDescriptionIdentifier(identifier, t); }) !== -1;
+
     const headCells: HeadCell[] = [
 
         {
@@ -197,19 +178,6 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductMod
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Snackbar
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                open={true}
-            >
-				<ButtonGroup orientation='horizontal'>
-                    <IconButton onClick={() => { handleItemDialogOpen(ViewItemTemplates.Create); }} aria-label="create" component="label" size="large" color='primary' sx={{ backgroundColor: 'gray' }}>
-                        <AddIcon />
-                    </IconButton>
-                    <IconButton onClick={() => { navigate("/productModelProductDescription/create") }} aria-label="create" component="label" size="large" color='primary' sx={{ backgroundColor: 'gray' }}>
-                        <AddIcon />
-                    </IconButton>
-                </ButtonGroup>
-            </Snackbar>
             <Popover id="item-action-popover"
                 sx={{ pointerEvents: 'none', }}
                 open={openPopoverItemActions}
@@ -233,19 +201,16 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductMod
                 <IconButton aria-label="edit" color="primary" onClick={() => { navigate("/productModelProductDescription/edit/" + getRouteParamsOfIProductModelProductDescriptionIdentifier(currentItemOnDialog)) }}>
                     <EditIcon />
                 </IconButton>
-                <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete) }}>
+                <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, null) }}>
                     <DeleteIcon />
                 </IconButton>
-                <IconButton aria-label="details" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Details) }}>
+                <IconButton aria-label="details" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Details, null) }}>
                     <BusinessCenterIcon />
                 </IconButton>
-                <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit) }}>
+                <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit, null) }}>
                     <EditIcon />
                 </IconButton>
             </Popover>
-            <Dialog open={openItemDialog} fullWidth={true} maxWidth={'sm'}>
-                <ItemViewsPartial {...crudItemPartialViewProps} item={currentItemOnDialog} isItemSelected={!!currentItemOnDialog && isSelected(getIProductModelProductDescriptionIdentifier(currentItemOnDialog))} totalCountInList={listItems.length} itemIndex={currentItemIndex} setItemIndex={setCurrentItemIndex} handleSelectItemClick={handleSelectItemClick} />
-            </Dialog>
             {!!handleChangePage && !numSelected && <Stack direction="row" onMouseEnter={() => { handleItemActionsPopoverClose(); }}>
                 <Item sx={{ width: 1 }}>
                     <Pagination count={Math.ceil(pagination.totalCount / ((1.0) * pagination.pageSize))} page={pagination.pageIndex} showFirstButton showLastButton variant="outlined" shape="rounded" onChange={handleChangePage} />

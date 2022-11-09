@@ -1,25 +1,23 @@
-import { useState } from 'react';
-import { ButtonGroup, CircularProgress, Dialog, Grid, IconButton, Paper, Snackbar } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
+import { useEffect } from 'react';
+import { CircularProgress, Grid, Paper } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 import InfiniteScroll from "react-infinite-scroll-component";
 
 // un-comment /*getCurrency,*/ if you display money
 import { /*getCurrency,*/ i18nFormats } from 'src/i18n';
 import { RootState } from 'src/store/CombinedReducers';
-import { getCRUDItemPartialViewPropsInline, getCRUDItemPartialViewPropsOnDialog, ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps';
+import { getCRUDItemPartialViewPropsInline, ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps';
 import { ListPartialViewProps } from 'src/shared/viewModels/ListPartialViewProps';
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 
 import { IBuildVersionDataModel } from 'src/dataModels/IBuildVersionDataModel';
-import { IBuildVersionIdentifier, getIBuildVersionIdentifier, compareIBuildVersionIdentifier, getRouteParamsOfIBuildVersionIdentifier } from 'src/dataModels/IBuildVersionQueries';
+import { IBuildVersionIdentifier, getIBuildVersionIdentifier, getRouteParamsOfIBuildVersionIdentifier } from 'src/dataModels/IBuildVersionQueries';
 import ItemViewsPartial from './ItemViewsPartial';
 
 export default function TilesPartial(props: ListPartialViewProps<IBuildVersionDataModel, IBuildVersionIdentifier>): JSX.Element {
-    const { listItems, itemsPerRow, selected, handleSelectItemClick, handleChangePage } = props;
-	const navigate = useNavigate();
+    const { listItems, numSelected, itemsPerRow, isSelected, handleChangePage, handleSelectItemClick, handleItemDialogOpen, setCurrentItemOnDialog, currentItemIndex } = props;
+
     // const { t } = useTranslation();
     // pagination
     const crudItemPartialViewPropsInline = getCRUDItemPartialViewPropsInline<IBuildVersionDataModel>(
@@ -27,33 +25,15 @@ export default function TilesPartial(props: ListPartialViewProps<IBuildVersionDa
         null
     );
 
-    const [currentItemIndex, setCurrentItemIndex] = useState<number>();
-    const [openItemDialog, setOpenItemDialog] = useState(false);
-    const [crudItemPartialViewPropsOnDialog, setCRUDItemPartialViewPropsOnDialog] = useState<ItemPartialViewProps<IBuildVersionDataModel> | null>(null);
-
-    const handleItemDialogOpen = (viewItemTemplate: ViewItemTemplates, itemIndex: number) => {
-        const dialogProps = getCRUDItemPartialViewPropsOnDialog<IBuildVersionDataModel>(
-            viewItemTemplate,
-            handleItemDialogClose
-        );
-        setCurrentItemIndex(itemIndex);
-        setCRUDItemPartialViewPropsOnDialog(dialogProps);
-        setOpenItemDialog(true);
-    };
-
-    const handleItemDialogClose = () => {
-        setOpenItemDialog(false);
-        setCRUDItemPartialViewPropsOnDialog(null);
-        setCurrentItemIndex(-1);
-    };
-
     const gridItemSpacing = 0.5;
-    const isSelected = (identifier: IBuildVersionIdentifier) => selected.findIndex(t=> { return compareIBuildVersionIdentifier(identifier, t); }) !== -1;
     const gridItemWidth = 12 / itemsPerRow;
-    const currentItemOnDialog = !!listItems && listItems.length > 0 && currentItemIndex >= 0 && currentItemIndex < listItems.length ? listItems[currentItemIndex] : null;
 
-    const { pagination } = useSelector((state: RootState) => state.buildVersionList);
+    const { pagination } = useSelector((state: RootState) => state.productList);
     const hasMoreItems = pagination.pageIndex !== pagination.lastPageIndex;
+
+    useEffect(() => {
+        setCurrentItemOnDialog(!!listItems && listItems.length > 0 && currentItemIndex >= 0 && currentItemIndex < listItems.length ? listItems[currentItemIndex] : null);
+    }, [currentItemIndex]);
 
     return (
         <>
@@ -89,22 +69,6 @@ export default function TilesPartial(props: ListPartialViewProps<IBuildVersionDa
                     </Grid> */}
                 </Grid>
             </InfiniteScroll>
-            <Snackbar
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                open={true}
-            >
-				<ButtonGroup orientation='horizontal'>
-                    <IconButton onClick={() => { handleItemDialogOpen(ViewItemTemplates.Create, -1); }} aria-label="create" component="label" size="large" color='primary' sx={{ backgroundColor: 'gray' }}>
-                        <AddIcon />
-                    </IconButton>
-                    <IconButton onClick={() => { navigate("/buildVersion/create") }} aria-label="create" component="label" size="large" color='primary' sx={{ backgroundColor: 'gray' }}>
-                        <AddIcon />
-                    </IconButton>
-                </ButtonGroup>
-            </Snackbar>
-            <Dialog open={openItemDialog} fullWidth={true} maxWidth={'sm'}>
-                {!!crudItemPartialViewPropsOnDialog && <ItemViewsPartial {...crudItemPartialViewPropsOnDialog} item={currentItemOnDialog} isItemSelected={!!currentItemOnDialog && isSelected(getIBuildVersionIdentifier(currentItemOnDialog))} totalCountInList={listItems.length} itemIndex={currentItemIndex} setItemIndex={setCurrentItemIndex} handleSelectItemClick={handleSelectItemClick} />}
-            </Dialog>
         </>
     );
 }
