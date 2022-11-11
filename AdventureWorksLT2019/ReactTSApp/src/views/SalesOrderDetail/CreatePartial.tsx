@@ -46,13 +46,29 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderDet
 
 
 
-    const [iSalesOrderHeaderAdvancedQuery_SalesOrderID, setISalesOrderHeaderAdvancedQuery_SalesOrderID] = useState<ISalesOrderHeaderAdvancedQuery>({ ...defaultISalesOrderHeaderAdvancedQuery(), pageSize: 10000 });
     const [salesOrderHeader_SalesOrderIDCodeList, setSalesOrderHeader_SalesOrderIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.salesOrderHeader_Name, value: item.salesOrderID, selected: false }]);
 
-    const [iProductAdvancedQuery_ProductID, setIProductAdvancedQuery_ProductID] = useState<IProductAdvancedQuery>({ ...defaultIProductAdvancedQuery(), pageSize: 10000 });
     const [product_ProductIDCodeList, setProduct_ProductIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.product_Name, value: item.productID, selected: false }]);
     useEffect(() => {
 
+
+        codeListsApi.getSalesOrderHeaderCodeList({ ...defaultISalesOrderHeaderAdvancedQuery(), pageSize: 10000 }).then((res) => {
+            if (res.status === "OK") {
+                setSalesOrderHeader_SalesOrderIDCodeList(res.responseBody);
+                const salesOrderID = res.responseBody[0].value;
+                setValue('salesOrderID', res.responseBody[0].value);
+				
+            }
+        });
+
+        codeListsApi.getProductCodeList({ ...defaultIProductAdvancedQuery(), pageSize: 10000 }).then((res) => {
+            if (res.status === "OK") {
+                setProduct_ProductIDCodeList(res.responseBody);
+                const productID = res.responseBody[0].value;
+                setValue('productID', res.responseBody[0].value);
+				
+            }
+        });
         setCreating(false);
         setCreated(false);
         setCreateMessage(null);
@@ -61,60 +77,6 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderDet
 
 
 
-
-    const getSalesOrderHeader_SalesOrderIDCodeList = (query: ISalesOrderHeaderAdvancedQuery, toSetSelectedValue: boolean, setCodeListToEmpty: boolean) => {
-        if (!setCodeListToEmpty) {
-            codeListsApi.getSalesOrderHeaderCodeList({ ...query, pageSize: 10000 }).then((res) => {
-                if (res.status === "OK") {
-                    if (toSetSelectedValue) {
-                        if (res.responseBody.findIndex(t => t.value === item.salesOrderID) === -1) {
-                            if (res.responseBody.length > 0) {
-                                setValue('salesOrderID', res.responseBody[0].value);
-                            }
-                            else {
-                                setValue('salesOrderID', -1);
-                            }
-                        }
-                        else {
-                            setValue('salesOrderID', item.salesOrderID);
-                        }
-                    }
-                    setSalesOrderHeader_SalesOrderIDCodeList(res.responseBody);
-                }
-            });
-        }
-        else {
-            setSalesOrderHeader_SalesOrderIDCodeList([]);
-            setValue('salesOrderID', -1);
-        }
-    }
-
-    const getProduct_ProductIDCodeList = (query: IProductAdvancedQuery, toSetSelectedValue: boolean, setCodeListToEmpty: boolean) => {
-        if (!setCodeListToEmpty) {
-            codeListsApi.getProductCodeList({ ...query, pageSize: 10000 }).then((res) => {
-                if (res.status === "OK") {
-                    if (toSetSelectedValue) {
-                        if (res.responseBody.findIndex(t => t.value === item.productID) === -1) {
-                            if (res.responseBody.length > 0) {
-                                setValue('productID', res.responseBody[0].value);
-                            }
-                            else {
-                                setValue('productID', -1);
-                            }
-                        }
-                        else {
-                            setValue('productID', item.productID);
-                        }
-                    }
-                    setProduct_ProductIDCodeList(res.responseBody);
-                }
-            });
-        }
-        else {
-            setProduct_ProductIDCodeList([]);
-            setValue('productID', -1);
-        }
-    }
 
     const onSubmit = () => {
         setCreating(true);
