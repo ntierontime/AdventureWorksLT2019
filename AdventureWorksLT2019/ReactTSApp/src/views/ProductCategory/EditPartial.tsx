@@ -16,7 +16,7 @@ import { Controller } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers';
 import { INameValuePair } from 'src/shared/dataModels/INameValuePair';
 import { codeListsApi } from 'src/apiClients/CodeListsApi';
-import { IProductCategoryAdvancedQuery, defaultIProductCategoryAdvancedQuery } from 'src/dataModels/IProductCategoryQueries';
+import { defaultIProductCategoryAdvancedQuery } from 'src/dataModels/IProductCategoryQueries';
 
 // un-comment /*getCurrency,*/ if you display money
 import { /*getCurrency,*/ i18nFormats } from 'src/i18n';

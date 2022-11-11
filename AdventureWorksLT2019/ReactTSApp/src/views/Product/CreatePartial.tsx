@@ -13,7 +13,7 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { INameValuePair } from 'src/shared/dataModels/INameValuePair';
 import { codeListsApi } from 'src/apiClients/CodeListsApi';
 import { IProductCategoryAdvancedQuery, defaultIProductCategoryAdvancedQuery } from 'src/dataModels/IProductCategoryQueries';
-import { IProductModelAdvancedQuery, defaultIProductModelAdvancedQuery } from 'src/dataModels/IProductModelQueries';
+import { defaultIProductModelAdvancedQuery } from 'src/dataModels/IProductModelQueries';
 
 import { AppDispatch } from 'src/store/Store';
 

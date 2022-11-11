@@ -12,8 +12,8 @@ import { Controller } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers';
 import { INameValuePair } from 'src/shared/dataModels/INameValuePair';
 import { codeListsApi } from 'src/apiClients/CodeListsApi';
-import { ICustomerAdvancedQuery, defaultICustomerAdvancedQuery } from 'src/dataModels/ICustomerQueries';
-import { IAddressAdvancedQuery, defaultIAddressAdvancedQuery } from 'src/dataModels/IAddressQueries';
+import { defaultICustomerAdvancedQuery } from 'src/dataModels/ICustomerQueries';
+import { defaultIAddressAdvancedQuery } from 'src/dataModels/IAddressQueries';
 
 import { AppDispatch } from 'src/store/Store';
 
