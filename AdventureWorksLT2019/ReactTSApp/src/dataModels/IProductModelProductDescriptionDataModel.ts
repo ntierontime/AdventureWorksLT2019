@@ -4,9 +4,9 @@ export interface IProductModelProductDescriptionDataModel {
     itemUIStatus______: ItemUIStatus;
     isDeleted______: boolean;
     productModel_Name: string;
-    productModelID: number | string;
+    productModelID: number | null;
     productDescription_Name: string;
-    productDescriptionID: number | string;
+    productDescriptionID: number | null;
     culture: string;
     rowguid: any;
     modifiedDate: string;
@@ -17,9 +17,9 @@ export function defaultProductModelProductDescription(): IProductModelProductDes
         itemUIStatus______: ItemUIStatus.New,
         isDeleted______: false,
         productModel_Name: '',
-        productModelID: '',
+        productModelID: null,
         productDescription_Name: '',
-        productDescriptionID: '',
+        productDescriptionID: null,
         culture: '',
         rowguid: null,
         modifiedDate: '',

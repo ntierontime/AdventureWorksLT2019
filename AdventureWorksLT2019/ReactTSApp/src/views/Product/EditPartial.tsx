@@ -37,7 +37,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
+    const { register, control, setValue, handleSubmit, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
@@ -50,19 +50,16 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
 
 
 
-    const [iProductCategoryAdvancedQuery_ParentID, setIProductCategoryAdvancedQuery_ParentID] = useState<IProductCategoryAdvancedQuery>();
     const [productCategory_ParentIDCodeList, setProductCategory_ParentIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.parent_Name, value: item.parentID, selected: false }]);
 
     const [iProductCategoryAdvancedQuery_ProductCategoryID, setIProductCategoryAdvancedQuery_ProductCategoryID] = useState<IProductCategoryAdvancedQuery>({ ...defaultIProductCategoryAdvancedQuery(), parentProductCategoryID: item.parentID, pageSize: 10000 });
     const [productCategory_ProductCategoryIDCodeList, setProductCategory_ProductCategoryIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productCategory_Name, value: item.productCategoryID, selected: false }]);
 
-    const [iProductModelAdvancedQuery_ProductModelID, setIProductModelAdvancedQuery_ProductModelID] = useState<IProductModelAdvancedQuery>();
     const [productModel_ProductModelIDCodeList, setProductModel_ProductModelIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productModel_Name, value: item.productModelID, selected: false }]);
     useEffect(() => {
 
 
-		setIProductCategoryAdvancedQuery_ParentID({ ...defaultIProductCategoryAdvancedQuery(), pageSize: 10000 });
-        codeListsApi.getProductCategoryCodeList(iProductCategoryAdvancedQuery_ParentID).then((res) => {
+        codeListsApi.getProductCategoryCodeList({ ...defaultIProductCategoryAdvancedQuery(), pageSize: 10000 }).then((res) => {
             if (res.status === "OK") {
                 setProductCategory_ParentIDCodeList(res.responseBody);
             }
@@ -70,13 +67,11 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
 
         getProductCategory_ProductCategoryIDCodeList(iProductCategoryAdvancedQuery_ProductCategoryID, false, false);
 
-		setIProductModelAdvancedQuery_ProductModelID({ ...defaultIProductModelAdvancedQuery(), pageSize: 10000 });
-        codeListsApi.getProductModelCodeList(iProductModelAdvancedQuery_ProductModelID).then((res) => {
+        codeListsApi.getProductModelCodeList({ ...defaultIProductModelAdvancedQuery(), pageSize: 10000 }).then((res) => {
             if (res.status === "OK") {
                 setProductModel_ProductModelIDCodeList(res.responseBody);
             }
         });
-        reset(item);
         setSaving(false);
         setSaved(false);
         setSaveMessage(null);
@@ -91,36 +86,41 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
         const nameValuePair = event.target as unknown as INameValuePair;
 
         const parentID = nameValuePair.value as number;
+        onParentIDChanged_LoadChildren(parentID);
+    }
 
-        setIProductCategoryAdvancedQuery_ProductCategoryID({ ...iProductCategoryAdvancedQuery_ProductCategoryID, parentProductCategoryID: parentID });
+    const onParentIDChanged_LoadChildren = (parentID: number) => {
+
+        const iProductCategoryAdvancedQuery_ProductCategoryID_Here = { ...iProductCategoryAdvancedQuery_ProductCategoryID, parentProductCategoryID: parentID };
+        setIProductCategoryAdvancedQuery_ProductCategoryID(iProductCategoryAdvancedQuery_ProductCategoryID_Here);
         getProductCategory_ProductCategoryIDCodeList(iProductCategoryAdvancedQuery_ProductCategoryID, true, false);
     }
 
 
     const getProductCategory_ProductCategoryIDCodeList = (query: IProductCategoryAdvancedQuery, toSetSelectedValue: boolean, setCodeListToEmpty: boolean) => {
         if (!setCodeListToEmpty) {
-			codeListsApi.getProductCategoryCodeList({ ...query, pageSize: 10000 }).then((res) => {
-				if (res.status === "OK") {
-					if (toSetSelectedValue) {
-						if (res.responseBody.findIndex(t => t.value === item.productCategoryID) === -1) {
-							if (res.responseBody.length > 0) {
-								setValue('productCategoryID', res.responseBody[0].value);
-							}
-							else {
-								setValue('productCategoryID', -1);
-							}
-						}
-						else {
-							setValue('productCategoryID', item.productCategoryID);
-						}
-					}
-					setProductCategory_ProductCategoryIDCodeList(res.responseBody);
-				}
-			});
-		}
+            codeListsApi.getProductCategoryCodeList({ ...query, pageSize: 10000 }).then((res) => {
+                if (res.status === "OK") {
+                    if (toSetSelectedValue) {
+                        if (res.responseBody.findIndex(t => t.value === item.productCategoryID) === -1) {
+                            if (res.responseBody.length > 0) {
+                                setValue('productCategoryID', res.responseBody[0].value);
+                            }
+                            else {
+                                setValue('productCategoryID', -1);
+                            }
+                        }
+                        else {
+                            setValue('productCategoryID', item.productCategoryID);
+                        }
+                    }
+                    setProductCategory_ProductCategoryIDCodeList(res.responseBody);
+                }
+            });
+        }
         else {
             setProductCategory_ProductCategoryIDCodeList([]);
-            setValue('productCategoryID', '');
+            setValue('productCategoryID', -1);
         }
     }
 
@@ -251,7 +251,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                 <TextField
                     name='productID'
                     label={t('ProductID')}
-                	value={item.productID}
+                    value={item.productID}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -488,7 +488,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                 <TextField
                     name='rowguid'
                     label={t('rowguid')}
-                	value={item.rowguid}
+                    value={item.rowguid}
                     variant='outlined'
                     margin='normal'
                     fullWidth

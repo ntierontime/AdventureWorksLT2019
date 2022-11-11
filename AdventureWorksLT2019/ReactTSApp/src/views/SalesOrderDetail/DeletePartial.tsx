@@ -177,40 +177,13 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderDet
                     alignItems="center"
                     spacing={2}
                 >
-                    <Typography>{t("ShipToID")}</Typography>
-                    <Link to={"/address/Details/" + item.shipToID}>{item.shipTo_Name}</Link>
-                </Stack>
-                <Stack sx={{ p: 2 }}
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={2}
-                >
-                    <Typography>{t("CustomerID")}</Typography>
-                    <Link to={"/customer/Details/" + item.customerID}>{item.customer_Name}</Link>
-                </Stack>
-                <Stack sx={{ p: 2 }}
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={2}
-                >
-                    <Typography>{t("BillToID")}</Typography>
-                    <Link to={"/address/Details/" + item.billToID}>{item.billTo_Name}</Link>
-                </Stack>
-                <Stack sx={{ p: 2 }}
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={2}
-                >
                     <Typography>{t("SalesOrderID")}</Typography>
                     <Link to={"/salesOrderHeader/Details/" + item.salesOrderID}>{item.salesOrderHeader_Name}</Link>
                 </Stack>
                 <TextField
                     name='salesOrderDetailID'
                     label={t('SalesOrderDetailID')}
-                	value={item.salesOrderDetailID}
+                    value={item.salesOrderDetailID}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -221,7 +194,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderDet
                 <TextField
                     name='orderQty'
                     label={t('OrderQty')}
-                	value={t(i18nFormats.number.format, { val: item.orderQty })}
+                    value={t(i18nFormats.number.format, { val: item.orderQty })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -229,33 +202,6 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderDet
                         readOnly: true
                     }}
                 />
-                <Stack sx={{ p: 2 }}
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={2}
-                >
-                    <Typography>{t("ProductModelID")}</Typography>
-                    <Link to={"/productModel/Details/" + item.productModelID}>{item.productModel_Name}</Link>
-                </Stack>
-                <Stack sx={{ p: 2 }}
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={2}
-                >
-                    <Typography>{t("ProductCategory_ParentID")}</Typography>
-                    <Link to={"/productCategory/Details/" + item.productCategory_ParentID}>{item.productCategory_Parent_Name}</Link>
-                </Stack>
-                <Stack sx={{ p: 2 }}
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={2}
-                >
-                    <Typography>{t("ProductCategoryID")}</Typography>
-                    <Link to={"/productCategory/Details/" + item.productCategoryID}>{item.productCategory_Name}</Link>
-                </Stack>
                 <Stack sx={{ p: 2 }}
                     direction="row"
                     justifyContent="space-between"
@@ -268,7 +214,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderDet
                 <TextField
                     name='unitPrice'
                     label={t('UnitPrice')}
-                	value={t(i18nFormats.double.format, { val: item.unitPrice })}
+                    value={t(i18nFormats.double.format, { val: item.unitPrice })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -279,7 +225,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderDet
                 <TextField
                     name='unitPriceDiscount'
                     label={t('UnitPriceDiscount')}
-                	value={t(i18nFormats.double.format, { val: item.unitPriceDiscount })}
+                    value={t(i18nFormats.double.format, { val: item.unitPriceDiscount })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -290,7 +236,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderDet
                 <TextField
                     name='lineTotal'
                     label={t('LineTotal')}
-                	value={t(i18nFormats.double.format, { val: item.lineTotal })}
+                    value={t(i18nFormats.double.format, { val: item.lineTotal })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -301,7 +247,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderDet
                 <TextField
                     name='rowguid'
                     label={t('rowguid')}
-                	value={item.rowguid}
+                    value={item.rowguid}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -312,7 +258,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderDet
                 <DatePicker
                     label={t('ModifiedDate')}
                     value={t(i18nFormats.dateTime.format, { val: new Date(item.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-                    onChange={() => {}}
+                    onChange={() => { }}
                     renderInput={(params) =>
                         <TextField
                             fullWidth

@@ -4,9 +4,9 @@ export interface ICustomerAddressDataModel {
     itemUIStatus______: ItemUIStatus;
     isDeleted______: boolean;
     customer_Name: string;
-    customerID: number | string;
+    customerID: number | null;
     address_Name: string;
-    addressID: number | string;
+    addressID: number | null;
     addressType: string;
     rowguid: any;
     modifiedDate: string;
@@ -17,9 +17,9 @@ export function defaultCustomerAddress(): ICustomerAddressDataModel {
         itemUIStatus______: ItemUIStatus.New,
         isDeleted______: false,
         customer_Name: '',
-        customerID: '',
+        customerID: null,
         address_Name: '',
-        addressID: '',
+        addressID: null,
         addressType: '',
         rowguid: null,
         modifiedDate: '',

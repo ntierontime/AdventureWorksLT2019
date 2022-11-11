@@ -36,7 +36,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductCategory
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
+    const { register, control, setValue, handleSubmit, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
@@ -49,18 +49,15 @@ export default function EditPartial(props: ItemPartialViewProps<IProductCategory
 
 
 
-    const [iProductCategoryAdvancedQuery_ParentProductCategoryID, setIProductCategoryAdvancedQuery_ParentProductCategoryID] = useState<IProductCategoryAdvancedQuery>();
     const [productCategory_ParentProductCategoryIDCodeList, setProductCategory_ParentProductCategoryIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.parent_Name, value: item.parentProductCategoryID, selected: false }]);
     useEffect(() => {
 
 
-		setIProductCategoryAdvancedQuery_ParentProductCategoryID({ ...defaultIProductCategoryAdvancedQuery(), pageSize: 10000 });
-        codeListsApi.getProductCategoryCodeList(iProductCategoryAdvancedQuery_ParentProductCategoryID).then((res) => {
+        codeListsApi.getProductCategoryCodeList({ ...defaultIProductCategoryAdvancedQuery(), pageSize: 10000 }).then((res) => {
             if (res.status === "OK") {
                 setProductCategory_ParentProductCategoryIDCodeList(res.responseBody);
             }
         });
-        reset(item);
         setSaving(false);
         setSaved(false);
         setSaveMessage(null);
@@ -197,7 +194,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductCategory
                 <TextField
                     name='productCategoryID'
                     label={t('ProductCategoryID')}
-                	value={item.productCategoryID}
+                    value={item.productCategoryID}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -235,7 +232,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductCategory
                 <TextField
                     name='rowguid'
                     label={t('rowguid')}
-                	value={item.rowguid}
+                    value={item.rowguid}
                     variant='outlined'
                     margin='normal'
                     fullWidth

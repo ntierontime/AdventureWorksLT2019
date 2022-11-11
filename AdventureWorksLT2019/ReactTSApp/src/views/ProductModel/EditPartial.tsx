@@ -34,7 +34,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelDat
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
+    const { register, control, setValue, handleSubmit, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
@@ -48,7 +48,6 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelDat
 
     useEffect(() => {
 
-        reset(item);
         setSaving(false);
         setSaved(false);
         setSaveMessage(null);
@@ -185,7 +184,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelDat
                 <TextField
                     name='productModelID'
                     label={t('ProductModelID')}
-                	value={item.productModelID}
+                    value={item.productModelID}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -220,7 +219,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelDat
                 <TextField
                     name='rowguid'
                     label={t('rowguid')}
-                	value={item.rowguid}
+                    value={item.rowguid}
                     variant='outlined'
                     margin='normal'
                     fullWidth

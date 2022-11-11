@@ -173,7 +173,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IBuildVersionD
                 <TextField
                     name='systemInformationID'
                     label={t('SystemInformationID')}
-                	value={item.systemInformationID}
+                    value={item.systemInformationID}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -195,7 +195,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IBuildVersionD
                 <DatePicker
                     label={t('VersionDate')}
                     value={item.versionDate}
-                    onChange={() => {}}
+                    onChange={() => { }}
                     renderInput={(params) =>
                         <TextField
                             fullWidth
@@ -209,7 +209,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IBuildVersionD
                 <DatePicker
                     label={t('ModifiedDate')}
                     value={item.modifiedDate}
-                    onChange={() => {}}
+                    onChange={() => { }}
                     renderInput={(params) =>
                         <TextField
                             fullWidth

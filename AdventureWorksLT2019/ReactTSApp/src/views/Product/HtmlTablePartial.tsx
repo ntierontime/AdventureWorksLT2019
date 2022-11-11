@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Checkbox, FormControlLabel, IconButton, Pagination, Popover, Stack, Switch, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 import { Link } from 'react-router-dom';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -118,6 +119,12 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDat
             label: t('Weight'),
         },
         {
+            id: 'parentID',
+            numeric: true,
+            disablePadding: true,
+            label: t('ParentID'),
+        },
+        {
             id: 'productCategoryID',
             numeric: true,
             disablePadding: true,
@@ -170,12 +177,6 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDat
             numeric: false,
             disablePadding: true,
             label: t('ModifiedDate'),
-        },
-        {
-            id: 'parentID',
-            numeric: true,
-            disablePadding: true,
-            label: t('ParentID'),
         },
     ];
 
@@ -239,6 +240,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDat
                                         <TableCell align='right'>{t(i18nFormats.double.format, { val: row.listPrice })}</TableCell>
                                         <TableCell align='right'>{row.size}</TableCell>
                                         <TableCell align='right'>{t(i18nFormats.double.format, { val: row.weight })}</TableCell>
+                                        <TableCell align='right'><Link to={"/productCategory/Details/" + row.parentID}>{row.parent_Name}</Link></TableCell>
                                         <TableCell align='right'><Link to={"/productCategory/Details/" + row.productCategoryID}>{row.productCategory_Name}</Link></TableCell>
                                         <TableCell align='right'><Link to={"/productModel/Details/" + row.productModelID}>{row.productModel_Name}</Link></TableCell>
                                         <TableCell align='right'>{t(i18nFormats.dateTime.format, { val: new Date(row.sellStartDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}</TableCell>
@@ -248,7 +250,6 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDat
                                         <TableCell align='right'>{row.thumbnailPhotoFileName}</TableCell>
                                         <TableCell align='right'>{row.rowguid}</TableCell>
                                         <TableCell align='right'>{t(i18nFormats.dateTime.format, { val: new Date(row.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}</TableCell>
-                                        <TableCell align='right'><Link to={"/productCategory/Details/" + row.parentID}>{row.parent_Name}</Link></TableCell>
                                         <TableCell align="right" onMouseOver={(event) => { handleItemActionsPopoverOpen(event, index) }}>
                                             <IconButton aria-label="more" size="small" >
                                                 <MoreVertIcon />
@@ -283,6 +284,9 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDat
                 }}
                 disableRestoreFocus
             >
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/product/dashboard/" + getRouteParamsOfIProductIdentifier(currentItemOnDialog)) }}>
+                    <AccountTreeIcon />
+                </IconButton>
                 <IconButton aria-label="delete" color="primary" onClick={() => { navigate("/product/delete/" + getRouteParamsOfIProductIdentifier(currentItemOnDialog)) }}>
                     <DeleteIcon />
                 </IconButton>

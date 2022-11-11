@@ -37,7 +37,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelPro
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
+    const { register, control, setValue, handleSubmit, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
@@ -50,28 +50,23 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelPro
 
 
 
-    const [iProductModelAdvancedQuery_ProductModelID, setIProductModelAdvancedQuery_ProductModelID] = useState<IProductModelAdvancedQuery>();
     const [productModel_ProductModelIDCodeList, setProductModel_ProductModelIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productModel_Name, value: item.productModelID, selected: false }]);
 
-    const [iProductDescriptionAdvancedQuery_ProductDescriptionID, setIProductDescriptionAdvancedQuery_ProductDescriptionID] = useState<IProductDescriptionAdvancedQuery>();
     const [productDescription_ProductDescriptionIDCodeList, setProductDescription_ProductDescriptionIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productDescription_Name, value: item.productDescriptionID, selected: false }]);
     useEffect(() => {
 
 
-		setIProductModelAdvancedQuery_ProductModelID({ ...defaultIProductModelAdvancedQuery(), pageSize: 10000 });
-        codeListsApi.getProductModelCodeList(iProductModelAdvancedQuery_ProductModelID).then((res) => {
+        codeListsApi.getProductModelCodeList({ ...defaultIProductModelAdvancedQuery(), pageSize: 10000 }).then((res) => {
             if (res.status === "OK") {
                 setProductModel_ProductModelIDCodeList(res.responseBody);
             }
         });
 
-		setIProductDescriptionAdvancedQuery_ProductDescriptionID({ ...defaultIProductDescriptionAdvancedQuery(), pageSize: 10000 });
-        codeListsApi.getProductDescriptionCodeList(iProductDescriptionAdvancedQuery_ProductDescriptionID).then((res) => {
+        codeListsApi.getProductDescriptionCodeList({ ...defaultIProductDescriptionAdvancedQuery(), pageSize: 10000 }).then((res) => {
             if (res.status === "OK") {
                 setProductDescription_ProductDescriptionIDCodeList(res.responseBody);
             }
         });
-        reset(item);
         setSaving(false);
         setSaved(false);
         setSaveMessage(null);
@@ -250,7 +245,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelPro
                 <TextField
                     name='rowguid'
                     label={t('rowguid')}
-                	value={item.rowguid}
+                    value={item.rowguid}
                     variant='outlined'
                     margin='normal'
                     fullWidth

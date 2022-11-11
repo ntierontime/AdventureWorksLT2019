@@ -14,11 +14,11 @@ export interface ISalesOrderHeaderDataModel {
     purchaseOrderNumber: string;
     accountNumber: string;
     customer_Name: string;
-    customerID: number | string;
+    customerID: number | null;
     shipTo_Name: string;
-    shipToAddressID: number | string;
+    shipToAddressID: number | null;
     billTo_Name: string;
-    billToAddressID: number | string;
+    billToAddressID: number | null;
     shipMethod: string;
     creditCardApprovalCode: string;
     subTotal: number;
@@ -45,11 +45,11 @@ export function defaultSalesOrderHeader(): ISalesOrderHeaderDataModel {
         purchaseOrderNumber: '',
         accountNumber: '',
         customer_Name: '',
-        customerID: '',
+        customerID: null,
         shipTo_Name: '',
-        shipToAddressID: '',
+        shipToAddressID: null,
         billTo_Name: '',
-        billToAddressID: '',
+        billToAddressID: null,
         shipMethod: '',
         creditCardApprovalCode: '',
         subTotal: 0,

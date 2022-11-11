@@ -37,7 +37,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
+    const { register, control, setValue, handleSubmit, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
@@ -50,38 +50,31 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
 
 
 
-    const [iCustomerAdvancedQuery_CustomerID, setICustomerAdvancedQuery_CustomerID] = useState<ICustomerAdvancedQuery>();
     const [customer_CustomerIDCodeList, setCustomer_CustomerIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.customer_Name, value: item.customerID, selected: false }]);
 
-    const [iAddressAdvancedQuery_ShipToAddressID, setIAddressAdvancedQuery_ShipToAddressID] = useState<IAddressAdvancedQuery>();
     const [address_ShipToAddressIDCodeList, setAddress_ShipToAddressIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.shipTo_Name, value: item.shipToAddressID, selected: false }]);
 
-    const [iAddressAdvancedQuery_BillToAddressID, setIAddressAdvancedQuery_BillToAddressID] = useState<IAddressAdvancedQuery>();
     const [address_BillToAddressIDCodeList, setAddress_BillToAddressIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.billTo_Name, value: item.billToAddressID, selected: false }]);
     useEffect(() => {
 
 
-		setICustomerAdvancedQuery_CustomerID({ ...defaultICustomerAdvancedQuery(), pageSize: 10000 });
-        codeListsApi.getCustomerCodeList(iCustomerAdvancedQuery_CustomerID).then((res) => {
+        codeListsApi.getCustomerCodeList({ ...defaultICustomerAdvancedQuery(), pageSize: 10000 }).then((res) => {
             if (res.status === "OK") {
                 setCustomer_CustomerIDCodeList(res.responseBody);
             }
         });
 
-		setIAddressAdvancedQuery_ShipToAddressID({ ...defaultIAddressAdvancedQuery(), pageSize: 10000 });
-        codeListsApi.getAddressCodeList(iAddressAdvancedQuery_ShipToAddressID).then((res) => {
+        codeListsApi.getAddressCodeList({ ...defaultIAddressAdvancedQuery(), pageSize: 10000 }).then((res) => {
             if (res.status === "OK") {
                 setAddress_ShipToAddressIDCodeList(res.responseBody);
             }
         });
 
-		setIAddressAdvancedQuery_BillToAddressID({ ...defaultIAddressAdvancedQuery(), pageSize: 10000 });
-        codeListsApi.getAddressCodeList(iAddressAdvancedQuery_BillToAddressID).then((res) => {
+        codeListsApi.getAddressCodeList({ ...defaultIAddressAdvancedQuery(), pageSize: 10000 }).then((res) => {
             if (res.status === "OK") {
                 setAddress_BillToAddressIDCodeList(res.responseBody);
             }
         });
-        reset(item);
         setSaving(false);
         setSaved(false);
         setSaveMessage(null);
@@ -218,7 +211,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                 <TextField
                     name='salesOrderID'
                     label={t('SalesOrderID')}
-                	value={item.salesOrderID}
+                    value={item.salesOrderID}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -484,7 +477,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                 <TextField
                     name='totalDue'
                     label={t('TotalDue')}
-                	value={t(i18nFormats.double.format, { val: item.totalDue })}
+                    value={t(i18nFormats.double.format, { val: item.totalDue })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -507,7 +500,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                 <TextField
                     name='rowguid'
                     label={t('rowguid')}
-                	value={item.rowguid}
+                    value={item.rowguid}
                     variant='outlined'
                     margin='normal'
                     fullWidth

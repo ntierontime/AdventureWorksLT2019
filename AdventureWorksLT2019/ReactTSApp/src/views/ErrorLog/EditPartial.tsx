@@ -34,7 +34,7 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
+    const { register, control, setValue, handleSubmit, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
@@ -48,7 +48,6 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
 
     useEffect(() => {
 
-        reset(item);
         setSaving(false);
         setSaved(false);
         setSaveMessage(null);
@@ -185,7 +184,7 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
                 <TextField
                     name='errorLogID'
                     label={t('ErrorLogID')}
-                	value={item.errorLogID}
+                    value={item.errorLogID}
                     variant='outlined'
                     margin='normal'
                     fullWidth

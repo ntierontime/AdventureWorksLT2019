@@ -1,4 +1,5 @@
 import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, Stack, TextField, Typography, useTheme } from '@mui/material';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
@@ -22,6 +23,7 @@ import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 import { getAvatarStyle } from 'src/shared/views/ThemeRelated';
 
 import { getSalesOrderHeaderAvatar, ISalesOrderHeaderDataModel } from 'src/dataModels/ISalesOrderHeaderDataModel';
+import { getRouteParamsOfISalesOrderHeaderIdentifier } from 'src/dataModels/ISalesOrderHeaderQueries';
 
 export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHeaderDataModel>): JSX.Element {
     const navigate = useNavigate();
@@ -36,7 +38,10 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHe
     const renderButtonGroupWhenCard = () => {
         return (
             <>
-                {!!handleItemDialogOpen && <>
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/SalesOrderHeader/Dashboard/" + getRouteParamsOfISalesOrderHeaderIdentifier(item)) }}>
+                    <AccountTreeIcon />
+                </IconButton>
+				{!!handleItemDialogOpen && <>
                     <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, itemIndex) }}>
                         <DeleteIcon />
                     </IconButton>
@@ -71,6 +76,9 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHe
                     checked={isItemSelected}
                     onChange={() => { handleSelectItemClick(item) }}
                 />}
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/SalesOrderHeader/Dashboard/" + getRouteParamsOfISalesOrderHeaderIdentifier(item)) }}>
+                    <AccountTreeIcon />
+                </IconButton>
                 {!!handleItemDialogOpen && <>
                     <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, itemIndex) }}>
                         <DeleteIcon />
@@ -101,6 +109,9 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHe
     const renderButtonGroupWhenInline = () => {
         return (
             <>
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/SalesOrderHeader/Dashboard/" + getRouteParamsOfISalesOrderHeaderIdentifier(item)) }}>
+                    <AccountTreeIcon />
+                </IconButton>
                 {!!handleSelectItemClick && <Checkbox
                     color="primary"
                     checked={isItemSelected}
@@ -167,7 +178,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHe
                 <TextField
                     name='salesOrderID'
                     label={t('SalesOrderID')}
-                	value={item.salesOrderID}
+                    value={item.salesOrderID}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -178,7 +189,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHe
                 <TextField
                     name='revisionNumber'
                     label={t('RevisionNumber')}
-                	value={t(i18nFormats.number.format, { val: item.revisionNumber })}
+                    value={t(i18nFormats.number.format, { val: item.revisionNumber })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -189,7 +200,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHe
                 <DatePicker
                     label={t('OrderDate')}
                     value={t(i18nFormats.dateTime.format, { val: new Date(item.orderDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-                    onChange={() => {}}
+                    onChange={() => { }}
                     renderInput={(params) =>
                         <TextField
                             fullWidth
@@ -203,7 +214,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHe
                 <DatePicker
                     label={t('DueDate')}
                     value={t(i18nFormats.dateTime.format, { val: new Date(item.dueDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-                    onChange={() => {}}
+                    onChange={() => { }}
                     renderInput={(params) =>
                         <TextField
                             fullWidth
@@ -217,7 +228,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHe
                 <DatePicker
                     label={t('ShipDate')}
                     value={t(i18nFormats.dateTime.format, { val: new Date(item.shipDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-                    onChange={() => {}}
+                    onChange={() => { }}
                     renderInput={(params) =>
                         <TextField
                             fullWidth
@@ -231,7 +242,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHe
                 <TextField
                     name='status'
                     label={t('Status')}
-                	value={t(i18nFormats.number.format, { val: item.status })}
+                    value={t(i18nFormats.number.format, { val: item.status })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -325,7 +336,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHe
                 <TextField
                     name='subTotal'
                     label={t('SubTotal')}
-                	value={t(i18nFormats.double.format, { val: item.subTotal })}
+                    value={t(i18nFormats.double.format, { val: item.subTotal })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -336,7 +347,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHe
                 <TextField
                     name='taxAmt'
                     label={t('TaxAmt')}
-                	value={t(i18nFormats.double.format, { val: item.taxAmt })}
+                    value={t(i18nFormats.double.format, { val: item.taxAmt })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -347,7 +358,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHe
                 <TextField
                     name='freight'
                     label={t('Freight')}
-                	value={t(i18nFormats.double.format, { val: item.freight })}
+                    value={t(i18nFormats.double.format, { val: item.freight })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -358,7 +369,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHe
                 <TextField
                     name='totalDue'
                     label={t('TotalDue')}
-                	value={t(i18nFormats.double.format, { val: item.totalDue })}
+                    value={t(i18nFormats.double.format, { val: item.totalDue })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -380,7 +391,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHe
                 <TextField
                     name='rowguid'
                     label={t('rowguid')}
-                	value={item.rowguid}
+                    value={item.rowguid}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -391,7 +402,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderHe
                 <DatePicker
                     label={t('ModifiedDate')}
                     value={t(i18nFormats.dateTime.format, { val: new Date(item.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-                    onChange={() => {}}
+                    onChange={() => { }}
                     renderInput={(params) =>
                         <TextField
                             fullWidth

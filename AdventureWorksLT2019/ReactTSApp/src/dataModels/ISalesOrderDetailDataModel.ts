@@ -3,24 +3,12 @@ import { ItemUIStatus } from "src/shared/dataModels/ItemUIStatus";
 export interface ISalesOrderDetailDataModel {
     itemUIStatus______: ItemUIStatus;
     isDeleted______: boolean;
-    shipToID: number | string;
-    shipTo_Name: string;
-    customerID: number | string;
-    customer_Name: string;
-    billToID: number | string;
-    billTo_Name: string;
     salesOrderHeader_Name: string;
-    salesOrderID: number | string;
+    salesOrderID: number | null;
     salesOrderDetailID: number;
     orderQty: number;
-    productModelID: number | string;
-    productModel_Name: string;
-    productCategory_ParentID: number | string;
-    productCategory_Parent_Name: string;
-    productCategoryID: number | string;
-    productCategory_Name: string;
     product_Name: string;
-    productID: number | string;
+    productID: number | null;
     unitPrice: number;
     unitPriceDiscount: number;
     lineTotal: number;
@@ -32,24 +20,12 @@ export function defaultSalesOrderDetail(): ISalesOrderDetailDataModel {
     return {
         itemUIStatus______: ItemUIStatus.New,
         isDeleted______: false,
-        shipToID: '',
-        shipTo_Name: '',
-        customerID: '',
-        customer_Name: '',
-        billToID: '',
-        billTo_Name: '',
         salesOrderHeader_Name: '',
-        salesOrderID: '',
+        salesOrderID: null,
         salesOrderDetailID: 0,
         orderQty: 0,
-        productModelID: '',
-        productModel_Name: '',
-        productCategory_ParentID: '',
-        productCategory_Parent_Name: '',
-        productCategoryID: '',
-        productCategory_Name: '',
         product_Name: '',
-        productID: '',
+        productID: null,
         unitPrice: 0,
         unitPriceDiscount: 0,
         lineTotal: 0,
@@ -64,22 +40,10 @@ export function getSalesOrderDetailAvatar(item: ISalesOrderDetailDataModel): str
 
 
 export const salesOrderDetailFormValidationWhenCreate = {
-    shipToID: {
-    },
-    customerID: {
-    },
-    billToID: {
-    },
     salesOrderID: {
     },
     orderQty: {
         required: 'OrderQty_is_required',
-    },
-    productModelID: {
-    },
-    productCategory_ParentID: {
-    },
-    productCategoryID: {
     },
     productID: {
     },
@@ -95,22 +59,10 @@ export const salesOrderDetailFormValidationWhenCreate = {
 };
 
 export const salesOrderDetailFormValidationWhenEdit = {
-    shipToID: {
-    },
-    customerID: {
-    },
-    billToID: {
-    },
     salesOrderID: {
     },
     orderQty: {
         required: 'OrderQty_is_required',
-    },
-    productModelID: {
-    },
-    productCategory_ParentID: {
-    },
-    productCategoryID: {
     },
     productID: {
     },

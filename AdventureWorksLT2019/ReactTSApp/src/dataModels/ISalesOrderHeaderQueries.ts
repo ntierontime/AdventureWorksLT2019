@@ -29,13 +29,13 @@ export interface ISalesOrderHeaderAdvancedQuery extends IBaseQuery {
     textSearchType: TextSearchTypes;
 
     // PredicateType:Equals
-	billToAddressID: number | string | null;
+	billToAddressID: number | null;
 
     // PredicateType:Equals
-	shipToAddressID: number | string | null;
+	shipToAddressID: number | null;
 
     // PredicateType:Equals
-	customerID: number | string | null;
+	customerID: number | null;
 
     // PredicateType:Equals
 	onlineOrderFlag: BooleanSearchOptions;
@@ -94,11 +94,11 @@ export function defaultISalesOrderHeaderAdvancedQuery(): ISalesOrderHeaderAdvanc
 		textSearch: '',
         textSearchType: TextSearchTypes.Contains,
 
-        billToAddressID: '', // PredicateType:Equals
+        billToAddressID: null, // PredicateType:Equals
 
-        shipToAddressID: '', // PredicateType:Equals
+        shipToAddressID: null, // PredicateType:Equals
 
-        customerID: '', // PredicateType:Equals
+        customerID: null, // PredicateType:Equals
 
         onlineOrderFlag: BooleanSearchOptions.All, // PredicateType:Equals
 

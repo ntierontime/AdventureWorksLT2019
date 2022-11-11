@@ -34,7 +34,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
+    const { register, control, setValue, handleSubmit, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
@@ -48,7 +48,6 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
 
     useEffect(() => {
 
-        reset(item);
         setSaving(false);
         setSaved(false);
         setSaveMessage(null);
@@ -185,7 +184,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
                 <TextField
                     name='customerID'
                     label={t('CustomerID')}
-                	value={item.customerID}
+                    value={item.customerID}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -347,7 +346,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
                 <TextField
                     name='rowguid'
                     label={t('rowguid')}
-                	value={item.rowguid}
+                    value={item.rowguid}
                     variant='outlined'
                     margin='normal'
                     fullWidth

@@ -1,4 +1,5 @@
 import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, Stack, TextField, Typography, useTheme } from '@mui/material';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
@@ -22,6 +23,7 @@ import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 import { getAvatarStyle } from 'src/shared/views/ThemeRelated';
 
 import { getProductModelProductDescriptionAvatar, IProductModelProductDescriptionDataModel } from 'src/dataModels/IProductModelProductDescriptionDataModel';
+import { getRouteParamsOfIProductModelProductDescriptionIdentifier } from 'src/dataModels/IProductModelProductDescriptionQueries';
 
 export default function DetailsPartial(props: ItemPartialViewProps<IProductModelProductDescriptionDataModel>): JSX.Element {
     const navigate = useNavigate();
@@ -36,7 +38,10 @@ export default function DetailsPartial(props: ItemPartialViewProps<IProductModel
     const renderButtonGroupWhenCard = () => {
         return (
             <>
-                {!!handleItemDialogOpen && <>
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/ProductModelProductDescription/Dashboard/" + getRouteParamsOfIProductModelProductDescriptionIdentifier(item)) }}>
+                    <AccountTreeIcon />
+                </IconButton>
+				{!!handleItemDialogOpen && <>
                     <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, itemIndex) }}>
                         <DeleteIcon />
                     </IconButton>
@@ -71,6 +76,9 @@ export default function DetailsPartial(props: ItemPartialViewProps<IProductModel
                     checked={isItemSelected}
                     onChange={() => { handleSelectItemClick(item) }}
                 />}
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/ProductModelProductDescription/Dashboard/" + getRouteParamsOfIProductModelProductDescriptionIdentifier(item)) }}>
+                    <AccountTreeIcon />
+                </IconButton>
                 {!!handleItemDialogOpen && <>
                     <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, itemIndex) }}>
                         <DeleteIcon />
@@ -101,6 +109,9 @@ export default function DetailsPartial(props: ItemPartialViewProps<IProductModel
     const renderButtonGroupWhenInline = () => {
         return (
             <>
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/ProductModelProductDescription/Dashboard/" + getRouteParamsOfIProductModelProductDescriptionIdentifier(item)) }}>
+                    <AccountTreeIcon />
+                </IconButton>
                 {!!handleSelectItemClick && <Checkbox
                     color="primary"
                     checked={isItemSelected}
@@ -196,7 +207,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IProductModel
                 <TextField
                     name='rowguid'
                     label={t('rowguid')}
-                	value={item.rowguid}
+                    value={item.rowguid}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -207,7 +218,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IProductModel
                 <DatePicker
                     label={t('ModifiedDate')}
                     value={t(i18nFormats.dateTime.format, { val: new Date(item.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-                    onChange={() => {}}
+                    onChange={() => { }}
                     renderInput={(params) =>
                         <TextField
                             fullWidth

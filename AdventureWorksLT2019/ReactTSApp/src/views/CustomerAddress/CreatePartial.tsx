@@ -46,25 +46,27 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerAddre
 
 
 
-    const [iCustomerAdvancedQuery_CustomerID, setICustomerAdvancedQuery_CustomerID] = useState<ICustomerAdvancedQuery>();
     const [customer_CustomerIDCodeList, setCustomer_CustomerIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.customer_Name, value: item.customerID, selected: false }]);
 
-    const [iAddressAdvancedQuery_AddressID, setIAddressAdvancedQuery_AddressID] = useState<IAddressAdvancedQuery>();
     const [address_AddressIDCodeList, setAddress_AddressIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.address_Name, value: item.addressID, selected: false }]);
     useEffect(() => {
 
 
-		setICustomerAdvancedQuery_CustomerID({ ...defaultICustomerAdvancedQuery(), pageSize: 10000 });
-        codeListsApi.getCustomerCodeList({ ...iCustomerAdvancedQuery_CustomerID }).then((res) => {
+        codeListsApi.getCustomerCodeList({ ...defaultICustomerAdvancedQuery(), pageSize: 10000 }).then((res) => {
             if (res.status === "OK") {
                 setCustomer_CustomerIDCodeList(res.responseBody);
+                const customerID = res.responseBody[0].value;
+                setValue('customerID', res.responseBody[0].value);
+				
             }
         });
 
-		setIAddressAdvancedQuery_AddressID({ ...defaultIAddressAdvancedQuery(), pageSize: 10000 });
-        codeListsApi.getAddressCodeList({ ...iAddressAdvancedQuery_AddressID }).then((res) => {
+        codeListsApi.getAddressCodeList({ ...defaultIAddressAdvancedQuery(), pageSize: 10000 }).then((res) => {
             if (res.status === "OK") {
                 setAddress_AddressIDCodeList(res.responseBody);
+                const addressID = res.responseBody[0].value;
+                setValue('addressID', res.responseBody[0].value);
+				
             }
         });
         setCreating(false);
@@ -115,7 +117,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerAddre
                         type='submit'
                         fullWidth
                         variant='contained'
-                        disabled={!isValid || creating || created}
+                        disabled={(!isValid || creating || created) && !isDirty}
                         startIcon={<SaveIcon />}>
                         {t('Create')}
                     </Button>
@@ -137,7 +139,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerAddre
     const renderButtonGroupWhenInline = () => {
         return (
             <>
-                <IconButton type='submit' aria-label="create" disabled={!isValid || creating || created}>
+                <IconButton type='submit' aria-label="create" disabled={(!isValid || creating || created) && !isDirty}>
                     <SaveIcon />
                 </IconButton>
                 <IconButton aria-label="close" onClick={() => { doneAction() }}>
@@ -160,7 +162,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerAddre
                         type='submit'
                         fullWidth
                         variant='contained'
-                        disabled={!isValid || creating || created}
+                        disabled={(!isValid || creating || created) && !isDirty}
                         startIcon={<SaveIcon />}>
                         {t('Create')}
                     </Button>

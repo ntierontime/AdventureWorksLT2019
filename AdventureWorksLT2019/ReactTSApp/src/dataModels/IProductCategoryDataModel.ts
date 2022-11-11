@@ -5,7 +5,7 @@ export interface IProductCategoryDataModel {
     isDeleted______: boolean;
     productCategoryID: number;
     parent_Name: string;
-    parentProductCategoryID: number | string;
+    parentProductCategoryID: number | null;
     name: string;
     rowguid: any;
     modifiedDate: string;
@@ -17,7 +17,7 @@ export function defaultProductCategory(): IProductCategoryDataModel {
         isDeleted______: false,
         productCategoryID: 0,
         parent_Name: '',
-        parentProductCategoryID: '',
+        parentProductCategoryID: null,
         name: '',
         rowguid: null,
         modifiedDate: '',

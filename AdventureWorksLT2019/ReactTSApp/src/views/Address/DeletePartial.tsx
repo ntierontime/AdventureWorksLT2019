@@ -173,7 +173,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IAddressDataMo
                 <TextField
                     name='addressID'
                     label={t('AddressID')}
-                	value={item.addressID}
+                    value={item.addressID}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -250,7 +250,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IAddressDataMo
                 <TextField
                     name='rowguid'
                     label={t('rowguid')}
-                	value={item.rowguid}
+                    value={item.rowguid}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -261,7 +261,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IAddressDataMo
                 <DatePicker
                     label={t('ModifiedDate')}
                     value={t(i18nFormats.dateTime.format, { val: new Date(item.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-                    onChange={() => {}}
+                    onChange={() => { }}
                     renderInput={(params) =>
                         <TextField
                             fullWidth

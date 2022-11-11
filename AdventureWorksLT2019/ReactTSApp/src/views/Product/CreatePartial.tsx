@@ -46,28 +46,30 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
 
 
 
-    const [iProductCategoryAdvancedQuery_ParentID, setIProductCategoryAdvancedQuery_ParentID] = useState<IProductCategoryAdvancedQuery>();
     const [productCategory_ParentIDCodeList, setProductCategory_ParentIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.parent_Name, value: item.parentID, selected: false }]);
 
     const [iProductCategoryAdvancedQuery_ProductCategoryID, setIProductCategoryAdvancedQuery_ProductCategoryID] = useState<IProductCategoryAdvancedQuery>({ ...defaultIProductCategoryAdvancedQuery(), parentProductCategoryID: item.parentID, pageSize: 10000 });
     const [productCategory_ProductCategoryIDCodeList, setProductCategory_ProductCategoryIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productCategory_Name, value: item.productCategoryID, selected: false }]);
 
-    const [iProductModelAdvancedQuery_ProductModelID, setIProductModelAdvancedQuery_ProductModelID] = useState<IProductModelAdvancedQuery>();
     const [productModel_ProductModelIDCodeList, setProductModel_ProductModelIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productModel_Name, value: item.productModelID, selected: false }]);
     useEffect(() => {
 
 
-		setIProductCategoryAdvancedQuery_ParentID({ ...defaultIProductCategoryAdvancedQuery(), pageSize: 10000 });
-        codeListsApi.getProductCategoryCodeList({ ...iProductCategoryAdvancedQuery_ParentID }).then((res) => {
+        codeListsApi.getProductCategoryCodeList({ ...defaultIProductCategoryAdvancedQuery(), pageSize: 10000 }).then((res) => {
             if (res.status === "OK") {
                 setProductCategory_ParentIDCodeList(res.responseBody);
+                const parentID = res.responseBody[0].value;
+                setValue('parentID', res.responseBody[0].value);
+				onParentIDChanged_LoadChildren(parentID);
             }
         });
 
-		setIProductModelAdvancedQuery_ProductModelID({ ...defaultIProductModelAdvancedQuery(), pageSize: 10000 });
-        codeListsApi.getProductModelCodeList({ ...iProductModelAdvancedQuery_ProductModelID }).then((res) => {
+        codeListsApi.getProductModelCodeList({ ...defaultIProductModelAdvancedQuery(), pageSize: 10000 }).then((res) => {
             if (res.status === "OK") {
                 setProductModel_ProductModelIDCodeList(res.responseBody);
+                const productModelID = res.responseBody[0].value;
+                setValue('productModelID', res.responseBody[0].value);
+				
             }
         });
         setCreating(false);
@@ -84,36 +86,41 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
         const nameValuePair = event.target as unknown as INameValuePair;
 
         const parentID = nameValuePair.value as number;
+        onParentIDChanged_LoadChildren(parentID);
+    }
 
-        setIProductCategoryAdvancedQuery_ProductCategoryID({ ...iProductCategoryAdvancedQuery_ProductCategoryID, parentProductCategoryID: parentID });
+    const onParentIDChanged_LoadChildren = (parentID: number) => {
+
+        const iProductCategoryAdvancedQuery_ProductCategoryID_Here = { ...iProductCategoryAdvancedQuery_ProductCategoryID, parentProductCategoryID: parentID };
+        setIProductCategoryAdvancedQuery_ProductCategoryID(iProductCategoryAdvancedQuery_ProductCategoryID_Here);
         getProductCategory_ProductCategoryIDCodeList(iProductCategoryAdvancedQuery_ProductCategoryID, true, false);
     }
 
 
     const getProductCategory_ProductCategoryIDCodeList = (query: IProductCategoryAdvancedQuery, toSetSelectedValue: boolean, setCodeListToEmpty: boolean) => {
         if (!setCodeListToEmpty) {
-			codeListsApi.getProductCategoryCodeList({ ...query, pageSize: 10000 }).then((res) => {
-				if (res.status === "OK") {
-					if (toSetSelectedValue) {
-						if (res.responseBody.findIndex(t => t.value === item.productCategoryID) === -1) {
-							if (res.responseBody.length > 0) {
-								setValue('productCategoryID', res.responseBody[0].value);
-							}
-							else {
-								setValue('productCategoryID', -1);
-							}
-						}
-						else {
-							setValue('productCategoryID', item.productCategoryID);
-						}
-					}
-					setProductCategory_ProductCategoryIDCodeList(res.responseBody);
-				}
-			});
-		}
+            codeListsApi.getProductCategoryCodeList({ ...query, pageSize: 10000 }).then((res) => {
+                if (res.status === "OK") {
+                    if (toSetSelectedValue) {
+                        if (res.responseBody.findIndex(t => t.value === item.productCategoryID) === -1) {
+                            if (res.responseBody.length > 0) {
+                                setValue('productCategoryID', res.responseBody[0].value);
+                            }
+                            else {
+                                setValue('productCategoryID', -1);
+                            }
+                        }
+                        else {
+                            setValue('productCategoryID', item.productCategoryID);
+                        }
+                    }
+                    setProductCategory_ProductCategoryIDCodeList(res.responseBody);
+                }
+            });
+        }
         else {
             setProductCategory_ProductCategoryIDCodeList([]);
-            setValue('productCategoryID', '');
+            setValue('productCategoryID', -1);
         }
     }
 
@@ -156,7 +163,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
                         type='submit'
                         fullWidth
                         variant='contained'
-                        disabled={!isValid || creating || created}
+                        disabled={(!isValid || creating || created) && !isDirty}
                         startIcon={<SaveIcon />}>
                         {t('Create')}
                     </Button>
@@ -178,7 +185,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
     const renderButtonGroupWhenInline = () => {
         return (
             <>
-                <IconButton type='submit' aria-label="create" disabled={!isValid || creating || created}>
+                <IconButton type='submit' aria-label="create" disabled={(!isValid || creating || created) && !isDirty}>
                     <SaveIcon />
                 </IconButton>
                 <IconButton aria-label="close" onClick={() => { doneAction() }}>
@@ -201,7 +208,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
                         type='submit'
                         fullWidth
                         variant='contained'
-                        disabled={!isValid || creating || created}
+                        disabled={(!isValid || creating || created) && !isDirty}
                         startIcon={<SaveIcon />}>
                         {t('Create')}
                     </Button>

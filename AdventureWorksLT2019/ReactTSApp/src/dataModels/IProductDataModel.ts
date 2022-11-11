@@ -11,12 +11,12 @@ export interface IProductDataModel {
     listPrice: number;
     size: string;
     weight: number;
-    parentID: number | string;
+    parentID: number | null;
     parent_Name: string;
     productCategory_Name: string;
-    productCategoryID: number | string;
+    productCategoryID: number | null;
     productModel_Name: string;
-    productModelID: number | string;
+    productModelID: number | null;
     sellStartDate: string;
     sellEndDate: string;
     discontinuedDate: string;
@@ -38,12 +38,12 @@ export function defaultProduct(): IProductDataModel {
         listPrice: 0,
         size: '',
         weight: 0,
-        parentID: '',
+        parentID: null,
         parent_Name: '',
         productCategory_Name: '',
-        productCategoryID: '',
+        productCategoryID: null,
         productModel_Name: '',
-        productModelID: '',
+        productModelID: null,
         sellStartDate: '',
         sellEndDate: '',
         discontinuedDate: '',

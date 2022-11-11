@@ -174,7 +174,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderHea
                 <TextField
                     name='salesOrderID'
                     label={t('SalesOrderID')}
-                	value={item.salesOrderID}
+                    value={item.salesOrderID}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -185,7 +185,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderHea
                 <TextField
                     name='revisionNumber'
                     label={t('RevisionNumber')}
-                	value={t(i18nFormats.number.format, { val: item.revisionNumber })}
+                    value={t(i18nFormats.number.format, { val: item.revisionNumber })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -196,7 +196,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderHea
                 <DatePicker
                     label={t('OrderDate')}
                     value={t(i18nFormats.dateTime.format, { val: new Date(item.orderDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-                    onChange={() => {}}
+                    onChange={() => { }}
                     renderInput={(params) =>
                         <TextField
                             fullWidth
@@ -210,7 +210,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderHea
                 <DatePicker
                     label={t('DueDate')}
                     value={t(i18nFormats.dateTime.format, { val: new Date(item.dueDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-                    onChange={() => {}}
+                    onChange={() => { }}
                     renderInput={(params) =>
                         <TextField
                             fullWidth
@@ -224,7 +224,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderHea
                 <DatePicker
                     label={t('ShipDate')}
                     value={t(i18nFormats.dateTime.format, { val: new Date(item.shipDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-                    onChange={() => {}}
+                    onChange={() => { }}
                     renderInput={(params) =>
                         <TextField
                             fullWidth
@@ -238,7 +238,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderHea
                 <TextField
                     name='status'
                     label={t('Status')}
-                	value={t(i18nFormats.number.format, { val: item.status })}
+                    value={t(i18nFormats.number.format, { val: item.status })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -332,7 +332,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderHea
                 <TextField
                     name='subTotal'
                     label={t('SubTotal')}
-                	value={t(i18nFormats.double.format, { val: item.subTotal })}
+                    value={t(i18nFormats.double.format, { val: item.subTotal })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -343,7 +343,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderHea
                 <TextField
                     name='taxAmt'
                     label={t('TaxAmt')}
-                	value={t(i18nFormats.double.format, { val: item.taxAmt })}
+                    value={t(i18nFormats.double.format, { val: item.taxAmt })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -354,7 +354,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderHea
                 <TextField
                     name='freight'
                     label={t('Freight')}
-                	value={t(i18nFormats.double.format, { val: item.freight })}
+                    value={t(i18nFormats.double.format, { val: item.freight })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -365,7 +365,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderHea
                 <TextField
                     name='totalDue'
                     label={t('TotalDue')}
-                	value={t(i18nFormats.double.format, { val: item.totalDue })}
+                    value={t(i18nFormats.double.format, { val: item.totalDue })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -387,7 +387,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderHea
                 <TextField
                     name='rowguid'
                     label={t('rowguid')}
-                	value={item.rowguid}
+                    value={item.rowguid}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -398,7 +398,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderHea
                 <DatePicker
                     label={t('ModifiedDate')}
                     value={t(i18nFormats.dateTime.format, { val: new Date(item.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-                    onChange={() => {}}
+                    onChange={() => { }}
                     renderInput={(params) =>
                         <TextField
                             fullWidth

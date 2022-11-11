@@ -1,4 +1,5 @@
 import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, TextField, useTheme } from '@mui/material';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
@@ -21,6 +22,7 @@ import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 import { getAvatarStyle } from 'src/shared/views/ThemeRelated';
 
 import { getErrorLogAvatar, IErrorLogDataModel } from 'src/dataModels/IErrorLogDataModel';
+import { getRouteParamsOfIErrorLogIdentifier } from 'src/dataModels/IErrorLogQueries';
 
 export default function DetailsPartial(props: ItemPartialViewProps<IErrorLogDataModel>): JSX.Element {
     const navigate = useNavigate();
@@ -35,7 +37,10 @@ export default function DetailsPartial(props: ItemPartialViewProps<IErrorLogData
     const renderButtonGroupWhenCard = () => {
         return (
             <>
-                {!!handleItemDialogOpen && <>
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/ErrorLog/Dashboard/" + getRouteParamsOfIErrorLogIdentifier(item)) }}>
+                    <AccountTreeIcon />
+                </IconButton>
+				{!!handleItemDialogOpen && <>
                     <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, itemIndex) }}>
                         <DeleteIcon />
                     </IconButton>
@@ -70,6 +75,9 @@ export default function DetailsPartial(props: ItemPartialViewProps<IErrorLogData
                     checked={isItemSelected}
                     onChange={() => { handleSelectItemClick(item) }}
                 />}
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/ErrorLog/Dashboard/" + getRouteParamsOfIErrorLogIdentifier(item)) }}>
+                    <AccountTreeIcon />
+                </IconButton>
                 {!!handleItemDialogOpen && <>
                     <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, itemIndex) }}>
                         <DeleteIcon />
@@ -100,6 +108,9 @@ export default function DetailsPartial(props: ItemPartialViewProps<IErrorLogData
     const renderButtonGroupWhenInline = () => {
         return (
             <>
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/ErrorLog/Dashboard/" + getRouteParamsOfIErrorLogIdentifier(item)) }}>
+                    <AccountTreeIcon />
+                </IconButton>
                 {!!handleSelectItemClick && <Checkbox
                     color="primary"
                     checked={isItemSelected}
@@ -166,7 +177,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IErrorLogData
                 <TextField
                     name='errorLogID'
                     label={t('ErrorLogID')}
-                	value={item.errorLogID}
+                    value={item.errorLogID}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -177,7 +188,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IErrorLogData
                 <DatePicker
                     label={t('ErrorTime')}
                     value={t(i18nFormats.dateTime.format, { val: new Date(item.errorTime), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-                    onChange={() => {}}
+                    onChange={() => { }}
                     renderInput={(params) =>
                         <TextField
                             fullWidth
@@ -202,7 +213,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IErrorLogData
                 <TextField
                     name='errorNumber'
                     label={t('ErrorNumber')}
-                	value={t(i18nFormats.number.format, { val: item.errorNumber })}
+                    value={t(i18nFormats.number.format, { val: item.errorNumber })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -213,7 +224,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IErrorLogData
                 <TextField
                     name='errorSeverity'
                     label={t('ErrorSeverity')}
-                	value={t(i18nFormats.number.format, { val: item.errorSeverity })}
+                    value={t(i18nFormats.number.format, { val: item.errorSeverity })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -224,7 +235,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IErrorLogData
                 <TextField
                     name='errorState'
                     label={t('ErrorState')}
-                	value={t(i18nFormats.number.format, { val: item.errorState })}
+                    value={t(i18nFormats.number.format, { val: item.errorState })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -246,7 +257,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IErrorLogData
                 <TextField
                     name='errorLine'
                     label={t('ErrorLine')}
-                	value={t(i18nFormats.number.format, { val: item.errorLine })}
+                    value={t(i18nFormats.number.format, { val: item.errorLine })}
                     variant='outlined'
                     margin='normal'
                     fullWidth

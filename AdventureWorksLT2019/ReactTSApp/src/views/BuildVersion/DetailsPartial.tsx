@@ -1,4 +1,5 @@
 import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, TextField, useTheme } from '@mui/material';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
@@ -21,6 +22,7 @@ import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 import { getAvatarStyle } from 'src/shared/views/ThemeRelated';
 
 import { getBuildVersionAvatar, IBuildVersionDataModel } from 'src/dataModels/IBuildVersionDataModel';
+import { getRouteParamsOfIBuildVersionIdentifier } from 'src/dataModels/IBuildVersionQueries';
 
 export default function DetailsPartial(props: ItemPartialViewProps<IBuildVersionDataModel>): JSX.Element {
     const navigate = useNavigate();
@@ -35,7 +37,10 @@ export default function DetailsPartial(props: ItemPartialViewProps<IBuildVersion
     const renderButtonGroupWhenCard = () => {
         return (
             <>
-                {!!handleItemDialogOpen && <>
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/BuildVersion/Dashboard/" + getRouteParamsOfIBuildVersionIdentifier(item)) }}>
+                    <AccountTreeIcon />
+                </IconButton>
+				{!!handleItemDialogOpen && <>
                     <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, itemIndex) }}>
                         <DeleteIcon />
                     </IconButton>
@@ -70,6 +75,9 @@ export default function DetailsPartial(props: ItemPartialViewProps<IBuildVersion
                     checked={isItemSelected}
                     onChange={() => { handleSelectItemClick(item) }}
                 />}
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/BuildVersion/Dashboard/" + getRouteParamsOfIBuildVersionIdentifier(item)) }}>
+                    <AccountTreeIcon />
+                </IconButton>
                 {!!handleItemDialogOpen && <>
                     <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, itemIndex) }}>
                         <DeleteIcon />
@@ -100,6 +108,9 @@ export default function DetailsPartial(props: ItemPartialViewProps<IBuildVersion
     const renderButtonGroupWhenInline = () => {
         return (
             <>
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/BuildVersion/Dashboard/" + getRouteParamsOfIBuildVersionIdentifier(item)) }}>
+                    <AccountTreeIcon />
+                </IconButton>
                 {!!handleSelectItemClick && <Checkbox
                     color="primary"
                     checked={isItemSelected}
@@ -166,7 +177,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IBuildVersion
                 <TextField
                     name='systemInformationID'
                     label={t('SystemInformationID')}
-                	value={item.systemInformationID}
+                    value={item.systemInformationID}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -188,7 +199,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IBuildVersion
                 <DatePicker
                     label={t('VersionDate')}
                     value={item.versionDate}
-                    onChange={() => {}}
+                    onChange={() => { }}
                     renderInput={(params) =>
                         <TextField
                             fullWidth
@@ -202,7 +213,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IBuildVersion
                 <DatePicker
                     label={t('ModifiedDate')}
                     value={item.modifiedDate}
-                    onChange={() => {}}
+                    onChange={() => { }}
                     renderInput={(params) =>
                         <TextField
                             fullWidth

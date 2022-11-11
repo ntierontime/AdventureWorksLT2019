@@ -1,12 +1,13 @@
+import { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 
+import { setIsAuthenticated } from 'src/slices/authenticationSlice';
 import AppBar from 'src/shared/views/AppBar';
 import AppDrawer from 'src/views/AppDrawer';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'src/store/CombinedReducers';
 import MasterRoutes from './MasterRoutes';
-import { useState } from 'react';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -30,6 +31,15 @@ export default function MasterLayout() {
     const handleDrawerClose = () => {
         setDrawerOpen(false);
     };
+
+    useEffect(() => {
+        const loggedInUser = localStorage.getItem("user");
+        if (loggedInUser) {
+            JSON.parse(loggedInUser);
+            dispatch(setIsAuthenticated());
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <Box sx={{ display: 'flex' }}>

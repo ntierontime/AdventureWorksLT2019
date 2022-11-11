@@ -9,7 +9,7 @@ import { ISalesOrderDetailDataModel } from 'src/dataModels/ISalesOrderDetailData
 export interface ISalesOrderDetailIdentifier {
 
     // PredicateType:Equals
-	salesOrderID: number | string | null;
+	salesOrderID: number | null;
 
     // PredicateType:Equals
 	salesOrderDetailID: number | null;
@@ -31,28 +31,28 @@ export interface ISalesOrderDetailAdvancedQuery extends IBaseQuery {
     textSearchType: TextSearchTypes;
 
     // PredicateType:Equals
-	productID: number | string | null;
+	productID: number | null;
 
     // PredicateType:Equals
-	productCategoryID: number | string | null;
+	productCategoryID: number | null;
 
     // PredicateType:Equals
-	productCategory_ParentID: number | string | null;
+	productCategory_ParentID: number | null;
 
     // PredicateType:Equals
-	productModelID: number | string | null;
+	productModelID: number | null;
 
     // PredicateType:Equals
-	salesOrderID: number | string | null;
+	salesOrderID: number | null;
 
     // PredicateType:Equals
-	billToID: number | string | null;
+	billToID: number | null;
 
     // PredicateType:Equals
-	shipToID: number | string | null;
+	shipToID: number | null;
 
     // PredicateType:Equals
-	customerID: number | string | null;
+	customerID: number | null;
 
     // PredicateType:Range
     modifiedDateRange: PreDefinedDateTimeRanges | null;
@@ -69,21 +69,21 @@ export function defaultISalesOrderDetailAdvancedQuery(): ISalesOrderDetailAdvanc
 		textSearch: '',
         textSearchType: TextSearchTypes.Contains,
 
-        productID: '', // PredicateType:Equals
+        productID: null, // PredicateType:Equals
 
-        productCategoryID: '', // PredicateType:Equals
+        productCategoryID: null, // PredicateType:Equals
 
-        productCategory_ParentID: '', // PredicateType:Equals
+        productCategory_ParentID: null, // PredicateType:Equals
 
-        productModelID: '', // PredicateType:Equals
+        productModelID: null, // PredicateType:Equals
 
-        salesOrderID: '', // PredicateType:Equals
+        salesOrderID: null, // PredicateType:Equals
 
-        billToID: '', // PredicateType:Equals
+        billToID: null, // PredicateType:Equals
 
-        shipToID: '', // PredicateType:Equals
+        shipToID: null, // PredicateType:Equals
 
-        customerID: '', // PredicateType:Equals
+        customerID: null, // PredicateType:Equals
 
         // PredicateType:Range
         modifiedDateRange: PreDefinedDateTimeRanges.AllTime,

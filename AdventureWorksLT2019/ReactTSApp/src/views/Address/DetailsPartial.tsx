@@ -1,4 +1,5 @@
 import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, TextField, useTheme } from '@mui/material';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
@@ -21,6 +22,7 @@ import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 import { getAvatarStyle } from 'src/shared/views/ThemeRelated';
 
 import { getAddressAvatar, IAddressDataModel } from 'src/dataModels/IAddressDataModel';
+import { getRouteParamsOfIAddressIdentifier } from 'src/dataModels/IAddressQueries';
 
 export default function DetailsPartial(props: ItemPartialViewProps<IAddressDataModel>): JSX.Element {
     const navigate = useNavigate();
@@ -35,7 +37,10 @@ export default function DetailsPartial(props: ItemPartialViewProps<IAddressDataM
     const renderButtonGroupWhenCard = () => {
         return (
             <>
-                {!!handleItemDialogOpen && <>
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/Address/Dashboard/" + getRouteParamsOfIAddressIdentifier(item)) }}>
+                    <AccountTreeIcon />
+                </IconButton>
+				{!!handleItemDialogOpen && <>
                     <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, itemIndex) }}>
                         <DeleteIcon />
                     </IconButton>
@@ -70,6 +75,9 @@ export default function DetailsPartial(props: ItemPartialViewProps<IAddressDataM
                     checked={isItemSelected}
                     onChange={() => { handleSelectItemClick(item) }}
                 />}
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/Address/Dashboard/" + getRouteParamsOfIAddressIdentifier(item)) }}>
+                    <AccountTreeIcon />
+                </IconButton>
                 {!!handleItemDialogOpen && <>
                     <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, itemIndex) }}>
                         <DeleteIcon />
@@ -100,6 +108,9 @@ export default function DetailsPartial(props: ItemPartialViewProps<IAddressDataM
     const renderButtonGroupWhenInline = () => {
         return (
             <>
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/Address/Dashboard/" + getRouteParamsOfIAddressIdentifier(item)) }}>
+                    <AccountTreeIcon />
+                </IconButton>
                 {!!handleSelectItemClick && <Checkbox
                     color="primary"
                     checked={isItemSelected}
@@ -166,7 +177,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IAddressDataM
                 <TextField
                     name='addressID'
                     label={t('AddressID')}
-                	value={item.addressID}
+                    value={item.addressID}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -243,7 +254,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IAddressDataM
                 <TextField
                     name='rowguid'
                     label={t('rowguid')}
-                	value={item.rowguid}
+                    value={item.rowguid}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -254,7 +265,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IAddressDataM
                 <DatePicker
                     label={t('ModifiedDate')}
                     value={t(i18nFormats.dateTime.format, { val: new Date(item.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-                    onChange={() => {}}
+                    onChange={() => { }}
                     renderInput={(params) =>
                         <TextField
                             fullWidth

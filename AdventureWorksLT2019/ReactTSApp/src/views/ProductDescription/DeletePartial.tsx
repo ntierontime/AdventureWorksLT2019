@@ -173,7 +173,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IProductDescri
                 <TextField
                     name='productDescriptionID'
                     label={t('ProductDescriptionID')}
-                	value={item.productDescriptionID}
+                    value={item.productDescriptionID}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -195,7 +195,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IProductDescri
                 <TextField
                     name='rowguid'
                     label={t('rowguid')}
-                	value={item.rowguid}
+                    value={item.rowguid}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -206,7 +206,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IProductDescri
                 <DatePicker
                     label={t('ModifiedDate')}
                     value={t(i18nFormats.dateTime.format, { val: new Date(item.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-                    onChange={() => {}}
+                    onChange={() => { }}
                     renderInput={(params) =>
                         <TextField
                             fullWidth

@@ -1,4 +1,5 @@
 import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, Stack, TextField, Typography, useTheme } from '@mui/material';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
@@ -22,6 +23,7 @@ import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 import { getAvatarStyle } from 'src/shared/views/ThemeRelated';
 
 import { getSalesOrderDetailAvatar, ISalesOrderDetailDataModel } from 'src/dataModels/ISalesOrderDetailDataModel';
+import { getRouteParamsOfISalesOrderDetailIdentifier } from 'src/dataModels/ISalesOrderDetailQueries';
 
 export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDetailDataModel>): JSX.Element {
     const navigate = useNavigate();
@@ -36,7 +38,10 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
     const renderButtonGroupWhenCard = () => {
         return (
             <>
-                {!!handleItemDialogOpen && <>
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/SalesOrderDetail/Dashboard/" + getRouteParamsOfISalesOrderDetailIdentifier(item)) }}>
+                    <AccountTreeIcon />
+                </IconButton>
+				{!!handleItemDialogOpen && <>
                     <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, itemIndex) }}>
                         <DeleteIcon />
                     </IconButton>
@@ -71,6 +76,9 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
                     checked={isItemSelected}
                     onChange={() => { handleSelectItemClick(item) }}
                 />}
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/SalesOrderDetail/Dashboard/" + getRouteParamsOfISalesOrderDetailIdentifier(item)) }}>
+                    <AccountTreeIcon />
+                </IconButton>
                 {!!handleItemDialogOpen && <>
                     <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, itemIndex) }}>
                         <DeleteIcon />
@@ -101,6 +109,9 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
     const renderButtonGroupWhenInline = () => {
         return (
             <>
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/SalesOrderDetail/Dashboard/" + getRouteParamsOfISalesOrderDetailIdentifier(item)) }}>
+                    <AccountTreeIcon />
+                </IconButton>
                 {!!handleSelectItemClick && <Checkbox
                     color="primary"
                     checked={isItemSelected}
@@ -170,40 +181,13 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
                     alignItems="center"
                     spacing={2}
                 >
-                    <Typography>{t("ShipToID")}</Typography>
-                    <Link to={"/address/Details/" + item.shipToID}>{item.shipTo_Name}</Link>
-                </Stack>
-                <Stack sx={{ p: 2 }}
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={2}
-                >
-                    <Typography>{t("CustomerID")}</Typography>
-                    <Link to={"/customer/Details/" + item.customerID}>{item.customer_Name}</Link>
-                </Stack>
-                <Stack sx={{ p: 2 }}
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={2}
-                >
-                    <Typography>{t("BillToID")}</Typography>
-                    <Link to={"/address/Details/" + item.billToID}>{item.billTo_Name}</Link>
-                </Stack>
-                <Stack sx={{ p: 2 }}
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={2}
-                >
                     <Typography>{t("SalesOrderID")}</Typography>
                     <Link to={"/salesOrderHeader/Details/" + item.salesOrderID}>{item.salesOrderHeader_Name}</Link>
                 </Stack>
                 <TextField
                     name='salesOrderDetailID'
                     label={t('SalesOrderDetailID')}
-                	value={item.salesOrderDetailID}
+                    value={item.salesOrderDetailID}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -214,7 +198,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
                 <TextField
                     name='orderQty'
                     label={t('OrderQty')}
-                	value={t(i18nFormats.number.format, { val: item.orderQty })}
+                    value={t(i18nFormats.number.format, { val: item.orderQty })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -222,33 +206,6 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
                         readOnly: true
                     }}
                 />
-                <Stack sx={{ p: 2 }}
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={2}
-                >
-                    <Typography>{t("ProductModelID")}</Typography>
-                    <Link to={"/productModel/Details/" + item.productModelID}>{item.productModel_Name}</Link>
-                </Stack>
-                <Stack sx={{ p: 2 }}
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={2}
-                >
-                    <Typography>{t("ProductCategory_ParentID")}</Typography>
-                    <Link to={"/productCategory/Details/" + item.productCategory_ParentID}>{item.productCategory_Parent_Name}</Link>
-                </Stack>
-                <Stack sx={{ p: 2 }}
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={2}
-                >
-                    <Typography>{t("ProductCategoryID")}</Typography>
-                    <Link to={"/productCategory/Details/" + item.productCategoryID}>{item.productCategory_Name}</Link>
-                </Stack>
                 <Stack sx={{ p: 2 }}
                     direction="row"
                     justifyContent="space-between"
@@ -261,7 +218,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
                 <TextField
                     name='unitPrice'
                     label={t('UnitPrice')}
-                	value={t(i18nFormats.double.format, { val: item.unitPrice })}
+                    value={t(i18nFormats.double.format, { val: item.unitPrice })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -272,7 +229,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
                 <TextField
                     name='unitPriceDiscount'
                     label={t('UnitPriceDiscount')}
-                	value={t(i18nFormats.double.format, { val: item.unitPriceDiscount })}
+                    value={t(i18nFormats.double.format, { val: item.unitPriceDiscount })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -283,7 +240,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
                 <TextField
                     name='lineTotal'
                     label={t('LineTotal')}
-                	value={t(i18nFormats.double.format, { val: item.lineTotal })}
+                    value={t(i18nFormats.double.format, { val: item.lineTotal })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -294,7 +251,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
                 <TextField
                     name='rowguid'
                     label={t('rowguid')}
-                	value={item.rowguid}
+                    value={item.rowguid}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -305,7 +262,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ISalesOrderDe
                 <DatePicker
                     label={t('ModifiedDate')}
                     value={t(i18nFormats.dateTime.format, { val: new Date(item.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-                    onChange={() => {}}
+                    onChange={() => { }}
                     renderInput={(params) =>
                         <TextField
                             fullWidth

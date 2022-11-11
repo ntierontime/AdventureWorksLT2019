@@ -45,15 +45,16 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductCatego
 
 
 
-    const [iProductCategoryAdvancedQuery_ParentProductCategoryID, setIProductCategoryAdvancedQuery_ParentProductCategoryID] = useState<IProductCategoryAdvancedQuery>();
     const [productCategory_ParentProductCategoryIDCodeList, setProductCategory_ParentProductCategoryIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.parent_Name, value: item.parentProductCategoryID, selected: false }]);
     useEffect(() => {
 
 
-		setIProductCategoryAdvancedQuery_ParentProductCategoryID({ ...defaultIProductCategoryAdvancedQuery(), pageSize: 10000 });
-        codeListsApi.getProductCategoryCodeList({ ...iProductCategoryAdvancedQuery_ParentProductCategoryID }).then((res) => {
+        codeListsApi.getProductCategoryCodeList({ ...defaultIProductCategoryAdvancedQuery(), pageSize: 10000 }).then((res) => {
             if (res.status === "OK") {
                 setProductCategory_ParentProductCategoryIDCodeList(res.responseBody);
+                const parentProductCategoryID = res.responseBody[0].value;
+                setValue('parentProductCategoryID', res.responseBody[0].value);
+				
             }
         });
         setCreating(false);
@@ -104,7 +105,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductCatego
                         type='submit'
                         fullWidth
                         variant='contained'
-                        disabled={!isValid || creating || created}
+                        disabled={(!isValid || creating || created) && !isDirty}
                         startIcon={<SaveIcon />}>
                         {t('Create')}
                     </Button>
@@ -126,7 +127,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductCatego
     const renderButtonGroupWhenInline = () => {
         return (
             <>
-                <IconButton type='submit' aria-label="create" disabled={!isValid || creating || created}>
+                <IconButton type='submit' aria-label="create" disabled={(!isValid || creating || created) && !isDirty}>
                     <SaveIcon />
                 </IconButton>
                 <IconButton aria-label="close" onClick={() => { doneAction() }}>
@@ -149,7 +150,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductCatego
                         type='submit'
                         fullWidth
                         variant='contained'
-                        disabled={!isValid || creating || created}
+                        disabled={(!isValid || creating || created) && !isDirty}
                         startIcon={<SaveIcon />}>
                         {t('Create')}
                     </Button>

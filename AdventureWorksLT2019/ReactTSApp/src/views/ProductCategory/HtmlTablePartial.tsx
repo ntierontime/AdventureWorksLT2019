@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Checkbox, FormControlLabel, IconButton, Pagination, Popover, Stack, Switch, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 import { Link } from 'react-router-dom';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -192,6 +193,9 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductCat
                 }}
                 disableRestoreFocus
             >
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/productCategory/dashboard/" + getRouteParamsOfIProductCategoryIdentifier(currentItemOnDialog)) }}>
+                    <AccountTreeIcon />
+                </IconButton>
                 <IconButton aria-label="delete" color="primary" onClick={() => { navigate("/productCategory/delete/" + getRouteParamsOfIProductCategoryIdentifier(currentItemOnDialog)) }}>
                     <DeleteIcon />
                 </IconButton>

@@ -37,7 +37,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerAddress
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
-    const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
+    const { register, control, setValue, handleSubmit, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
@@ -50,28 +50,23 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerAddress
 
 
 
-    const [iCustomerAdvancedQuery_CustomerID, setICustomerAdvancedQuery_CustomerID] = useState<ICustomerAdvancedQuery>();
     const [customer_CustomerIDCodeList, setCustomer_CustomerIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.customer_Name, value: item.customerID, selected: false }]);
 
-    const [iAddressAdvancedQuery_AddressID, setIAddressAdvancedQuery_AddressID] = useState<IAddressAdvancedQuery>();
     const [address_AddressIDCodeList, setAddress_AddressIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.address_Name, value: item.addressID, selected: false }]);
     useEffect(() => {
 
 
-		setICustomerAdvancedQuery_CustomerID({ ...defaultICustomerAdvancedQuery(), pageSize: 10000 });
-        codeListsApi.getCustomerCodeList(iCustomerAdvancedQuery_CustomerID).then((res) => {
+        codeListsApi.getCustomerCodeList({ ...defaultICustomerAdvancedQuery(), pageSize: 10000 }).then((res) => {
             if (res.status === "OK") {
                 setCustomer_CustomerIDCodeList(res.responseBody);
             }
         });
 
-		setIAddressAdvancedQuery_AddressID({ ...defaultIAddressAdvancedQuery(), pageSize: 10000 });
-        codeListsApi.getAddressCodeList(iAddressAdvancedQuery_AddressID).then((res) => {
+        codeListsApi.getAddressCodeList({ ...defaultIAddressAdvancedQuery(), pageSize: 10000 }).then((res) => {
             if (res.status === "OK") {
                 setAddress_AddressIDCodeList(res.responseBody);
             }
         });
-        reset(item);
         setSaving(false);
         setSaved(false);
         setSaveMessage(null);
@@ -250,7 +245,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerAddress
                 <TextField
                     name='rowguid'
                     label={t('rowguid')}
-                	value={item.rowguid}
+                    value={item.rowguid}
                     variant='outlined'
                     margin='normal'
                     fullWidth

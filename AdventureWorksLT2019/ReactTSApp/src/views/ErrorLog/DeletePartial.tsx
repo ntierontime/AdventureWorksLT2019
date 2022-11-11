@@ -173,7 +173,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IErrorLogDataM
                 <TextField
                     name='errorLogID'
                     label={t('ErrorLogID')}
-                	value={item.errorLogID}
+                    value={item.errorLogID}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -184,7 +184,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IErrorLogDataM
                 <DatePicker
                     label={t('ErrorTime')}
                     value={t(i18nFormats.dateTime.format, { val: new Date(item.errorTime), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-                    onChange={() => {}}
+                    onChange={() => { }}
                     renderInput={(params) =>
                         <TextField
                             fullWidth
@@ -209,7 +209,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IErrorLogDataM
                 <TextField
                     name='errorNumber'
                     label={t('ErrorNumber')}
-                	value={t(i18nFormats.number.format, { val: item.errorNumber })}
+                    value={t(i18nFormats.number.format, { val: item.errorNumber })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -220,7 +220,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IErrorLogDataM
                 <TextField
                     name='errorSeverity'
                     label={t('ErrorSeverity')}
-                	value={t(i18nFormats.number.format, { val: item.errorSeverity })}
+                    value={t(i18nFormats.number.format, { val: item.errorSeverity })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -231,7 +231,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IErrorLogDataM
                 <TextField
                     name='errorState'
                     label={t('ErrorState')}
-                	value={t(i18nFormats.number.format, { val: item.errorState })}
+                    value={t(i18nFormats.number.format, { val: item.errorState })}
                     variant='outlined'
                     margin='normal'
                     fullWidth
@@ -253,7 +253,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IErrorLogDataM
                 <TextField
                     name='errorLine'
                     label={t('ErrorLine')}
-                	value={t(i18nFormats.number.format, { val: item.errorLine })}
+                    value={t(i18nFormats.number.format, { val: item.errorLine })}
                     variant='outlined'
                     margin='normal'
                     fullWidth

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Checkbox, FormControlLabel, IconButton, Pagination, Popover, Stack, Switch, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 import { Link } from 'react-router-dom';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -123,42 +124,6 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ISalesOrder
             disablePadding: true,
             label: t('ModifiedDate'),
         },
-        {
-            id: 'productCategoryID',
-            numeric: true,
-            disablePadding: true,
-            label: t('ProductCategoryID'),
-        },
-        {
-            id: 'productCategory_ParentID',
-            numeric: true,
-            disablePadding: true,
-            label: t('ProductCategory_ParentID'),
-        },
-        {
-            id: 'productModelID',
-            numeric: true,
-            disablePadding: true,
-            label: t('ProductModelID'),
-        },
-        {
-            id: 'billToID',
-            numeric: true,
-            disablePadding: true,
-            label: t('BillToID'),
-        },
-        {
-            id: 'customerID',
-            numeric: true,
-            disablePadding: true,
-            label: t('CustomerID'),
-        },
-        {
-            id: 'shipToID',
-            numeric: true,
-            disablePadding: true,
-            label: t('ShipToID'),
-        },
     ];
 
     return (
@@ -222,12 +187,6 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ISalesOrder
                                         <TableCell align='right'>{t(i18nFormats.double.format, { val: row.lineTotal })}</TableCell>
                                         <TableCell align='right'>{row.rowguid}</TableCell>
                                         <TableCell align='right'>{t(i18nFormats.dateTime.format, { val: new Date(row.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}</TableCell>
-                                        <TableCell align='right'><Link to={"/productCategory/Details/" + row.productCategoryID}>{row.productCategory_Name}</Link></TableCell>
-                                        <TableCell align='right'><Link to={"/productCategory/Details/" + row.productCategory_ParentID}>{row.productCategory_Parent_Name}</Link></TableCell>
-                                        <TableCell align='right'><Link to={"/productModel/Details/" + row.productModelID}>{row.productModel_Name}</Link></TableCell>
-                                        <TableCell align='right'><Link to={"/address/Details/" + row.billToID}>{row.billTo_Name}</Link></TableCell>
-                                        <TableCell align='right'><Link to={"/customer/Details/" + row.customerID}>{row.customer_Name}</Link></TableCell>
-                                        <TableCell align='right'><Link to={"/address/Details/" + row.shipToID}>{row.shipTo_Name}</Link></TableCell>
                                         <TableCell align="right" onMouseOver={(event) => { handleItemActionsPopoverOpen(event, index) }}>
                                             <IconButton aria-label="more" size="small" >
                                                 <MoreVertIcon />
@@ -262,6 +221,9 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ISalesOrder
                 }}
                 disableRestoreFocus
             >
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/salesOrderDetail/dashboard/" + getRouteParamsOfISalesOrderDetailIdentifier(currentItemOnDialog)) }}>
+                    <AccountTreeIcon />
+                </IconButton>
                 <IconButton aria-label="delete" color="primary" onClick={() => { navigate("/salesOrderDetail/delete/" + getRouteParamsOfISalesOrderDetailIdentifier(currentItemOnDialog)) }}>
                     <DeleteIcon />
                 </IconButton>

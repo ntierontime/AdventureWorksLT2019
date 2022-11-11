@@ -92,7 +92,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductModelD
                         type='submit'
                         fullWidth
                         variant='contained'
-                        disabled={!isValid || creating || created}
+                        disabled={(!isValid || creating || created) && !isDirty}
                         startIcon={<SaveIcon />}>
                         {t('Create')}
                     </Button>
@@ -114,7 +114,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductModelD
     const renderButtonGroupWhenInline = () => {
         return (
             <>
-                <IconButton type='submit' aria-label="create" disabled={!isValid || creating || created}>
+                <IconButton type='submit' aria-label="create" disabled={(!isValid || creating || created) && !isDirty}>
                     <SaveIcon />
                 </IconButton>
                 <IconButton aria-label="close" onClick={() => { doneAction() }}>
@@ -137,7 +137,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductModelD
                         type='submit'
                         fullWidth
                         variant='contained'
-                        disabled={!isValid || creating || created}
+                        disabled={(!isValid || creating || created) && !isDirty}
                         startIcon={<SaveIcon />}>
                         {t('Create')}
                     </Button>

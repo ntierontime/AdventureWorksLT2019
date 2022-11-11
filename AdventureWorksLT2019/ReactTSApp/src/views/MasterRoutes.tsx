@@ -2,9 +2,10 @@ import { Routes, Route } from "react-router-dom";
 import PrivateRoute from "src/shared/views/PrivateRoute";
 import AutoLogIn from "./AutoLogIn";
 import Home from "./Home";
+import AccountRoutes from "./AccountRoutesPartial";
+import NotFoundPage from "./NotFoundPage";
 import PrivateRouteTestPage from "./PrivateRouteTestPage";
 
-import AccountRoutes from "./AccountRoutesPartial";
 import BuildVersionRoutesPartial from 'src/routePartials/BuildVersionRoutesPartial'
 import ErrorLogRoutesPartial from 'src/routePartials/ErrorLogRoutesPartial'
 import AddressRoutesPartial from 'src/routePartials/AddressRoutesPartial'
@@ -41,6 +42,8 @@ export default function MasterRoutes(): JSX.Element {
             <Route path="ProductModelProductDescription/*" element={<ProductModelProductDescriptionRoutesPartial />} />
             <Route path="SalesOrderDetail/*" element={<SalesOrderDetailRoutesPartial />} />
             <Route path="SalesOrderHeader/*" element={<SalesOrderHeaderRoutesPartial />} />
+
+            <Route path="*" element={<NotFoundPage />} />
         </Routes>);
 }
 
