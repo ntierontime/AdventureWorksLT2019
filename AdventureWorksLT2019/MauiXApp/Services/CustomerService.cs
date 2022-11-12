@@ -42,22 +42,9 @@ public class CustomerService : DataServiceBase<CustomerAdvancedQuery, CustomerId
         return response;
     }
 
-    public override async Task<Response> BulkDelete(List<CustomerIdentifier> ids)
-    {
-        var response = await _thisApiClient.BulkDelete(ids);
-        return response;
-    }
-
     public override async Task<ListResponse<CustomerDataModel[]>> BulkUpdate(BatchActionRequest<CustomerIdentifier, CustomerDataModel> data)
     {
         var response = await _thisApiClient.BulkUpdate(data);
-        return response;
-    }
-
-    public override async Task<Response<MultiItemsCUDRequest<CustomerIdentifier, CustomerDataModel>>> MultiItemsCUD(
-        MultiItemsCUDRequest<CustomerIdentifier, CustomerDataModel> input)
-    {
-        var response = await _thisApiClient.MultiItemsCUD(input);
         return response;
     }
 
@@ -76,12 +63,6 @@ public class CustomerService : DataServiceBase<CustomerAdvancedQuery, CustomerId
     public override async Task<Response<CustomerDataModel>> Create(CustomerDataModel input)
     {
         var response = await _thisApiClient.Create(input);
-        return response;
-    }
-
-    public override async Task<Response> Delete(CustomerIdentifier id)
-    {
-        var response = await _thisApiClient.Delete(id);
         return response;
     }
 

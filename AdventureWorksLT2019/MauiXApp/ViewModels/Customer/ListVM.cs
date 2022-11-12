@@ -71,20 +71,10 @@ public class ListVM : ListVMBase<CustomerAdvancedQuery, CustomerIdentifier, Cust
         */
         // AdvancedQuery.End DateTimeRanges
 
-        // 1. Init LaunchCustomerCreatePageCommand
-        LaunchCreatePageCommand = LaunchViewCommandsHelper.GetLaunchCustomerCreatePageCommand(AppShellRoutes.CustomerListPage);
-        // 2. Init LaunchCustomerDeletePageCommand
-        LaunchDeletePageCommand = LaunchViewCommandsHelper.GetLaunchCustomerDeletePageCommand(AppShellRoutes.CustomerListPage);
-        // 3. Init LaunchCustomerDetailsPageCommand
-        LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchCustomerDetailsPageCommand(AppShellRoutes.CustomerListPage);
-        // 4. Init LaunchCustomerEditPageCommand
-        LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchCustomerEditPageCommand(AppShellRoutes.CustomerListPage);
         // 5. Init LaunchCustomerDashboardPageCommand
         LaunchDashboardPageCommand = LaunchViewCommandsHelper.GetLaunchCustomerDashboardPageCommand(AppShellRoutes.CustomerListPage);
         // 6. Init LaunchCustomerCreatePopupCommand
         LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchCustomerCreatePopupCommand();
-        // 7. Init LaunchCustomerDeletePopupCommand
-        LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchCustomerDeletePopupCommand();
         // 8. Init LaunchCustomerDetailsPopupCommand
         LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchCustomerDetailsPopupCommand();
         // 9. Init LaunchCustomerEditPopupCommand

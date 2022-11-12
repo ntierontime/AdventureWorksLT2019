@@ -68,10 +68,8 @@ public class ItemVM : ItemVMBase<ProductModelProductDescriptionIdentifier, Produ
     {
 
         LaunchProductModelFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductModelEditPopupCommand();
-        //LaunchProductModelFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductModelEditPageCommand(AppShellRoutes.ProductModelProductDescriptionListPage);
 
         LaunchProductDescriptionFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionEditPopupCommand();
-        //LaunchProductDescriptionFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductDescriptionEditPageCommand(AppShellRoutes.ProductModelProductDescriptionListPage);
 
         WeakReferenceMessenger.Default.Register<ItemVM, ProductModelProductDescriptionIdentifierMessage>(
            this, async (r, m) =>

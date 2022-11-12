@@ -71,20 +71,10 @@ public class ListVM : ListVMBase<ProductModelAdvancedQuery, ProductModelIdentifi
         */
         // AdvancedQuery.End DateTimeRanges
 
-        // 1. Init LaunchProductModelCreatePageCommand
-        LaunchCreatePageCommand = LaunchViewCommandsHelper.GetLaunchProductModelCreatePageCommand(AppShellRoutes.ProductModelListPage);
-        // 2. Init LaunchProductModelDeletePageCommand
-        LaunchDeletePageCommand = LaunchViewCommandsHelper.GetLaunchProductModelDeletePageCommand(AppShellRoutes.ProductModelListPage);
-        // 3. Init LaunchProductModelDetailsPageCommand
-        LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchProductModelDetailsPageCommand(AppShellRoutes.ProductModelListPage);
-        // 4. Init LaunchProductModelEditPageCommand
-        LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchProductModelEditPageCommand(AppShellRoutes.ProductModelListPage);
         // 5. Init LaunchProductModelDashboardPageCommand
         LaunchDashboardPageCommand = LaunchViewCommandsHelper.GetLaunchProductModelDashboardPageCommand(AppShellRoutes.ProductModelListPage);
         // 6. Init LaunchProductModelCreatePopupCommand
         LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchProductModelCreatePopupCommand();
-        // 7. Init LaunchProductModelDeletePopupCommand
-        LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchProductModelDeletePopupCommand();
         // 8. Init LaunchProductModelDetailsPopupCommand
         LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchProductModelDetailsPopupCommand();
         // 9. Init LaunchProductModelEditPopupCommand

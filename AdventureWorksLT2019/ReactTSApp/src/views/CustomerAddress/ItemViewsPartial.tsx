@@ -3,10 +3,7 @@ import { CrudViewContainers } from 'src/shared/viewModels/CrudViewContainers';
 import { ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps';
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 import { ICustomerAddressDataModel } from 'src/dataModels/ICustomerAddressDataModel';
-import CreatePartial from './CreatePartial';
-import DeletePartial from './DeletePartial';
 import DetailsPartial from './DetailsPartial';
-import EditPartial from './EditPartial';
 
 export default function ItemViewsPartial(props: ItemPartialViewProps<ICustomerAddressDataModel>): JSX.Element {
     const { crudViewContainer, totalCountInList, itemIndex, setItemIndex } = props;
@@ -37,17 +34,8 @@ export default function ItemViewsPartial(props: ItemPartialViewProps<ICustomerAd
 
     return (
         <>
-            {viewItemTemplate === ViewItemTemplates.Create &&
-                <CreatePartial {...props} />
-            }
-            {viewItemTemplate === ViewItemTemplates.Delete &&
-                <DeletePartial {...props} previousAction={gotoPreviousItemOnDialog} nextAction={gotoNextItemOnDialog} changeViewItemTemplate={changeViewItemTemplate} doneAction={doneAction} />
-            }
             {viewItemTemplate === ViewItemTemplates.Details &&
                 <DetailsPartial {...props} previousAction={gotoPreviousItemOnDialog} nextAction={gotoNextItemOnDialog} changeViewItemTemplate={changeViewItemTemplate} doneAction={doneAction} />
-            }
-            {viewItemTemplate === ViewItemTemplates.Edit &&
-                <EditPartial {...props} previousAction={gotoPreviousItemOnDialog} nextAction={gotoNextItemOnDialog} changeViewItemTemplate={changeViewItemTemplate} doneAction={doneAction} />
             }
         </>
     );

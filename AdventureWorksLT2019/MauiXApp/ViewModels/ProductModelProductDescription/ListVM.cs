@@ -122,20 +122,8 @@ public class ListVM : ListVMBase<ProductModelProductDescriptionAdvancedQuery, Pr
         */
         // AdvancedQuery.End DateTimeRanges
 
-        // 1. Init LaunchProductModelProductDescriptionCreatePageCommand
-        LaunchCreatePageCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionCreatePageCommand(AppShellRoutes.ProductModelProductDescriptionListPage);
-        // 2. Init LaunchProductModelProductDescriptionDeletePageCommand
-        LaunchDeletePageCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionDeletePageCommand(AppShellRoutes.ProductModelProductDescriptionListPage);
-        // 3. Init LaunchProductModelProductDescriptionDetailsPageCommand
-        LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionDetailsPageCommand(AppShellRoutes.ProductModelProductDescriptionListPage);
-        // 4. Init LaunchProductModelProductDescriptionEditPageCommand
-        LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionEditPageCommand(AppShellRoutes.ProductModelProductDescriptionListPage);
-        // 5. Init LaunchProductModelProductDescriptionDashboardPageCommand
-        LaunchDashboardPageCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionDashboardPageCommand(AppShellRoutes.ProductModelProductDescriptionListPage);
         // 6. Init LaunchProductModelProductDescriptionCreatePopupCommand
         LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionCreatePopupCommand();
-        // 7. Init LaunchProductModelProductDescriptionDeletePopupCommand
-        LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionDeletePopupCommand();
         // 8. Init LaunchProductModelProductDescriptionDetailsPopupCommand
         LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionDetailsPopupCommand();
         // 9. Init LaunchProductModelProductDescriptionEditPopupCommand

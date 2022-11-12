@@ -35,26 +35,6 @@ public class ProductModelProductDescriptionService : DataServiceBase<ProductMode
         return response;
     }
 
-    public async Task<ProductModelProductDescriptionCompositeModel> GetCompositeModel(
-        ProductModelProductDescriptionIdentifier id)
-    {
-        var response = await _thisApiClient.GetCompositeModel(id);
-        return response;
-    }
-
-    public override async Task<Response> BulkDelete(List<ProductModelProductDescriptionIdentifier> ids)
-    {
-        var response = await _thisApiClient.BulkDelete(ids);
-        return response;
-    }
-
-    public override async Task<Response<MultiItemsCUDRequest<ProductModelProductDescriptionIdentifier, ProductModelProductDescriptionDataModel>>> MultiItemsCUD(
-        MultiItemsCUDRequest<ProductModelProductDescriptionIdentifier, ProductModelProductDescriptionDataModel> input)
-    {
-        var response = await _thisApiClient.MultiItemsCUD(input);
-        return response;
-    }
-
     public override async Task<Response<ProductModelProductDescriptionDataModel>> Update(ProductModelProductDescriptionIdentifier id, ProductModelProductDescriptionDataModel input)
     {
         var response = await _thisApiClient.Update(id, input);
@@ -70,12 +50,6 @@ public class ProductModelProductDescriptionService : DataServiceBase<ProductMode
     public override async Task<Response<ProductModelProductDescriptionDataModel>> Create(ProductModelProductDescriptionDataModel input)
     {
         var response = await _thisApiClient.Create(input);
-        return response;
-    }
-
-    public override async Task<Response> Delete(ProductModelProductDescriptionIdentifier id)
-    {
-        var response = await _thisApiClient.Delete(id);
         return response;
     }
 

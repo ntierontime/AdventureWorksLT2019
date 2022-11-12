@@ -14,17 +14,11 @@ export class AddressApi extends AxiosApiBaseGeneric<IAddressDataModel, IAddressI
 
         this.url_GetCompositeModel = "api/AddressApi/GetCompositeModel";
 
-        this.url_BulkDelete = "api/AddressApi/BulkDelete";
-
-        this.url_MultiItemsCUD = "api/AddressApi/MultiItemsCUD";
-
         this.url_Put = "api/AddressApi/Put";
 
         this.url_Get = "api/AddressApi/Get";
 
         this.url_Post = "api/AddressApi/Post";
-
-        this.url_Delete = "api/AddressApi/Delete";
 
         // this middleware is been called right before the http request is made.
         this.interceptors.request.use((param: AxiosRequestConfig) => ({

@@ -19,9 +19,7 @@ import { getSalesOrderHeaderQueryOrderBySettings, ISalesOrderHeaderAdvancedQuery
 import ItemViewsPartial from './ItemViewsPartial';
 
 import AdvancedSearchPartial from './AdvancedSearchPartial';
-import CarouselPartial from './CarouselPartial';
 import HtmlTablePartial from './HtmlTablePartial';
-import TilesPartial from './TilesPartial';
 
 export default function ListsPartial(props: ListsPartialViewProps<ISalesOrderHeaderAdvancedQuery, ISalesOrderHeaderDataModel>): JSX.Element {
     const { advancedQuery, setAdvancedQuery, defaultAdvancedQuery, listItems, initialLoadFromServer, hasListToolBar, hasAdvancedSearch, addNewButtonContainer } = props;
@@ -198,21 +196,6 @@ export default function ListsPartial(props: ListsPartialViewProps<ISalesOrderHea
                     {hasAdvancedSearch && <Collapse in={advancedSearchExpanded} timeout="auto" unmountOnExit>
                         <AdvancedSearchPartial advancedQuery={advancedQuery} submitAction={submitAdvancedSearch} doneAction={() => { handleAdvancedSearchExpandClose(); }} />
                     </Collapse>}
-                    {listViewOption === ListViewOptions.SlideShow && <CarouselPartial
-                        listViewOption={ListViewOptions.SlideShow}
-                        listItems={listItems}
-                        itemsPerRow={itemsPerRow}
-                        numSelected={numSelected}
-                        selected={selected}
-                        handleChangePage={handlePaginationLoadMore}
-                        handleSelectItemClick={handleSelectItemClick}
-                        handleItemDialogOpen={handleItemDialogOpen}
-                        currentItemOnDialog={currentItemOnDialog}
-                        setCurrentItemOnDialog={setCurrentItemOnDialog}
-                        currentItemIndex={currentItemIndex}
-                        setCurrentItemIndex={setCurrentItemIndex}
-                        isSelected={isSelected}
-                    />}
                     {listViewOption === ListViewOptions.Table && <HtmlTablePartial
                         listViewOption={ListViewOptions.Table}
                         listItems={listItems}
@@ -220,21 +203,6 @@ export default function ListsPartial(props: ListsPartialViewProps<ISalesOrderHea
                         numSelected={numSelected}
                         selected={selected}
                         handleChangePage={handlePaginationChangePage}
-                        handleSelectItemClick={handleSelectItemClick}
-                        handleItemDialogOpen={handleItemDialogOpen}
-                        currentItemOnDialog={currentItemOnDialog}
-                        setCurrentItemOnDialog={setCurrentItemOnDialog}
-                        currentItemIndex={currentItemIndex}
-                        setCurrentItemIndex={setCurrentItemIndex}
-                        isSelected={isSelected}
-                    />}
-                    {listViewOption === ListViewOptions.Tiles && <TilesPartial
-                        listViewOption={ListViewOptions.Tiles}
-                        listItems={listItems}
-                        itemsPerRow={itemsPerRow}
-                        numSelected={numSelected}
-                        selected={selected}
-                        handleChangePage={handlePaginationLoadMore}
                         handleSelectItemClick={handleSelectItemClick}
                         handleItemDialogOpen={handleItemDialogOpen}
                         currentItemOnDialog={currentItemOnDialog}

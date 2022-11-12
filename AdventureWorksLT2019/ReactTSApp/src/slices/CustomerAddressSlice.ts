@@ -34,31 +34,6 @@ export const search = createAsyncThunk(
     }
 )
 
-export const getCompositeModel = createAsyncThunk(
-    'getCustomerAddressCompositeModel',
-    async (identifier: ICustomerAddressIdentifier, { dispatch }) => {
-        const response = await customerAddressApi.GetCompositeModel(identifier);
-        return response;
-    }
-)
-
-export const bulkDelete = createAsyncThunk(
-    'bulkDeleteCustomerAddress',
-    async (identifiers: ICustomerAddressIdentifier[], { dispatch }) => {
-        const response = await customerAddressApi.BulkDelete(identifiers);
-        return { response, identifiers };
-        // return { response: {status: 'OK'}, identifiers }; // for testing
-    }
-)
-
-export const multiItemsCUD = createAsyncThunk(
-    'multiItemsCUDCustomerAddress',
-    async (params: IMultiItemsCUDRequest<ICustomerAddressIdentifier, ICustomerAddressDataModel>, { dispatch }) => {
-        const response = await customerAddressApi.MultiItemsCUD(params);
-        return response;
-    }
-)
-
 export const put = createAsyncThunk(
     'putCustomerAddress',
     async (params: { identifier: ICustomerAddressIdentifier, data: ICustomerAddressDataModel }, { dispatch }) => {
@@ -80,14 +55,6 @@ export const post = createAsyncThunk(
     async (data: ICustomerAddressDataModel, { dispatch }) => {
         const response = await customerAddressApi.Post(data);
         return response;
-    }
-)
-
-export const delete1 = createAsyncThunk(
-    'deleteCustomerAddress',
-    async (identifier: ICustomerAddressIdentifier, { dispatch }) => {
-        const response = await customerAddressApi.Delete(identifier);
-        return { response, identifier };
     }
 )
 
@@ -145,67 +112,6 @@ const CustomerAddressSlice = createSlice({
             // console.log("search.rejected");
         });
 
-        builder.addCase(getCompositeModel.pending, (state) => {
-
-            // console.log("getCompositeModel.pending");
-        });
-        builder.addCase(getCompositeModel.fulfilled, (state, { payload }) => {
-            // TODO: how?
-            // console.log("getCompositeModel.fulfilled");
-        });
-        builder.addCase(getCompositeModel.rejected, (state, action) => {
-
-            // console.log("getCompositeModel.rejected");
-        });
-
-        builder.addCase(bulkDelete.pending, (state) => {
-
-            // console.log("bulkDelete.pending");
-        });
-        builder.addCase(bulkDelete.fulfilled, (state, { payload }) => {
-            if (!!payload && !!payload.response && payload.response.status === 'OK') {
-                // TODO: how to remove multiple
-                entityAdapter.removeMany(state, payload.identifiers.map(identifier => identifier.customerID));
-            }
-            // console.log("bulkDelete.fulfilled");
-        });
-        builder.addCase(bulkDelete.rejected, (state, action) => {
-
-            // console.log("bulkDelete.rejected");
-        });
-
-        builder.addCase(multiItemsCUD.pending, (state) => {
-
-            // console.log("multiItemsCUD.pending");
-        });
-        builder.addCase(multiItemsCUD.fulfilled, (state, { payload }) => {
-            if (!!payload && payload.status === 'OK') {
-                if (!!payload.responseBody.updateItems) {
-                    entityAdapter.upsertMany(state, payload.responseBody.updateItems.map(item => { return { ...item, itemUIStatus: ItemUIStatus.Updated }; }));
-                }
-                if (!!payload.responseBody.newItems) {
-                    entityAdapter.upsertMany(state, payload.responseBody.newItems.map(item => { return { ...item, itemUIStatus: ItemUIStatus.New }; }));
-                }
-                if (!!payload.responseBody.mergeItems) {
-                    entityAdapter.upsertMany(state, payload.responseBody.mergeItems.map(item => {
-                        if (state.ids.find(oId => { return oId === item.customerID }) !== -1) {
-                            return { ...item, itemUIStatus______: ItemUIStatus.Updated }
-                        }
-                        return { ...item, itemUIStatus______: ItemUIStatus.New }
-                    }));
-                }
-                if (!!payload.responseBody.deleteItems) {
-                    // TODO: how to remove many: 
-                    entityAdapter.removeMany(state, payload.responseBody.deleteItems.map(item => { return item.customerID; }));
-                }
-            }
-            // console.log("multiItemsCUD.fulfilled");
-        });
-        builder.addCase(multiItemsCUD.rejected, (state, action) => {
-
-            // console.log("multiItemsCUD.rejected");
-        });
-
         builder.addCase(put.pending, (state) => {
 
             // console.log("put.pending");
@@ -249,22 +155,6 @@ const CustomerAddressSlice = createSlice({
         builder.addCase(post.rejected, (state, action) => {
 
             // console.log("post.rejected");
-        });
-
-        builder.addCase(delete1.pending, (state) => {
-
-            // console.log("delete.pending");
-        });
-        builder.addCase(delete1.fulfilled, (state, { payload }) => {
-            if (!!payload && !!payload.response && payload.response.status === 'OK') {
-                // TODO: how to remove one
-                entityAdapter.removeOne(state, payload.identifier.customerID);
-            }
-            // console.log("delete.fulfilled");
-        });
-        builder.addCase(delete1.rejected, (state, action) => {
-
-            // console.log("delete.rejected");
         });
     }
 });

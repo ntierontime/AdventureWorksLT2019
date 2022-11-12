@@ -30,7 +30,7 @@ export default function IndexPage() {
         listToolBarSetting: {
             textSearchPlaceHolder: t("Search") + ' ' +t("ProductModelProductDescription"),
             hasListViewOptionsSelect: true,
-	        availableListViewOptions: [ListViewOptions.SlideShow, ListViewOptions.Table, ListViewOptions.Tiles],
+	        availableListViewOptions: [ListViewOptions.Table],
             hasItemsSelect: true,
             hasBulkDelete: true,
             hasBulkUpdate: true,

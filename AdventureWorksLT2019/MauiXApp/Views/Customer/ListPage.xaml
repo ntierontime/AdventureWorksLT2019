@@ -42,10 +42,6 @@
                         <SwipeView>
                             <SwipeView.LeftItems>
                                 <SwipeItems>
-                                    <SwipeItem Text="{l:Localize Delete}"
-                                        BackgroundColor="LightPink"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDeletePopupCommand}"
-                                        CommandParameter="{Binding CustomerID}" />
                                     <SwipeItem Text="{l:Localize Details}"
                                         BackgroundColor="LightPink"
                                         Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDetailsPopupCommand}"
@@ -58,18 +54,6 @@
                             </SwipeView.LeftItems>
                             <SwipeView.RightItems>
                                 <SwipeItems>
-                                    <SwipeItem Text="{l:Localize Delete}"
-                                        BackgroundColor="LightPink"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDeletePageCommand}"
-                                        CommandParameter="{Binding CustomerID}" />
-                                    <SwipeItem Text="{l:Localize Details}"
-                                        BackgroundColor="LightPink"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDetailsPageCommand}"
-                                        CommandParameter="{Binding CustomerID}" />
-                                    <SwipeItem Text="{l:Localize Edit}"
-                                        BackgroundColor="LightPink"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchEditPageCommand}"
-                                        CommandParameter="{Binding CustomerID}" />
                                     <SwipeItem Text="{l:Localize Dashboard}"
                                         BackgroundColor="LightPink"
                                         Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDashboardPageCommand}"
@@ -101,23 +85,11 @@
                                     Style="{StaticResource SubTitleLabelStyle}"
                                     Text="{Binding ModifiedDate}" />
                                 <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"  Margin="0" Padding="5,0,10,0">
-                                    <Button Style="{StaticResource ToolbarDeleteIconButtonStyle}" Margin="0"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDeletePopupCommand}"
-                                        CommandParameter="{Binding CustomerID}" />
                                     <Button Style="{StaticResource ToolbarDetailsIconButtonStyle}" Margin="0"
                                         Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDetailsPopupCommand}"
                                         CommandParameter="{Binding CustomerID}" />
                                     <Button Style="{StaticResource ToolbarEditIconButtonStyle}" Margin="0"
                                         Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchEditPopupCommand}"
-                                        CommandParameter="{Binding CustomerID}" />
-                                    <Button Style="{StaticResource ToolbarDeleteIconButtonStyle}" Margin="0"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDeletePageCommand}"
-                                        CommandParameter="{Binding CustomerID}" />
-                                    <Button Style="{StaticResource ToolbarDetailsIconButtonStyle}" Margin="0"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDetailsPageCommand}"
-                                        CommandParameter="{Binding CustomerID}" />
-                                    <Button Style="{StaticResource ToolbarEditIconButtonStyle}" Margin="0"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchEditPageCommand}"
                                         CommandParameter="{Binding CustomerID}" />
                                     <Button Style="{StaticResource ToolbarDashboardIconButtonStyle}" Margin="0"
                                         Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDashboardPageCommand}"
@@ -132,8 +104,6 @@
         <HorizontalStackLayout x:Name="ButtonsWhenNonMultipleSelection" HorizontalOptions="End" VerticalOptions="End" Margin="0,0,20,20" IsVisible="{Binding CurrentSelectionMode, Converter={StaticResource ListSelectModeSingleConverter}}" >
             <Button Style="{StaticResource AddIconButtonStyle}"
                 Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchCreatePopupCommand}" />
-            <Button Style="{StaticResource AddIconButtonStyle}"
-                Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchCreatePageCommand}" />
             <Button Grid.Column="2" Style="{StaticResource LaunchAdvancedSearchIconButtonStyle}"
                     Command="{Binding AdvancedSearchLaunchCommand}"
                     />
@@ -155,9 +125,6 @@
                 Command="{Binding ListBulkActionsLaunchCommand}"
                 CommandParameter="NameStyle"
                 Text="{l:Localize NameStyle}" />
-            <Button
-                Command="{Binding BulkDeleteCommand}"
-                Text="{l:Localize Delete}" />
             <Button
                 Command="{Binding ClearSelectedItemsCommand}"
                 Text="{l:Localize Clear}" />

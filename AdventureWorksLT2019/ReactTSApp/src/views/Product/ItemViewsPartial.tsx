@@ -4,7 +4,6 @@ import { ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 import { IProductDataModel } from 'src/dataModels/IProductDataModel';
 import CreatePartial from './CreatePartial';
-import DeletePartial from './DeletePartial';
 import DetailsPartial from './DetailsPartial';
 import EditPartial from './EditPartial';
 
@@ -39,9 +38,6 @@ export default function ItemViewsPartial(props: ItemPartialViewProps<IProductDat
         <>
             {viewItemTemplate === ViewItemTemplates.Create &&
                 <CreatePartial {...props} />
-            }
-            {viewItemTemplate === ViewItemTemplates.Delete &&
-                <DeletePartial {...props} previousAction={gotoPreviousItemOnDialog} nextAction={gotoNextItemOnDialog} changeViewItemTemplate={changeViewItemTemplate} doneAction={doneAction} />
             }
             {viewItemTemplate === ViewItemTemplates.Details &&
                 <DetailsPartial {...props} previousAction={gotoPreviousItemOnDialog} nextAction={gotoNextItemOnDialog} changeViewItemTemplate={changeViewItemTemplate} doneAction={doneAction} />
