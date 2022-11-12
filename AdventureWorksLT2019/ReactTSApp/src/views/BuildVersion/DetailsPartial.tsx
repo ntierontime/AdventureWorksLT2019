@@ -1,4 +1,4 @@
-import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, TextField, useTheme } from '@mui/material';
+import { Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, TextField, useTheme } from '@mui/material';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -26,7 +26,7 @@ import { getRouteParamsOfIBuildVersionIdentifier } from 'src/dataModels/IBuildVe
 
 export default function DetailsPartial(props: ItemPartialViewProps<IBuildVersionDataModel>): JSX.Element {
     const navigate = useNavigate();
-    const { crudViewContainer, item, itemIndex, isItemSelected, handleSelectItemClick, changeViewItemTemplate, handleItemDialogOpen } = props; // item
+    const { gridColumns, scrollableCardContent, crudViewContainer, item, itemIndex, isItemSelected, handleSelectItemClick, changeViewItemTemplate, handleItemDialogOpen } = props; // item
     const { doneAction, previousAction, nextAction } = props; // dialog
     const { t } = useTranslation();
 
@@ -174,56 +174,68 @@ export default function DetailsPartial(props: ItemPartialViewProps<IBuildVersion
                 subheader={t('{{val, datetime}}', { val: new Date(item.versionDate) })}
             />
             <CardContent>
-                <TextField
-                    name='systemInformationID'
-                    label={t('SystemInformationID')}
-                    value={item.systemInformationID}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='database_Version'
-                    label={t('Database_Version')}
-                    defaultValue={item.database_Version}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <DatePicker
-                    label={t('VersionDate')}
-                    value={item.versionDate}
-                    onChange={() => { }}
-                    renderInput={(params) =>
-                        <TextField
-                            fullWidth
-                            autoComplete='versionDate'
-                            {...params}
-                            InputProps={{
-                                readOnly: true
-                            }}
-                        />}
-                />
-                <DatePicker
-                    label={t('ModifiedDate')}
-                    value={item.modifiedDate}
-                    onChange={() => { }}
-                    renderInput={(params) =>
-                        <TextField
-                            fullWidth
-                            autoComplete='modifiedDate'
-                            {...params}
-                            InputProps={{
-                                readOnly: true
-                            }}
-                        />}
-                />
+                <Box sx={{ ...scrollableCardContent }}>
+                    <Grid container spacing={2}>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='systemInformationID'
+                                label={t('SystemInformationID')}
+                                value={item.systemInformationID}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='database_Version'
+                                label={t('Database_Version')}
+                                defaultValue={item.database_Version}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <DatePicker
+                                label={t('VersionDate')}
+                                value={item.versionDate}
+                                onChange={() => { }}
+                                renderInput={(params) =>
+                                    <TextField
+                                        fullWidth
+                                        autoComplete='versionDate'
+                                        {...params}
+                                        InputProps={{
+                                            readOnly: true
+                                        }}
+                                    />}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <DatePicker
+                                label={t('ModifiedDate')}
+                                value={item.modifiedDate}
+                                onChange={() => { }}
+                                renderInput={(params) =>
+                                    <TextField
+                                        fullWidth
+                                        autoComplete='modifiedDate'
+                                        {...params}
+                                        InputProps={{
+                                            readOnly: true
+                                        }}
+                                    />}
+                            />
+                        </Grid>
+                    </Grid>
+				</Box>
             </CardContent>
             {crudViewContainer === CrudViewContainers.Dialog && <CardActions disableSpacing>
                 {(!!previousAction || !!nextAction) && <ButtonGroup

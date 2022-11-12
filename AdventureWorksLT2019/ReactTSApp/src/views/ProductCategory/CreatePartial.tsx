@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, MenuItem, TextField, Typography } from '@mui/material';
+import { Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, MenuItem, TextField, Typography } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
@@ -22,7 +22,7 @@ import { defaultProductCategory, IProductCategoryDataModel, productCategoryFormV
 import { post } from 'src/slices/ProductCategorySlice';
 
 export default function CreatePartial(props: ItemPartialViewProps<IProductCategoryDataModel>): JSX.Element {
-    const { crudViewContainer } = props; // item
+    const { gridColumns, scrollableCardContent, crudViewContainer } = props; // item
     const { doneAction } = props; // dialog
     const [item, setItem] = useState<IProductCategoryDataModel>(defaultProductCategory());
     const { t } = useTranslation();
@@ -180,57 +180,67 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductCatego
                 </Typography>
             </CardContent>}
             <CardContent>
-                <TextField
-                    label={t("ParentProductCategoryID")}
-                    id="parentProductCategoryIDSelect"
-                    select
-                    name='parentProductCategoryID'
-                    {...register("parentProductCategoryID", productCategoryFormValidationWhenCreate.parentProductCategoryID)}
-                    autoComplete='parentProductCategoryID'
-                    variant="outlined"
-                    fullWidth
-                    defaultValue={item.parentProductCategoryID}
-                >
-                    {productCategory_ParentProductCategoryIDCodeList && productCategory_ParentProductCategoryIDCodeList.map((v, index) => {
-                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
-                    })}
-                </TextField>
-                <TextField
-                    name='name'
-                    label={t('Name')}
-                    defaultValue={item.name}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("name", productCategoryFormValidationWhenCreate.name)}
-                    autoComplete='name'
-                    error={!!errors.name}
-                    fullWidth
-                    helperText={!!errors.name ? t(errors.name.message) : ''}
-                />
-                <Controller
-                    name="modifiedDate"
-                    defaultValue={item.modifiedDate}
-                    control={control}
-                    {...register("modifiedDate", productCategoryFormValidationWhenCreate.modifiedDate)}
-                    render={
-                        ({ field: { onChange, ...restField } }) =>
-                            <DatePicker
-                                ref={null}
-                                label={t('ModifiedDate')}
-                                onChange={(event) => { onChange(event); }}
-                                renderInput={(params) =>
-                                    <TextField
-                                        ref={null}
-                                        fullWidth
-                                        autoComplete='modifiedDate'
-                                        error={!!errors.modifiedDate}
-                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                        {...params}
-                                    />}
-                                {...restField}
+                <Box sx={{ ...scrollableCardContent }}>
+                    <Grid container spacing={2}>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                label={t("ParentProductCategoryID")}
+                                id="parentProductCategoryIDSelect"
+                                select
+                                name='parentProductCategoryID'
+                                {...register("parentProductCategoryID", productCategoryFormValidationWhenCreate.parentProductCategoryID)}
+                                autoComplete='parentProductCategoryID'
+                                variant="outlined"
+                                fullWidth
+                                defaultValue={item.parentProductCategoryID}
+                            >
+                                {productCategory_ParentProductCategoryIDCodeList && productCategory_ParentProductCategoryIDCodeList.map((v, index) => {
+                                    return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
+                                })}
+                            </TextField>
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='name'
+                                label={t('Name')}
+                                defaultValue={item.name}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("name", productCategoryFormValidationWhenCreate.name)}
+                                autoComplete='name'
+                                error={!!errors.name}
+                                fullWidth
+                                helperText={!!errors.name ? t(errors.name.message) : ''}
                             />
-                    }
-                />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <Controller
+                                name="modifiedDate"
+                                defaultValue={item.modifiedDate}
+                                control={control}
+                                {...register("modifiedDate", productCategoryFormValidationWhenCreate.modifiedDate)}
+                                render={
+                                    ({ field: { onChange, ...restField } }) =>
+                                        <DatePicker
+                                            ref={null}
+                                            label={t('ModifiedDate')}
+                                            onChange={(event) => { onChange(event); }}
+                                            renderInput={(params) =>
+                                                <TextField
+                                                    ref={null}
+                                                    fullWidth
+                                                    autoComplete='modifiedDate'
+                                                    error={!!errors.modifiedDate}
+                                                    helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                                                    {...params}
+                                                />}
+                                            {...restField}
+                                        />
+                                }
+                            />
+                        </Grid>
+                    </Grid>
+				</Box>
             </CardContent>
             {(crudViewContainer === CrudViewContainers.Dialog) && <CardActions disableSpacing>
                 {renderButtonGroupWhenDialog()}

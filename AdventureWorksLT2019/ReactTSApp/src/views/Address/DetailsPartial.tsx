@@ -1,4 +1,4 @@
-import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, TextField, useTheme } from '@mui/material';
+import { Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, TextField, useTheme } from '@mui/material';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -26,7 +26,7 @@ import { getRouteParamsOfIAddressIdentifier } from 'src/dataModels/IAddressQueri
 
 export default function DetailsPartial(props: ItemPartialViewProps<IAddressDataModel>): JSX.Element {
     const navigate = useNavigate();
-    const { crudViewContainer, item, itemIndex, isItemSelected, handleSelectItemClick, changeViewItemTemplate, handleItemDialogOpen } = props; // item
+    const { gridColumns, scrollableCardContent, crudViewContainer, item, itemIndex, isItemSelected, handleSelectItemClick, changeViewItemTemplate, handleItemDialogOpen } = props; // item
     const { doneAction, previousAction, nextAction } = props; // dialog
     const { t } = useTranslation();
 
@@ -174,108 +174,130 @@ export default function DetailsPartial(props: ItemPartialViewProps<IAddressDataM
                 subheader={t('{{val, datetime}}', { val: new Date(item.modifiedDate) })}
             />
             <CardContent>
-                <TextField
-                    name='addressID'
-                    label={t('AddressID')}
-                    value={item.addressID}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='addressLine1'
-                    label={t('AddressLine1')}
-                    defaultValue={item.addressLine1}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='addressLine2'
-                    label={t('AddressLine2')}
-                    defaultValue={item.addressLine2}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='city'
-                    label={t('City')}
-                    defaultValue={item.city}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='stateProvince'
-                    label={t('StateProvince')}
-                    defaultValue={item.stateProvince}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='countryRegion'
-                    label={t('CountryRegion')}
-                    defaultValue={item.countryRegion}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='postalCode'
-                    label={t('PostalCode')}
-                    defaultValue={item.postalCode}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='rowguid'
-                    label={t('rowguid')}
-                    value={item.rowguid}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <DatePicker
-                    label={t('ModifiedDate')}
-                    value={t(i18nFormats.dateTime.format, { val: new Date(item.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-                    onChange={() => { }}
-                    renderInput={(params) =>
-                        <TextField
-                            fullWidth
-                            autoComplete='modifiedDate'
-                            {...params}
-                            InputProps={{
-                                readOnly: true
-                            }}
-                        />}
-                />
+                <Box sx={{ ...scrollableCardContent }}>
+                    <Grid container spacing={2}>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='addressID'
+                                label={t('AddressID')}
+                                value={item.addressID}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='addressLine1'
+                                label={t('AddressLine1')}
+                                defaultValue={item.addressLine1}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='addressLine2'
+                                label={t('AddressLine2')}
+                                defaultValue={item.addressLine2}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='city'
+                                label={t('City')}
+                                defaultValue={item.city}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='stateProvince'
+                                label={t('StateProvince')}
+                                defaultValue={item.stateProvince}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='countryRegion'
+                                label={t('CountryRegion')}
+                                defaultValue={item.countryRegion}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='postalCode'
+                                label={t('PostalCode')}
+                                defaultValue={item.postalCode}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='rowguid'
+                                label={t('rowguid')}
+                                value={item.rowguid}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <DatePicker
+                                label={t('ModifiedDate')}
+                                value={t(i18nFormats.dateTime.format, { val: new Date(item.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
+                                onChange={() => { }}
+                                renderInput={(params) =>
+                                    <TextField
+                                        fullWidth
+                                        autoComplete='modifiedDate'
+                                        {...params}
+                                        InputProps={{
+                                            readOnly: true
+                                        }}
+                                    />}
+                            />
+                        </Grid>
+                    </Grid>
+				</Box>
             </CardContent>
             {crudViewContainer === CrudViewContainers.Dialog && <CardActions disableSpacing>
                 {(!!previousAction || !!nextAction) && <ButtonGroup

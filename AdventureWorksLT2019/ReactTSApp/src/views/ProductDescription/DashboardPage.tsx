@@ -45,7 +45,7 @@ export default function DashboardPage(): JSX.Element {
 
 
     const listItems_ProductModelProductDescriptions_Via_ProductDescriptionID = useSelector(
-        (state: RootState) => productModelProductDescriptionSelectors.selectAll(state).filter(t => t.productDescriptionID == productDescriptionID)
+        (state: RootState) => productModelProductDescriptionSelectors.selectAll(state).filter(t => t.productDescriptionID === productDescriptionID)
     );
 
     const defaultIProductModelProductDescriptionAdvancedQuery_ProductModelProductDescriptions_Via_ProductDescriptionID = { ...defaultIProductModelProductDescriptionAdvancedQuery(), productDescriptionID: productDescriptionID };

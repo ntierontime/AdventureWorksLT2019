@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, TextField, Typography, useTheme } from '@mui/material';
+import { Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, TextField, Typography, useTheme } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -29,7 +29,7 @@ import { put } from 'src/slices/CustomerSlice';
 
 export default function EditPartial(props: ItemPartialViewProps<ICustomerDataModel>): JSX.Element {
     const navigate = useNavigate();
-    const { crudViewContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
+    const { gridColumns, scrollableCardContent, crudViewContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
     const { doneAction, previousAction, nextAction } = props; // dialog
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
@@ -181,203 +181,237 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
                 </Typography>
             </CardContent>}
             <CardContent>
-                <TextField
-                    name='customerID'
-                    label={t('CustomerID')}
-                    value={item.customerID}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <FormControlLabel
-                    control={
-                        <Controller
-                            control={control}
-                            name="nameStyle"
-                            defaultValue={item.nameStyle}
-                            {...register("nameStyle", customerFormValidationWhenEdit.nameStyle)}
-                            render={({ field: { onChange } }) => (
-                                <Checkbox
-                                    color="primary"
-                                    onChange={(e) => onChange(e.target.checked)}
-                                />
-                            )}
-                        />
-                    }
-                    label={
-                        <Typography>{t('NameStyle')}</Typography>
-                    }
-                />
-                <TextField
-                    name='title'
-                    label={t('Title')}
-                    defaultValue={item.title}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("title", customerFormValidationWhenEdit.title)}
-                    autoComplete='title'
-                    error={!!errors.title}
-                    fullWidth
-                    helperText={!!errors.title ? t(errors.title.message) : ''}
-                />
-                <TextField
-                    name='firstName'
-                    label={t('FirstName')}
-                    defaultValue={item.firstName}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("firstName", customerFormValidationWhenEdit.firstName)}
-                    autoComplete='firstName'
-                    error={!!errors.firstName}
-                    fullWidth
-                    helperText={!!errors.firstName ? t(errors.firstName.message) : ''}
-                />
-                <TextField
-                    name='middleName'
-                    label={t('MiddleName')}
-                    defaultValue={item.middleName}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("middleName", customerFormValidationWhenEdit.middleName)}
-                    autoComplete='middleName'
-                    error={!!errors.middleName}
-                    fullWidth
-                    helperText={!!errors.middleName ? t(errors.middleName.message) : ''}
-                />
-                <TextField
-                    name='lastName'
-                    label={t('LastName')}
-                    defaultValue={item.lastName}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("lastName", customerFormValidationWhenEdit.lastName)}
-                    autoComplete='lastName'
-                    error={!!errors.lastName}
-                    fullWidth
-                    helperText={!!errors.lastName ? t(errors.lastName.message) : ''}
-                />
-                <TextField
-                    name='suffix'
-                    label={t('Suffix')}
-                    defaultValue={item.suffix}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("suffix", customerFormValidationWhenEdit.suffix)}
-                    autoComplete='suffix'
-                    error={!!errors.suffix}
-                    fullWidth
-                    helperText={!!errors.suffix ? t(errors.suffix.message) : ''}
-                />
-                <TextField
-                    name='companyName'
-                    label={t('CompanyName')}
-                    defaultValue={item.companyName}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("companyName", customerFormValidationWhenEdit.companyName)}
-                    autoComplete='companyName'
-                    error={!!errors.companyName}
-                    fullWidth
-                    helperText={!!errors.companyName ? t(errors.companyName.message) : ''}
-                />
-                <TextField
-                    name='salesPerson'
-                    label={t('SalesPerson')}
-                    defaultValue={item.salesPerson}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("salesPerson", customerFormValidationWhenEdit.salesPerson)}
-                    autoComplete='salesPerson'
-                    error={!!errors.salesPerson}
-                    fullWidth
-                    helperText={!!errors.salesPerson ? t(errors.salesPerson.message) : ''}
-                />
-                <TextField
-                    name='emailAddress'
-                    label={t('EmailAddress')}
-                    defaultValue={item.emailAddress}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("emailAddress", customerFormValidationWhenEdit.emailAddress)}
-                    autoComplete='emailAddress'
-                    error={!!errors.emailAddress}
-                    fullWidth
-                    helperText={!!errors.emailAddress ? t(errors.emailAddress.message) : ''}
-                />
-                <TextField
-                    name='phone'
-                    label={t('Phone')}
-                    defaultValue={item.phone}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("phone", customerFormValidationWhenEdit.phone)}
-                    autoComplete='phone'
-                    error={!!errors.phone}
-                    fullWidth
-                    helperText={!!errors.phone ? t(errors.phone.message) : ''}
-                />
-                <TextField
-                    name='passwordHash'
-                    label={t('PasswordHash')}
-                    defaultValue={item.passwordHash}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("passwordHash", customerFormValidationWhenEdit.passwordHash)}
-                    autoComplete='passwordHash'
-                    error={!!errors.passwordHash}
-                    fullWidth
-                    helperText={!!errors.passwordHash ? t(errors.passwordHash.message) : ''}
-                />
-                <TextField
-                    name='passwordSalt'
-                    label={t('PasswordSalt')}
-                    defaultValue={item.passwordSalt}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("passwordSalt", customerFormValidationWhenEdit.passwordSalt)}
-                    autoComplete='passwordSalt'
-                    error={!!errors.passwordSalt}
-                    fullWidth
-                    helperText={!!errors.passwordSalt ? t(errors.passwordSalt.message) : ''}
-                />
-                <TextField
-                    name='rowguid'
-                    label={t('rowguid')}
-                    value={item.rowguid}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <Controller
-                    name="modifiedDate"
-                    defaultValue={item.modifiedDate}
-                    control={control}
-                    {...register("modifiedDate", customerFormValidationWhenEdit.modifiedDate)}
-                    render={
-                        ({ field: { onChange, ...restField } }) =>
-                            <DatePicker
-                                ref={null}
-                                label={t('ModifiedDate')}
-                                onChange={(event) => { onChange(event); }}
-                                renderInput={(params) =>
-                                    <TextField
-                                        ref={null}
-                                        fullWidth
-                                        autoComplete='modifiedDate'
-                                        error={!!errors.modifiedDate}
-                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                        {...params}
-                                    />}
-                                {...restField}
+                <Box sx={{ ...scrollableCardContent }}>
+                    <Grid container spacing={2}>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='customerID'
+                                label={t('CustomerID')}
+                                value={item.customerID}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
                             />
-                    }
-                />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <FormControlLabel
+                                control={
+                                    <Controller
+                                        control={control}
+                                        name="nameStyle"
+                                        defaultValue={item.nameStyle}
+                                        {...register("nameStyle", customerFormValidationWhenEdit.nameStyle)}
+                                        render={({ field: { onChange } }) => (
+                                            <Checkbox
+                                                color="primary"
+                                                onChange={(e) => onChange(e.target.checked)}
+                                            />
+                                        )}
+                                    />
+                                }
+                                label={
+                                    <Typography>{t('NameStyle')}</Typography>
+                                }
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='title'
+                                label={t('Title')}
+                                defaultValue={item.title}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("title", customerFormValidationWhenEdit.title)}
+                                autoComplete='title'
+                                error={!!errors.title}
+                                fullWidth
+                                helperText={!!errors.title ? t(errors.title.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='firstName'
+                                label={t('FirstName')}
+                                defaultValue={item.firstName}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("firstName", customerFormValidationWhenEdit.firstName)}
+                                autoComplete='firstName'
+                                error={!!errors.firstName}
+                                fullWidth
+                                helperText={!!errors.firstName ? t(errors.firstName.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='middleName'
+                                label={t('MiddleName')}
+                                defaultValue={item.middleName}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("middleName", customerFormValidationWhenEdit.middleName)}
+                                autoComplete='middleName'
+                                error={!!errors.middleName}
+                                fullWidth
+                                helperText={!!errors.middleName ? t(errors.middleName.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='lastName'
+                                label={t('LastName')}
+                                defaultValue={item.lastName}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("lastName", customerFormValidationWhenEdit.lastName)}
+                                autoComplete='lastName'
+                                error={!!errors.lastName}
+                                fullWidth
+                                helperText={!!errors.lastName ? t(errors.lastName.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='suffix'
+                                label={t('Suffix')}
+                                defaultValue={item.suffix}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("suffix", customerFormValidationWhenEdit.suffix)}
+                                autoComplete='suffix'
+                                error={!!errors.suffix}
+                                fullWidth
+                                helperText={!!errors.suffix ? t(errors.suffix.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='companyName'
+                                label={t('CompanyName')}
+                                defaultValue={item.companyName}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("companyName", customerFormValidationWhenEdit.companyName)}
+                                autoComplete='companyName'
+                                error={!!errors.companyName}
+                                fullWidth
+                                helperText={!!errors.companyName ? t(errors.companyName.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='salesPerson'
+                                label={t('SalesPerson')}
+                                defaultValue={item.salesPerson}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("salesPerson", customerFormValidationWhenEdit.salesPerson)}
+                                autoComplete='salesPerson'
+                                error={!!errors.salesPerson}
+                                fullWidth
+                                helperText={!!errors.salesPerson ? t(errors.salesPerson.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='emailAddress'
+                                label={t('EmailAddress')}
+                                defaultValue={item.emailAddress}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("emailAddress", customerFormValidationWhenEdit.emailAddress)}
+                                autoComplete='emailAddress'
+                                error={!!errors.emailAddress}
+                                fullWidth
+                                helperText={!!errors.emailAddress ? t(errors.emailAddress.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='phone'
+                                label={t('Phone')}
+                                defaultValue={item.phone}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("phone", customerFormValidationWhenEdit.phone)}
+                                autoComplete='phone'
+                                error={!!errors.phone}
+                                fullWidth
+                                helperText={!!errors.phone ? t(errors.phone.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='passwordHash'
+                                label={t('PasswordHash')}
+                                defaultValue={item.passwordHash}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("passwordHash", customerFormValidationWhenEdit.passwordHash)}
+                                autoComplete='passwordHash'
+                                error={!!errors.passwordHash}
+                                fullWidth
+                                helperText={!!errors.passwordHash ? t(errors.passwordHash.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='passwordSalt'
+                                label={t('PasswordSalt')}
+                                defaultValue={item.passwordSalt}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("passwordSalt", customerFormValidationWhenEdit.passwordSalt)}
+                                autoComplete='passwordSalt'
+                                error={!!errors.passwordSalt}
+                                fullWidth
+                                helperText={!!errors.passwordSalt ? t(errors.passwordSalt.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='rowguid'
+                                label={t('rowguid')}
+                                value={item.rowguid}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <Controller
+                                name="modifiedDate"
+                                defaultValue={item.modifiedDate}
+                                control={control}
+                                {...register("modifiedDate", customerFormValidationWhenEdit.modifiedDate)}
+                                render={
+                                    ({ field: { onChange, ...restField } }) =>
+                                        <DatePicker
+                                            ref={null}
+                                            label={t('ModifiedDate')}
+                                            onChange={(event) => { onChange(event); }}
+                                            renderInput={(params) =>
+                                                <TextField
+                                                    ref={null}
+                                                    fullWidth
+                                                    autoComplete='modifiedDate'
+                                                    error={!!errors.modifiedDate}
+                                                    helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                                                    {...params}
+                                                />}
+                                            {...restField}
+                                        />
+                                }
+                            />
+                        </Grid>
+                    </Grid>
+				</Box>
             </CardContent>
             {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Inline) && <CardActions disableSpacing>
                 {(!!previousAction || !!nextAction) && <ButtonGroup

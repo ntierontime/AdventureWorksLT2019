@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, TextField, Typography, useTheme } from '@mui/material';
+import { Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, TextField, Typography, useTheme } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -29,7 +29,7 @@ import { put } from 'src/slices/AddressSlice';
 
 export default function EditPartial(props: ItemPartialViewProps<IAddressDataModel>): JSX.Element {
     const navigate = useNavigate();
-    const { crudViewContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
+    const { gridColumns, scrollableCardContent, crudViewContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
     const { doneAction, previousAction, nextAction } = props; // dialog
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
@@ -181,124 +181,146 @@ export default function EditPartial(props: ItemPartialViewProps<IAddressDataMode
                 </Typography>
             </CardContent>}
             <CardContent>
-                <TextField
-                    name='addressID'
-                    label={t('AddressID')}
-                    value={item.addressID}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='addressLine1'
-                    label={t('AddressLine1')}
-                    defaultValue={item.addressLine1}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("addressLine1", addressFormValidationWhenEdit.addressLine1)}
-                    autoComplete='addressLine1'
-                    error={!!errors.addressLine1}
-                    fullWidth
-                    helperText={!!errors.addressLine1 ? t(errors.addressLine1.message) : ''}
-                />
-                <TextField
-                    name='addressLine2'
-                    label={t('AddressLine2')}
-                    defaultValue={item.addressLine2}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("addressLine2", addressFormValidationWhenEdit.addressLine2)}
-                    autoComplete='addressLine2'
-                    error={!!errors.addressLine2}
-                    fullWidth
-                    helperText={!!errors.addressLine2 ? t(errors.addressLine2.message) : ''}
-                />
-                <TextField
-                    name='city'
-                    label={t('City')}
-                    defaultValue={item.city}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("city", addressFormValidationWhenEdit.city)}
-                    autoComplete='city'
-                    error={!!errors.city}
-                    fullWidth
-                    helperText={!!errors.city ? t(errors.city.message) : ''}
-                />
-                <TextField
-                    name='stateProvince'
-                    label={t('StateProvince')}
-                    defaultValue={item.stateProvince}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("stateProvince", addressFormValidationWhenEdit.stateProvince)}
-                    autoComplete='stateProvince'
-                    error={!!errors.stateProvince}
-                    fullWidth
-                    helperText={!!errors.stateProvince ? t(errors.stateProvince.message) : ''}
-                />
-                <TextField
-                    name='countryRegion'
-                    label={t('CountryRegion')}
-                    defaultValue={item.countryRegion}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("countryRegion", addressFormValidationWhenEdit.countryRegion)}
-                    autoComplete='countryRegion'
-                    error={!!errors.countryRegion}
-                    fullWidth
-                    helperText={!!errors.countryRegion ? t(errors.countryRegion.message) : ''}
-                />
-                <TextField
-                    name='postalCode'
-                    label={t('PostalCode')}
-                    defaultValue={item.postalCode}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("postalCode", addressFormValidationWhenEdit.postalCode)}
-                    autoComplete='postalCode'
-                    error={!!errors.postalCode}
-                    fullWidth
-                    helperText={!!errors.postalCode ? t(errors.postalCode.message) : ''}
-                />
-                <TextField
-                    name='rowguid'
-                    label={t('rowguid')}
-                    value={item.rowguid}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <Controller
-                    name="modifiedDate"
-                    defaultValue={item.modifiedDate}
-                    control={control}
-                    {...register("modifiedDate", addressFormValidationWhenEdit.modifiedDate)}
-                    render={
-                        ({ field: { onChange, ...restField } }) =>
-                            <DatePicker
-                                ref={null}
-                                label={t('ModifiedDate')}
-                                onChange={(event) => { onChange(event); }}
-                                renderInput={(params) =>
-                                    <TextField
-                                        ref={null}
-                                        fullWidth
-                                        autoComplete='modifiedDate'
-                                        error={!!errors.modifiedDate}
-                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                        {...params}
-                                    />}
-                                {...restField}
+                <Box sx={{ ...scrollableCardContent }}>
+                    <Grid container spacing={2}>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='addressID'
+                                label={t('AddressID')}
+                                value={item.addressID}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
                             />
-                    }
-                />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='addressLine1'
+                                label={t('AddressLine1')}
+                                defaultValue={item.addressLine1}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("addressLine1", addressFormValidationWhenEdit.addressLine1)}
+                                autoComplete='addressLine1'
+                                error={!!errors.addressLine1}
+                                fullWidth
+                                helperText={!!errors.addressLine1 ? t(errors.addressLine1.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='addressLine2'
+                                label={t('AddressLine2')}
+                                defaultValue={item.addressLine2}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("addressLine2", addressFormValidationWhenEdit.addressLine2)}
+                                autoComplete='addressLine2'
+                                error={!!errors.addressLine2}
+                                fullWidth
+                                helperText={!!errors.addressLine2 ? t(errors.addressLine2.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='city'
+                                label={t('City')}
+                                defaultValue={item.city}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("city", addressFormValidationWhenEdit.city)}
+                                autoComplete='city'
+                                error={!!errors.city}
+                                fullWidth
+                                helperText={!!errors.city ? t(errors.city.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='stateProvince'
+                                label={t('StateProvince')}
+                                defaultValue={item.stateProvince}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("stateProvince", addressFormValidationWhenEdit.stateProvince)}
+                                autoComplete='stateProvince'
+                                error={!!errors.stateProvince}
+                                fullWidth
+                                helperText={!!errors.stateProvince ? t(errors.stateProvince.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='countryRegion'
+                                label={t('CountryRegion')}
+                                defaultValue={item.countryRegion}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("countryRegion", addressFormValidationWhenEdit.countryRegion)}
+                                autoComplete='countryRegion'
+                                error={!!errors.countryRegion}
+                                fullWidth
+                                helperText={!!errors.countryRegion ? t(errors.countryRegion.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='postalCode'
+                                label={t('PostalCode')}
+                                defaultValue={item.postalCode}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("postalCode", addressFormValidationWhenEdit.postalCode)}
+                                autoComplete='postalCode'
+                                error={!!errors.postalCode}
+                                fullWidth
+                                helperText={!!errors.postalCode ? t(errors.postalCode.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='rowguid'
+                                label={t('rowguid')}
+                                value={item.rowguid}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <Controller
+                                name="modifiedDate"
+                                defaultValue={item.modifiedDate}
+                                control={control}
+                                {...register("modifiedDate", addressFormValidationWhenEdit.modifiedDate)}
+                                render={
+                                    ({ field: { onChange, ...restField } }) =>
+                                        <DatePicker
+                                            ref={null}
+                                            label={t('ModifiedDate')}
+                                            onChange={(event) => { onChange(event); }}
+                                            renderInput={(params) =>
+                                                <TextField
+                                                    ref={null}
+                                                    fullWidth
+                                                    autoComplete='modifiedDate'
+                                                    error={!!errors.modifiedDate}
+                                                    helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                                                    {...params}
+                                                />}
+                                            {...restField}
+                                        />
+                                }
+                            />
+                        </Grid>
+                    </Grid>
+				</Box>
             </CardContent>
             {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Inline) && <CardActions disableSpacing>
                 {(!!previousAction || !!nextAction) && <ButtonGroup

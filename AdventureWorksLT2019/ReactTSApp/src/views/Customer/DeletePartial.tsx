@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, TextField, Typography, useTheme } from '@mui/material';
+import { Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, TextField, Typography, useTheme } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -27,7 +27,7 @@ import { delete1 } from 'src/slices/CustomerSlice';
 export default function DeletePartial(props: ItemPartialViewProps<ICustomerDataModel>): JSX.Element {
     const navigate = useNavigate();
     
-    const { crudViewContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
+    const { gridColumns, scrollableCardContent, crudViewContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
     const { doneAction, previousAction, nextAction } = props; // dialog
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
@@ -170,164 +170,198 @@ export default function DeletePartial(props: ItemPartialViewProps<ICustomerDataM
                 </Typography>
             </CardContent>
             <CardContent>
-                <TextField
-                    name='customerID'
-                    label={t('CustomerID')}
-                    value={item.customerID}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <FormControlLabel control={<Checkbox checked={item.nameStyle} readOnly />} label={t('NameStyle')} />
-                <TextField
-                    name='title'
-                    label={t('Title')}
-                    defaultValue={item.title}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='firstName'
-                    label={t('FirstName')}
-                    defaultValue={item.firstName}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='middleName'
-                    label={t('MiddleName')}
-                    defaultValue={item.middleName}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='lastName'
-                    label={t('LastName')}
-                    defaultValue={item.lastName}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='suffix'
-                    label={t('Suffix')}
-                    defaultValue={item.suffix}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='companyName'
-                    label={t('CompanyName')}
-                    defaultValue={item.companyName}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='salesPerson'
-                    label={t('SalesPerson')}
-                    defaultValue={item.salesPerson}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='emailAddress'
-                    label={t('EmailAddress')}
-                    defaultValue={item.emailAddress}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='phone'
-                    label={t('Phone')}
-                    defaultValue={item.phone}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='passwordHash'
-                    label={t('PasswordHash')}
-                    defaultValue={item.passwordHash}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='passwordSalt'
-                    label={t('PasswordSalt')}
-                    defaultValue={item.passwordSalt}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='rowguid'
-                    label={t('rowguid')}
-                    value={item.rowguid}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <DatePicker
-                    label={t('ModifiedDate')}
-                    value={t(i18nFormats.dateTime.format, { val: new Date(item.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-                    onChange={() => { }}
-                    renderInput={(params) =>
-                        <TextField
-                            fullWidth
-                            autoComplete='modifiedDate'
-                            {...params}
-                            InputProps={{
-                                readOnly: true
-                            }}
-                        />}
-                />
+                <Box sx={{ ...scrollableCardContent }}>
+                    <Grid container spacing={2}>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='customerID'
+                                label={t('CustomerID')}
+                                value={item.customerID}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <FormControlLabel control={<Checkbox checked={item.nameStyle} readOnly />} label={t('NameStyle')} />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='title'
+                                label={t('Title')}
+                                defaultValue={item.title}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='firstName'
+                                label={t('FirstName')}
+                                defaultValue={item.firstName}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='middleName'
+                                label={t('MiddleName')}
+                                defaultValue={item.middleName}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='lastName'
+                                label={t('LastName')}
+                                defaultValue={item.lastName}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='suffix'
+                                label={t('Suffix')}
+                                defaultValue={item.suffix}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='companyName'
+                                label={t('CompanyName')}
+                                defaultValue={item.companyName}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='salesPerson'
+                                label={t('SalesPerson')}
+                                defaultValue={item.salesPerson}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='emailAddress'
+                                label={t('EmailAddress')}
+                                defaultValue={item.emailAddress}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='phone'
+                                label={t('Phone')}
+                                defaultValue={item.phone}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='passwordHash'
+                                label={t('PasswordHash')}
+                                defaultValue={item.passwordHash}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='passwordSalt'
+                                label={t('PasswordSalt')}
+                                defaultValue={item.passwordSalt}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='rowguid'
+                                label={t('rowguid')}
+                                value={item.rowguid}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <DatePicker
+                                label={t('ModifiedDate')}
+                                value={t(i18nFormats.dateTime.format, { val: new Date(item.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
+                                onChange={() => { }}
+                                renderInput={(params) =>
+                                    <TextField
+                                        fullWidth
+                                        autoComplete='modifiedDate'
+                                        {...params}
+                                        InputProps={{
+                                            readOnly: true
+                                        }}
+                                    />}
+                            />
+                        </Grid>
+                    </Grid>
+				</Box>
             </CardContent>
             {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Inline) && <CardActions disableSpacing>
                 {(!!previousAction || !!nextAction) && <ButtonGroup

@@ -1,4 +1,4 @@
-import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, Stack, TextField, Typography, useTheme } from '@mui/material';
+import { Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, Stack, TextField, Typography, useTheme } from '@mui/material';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -27,7 +27,7 @@ import { getRouteParamsOfICustomerAddressIdentifier } from 'src/dataModels/ICust
 
 export default function DetailsPartial(props: ItemPartialViewProps<ICustomerAddressDataModel>): JSX.Element {
     const navigate = useNavigate();
-    const { crudViewContainer, item, itemIndex, isItemSelected, handleSelectItemClick, changeViewItemTemplate, handleItemDialogOpen } = props; // item
+    const { gridColumns, scrollableCardContent, crudViewContainer, item, itemIndex, isItemSelected, handleSelectItemClick, changeViewItemTemplate, handleItemDialogOpen } = props; // item
     const { doneAction, previousAction, nextAction } = props; // dialog
     const { t } = useTranslation();
 
@@ -175,60 +175,74 @@ export default function DetailsPartial(props: ItemPartialViewProps<ICustomerAddr
                 subheader={t('{{val, datetime}}', { val: new Date(item.modifiedDate) })}
             />
             <CardContent>
-                <Stack sx={{ p: 2 }}
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={2}
-                >
-                    <Typography>{t("CustomerID")}</Typography>
-                    <Link to={"/customer/Details/" + item.customerID}>{item.customer_Name}</Link>
-                </Stack>
-                <Stack sx={{ p: 2 }}
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={2}
-                >
-                    <Typography>{t("AddressID")}</Typography>
-                    <Link to={"/address/Details/" + item.addressID}>{item.address_Name}</Link>
-                </Stack>
-                <TextField
-                    name='addressType'
-                    label={t('AddressType')}
-                    defaultValue={item.addressType}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='rowguid'
-                    label={t('rowguid')}
-                    value={item.rowguid}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <DatePicker
-                    label={t('ModifiedDate')}
-                    value={t(i18nFormats.dateTime.format, { val: new Date(item.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-                    onChange={() => { }}
-                    renderInput={(params) =>
-                        <TextField
-                            fullWidth
-                            autoComplete='modifiedDate'
-                            {...params}
-                            InputProps={{
-                                readOnly: true
-                            }}
-                        />}
-                />
+                <Box sx={{ ...scrollableCardContent }}>
+                    <Grid container spacing={2}>
+                        <Grid item {...gridColumns}>
+                            <Stack sx={{ p: 2 }}
+                                direction="row"
+                                justifyContent="space-between"
+                                alignItems="center"
+                                spacing={2}
+                            >
+                                <Typography>{t("CustomerID")}</Typography>
+                                <Link to={"/customer/Details/" + item.customerID}>{item.customer_Name}</Link>
+                            </Stack>
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <Stack sx={{ p: 2 }}
+                                direction="row"
+                                justifyContent="space-between"
+                                alignItems="center"
+                                spacing={2}
+                            >
+                                <Typography>{t("AddressID")}</Typography>
+                                <Link to={"/address/Details/" + item.addressID}>{item.address_Name}</Link>
+                            </Stack>
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='addressType'
+                                label={t('AddressType')}
+                                defaultValue={item.addressType}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='rowguid'
+                                label={t('rowguid')}
+                                value={item.rowguid}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <DatePicker
+                                label={t('ModifiedDate')}
+                                value={t(i18nFormats.dateTime.format, { val: new Date(item.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
+                                onChange={() => { }}
+                                renderInput={(params) =>
+                                    <TextField
+                                        fullWidth
+                                        autoComplete='modifiedDate'
+                                        {...params}
+                                        InputProps={{
+                                            readOnly: true
+                                        }}
+                                    />}
+                            />
+                        </Grid>
+                    </Grid>
+				</Box>
             </CardContent>
             {crudViewContainer === CrudViewContainers.Dialog && <CardActions disableSpacing>
                 {(!!previousAction || !!nextAction) && <ButtonGroup

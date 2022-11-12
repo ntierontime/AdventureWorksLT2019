@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, MenuItem, TextField, Typography } from '@mui/material';
+import { Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, MenuItem, TextField, Typography } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
@@ -23,7 +23,7 @@ import { defaultProductModelProductDescription, IProductModelProductDescriptionD
 import { post } from 'src/slices/ProductModelProductDescriptionSlice';
 
 export default function CreatePartial(props: ItemPartialViewProps<IProductModelProductDescriptionDataModel>): JSX.Element {
-    const { crudViewContainer } = props; // item
+    const { gridColumns, scrollableCardContent, crudViewContainer } = props; // item
     const { doneAction } = props; // dialog
     const [item, setItem] = useState<IProductModelProductDescriptionDataModel>(defaultProductModelProductDescription());
     const { t } = useTranslation();
@@ -192,72 +192,84 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductModelP
                 </Typography>
             </CardContent>}
             <CardContent>
-                <TextField
-                    label={t("ProductModelID")}
-                    id="productModelIDSelect"
-                    select
-                    name='productModelID'
-                    {...register("productModelID", productModelProductDescriptionFormValidationWhenCreate.productModelID)}
-                    autoComplete='productModelID'
-                    variant="outlined"
-                    fullWidth
-                    defaultValue={item.productModelID}
-                >
-                    {productModel_ProductModelIDCodeList && productModel_ProductModelIDCodeList.map((v, index) => {
-                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
-                    })}
-                </TextField>
-                <TextField
-                    label={t("ProductDescriptionID")}
-                    id="productDescriptionIDSelect"
-                    select
-                    name='productDescriptionID'
-                    {...register("productDescriptionID", productModelProductDescriptionFormValidationWhenCreate.productDescriptionID)}
-                    autoComplete='productDescriptionID'
-                    variant="outlined"
-                    fullWidth
-                    defaultValue={item.productDescriptionID}
-                >
-                    {productDescription_ProductDescriptionIDCodeList && productDescription_ProductDescriptionIDCodeList.map((v, index) => {
-                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
-                    })}
-                </TextField>
-                <TextField
-                    name='culture'
-                    label={t('Culture')}
-                    defaultValue={item.culture}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("culture", productModelProductDescriptionFormValidationWhenCreate.culture)}
-                    autoComplete='culture'
-                    error={!!errors.culture}
-                    fullWidth
-                    helperText={!!errors.culture ? t(errors.culture.message) : ''}
-                />
-                <Controller
-                    name="modifiedDate"
-                    defaultValue={item.modifiedDate}
-                    control={control}
-                    {...register("modifiedDate", productModelProductDescriptionFormValidationWhenCreate.modifiedDate)}
-                    render={
-                        ({ field: { onChange, ...restField } }) =>
-                            <DatePicker
-                                ref={null}
-                                label={t('ModifiedDate')}
-                                onChange={(event) => { onChange(event); }}
-                                renderInput={(params) =>
-                                    <TextField
-                                        ref={null}
-                                        fullWidth
-                                        autoComplete='modifiedDate'
-                                        error={!!errors.modifiedDate}
-                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                        {...params}
-                                    />}
-                                {...restField}
+                <Box sx={{ ...scrollableCardContent }}>
+                    <Grid container spacing={2}>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                label={t("ProductModelID")}
+                                id="productModelIDSelect"
+                                select
+                                name='productModelID'
+                                {...register("productModelID", productModelProductDescriptionFormValidationWhenCreate.productModelID)}
+                                autoComplete='productModelID'
+                                variant="outlined"
+                                fullWidth
+                                defaultValue={item.productModelID}
+                            >
+                                {productModel_ProductModelIDCodeList && productModel_ProductModelIDCodeList.map((v, index) => {
+                                    return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
+                                })}
+                            </TextField>
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                label={t("ProductDescriptionID")}
+                                id="productDescriptionIDSelect"
+                                select
+                                name='productDescriptionID'
+                                {...register("productDescriptionID", productModelProductDescriptionFormValidationWhenCreate.productDescriptionID)}
+                                autoComplete='productDescriptionID'
+                                variant="outlined"
+                                fullWidth
+                                defaultValue={item.productDescriptionID}
+                            >
+                                {productDescription_ProductDescriptionIDCodeList && productDescription_ProductDescriptionIDCodeList.map((v, index) => {
+                                    return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
+                                })}
+                            </TextField>
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='culture'
+                                label={t('Culture')}
+                                defaultValue={item.culture}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("culture", productModelProductDescriptionFormValidationWhenCreate.culture)}
+                                autoComplete='culture'
+                                error={!!errors.culture}
+                                fullWidth
+                                helperText={!!errors.culture ? t(errors.culture.message) : ''}
                             />
-                    }
-                />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <Controller
+                                name="modifiedDate"
+                                defaultValue={item.modifiedDate}
+                                control={control}
+                                {...register("modifiedDate", productModelProductDescriptionFormValidationWhenCreate.modifiedDate)}
+                                render={
+                                    ({ field: { onChange, ...restField } }) =>
+                                        <DatePicker
+                                            ref={null}
+                                            label={t('ModifiedDate')}
+                                            onChange={(event) => { onChange(event); }}
+                                            renderInput={(params) =>
+                                                <TextField
+                                                    ref={null}
+                                                    fullWidth
+                                                    autoComplete='modifiedDate'
+                                                    error={!!errors.modifiedDate}
+                                                    helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                                                    {...params}
+                                                />}
+                                            {...restField}
+                                        />
+                                }
+                            />
+                        </Grid>
+                    </Grid>
+				</Box>
             </CardContent>
             {(crudViewContainer === CrudViewContainers.Dialog) && <CardActions disableSpacing>
                 {renderButtonGroupWhenDialog()}

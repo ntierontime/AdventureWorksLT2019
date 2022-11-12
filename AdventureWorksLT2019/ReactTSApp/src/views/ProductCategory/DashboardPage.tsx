@@ -48,14 +48,14 @@ export default function DashboardPage(): JSX.Element {
 
 
     const listItems_Products_Via_ProductCategoryID = useSelector(
-        (state: RootState) => productSelectors.selectAll(state).filter(t => t.productCategoryID == productCategoryID)
+        (state: RootState) => productSelectors.selectAll(state).filter(t => t.productCategoryID === productCategoryID)
     );
 
     const defaultIProductAdvancedQuery_Products_Via_ProductCategoryID = { ...defaultIProductAdvancedQuery(), productCategoryID: productCategoryID };
     const [advancedQuery_Products_Via_ProductCategoryID, setAdvancedQuery_Products_Via_ProductCategoryID] = useState<IProductAdvancedQuery>(defaultIProductAdvancedQuery_Products_Via_ProductCategoryID);
 
     const listItems_ProductCategories_Via_ParentProductCategoryID = useSelector(
-        (state: RootState) => productCategorySelectors.selectAll(state).filter(t => t.parentProductCategoryID == productCategoryID)
+        (state: RootState) => productCategorySelectors.selectAll(state).filter(t => t.parentProductCategoryID === productCategoryID)
     );
 
     const defaultIProductCategoryAdvancedQuery_ProductCategories_Via_ParentProductCategoryID = { ...defaultIProductCategoryAdvancedQuery(), parentProductCategoryID: productCategoryID };

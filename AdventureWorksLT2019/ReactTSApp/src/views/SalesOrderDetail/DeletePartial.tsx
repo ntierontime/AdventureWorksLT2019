@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, Stack, TextField, Typography, useTheme } from '@mui/material';
+import { Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, Stack, TextField, Typography, useTheme } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -28,7 +28,7 @@ import { delete1 } from 'src/slices/SalesOrderDetailSlice';
 export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderDetailDataModel>): JSX.Element {
     const navigate = useNavigate();
     
-    const { crudViewContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
+    const { gridColumns, scrollableCardContent, crudViewContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
     const { doneAction, previousAction, nextAction } = props; // dialog
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
@@ -171,104 +171,126 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderDet
                 </Typography>
             </CardContent>
             <CardContent>
-                <Stack sx={{ p: 2 }}
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={2}
-                >
-                    <Typography>{t("SalesOrderID")}</Typography>
-                    <Link to={"/salesOrderHeader/Details/" + item.salesOrderID}>{item.salesOrderHeader_Name}</Link>
-                </Stack>
-                <TextField
-                    name='salesOrderDetailID'
-                    label={t('SalesOrderDetailID')}
-                    value={item.salesOrderDetailID}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='orderQty'
-                    label={t('OrderQty')}
-                    value={t(i18nFormats.number.format, { val: item.orderQty })}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <Stack sx={{ p: 2 }}
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    spacing={2}
-                >
-                    <Typography>{t("ProductID")}</Typography>
-                    <Link to={"/product/Details/" + item.productID}>{item.product_Name}</Link>
-                </Stack>
-                <TextField
-                    name='unitPrice'
-                    label={t('UnitPrice')}
-                    value={t(i18nFormats.double.format, { val: item.unitPrice })}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='unitPriceDiscount'
-                    label={t('UnitPriceDiscount')}
-                    value={t(i18nFormats.double.format, { val: item.unitPriceDiscount })}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='lineTotal'
-                    label={t('LineTotal')}
-                    value={t(i18nFormats.double.format, { val: item.lineTotal })}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='rowguid'
-                    label={t('rowguid')}
-                    value={item.rowguid}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <DatePicker
-                    label={t('ModifiedDate')}
-                    value={t(i18nFormats.dateTime.format, { val: new Date(item.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-                    onChange={() => { }}
-                    renderInput={(params) =>
-                        <TextField
-                            fullWidth
-                            autoComplete='modifiedDate'
-                            {...params}
-                            InputProps={{
-                                readOnly: true
-                            }}
-                        />}
-                />
+                <Box sx={{ ...scrollableCardContent }}>
+                    <Grid container spacing={2}>
+                        <Grid item {...gridColumns}>
+                            <Stack sx={{ p: 2 }}
+                                direction="row"
+                                justifyContent="space-between"
+                                alignItems="center"
+                                spacing={2}
+                            >
+                                <Typography>{t("SalesOrderID")}</Typography>
+                                <Link to={"/salesOrderHeader/Details/" + item.salesOrderID}>{item.salesOrderHeader_Name}</Link>
+                            </Stack>
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='salesOrderDetailID'
+                                label={t('SalesOrderDetailID')}
+                                value={item.salesOrderDetailID}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='orderQty'
+                                label={t('OrderQty')}
+                                value={t(i18nFormats.number.format, { val: item.orderQty })}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <Stack sx={{ p: 2 }}
+                                direction="row"
+                                justifyContent="space-between"
+                                alignItems="center"
+                                spacing={2}
+                            >
+                                <Typography>{t("ProductID")}</Typography>
+                                <Link to={"/product/Details/" + item.productID}>{item.product_Name}</Link>
+                            </Stack>
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='unitPrice'
+                                label={t('UnitPrice')}
+                                value={t(i18nFormats.double.format, { val: item.unitPrice })}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='unitPriceDiscount'
+                                label={t('UnitPriceDiscount')}
+                                value={t(i18nFormats.double.format, { val: item.unitPriceDiscount })}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='lineTotal'
+                                label={t('LineTotal')}
+                                value={t(i18nFormats.double.format, { val: item.lineTotal })}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='rowguid'
+                                label={t('rowguid')}
+                                value={item.rowguid}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <DatePicker
+                                label={t('ModifiedDate')}
+                                value={t(i18nFormats.dateTime.format, { val: new Date(item.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
+                                onChange={() => { }}
+                                renderInput={(params) =>
+                                    <TextField
+                                        fullWidth
+                                        autoComplete='modifiedDate'
+                                        {...params}
+                                        InputProps={{
+                                            readOnly: true
+                                        }}
+                                    />}
+                            />
+                        </Grid>
+                    </Grid>
+				</Box>
             </CardContent>
             {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Inline) && <CardActions disableSpacing>
                 {(!!previousAction || !!nextAction) && <ButtonGroup

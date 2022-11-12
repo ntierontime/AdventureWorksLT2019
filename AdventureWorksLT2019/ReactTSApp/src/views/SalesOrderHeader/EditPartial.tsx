@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, MenuItem, TextField, Typography, useTheme } from '@mui/material';
+import { Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, MenuItem, TextField, Typography, useTheme } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -32,7 +32,7 @@ import { put } from 'src/slices/SalesOrderHeaderSlice';
 
 export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeaderDataModel>): JSX.Element {
     const navigate = useNavigate();
-    const { crudViewContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
+    const { gridColumns, scrollableCardContent, crudViewContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
     const { doneAction, previousAction, nextAction } = props; // dialog
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
@@ -208,330 +208,378 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                 </Typography>
             </CardContent>}
             <CardContent>
-                <TextField
-                    name='salesOrderID'
-                    label={t('SalesOrderID')}
-                    value={item.salesOrderID}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='revisionNumber'
-                    label={t('RevisionNumber')}
-                    defaultValue={item.revisionNumber}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("revisionNumber", salesOrderHeaderFormValidationWhenEdit.revisionNumber)}
-                    autoComplete='revisionNumber'
-                    error={!!errors.revisionNumber}
-                    fullWidth
-                    helperText={!!errors.revisionNumber ? t(errors.revisionNumber.message) : ''}
-                />
-                <Controller
-                    name="orderDate"
-                    defaultValue={item.orderDate}
-                    control={control}
-                    {...register("orderDate", salesOrderHeaderFormValidationWhenEdit.orderDate)}
-                    render={
-                        ({ field: { onChange, ...restField } }) =>
-                            <DatePicker
-                                ref={null}
-                                label={t('OrderDate')}
-                                onChange={(event) => { onChange(event); }}
-                                renderInput={(params) =>
-                                    <TextField
-                                        ref={null}
-                                        fullWidth
-                                        autoComplete='orderDate'
-                                        error={!!errors.orderDate}
-                                        helperText={!!errors.orderDate ? t(errors.orderDate.message) : ''}
-                                        {...params}
-                                    />}
-                                {...restField}
+                <Box sx={{ ...scrollableCardContent }}>
+                    <Grid container spacing={2}>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='salesOrderID'
+                                label={t('SalesOrderID')}
+                                value={item.salesOrderID}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
                             />
-                    }
-                />
-                <Controller
-                    name="dueDate"
-                    defaultValue={item.dueDate}
-                    control={control}
-                    {...register("dueDate", salesOrderHeaderFormValidationWhenEdit.dueDate)}
-                    render={
-                        ({ field: { onChange, ...restField } }) =>
-                            <DatePicker
-                                ref={null}
-                                label={t('DueDate')}
-                                onChange={(event) => { onChange(event); }}
-                                renderInput={(params) =>
-                                    <TextField
-                                        ref={null}
-                                        fullWidth
-                                        autoComplete='dueDate'
-                                        error={!!errors.dueDate}
-                                        helperText={!!errors.dueDate ? t(errors.dueDate.message) : ''}
-                                        {...params}
-                                    />}
-                                {...restField}
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='revisionNumber'
+                                label={t('RevisionNumber')}
+                                defaultValue={item.revisionNumber}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("revisionNumber", salesOrderHeaderFormValidationWhenEdit.revisionNumber)}
+                                autoComplete='revisionNumber'
+                                error={!!errors.revisionNumber}
+                                fullWidth
+                                helperText={!!errors.revisionNumber ? t(errors.revisionNumber.message) : ''}
                             />
-                    }
-                />
-                <Controller
-                    name="shipDate"
-                    defaultValue={item.shipDate}
-                    control={control}
-                    {...register("shipDate", salesOrderHeaderFormValidationWhenEdit.shipDate)}
-                    render={
-                        ({ field: { onChange, ...restField } }) =>
-                            <DatePicker
-                                ref={null}
-                                label={t('ShipDate')}
-                                onChange={(event) => { onChange(event); }}
-                                renderInput={(params) =>
-                                    <TextField
-                                        ref={null}
-                                        fullWidth
-                                        autoComplete='shipDate'
-                                        error={!!errors.shipDate}
-                                        //helperText={!!errors.shipDate ? t(errors.shipDate.message) : ''}
-                                        {...params}
-                                    />}
-                                {...restField}
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <Controller
+                                name="orderDate"
+                                defaultValue={item.orderDate}
+                                control={control}
+                                {...register("orderDate", salesOrderHeaderFormValidationWhenEdit.orderDate)}
+                                render={
+                                    ({ field: { onChange, ...restField } }) =>
+                                        <DatePicker
+                                            ref={null}
+                                            label={t('OrderDate')}
+                                            onChange={(event) => { onChange(event); }}
+                                            renderInput={(params) =>
+                                                <TextField
+                                                    ref={null}
+                                                    fullWidth
+                                                    autoComplete='orderDate'
+                                                    error={!!errors.orderDate}
+                                                    helperText={!!errors.orderDate ? t(errors.orderDate.message) : ''}
+                                                    {...params}
+                                                />}
+                                            {...restField}
+                                        />
+                                }
                             />
-                    }
-                />
-                <TextField
-                    name='status'
-                    label={t('Status')}
-                    defaultValue={item.status}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("status", salesOrderHeaderFormValidationWhenEdit.status)}
-                    autoComplete='status'
-                    error={!!errors.status}
-                    fullWidth
-                    helperText={!!errors.status ? t(errors.status.message) : ''}
-                />
-                <FormControlLabel
-                    control={
-                        <Controller
-                            control={control}
-                            name="onlineOrderFlag"
-                            defaultValue={item.onlineOrderFlag}
-                            {...register("onlineOrderFlag", salesOrderHeaderFormValidationWhenEdit.onlineOrderFlag)}
-                            render={({ field: { onChange } }) => (
-                                <Checkbox
-                                    color="primary"
-                                    onChange={(e) => onChange(e.target.checked)}
-                                />
-                            )}
-                        />
-                    }
-                    label={
-                        <Typography>{t('OnlineOrderFlag')}</Typography>
-                    }
-                />
-                <TextField
-                    name='salesOrderNumber'
-                    label={t('SalesOrderNumber')}
-                    defaultValue={item.salesOrderNumber}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='purchaseOrderNumber'
-                    label={t('PurchaseOrderNumber')}
-                    defaultValue={item.purchaseOrderNumber}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("purchaseOrderNumber", salesOrderHeaderFormValidationWhenEdit.purchaseOrderNumber)}
-                    autoComplete='purchaseOrderNumber'
-                    error={!!errors.purchaseOrderNumber}
-                    fullWidth
-                    helperText={!!errors.purchaseOrderNumber ? t(errors.purchaseOrderNumber.message) : ''}
-                />
-                <TextField
-                    name='accountNumber'
-                    label={t('AccountNumber')}
-                    defaultValue={item.accountNumber}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("accountNumber", salesOrderHeaderFormValidationWhenEdit.accountNumber)}
-                    autoComplete='accountNumber'
-                    error={!!errors.accountNumber}
-                    fullWidth
-                    helperText={!!errors.accountNumber ? t(errors.accountNumber.message) : ''}
-                />
-                <TextField
-                    label={t("CustomerID")}
-                    id="customerIDSelect"
-                    select
-                    name='customerID'
-                    {...register("customerID", salesOrderHeaderFormValidationWhenEdit.customerID)}
-                    autoComplete='customerID'
-                    variant="outlined"
-                    fullWidth
-                    defaultValue={item.customerID}
-                >
-                    {customer_CustomerIDCodeList && customer_CustomerIDCodeList.map((v, index) => {
-                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
-                    })}
-                </TextField>
-                <TextField
-                    label={t("ShipToAddressID")}
-                    id="shipToAddressIDSelect"
-                    select
-                    name='shipToAddressID'
-                    {...register("shipToAddressID", salesOrderHeaderFormValidationWhenEdit.shipToAddressID)}
-                    autoComplete='shipToAddressID'
-                    variant="outlined"
-                    fullWidth
-                    defaultValue={item.shipToAddressID}
-                >
-                    {address_ShipToAddressIDCodeList && address_ShipToAddressIDCodeList.map((v, index) => {
-                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
-                    })}
-                </TextField>
-                <TextField
-                    label={t("BillToAddressID")}
-                    id="billToAddressIDSelect"
-                    select
-                    name='billToAddressID'
-                    {...register("billToAddressID", salesOrderHeaderFormValidationWhenEdit.billToAddressID)}
-                    autoComplete='billToAddressID'
-                    variant="outlined"
-                    fullWidth
-                    defaultValue={item.billToAddressID}
-                >
-                    {address_BillToAddressIDCodeList && address_BillToAddressIDCodeList.map((v, index) => {
-                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
-                    })}
-                </TextField>
-                <TextField
-                    name='shipMethod'
-                    label={t('ShipMethod')}
-                    defaultValue={item.shipMethod}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("shipMethod", salesOrderHeaderFormValidationWhenEdit.shipMethod)}
-                    autoComplete='shipMethod'
-                    error={!!errors.shipMethod}
-                    fullWidth
-                    helperText={!!errors.shipMethod ? t(errors.shipMethod.message) : ''}
-                />
-                <TextField
-                    name='creditCardApprovalCode'
-                    label={t('CreditCardApprovalCode')}
-                    defaultValue={item.creditCardApprovalCode}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("creditCardApprovalCode", salesOrderHeaderFormValidationWhenEdit.creditCardApprovalCode)}
-                    autoComplete='creditCardApprovalCode'
-                    error={!!errors.creditCardApprovalCode}
-                    fullWidth
-                    helperText={!!errors.creditCardApprovalCode ? t(errors.creditCardApprovalCode.message) : ''}
-                />
-                <TextField
-                    name='subTotal'
-                    label={t('SubTotal')}
-                    defaultValue={item.subTotal}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("subTotal", salesOrderHeaderFormValidationWhenEdit.subTotal)}
-                    autoComplete='subTotal'
-                    error={!!errors.subTotal}
-                    fullWidth
-                    helperText={!!errors.subTotal ? t(errors.subTotal.message) : ''}
-                />
-                <TextField
-                    name='taxAmt'
-                    label={t('TaxAmt')}
-                    defaultValue={item.taxAmt}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("taxAmt", salesOrderHeaderFormValidationWhenEdit.taxAmt)}
-                    autoComplete='taxAmt'
-                    error={!!errors.taxAmt}
-                    fullWidth
-                    helperText={!!errors.taxAmt ? t(errors.taxAmt.message) : ''}
-                />
-                <TextField
-                    name='freight'
-                    label={t('Freight')}
-                    defaultValue={item.freight}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("freight", salesOrderHeaderFormValidationWhenEdit.freight)}
-                    autoComplete='freight'
-                    error={!!errors.freight}
-                    fullWidth
-                    helperText={!!errors.freight ? t(errors.freight.message) : ''}
-                />
-                <TextField
-                    name='totalDue'
-                    label={t('TotalDue')}
-                    value={t(i18nFormats.double.format, { val: item.totalDue })}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='comment'
-                    label={t('Comment')}
-                    defaultValue={item.comment}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("comment", salesOrderHeaderFormValidationWhenEdit.comment)}
-                    autoComplete='comment'
-                    error={!!errors.comment}
-                    fullWidth
-                    helperText={!!errors.comment ? t(errors.comment.message) : ''}
-                />
-                <TextField
-                    name='rowguid'
-                    label={t('rowguid')}
-                    value={item.rowguid}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <Controller
-                    name="modifiedDate"
-                    defaultValue={item.modifiedDate}
-                    control={control}
-                    {...register("modifiedDate", salesOrderHeaderFormValidationWhenEdit.modifiedDate)}
-                    render={
-                        ({ field: { onChange, ...restField } }) =>
-                            <DatePicker
-                                ref={null}
-                                label={t('ModifiedDate')}
-                                onChange={(event) => { onChange(event); }}
-                                renderInput={(params) =>
-                                    <TextField
-                                        ref={null}
-                                        fullWidth
-                                        autoComplete='modifiedDate'
-                                        error={!!errors.modifiedDate}
-                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                        {...params}
-                                    />}
-                                {...restField}
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <Controller
+                                name="dueDate"
+                                defaultValue={item.dueDate}
+                                control={control}
+                                {...register("dueDate", salesOrderHeaderFormValidationWhenEdit.dueDate)}
+                                render={
+                                    ({ field: { onChange, ...restField } }) =>
+                                        <DatePicker
+                                            ref={null}
+                                            label={t('DueDate')}
+                                            onChange={(event) => { onChange(event); }}
+                                            renderInput={(params) =>
+                                                <TextField
+                                                    ref={null}
+                                                    fullWidth
+                                                    autoComplete='dueDate'
+                                                    error={!!errors.dueDate}
+                                                    helperText={!!errors.dueDate ? t(errors.dueDate.message) : ''}
+                                                    {...params}
+                                                />}
+                                            {...restField}
+                                        />
+                                }
                             />
-                    }
-                />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <Controller
+                                name="shipDate"
+                                defaultValue={item.shipDate}
+                                control={control}
+                                {...register("shipDate", salesOrderHeaderFormValidationWhenEdit.shipDate)}
+                                render={
+                                    ({ field: { onChange, ...restField } }) =>
+                                        <DatePicker
+                                            ref={null}
+                                            label={t('ShipDate')}
+                                            onChange={(event) => { onChange(event); }}
+                                            renderInput={(params) =>
+                                                <TextField
+                                                    ref={null}
+                                                    fullWidth
+                                                    autoComplete='shipDate'
+                                                    error={!!errors.shipDate}
+                                                    //helperText={!!errors.shipDate ? t(errors.shipDate.message) : ''}
+                                                    {...params}
+                                                />}
+                                            {...restField}
+                                        />
+                                }
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='status'
+                                label={t('Status')}
+                                defaultValue={item.status}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("status", salesOrderHeaderFormValidationWhenEdit.status)}
+                                autoComplete='status'
+                                error={!!errors.status}
+                                fullWidth
+                                helperText={!!errors.status ? t(errors.status.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <FormControlLabel
+                                control={
+                                    <Controller
+                                        control={control}
+                                        name="onlineOrderFlag"
+                                        defaultValue={item.onlineOrderFlag}
+                                        {...register("onlineOrderFlag", salesOrderHeaderFormValidationWhenEdit.onlineOrderFlag)}
+                                        render={({ field: { onChange } }) => (
+                                            <Checkbox
+                                                color="primary"
+                                                onChange={(e) => onChange(e.target.checked)}
+                                            />
+                                        )}
+                                    />
+                                }
+                                label={
+                                    <Typography>{t('OnlineOrderFlag')}</Typography>
+                                }
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='salesOrderNumber'
+                                label={t('SalesOrderNumber')}
+                                defaultValue={item.salesOrderNumber}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='purchaseOrderNumber'
+                                label={t('PurchaseOrderNumber')}
+                                defaultValue={item.purchaseOrderNumber}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("purchaseOrderNumber", salesOrderHeaderFormValidationWhenEdit.purchaseOrderNumber)}
+                                autoComplete='purchaseOrderNumber'
+                                error={!!errors.purchaseOrderNumber}
+                                fullWidth
+                                helperText={!!errors.purchaseOrderNumber ? t(errors.purchaseOrderNumber.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='accountNumber'
+                                label={t('AccountNumber')}
+                                defaultValue={item.accountNumber}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("accountNumber", salesOrderHeaderFormValidationWhenEdit.accountNumber)}
+                                autoComplete='accountNumber'
+                                error={!!errors.accountNumber}
+                                fullWidth
+                                helperText={!!errors.accountNumber ? t(errors.accountNumber.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                label={t("CustomerID")}
+                                id="customerIDSelect"
+                                select
+                                name='customerID'
+                                {...register("customerID", salesOrderHeaderFormValidationWhenEdit.customerID)}
+                                autoComplete='customerID'
+                                variant="outlined"
+                                fullWidth
+                                defaultValue={item.customerID}
+                            >
+                                {customer_CustomerIDCodeList && customer_CustomerIDCodeList.map((v, index) => {
+                                    return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
+                                })}
+                            </TextField>
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                label={t("ShipToAddressID")}
+                                id="shipToAddressIDSelect"
+                                select
+                                name='shipToAddressID'
+                                {...register("shipToAddressID", salesOrderHeaderFormValidationWhenEdit.shipToAddressID)}
+                                autoComplete='shipToAddressID'
+                                variant="outlined"
+                                fullWidth
+                                defaultValue={item.shipToAddressID}
+                            >
+                                {address_ShipToAddressIDCodeList && address_ShipToAddressIDCodeList.map((v, index) => {
+                                    return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
+                                })}
+                            </TextField>
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                label={t("BillToAddressID")}
+                                id="billToAddressIDSelect"
+                                select
+                                name='billToAddressID'
+                                {...register("billToAddressID", salesOrderHeaderFormValidationWhenEdit.billToAddressID)}
+                                autoComplete='billToAddressID'
+                                variant="outlined"
+                                fullWidth
+                                defaultValue={item.billToAddressID}
+                            >
+                                {address_BillToAddressIDCodeList && address_BillToAddressIDCodeList.map((v, index) => {
+                                    return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
+                                })}
+                            </TextField>
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='shipMethod'
+                                label={t('ShipMethod')}
+                                defaultValue={item.shipMethod}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("shipMethod", salesOrderHeaderFormValidationWhenEdit.shipMethod)}
+                                autoComplete='shipMethod'
+                                error={!!errors.shipMethod}
+                                fullWidth
+                                helperText={!!errors.shipMethod ? t(errors.shipMethod.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='creditCardApprovalCode'
+                                label={t('CreditCardApprovalCode')}
+                                defaultValue={item.creditCardApprovalCode}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("creditCardApprovalCode", salesOrderHeaderFormValidationWhenEdit.creditCardApprovalCode)}
+                                autoComplete='creditCardApprovalCode'
+                                error={!!errors.creditCardApprovalCode}
+                                fullWidth
+                                helperText={!!errors.creditCardApprovalCode ? t(errors.creditCardApprovalCode.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='subTotal'
+                                label={t('SubTotal')}
+                                defaultValue={item.subTotal}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("subTotal", salesOrderHeaderFormValidationWhenEdit.subTotal)}
+                                autoComplete='subTotal'
+                                error={!!errors.subTotal}
+                                fullWidth
+                                helperText={!!errors.subTotal ? t(errors.subTotal.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='taxAmt'
+                                label={t('TaxAmt')}
+                                defaultValue={item.taxAmt}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("taxAmt", salesOrderHeaderFormValidationWhenEdit.taxAmt)}
+                                autoComplete='taxAmt'
+                                error={!!errors.taxAmt}
+                                fullWidth
+                                helperText={!!errors.taxAmt ? t(errors.taxAmt.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='freight'
+                                label={t('Freight')}
+                                defaultValue={item.freight}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("freight", salesOrderHeaderFormValidationWhenEdit.freight)}
+                                autoComplete='freight'
+                                error={!!errors.freight}
+                                fullWidth
+                                helperText={!!errors.freight ? t(errors.freight.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='totalDue'
+                                label={t('TotalDue')}
+                                value={t(i18nFormats.double.format, { val: item.totalDue })}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='comment'
+                                label={t('Comment')}
+                                defaultValue={item.comment}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("comment", salesOrderHeaderFormValidationWhenEdit.comment)}
+                                autoComplete='comment'
+                                error={!!errors.comment}
+                                fullWidth
+                                helperText={!!errors.comment ? t(errors.comment.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='rowguid'
+                                label={t('rowguid')}
+                                value={item.rowguid}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <Controller
+                                name="modifiedDate"
+                                defaultValue={item.modifiedDate}
+                                control={control}
+                                {...register("modifiedDate", salesOrderHeaderFormValidationWhenEdit.modifiedDate)}
+                                render={
+                                    ({ field: { onChange, ...restField } }) =>
+                                        <DatePicker
+                                            ref={null}
+                                            label={t('ModifiedDate')}
+                                            onChange={(event) => { onChange(event); }}
+                                            renderInput={(params) =>
+                                                <TextField
+                                                    ref={null}
+                                                    fullWidth
+                                                    autoComplete='modifiedDate'
+                                                    error={!!errors.modifiedDate}
+                                                    helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                                                    {...params}
+                                                />}
+                                            {...restField}
+                                        />
+                                }
+                            />
+                        </Grid>
+                    </Grid>
+				</Box>
             </CardContent>
             {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Inline) && <CardActions disableSpacing>
                 {(!!previousAction || !!nextAction) && <ButtonGroup

@@ -45,7 +45,7 @@ export default function DashboardPage(): JSX.Element {
 
 
     const listItems_SalesOrderDetails_Via_ProductID = useSelector(
-        (state: RootState) => salesOrderDetailSelectors.selectAll(state).filter(t => t.productID == productID)
+        (state: RootState) => salesOrderDetailSelectors.selectAll(state).filter(t => t.productID === productID)
     );
 
     const defaultISalesOrderDetailAdvancedQuery_SalesOrderDetails_Via_ProductID = { ...defaultISalesOrderDetailAdvancedQuery(), productID: productID };

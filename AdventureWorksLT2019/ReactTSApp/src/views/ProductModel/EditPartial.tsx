@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, TextField, Typography, useTheme } from '@mui/material';
+import { Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, TextField, Typography, useTheme } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -29,7 +29,7 @@ import { put } from 'src/slices/ProductModelSlice';
 
 export default function EditPartial(props: ItemPartialViewProps<IProductModelDataModel>): JSX.Element {
     const navigate = useNavigate();
-    const { crudViewContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
+    const { gridColumns, scrollableCardContent, crudViewContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
     const { doneAction, previousAction, nextAction } = props; // dialog
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
@@ -181,76 +181,90 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelDat
                 </Typography>
             </CardContent>}
             <CardContent>
-                <TextField
-                    name='productModelID'
-                    label={t('ProductModelID')}
-                    value={item.productModelID}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='name'
-                    label={t('Name')}
-                    defaultValue={item.name}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("name", productModelFormValidationWhenEdit.name)}
-                    autoComplete='name'
-                    error={!!errors.name}
-                    fullWidth
-                    helperText={!!errors.name ? t(errors.name.message) : ''}
-                />
-                <TextField
-                    name='catalogDescription'
-                    label={t('CatalogDescription')}
-                    defaultValue={item.catalogDescription}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("catalogDescription", productModelFormValidationWhenEdit.catalogDescription)}
-                    autoComplete='catalogDescription'
-                    error={!!errors.catalogDescription}
-                    fullWidth
-                    //helperText={!!errors.catalogDescription ? t(errors.catalogDescription.message) : ''}
-                />
-                <TextField
-                    name='rowguid'
-                    label={t('rowguid')}
-                    value={item.rowguid}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <Controller
-                    name="modifiedDate"
-                    defaultValue={item.modifiedDate}
-                    control={control}
-                    {...register("modifiedDate", productModelFormValidationWhenEdit.modifiedDate)}
-                    render={
-                        ({ field: { onChange, ...restField } }) =>
-                            <DatePicker
-                                ref={null}
-                                label={t('ModifiedDate')}
-                                onChange={(event) => { onChange(event); }}
-                                renderInput={(params) =>
-                                    <TextField
-                                        ref={null}
-                                        fullWidth
-                                        autoComplete='modifiedDate'
-                                        error={!!errors.modifiedDate}
-                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                        {...params}
-                                    />}
-                                {...restField}
+                <Box sx={{ ...scrollableCardContent }}>
+                    <Grid container spacing={2}>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='productModelID'
+                                label={t('ProductModelID')}
+                                value={item.productModelID}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
                             />
-                    }
-                />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='name'
+                                label={t('Name')}
+                                defaultValue={item.name}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("name", productModelFormValidationWhenEdit.name)}
+                                autoComplete='name'
+                                error={!!errors.name}
+                                fullWidth
+                                helperText={!!errors.name ? t(errors.name.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='catalogDescription'
+                                label={t('CatalogDescription')}
+                                defaultValue={item.catalogDescription}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("catalogDescription", productModelFormValidationWhenEdit.catalogDescription)}
+                                autoComplete='catalogDescription'
+                                error={!!errors.catalogDescription}
+                                fullWidth
+                                //helperText={!!errors.catalogDescription ? t(errors.catalogDescription.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='rowguid'
+                                label={t('rowguid')}
+                                value={item.rowguid}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <Controller
+                                name="modifiedDate"
+                                defaultValue={item.modifiedDate}
+                                control={control}
+                                {...register("modifiedDate", productModelFormValidationWhenEdit.modifiedDate)}
+                                render={
+                                    ({ field: { onChange, ...restField } }) =>
+                                        <DatePicker
+                                            ref={null}
+                                            label={t('ModifiedDate')}
+                                            onChange={(event) => { onChange(event); }}
+                                            renderInput={(params) =>
+                                                <TextField
+                                                    ref={null}
+                                                    fullWidth
+                                                    autoComplete='modifiedDate'
+                                                    error={!!errors.modifiedDate}
+                                                    helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                                                    {...params}
+                                                />}
+                                            {...restField}
+                                        />
+                                }
+                            />
+                        </Grid>
+                    </Grid>
+				</Box>
             </CardContent>
             {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Inline) && <CardActions disableSpacing>
                 {(!!previousAction || !!nextAction) && <ButtonGroup

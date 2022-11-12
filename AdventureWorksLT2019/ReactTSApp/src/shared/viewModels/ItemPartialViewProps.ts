@@ -1,8 +1,20 @@
+import { RegularBreakpoints } from "@mui/material/Grid";
 import { CrudViewContainers } from "./CrudViewContainers";
 import { ViewItemTemplates } from "./ViewItemTemplates";
 
+export const multiColumnItemViewGrid = {
+    xs: 12,
+    sm: 12,
+    md: 6,
+    lg: 4,
+    xl: 3,
+}
+
+export const scrollableCardContent = { maxHeight: '75vh', overflow: 'auto' };
+
 export interface ItemPartialViewProps<TDataModel> {
-    multiColumns: boolean;
+    gridColumns: RegularBreakpoints;
+    scrollableCardContent: any,
     crudViewContainer: CrudViewContainers,
     viewItemTemplate: ViewItemTemplates,
     item: TDataModel,
@@ -31,7 +43,8 @@ export function getCRUDItemPartialViewPropsOnDialog<TDataModel>(
     doneAction: () => void
 ): ItemPartialViewProps<TDataModel> {
     return {
-        multiColumns: true,
+        gridColumns: multiColumnItemViewGrid,
+        scrollableCardContent: scrollableCardContent,
         crudViewContainer: CrudViewContainers.Dialog,
         viewItemTemplate,
         isItemSelected: false,
@@ -58,7 +71,8 @@ export function getCRUDItemPartialViewPropsInline<TDataModel>(
     doneAction: () => void
 ): ItemPartialViewProps<TDataModel> {
     return {
-        multiColumns: false,
+        gridColumns: null,
+        scrollableCardContent: null,
         crudViewContainer: CrudViewContainers.Inline,
         viewItemTemplate,
         isItemSelected: false,
@@ -85,7 +99,8 @@ export function getCRUDItemPartialViewPropsStandalone<TDataModel>(
     doneAction: () => void
 ): ItemPartialViewProps<TDataModel> {
     return {
-        multiColumns: true,
+        gridColumns: multiColumnItemViewGrid,
+        scrollableCardContent: null,
         crudViewContainer: CrudViewContainers.StandaloneView,
         viewItemTemplate,
         isItemSelected: false,
@@ -112,7 +127,8 @@ export function getCRUDItemPartialViewPropsCard<TDataModel>(
     doneAction: () => void
 ): ItemPartialViewProps<TDataModel> {
     return {
-        multiColumns: false,
+        gridColumns: null,
+        scrollableCardContent: null,
         crudViewContainer: CrudViewContainers.Card,
         viewItemTemplate,
         isItemSelected: false,

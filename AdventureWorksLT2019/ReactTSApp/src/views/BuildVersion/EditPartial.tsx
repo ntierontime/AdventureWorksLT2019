@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, TextField, Typography, useTheme } from '@mui/material';
+import { Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, TextField, Typography, useTheme } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -29,7 +29,7 @@ import { put } from 'src/slices/BuildVersionSlice';
 
 export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDataModel>): JSX.Element {
     const navigate = useNavigate();
-    const { crudViewContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
+    const { gridColumns, scrollableCardContent, crudViewContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
     const { doneAction, previousAction, nextAction } = props; // dialog
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
@@ -181,77 +181,89 @@ export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDat
                 </Typography>
             </CardContent>}
             <CardContent>
-                <TextField
-                    name='systemInformationID'
-                    label={t('SystemInformationID')}
-                    value={item.systemInformationID}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='database_Version'
-                    label={t('Database_Version')}
-                    defaultValue={item.database_Version}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("database_Version", buildVersionFormValidationWhenEdit.database_Version)}
-                    autoComplete='database_Version'
-                    error={!!errors.database_Version}
-                    fullWidth
-                    helperText={!!errors.database_Version ? t(errors.database_Version.message) : ''}
-                />
-                <Controller
-                    name="versionDate"
-                    defaultValue={item.versionDate}
-                    control={control}
-                    {...register("versionDate", buildVersionFormValidationWhenEdit.versionDate)}
-                    render={
-                        ({ field: { onChange, ...restField } }) =>
-                            <DatePicker
-                                ref={null}
-                                label={t('VersionDate')}
-                                onChange={(event) => { onChange(event); }}
-                                renderInput={(params) =>
-                                    <TextField
-                                        ref={null}
-                                        fullWidth
-                                        autoComplete='versionDate'
-                                        error={!!errors.versionDate}
-                                        helperText={!!errors.versionDate ? t(errors.versionDate.message) : ''}
-                                        {...params}
-                                    />}
-                                {...restField}
+                <Box sx={{ ...scrollableCardContent }}>
+                    <Grid container spacing={2}>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='systemInformationID'
+                                label={t('SystemInformationID')}
+                                value={item.systemInformationID}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
                             />
-                    }
-                />
-                <Controller
-                    name="modifiedDate"
-                    defaultValue={item.modifiedDate}
-                    control={control}
-                    {...register("modifiedDate", buildVersionFormValidationWhenEdit.modifiedDate)}
-                    render={
-                        ({ field: { onChange, ...restField } }) =>
-                            <DatePicker
-                                ref={null}
-                                label={t('ModifiedDate')}
-                                onChange={(event) => { onChange(event); }}
-                                renderInput={(params) =>
-                                    <TextField
-                                        ref={null}
-                                        fullWidth
-                                        autoComplete='modifiedDate'
-                                        error={!!errors.modifiedDate}
-                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                        {...params}
-                                    />}
-                                {...restField}
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='database_Version'
+                                label={t('Database_Version')}
+                                defaultValue={item.database_Version}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("database_Version", buildVersionFormValidationWhenEdit.database_Version)}
+                                autoComplete='database_Version'
+                                error={!!errors.database_Version}
+                                fullWidth
+                                helperText={!!errors.database_Version ? t(errors.database_Version.message) : ''}
                             />
-                    }
-                />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <Controller
+                                name="versionDate"
+                                defaultValue={item.versionDate}
+                                control={control}
+                                {...register("versionDate", buildVersionFormValidationWhenEdit.versionDate)}
+                                render={
+                                    ({ field: { onChange, ...restField } }) =>
+                                        <DatePicker
+                                            ref={null}
+                                            label={t('VersionDate')}
+                                            onChange={(event) => { onChange(event); }}
+                                            renderInput={(params) =>
+                                                <TextField
+                                                    ref={null}
+                                                    fullWidth
+                                                    autoComplete='versionDate'
+                                                    error={!!errors.versionDate}
+                                                    helperText={!!errors.versionDate ? t(errors.versionDate.message) : ''}
+                                                    {...params}
+                                                />}
+                                            {...restField}
+                                        />
+                                }
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <Controller
+                                name="modifiedDate"
+                                defaultValue={item.modifiedDate}
+                                control={control}
+                                {...register("modifiedDate", buildVersionFormValidationWhenEdit.modifiedDate)}
+                                render={
+                                    ({ field: { onChange, ...restField } }) =>
+                                        <DatePicker
+                                            ref={null}
+                                            label={t('ModifiedDate')}
+                                            onChange={(event) => { onChange(event); }}
+                                            renderInput={(params) =>
+                                                <TextField
+                                                    ref={null}
+                                                    fullWidth
+                                                    autoComplete='modifiedDate'
+                                                    error={!!errors.modifiedDate}
+                                                    helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                                                    {...params}
+                                                />}
+                                            {...restField}
+                                        />
+                                }
+                            />
+                        </Grid>
+                    </Grid>
+				</Box>
             </CardContent>
             {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Inline) && <CardActions disableSpacing>
                 {(!!previousAction || !!nextAction) && <ButtonGroup

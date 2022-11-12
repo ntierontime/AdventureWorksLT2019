@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, MenuItem, TextField, Typography, useTheme } from '@mui/material';
+import { Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, MenuItem, TextField, Typography, useTheme } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -32,7 +32,7 @@ import { put } from 'src/slices/SalesOrderDetailSlice';
 
 export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetailDataModel>): JSX.Element {
     const navigate = useNavigate();
-    const { crudViewContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
+    const { gridColumns, scrollableCardContent, crudViewContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
     const { doneAction, previousAction, nextAction } = props; // dialog
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
@@ -200,129 +200,151 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
                 </Typography>
             </CardContent>}
             <CardContent>
-                <TextField
-                    label={t("SalesOrderID")}
-                    id="salesOrderIDSelect"
-                    select
-                    name='salesOrderID'
-                    {...register("salesOrderID", salesOrderDetailFormValidationWhenEdit.salesOrderID)}
-                    autoComplete='salesOrderID'
-                    variant="outlined"
-                    fullWidth
-                    defaultValue={item.salesOrderID}
-                >
-                    {salesOrderHeader_SalesOrderIDCodeList && salesOrderHeader_SalesOrderIDCodeList.map((v, index) => {
-                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
-                    })}
-                </TextField>
-                <TextField
-                    name='salesOrderDetailID'
-                    label={t('SalesOrderDetailID')}
-                    value={item.salesOrderDetailID}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='orderQty'
-                    label={t('OrderQty')}
-                    defaultValue={item.orderQty}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("orderQty", salesOrderDetailFormValidationWhenEdit.orderQty)}
-                    autoComplete='orderQty'
-                    error={!!errors.orderQty}
-                    fullWidth
-                    helperText={!!errors.orderQty ? t(errors.orderQty.message) : ''}
-                />
-                <TextField
-                    label={t("ProductID")}
-                    id="productIDSelect"
-                    select
-                    name='productID'
-                    {...register("productID", salesOrderDetailFormValidationWhenEdit.productID)}
-                    autoComplete='productID'
-                    variant="outlined"
-                    fullWidth
-                    defaultValue={item.productID}
-                >
-                    {product_ProductIDCodeList && product_ProductIDCodeList.map((v, index) => {
-                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
-                    })}
-                </TextField>
-                <TextField
-                    name='unitPrice'
-                    label={t('UnitPrice')}
-                    defaultValue={item.unitPrice}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("unitPrice", salesOrderDetailFormValidationWhenEdit.unitPrice)}
-                    autoComplete='unitPrice'
-                    error={!!errors.unitPrice}
-                    fullWidth
-                    helperText={!!errors.unitPrice ? t(errors.unitPrice.message) : ''}
-                />
-                <TextField
-                    name='unitPriceDiscount'
-                    label={t('UnitPriceDiscount')}
-                    defaultValue={item.unitPriceDiscount}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("unitPriceDiscount", salesOrderDetailFormValidationWhenEdit.unitPriceDiscount)}
-                    autoComplete='unitPriceDiscount'
-                    error={!!errors.unitPriceDiscount}
-                    fullWidth
-                    helperText={!!errors.unitPriceDiscount ? t(errors.unitPriceDiscount.message) : ''}
-                />
-                <TextField
-                    name='lineTotal'
-                    label={t('LineTotal')}
-                    value={t(i18nFormats.double.format, { val: item.lineTotal })}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <TextField
-                    name='rowguid'
-                    label={t('rowguid')}
-                    value={item.rowguid}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <Controller
-                    name="modifiedDate"
-                    defaultValue={item.modifiedDate}
-                    control={control}
-                    {...register("modifiedDate", salesOrderDetailFormValidationWhenEdit.modifiedDate)}
-                    render={
-                        ({ field: { onChange, ...restField } }) =>
-                            <DatePicker
-                                ref={null}
-                                label={t('ModifiedDate')}
-                                onChange={(event) => { onChange(event); }}
-                                renderInput={(params) =>
-                                    <TextField
-                                        ref={null}
-                                        fullWidth
-                                        autoComplete='modifiedDate'
-                                        error={!!errors.modifiedDate}
-                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                        {...params}
-                                    />}
-                                {...restField}
+                <Box sx={{ ...scrollableCardContent }}>
+                    <Grid container spacing={2}>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                label={t("SalesOrderID")}
+                                id="salesOrderIDSelect"
+                                select
+                                name='salesOrderID'
+                                {...register("salesOrderID", salesOrderDetailFormValidationWhenEdit.salesOrderID)}
+                                autoComplete='salesOrderID'
+                                variant="outlined"
+                                fullWidth
+                                defaultValue={item.salesOrderID}
+                            >
+                                {salesOrderHeader_SalesOrderIDCodeList && salesOrderHeader_SalesOrderIDCodeList.map((v, index) => {
+                                    return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
+                                })}
+                            </TextField>
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='salesOrderDetailID'
+                                label={t('SalesOrderDetailID')}
+                                value={item.salesOrderDetailID}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
                             />
-                    }
-                />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='orderQty'
+                                label={t('OrderQty')}
+                                defaultValue={item.orderQty}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("orderQty", salesOrderDetailFormValidationWhenEdit.orderQty)}
+                                autoComplete='orderQty'
+                                error={!!errors.orderQty}
+                                fullWidth
+                                helperText={!!errors.orderQty ? t(errors.orderQty.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                label={t("ProductID")}
+                                id="productIDSelect"
+                                select
+                                name='productID'
+                                {...register("productID", salesOrderDetailFormValidationWhenEdit.productID)}
+                                autoComplete='productID'
+                                variant="outlined"
+                                fullWidth
+                                defaultValue={item.productID}
+                            >
+                                {product_ProductIDCodeList && product_ProductIDCodeList.map((v, index) => {
+                                    return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
+                                })}
+                            </TextField>
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='unitPrice'
+                                label={t('UnitPrice')}
+                                defaultValue={item.unitPrice}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("unitPrice", salesOrderDetailFormValidationWhenEdit.unitPrice)}
+                                autoComplete='unitPrice'
+                                error={!!errors.unitPrice}
+                                fullWidth
+                                helperText={!!errors.unitPrice ? t(errors.unitPrice.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='unitPriceDiscount'
+                                label={t('UnitPriceDiscount')}
+                                defaultValue={item.unitPriceDiscount}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("unitPriceDiscount", salesOrderDetailFormValidationWhenEdit.unitPriceDiscount)}
+                                autoComplete='unitPriceDiscount'
+                                error={!!errors.unitPriceDiscount}
+                                fullWidth
+                                helperText={!!errors.unitPriceDiscount ? t(errors.unitPriceDiscount.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='lineTotal'
+                                label={t('LineTotal')}
+                                value={t(i18nFormats.double.format, { val: item.lineTotal })}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='rowguid'
+                                label={t('rowguid')}
+                                value={item.rowguid}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <Controller
+                                name="modifiedDate"
+                                defaultValue={item.modifiedDate}
+                                control={control}
+                                {...register("modifiedDate", salesOrderDetailFormValidationWhenEdit.modifiedDate)}
+                                render={
+                                    ({ field: { onChange, ...restField } }) =>
+                                        <DatePicker
+                                            ref={null}
+                                            label={t('ModifiedDate')}
+                                            onChange={(event) => { onChange(event); }}
+                                            renderInput={(params) =>
+                                                <TextField
+                                                    ref={null}
+                                                    fullWidth
+                                                    autoComplete='modifiedDate'
+                                                    error={!!errors.modifiedDate}
+                                                    helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                                                    {...params}
+                                                />}
+                                            {...restField}
+                                        />
+                                }
+                            />
+                        </Grid>
+                    </Grid>
+				</Box>
             </CardContent>
             {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Inline) && <CardActions disableSpacing>
                 {(!!previousAction || !!nextAction) && <ButtonGroup

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, MenuItem, TextField, Typography } from '@mui/material';
+import { Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, MenuItem, TextField, Typography } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
@@ -23,7 +23,7 @@ import { defaultSalesOrderDetail, ISalesOrderDetailDataModel, salesOrderDetailFo
 import { post } from 'src/slices/SalesOrderDetailSlice';
 
 export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderDetailDataModel>): JSX.Element {
-    const { crudViewContainer } = props; // item
+    const { gridColumns, scrollableCardContent, crudViewContainer } = props; // item
     const { doneAction } = props; // dialog
     const [item, setItem] = useState<ISalesOrderDetailDataModel>(defaultSalesOrderDetail());
     const { t } = useTranslation();
@@ -192,96 +192,112 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderDet
                 </Typography>
             </CardContent>}
             <CardContent>
-                <TextField
-                    label={t("SalesOrderID")}
-                    id="salesOrderIDSelect"
-                    select
-                    name='salesOrderID'
-                    {...register("salesOrderID", salesOrderDetailFormValidationWhenCreate.salesOrderID)}
-                    autoComplete='salesOrderID'
-                    variant="outlined"
-                    fullWidth
-                    defaultValue={item.salesOrderID}
-                >
-                    {salesOrderHeader_SalesOrderIDCodeList && salesOrderHeader_SalesOrderIDCodeList.map((v, index) => {
-                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
-                    })}
-                </TextField>
-                <TextField
-                    name='orderQty'
-                    label={t('OrderQty')}
-                    defaultValue={item.orderQty}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("orderQty", salesOrderDetailFormValidationWhenCreate.orderQty)}
-                    autoComplete='orderQty'
-                    error={!!errors.orderQty}
-                    fullWidth
-                    helperText={!!errors.orderQty ? t(errors.orderQty.message) : ''}
-                />
-                <TextField
-                    label={t("ProductID")}
-                    id="productIDSelect"
-                    select
-                    name='productID'
-                    {...register("productID", salesOrderDetailFormValidationWhenCreate.productID)}
-                    autoComplete='productID'
-                    variant="outlined"
-                    fullWidth
-                    defaultValue={item.productID}
-                >
-                    {product_ProductIDCodeList && product_ProductIDCodeList.map((v, index) => {
-                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
-                    })}
-                </TextField>
-                <TextField
-                    name='unitPrice'
-                    label={t('UnitPrice')}
-                    defaultValue={item.unitPrice}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("unitPrice", salesOrderDetailFormValidationWhenCreate.unitPrice)}
-                    autoComplete='unitPrice'
-                    error={!!errors.unitPrice}
-                    fullWidth
-                    helperText={!!errors.unitPrice ? t(errors.unitPrice.message) : ''}
-                />
-                <TextField
-                    name='unitPriceDiscount'
-                    label={t('UnitPriceDiscount')}
-                    defaultValue={item.unitPriceDiscount}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("unitPriceDiscount", salesOrderDetailFormValidationWhenCreate.unitPriceDiscount)}
-                    autoComplete='unitPriceDiscount'
-                    error={!!errors.unitPriceDiscount}
-                    fullWidth
-                    helperText={!!errors.unitPriceDiscount ? t(errors.unitPriceDiscount.message) : ''}
-                />
-                <Controller
-                    name="modifiedDate"
-                    defaultValue={item.modifiedDate}
-                    control={control}
-                    {...register("modifiedDate", salesOrderDetailFormValidationWhenCreate.modifiedDate)}
-                    render={
-                        ({ field: { onChange, ...restField } }) =>
-                            <DatePicker
-                                ref={null}
-                                label={t('ModifiedDate')}
-                                onChange={(event) => { onChange(event); }}
-                                renderInput={(params) =>
-                                    <TextField
-                                        ref={null}
-                                        fullWidth
-                                        autoComplete='modifiedDate'
-                                        error={!!errors.modifiedDate}
-                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                        {...params}
-                                    />}
-                                {...restField}
+                <Box sx={{ ...scrollableCardContent }}>
+                    <Grid container spacing={2}>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                label={t("SalesOrderID")}
+                                id="salesOrderIDSelect"
+                                select
+                                name='salesOrderID'
+                                {...register("salesOrderID", salesOrderDetailFormValidationWhenCreate.salesOrderID)}
+                                autoComplete='salesOrderID'
+                                variant="outlined"
+                                fullWidth
+                                defaultValue={item.salesOrderID}
+                            >
+                                {salesOrderHeader_SalesOrderIDCodeList && salesOrderHeader_SalesOrderIDCodeList.map((v, index) => {
+                                    return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
+                                })}
+                            </TextField>
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='orderQty'
+                                label={t('OrderQty')}
+                                defaultValue={item.orderQty}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("orderQty", salesOrderDetailFormValidationWhenCreate.orderQty)}
+                                autoComplete='orderQty'
+                                error={!!errors.orderQty}
+                                fullWidth
+                                helperText={!!errors.orderQty ? t(errors.orderQty.message) : ''}
                             />
-                    }
-                />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                label={t("ProductID")}
+                                id="productIDSelect"
+                                select
+                                name='productID'
+                                {...register("productID", salesOrderDetailFormValidationWhenCreate.productID)}
+                                autoComplete='productID'
+                                variant="outlined"
+                                fullWidth
+                                defaultValue={item.productID}
+                            >
+                                {product_ProductIDCodeList && product_ProductIDCodeList.map((v, index) => {
+                                    return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
+                                })}
+                            </TextField>
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='unitPrice'
+                                label={t('UnitPrice')}
+                                defaultValue={item.unitPrice}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("unitPrice", salesOrderDetailFormValidationWhenCreate.unitPrice)}
+                                autoComplete='unitPrice'
+                                error={!!errors.unitPrice}
+                                fullWidth
+                                helperText={!!errors.unitPrice ? t(errors.unitPrice.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='unitPriceDiscount'
+                                label={t('UnitPriceDiscount')}
+                                defaultValue={item.unitPriceDiscount}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("unitPriceDiscount", salesOrderDetailFormValidationWhenCreate.unitPriceDiscount)}
+                                autoComplete='unitPriceDiscount'
+                                error={!!errors.unitPriceDiscount}
+                                fullWidth
+                                helperText={!!errors.unitPriceDiscount ? t(errors.unitPriceDiscount.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <Controller
+                                name="modifiedDate"
+                                defaultValue={item.modifiedDate}
+                                control={control}
+                                {...register("modifiedDate", salesOrderDetailFormValidationWhenCreate.modifiedDate)}
+                                render={
+                                    ({ field: { onChange, ...restField } }) =>
+                                        <DatePicker
+                                            ref={null}
+                                            label={t('ModifiedDate')}
+                                            onChange={(event) => { onChange(event); }}
+                                            renderInput={(params) =>
+                                                <TextField
+                                                    ref={null}
+                                                    fullWidth
+                                                    autoComplete='modifiedDate'
+                                                    error={!!errors.modifiedDate}
+                                                    helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                                                    {...params}
+                                                />}
+                                            {...restField}
+                                        />
+                                }
+                            />
+                        </Grid>
+                    </Grid>
+				</Box>
             </CardContent>
             {(crudViewContainer === CrudViewContainers.Dialog) && <CardActions disableSpacing>
                 {renderButtonGroupWhenDialog()}

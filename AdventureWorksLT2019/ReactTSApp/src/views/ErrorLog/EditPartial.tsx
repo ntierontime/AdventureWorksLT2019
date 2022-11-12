@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, TextField, Typography, useTheme } from '@mui/material';
+import { Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, TextField, Typography, useTheme } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -29,7 +29,7 @@ import { put } from 'src/slices/ErrorLogSlice';
 
 export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataModel>): JSX.Element {
     const navigate = useNavigate();
-    const { crudViewContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
+    const { gridColumns, scrollableCardContent, crudViewContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
     const { doneAction, previousAction, nextAction } = props; // dialog
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
@@ -181,125 +181,147 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
                 </Typography>
             </CardContent>}
             <CardContent>
-                <TextField
-                    name='errorLogID'
-                    label={t('ErrorLogID')}
-                    value={item.errorLogID}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <Controller
-                    name="errorTime"
-                    defaultValue={item.errorTime}
-                    control={control}
-                    {...register("errorTime", errorLogFormValidationWhenEdit.errorTime)}
-                    render={
-                        ({ field: { onChange, ...restField } }) =>
-                            <DatePicker
-                                ref={null}
-                                label={t('ErrorTime')}
-                                onChange={(event) => { onChange(event); }}
-                                renderInput={(params) =>
-                                    <TextField
-                                        ref={null}
-                                        fullWidth
-                                        autoComplete='errorTime'
-                                        error={!!errors.errorTime}
-                                        helperText={!!errors.errorTime ? t(errors.errorTime.message) : ''}
-                                        {...params}
-                                    />}
-                                {...restField}
+                <Box sx={{ ...scrollableCardContent }}>
+                    <Grid container spacing={2}>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='errorLogID'
+                                label={t('ErrorLogID')}
+                                value={item.errorLogID}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
                             />
-                    }
-                />
-                <TextField
-                    name='userName'
-                    label={t('UserName')}
-                    defaultValue={item.userName}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("userName", errorLogFormValidationWhenEdit.userName)}
-                    autoComplete='userName'
-                    error={!!errors.userName}
-                    fullWidth
-                    helperText={!!errors.userName ? t(errors.userName.message) : ''}
-                />
-                <TextField
-                    name='errorNumber'
-                    label={t('ErrorNumber')}
-                    defaultValue={item.errorNumber}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("errorNumber", errorLogFormValidationWhenEdit.errorNumber)}
-                    autoComplete='errorNumber'
-                    error={!!errors.errorNumber}
-                    fullWidth
-                    helperText={!!errors.errorNumber ? t(errors.errorNumber.message) : ''}
-                />
-                <TextField
-                    name='errorSeverity'
-                    label={t('ErrorSeverity')}
-                    defaultValue={item.errorSeverity}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("errorSeverity", errorLogFormValidationWhenEdit.errorSeverity)}
-                    autoComplete='errorSeverity'
-                    error={!!errors.errorSeverity}
-                    fullWidth
-                    //helperText={!!errors.errorSeverity ? t(errors.errorSeverity.message) : ''}
-                />
-                <TextField
-                    name='errorState'
-                    label={t('ErrorState')}
-                    defaultValue={item.errorState}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("errorState", errorLogFormValidationWhenEdit.errorState)}
-                    autoComplete='errorState'
-                    error={!!errors.errorState}
-                    fullWidth
-                    //helperText={!!errors.errorState ? t(errors.errorState.message) : ''}
-                />
-                <TextField
-                    name='errorProcedure'
-                    label={t('ErrorProcedure')}
-                    defaultValue={item.errorProcedure}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("errorProcedure", errorLogFormValidationWhenEdit.errorProcedure)}
-                    autoComplete='errorProcedure'
-                    error={!!errors.errorProcedure}
-                    fullWidth
-                    helperText={!!errors.errorProcedure ? t(errors.errorProcedure.message) : ''}
-                />
-                <TextField
-                    name='errorLine'
-                    label={t('ErrorLine')}
-                    defaultValue={item.errorLine}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("errorLine", errorLogFormValidationWhenEdit.errorLine)}
-                    autoComplete='errorLine'
-                    error={!!errors.errorLine}
-                    fullWidth
-                    //helperText={!!errors.errorLine ? t(errors.errorLine.message) : ''}
-                />
-                <TextField
-                    name='errorMessage'
-                    label={t('ErrorMessage')}
-                    defaultValue={item.errorMessage}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("errorMessage", errorLogFormValidationWhenEdit.errorMessage)}
-                    autoComplete='errorMessage'
-                    error={!!errors.errorMessage}
-                    fullWidth
-                    helperText={!!errors.errorMessage ? t(errors.errorMessage.message) : ''}
-                />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <Controller
+                                name="errorTime"
+                                defaultValue={item.errorTime}
+                                control={control}
+                                {...register("errorTime", errorLogFormValidationWhenEdit.errorTime)}
+                                render={
+                                    ({ field: { onChange, ...restField } }) =>
+                                        <DatePicker
+                                            ref={null}
+                                            label={t('ErrorTime')}
+                                            onChange={(event) => { onChange(event); }}
+                                            renderInput={(params) =>
+                                                <TextField
+                                                    ref={null}
+                                                    fullWidth
+                                                    autoComplete='errorTime'
+                                                    error={!!errors.errorTime}
+                                                    helperText={!!errors.errorTime ? t(errors.errorTime.message) : ''}
+                                                    {...params}
+                                                />}
+                                            {...restField}
+                                        />
+                                }
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='userName'
+                                label={t('UserName')}
+                                defaultValue={item.userName}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("userName", errorLogFormValidationWhenEdit.userName)}
+                                autoComplete='userName'
+                                error={!!errors.userName}
+                                fullWidth
+                                helperText={!!errors.userName ? t(errors.userName.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='errorNumber'
+                                label={t('ErrorNumber')}
+                                defaultValue={item.errorNumber}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("errorNumber", errorLogFormValidationWhenEdit.errorNumber)}
+                                autoComplete='errorNumber'
+                                error={!!errors.errorNumber}
+                                fullWidth
+                                helperText={!!errors.errorNumber ? t(errors.errorNumber.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='errorSeverity'
+                                label={t('ErrorSeverity')}
+                                defaultValue={item.errorSeverity}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("errorSeverity", errorLogFormValidationWhenEdit.errorSeverity)}
+                                autoComplete='errorSeverity'
+                                error={!!errors.errorSeverity}
+                                fullWidth
+                                //helperText={!!errors.errorSeverity ? t(errors.errorSeverity.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='errorState'
+                                label={t('ErrorState')}
+                                defaultValue={item.errorState}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("errorState", errorLogFormValidationWhenEdit.errorState)}
+                                autoComplete='errorState'
+                                error={!!errors.errorState}
+                                fullWidth
+                                //helperText={!!errors.errorState ? t(errors.errorState.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='errorProcedure'
+                                label={t('ErrorProcedure')}
+                                defaultValue={item.errorProcedure}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("errorProcedure", errorLogFormValidationWhenEdit.errorProcedure)}
+                                autoComplete='errorProcedure'
+                                error={!!errors.errorProcedure}
+                                fullWidth
+                                helperText={!!errors.errorProcedure ? t(errors.errorProcedure.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='errorLine'
+                                label={t('ErrorLine')}
+                                defaultValue={item.errorLine}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("errorLine", errorLogFormValidationWhenEdit.errorLine)}
+                                autoComplete='errorLine'
+                                error={!!errors.errorLine}
+                                fullWidth
+                                //helperText={!!errors.errorLine ? t(errors.errorLine.message) : ''}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='errorMessage'
+                                label={t('ErrorMessage')}
+                                defaultValue={item.errorMessage}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("errorMessage", errorLogFormValidationWhenEdit.errorMessage)}
+                                autoComplete='errorMessage'
+                                error={!!errors.errorMessage}
+                                fullWidth
+                                helperText={!!errors.errorMessage ? t(errors.errorMessage.message) : ''}
+                            />
+                        </Grid>
+                    </Grid>
+				</Box>
             </CardContent>
             {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Inline) && <CardActions disableSpacing>
                 {(!!previousAction || !!nextAction) && <ButtonGroup

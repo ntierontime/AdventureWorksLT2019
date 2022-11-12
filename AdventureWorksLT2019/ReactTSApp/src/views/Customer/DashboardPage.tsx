@@ -49,14 +49,14 @@ export default function DashboardPage(): JSX.Element {
 
 
     const listItems_CustomerAddresses_Via_CustomerID = useSelector(
-        (state: RootState) => customerAddressSelectors.selectAll(state).filter(t => t.customerID == customerID)
+        (state: RootState) => customerAddressSelectors.selectAll(state).filter(t => t.customerID === customerID)
     );
 
     const defaultICustomerAddressAdvancedQuery_CustomerAddresses_Via_CustomerID = { ...defaultICustomerAddressAdvancedQuery(), customerID: customerID };
     const [advancedQuery_CustomerAddresses_Via_CustomerID, setAdvancedQuery_CustomerAddresses_Via_CustomerID] = useState<ICustomerAddressAdvancedQuery>(defaultICustomerAddressAdvancedQuery_CustomerAddresses_Via_CustomerID);
 
     const listItems_SalesOrderHeaders_Via_CustomerID = useSelector(
-        (state: RootState) => salesOrderHeaderSelectors.selectAll(state).filter(t => t.customerID == customerID)
+        (state: RootState) => salesOrderHeaderSelectors.selectAll(state).filter(t => t.customerID === customerID)
     );
 
     const defaultISalesOrderHeaderAdvancedQuery_SalesOrderHeaders_Via_CustomerID = { ...defaultISalesOrderHeaderAdvancedQuery(), customerID: customerID };

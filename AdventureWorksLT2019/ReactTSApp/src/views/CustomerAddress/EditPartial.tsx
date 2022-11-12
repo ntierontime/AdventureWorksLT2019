@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Avatar, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, MenuItem, TextField, Typography, useTheme } from '@mui/material';
+import { Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, MenuItem, TextField, Typography, useTheme } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -32,7 +32,7 @@ import { put } from 'src/slices/CustomerAddressSlice';
 
 export default function EditPartial(props: ItemPartialViewProps<ICustomerAddressDataModel>): JSX.Element {
     const navigate = useNavigate();
-    const { crudViewContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
+    const { gridColumns, scrollableCardContent, crudViewContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
     const { doneAction, previousAction, nextAction } = props; // dialog
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
@@ -200,83 +200,97 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerAddress
                 </Typography>
             </CardContent>}
             <CardContent>
-                <TextField
-                    label={t("CustomerID")}
-                    id="customerIDSelect"
-                    select
-                    name='customerID'
-                    {...register("customerID", customerAddressFormValidationWhenEdit.customerID)}
-                    autoComplete='customerID'
-                    variant="outlined"
-                    fullWidth
-                    defaultValue={item.customerID}
-                >
-                    {customer_CustomerIDCodeList && customer_CustomerIDCodeList.map((v, index) => {
-                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
-                    })}
-                </TextField>
-                <TextField
-                    label={t("AddressID")}
-                    id="addressIDSelect"
-                    select
-                    name='addressID'
-                    {...register("addressID", customerAddressFormValidationWhenEdit.addressID)}
-                    autoComplete='addressID'
-                    variant="outlined"
-                    fullWidth
-                    defaultValue={item.addressID}
-                >
-                    {address_AddressIDCodeList && address_AddressIDCodeList.map((v, index) => {
-                        return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
-                    })}
-                </TextField>
-                <TextField
-                    name='addressType'
-                    label={t('AddressType')}
-                    defaultValue={item.addressType}
-                    variant='outlined'
-                    margin='normal'
-                    {...register("addressType", customerAddressFormValidationWhenEdit.addressType)}
-                    autoComplete='addressType'
-                    error={!!errors.addressType}
-                    fullWidth
-                    helperText={!!errors.addressType ? t(errors.addressType.message) : ''}
-                />
-                <TextField
-                    name='rowguid'
-                    label={t('rowguid')}
-                    value={item.rowguid}
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    InputProps={{
-                        readOnly: true
-                    }}
-                />
-                <Controller
-                    name="modifiedDate"
-                    defaultValue={item.modifiedDate}
-                    control={control}
-                    {...register("modifiedDate", customerAddressFormValidationWhenEdit.modifiedDate)}
-                    render={
-                        ({ field: { onChange, ...restField } }) =>
-                            <DatePicker
-                                ref={null}
-                                label={t('ModifiedDate')}
-                                onChange={(event) => { onChange(event); }}
-                                renderInput={(params) =>
-                                    <TextField
-                                        ref={null}
-                                        fullWidth
-                                        autoComplete='modifiedDate'
-                                        error={!!errors.modifiedDate}
-                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                        {...params}
-                                    />}
-                                {...restField}
+                <Box sx={{ ...scrollableCardContent }}>
+                    <Grid container spacing={2}>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                label={t("CustomerID")}
+                                id="customerIDSelect"
+                                select
+                                name='customerID'
+                                {...register("customerID", customerAddressFormValidationWhenEdit.customerID)}
+                                autoComplete='customerID'
+                                variant="outlined"
+                                fullWidth
+                                defaultValue={item.customerID}
+                            >
+                                {customer_CustomerIDCodeList && customer_CustomerIDCodeList.map((v, index) => {
+                                    return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
+                                })}
+                            </TextField>
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                label={t("AddressID")}
+                                id="addressIDSelect"
+                                select
+                                name='addressID'
+                                {...register("addressID", customerAddressFormValidationWhenEdit.addressID)}
+                                autoComplete='addressID'
+                                variant="outlined"
+                                fullWidth
+                                defaultValue={item.addressID}
+                            >
+                                {address_AddressIDCodeList && address_AddressIDCodeList.map((v, index) => {
+                                    return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
+                                })}
+                            </TextField>
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='addressType'
+                                label={t('AddressType')}
+                                defaultValue={item.addressType}
+                                variant='outlined'
+                                margin='normal'
+                                {...register("addressType", customerAddressFormValidationWhenEdit.addressType)}
+                                autoComplete='addressType'
+                                error={!!errors.addressType}
+                                fullWidth
+                                helperText={!!errors.addressType ? t(errors.addressType.message) : ''}
                             />
-                    }
-                />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
+                                name='rowguid'
+                                label={t('rowguid')}
+                                value={item.rowguid}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                            />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <Controller
+                                name="modifiedDate"
+                                defaultValue={item.modifiedDate}
+                                control={control}
+                                {...register("modifiedDate", customerAddressFormValidationWhenEdit.modifiedDate)}
+                                render={
+                                    ({ field: { onChange, ...restField } }) =>
+                                        <DatePicker
+                                            ref={null}
+                                            label={t('ModifiedDate')}
+                                            onChange={(event) => { onChange(event); }}
+                                            renderInput={(params) =>
+                                                <TextField
+                                                    ref={null}
+                                                    fullWidth
+                                                    autoComplete='modifiedDate'
+                                                    error={!!errors.modifiedDate}
+                                                    helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                                                    {...params}
+                                                />}
+                                            {...restField}
+                                        />
+                                }
+                            />
+                        </Grid>
+                    </Grid>
+				</Box>
             </CardContent>
             {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Inline) && <CardActions disableSpacing>
                 {(!!previousAction || !!nextAction) && <ButtonGroup
