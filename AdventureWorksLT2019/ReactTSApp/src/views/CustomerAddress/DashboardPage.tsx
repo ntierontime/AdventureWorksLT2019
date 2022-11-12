@@ -17,11 +17,11 @@ import { ListsPartialViewProps } from "src/shared/viewModels/ListsPartialViewPro
 import { ListViewOptions } from "src/shared/views/ListViewOptions";
 import { ViewItemTemplates } from "src/shared/viewModels/ViewItemTemplates";
 
-import { buildVersionApi } from "src/apiClients/BuildVersionApi";
-import { IBuildVersionCompositeModel, IBuildVersionCompositeModel_DataOptions__ } from "src/dataModels/IBuildVersionCompositeModel";
-import ItemViewsPartial from "src/views/BuildVersion/ItemViewsPartial";
+import { customerAddressApi } from "src/apiClients/CustomerAddressApi";
+import { ICustomerAddressCompositeModel, ICustomerAddressCompositeModel_DataOptions__ } from "src/dataModels/ICustomerAddressCompositeModel";
+import ItemViewsPartial from "src/views/CustomerAddress/ItemViewsPartial";
 
-import { IBuildVersionDataModel } from "src/dataModels/IBuildVersionDataModel";
+import { ICustomerAddressDataModel } from "src/dataModels/ICustomerAddressDataModel";
 
 
 
@@ -37,16 +37,15 @@ export default function DashboardPage(): JSX.Element {
     };
 
     const params = useParams()
-    const systemInformationID = parseInt(params.systemInformationID, 10);
-    const versionDate = params.versionDate;
-    const modifiedDate = params.modifiedDate;
-    const [compositeModel, setCompositeModel] = useState<IBuildVersionCompositeModel>(null);
+    const customerID = parseInt(params.customerID, 10);
+    const addressID = parseInt(params.addressID, 10);
+    const [compositeModel, setCompositeModel] = useState<ICustomerAddressCompositeModel>(null);
 
 
 
     useEffect(() => {
 
-        buildVersionApi.GetCompositeModel({ systemInformationID, versionDate, modifiedDate })
+        customerAddressApi.GetCompositeModel({ customerID, addressID })
             .then((res) => {
                 //console.log(res);
                 setCompositeModel(res);
@@ -63,7 +62,7 @@ export default function DashboardPage(): JSX.Element {
 
     const { __Master__ } = compositeModel;
 
-    const crudItemPartialViewProps = getCRUDItemPartialViewPropsCard<IBuildVersionDataModel>(
+    const crudItemPartialViewProps = getCRUDItemPartialViewPropsCard<ICustomerAddressDataModel>(
         ViewItemTemplates.Details,
         () => {
             navigate(-1);

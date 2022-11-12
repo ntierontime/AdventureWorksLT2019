@@ -18,10 +18,10 @@ import { search, bulkDelete } from 'src/slices/BuildVersionSlice';
 import { getBuildVersionQueryOrderBySettings, IBuildVersionAdvancedQuery, IBuildVersionIdentifier, getIBuildVersionIdentifier, compareIBuildVersionIdentifier } from 'src/dataModels/IBuildVersionQueries';
 import ItemViewsPartial from './ItemViewsPartial';
 
-import AdvancedSearchPartial from './AdvancedSearchPartial'
-import CarouselPartial from './CarouselPartial'
-import HtmlTablePartial from './HtmlTablePartial'
-import TilesPartial from './TilesPartial'
+import AdvancedSearchPartial from './AdvancedSearchPartial';
+import CarouselPartial from './CarouselPartial';
+import HtmlTablePartial from './HtmlTablePartial';
+import TilesPartial from './TilesPartial';
 
 export default function ListsPartial(props: ListsPartialViewProps<IBuildVersionAdvancedQuery, IBuildVersionDataModel>): JSX.Element {
     const { advancedQuery, setAdvancedQuery, defaultAdvancedQuery, listItems, initialLoadFromServer, hasListToolBar, hasAdvancedSearch, addNewButtonContainer } = props;

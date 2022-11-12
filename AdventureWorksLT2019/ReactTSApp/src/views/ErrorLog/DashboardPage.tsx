@@ -17,11 +17,11 @@ import { ListsPartialViewProps } from "src/shared/viewModels/ListsPartialViewPro
 import { ListViewOptions } from "src/shared/views/ListViewOptions";
 import { ViewItemTemplates } from "src/shared/viewModels/ViewItemTemplates";
 
-import { buildVersionApi } from "src/apiClients/BuildVersionApi";
-import { IBuildVersionCompositeModel, IBuildVersionCompositeModel_DataOptions__ } from "src/dataModels/IBuildVersionCompositeModel";
-import ItemViewsPartial from "src/views/BuildVersion/ItemViewsPartial";
+import { errorLogApi } from "src/apiClients/ErrorLogApi";
+import { IErrorLogCompositeModel, IErrorLogCompositeModel_DataOptions__ } from "src/dataModels/IErrorLogCompositeModel";
+import ItemViewsPartial from "src/views/ErrorLog/ItemViewsPartial";
 
-import { IBuildVersionDataModel } from "src/dataModels/IBuildVersionDataModel";
+import { IErrorLogDataModel } from "src/dataModels/IErrorLogDataModel";
 
 
 
@@ -37,16 +37,14 @@ export default function DashboardPage(): JSX.Element {
     };
 
     const params = useParams()
-    const systemInformationID = parseInt(params.systemInformationID, 10);
-    const versionDate = params.versionDate;
-    const modifiedDate = params.modifiedDate;
-    const [compositeModel, setCompositeModel] = useState<IBuildVersionCompositeModel>(null);
+    const errorLogID = parseInt(params.errorLogID, 10);
+    const [compositeModel, setCompositeModel] = useState<IErrorLogCompositeModel>(null);
 
 
 
     useEffect(() => {
 
-        buildVersionApi.GetCompositeModel({ systemInformationID, versionDate, modifiedDate })
+        errorLogApi.GetCompositeModel({ errorLogID })
             .then((res) => {
                 //console.log(res);
                 setCompositeModel(res);
@@ -63,7 +61,7 @@ export default function DashboardPage(): JSX.Element {
 
     const { __Master__ } = compositeModel;
 
-    const crudItemPartialViewProps = getCRUDItemPartialViewPropsCard<IBuildVersionDataModel>(
+    const crudItemPartialViewProps = getCRUDItemPartialViewPropsCard<IErrorLogDataModel>(
         ViewItemTemplates.Details,
         () => {
             navigate(-1);

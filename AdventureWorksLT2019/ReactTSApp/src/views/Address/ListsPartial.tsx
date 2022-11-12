@@ -18,10 +18,10 @@ import { search, bulkDelete } from 'src/slices/AddressSlice';
 import { getAddressQueryOrderBySettings, IAddressAdvancedQuery, IAddressIdentifier, getIAddressIdentifier, compareIAddressIdentifier } from 'src/dataModels/IAddressQueries';
 import ItemViewsPartial from './ItemViewsPartial';
 
-import AdvancedSearchPartial from './AdvancedSearchPartial'
-import CarouselPartial from './CarouselPartial'
-import HtmlTablePartial from './HtmlTablePartial'
-import TilesPartial from './TilesPartial'
+import AdvancedSearchPartial from './AdvancedSearchPartial';
+import CarouselPartial from './CarouselPartial';
+import HtmlTablePartial from './HtmlTablePartial';
+import TilesPartial from './TilesPartial';
 
 export default function ListsPartial(props: ListsPartialViewProps<IAddressAdvancedQuery, IAddressDataModel>): JSX.Element {
     const { advancedQuery, setAdvancedQuery, defaultAdvancedQuery, listItems, initialLoadFromServer, hasListToolBar, hasAdvancedSearch, addNewButtonContainer } = props;

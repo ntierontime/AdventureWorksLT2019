@@ -17,11 +17,11 @@ import { ListsPartialViewProps } from "src/shared/viewModels/ListsPartialViewPro
 import { ListViewOptions } from "src/shared/views/ListViewOptions";
 import { ViewItemTemplates } from "src/shared/viewModels/ViewItemTemplates";
 
-import { buildVersionApi } from "src/apiClients/BuildVersionApi";
-import { IBuildVersionCompositeModel, IBuildVersionCompositeModel_DataOptions__ } from "src/dataModels/IBuildVersionCompositeModel";
-import ItemViewsPartial from "src/views/BuildVersion/ItemViewsPartial";
+import { productModelProductDescriptionApi } from "src/apiClients/ProductModelProductDescriptionApi";
+import { IProductModelProductDescriptionCompositeModel, IProductModelProductDescriptionCompositeModel_DataOptions__ } from "src/dataModels/IProductModelProductDescriptionCompositeModel";
+import ItemViewsPartial from "src/views/ProductModelProductDescription/ItemViewsPartial";
 
-import { IBuildVersionDataModel } from "src/dataModels/IBuildVersionDataModel";
+import { IProductModelProductDescriptionDataModel } from "src/dataModels/IProductModelProductDescriptionDataModel";
 
 
 
@@ -37,16 +37,16 @@ export default function DashboardPage(): JSX.Element {
     };
 
     const params = useParams()
-    const systemInformationID = parseInt(params.systemInformationID, 10);
-    const versionDate = params.versionDate;
-    const modifiedDate = params.modifiedDate;
-    const [compositeModel, setCompositeModel] = useState<IBuildVersionCompositeModel>(null);
+    const productModelID = parseInt(params.productModelID, 10);
+    const productDescriptionID = parseInt(params.productDescriptionID, 10);
+    const culture = params.culture;
+    const [compositeModel, setCompositeModel] = useState<IProductModelProductDescriptionCompositeModel>(null);
 
 
 
     useEffect(() => {
 
-        buildVersionApi.GetCompositeModel({ systemInformationID, versionDate, modifiedDate })
+        productModelProductDescriptionApi.GetCompositeModel({ productModelID, productDescriptionID, culture })
             .then((res) => {
                 //console.log(res);
                 setCompositeModel(res);
@@ -63,7 +63,7 @@ export default function DashboardPage(): JSX.Element {
 
     const { __Master__ } = compositeModel;
 
-    const crudItemPartialViewProps = getCRUDItemPartialViewPropsCard<IBuildVersionDataModel>(
+    const crudItemPartialViewProps = getCRUDItemPartialViewPropsCard<IProductModelProductDescriptionDataModel>(
         ViewItemTemplates.Details,
         () => {
             navigate(-1);

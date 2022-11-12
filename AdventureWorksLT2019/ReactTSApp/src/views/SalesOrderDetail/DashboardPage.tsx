@@ -17,11 +17,11 @@ import { ListsPartialViewProps } from "src/shared/viewModels/ListsPartialViewPro
 import { ListViewOptions } from "src/shared/views/ListViewOptions";
 import { ViewItemTemplates } from "src/shared/viewModels/ViewItemTemplates";
 
-import { buildVersionApi } from "src/apiClients/BuildVersionApi";
-import { IBuildVersionCompositeModel, IBuildVersionCompositeModel_DataOptions__ } from "src/dataModels/IBuildVersionCompositeModel";
-import ItemViewsPartial from "src/views/BuildVersion/ItemViewsPartial";
+import { salesOrderDetailApi } from "src/apiClients/SalesOrderDetailApi";
+import { ISalesOrderDetailCompositeModel, ISalesOrderDetailCompositeModel_DataOptions__ } from "src/dataModels/ISalesOrderDetailCompositeModel";
+import ItemViewsPartial from "src/views/SalesOrderDetail/ItemViewsPartial";
 
-import { IBuildVersionDataModel } from "src/dataModels/IBuildVersionDataModel";
+import { ISalesOrderDetailDataModel } from "src/dataModels/ISalesOrderDetailDataModel";
 
 
 
@@ -37,16 +37,15 @@ export default function DashboardPage(): JSX.Element {
     };
 
     const params = useParams()
-    const systemInformationID = parseInt(params.systemInformationID, 10);
-    const versionDate = params.versionDate;
-    const modifiedDate = params.modifiedDate;
-    const [compositeModel, setCompositeModel] = useState<IBuildVersionCompositeModel>(null);
+    const salesOrderID = parseInt(params.salesOrderID, 10);
+    const salesOrderDetailID = parseInt(params.salesOrderDetailID, 10);
+    const [compositeModel, setCompositeModel] = useState<ISalesOrderDetailCompositeModel>(null);
 
 
 
     useEffect(() => {
 
-        buildVersionApi.GetCompositeModel({ systemInformationID, versionDate, modifiedDate })
+        salesOrderDetailApi.GetCompositeModel({ salesOrderID, salesOrderDetailID })
             .then((res) => {
                 //console.log(res);
                 setCompositeModel(res);
@@ -63,7 +62,7 @@ export default function DashboardPage(): JSX.Element {
 
     const { __Master__ } = compositeModel;
 
-    const crudItemPartialViewProps = getCRUDItemPartialViewPropsCard<IBuildVersionDataModel>(
+    const crudItemPartialViewProps = getCRUDItemPartialViewPropsCard<ISalesOrderDetailDataModel>(
         ViewItemTemplates.Details,
         () => {
             navigate(-1);

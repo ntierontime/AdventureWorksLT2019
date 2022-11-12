@@ -18,10 +18,10 @@ import { search, bulkDelete } from 'src/slices/SalesOrderDetailSlice';
 import { getSalesOrderDetailQueryOrderBySettings, ISalesOrderDetailAdvancedQuery, ISalesOrderDetailIdentifier, getISalesOrderDetailIdentifier, compareISalesOrderDetailIdentifier } from 'src/dataModels/ISalesOrderDetailQueries';
 import ItemViewsPartial from './ItemViewsPartial';
 
-import AdvancedSearchPartial from './AdvancedSearchPartial'
-import CarouselPartial from './CarouselPartial'
-import HtmlTablePartial from './HtmlTablePartial'
-import TilesPartial from './TilesPartial'
+import AdvancedSearchPartial from './AdvancedSearchPartial';
+import CarouselPartial from './CarouselPartial';
+import HtmlTablePartial from './HtmlTablePartial';
+import TilesPartial from './TilesPartial';
 
 export default function ListsPartial(props: ListsPartialViewProps<ISalesOrderDetailAdvancedQuery, ISalesOrderDetailDataModel>): JSX.Element {
     const { advancedQuery, setAdvancedQuery, defaultAdvancedQuery, listItems, initialLoadFromServer, hasListToolBar, hasAdvancedSearch, addNewButtonContainer } = props;
