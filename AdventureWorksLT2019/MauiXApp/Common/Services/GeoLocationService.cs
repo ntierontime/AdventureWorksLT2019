@@ -40,7 +40,7 @@ public class GeoLocationService
             if (location != null)
             {
                 //Console.WriteLine($"Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}");
-                WeakReferenceMessenger.Default.Send<GeoLocationChangedMessage>(new GeoLocationChangedMessage(Microsoft.Spatial.GeographyPoint.Create(location.Latitude, location.Longitude)));
+                WeakReferenceMessenger.Default.Send<GeoLocationChangedMessage>(new GeoLocationChangedMessage(new NetTopologySuite.Geometries.Point(location.Latitude, location.Longitude)));
             }
         }
         //catch (FeatureNotSupportedException fnsEx)

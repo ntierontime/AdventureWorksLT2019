@@ -20,8 +20,8 @@ public class AppStates : ObservableObject
         set => SetProperty(ref m_Authenticated, value);
     }
 
-    private Microsoft.Spatial.GeographyPoint m_CurrentLocation;
-    public Microsoft.Spatial.GeographyPoint CurrentLocation
+    private NetTopologySuite.Geometries.Point m_CurrentLocation;
+    public NetTopologySuite.Geometries.Point CurrentLocation
     {
         get => m_CurrentLocation;
         set => SetProperty(ref m_CurrentLocation, value);
