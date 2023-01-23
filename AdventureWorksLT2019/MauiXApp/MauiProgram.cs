@@ -10,6 +10,8 @@ using Framework.MauiX.Icons;
 using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Markup;
 
+[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
+
 namespace AdventureWorksLT2019.MauiXApp
 {
     public static class MauiProgram
@@ -26,6 +28,7 @@ namespace AdventureWorksLT2019.MauiXApp
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
                 .UseMauiCommunityToolkitMarkup()
+                .UseMauiCommunityToolkitMediaElement()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
