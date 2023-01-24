@@ -75,6 +75,7 @@ namespace AdventureWorksLT2019.MauiXApp
             builder.Services.AddScoped<RegisterUserVM>();
             builder.Services.AddScoped<FirstTimeUserVM>();
             builder.Services.AddScoped<SettingsVM>();
+            builder.Services.AddScoped<WebAuthenticatorViewModel>();
 
             // 3.1. WebApi Clients
             builder.Services.AddScoped<BuildVersionApiClient>();

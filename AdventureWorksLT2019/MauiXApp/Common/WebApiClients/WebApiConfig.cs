@@ -31,6 +31,8 @@ public class WebApiConfig : IWebApiConfig
 #endif
         }
     }
+
+    const string authenticationUrl = "https://xamarin-essentials-auth-sample.azurewebsites.net/mobileauth/";
     //public bool UseToken { get => false; }
     ///// <summary>
     ///// Should use TOKEN when on all web services calls, only exception is login.

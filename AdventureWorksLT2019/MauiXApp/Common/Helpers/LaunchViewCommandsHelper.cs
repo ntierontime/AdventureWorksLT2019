@@ -240,8 +240,8 @@ public static class LaunchViewCommandsHelper
     {
         return new Command(async () =>
         {
-            var popup = new AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.AdvancedSearchPopup();
-            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            //var popup = new AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.AdvancedSearchPopup();
+            //await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
         });
     }
 
@@ -398,8 +398,8 @@ public static class LaunchViewCommandsHelper
     {
         return new Command(async () =>
         {
-            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductCategory.AdvancedSearchPopup();
-            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            //var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductCategory.AdvancedSearchPopup();
+            //await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
         });
     }
 
@@ -477,8 +477,8 @@ public static class LaunchViewCommandsHelper
     {
         return new Command(async () =>
         {
-            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductDescription.AdvancedSearchPopup();
-            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            //var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductDescription.AdvancedSearchPopup();
+            //await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
         });
     }
 
@@ -556,8 +556,8 @@ public static class LaunchViewCommandsHelper
     {
         return new Command(async () =>
         {
-            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductModel.AdvancedSearchPopup();
-            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            //var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductModel.AdvancedSearchPopup();
+            //await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
         });
     }
 
@@ -624,8 +624,8 @@ public static class LaunchViewCommandsHelper
     {
         return new Command(async () =>
         {
-            var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductModelProductDescription.AdvancedSearchPopup();
-            await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
+            //var popup = new AdventureWorksLT2019.MauiXApp.Views.ProductModelProductDescription.AdvancedSearchPopup();
+            //await AppShell.Current.CurrentPage.ShowPopupAsync(popup);
         });
     }
 

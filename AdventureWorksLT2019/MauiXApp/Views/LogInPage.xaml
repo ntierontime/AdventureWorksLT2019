@@ -14,7 +14,7 @@
     </ContentPage.Resources>
     <VerticalStackLayout VerticalOptions="CenterAndExpand"  Margin="5" IsEnabled="{Binding EnablePage}">
         <Entry x:Name="usernameEntry" AutomationId="UsernameEntryField" Style="{StaticResource RegularEntryStyle}"
-               Placeholder="{l:Localize Email}" Text="{Binding Email}" ClearButtonVisibility="WhileEditing" >
+               Placeholder="{l:Localize Email}" Text="{Binding Email}"  >
             <!--<Entry.Behaviors>
                 <fmb:EntryValidationBehavior PropertyName="Email" />
             </Entry.Behaviors>-->

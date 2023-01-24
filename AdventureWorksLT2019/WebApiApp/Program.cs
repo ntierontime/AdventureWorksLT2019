@@ -121,7 +121,8 @@ var identitySecret = identitySecretSection.Get<IdentitySecret>();
 builder.Services.Configure<IdentitySecret>(identitySecretSection);
 var key = Encoding.ASCII.GetBytes(identitySecret.Secret);
 builder.Services.AddAuthentication()
-    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, cfg => cfg.SlidingExpiration = true)
+    .AddCookie()
+    //.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, cfg => cfg.SlidingExpiration = true)
     .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, x =>
     {
         x.RequireHttpsMetadata = false;
@@ -133,6 +134,12 @@ builder.Services.AddAuthentication()
             ValidateIssuer = false,
             ValidateAudience = false
         };
+    })
+    .AddGoogle(googleOptions =>
+    {
+        googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+        googleOptions.SaveTokens= true;
     });
 
 var app = builder.Build();

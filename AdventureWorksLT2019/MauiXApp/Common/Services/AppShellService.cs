@@ -63,6 +63,11 @@ public class AppShellService
             typeof(SettingsPage),
             UIStrings.Settings);
 
+        AddFlyoutItem(
+            nameof(WebAuthenticatorPage),
+            typeof(WebAuthenticatorPage),
+            UIStrings.LogIn);
+
         var logoutMenuItem = new MenuItem
         {
             Text = UIStrings.LogOut,
