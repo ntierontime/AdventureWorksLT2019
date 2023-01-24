@@ -1,20 +1,16 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:views="clr-namespace:CommunityToolkit.Maui.Sample.Pages.Views"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             xmlns:viewModels="clr-namespace:CommunityToolkit.Maui.Sample.ViewModels.Views"
-             xmlns:converters="clr-namespace:CommunityToolkit.Maui.Sample.Converters"
-             x:TypeArguments="viewModels:MediaElementViewModel"
-             x:DataType="viewModels:MediaElementViewModel"
-             x:Class="CommunityToolkit.Maui.Sample.Pages.Views.MediaElementPage"
-             Title="MediaElement"
-             Unloaded="BasePage_Unloaded">
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:converters="clr-namespace:Framework.MauiX.Converters;assembly=Framework.MauiX"
+             xmlns:viewModels="clr-namespace:AdventureWorksLT2019.MauiXApp.ViewModels"
+
+             x:Class="AdventureWorksLT2019.MauiXApp.Views.MediaElementPage"
+             Title="MediaElementPage">
     <ContentPage.Resources>
-        <toolkit:TimeSpanToSecondsConverter x:Key="TimeSpanConverter" />
+        <mct:TimeSpanToSecondsConverter x:Key="TimeSpanConverter" />
         <converters:SecondsToStringConverter x:Key="SecondsToStringConverter" />
     </ContentPage.Resources>
-
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
@@ -26,11 +22,13 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <toolkit:MediaElement
+            <mct:MediaElement                 
                 x:Name="mediaElement"
                 ShouldAutoPlay="True"
-                Source="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                Source="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" 
                 MediaEnded="OnMediaEnded"
                 MediaFailed="OnMediaFailed"
                 MediaOpened="OnMediaOpened"
@@ -51,7 +49,7 @@
 
             </HorizontalStackLayout>
 
-            <Grid Grid.Row="2" Padding="0,10,0,10" ColumnDefinitions="*,*,*" ColumnSpacing="5">          
+            <Grid Grid.Row="2" Padding="0,10,0,10" ColumnDefinitions="*,*,*" ColumnSpacing="5">
                 <Button Grid.Column="0" Text="Play" Clicked="OnPlayClicked" />
                 <Button Grid.Column="1" Text="Pause" Clicked="OnPauseClicked" />
                 <Button Grid.Column="2" Text="Stop" Clicked="OnStopClicked" />
@@ -102,7 +100,7 @@
                 <Button Text="-" Clicked="OnVolumeMinusClicked" />
                 <Button Text="+" Clicked="OnVolumePlusClicked" />
             </HorizontalStackLayout>
-        
+
             <VerticalStackLayout Grid.Row="7">
                 <HorizontalStackLayout Padding="0,0,0,10">
                     <Switch
@@ -135,6 +133,8 @@
                         Text="Keep screen on" />
                 </HorizontalStackLayout>
             </VerticalStackLayout>
+            <Button Grid.Row="8" Text="Change Orientation" Clicked="OnChangeOrientation" />
+            <Button Grid.Row="9" Text="Change Orientation" Clicked="OnChangeOrientation" Padding="0,0,10,10"/>
         </Grid>
     </ScrollView>
 </ContentPage>

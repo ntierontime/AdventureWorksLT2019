@@ -54,6 +54,12 @@ public class AppShellService
             }
         }
 
+        // MediaElementPage
+        AddFlyoutItem(
+            nameof(MediaElementPage),
+            typeof(MediaElementPage),
+            UIStrings.Settings);
+
         // TODO: For Testing Purpose: table relate ListPage
         AddListPagesToFlyoutItems();
 

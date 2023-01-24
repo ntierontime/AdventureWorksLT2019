@@ -27,6 +27,11 @@
 <ItemGroup>
     <ProjectReference Include="..\Framework\Framework.csproj" />
 </ItemGroup>
+<ItemGroup>
+  <Compile Update="Platforms\MacCatalyst\DeviceOrientationService.MacCatalyst.cs">
+    <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
+  </Compile>
+</ItemGroup>
 	
 </Project>
 
