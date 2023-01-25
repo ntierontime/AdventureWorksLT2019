@@ -4,21 +4,23 @@ import { Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardH
 import LoadingButton from '@mui/lab/LoadingButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CloseIcon from '@mui/icons-material/Close';
-import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 
-import { useNavigate } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Controller } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers';
 
 
-// un-comment /*getCurrency,*/ if you display money
+
+// 1. DateTime/Integer/Decimal fields are using 'i18nFormats.??' when display
+// 2. un-comment /*getCurrency,*/ if you display money
 import { /*getCurrency,*/ i18nFormats } from 'src/i18n';
 import { AppDispatch } from 'src/store/Store';
+
+import { ContainerOptions } from 'src/shared/viewModels/ContainerOptions';
 import { CrudViewContainers } from 'src/shared/viewModels/CrudViewContainers';
 import { ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps';
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
@@ -28,12 +30,13 @@ import { getErrorLogAvatar, IErrorLogDataModel, errorLogFormValidationWhenEdit }
 import { put } from 'src/slices/ErrorLogSlice';
 
 export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataModel>): JSX.Element {
-    const navigate = useNavigate();
-    const { gridColumns, scrollableCardContent, crudViewContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
+    const { gridColumns, scrollableCardContent, crudViewContainer, buttonContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
     const { doneAction, previousAction, nextAction } = props; // dialog
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
+	// 'control' is only used by boolean fields, you can remove it if this form doesn't have it
+	// 'setValue' is only used by Dropdown List fields and DatePicker fields, you can remove it if this form doesn't have it
     const { register, control, setValue, handleSubmit, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
@@ -46,6 +49,7 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
     const [saveMessage, setSaveMessage] = useState<string>();
 
 
+    const [errorTime, setErrorTime] = useState<string>();
     useEffect(() => {
 
         setSaving(false);
@@ -78,77 +82,112 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
     const avatar = getErrorLogAvatar(item);
     const avatarStyle = getAvatarStyle(item.itemUIStatus______, theme);
 
-    const renderButtonGroupWhenCard = () => {
+
+    const renderButtonGroup_IconButtons = () => {
         return (
-            <>
-                <IconButton
+            <>                {!!handleSelectItemClick && <ButtonGroup
+                    disableElevation
+                    variant="contained"
+                    aria-label="navigation buttons"
+                ><Checkbox
+                    color="primary"
+                    checked={isItemSelected}
+                    onChange={() => { handleSelectItemClick(item) }}
+                /></ButtonGroup>}
+				{(!!previousAction || !!nextAction) && <ButtonGroup
+                    disableElevation
+                    variant="contained"
+                    aria-label="navigation buttons"
+                >
+                    {!!previousAction && <Button
+                        color="secondary"
+                        disabled={saving}
+                        variant='outlined'
+                        startIcon={<NavigateBeforeIcon />}
+                        onClick={() => { previousAction() }}
+                    />}
+                    {!!nextAction && <Button
+                        color="secondary"
+                        disabled={saving}
+                        variant='outlined'
+                        endIcon={<NavigateNextIcon />}
+                        onClick={() => { nextAction() }}
+                    />}
+                </ButtonGroup>}
+                <IconButton aria-label="Save"
                     color="primary"
                     type='submit'
-                    disabled={(!isValid || saving || saved) && !isDirty}
-                    aria-label="save">
+                    disabled={!isValid || saving || saved || !isDirty}
+                >
                     <SaveIcon />
                 </IconButton>
-                <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
+                {!!doneAction && crudViewContainer !== CrudViewContainers.StandaloneView && <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
                     <CloseIcon />
-                </IconButton>
-            </>
-        );
-    }
-
-    const renderButtonGroupWhenDialog = () => {
-        return (
-            <>
-                {!!handleSelectItemClick && <Checkbox
-                    color="primary"
-                    checked={isItemSelected}
-                    onChange={() => { handleSelectItemClick(item) }}
-                />}
-                {!!changeViewItemTemplate && <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete); }} disabled={saving}>
-                    <DeleteIcon />
                 </IconButton>}
-                {!!doneAction && <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
-                    <CloseIcon />
+                {!!doneAction && crudViewContainer === CrudViewContainers.StandaloneView && <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
+                    <ArrowBackIcon />
                 </IconButton>}
             </>
         );
     }
 
-    const renderButtonGroupWhenInline = () => {
+    const renderButtonGroup_TextAndIconButtons = () => {
         return (
             <>
-                {!!handleSelectItemClick && <Checkbox
-                    color="primary"
-                    checked={isItemSelected}
-                    onChange={() => { handleSelectItemClick(item) }}
-                />}
-                {!!changeViewItemTemplate && <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete); }} disabled={saving}>
-                    <DeleteIcon />
-                </IconButton>}
-                {!!doneAction && <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
-                    <CloseIcon />
-                </IconButton>}
-            </>
-        );
-    }
-
-    const renderButtonGroupWhenStandaloneView = () => {
-        return (
-            <>
-                <LoadingButton
-                    color="primary"
-                    type='submit'
-                    variant='contained'
-                    disabled={(!isValid || saving || saved) && !isDirty}
-                    startIcon={<SaveIcon color='action' />}>
-                    {t('Save')}
-                </LoadingButton>
-                <IconButton aria-label="close"
-                    onClick={() => {
-                        navigate(-1);
-                    }} disabled={saving}
+				{(!!previousAction || !!nextAction) && <ButtonGroup
+                    disableElevation
+                    variant="contained"
+                    aria-label="navigation buttons"
                 >
-                    <CloseIcon />
-                </IconButton>
+                    {!!previousAction && <Button
+                        color="secondary"
+                        disabled={saving}
+                        variant='outlined'
+                        startIcon={<NavigateBeforeIcon />}
+                        onClick={() => { previousAction() }}
+                    />}
+                    {!!nextAction && <Button
+                        color="secondary"
+                        disabled={saving}
+                        variant='outlined'
+                        endIcon={<NavigateNextIcon />}
+                        onClick={() => { nextAction() }}
+                    />}
+                </ButtonGroup>}
+                <ButtonGroup sx={{ marginLeft: 'auto', }}
+                    disableElevation
+                    variant="contained"
+                    aria-label="navigation buttons"
+                >
+                    <LoadingButton
+                        color="primary"
+                        type='submit'
+                        variant='contained'
+                        disabled={!isValid || saving || saved || !isDirty}
+                        startIcon={<SaveIcon color='action' />}>
+                        {t('Save')}
+                    </LoadingButton>
+                    {!!doneAction && crudViewContainer !== CrudViewContainers.StandaloneView && <Button
+                        color="secondary"
+                        autoFocus
+                        disabled={saving}
+                        variant='contained'
+                        startIcon={<CloseIcon />}
+                        onClick={() => { doneAction() }}
+                    >
+                        {t('Cancel')}
+                    </Button>}
+                    {!!doneAction && crudViewContainer === CrudViewContainers.StandaloneView && <Button
+                        color="secondary"
+                        autoFocus
+                        disabled={saving}
+                        variant='contained'
+                        startIcon={<ArrowBackIcon />}
+                        onClick={() => { doneAction() }}
+                    >
+                        {t('Back')}
+                    </Button>}
+                </ButtonGroup>
             </>
         );
     }
@@ -161,17 +200,16 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
                         {avatar}
                     </Avatar>
                 }
-                action={
-                    <>
-                        {crudViewContainer === CrudViewContainers.Card && (renderButtonGroupWhenCard())}
-                        {crudViewContainer === CrudViewContainers.Dialog && (renderButtonGroupWhenDialog())}
-                        {crudViewContainer === CrudViewContainers.Inline && (renderButtonGroupWhenInline())}
-                        {(crudViewContainer === CrudViewContainers.StandaloneView) && (renderButtonGroupWhenStandaloneView())}
-                    </>
-                }
+                action={buttonContainer === ContainerOptions.ItemCardHead && <>
+                    {crudViewContainer !== CrudViewContainers.StandaloneView && renderButtonGroup_IconButtons()}
+                    {crudViewContainer === CrudViewContainers.StandaloneView && renderButtonGroup_TextAndIconButtons()}
+                </>}
                 title={item.userName}
-                subheader={t('{{val, datetime}}', { val: new Date(item.errorTime) })}
+                subheader={t(i18nFormats.dateTime.format, { val: new Date(item.errorTime), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
             />
+            {buttonContainer === ContainerOptions.ItemCardToolbar && <CardActions disableSpacing>
+                {renderButtonGroup_IconButtons()}
+            </CardActions>}
             {!!saveMessage && <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
                 <Typography variant="body1" component="span">
                     {saveMessage + " "}
@@ -197,29 +235,19 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <Controller
-                                name="errorTime"
-                                defaultValue={item.errorTime}
-                                control={control}
-                                {...register("errorTime", errorLogFormValidationWhenEdit.errorTime)}
-                                render={
-                                    ({ field: { onChange, ...restField } }) =>
-                                        <DatePicker
-                                            ref={null}
-                                            label={t('ErrorTime')}
-                                            onChange={(event) => { onChange(event); }}
-                                            renderInput={(params) =>
-                                                <TextField
-                                                    ref={null}
-                                                    fullWidth
-                                                    autoComplete='errorTime'
-                                                    error={!!errors.errorTime}
-                                                    helperText={!!errors.errorTime ? t(errors.errorTime.message) : ''}
-                                                    {...params}
-                                                />}
-                                            {...restField}
-                                        />
-                                }
+                            <DatePicker
+                                value={errorTime}
+                                label={t('ErrorTime')}
+                                onChange={(event: string) => { setErrorTime(event); setValue('errorTime', event, { shouldDirty: true }); }}
+                                renderInput={(params) =>
+                                    <TextField
+                                        fullWidth
+                                        autoComplete='errorTime'
+                            			{...register("errorTime", errorLogFormValidationWhenEdit.errorTime)}
+                                        error={!!errors.errorTime}
+                                        helperText={!!errors.errorTime ? t(errors.errorTime.message) : ''}
+                                        {...params}
+                                    />}
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
@@ -323,54 +351,10 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
                     </Grid>
 				</Box>
             </CardContent>
-            {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Inline) && <CardActions disableSpacing>
-                {(!!previousAction || !!nextAction) && <ButtonGroup
-                    disableElevation
-                    variant="contained"
-                    aria-label="navigation buttons"
-                >
-                    {!!previousAction && <Button
-                        color="secondary"
-                        disabled={saving}
-                        variant='outlined'
-                        startIcon={<NavigateBeforeIcon />}
-                        onClick={() => { previousAction() }}
-                    />}
-                    {!!nextAction && <Button
-                        color="secondary"
-                        disabled={saving}
-                        variant='outlined'
-                        endIcon={<NavigateNextIcon />}
-                        onClick={() => { nextAction() }}
-                    />}
-                </ButtonGroup>}
-                <ButtonGroup sx={{ marginLeft: 'auto', }}
-                    disableElevation
-                    variant="contained"
-                    aria-label="navigation buttons"
-                >
-                    <LoadingButton
-                        color="primary"
-                        type='submit'
-                        variant='contained'
-                        disabled={!isValid || saving || saved}
-                        startIcon={<SaveIcon color='action' />}>
-                        {t('Save')}
-                    </LoadingButton>
-                    {!!doneAction && <Button
-                        color="secondary"
-                        autoFocus
-                        disabled={saving}
-                        variant='contained'
-                        startIcon={<CloseIcon />}
-                        onClick={() => { doneAction() }}
-                    >
-                        {t('Cancel')}
-                    </Button>}
-                </ButtonGroup>
+            {buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
+                {renderButtonGroup_TextAndIconButtons()}
             </CardActions>}
         </Card >
     );
 }
-
 

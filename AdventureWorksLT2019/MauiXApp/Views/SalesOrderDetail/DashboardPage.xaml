@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:fmif="clr-namespace:Framework.MauiX.Icons;assembly=Framework.MauiX"
+             xmlns:fm="clr-namespace:Framework.Models;assembly=Framework"
+             xmlns:l="clr-namespace:AdventureWorksLT2019.MauiXApp.Extensions"
+             x:Class="AdventureWorksLT2019.MauiXApp.Views.SalesOrderDetail.DashboardPage"
+             x:Name="thisPage"
+             Title="DashboardPage">
+    <Grid Margin="0">
+        <ScrollView Margin="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <VerticalStackLayout HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
+                <Grid HorizontalOptions="FillAndExpand" VerticalOptions="Start" Margin="0,0,0,50">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                        Text="{l:Localize SalesOrderDetailID}"/>
+                    <Entry Grid.Row="0" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                        Text="{Binding __Master__.SalesOrderDetailID}"/>
+                    <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                        Text="{l:Localize OrderQty}"/>
+                    <Entry Grid.Row="1" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                        Text="{Binding __Master__.OrderQty}"/>
+                    <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                        Text="{l:Localize UnitPrice}"/>
+                    <Entry Grid.Row="2" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                        Text="{Binding __Master__.UnitPrice}"/>
+                    <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                        Text="{l:Localize UnitPriceDiscount}"/>
+                    <Entry Grid.Row="3" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                        Text="{Binding __Master__.UnitPriceDiscount}"/>
+                    <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                        Text="{l:Localize LineTotal}"/>
+                    <Entry Grid.Row="4" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                        Text="{Binding __Master__.LineTotal}"/>
+                    <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                        Text="{l:Localize rowguid}"/>
+                    <Entry Grid.Row="5" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                        Text="{Binding __Master__.rowguid}"/>
+                    <Label Grid.Row="6" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                        Text="{l:Localize ModifiedDate}"/>
+                    <Entry Grid.Row="6" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                        Text="{Binding __Master__.ModifiedDate}"/>
+                </Grid>
+                <VerticalStackLayout x:Name="masterForeignKeyToolbar">
+                    <Label Style="{StaticResource NameLabelStyle}"
+                        Text="{l:Localize SalesOrderID}"/>
+                    <Button
+                        Command="{Binding LaunchMaster_SalesOrderHeaderFKItemViewCommand}" CommandParameter="{Binding __Master__.SalesOrderID}"
+                        Text="{Binding __Master__.SalesOrderHeader_Name}" />
+                    <Label Style="{StaticResource NameLabelStyle}"
+                        Text="{l:Localize ProductID}"/>
+                    <Button
+                        Command="{Binding LaunchMaster_ProductFKItemViewCommand}" CommandParameter="{Binding __Master__.ProductID}"
+                        Text="{Binding __Master__.Product_Name}" />
+                    <Label Style="{StaticResource NameLabelStyle}"
+                        Text="{l:Localize ProductCategoryID}"/>
+                    <Button
+                        Command="{Binding LaunchMaster_ProductCategoryFKItemViewCommand}" CommandParameter="{Binding __Master__.ProductCategoryID}"
+                        Text="{Binding __Master__.ProductCategory_Name}" />
+                    <Label Style="{StaticResource NameLabelStyle}"
+                        Text="{l:Localize ProductCategory_ParentID}"/>
+                    <Button
+                        Command="{Binding LaunchMaster_ProductCategoryFKItemViewCommand}" CommandParameter="{Binding __Master__.ProductCategory_ParentID}"
+                        Text="{Binding __Master__.ProductCategory_Parent_Name}" />
+                    <Label Style="{StaticResource NameLabelStyle}"
+                        Text="{l:Localize ProductModelID}"/>
+                    <Button
+                        Command="{Binding LaunchMaster_ProductModelFKItemViewCommand}" CommandParameter="{Binding __Master__.ProductModelID}"
+                        Text="{Binding __Master__.ProductModel_Name}" />
+                    <Label Style="{StaticResource NameLabelStyle}"
+                        Text="{l:Localize BillToID}"/>
+                    <Button
+                        Command="{Binding LaunchMaster_AddressFKItemViewCommand}" CommandParameter="{Binding __Master__.BillToID}"
+                        Text="{Binding __Master__.BillTo_Name}" />
+                    <Label Style="{StaticResource NameLabelStyle}"
+                        Text="{l:Localize CustomerID}"/>
+                    <Button
+                        Command="{Binding LaunchMaster_CustomerFKItemViewCommand}" CommandParameter="{Binding __Master__.CustomerID}"
+                        Text="{Binding __Master__.Customer_Name}" />
+                    <Label Style="{StaticResource NameLabelStyle}"
+                        Text="{l:Localize ShipToID}"/>
+                    <Button
+                        Command="{Binding LaunchMaster_AddressFKItemViewCommand}" CommandParameter="{Binding __Master__.ShipToID}"
+                        Text="{Binding __Master__.ShipTo_Name}" />
+                </VerticalStackLayout>
+                <VerticalStackLayout x:Name="masterActionsToolbar">
+                </VerticalStackLayout>
+                <Grid MinimumHeightRequest="100"></Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+        <HorizontalStackLayout  VerticalOptions="End" HorizontalOptions="Center" Padding="0,0,0,40">
+            <Button Style="{StaticResource DashboardCloseIconButtonStyle}"
+                Command="{Binding CloseCommand}" CommandParameter="{Binding ReturnPath}" />
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:fmif="clr-namespace:Framework.MauiX.Icons;assembly=Framework.MauiX"
+             xmlns:fm="clr-namespace:Framework.Models;assembly=Framework"
+             xmlns:l="clr-namespace:AdventureWorksLT2019.MauiXApp.Extensions"
+             x:Class="AdventureWorksLT2019.MauiXApp.Views.CustomerAddress.DashboardPage"
+             x:Name="thisPage"
+             Title="DashboardPage">
+    <Grid Margin="0">
+        <ScrollView Margin="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <VerticalStackLayout HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
+                <Grid HorizontalOptions="FillAndExpand" VerticalOptions="Start" Margin="0,0,0,50">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                        Text="{l:Localize AddressType}"/>
+                    <Entry Grid.Row="0" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                        Text="{Binding __Master__.AddressType}"/>
+                    <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                        Text="{l:Localize rowguid}"/>
+                    <Entry Grid.Row="1" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                        Text="{Binding __Master__.rowguid}"/>
+                    <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource NameLabelStyle}"
+                        Text="{l:Localize ModifiedDate}"/>
+                    <Entry Grid.Row="2" Grid.Column="1" Style="{StaticResource ReadonlyDataEntryStyle}"
+                        Text="{Binding __Master__.ModifiedDate}"/>
+                </Grid>
+                <VerticalStackLayout x:Name="masterForeignKeyToolbar">
+                    <Label Style="{StaticResource NameLabelStyle}"
+                        Text="{l:Localize CustomerID}"/>
+                    <Button
+                        Command="{Binding LaunchMaster_CustomerFKItemViewCommand}" CommandParameter="{Binding __Master__.CustomerID}"
+                        Text="{Binding __Master__.Customer_Name}" />
+                    <Label Style="{StaticResource NameLabelStyle}"
+                        Text="{l:Localize AddressID}"/>
+                    <Button
+                        Command="{Binding LaunchMaster_AddressFKItemViewCommand}" CommandParameter="{Binding __Master__.AddressID}"
+                        Text="{Binding __Master__.Address_Name}" />
+                </VerticalStackLayout>
+                <VerticalStackLayout x:Name="masterActionsToolbar">
+                </VerticalStackLayout>
+                <Grid MinimumHeightRequest="100"></Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+        <HorizontalStackLayout  VerticalOptions="End" HorizontalOptions="Center" Padding="0,0,0,40">
+            <Button Style="{StaticResource DashboardCloseIconButtonStyle}"
+                Command="{Binding CloseCommand}" CommandParameter="{Binding ReturnPath}" />
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>

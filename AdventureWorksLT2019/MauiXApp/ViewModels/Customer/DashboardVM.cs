@@ -66,6 +66,10 @@ public class DashboardVM : ObservableObject
             });
 
     // 4. ListTable = 4,
+            LaunchList_CustomerAddressItemViewCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressDetailsPopupCommand();
+            //LaunchList_CustomerAddressItemViewCommand = LaunchViewCommandsHelper.GetLaunchCustomerAddressDetailsPageCommand(AppShellRoutes.CustomerDashboardPage);
+            LaunchList_SalesOrderHeaderItemViewCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderDetailsPopupCommand();
+            //LaunchList_SalesOrderHeaderItemViewCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderDetailsPageCommand(AppShellRoutes.CustomerDashboardPage);
 
         CloseCommand = AppShellService.ShellGotoAbsoluteCommand;
 

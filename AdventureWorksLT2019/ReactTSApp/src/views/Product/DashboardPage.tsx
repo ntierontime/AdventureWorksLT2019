@@ -92,20 +92,20 @@ export default function DashboardPage(): JSX.Element {
         listItems: listItems_SalesOrderDetails_Via_ProductID,
         initialLoadFromServer: true,
         hasListToolBar: true,
-        hasAdvancedSearch: true,
-        addNewButtonContainer: ContainerOptions.ToolBar,
+        hasAdvancedSearch : true,
+        addNewButtonContainer: ContainerOptions.ListToolBar,
         listToolBarSetting: {
             textSearchPlaceHolder: t("SalesOrderDetail"),
             hasListViewOptionsSelect: true,
             availableListViewOptions: [ListViewOptions.SlideShow, ListViewOptions.Table, ListViewOptions.Tiles],
             hasItemsSelect: true,
             hasBulkDelete: true,
-            hasBulkUpdate: true,
-            hasItemsPerRowSelect: true,
-            hasPageSizeSelect: false,
-            hasOrderBySelect: false,
-            hasSearch: false,
-            hasAdvancedSearchAccordion: false,
+            hasBulkUpdate: false,
+            hasItemsPerRowSelect: true, // When "Tiles"
+            hasPageSizeSelect: true,    // When "Table"
+            hasOrderBySelect: true,
+            hasSearch: true,			// Text Search
+            hasAdvancedSearchAccordion: true,
             hasAdvancedSearchDialog: false,
         }
     } as ListsPartialViewProps<ISalesOrderDetailAdvancedQuery, ISalesOrderDetailDataModel>;
@@ -116,25 +116,25 @@ export default function DashboardPage(): JSX.Element {
                 <TabContext value={tabValue}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                         <TabList onChange={handleTabChange} aria-label="Product Dashboard tabs">
-                        <Tab label={t('Lists')} value='1' />
+                            <Tab label={t('Lists')} value='1' />
                         </TabList>
                     </Box>
-                    <TabPanel value="1">
-                    <Accordion defaultExpanded={true}>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel1a-SalesOrderDetails_Via_ProductID-content"
-                            id="panel1a-SalesOrderDetails_Via_ProductID-header"
-                        >
-                            <Link to="/SalesOrderDetail">
-                                <Typography variant="h5" component="h5">{t("SalesOrderDetail")}</Typography>
-                            </Link>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <SalesOrderDetailListsPartial {...listsPartialViewProps_SalesOrderDetails_Via_ProductID} />
-                        </AccordionDetails>
-                    </Accordion>
-                    </TabPanel>
+                        <TabPanel value="1">
+                        <Accordion defaultExpanded={true}>
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel1a-SalesOrderDetails_Via_ProductID-content"
+                                id="panel1a-SalesOrderDetails_Via_ProductID-header"
+                            >
+                                <Link to="/SalesOrderDetail">
+                                    <Typography variant="h5" component="h5">{t("SalesOrderDetail")}</Typography>
+                                </Link>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <SalesOrderDetailListsPartial {...listsPartialViewProps_SalesOrderDetails_Via_ProductID} />
+                            </AccordionDetails>
+                        </Accordion>
+                        </TabPanel>
                 </TabContext>
             </Grid>
             <Grid item xs={6} sm={6} md={4} lg={3} xl={2}>

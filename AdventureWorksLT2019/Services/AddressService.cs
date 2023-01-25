@@ -141,6 +141,17 @@ namespace AdventureWorksLT2019.Services
             return successResponse;
         }
 
+        public async Task<Response> BulkDelete(List<AddressIdentifier> ids)
+        {
+            return await _thisRepository.BulkDelete(ids);
+        }
+
+        public async Task<Response<MultiItemsCUDRequest<AddressIdentifier, AddressDataModel>>> MultiItemsCUD(
+            MultiItemsCUDRequest<AddressIdentifier, AddressDataModel> input)
+        {
+            return await _thisRepository.MultiItemsCUD(input);
+        }
+
         public async Task<Response<AddressDataModel>> Update(AddressIdentifier id, AddressDataModel input)
         {
             return await _thisRepository.Update(id, input);
@@ -160,6 +171,11 @@ namespace AdventureWorksLT2019.Services
         {
             // TODO: please set default value here
             return new AddressDataModel { ItemUIStatus______ = ItemUIStatus.New };
+        }
+
+        public async Task<Response> Delete(AddressIdentifier id)
+        {
+            return await _thisRepository.Delete(id);
         }
 
         public async Task<ListResponse<NameValuePair[]>> GetCodeList(

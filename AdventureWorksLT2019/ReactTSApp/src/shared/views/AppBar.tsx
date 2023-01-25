@@ -21,6 +21,7 @@ import { supportedLngs } from 'src/i18n';
 import { logout } from 'src/slices/authenticationSlice';
 import { AppDispatch } from 'src/store/Store';
 import { useNavigate } from 'react-router-dom';
+import { Stack } from '@mui/system';
 
 interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
@@ -75,7 +76,7 @@ export default function AppBar(props: AppBarProps) {
         i18n.changeLanguage(language);
         setLanguage(i18next.language);
         setAnchorLanguage(null);
-		const cookies = new Cookies();
+        const cookies = new Cookies();
         cookies.set(CookieKeys.Language, i18next.language);
     }
     const handleLanguageOpen = (event: any) => {
@@ -119,25 +120,21 @@ export default function AppBar(props: AppBarProps) {
         setLanguages(supportedLngs);
         const cookies = new Cookies();
         const language = cookies.get(CookieKeys.Language);
-        if(language)
-        {
+        if (language) {
             setLanguage(language);
             i18n.changeLanguage(language);
         }
-        else
-        {
+        else {
             setLanguage(i18n.language);
         }
 
         // 1.2. Theme
         setThemes(['light', 'dark']);
         const theme1 = localStorage.getItem(CookieKeys.Theme);
-        if(theme1)
-        {
+        if (theme1) {
             setTheme(theme1);
         }
-        else
-        {
+        else {
             setTheme('dark');
         }
     }, [i18n]);
@@ -178,75 +175,86 @@ export default function AppBar(props: AppBarProps) {
                 >
                     <Grid container spacing={2} padding={2}>
                         {/* 1.1. Languages */}
-                        <Grid item xs={4}>
-                            <Item>{t('Language')}</Item>
-                        </Grid>
-                        <Grid item xs={8}>
+                        <Grid item xs={12}>
                             <Item>
-                                <IconButton
-                                    aria-owns={openLanguage ? 'menu-appbar' : null}
-                                    aria-haspopup="true"
-                                    onClick={handleLanguageOpen}
-                                    color="inherit">
-                                    {language}
-                                </IconButton>
-                                <Menu
-                                    id="language-appbar"
-                                    anchorEl={anchorElLanguage}
-                                    anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    open={openLanguage}
-                                    onClose={(e) => handleLanguageClose(null)}
+                                <Stack
+                                    direction="row"
+                                    justifyContent="space-between"
+                                    alignItems="baseline"
+                                    spacing={2}
                                 >
-                                    {languages.map((lang: string) => {
-                                        return (
-                                            <MenuItem key={lang} onClick={(e) => changeLanguage(lang)}>{lang}</MenuItem>
-                                        );
-                                    })}
-                                </Menu>
+                                    <Typography variant='h6'>{t('Language')}</Typography>
+                                    <Button
+                                        aria-owns={openLanguage ? 'menu-appbar' : null}
+                                        aria-haspopup="true"
+                                        onClick={handleLanguageOpen}
+                                        size="small"
+                                        color="inherit">
+                                        {language}
+                                    </Button>
+                                    <Menu
+                                        id="language-appbar"
+                                        anchorEl={anchorElLanguage}
+                                        anchorOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'right',
+                                        }}
+                                        transformOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'right',
+                                        }}
+                                        open={openLanguage}
+                                        onClose={(e) => handleLanguageClose(null)}
+                                    >
+                                        {languages.map((lang: string) => {
+                                            return (
+                                                <MenuItem key={lang} onClick={(e) => changeLanguage(lang)}>{lang}</MenuItem>
+                                            );
+                                        })}
+                                    </Menu>
+                                </Stack>
                             </Item>
                         </Grid>
-                        {/* 1.2. Themes */}
-                        <Grid item xs={4}>
-                            <Item>{t('Theme')}</Item>
-                        </Grid>
-                        <Grid item xs={8}>
+                        <Grid item xs={12}>
                             <Item>
-                                <IconButton
-                                    aria-owns={openTheme ? 'menu-appbar' : null}
-                                    aria-haspopup="true"
-                                    onClick={handleThemeOpen}
-                                    color="inherit"
+                                <Stack
+                                    direction="row"
+                                    justifyContent="space-between"
+                                    alignItems="baseline"
+                                    spacing={2}
                                 >
-                                    {theme}
-                                </IconButton>
-                                <Menu
-                                    id="language-appbar"
-                                    anchorEl={anchorElTheme}
-                                    anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    open={openTheme}
-                                    onClose={(e) => handleThemeClose(null)}
-                                >
-                                    {themes.map((theme1: PaletteMode) => {
-                                        return (
-                                            <MenuItem key={theme1} onClick={(e) => handleChangeTheme(theme1)}>{theme1}</MenuItem>
-                                        );
-                                    })}
-                                </Menu>
-                                </Item>
+                                    <Typography variant='h6'>{t('Theme')}</Typography>
+                                    <Button
+                                        aria-owns={openTheme ? 'menu-appbar' : null}
+                                        aria-haspopup="true"
+                                        onClick={handleThemeOpen}
+                                        color="inherit"
+                                        size="small"
+                                    >
+                                        {theme}
+                                    </Button>
+                                    <Menu
+                                        id="language-appbar"
+                                        anchorEl={anchorElTheme}
+                                        anchorOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'right',
+                                        }}
+                                        transformOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'right',
+                                        }}
+                                        open={openTheme}
+                                        onClose={(e) => handleThemeClose(null)}
+                                    >
+                                        {themes.map((theme1: PaletteMode) => {
+                                            return (
+                                                <MenuItem key={theme1} onClick={(e) => handleChangeTheme(theme1)}>{theme1}</MenuItem>
+                                            );
+                                        })}
+                                    </Menu>
+                                </Stack>
+                            </Item>
                         </Grid>
                         <Grid item xs={12}>
                             <Item><Button variant="text" startIcon={<Logout />} onClick={(e) => handleLogout()}>
@@ -254,7 +262,7 @@ export default function AppBar(props: AppBarProps) {
                             </Button></Item>
                         </Grid>
                     </Grid>
-                </Popover>
+               </Popover>
             </Toolbar>
         </StyledAppBar>
     );

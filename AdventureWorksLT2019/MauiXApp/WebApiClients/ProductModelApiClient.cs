@@ -2,6 +2,7 @@ using AdventureWorksLT2019.MauiXApp.DataModels;
 using AdventureWorksLT2019.MauiXApp.Common.WebApiClients;
 using Framework.Models;
 using Framework.MauiX;
+using System.Text.Json;
 
 namespace AdventureWorksLT2019.MauiXApp.WebApiClients;
 
@@ -27,6 +28,23 @@ public partial class ProductModelApiClient : WebApiClientBase
         const string actionName = nameof(GetCompositeModel);
         string url = GetHttpRequestUrl(actionName, id.GetWebApiRoute());
         var response = await Get<ProductModelCompositeModel>(url);
+        return response;
+    }
+
+    public async Task<Response> BulkDelete(List<ProductModelIdentifier> ids)
+    {
+        const string actionName = nameof(BulkDelete);
+        string url = GetHttpRequestUrl(actionName);
+        var response = await Put<List<ProductModelIdentifier>, Response>(url, ids);
+        return response;
+    }
+
+    public async Task<Response<MultiItemsCUDRequest<ProductModelIdentifier, ProductModelDataModel>>> MultiItemsCUD(
+        MultiItemsCUDRequest<ProductModelIdentifier, ProductModelDataModel> input)
+    {
+        const string actionName = nameof(MultiItemsCUD);
+        string url = GetHttpRequestUrl(actionName);
+        var response = await Post<MultiItemsCUDRequest<ProductModelIdentifier, ProductModelDataModel>, Response<MultiItemsCUDRequest<ProductModelIdentifier, ProductModelDataModel>>>(url, input);
         return response;
     }
 

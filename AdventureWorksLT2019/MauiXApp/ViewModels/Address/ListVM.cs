@@ -71,10 +71,20 @@ public class ListVM : ListVMBase<AddressAdvancedQuery, AddressIdentifier, Addres
         */
         // AdvancedQuery.End DateTimeRanges
 
+        // 1. Init LaunchAddressCreatePageCommand
+        LaunchCreatePageCommand = LaunchViewCommandsHelper.GetLaunchAddressCreatePageCommand(AppShellRoutes.AddressListPage);
+        // 2. Init LaunchAddressDeletePageCommand
+        LaunchDeletePageCommand = LaunchViewCommandsHelper.GetLaunchAddressDeletePageCommand(AppShellRoutes.AddressListPage);
+        // 3. Init LaunchAddressDetailsPageCommand
+        LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchAddressDetailsPageCommand(AppShellRoutes.AddressListPage);
+        // 4. Init LaunchAddressEditPageCommand
+        LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchAddressEditPageCommand(AppShellRoutes.AddressListPage);
         // 5. Init LaunchAddressDashboardPageCommand
         LaunchDashboardPageCommand = LaunchViewCommandsHelper.GetLaunchAddressDashboardPageCommand(AppShellRoutes.AddressListPage);
         // 6. Init LaunchAddressCreatePopupCommand
         LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchAddressCreatePopupCommand();
+        // 7. Init LaunchAddressDeletePopupCommand
+        LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchAddressDeletePopupCommand();
         // 8. Init LaunchAddressDetailsPopupCommand
         LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchAddressDetailsPopupCommand();
         // 9. Init LaunchAddressEditPopupCommand

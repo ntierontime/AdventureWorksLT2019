@@ -16,8 +16,8 @@ public class AppVM : ObservableObject
         set => SetProperty(ref m_ShellNavBarIsVisible, value);
     }
 
-    private Microsoft.Spatial.GeographyPoint m_CurrentLocation;
-    public Microsoft.Spatial.GeographyPoint CurrentLocation
+    private NetTopologySuite.Geometries.Geometry m_CurrentLocation;
+    public NetTopologySuite.Geometries.Geometry CurrentLocation
     {
         get => m_CurrentLocation;
         set => SetProperty(ref m_CurrentLocation, value);

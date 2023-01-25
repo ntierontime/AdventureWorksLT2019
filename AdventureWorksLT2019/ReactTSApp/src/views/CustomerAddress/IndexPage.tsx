@@ -26,19 +26,19 @@ export default function IndexPage() {
         initialLoadFromServer: true,
         hasListToolBar : true,
         hasAdvancedSearch : true,
-        addNewButtonContainer: ContainerOptions.ToolBar, // at bottom-right using SnackBar
+        addNewButtonContainer: ContainerOptions.Absolute, // at bottom-right using SnackBar
         listToolBarSetting: {
-            textSearchPlaceHolder: t("Search") + ' ' +t("CustomerAddress"),
+            textSearchPlaceHolder: t("Search") + ' ' + t("CustomerAddress"),
             hasListViewOptionsSelect: true,
-	        availableListViewOptions: [ListViewOptions.Table],
+	        availableListViewOptions: [ListViewOptions.SlideShow, ListViewOptions.Table, ListViewOptions.Tiles],
             hasItemsSelect: true,
             hasBulkDelete: true,
-            hasBulkUpdate: true,
-            hasItemsPerRowSelect: true,
-            hasPageSizeSelect: true,
+            hasBulkUpdate: false,
+            hasItemsPerRowSelect: true, // When "Tiles"
+            hasPageSizeSelect: true,    // When "Table"
             hasOrderBySelect: true,
-            hasSearch: true,
-            hasAdvancedSearchAccordion: true,
+            hasSearch: true,			// Text Search
+            hasAdvancedSearchAccordion: false,
             hasAdvancedSearchDialog: true,
         }
     } as ListsPartialViewProps<ICustomerAddressAdvancedQuery, ICustomerAddressDataModel>;

@@ -44,6 +44,7 @@ export interface HeadCell {
 }
 
 export interface EnhancedTableProps {
+    hasItemsSelect: boolean;
     onRequestSort: (event: React.MouseEvent<unknown>, property: string | number) => void;
     order: QueryOrderDirections;
     orderBy: string;

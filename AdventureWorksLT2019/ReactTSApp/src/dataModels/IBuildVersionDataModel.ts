@@ -25,5 +25,41 @@ export function getBuildVersionAvatar(item: IBuildVersionDataModel): string {
 }
 
 
+export const buildVersionFormValidationWhenCreate = {
+    database_Version: {
+        minlength: {
+            value: 1,
+            message: 'The_length_of_Database_Version_should_be_1_to_25',
+        },
+        maxLength: {
+            value: 25,
+            message: 'The_length_of_Database_Version_should_be_1_to_25',
+        },
+    },
+    versionDate: {
+        required: 'VersionDate_is_required',
+    },
+    modifiedDate: {
+        required: 'ModifiedDate_is_required',
+    },
+};
 
+export const buildVersionFormValidationWhenEdit = {
+    database_Version: {
+        minlength: {
+            value: 1,
+            message: 'The_length_of_Database_Version_should_be_1_to_25',
+        },
+        maxLength: {
+            value: 25,
+            message: 'The_length_of_Database_Version_should_be_1_to_25',
+        },
+    },
+    versionDate: {
+        required: 'VersionDate_is_required',
+    },
+    modifiedDate: {
+        required: 'ModifiedDate_is_required',
+    },
+};
 

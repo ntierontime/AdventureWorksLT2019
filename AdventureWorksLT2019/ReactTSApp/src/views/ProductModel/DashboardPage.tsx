@@ -113,20 +113,20 @@ export default function DashboardPage(): JSX.Element {
         listItems: listItems_Products_Via_ProductModelID,
         initialLoadFromServer: true,
         hasListToolBar: true,
-        hasAdvancedSearch: true,
-        addNewButtonContainer: ContainerOptions.ToolBar,
+        hasAdvancedSearch : true,
+        addNewButtonContainer: ContainerOptions.ListToolBar,
         listToolBarSetting: {
             textSearchPlaceHolder: t("Product"),
             hasListViewOptionsSelect: true,
             availableListViewOptions: [ListViewOptions.SlideShow, ListViewOptions.Table, ListViewOptions.Tiles],
             hasItemsSelect: true,
             hasBulkDelete: true,
-            hasBulkUpdate: true,
-            hasItemsPerRowSelect: true,
-            hasPageSizeSelect: false,
-            hasOrderBySelect: false,
-            hasSearch: false,
-            hasAdvancedSearchAccordion: false,
+            hasBulkUpdate: false,
+            hasItemsPerRowSelect: true, // When "Tiles"
+            hasPageSizeSelect: true,    // When "Table"
+            hasOrderBySelect: true,
+            hasSearch: true,			// Text Search
+            hasAdvancedSearchAccordion: true,
             hasAdvancedSearchDialog: false,
         }
     } as ListsPartialViewProps<IProductAdvancedQuery, IProductDataModel>;
@@ -137,20 +137,20 @@ export default function DashboardPage(): JSX.Element {
         listItems: listItems_ProductModelProductDescriptions_Via_ProductModelID,
         initialLoadFromServer: true,
         hasListToolBar: true,
-        hasAdvancedSearch: true,
-        addNewButtonContainer: ContainerOptions.ToolBar,
+        hasAdvancedSearch : true,
+        addNewButtonContainer: ContainerOptions.ListToolBar,
         listToolBarSetting: {
             textSearchPlaceHolder: t("ProductModelProductDescription"),
             hasListViewOptionsSelect: true,
             availableListViewOptions: [ListViewOptions.SlideShow, ListViewOptions.Table, ListViewOptions.Tiles],
             hasItemsSelect: true,
             hasBulkDelete: true,
-            hasBulkUpdate: true,
-            hasItemsPerRowSelect: true,
-            hasPageSizeSelect: false,
-            hasOrderBySelect: false,
-            hasSearch: false,
-            hasAdvancedSearchAccordion: false,
+            hasBulkUpdate: false,
+            hasItemsPerRowSelect: true, // When "Tiles"
+            hasPageSizeSelect: true,    // When "Table"
+            hasOrderBySelect: true,
+            hasSearch: true,			// Text Search
+            hasAdvancedSearchAccordion: true,
             hasAdvancedSearchDialog: false,
         }
     } as ListsPartialViewProps<IProductModelProductDescriptionAdvancedQuery, IProductModelProductDescriptionDataModel>;
@@ -161,39 +161,39 @@ export default function DashboardPage(): JSX.Element {
                 <TabContext value={tabValue}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                         <TabList onChange={handleTabChange} aria-label="ProductModel Dashboard tabs">
-                        <Tab label={t('Lists')} value='1' />
+                            <Tab label={t('Lists')} value='1' />
                         </TabList>
                     </Box>
-                    <TabPanel value="1">
-                    <Accordion defaultExpanded={true}>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel1a-Products_Via_ProductModelID-content"
-                            id="panel1a-Products_Via_ProductModelID-header"
-                        >
-                            <Link to="/Product">
-                                <Typography variant="h5" component="h5">{t("Product")}</Typography>
-                            </Link>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <ProductListsPartial {...listsPartialViewProps_Products_Via_ProductModelID} />
-                        </AccordionDetails>
-                    </Accordion>
-                    <Accordion defaultExpanded={true}>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel1a-ProductModelProductDescriptions_Via_ProductModelID-content"
-                            id="panel1a-ProductModelProductDescriptions_Via_ProductModelID-header"
-                        >
-                            <Link to="/ProductModelProductDescription">
-                                <Typography variant="h5" component="h5">{t("ProductModelProductDescription")}</Typography>
-                            </Link>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <ProductModelProductDescriptionListsPartial {...listsPartialViewProps_ProductModelProductDescriptions_Via_ProductModelID} />
-                        </AccordionDetails>
-                    </Accordion>
-                    </TabPanel>
+                        <TabPanel value="1">
+                        <Accordion defaultExpanded={true}>
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel1a-Products_Via_ProductModelID-content"
+                                id="panel1a-Products_Via_ProductModelID-header"
+                            >
+                                <Link to="/Product">
+                                    <Typography variant="h5" component="h5">{t("Product")}</Typography>
+                                </Link>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <ProductListsPartial {...listsPartialViewProps_Products_Via_ProductModelID} />
+                            </AccordionDetails>
+                        </Accordion>
+                        <Accordion defaultExpanded={true}>
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel1a-ProductModelProductDescriptions_Via_ProductModelID-content"
+                                id="panel1a-ProductModelProductDescriptions_Via_ProductModelID-header"
+                            >
+                                <Link to="/ProductModelProductDescription">
+                                    <Typography variant="h5" component="h5">{t("ProductModelProductDescription")}</Typography>
+                                </Link>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <ProductModelProductDescriptionListsPartial {...listsPartialViewProps_ProductModelProductDescriptions_Via_ProductModelID} />
+                            </AccordionDetails>
+                        </Accordion>
+                        </TabPanel>
                 </TabContext>
             </Grid>
             <Grid item xs={6} sm={6} md={4} lg={3} xl={2}>

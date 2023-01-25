@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Checkbox, FormControlLabel, IconButton, Pagination, Popover, Stack, Switch, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
+
 import { Link } from 'react-router-dom';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
@@ -28,7 +29,8 @@ import { IProductIdentifier, getIProductIdentifier, getRouteParamsOfIProductIden
 export default function HtmlTablePartial(props: ListPartialViewProps<IProductDataModel, IProductIdentifier>): JSX.Element {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { listItems, numSelected, isSelected, handleChangePage, handleSelectItemClick, handleItemDialogOpen, currentItemOnDialog, setCurrentItemOnDialog, currentItemIndex, setCurrentItemIndex } = props;
+    // currentItemOnDialog is only used in page navigation, you can remove it if not-in-use.
+    const { listItems, hasItemsSelect, numSelected, isSelected, handleChangePage, handleSelectItemClick, handleItemDialogOpen, currentItemOnDialog, setCurrentItemOnDialog, currentItemIndex, setCurrentItemIndex } = props;
     const [order, setOrder] = useState<QueryOrderDirections>('asc');
     const [orderBy, setOrderBy] = useState<keyof IProductDataModel>('sellStartDate');
     const [dense, setDense] = useState(true);
@@ -119,12 +121,6 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDat
             label: t('Weight'),
         },
         {
-            id: 'parentID',
-            numeric: true,
-            disablePadding: true,
-            label: t('ParentID'),
-        },
-        {
             id: 'productCategoryID',
             numeric: true,
             disablePadding: true,
@@ -190,6 +186,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDat
                     stickyHeader
                 >
                     <EnhancedTableHead
+					    hasItemsSelect={hasItemsSelect}
                         order={order}
                         orderBy={orderBy}
                         onRequestSort={handleClientSideRequestSort}
@@ -240,7 +237,6 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDat
                                         <TableCell align='right'>{t(i18nFormats.double.format, { val: row.listPrice })}</TableCell>
                                         <TableCell align='right'>{row.size}</TableCell>
                                         <TableCell align='right'>{t(i18nFormats.double.format, { val: row.weight })}</TableCell>
-                                        <TableCell align='right'><Link to={"/productCategory/Details/" + row.parentID}>{row.parent_Name}</Link></TableCell>
                                         <TableCell align='right'><Link to={"/productCategory/Details/" + row.productCategoryID}>{row.productCategory_Name}</Link></TableCell>
                                         <TableCell align='right'><Link to={"/productModel/Details/" + row.productModelID}>{row.productModel_Name}</Link></TableCell>
                                         <TableCell align='right'>{t(i18nFormats.dateTime.format, { val: new Date(row.sellStartDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}</TableCell>
@@ -284,8 +280,14 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDat
                 }}
                 disableRestoreFocus
             >
-                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/product/dashboard/" + getRouteParamsOfIProductIdentifier(currentItemOnDialog)) }}>
-                    <AccountTreeIcon />
+                <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, null) }}>
+                    <DeleteIcon />
+                </IconButton>
+                <IconButton aria-label="details" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Details, null) }}>
+                    <BusinessCenterIcon />
+                </IconButton>
+                <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit, null) }}>
+                    <EditIcon />
                 </IconButton>
                 <IconButton aria-label="delete" color="primary" onClick={() => { navigate("/product/delete/" + getRouteParamsOfIProductIdentifier(currentItemOnDialog)) }}>
                     <DeleteIcon />
@@ -296,14 +298,8 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDat
                 <IconButton aria-label="edit" color="primary" onClick={() => { navigate("/product/edit/" + getRouteParamsOfIProductIdentifier(currentItemOnDialog)) }}>
                     <EditIcon />
                 </IconButton>
-                <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, null) }}>
-                    <DeleteIcon />
-                </IconButton>
-                <IconButton aria-label="details" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Details, null) }}>
-                    <BusinessCenterIcon />
-                </IconButton>
-                <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit, null) }}>
-                    <EditIcon />
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/product/dashboard/" + getRouteParamsOfIProductIdentifier(currentItemOnDialog)) }}>
+                    <AccountTreeIcon />
                 </IconButton>
             </Popover>
             {!!handleChangePage && !numSelected && <Stack direction="row" onMouseEnter={() => { handleItemActionsPopoverClose(); }}>

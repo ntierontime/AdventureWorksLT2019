@@ -116,6 +116,17 @@ namespace AdventureWorksLT2019.Services
             return successResponse;
         }
 
+        public async Task<Response> BulkDelete(List<ProductCategoryIdentifier> ids)
+        {
+            return await _thisRepository.BulkDelete(ids);
+        }
+
+        public async Task<Response<MultiItemsCUDRequest<ProductCategoryIdentifier, ProductCategoryDataModel.DefaultView>>> MultiItemsCUD(
+            MultiItemsCUDRequest<ProductCategoryIdentifier, ProductCategoryDataModel.DefaultView> input)
+        {
+            return await _thisRepository.MultiItemsCUD(input);
+        }
+
         public async Task<Response<ProductCategoryDataModel.DefaultView>> Update(ProductCategoryIdentifier id, ProductCategoryDataModel input)
         {
             return await _thisRepository.Update(id, input);

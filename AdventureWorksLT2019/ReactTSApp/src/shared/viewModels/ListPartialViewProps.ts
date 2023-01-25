@@ -6,6 +6,7 @@ export interface ListPartialViewProps<TDataModel, TIdentifier> {
     listItems: TDataModel[],
     itemsPerRow: number,
 
+    hasItemsSelect: boolean;
     isSelected?: (identifier: TIdentifier) => boolean,
     numSelected: number,
     selected: readonly TIdentifier[],

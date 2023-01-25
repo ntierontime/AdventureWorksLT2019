@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Checkbox, FormControlLabel, IconButton, Pagination, Popover, Stack, Switch, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
+
 import { Link } from 'react-router-dom';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
@@ -28,7 +29,8 @@ import { ISalesOrderHeaderIdentifier, getISalesOrderHeaderIdentifier, getRoutePa
 export default function HtmlTablePartial(props: ListPartialViewProps<ISalesOrderHeaderDataModel, ISalesOrderHeaderIdentifier>): JSX.Element {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { listItems, numSelected, isSelected, handleChangePage, handleSelectItemClick, handleItemDialogOpen, currentItemOnDialog, setCurrentItemOnDialog, currentItemIndex, setCurrentItemIndex } = props;
+    // currentItemOnDialog is only used in page navigation, you can remove it if not-in-use.
+    const { listItems, hasItemsSelect, numSelected, isSelected, handleChangePage, handleSelectItemClick, handleItemDialogOpen, currentItemOnDialog, setCurrentItemOnDialog, currentItemIndex, setCurrentItemIndex } = props;
     const [order, setOrder] = useState<QueryOrderDirections>('asc');
     const [orderBy, setOrderBy] = useState<keyof ISalesOrderHeaderDataModel>('orderDate');
     const [dense, setDense] = useState(true);
@@ -214,6 +216,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ISalesOrder
                     stickyHeader
                 >
                     <EnhancedTableHead
+					    hasItemsSelect={hasItemsSelect}
                         order={order}
                         orderBy={orderBy}
                         onRequestSort={handleClientSideRequestSort}
@@ -312,8 +315,14 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ISalesOrder
                 }}
                 disableRestoreFocus
             >
-                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/salesOrderHeader/dashboard/" + getRouteParamsOfISalesOrderHeaderIdentifier(currentItemOnDialog)) }}>
-                    <AccountTreeIcon />
+                <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, null) }}>
+                    <DeleteIcon />
+                </IconButton>
+                <IconButton aria-label="details" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Details, null) }}>
+                    <BusinessCenterIcon />
+                </IconButton>
+                <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit, null) }}>
+                    <EditIcon />
                 </IconButton>
                 <IconButton aria-label="delete" color="primary" onClick={() => { navigate("/salesOrderHeader/delete/" + getRouteParamsOfISalesOrderHeaderIdentifier(currentItemOnDialog)) }}>
                     <DeleteIcon />
@@ -324,14 +333,8 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ISalesOrder
                 <IconButton aria-label="edit" color="primary" onClick={() => { navigate("/salesOrderHeader/edit/" + getRouteParamsOfISalesOrderHeaderIdentifier(currentItemOnDialog)) }}>
                     <EditIcon />
                 </IconButton>
-                <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, null) }}>
-                    <DeleteIcon />
-                </IconButton>
-                <IconButton aria-label="details" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Details, null) }}>
-                    <BusinessCenterIcon />
-                </IconButton>
-                <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit, null) }}>
-                    <EditIcon />
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/salesOrderHeader/dashboard/" + getRouteParamsOfISalesOrderHeaderIdentifier(currentItemOnDialog)) }}>
+                    <AccountTreeIcon />
                 </IconButton>
             </Popover>
             {!!handleChangePage && !numSelected && <Stack direction="row" onMouseEnter={() => { handleItemActionsPopoverClose(); }}>

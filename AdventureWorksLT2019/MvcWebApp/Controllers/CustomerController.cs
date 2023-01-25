@@ -258,6 +258,21 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
             return PartialView("~/Views/Shared/_AjaxResponse.cshtml", new AjaxResponseViewModel { Status = System.Net.HttpStatusCode.BadRequest, RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        [Route("[controller]/[action]/{CustomerID}")] // Primary
+        [HttpPost, ActionName("AjaxDelete")]
+        // POST: Customer/AjaxDelete/{CustomerID}
+        public async Task<IActionResult> AjaxDelete(
+            ListViewOptions view,
+            CrudViewContainers container,
+            ViewItemTemplates template,
+            [FromRoute] CustomerIdentifier id)
+        {
+            var result = await _thisService.Delete(id);
+            if (result.Status == System.Net.HttpStatusCode.OK)
+                return PartialView("~/Views/Shared/_AjaxResponse.cshtml", new AjaxResponseViewModel { Status = System.Net.HttpStatusCode.OK, RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return PartialView("~/Views/Shared/_AjaxResponse.cshtml", new AjaxResponseViewModel { Status = result.Status, Message = result.StatusMessage, RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 
@@ -332,6 +347,18 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
             return PartialView("~/Views/Shared/_AjaxResponse.cshtml", new AjaxResponseViewModel { Status = System.Net.HttpStatusCode.BadRequest, RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        // POST: Customer//AjaxBulkDelete
+        [HttpPost, ActionName("AjaxBulkDelete")]
+        [Route("[controller]/[action]")]
+        public async Task<IActionResult> AjaxBulkDelete(
+            [FromForm] BatchActionRequest<CustomerIdentifier> data)
+        {
+            var result = await _thisService.BulkDelete(data.Ids);
+            if (result.Status == System.Net.HttpStatusCode.OK)
+                return PartialView("~/Views/Shared/_AjaxResponse.cshtml", new AjaxResponseViewModel { Status = System.Net.HttpStatusCode.OK, RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return PartialView("~/Views/Shared/_AjaxResponse.cshtml", new AjaxResponseViewModel { Status = result.Status, Message = result.StatusMessage, RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
         // POST: ElmahError/AjaxBulkUpdateNameStyle
         [HttpPost, ActionName("AjaxBulkUpdateNameStyle")]
         [Route("[controller]/[action]")]
@@ -375,6 +402,227 @@ namespace AdventureWorksLT2019.MvcWebApp.Controllers
             if (result.Status == System.Net.HttpStatusCode.OK)
                 return PartialView("~/Views/Shared/_AjaxResponse.cshtml", new AjaxResponseViewModel { Status = System.Net.HttpStatusCode.OK, RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
             return PartialView("~/Views/Shared/_AjaxResponse.cshtml", new AjaxResponseViewModel { Status = result.Status, Message = result.StatusMessage, RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        // POST: Customer/AjaxMultiItemsCUDSubmit
+        [HttpPost, ActionName("AjaxMultiItemsCUDSubmit")]
+        [Route("[controller]/[action]")]
+        public async Task<IActionResult> AjaxMultiItemsCUDSubmit(
+            [FromQuery] ListViewOptions view,
+            [FromForm] List<CustomerDataModel> data)
+        {
+            if(data == null || !data.Any(t=> t.IsDeleted______ && t.ItemUIStatus______ != ItemUIStatus.New || !t.IsDeleted______ && t.ItemUIStatus______ == ItemUIStatus.New || !t.IsDeleted______ && t.ItemUIStatus______ == ItemUIStatus.Updated))
+            {
+                return PartialView("~/Views/Shared/_AjaxResponse.cshtml",
+                    new AjaxResponseViewModel
+                    {
+                        Status = System.Net.HttpStatusCode.NoContent,
+                        Message = "NoContent",
+                        RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+                    });
+            }
+
+            var multiItemsCUDModel = new MultiItemsCUDRequest<CustomerIdentifier, CustomerDataModel>
+            {
+                DeleteItems =
+                    (from t in data
+                    where t.IsDeleted______ && t.ItemUIStatus______ != ItemUIStatus.New
+                    select new CustomerIdentifier { CustomerID = t.CustomerID }).ToList(),
+                NewItems =
+                    (from t in data
+                     where !t.IsDeleted______ && t.ItemUIStatus______ == ItemUIStatus.New
+                     select t).ToList(),
+                UpdateItems =
+                    (from t in data
+                     where !t.IsDeleted______ && t.ItemUIStatus______ == ItemUIStatus.Updated
+                     select t).ToList(),
+            };
+
+            // although we have the NewItems and UpdatedITems in result, but we have to Mvc Core JQuery/Ajax refresh the whole list because array binding.
+            var result = await _thisService.MultiItemsCUD(multiItemsCUDModel);
+
+            return PartialView("~/Views/Shared/_AjaxResponse.cshtml",
+                new AjaxResponseViewModel
+                {
+                    Status = result.Status,
+                    ShowMessage = result.Status == System.Net.HttpStatusCode.OK,
+                    Message = result.Status == System.Net.HttpStatusCode.OK ? _localizor.Get("Click Close To Reload this List") : result.StatusMessage,
+                    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+                });
+        }
+
+        [Route("[controller]/[action]/{CustomerID}")] // Primary
+        //[HttpGet, ActionName("Edit")]
+        // GET: Customer/Edit/{CustomerID}
+        public async Task<IActionResult> Edit([FromRoute]CustomerIdentifier id)
+        {
+            if (!id.CustomerID.HasValue)
+            {
+                var itemViewModel1 = new Framework.Mvc.Models.MvcItemViewModel<CustomerDataModel>
+                {
+                    Status = System.Net.HttpStatusCode.NotFound,
+                    StatusMessage = "Not Found",
+                    Template = ViewItemTemplates.Edit.ToString(),
+                };
+                return View(itemViewModel1);
+            }
+
+            var result = await _thisService.Get(id);
+            var itemViewModel = new Framework.Mvc.Models.MvcItemViewModel<CustomerDataModel>
+            {
+                Status = result.Status,
+                StatusMessage = result.StatusMessage,
+                Template = ViewItemTemplates.Edit.ToString(),
+
+                Model = result.ResponseBody
+            };
+            return View(itemViewModel);
+        }
+
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+
+        [Route("[controller]/[action]/{CustomerID}")] // Primary
+        // POST: Customer/Edit/{CustomerID}
+        public async Task<IActionResult> Edit(
+            [FromRoute]CustomerIdentifier id,
+            [Bind("CustomerID,NameStyle,Title,FirstName,MiddleName,LastName,Suffix,CompanyName,SalesPerson,EmailAddress,Phone,PasswordHash,PasswordSalt,ModifiedDate")] CustomerDataModel input)
+        {
+            if (!id.CustomerID.HasValue ||
+                id.CustomerID.HasValue && id.CustomerID != input.CustomerID)
+            {
+                var itemViewModel1 = new Framework.Mvc.Models.MvcItemViewModel<CustomerDataModel>
+                {
+                    Status = System.Net.HttpStatusCode.NotFound,
+                    StatusMessage = "Not Found",
+                    Template = ViewItemTemplates.Edit.ToString(),
+
+                    Model = input, // should GetbyId again and merge content not in postback
+                };
+                return View(itemViewModel1);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                var itemViewModel1 = new Framework.Mvc.Models.MvcItemViewModel<CustomerDataModel>
+                {
+                    Status = System.Net.HttpStatusCode.BadRequest,
+                    StatusMessage = "Bad Request",
+                    Template = ViewItemTemplates.Edit.ToString(),
+
+                    Model = input, // should GetbyId again and merge content not in postback
+                };
+                return View(itemViewModel1);
+            }
+
+            var result = await _thisService.Update(id, input);
+            var itemViewModel = new Framework.Mvc.Models.MvcItemViewModel<CustomerDataModel>
+            {
+                Status = result.Status,
+                StatusMessage = result.StatusMessage,
+                Template = ViewItemTemplates.Edit.ToString(),
+
+                Model = result.ResponseBody,
+            };
+            return View(itemViewModel);
+        }
+
+        [Route("[controller]/[action]/{CustomerID}")] // Primary
+        // GET: Customer/Details/{CustomerID}
+        public async Task<IActionResult> Details([FromRoute]CustomerIdentifier id)
+        {
+            var result = await _thisService.Get(id);
+            var itemViewModel = new Framework.Mvc.Models.MvcItemViewModel<CustomerDataModel>
+            {
+                Status = result.Status,
+                StatusMessage = result.StatusMessage,
+                Template = ViewItemTemplates.Details.ToString(),
+                Model = result.ResponseBody,
+            };
+            return View(itemViewModel);
+        }
+
+        // GET: Customer/Create
+        public async Task<IActionResult> Create()
+        {
+            var itemViewModel = await Task.FromResult(new Framework.Mvc.Models.MvcItemViewModel<CustomerDataModel>
+            {
+                Status = System.Net.HttpStatusCode.OK,
+                Template = ViewItemTemplates.Create.ToString(),
+                Model = _thisService.GetDefault(),
+
+            });
+
+            return View(itemViewModel);
+        }
+
+        // POST: Customer/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(
+            [Bind("NameStyle,Title,FirstName,MiddleName,LastName,Suffix,CompanyName,SalesPerson,EmailAddress,Phone,PasswordHash,PasswordSalt,ModifiedDate")] CustomerDataModel input)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _thisService.Create(input);
+                var itemViewModel = new Framework.Mvc.Models.MvcItemViewModel<CustomerDataModel>
+                {
+                    Status = result.Status,
+                    StatusMessage = result.StatusMessage,
+                    Template = ViewItemTemplates.Create.ToString(),
+                    Model = result.ResponseBody,
+
+                };
+                return View(itemViewModel);
+            }
+
+            var itemViewModel1 = new Framework.Mvc.Models.MvcItemViewModel<CustomerDataModel>
+            {
+                Status = System.Net.HttpStatusCode.BadRequest,
+                StatusMessage = "Bad Request",
+                Template = ViewItemTemplates.Create.ToString(),
+                Model = input, // should GetbyId again and merge content not in postback
+
+            };
+            return View(itemViewModel1);
+        }
+
+        [Route("[controller]/[action]/{CustomerID}")] // Primary
+        // GET: Customer/Delete/{CustomerID}
+        public async Task<IActionResult> Delete([FromRoute]CustomerIdentifier id)
+        {
+            var result = await _thisService.Get(id);
+            var itemViewModel = new Framework.Mvc.Models.MvcItemViewModel<CustomerDataModel>
+            {
+                Status = result.Status,
+                StatusMessage = result.StatusMessage,
+                Template = ViewItemTemplates.Delete.ToString(),
+                Model = result.ResponseBody,
+            };
+            return View(itemViewModel);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+
+        [Route("[controller]/[action]/{CustomerID}")] // Primary
+        // POST: Customer/Delete/{CustomerID}
+        public async Task<IActionResult> DeleteConfirmed([FromRoute]CustomerIdentifier id)
+        {
+            var result1 = await _thisService.Get(id);
+            var result = await _thisService.Delete(id);
+            var itemViewModel = new Framework.Mvc.Models.MvcItemViewModel<CustomerDataModel>
+            {
+                Status = result.Status,
+                StatusMessage = result.StatusMessage,
+                Template = ViewItemTemplates.Delete.ToString(),
+                Model = result1.ResponseBody,
+            };
+            return View(itemViewModel);
         }
     }
 }

@@ -91,9 +91,20 @@ namespace AdventureWorksLT2019.Services
             return successResponse;
         }
 
+        public async Task<Response> BulkDelete(List<SalesOrderHeaderIdentifier> ids)
+        {
+            return await _thisRepository.BulkDelete(ids);
+        }
+
         public async Task<ListResponse<SalesOrderHeaderDataModel.DefaultView[]>> BulkUpdate(BatchActionRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView> data)
         {
             return await _thisRepository.BulkUpdate(data);
+        }
+
+        public async Task<Response<MultiItemsCUDRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView>>> MultiItemsCUD(
+            MultiItemsCUDRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView> input)
+        {
+            return await _thisRepository.MultiItemsCUD(input);
         }
 
         public async Task<Response<SalesOrderHeaderDataModel.DefaultView>> Update(SalesOrderHeaderIdentifier id, SalesOrderHeaderDataModel input)
@@ -115,6 +126,11 @@ namespace AdventureWorksLT2019.Services
         {
             // TODO: please set default value here
             return new SalesOrderHeaderDataModel.DefaultView { ItemUIStatus______ = ItemUIStatus.New };
+        }
+
+        public async Task<Response> Delete(SalesOrderHeaderIdentifier id)
+        {
+            return await _thisRepository.Delete(id);
         }
 
         public async Task<ListResponse<NameValuePair[]>> GetCodeList(

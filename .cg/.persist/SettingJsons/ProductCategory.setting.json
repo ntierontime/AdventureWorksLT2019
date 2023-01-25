@@ -120,7 +120,7 @@
         "idInDefaultDataView": true,
         "uniqueConstraintInDefaultDataView": true,
         "propertiesInDefaultDataView": null,
-        "createdDate": "2022-10-02T00:00:00"
+        "createdDate": "2023-01-25T00:00:00"
       },
       "tablE_SCHEMA": "SalesLT",
       "tablE_NAME": "ProductCategory",

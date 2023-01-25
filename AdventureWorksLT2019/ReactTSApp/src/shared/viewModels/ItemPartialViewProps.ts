@@ -1,4 +1,5 @@
 import { RegularBreakpoints } from "@mui/material/Grid";
+import { ContainerOptions } from "./ContainerOptions";
 import { CrudViewContainers } from "./CrudViewContainers";
 import { ViewItemTemplates } from "./ViewItemTemplates";
 
@@ -13,6 +14,7 @@ export const multiColumnItemViewGrid = {
 export const scrollableCardContent = { maxHeight: '75vh', overflow: 'auto' };
 
 export interface ItemPartialViewProps<TDataModel> {
+    buttonContainer: ContainerOptions;
     gridColumns: RegularBreakpoints;
     scrollableCardContent: any,
     crudViewContainer: CrudViewContainers,
@@ -43,6 +45,7 @@ export function getCRUDItemPartialViewPropsOnDialog<TDataModel>(
     doneAction: () => void
 ): ItemPartialViewProps<TDataModel> {
     return {
+        buttonContainer: ContainerOptions.ItemCardBottom,
         gridColumns: multiColumnItemViewGrid,
         scrollableCardContent: scrollableCardContent,
         crudViewContainer: CrudViewContainers.Dialog,
@@ -71,6 +74,7 @@ export function getCRUDItemPartialViewPropsInline<TDataModel>(
     doneAction: () => void
 ): ItemPartialViewProps<TDataModel> {
     return {
+        buttonContainer: ContainerOptions.ItemCardToolbar,
         gridColumns: null,
         scrollableCardContent: null,
         crudViewContainer: CrudViewContainers.Inline,
@@ -99,6 +103,7 @@ export function getCRUDItemPartialViewPropsStandalone<TDataModel>(
     doneAction: () => void
 ): ItemPartialViewProps<TDataModel> {
     return {
+        buttonContainer: ContainerOptions.ItemCardHead,
         gridColumns: multiColumnItemViewGrid,
         scrollableCardContent: null,
         crudViewContainer: CrudViewContainers.StandaloneView,
@@ -127,6 +132,7 @@ export function getCRUDItemPartialViewPropsCard<TDataModel>(
     doneAction: () => void
 ): ItemPartialViewProps<TDataModel> {
     return {
+        buttonContainer: ContainerOptions.ItemCardToolbar,
         gridColumns: null,
         scrollableCardContent: null,
         crudViewContainer: CrudViewContainers.Card,

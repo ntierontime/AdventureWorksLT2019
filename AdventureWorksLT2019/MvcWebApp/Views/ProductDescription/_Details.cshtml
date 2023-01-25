@@ -1,0 +1,38 @@
+@using Framework.Models;
+@using AdventureWorksLT2019.Models.Definitions;
+@using AdventureWorksLT2019.MvcWebApp.Models;
+@using Framework.Mvc.Models;
+@using AdventureWorksLT2019.Models;
+@using AdventureWorksLT2019.Resx;
+@model MvcItemViewModel<ProductDescriptionDataModel>
+@inject SelectListHelper selectListHelper;
+@inject IUIStrings localizor;
+@{
+    var format_Please_Select = localizor.Get("Format_Please_Select");
+}
+@if (Model.Status != System.Net.HttpStatusCode.OK)
+{
+    <div class="row">
+        <div class="text-danger">@Model.StatusMessage</div>
+    </div>
+}
+else
+{
+    <input class="nt-hidden-modal-title" value="@Model!.Model!.Description" type="hidden" />
+    <div class="form-group">
+        <label asp-for="Model!.ProductDescriptionID" class="control-label" for="@Model!.HtmlId(nameof(ProductDescriptionDataModel.ProductDescriptionID))"></label>
+        <input asp-for="Model!.ProductDescriptionID" readonly class="form-control " id="@Model!.HtmlId(nameof(ProductDescriptionDataModel.ProductDescriptionID))" name="@Model!.HtmlName(nameof(ProductDescriptionDataModel.ProductDescriptionID))" data-nt-value="@Model!.Model!.ProductDescriptionID"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.Description" class="control-label" for="@Model!.HtmlId(nameof(ProductDescriptionDataModel.Description))"></label>
+        <input asp-for="Model!.Description" readonly class="form-control " id="@Model!.HtmlId(nameof(ProductDescriptionDataModel.Description))" name="@Model!.HtmlName(nameof(ProductDescriptionDataModel.Description))" data-nt-value="@Model!.Model!.Description"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.rowguid" class="control-label" for="@Model!.HtmlId(nameof(ProductDescriptionDataModel.rowguid))"></label>
+        <input asp-for="Model!.rowguid" readonly class="form-control " id="@Model!.HtmlId(nameof(ProductDescriptionDataModel.rowguid))" name="@Model!.HtmlName(nameof(ProductDescriptionDataModel.rowguid))" data-nt-value="@Model!.Model!.rowguid"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Model!.ModifiedDate" class="control-label" for="@Model!.HtmlId(nameof(ProductDescriptionDataModel.ModifiedDate))"></label>
+        <input asp-for="Model!.ModifiedDate" readonly class="form-control " id="@Model!.HtmlId(nameof(ProductDescriptionDataModel.ModifiedDate))" name="@Model!.HtmlName(nameof(ProductDescriptionDataModel.ModifiedDate))" data-nt-value="@Model!.Model!.ModifiedDate"/>
+    </div>
+}

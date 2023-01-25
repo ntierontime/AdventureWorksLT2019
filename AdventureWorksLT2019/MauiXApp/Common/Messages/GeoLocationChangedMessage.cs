@@ -2,9 +2,9 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace AdventureWorksLT2019.MauiXApp.Common.Messages
 {
-    public class GeoLocationChangedMessage : ValueChangedMessage<Microsoft.Spatial.GeographyPoint>
+    public class GeoLocationChangedMessage : ValueChangedMessage<NetTopologySuite.Geometries.Geometry>
     {
-        public GeoLocationChangedMessage(Microsoft.Spatial.GeographyPoint value) : base(value)
+        public GeoLocationChangedMessage(NetTopologySuite.Geometries.Geometry value) : base(value)
         {
         }
     }

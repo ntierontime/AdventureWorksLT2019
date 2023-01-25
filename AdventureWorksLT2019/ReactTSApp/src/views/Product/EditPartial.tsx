@@ -4,24 +4,26 @@ import { Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardH
 import LoadingButton from '@mui/lab/LoadingButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CloseIcon from '@mui/icons-material/Close';
-import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 
-import { useNavigate } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Controller } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers';
 import { INameValuePair } from 'src/shared/dataModels/INameValuePair';
 import { codeListsApi } from 'src/apiClients/CodeListsApi';
-import { IProductCategoryAdvancedQuery, defaultIProductCategoryAdvancedQuery } from 'src/dataModels/IProductCategoryQueries';
+import { defaultIProductCategoryAdvancedQuery } from 'src/dataModels/IProductCategoryQueries';
 import { defaultIProductModelAdvancedQuery } from 'src/dataModels/IProductModelQueries';
 
-// un-comment /*getCurrency,*/ if you display money
+
+// 1. DateTime/Integer/Decimal fields are using 'i18nFormats.??' when display
+// 2. un-comment /*getCurrency,*/ if you display money
 import { /*getCurrency,*/ i18nFormats } from 'src/i18n';
 import { AppDispatch } from 'src/store/Store';
+
+import { ContainerOptions } from 'src/shared/viewModels/ContainerOptions';
 import { CrudViewContainers } from 'src/shared/viewModels/CrudViewContainers';
 import { ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps';
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
@@ -31,12 +33,13 @@ import { getProductAvatar, IProductDataModel, productFormValidationWhenEdit } fr
 import { put } from 'src/slices/ProductSlice';
 
 export default function EditPartial(props: ItemPartialViewProps<IProductDataModel>): JSX.Element {
-    const navigate = useNavigate();
-    const { gridColumns, scrollableCardContent, crudViewContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
+    const { gridColumns, scrollableCardContent, crudViewContainer, buttonContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
     const { doneAction, previousAction, nextAction } = props; // dialog
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
+	// 'control' is only used by boolean fields, you can remove it if this form doesn't have it
+	// 'setValue' is only used by Dropdown List fields and DatePicker fields, you can remove it if this form doesn't have it
     const { register, control, setValue, handleSubmit, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
@@ -50,22 +53,21 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
 
 
 
-    const [productCategory_ParentIDCodeList, setProductCategory_ParentIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.parent_Name, value: item.parentID, selected: false }]);
-
-    const [iProductCategoryAdvancedQuery_ProductCategoryID, setIProductCategoryAdvancedQuery_ProductCategoryID] = useState<IProductCategoryAdvancedQuery>({ ...defaultIProductCategoryAdvancedQuery(), parentProductCategoryID: item.parentID, pageSize: 10000 });
     const [productCategory_ProductCategoryIDCodeList, setProductCategory_ProductCategoryIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productCategory_Name, value: item.productCategoryID, selected: false }]);
 
     const [productModel_ProductModelIDCodeList, setProductModel_ProductModelIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productModel_Name, value: item.productModelID, selected: false }]);
+    const [sellStartDate, setSellStartDate] = useState<string>();
+    const [sellEndDate, setSellEndDate] = useState<string>();
+    const [discontinuedDate, setDiscontinuedDate] = useState<string>();
+    const [modifiedDate, setModifiedDate] = useState<string>();
     useEffect(() => {
 
 
         codeListsApi.getProductCategoryCodeList({ ...defaultIProductCategoryAdvancedQuery(), pageSize: 10000 }).then((res) => {
             if (res.status === "OK") {
-                setProductCategory_ParentIDCodeList(res.responseBody);
+                setProductCategory_ProductCategoryIDCodeList(res.responseBody);
             }
         });
-
-        getProductCategory_ProductCategoryIDCodeList(iProductCategoryAdvancedQuery_ProductCategoryID, false, false);
 
         codeListsApi.getProductModelCodeList({ ...defaultIProductModelAdvancedQuery(), pageSize: 10000 }).then((res) => {
             if (res.status === "OK") {
@@ -80,49 +82,6 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
 
 
 
-    const onParentIDChanged = (event: React.PointerEvent<INameValuePair>) => {
-        console.log("ParentID");
-        // name is the property name, value is the selected value
-        const nameValuePair = event.target as unknown as INameValuePair;
-
-        const parentID = nameValuePair.value as number;
-        onParentIDChanged_LoadChildren(parentID);
-    }
-
-    const onParentIDChanged_LoadChildren = (parentID: number) => {
-
-        const iProductCategoryAdvancedQuery_ProductCategoryID_Here = { ...iProductCategoryAdvancedQuery_ProductCategoryID, parentProductCategoryID: parentID };
-        setIProductCategoryAdvancedQuery_ProductCategoryID(iProductCategoryAdvancedQuery_ProductCategoryID_Here);
-        getProductCategory_ProductCategoryIDCodeList(iProductCategoryAdvancedQuery_ProductCategoryID, true, false);
-    }
-
-
-    const getProductCategory_ProductCategoryIDCodeList = (query: IProductCategoryAdvancedQuery, toSetSelectedValue: boolean, setCodeListToEmpty: boolean) => {
-        if (!setCodeListToEmpty) {
-            codeListsApi.getProductCategoryCodeList({ ...query, pageSize: 10000 }).then((res) => {
-                if (res.status === "OK") {
-                    if (toSetSelectedValue) {
-                        if (res.responseBody.findIndex(t => t.value === item.productCategoryID) === -1) {
-                            if (res.responseBody.length > 0) {
-                                setValue('productCategoryID', res.responseBody[0].value);
-                            }
-                            else {
-                                setValue('productCategoryID', -1);
-                            }
-                        }
-                        else {
-                            setValue('productCategoryID', item.productCategoryID);
-                        }
-                    }
-                    setProductCategory_ProductCategoryIDCodeList(res.responseBody);
-                }
-            });
-        }
-        else {
-            setProductCategory_ProductCategoryIDCodeList([]);
-            setValue('productCategoryID', -1);
-        }
-    }
 
     const onSubmit = (data: IProductDataModel) => {
         setSaving(true);
@@ -145,77 +104,112 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
     const avatar = getProductAvatar(item);
     const avatarStyle = getAvatarStyle(item.itemUIStatus______, theme);
 
-    const renderButtonGroupWhenCard = () => {
+
+    const renderButtonGroup_IconButtons = () => {
         return (
-            <>
-                <IconButton
+            <>                {!!handleSelectItemClick && <ButtonGroup
+                    disableElevation
+                    variant="contained"
+                    aria-label="navigation buttons"
+                ><Checkbox
+                    color="primary"
+                    checked={isItemSelected}
+                    onChange={() => { handleSelectItemClick(item) }}
+                /></ButtonGroup>}
+				{(!!previousAction || !!nextAction) && <ButtonGroup
+                    disableElevation
+                    variant="contained"
+                    aria-label="navigation buttons"
+                >
+                    {!!previousAction && <Button
+                        color="secondary"
+                        disabled={saving}
+                        variant='outlined'
+                        startIcon={<NavigateBeforeIcon />}
+                        onClick={() => { previousAction() }}
+                    />}
+                    {!!nextAction && <Button
+                        color="secondary"
+                        disabled={saving}
+                        variant='outlined'
+                        endIcon={<NavigateNextIcon />}
+                        onClick={() => { nextAction() }}
+                    />}
+                </ButtonGroup>}
+                <IconButton aria-label="Save"
                     color="primary"
                     type='submit'
-                    disabled={(!isValid || saving || saved) && !isDirty}
-                    aria-label="save">
+                    disabled={!isValid || saving || saved || !isDirty}
+                >
                     <SaveIcon />
                 </IconButton>
-                <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
+                {!!doneAction && crudViewContainer !== CrudViewContainers.StandaloneView && <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
                     <CloseIcon />
-                </IconButton>
-            </>
-        );
-    }
-
-    const renderButtonGroupWhenDialog = () => {
-        return (
-            <>
-                {!!handleSelectItemClick && <Checkbox
-                    color="primary"
-                    checked={isItemSelected}
-                    onChange={() => { handleSelectItemClick(item) }}
-                />}
-                {!!changeViewItemTemplate && <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete); }} disabled={saving}>
-                    <DeleteIcon />
                 </IconButton>}
-                {!!doneAction && <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
-                    <CloseIcon />
+                {!!doneAction && crudViewContainer === CrudViewContainers.StandaloneView && <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
+                    <ArrowBackIcon />
                 </IconButton>}
             </>
         );
     }
 
-    const renderButtonGroupWhenInline = () => {
+    const renderButtonGroup_TextAndIconButtons = () => {
         return (
             <>
-                {!!handleSelectItemClick && <Checkbox
-                    color="primary"
-                    checked={isItemSelected}
-                    onChange={() => { handleSelectItemClick(item) }}
-                />}
-                {!!changeViewItemTemplate && <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete); }} disabled={saving}>
-                    <DeleteIcon />
-                </IconButton>}
-                {!!doneAction && <IconButton aria-label="close" onClick={() => { doneAction() }} disabled={saving}>
-                    <CloseIcon />
-                </IconButton>}
-            </>
-        );
-    }
-
-    const renderButtonGroupWhenStandaloneView = () => {
-        return (
-            <>
-                <LoadingButton
-                    color="primary"
-                    type='submit'
-                    variant='contained'
-                    disabled={(!isValid || saving || saved) && !isDirty}
-                    startIcon={<SaveIcon color='action' />}>
-                    {t('Save')}
-                </LoadingButton>
-                <IconButton aria-label="close"
-                    onClick={() => {
-                        navigate(-1);
-                    }} disabled={saving}
+				{(!!previousAction || !!nextAction) && <ButtonGroup
+                    disableElevation
+                    variant="contained"
+                    aria-label="navigation buttons"
                 >
-                    <CloseIcon />
-                </IconButton>
+                    {!!previousAction && <Button
+                        color="secondary"
+                        disabled={saving}
+                        variant='outlined'
+                        startIcon={<NavigateBeforeIcon />}
+                        onClick={() => { previousAction() }}
+                    />}
+                    {!!nextAction && <Button
+                        color="secondary"
+                        disabled={saving}
+                        variant='outlined'
+                        endIcon={<NavigateNextIcon />}
+                        onClick={() => { nextAction() }}
+                    />}
+                </ButtonGroup>}
+                <ButtonGroup sx={{ marginLeft: 'auto', }}
+                    disableElevation
+                    variant="contained"
+                    aria-label="navigation buttons"
+                >
+                    <LoadingButton
+                        color="primary"
+                        type='submit'
+                        variant='contained'
+                        disabled={!isValid || saving || saved || !isDirty}
+                        startIcon={<SaveIcon color='action' />}>
+                        {t('Save')}
+                    </LoadingButton>
+                    {!!doneAction && crudViewContainer !== CrudViewContainers.StandaloneView && <Button
+                        color="secondary"
+                        autoFocus
+                        disabled={saving}
+                        variant='contained'
+                        startIcon={<CloseIcon />}
+                        onClick={() => { doneAction() }}
+                    >
+                        {t('Cancel')}
+                    </Button>}
+                    {!!doneAction && crudViewContainer === CrudViewContainers.StandaloneView && <Button
+                        color="secondary"
+                        autoFocus
+                        disabled={saving}
+                        variant='contained'
+                        startIcon={<ArrowBackIcon />}
+                        onClick={() => { doneAction() }}
+                    >
+                        {t('Back')}
+                    </Button>}
+                </ButtonGroup>
             </>
         );
     }
@@ -228,17 +222,16 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                         {avatar}
                     </Avatar>
                 }
-                action={
-                    <>
-                        {crudViewContainer === CrudViewContainers.Card && (renderButtonGroupWhenCard())}
-                        {crudViewContainer === CrudViewContainers.Dialog && (renderButtonGroupWhenDialog())}
-                        {crudViewContainer === CrudViewContainers.Inline && (renderButtonGroupWhenInline())}
-                        {(crudViewContainer === CrudViewContainers.StandaloneView) && (renderButtonGroupWhenStandaloneView())}
-                    </>
-                }
+                action={buttonContainer === ContainerOptions.ItemCardHead && <>
+                    {crudViewContainer !== CrudViewContainers.StandaloneView && renderButtonGroup_IconButtons()}
+                    {crudViewContainer === CrudViewContainers.StandaloneView && renderButtonGroup_TextAndIconButtons()}
+                </>}
                 title={item.name}
-                subheader={t('{{val, datetime}}', { val: new Date(item.sellStartDate) })}
+                subheader={t(i18nFormats.dateTime.format, { val: new Date(item.sellStartDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
             />
+            {buttonContainer === ContainerOptions.ItemCardToolbar && <CardActions disableSpacing>
+                {renderButtonGroup_IconButtons()}
+            </CardActions>}
             {!!saveMessage && <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
                 <Typography variant="body1" component="span">
                     {saveMessage + " "}
@@ -363,24 +356,6 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                         </Grid>
                         <Grid item {...gridColumns}>
                             <TextField
-                                label={t("ParentID")}
-                                id="parentIDSelect"
-                                select
-                                name='parentID'
-                                {...register("parentID", productFormValidationWhenEdit.parentID)}
-                                autoComplete='parentID'
-                                variant="outlined"
-                                fullWidth
-                                defaultValue={item.parentID}
-                            	onChange={(event: any) => { onParentIDChanged(event) }}
-                            >
-                                {productCategory_ParentIDCodeList && productCategory_ParentIDCodeList.map((v, index) => {
-                                    return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
-                                })}
-                            </TextField>
-                        </Grid>
-                        <Grid item {...gridColumns}>
-                            <TextField
                                 label={t("ProductCategoryID")}
                                 id="productCategoryIDSelect"
                                 select
@@ -414,81 +389,51 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                             </TextField>
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <Controller
-                                name="sellStartDate"
-                                defaultValue={item.sellStartDate}
-                                control={control}
-                                {...register("sellStartDate", productFormValidationWhenEdit.sellStartDate)}
-                                render={
-                                    ({ field: { onChange, ...restField } }) =>
-                                        <DatePicker
-                                            ref={null}
-                                            label={t('SellStartDate')}
-                                            onChange={(event) => { onChange(event); }}
-                                            renderInput={(params) =>
-                                                <TextField
-                                                    ref={null}
-                                                    fullWidth
-                                                    autoComplete='sellStartDate'
-                                                    error={!!errors.sellStartDate}
-                                                    helperText={!!errors.sellStartDate ? t(errors.sellStartDate.message) : ''}
-                                                    {...params}
-                                                />}
-                                            {...restField}
-                                        />
-                                }
+                            <DatePicker
+                                value={sellStartDate}
+                                label={t('SellStartDate')}
+                                onChange={(event: string) => { setSellStartDate(event); setValue('sellStartDate', event, { shouldDirty: true }); }}
+                                renderInput={(params) =>
+                                    <TextField
+                                        fullWidth
+                                        autoComplete='sellStartDate'
+                            			{...register("sellStartDate", productFormValidationWhenEdit.sellStartDate)}
+                                        error={!!errors.sellStartDate}
+                                        helperText={!!errors.sellStartDate ? t(errors.sellStartDate.message) : ''}
+                                        {...params}
+                                    />}
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <Controller
-                                name="sellEndDate"
-                                defaultValue={item.sellEndDate}
-                                control={control}
-                                {...register("sellEndDate", productFormValidationWhenEdit.sellEndDate)}
-                                render={
-                                    ({ field: { onChange, ...restField } }) =>
-                                        <DatePicker
-                                            ref={null}
-                                            label={t('SellEndDate')}
-                                            onChange={(event) => { onChange(event); }}
-                                            renderInput={(params) =>
-                                                <TextField
-                                                    ref={null}
-                                                    fullWidth
-                                                    autoComplete='sellEndDate'
-                                                    error={!!errors.sellEndDate}
-                                                    //helperText={!!errors.sellEndDate ? t(errors.sellEndDate.message) : ''}
-                                                    {...params}
-                                                />}
-                                            {...restField}
-                                        />
-                                }
+                            <DatePicker
+                                value={sellEndDate}
+                                label={t('SellEndDate')}
+                                onChange={(event: string) => { setSellEndDate(event); setValue('sellEndDate', event, { shouldDirty: true }); }}
+                                renderInput={(params) =>
+                                    <TextField
+                                        fullWidth
+                                        autoComplete='sellEndDate'
+                            			{...register("sellEndDate", productFormValidationWhenEdit.sellEndDate)}
+                                        error={!!errors.sellEndDate}
+                                        helperText={!!errors.sellEndDate ? t(errors.sellEndDate.message) : ''}
+                                        {...params}
+                                    />}
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <Controller
-                                name="discontinuedDate"
-                                defaultValue={item.discontinuedDate}
-                                control={control}
-                                {...register("discontinuedDate", productFormValidationWhenEdit.discontinuedDate)}
-                                render={
-                                    ({ field: { onChange, ...restField } }) =>
-                                        <DatePicker
-                                            ref={null}
-                                            label={t('DiscontinuedDate')}
-                                            onChange={(event) => { onChange(event); }}
-                                            renderInput={(params) =>
-                                                <TextField
-                                                    ref={null}
-                                                    fullWidth
-                                                    autoComplete='discontinuedDate'
-                                                    error={!!errors.discontinuedDate}
-                                                    //helperText={!!errors.discontinuedDate ? t(errors.discontinuedDate.message) : ''}
-                                                    {...params}
-                                                />}
-                                            {...restField}
-                                        />
-                                }
+                            <DatePicker
+                                value={discontinuedDate}
+                                label={t('DiscontinuedDate')}
+                                onChange={(event: string) => { setDiscontinuedDate(event); setValue('discontinuedDate', event, { shouldDirty: true }); }}
+                                renderInput={(params) =>
+                                    <TextField
+                                        fullWidth
+                                        autoComplete='discontinuedDate'
+                            			{...register("discontinuedDate", productFormValidationWhenEdit.discontinuedDate)}
+                                        error={!!errors.discontinuedDate}
+                                        helperText={!!errors.discontinuedDate ? t(errors.discontinuedDate.message) : ''}
+                                        {...params}
+                                    />}
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
@@ -533,82 +478,28 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <Controller
-                                name="modifiedDate"
-                                defaultValue={item.modifiedDate}
-                                control={control}
-                                {...register("modifiedDate", productFormValidationWhenEdit.modifiedDate)}
-                                render={
-                                    ({ field: { onChange, ...restField } }) =>
-                                        <DatePicker
-                                            ref={null}
-                                            label={t('ModifiedDate')}
-                                            onChange={(event) => { onChange(event); }}
-                                            renderInput={(params) =>
-                                                <TextField
-                                                    ref={null}
-                                                    fullWidth
-                                                    autoComplete='modifiedDate'
-                                                    error={!!errors.modifiedDate}
-                                                    helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                                    {...params}
-                                                />}
-                                            {...restField}
-                                        />
-                                }
+                            <DatePicker
+                                value={modifiedDate}
+                                label={t('ModifiedDate')}
+                                onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
+                                renderInput={(params) =>
+                                    <TextField
+                                        fullWidth
+                                        autoComplete='modifiedDate'
+                            			{...register("modifiedDate", productFormValidationWhenEdit.modifiedDate)}
+                                        error={!!errors.modifiedDate}
+                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                                        {...params}
+                                    />}
                             />
                         </Grid>
                     </Grid>
 				</Box>
             </CardContent>
-            {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Inline) && <CardActions disableSpacing>
-                {(!!previousAction || !!nextAction) && <ButtonGroup
-                    disableElevation
-                    variant="contained"
-                    aria-label="navigation buttons"
-                >
-                    {!!previousAction && <Button
-                        color="secondary"
-                        disabled={saving}
-                        variant='outlined'
-                        startIcon={<NavigateBeforeIcon />}
-                        onClick={() => { previousAction() }}
-                    />}
-                    {!!nextAction && <Button
-                        color="secondary"
-                        disabled={saving}
-                        variant='outlined'
-                        endIcon={<NavigateNextIcon />}
-                        onClick={() => { nextAction() }}
-                    />}
-                </ButtonGroup>}
-                <ButtonGroup sx={{ marginLeft: 'auto', }}
-                    disableElevation
-                    variant="contained"
-                    aria-label="navigation buttons"
-                >
-                    <LoadingButton
-                        color="primary"
-                        type='submit'
-                        variant='contained'
-                        disabled={!isValid || saving || saved}
-                        startIcon={<SaveIcon color='action' />}>
-                        {t('Save')}
-                    </LoadingButton>
-                    {!!doneAction && <Button
-                        color="secondary"
-                        autoFocus
-                        disabled={saving}
-                        variant='contained'
-                        startIcon={<CloseIcon />}
-                        onClick={() => { doneAction() }}
-                    >
-                        {t('Cancel')}
-                    </Button>}
-                </ButtonGroup>
+            {buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
+                {renderButtonGroup_TextAndIconButtons()}
             </CardActions>}
         </Card >
     );
 }
-
 

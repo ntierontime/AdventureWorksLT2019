@@ -1,36 +1,100 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useDispatch, } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { Box, Paper, Dialog, DialogContent, Collapse, Snackbar, ButtonGroup, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 import { AppDispatch } from 'src/store/Store';
-import { ContainerOptions } from 'src/shared/viewModels/ContainerOptions';
-import { getCRUDItemPartialViewPropsOnDialog, ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps';
 import { ListsPartialViewProps } from 'src/shared/viewModels/ListsPartialViewProps';
-import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 import ListToolBar, { ListToolBarProps } from 'src/shared/views/ListToolBar';
 import { ListViewOptions } from 'src/shared/views/ListViewOptions';
+import { ContainerOptions } from 'src/shared/viewModels/ContainerOptions';
+import { getCRUDItemPartialViewPropsOnDialog, ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps';
+import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 
 import { IErrorLogDataModel } from 'src/dataModels/IErrorLogDataModel';
 import { search, bulkDelete } from 'src/slices/ErrorLogSlice';
 import { getErrorLogQueryOrderBySettings, IErrorLogAdvancedQuery, IErrorLogIdentifier, getIErrorLogIdentifier, compareIErrorLogIdentifier } from 'src/dataModels/IErrorLogQueries';
-import ItemViewsPartial from './ItemViewsPartial';
 
 import AdvancedSearchPartial from './AdvancedSearchPartial';
+import CarouselPartial from './CarouselPartial';
 import HtmlTablePartial from './HtmlTablePartial';
+import TilesPartial from './TilesPartial';
+import ItemViewsPartial from './ItemViewsPartial';
 
 export default function ListsPartial(props: ListsPartialViewProps<IErrorLogAdvancedQuery, IErrorLogDataModel>): JSX.Element {
-    const { advancedQuery, setAdvancedQuery, defaultAdvancedQuery, listItems, initialLoadFromServer, hasListToolBar, hasAdvancedSearch, addNewButtonContainer } = props;
-    const navigate = useNavigate();
+    const { advancedQuery, setAdvancedQuery, defaultAdvancedQuery, listItems, initialLoadFromServer, hasListToolBar, listToolBarSetting, hasAdvancedSearch, addNewButtonContainer } = props;
+    const rowCount = listItems.length;
+
     const dispatch = useDispatch<AppDispatch>();
 
     const [listViewOption, setListViewOption] = useState<ListViewOptions>(ListViewOptions.Table);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const serverOrderBys = getErrorLogQueryOrderBySettings();
-    const [selected, setSelected] = useState<readonly IErrorLogIdentifier[]>([]);
     const [itemsPerRow, setItemsPerRow] = useState<number>(3); // only for ListViewOptions.Tiles, should use MediaQuery(windows size)
+
+
+
+    // 2. Bulk actions on Top Toolbar
+    // 2.1.1. Top Toolbar - Select All Checkbox
+    const [selected, setSelected] = useState<readonly IErrorLogIdentifier[]>([]);
+    const isSelected = (identifier: IErrorLogIdentifier) => selected.findIndex(t => { return compareIErrorLogIdentifier(identifier, t); }) !== -1;
+    const numSelected = selected.length;
+
+    const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.checked) {
+            const newSelected = listItems.map((n) => getIErrorLogIdentifier(n));
+            setSelected(newSelected);
+            return;
+        }
+        setSelected([]);
+    };
+    // 2.1.2. Selected/De-Select one item
+    const handleSelectItemClick = (item: IErrorLogDataModel) => {
+        const selectedIndex = selected.findIndex(t => compareIErrorLogIdentifier(t, item));
+        let newSelected: readonly IErrorLogIdentifier[] = [];
+
+        if (selectedIndex === -1) {
+            newSelected = newSelected.concat(selected, getIErrorLogIdentifier(item));
+        } else if (selectedIndex === 0) {
+            newSelected = newSelected.concat(selected.slice(1));
+        } else if (selectedIndex === selected.length - 1) {
+            newSelected = newSelected.concat(selected.slice(0, -1));
+        } else if (selectedIndex > 0) {
+            newSelected = newSelected.concat(
+                selected.slice(0, selectedIndex),
+                selected.slice(selectedIndex + 1),
+            );
+        }
+
+        setSelected(newSelected);
+    };
+
+
+    // 2.2. Top Toolbar - Delete Selected Rows/Items
+    const handleDeleteSelected = () => {
+        dispatch(bulkDelete(selected.map(t => t)));
+        // console.log("handleDeleteSelected");
+    };
+
+    // 3.1. Top Toolbar - Advanced Search Dialog
+    const [openAdvancedSearchDialog, setOpenAdvancedSearchDialog] = useState(false);
+    const handleAdvancedSearchDialogOpen = () => {
+        setOpenAdvancedSearchDialog(true);
+    };
+
+    const handleAdvancedSearchDialogClose = () => {
+        setOpenAdvancedSearchDialog(false);
+    };
+
+    // 3.2. Top Toolbar - Advanced Search Inline - Collapse Panel 
+    const [advancedSearchExpanded, setAdvancedSearchExpanded] = useState(false);
+    const handleAdvancedSearchExpandClick = () => {
+        setAdvancedSearchExpanded(!advancedSearchExpanded);
+    };
+    const handleAdvancedSearchExpandClose = () => {
+        setAdvancedSearchExpanded(false);
+    };
 
 	const [openItemDialog, setOpenItemDialog] = useState(false);
     const [crudItemPartialViewProps, setCRUDItemPartialViewProps] = useState<ItemPartialViewProps<IErrorLogDataModel> | null>(null);
@@ -55,6 +119,26 @@ export default function ListsPartial(props: ListsPartialViewProps<IErrorLogAdvan
         setCRUDItemPartialViewProps(null);
     };
 
+
+    // 4. Bottom Toolbar - Pagination
+    // 4.1. Bottom Toolbar - Pagination - Change Page
+    const handlePaginationChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
+        advancedQuery.pageIndex = value;
+        if (!isLoading) {
+            setIsLoading(true);
+            dispatch(search(advancedQuery)).finally(() => { setIsLoading(false); });
+        }
+    };
+
+    // 4.2. Bottom Toolbar - Pagination - Load More
+    const handlePaginationLoadMore = (event: React.ChangeEvent<unknown>, value: number) => {
+        advancedQuery.pageIndex++;
+        if (!isLoading) {
+            setIsLoading(true);
+            dispatch(search(advancedQuery)).finally(() => { setIsLoading(false); });
+        }
+    };
+
     useEffect(() => {
         if (initialLoadFromServer) {
             submitAdvancedSearch(advancedQuery);
@@ -62,7 +146,6 @@ export default function ListsPartial(props: ListsPartialViewProps<IErrorLogAdvan
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // 1.7.1. Top Toolbar - Submit Advanced Search Action
     const submitAdvancedSearch = (query: IErrorLogAdvancedQuery) => {
         if (!isLoading) {
             setIsLoading(true);
@@ -79,101 +162,27 @@ export default function ListsPartial(props: ListsPartialViewProps<IErrorLogAdvan
         }
     };
 
-    // 1. Top Toolbar
-    // 1.1. Top Toolbar - Select All Checkbox
-    const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.checked) {
-            const newSelected = listItems.map((n) => getIErrorLogIdentifier(n));
-            setSelected(newSelected);
-            return;
-        }
-        setSelected([]);
-    };
-
-    // 1.2. Top Toolbar - Delete Selected Rows/Items
-    const handleDeleteSelected = () => {
-        dispatch(bulkDelete(selected.map(t => t)));
-        // console.log("handleDeleteSelected");
-    };
-
-    // 1.7.2. Top Toolbar - Advanced Search Dialog
-    const [openAdvancedSearchDialog, setOpenAdvancedSearchDialog] = useState(false);
-    const handleAdvancedSearchDialogOpen = () => {
-        setOpenAdvancedSearchDialog(true);
-    };
-
-    const handleAdvancedSearchDialogClose = () => {
-        setOpenAdvancedSearchDialog(false);
-    };
-    // 1.7.3. Top Toolbar - Advanced Search Collapse Panel
-    const [advancedSearchExpanded, setAdvancedSearchExpanded] = useState(false);
-    const handleAdvancedSearchExpandClick = () => {
-        setAdvancedSearchExpanded(!advancedSearchExpanded);
-    };
-    const handleAdvancedSearchExpandClose = () => {
-        setAdvancedSearchExpanded(false);
-    };
-
-    // 2. Selected/De-Select one item
-    const handleSelectItemClick = (item: IErrorLogDataModel) => {
-        const selectedIndex = selected.findIndex(t => compareIErrorLogIdentifier(t, item));
-        let newSelected: readonly IErrorLogIdentifier[] = [];
-
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, getIErrorLogIdentifier(item));
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1),
-            );
-        }
-
-        setSelected(newSelected);
-    };
-
-    // 3. Bottom Toolbar
-    // 3.1. Bottom Toolbar - Pagination - Change Page
-    const handlePaginationChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
-        advancedQuery.pageIndex = value;
-        if (!isLoading) {
-            setIsLoading(true);
-            dispatch(search(advancedQuery)).finally(() => { setIsLoading(false); });
-        }
-    };
-
-    // 3.2. Bottom Toolbar - Pagination - Load More
-    const handlePaginationLoadMore = (event: React.ChangeEvent<unknown>, value: number) => {
-        advancedQuery.pageIndex++;
-        if (!isLoading) {
-            setIsLoading(true);
-            dispatch(search(advancedQuery)).finally(() => { setIsLoading(false); });
-        }
-    };
-
-    const isSelected = (identifier: IErrorLogIdentifier) => selected.findIndex(t => { return compareIErrorLogIdentifier(identifier, t); }) !== -1;
-    const numSelected = selected.length;
-    const rowCount = listItems.length;
 
     // Render.1. Top Toolbar
     const renderEnhancedTopToolbar = () => {
         const topToolbarProps = {
-            ...props.listToolBarSetting,
+
+            ...listToolBarSetting,
             advancedQuery, defaultAdvancedQuery: { ...defaultAdvancedQuery }, setAdvancedQuery,
             rowCount,
             submitAdvancedSearch,
 
-            setSelected, numSelected,
+            setSelected,
+            numSelected,
             handleSelectAllClick,
 
             handleDeleteSelected,
 
-            listViewOption, setListViewOption,
+            listViewOption,
+            setListViewOption,
 
-            itemsPerRow, setItemsPerRow,
+            itemsPerRow,
+            setItemsPerRow,
 
             serverOrderBys,
 
@@ -181,7 +190,7 @@ export default function ListsPartial(props: ListsPartialViewProps<IErrorLogAdvan
             handleAdvancedSearchExpandClick,
             handleAdvancedSearchDialogOpen,
 
-            hasAddNewButton: addNewButtonContainer === ContainerOptions.ToolBar,
+            hasAddNewButton: addNewButtonContainer === ContainerOptions.ListToolBar,
             handleAddNewClick: () => { handleItemDialogOpen(ViewItemTemplates.Create, -1); },
         } as ListToolBarProps<IErrorLogAdvancedQuery, IErrorLogIdentifier>;
 
@@ -196,13 +205,46 @@ export default function ListsPartial(props: ListsPartialViewProps<IErrorLogAdvan
                     {hasAdvancedSearch && <Collapse in={advancedSearchExpanded} timeout="auto" unmountOnExit>
                         <AdvancedSearchPartial advancedQuery={advancedQuery} submitAction={submitAdvancedSearch} doneAction={() => { handleAdvancedSearchExpandClose(); }} />
                     </Collapse>}
+                    {listViewOption === ListViewOptions.SlideShow && <CarouselPartial
+                        listViewOption={ListViewOptions.SlideShow}
+                        listItems={listItems}
+                        itemsPerRow={itemsPerRow}
+						hasItemsSelect={hasListToolBar && (listToolBarSetting?.hasItemsSelect ?? false)}
+                        numSelected={numSelected}
+                        selected={selected}
+                        handleChangePage={handlePaginationLoadMore}
+                        handleSelectItemClick={handleSelectItemClick}
+                        handleItemDialogOpen={handleItemDialogOpen}
+                        currentItemOnDialog={currentItemOnDialog}
+                        setCurrentItemOnDialog={setCurrentItemOnDialog}
+                        currentItemIndex={currentItemIndex}
+                        setCurrentItemIndex={setCurrentItemIndex}
+                        isSelected={isSelected}
+                    />}
                     {listViewOption === ListViewOptions.Table && <HtmlTablePartial
                         listViewOption={ListViewOptions.Table}
                         listItems={listItems}
                         itemsPerRow={itemsPerRow}
+						hasItemsSelect={hasListToolBar && (listToolBarSetting?.hasItemsSelect ?? false)}
                         numSelected={numSelected}
                         selected={selected}
                         handleChangePage={handlePaginationChangePage}
+                        handleSelectItemClick={handleSelectItemClick}
+                        handleItemDialogOpen={handleItemDialogOpen}
+                        currentItemOnDialog={currentItemOnDialog}
+                        setCurrentItemOnDialog={setCurrentItemOnDialog}
+                        currentItemIndex={currentItemIndex}
+                        setCurrentItemIndex={setCurrentItemIndex}
+                        isSelected={isSelected}
+                    />}
+                    {listViewOption === ListViewOptions.Tiles && <TilesPartial
+                        listViewOption={ListViewOptions.Tiles}
+                        listItems={listItems}
+                        itemsPerRow={itemsPerRow}
+						hasItemsSelect={hasListToolBar && (listToolBarSetting?.hasItemsSelect ?? false)}
+                        numSelected={numSelected}
+                        selected={selected}
+                        handleChangePage={handlePaginationLoadMore}
                         handleSelectItemClick={handleSelectItemClick}
                         handleItemDialogOpen={handleItemDialogOpen}
                         currentItemOnDialog={currentItemOnDialog}
@@ -219,7 +261,13 @@ export default function ListsPartial(props: ListsPartialViewProps<IErrorLogAdvan
                 </DialogContent>
             </Dialog>}
             <Dialog open={openItemDialog} fullWidth={true} maxWidth={'lg'}>
-                <ItemViewsPartial {...crudItemPartialViewProps} item={currentItemOnDialog} isItemSelected={!!currentItemOnDialog && isSelected(getIErrorLogIdentifier(currentItemOnDialog))} totalCountInList={listItems.length} itemIndex={currentItemIndex} setItemIndex={setCurrentItemIndex} handleSelectItemClick={handleSelectItemClick} />
+                <ItemViewsPartial {...crudItemPartialViewProps} 
+                    item={currentItemOnDialog} 
+                    isItemSelected={!!currentItemOnDialog && isSelected(getIErrorLogIdentifier(currentItemOnDialog))} 
+                    totalCountInList={listItems.length} 
+                    itemIndex={currentItemIndex} 
+                    setItemIndex={setCurrentItemIndex} 
+                    handleSelectItemClick={handleSelectItemClick} />
             </Dialog>
             {addNewButtonContainer === ContainerOptions.Absolute && <Snackbar
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
@@ -227,9 +275,6 @@ export default function ListsPartial(props: ListsPartialViewProps<IErrorLogAdvan
             >
                 <ButtonGroup orientation='horizontal'>
                     <IconButton onClick={() => { handleItemDialogOpen(ViewItemTemplates.Create, -1); }} aria-label="create" component="label" size="large" color='primary' sx={{ backgroundColor: 'gray' }}>
-                        <AddIcon />
-                    </IconButton>
-                    <IconButton onClick={() => { navigate("/errorLog/create") }} aria-label="create" component="label" size="large" color='primary' sx={{ backgroundColor: 'gray' }}>
                         <AddIcon />
                     </IconButton>
                 </ButtonGroup>

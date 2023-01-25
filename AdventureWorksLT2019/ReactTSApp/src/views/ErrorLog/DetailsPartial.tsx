@@ -2,8 +2,8 @@ import { Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardH
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -14,8 +14,11 @@ import { useTranslation } from 'react-i18next';
 
 import { DatePicker } from '@mui/x-date-pickers';
 
-// un-comment /*getCurrency,*/ if you display money
+
+// 1. DateTime/Integer/Decimal fields are using 'i18nFormats.??' when display
+// 2. un-comment /*getCurrency,*/ if you display money
 import { /*getCurrency,*/ i18nFormats } from 'src/i18n';
+import { ContainerOptions } from 'src/shared/viewModels/ContainerOptions';
 import { CrudViewContainers } from 'src/shared/viewModels/CrudViewContainers';
 import { ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps';
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
@@ -26,7 +29,7 @@ import { getRouteParamsOfIErrorLogIdentifier } from 'src/dataModels/IErrorLogQue
 
 export default function DetailsPartial(props: ItemPartialViewProps<IErrorLogDataModel>): JSX.Element {
     const navigate = useNavigate();
-    const { gridColumns, scrollableCardContent, crudViewContainer, item, itemIndex, isItemSelected, handleSelectItemClick, changeViewItemTemplate, handleItemDialogOpen } = props; // item
+    const { gridColumns, scrollableCardContent, crudViewContainer, buttonContainer, item, itemIndex, isItemSelected, handleSelectItemClick, changeViewItemTemplate, handleItemDialogOpen } = props; // item
     const { doneAction, previousAction, nextAction } = props; // dialog
     const { t } = useTranslation();
 
@@ -34,122 +37,95 @@ export default function DetailsPartial(props: ItemPartialViewProps<IErrorLogData
     const avatar = getErrorLogAvatar(item);
     const avatarStyle = getAvatarStyle(item.itemUIStatus______, theme);
 
-    const renderButtonGroupWhenCard = () => {
-        return (
-            <>
-                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/ErrorLog/Dashboard/" + getRouteParamsOfIErrorLogIdentifier(item)) }}>
-                    <AccountTreeIcon />
-                </IconButton>
-				{!!handleItemDialogOpen && <>
-                    <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, itemIndex) }}>
-                        <DeleteIcon />
-                    </IconButton>
-                    <IconButton aria-label="details" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Details, itemIndex) }}>
-                        <BusinessCenterIcon />
-                    </IconButton>
-                    <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit, itemIndex) }}>
-                        <EditIcon />
-                    </IconButton>
-                </>}
-                <IconButton aria-label="delete" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete) }}>
-                    <DeleteIcon />
-                </IconButton>
-                <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Edit) }}>
-                    <EditIcon />
-                </IconButton>
-                <IconButton aria-label="more">
-                    <MoreVertIcon />
-                </IconButton>
-                <IconButton aria-label="close" onClick={() => { doneAction() }}>
-                    <ChevronLeftIcon />
-                </IconButton>
-            </>
-        );
-    }
 
-    const renderButtonGroupWhenDialog = () => {
+    const renderButtonGroup_IconButtons = () => {
         return (
             <>
-                {!!handleSelectItemClick && <Checkbox
-                    color="primary"
-                    checked={isItemSelected}
-                    onChange={() => { handleSelectItemClick(item) }}
-                />}
-                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/ErrorLog/Dashboard/" + getRouteParamsOfIErrorLogIdentifier(item)) }}>
-                    <AccountTreeIcon />
-                </IconButton>
-                {!!handleItemDialogOpen && <>
-                    <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, itemIndex) }}>
-                        <DeleteIcon />
-                    </IconButton>
-                    <IconButton aria-label="details" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Details, itemIndex) }}>
-                        <BusinessCenterIcon />
-                    </IconButton>
-                    <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit, itemIndex) }}>
-                        <EditIcon />
-                    </IconButton>
-                </>}
-                <IconButton aria-label="delete" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete) }}>
-                    <DeleteIcon />
-                </IconButton>
-                <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Edit) }}>
-                    <EditIcon />
-                </IconButton>
-                <IconButton aria-label="more">
-                    <MoreVertIcon />
-                </IconButton>
-                {crudViewContainer === CrudViewContainers.Dialog && <IconButton aria-label="close" onClick={() => { doneAction() }}>
-                    <CloseIcon />
-                </IconButton>}
-            </>
-        );
-    }
-
-    const renderButtonGroupWhenInline = () => {
-        return (
-            <>
-                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/ErrorLog/Dashboard/" + getRouteParamsOfIErrorLogIdentifier(item)) }}>
-                    <AccountTreeIcon />
-                </IconButton>
-                {!!handleSelectItemClick && <Checkbox
-                    color="primary"
-                    checked={isItemSelected}
-                    onChange={() => { handleSelectItemClick(item) }}
-                />}
-                {!!handleItemDialogOpen && <>
-                    <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, itemIndex) }}>
-                        <DeleteIcon />
-                    </IconButton>
-                    <IconButton aria-label="details" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Details, itemIndex) }}>
-                        <BusinessCenterIcon />
-                    </IconButton>
-                    <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit, itemIndex) }}>
-                        <EditIcon />
-                    </IconButton>
-                </>}
-                <IconButton aria-label="delete" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete) }}>
-                    <DeleteIcon />
-                </IconButton>
-                <IconButton aria-label="edit" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Edit) }}>
-                    <EditIcon />
-                </IconButton>
-                <IconButton aria-label="more">
-                    <MoreVertIcon />
-                </IconButton>
-            </>
-        );
-    }
-
-    const renderButtonGroupWhenStandaloneView = () => {
-        return (
-            <>
-                <IconButton aria-label="close"
-                    onClick={() => {
-                        navigate(-1);
-                    }}
+				{(!!previousAction || !!nextAction) && <ButtonGroup
+                    disableElevation
+                    variant="contained"
+                    aria-label="navigation buttons"
                 >
-                    <CloseIcon />
-                </IconButton>
+                    {!!previousAction && <Button
+                        color="secondary"
+                        variant='outlined'
+                        startIcon={<NavigateBeforeIcon />}
+                        onClick={() => { previousAction() }}
+                    />}
+                    {!!nextAction && <Button
+                        color="secondary"
+                        variant='outlined'
+                        endIcon={<NavigateNextIcon />}
+                        onClick={() => { nextAction() }}
+                    />}
+                </ButtonGroup>}
+                {!!handleSelectItemClick && <ButtonGroup
+                    disableElevation
+                    variant="contained"
+                    aria-label="navigation buttons"
+                ><Checkbox
+                    color="primary"
+                    checked={isItemSelected}
+                    onChange={() => { handleSelectItemClick(item) }}
+                /></ButtonGroup>}
+                <ButtonGroup
+                    disableElevation
+                    variant="contained"
+                    aria-label="navigation buttons"
+                    >
+                    {(crudViewContainer !== CrudViewContainers.Card) &&
+                        <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/errorLog/dashboard/" + getRouteParamsOfIErrorLogIdentifier(item)) }}>
+                            <AccountTreeIcon />
+                        </IconButton>
+                    }
+                    {(crudViewContainer === CrudViewContainers.Inline) &&
+                        <>
+                            <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, null) }}>
+                                <DeleteIcon />
+                            </IconButton>
+                            <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit, null) }}>
+                                <EditIcon />
+                            </IconButton>
+                        </>
+                    }
+                    {(crudViewContainer === CrudViewContainers.StandaloneView) &&
+                        <>
+                            <IconButton aria-label="delete" color="primary" onClick={() => { navigate("/errorLog/delete/" + getRouteParamsOfIErrorLogIdentifier(item)) }}>
+                                <DeleteIcon />
+                            </IconButton>
+                            <IconButton aria-label="edit" color="primary" onClick={() => { navigate("/errorLog/edit/" + getRouteParamsOfIErrorLogIdentifier(item)) }}>
+                                <EditIcon />
+                            </IconButton>
+                        </>
+                    }
+                    {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Card) &&
+                        <>
+                            <IconButton aria-label="delete" color="primary" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete) }}>
+                                <DeleteIcon />
+                            </IconButton>
+                            <IconButton aria-label="edit" color="primary" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Edit) }}>
+                                <EditIcon />
+                            </IconButton>
+                        </>
+                    }
+                </ButtonGroup>
+                <ButtonGroup>
+                    {!!doneAction && (crudViewContainer === CrudViewContainers.Dialog) && <IconButton aria-label="close" onClick={() => { doneAction() }}>
+                        <CloseIcon />
+                    </IconButton>}
+                    {!!doneAction && (crudViewContainer === CrudViewContainers.Card) && <IconButton aria-label="close" onClick={() => { doneAction() }}>
+                        <ArrowBackIcon />
+                    </IconButton>}
+                    {!!doneAction && (crudViewContainer === CrudViewContainers.StandaloneView) && <Button
+                        color="secondary"
+                        autoFocus
+                        variant='contained'
+                        startIcon={<ArrowBackIcon />}
+                        onClick={() => { doneAction() }}
+                    >
+                        {t('Back')}
+                    </Button>}
+                </ButtonGroup>
             </>
         );
     }
@@ -162,17 +138,13 @@ export default function DetailsPartial(props: ItemPartialViewProps<IErrorLogData
                         {avatar}
                     </Avatar>
                 }
-                action={
-                    <>
-                        {crudViewContainer === CrudViewContainers.Card && (renderButtonGroupWhenCard())}
-                        {crudViewContainer === CrudViewContainers.Dialog && (renderButtonGroupWhenDialog())}
-                        {crudViewContainer === CrudViewContainers.Inline && (renderButtonGroupWhenInline())}
-                        {(crudViewContainer === CrudViewContainers.StandaloneView) && (renderButtonGroupWhenStandaloneView())}
-                    </>
-                }
+                action={buttonContainer === ContainerOptions.ItemCardHead && renderButtonGroup_IconButtons()}
                 title={item.userName}
-                subheader={t('{{val, datetime}}', { val: new Date(item.errorTime) })}
+                subheader={t(i18nFormats.dateTime.format, { val: new Date(item.errorTime), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
             />
+            {buttonContainer === ContainerOptions.ItemCardToolbar && <CardActions disableSpacing>
+                {renderButtonGroup_IconButtons()}
+            </CardActions>}
             <CardContent>
                 <Box sx={{ ...scrollableCardContent }}>
                     <Grid container spacing={2}>
@@ -299,41 +271,9 @@ export default function DetailsPartial(props: ItemPartialViewProps<IErrorLogData
                     </Grid>
 				</Box>
             </CardContent>
-            {crudViewContainer === CrudViewContainers.Dialog && <CardActions disableSpacing>
-                {(!!previousAction || !!nextAction) && <ButtonGroup
-                    disableElevation
-                    variant="contained"
-                    aria-label="navigation buttons"
-                >
-                    {!!previousAction && <Button
-                        color="secondary"
-                        variant='outlined'
-                        startIcon={<NavigateBeforeIcon />}
-                        onClick={() => { previousAction() }}
-                    />}
-                    {!!nextAction && <Button
-                        color="secondary"
-                        variant='outlined'
-                        endIcon={<NavigateNextIcon />}
-                        onClick={() => { nextAction() }}
-                    />}
-                </ButtonGroup>}
-                <ButtonGroup sx={{ marginLeft: 'auto' }}
-                    disableElevation
-                    variant="contained"
-                    aria-label="navigation buttons"
-                >
-                    <Button sx={{ marginLeft: 'auto' }}
-                        color="primary"
-                        autoFocus
-                        variant='contained'
-                        startIcon={<CloseIcon color='action' />}
-                        onClick={() => { doneAction() }}
-                    >
-                        {t('Cancel')}
-                    </Button>
-                </ButtonGroup>
-            </CardActions>}
+            {/* {buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
+                {renderButtonGroup_IconButtons()}
+            </CardActions>} */}
         </Card >
     );
 }

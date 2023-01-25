@@ -1,34 +1,42 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, MenuItem, TextField, Typography } from '@mui/material';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
 
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Controller } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers';
+import { Controller } from 'react-hook-form';
 import { INameValuePair } from 'src/shared/dataModels/INameValuePair';
 import { codeListsApi } from 'src/apiClients/CodeListsApi';
 import { defaultICustomerAdvancedQuery } from 'src/dataModels/ICustomerQueries';
 import { defaultIAddressAdvancedQuery } from 'src/dataModels/IAddressQueries';
 
+
+
+// 1. DateTime/Integer/Decimal fields are using 'i18nFormats.??' when display
+// 2. un-comment /*getCurrency,*/ if you display money
+import { /*getCurrency,*/ i18nFormats } from 'src/i18n';
+
 import { AppDispatch } from 'src/store/Store';
 
+import { ContainerOptions } from 'src/shared/viewModels/ContainerOptions';
 import { CrudViewContainers } from 'src/shared/viewModels/CrudViewContainers';
 import { ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps';
 import { defaultSalesOrderHeader, ISalesOrderHeaderDataModel, salesOrderHeaderFormValidationWhenCreate } from 'src/dataModels/ISalesOrderHeaderDataModel';
 import { post } from 'src/slices/SalesOrderHeaderSlice';
 
 export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHeaderDataModel>): JSX.Element {
-    const { gridColumns, scrollableCardContent, crudViewContainer } = props; // item
+    const { gridColumns, scrollableCardContent, crudViewContainer, buttonContainer } = props; // item
     const { doneAction } = props; // dialog
     const [item, setItem] = useState<ISalesOrderHeaderDataModel>(defaultSalesOrderHeader());
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
+	// 'control' is only used by boolean fields, you can remove it if this form doesn't have it
+	// 'setValue' is only used by Dropdown List fields and DatePicker fields, you can remove it if this form doesn't have it
     const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
@@ -51,13 +59,16 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
     const [address_ShipToAddressIDCodeList, setAddress_ShipToAddressIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.shipTo_Name, value: item.shipToAddressID, selected: false }]);
 
     const [address_BillToAddressIDCodeList, setAddress_BillToAddressIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.billTo_Name, value: item.billToAddressID, selected: false }]);
+    const [orderDate, setOrderDate] = useState<string>();
+    const [dueDate, setDueDate] = useState<string>();
+    const [shipDate, setShipDate] = useState<string>();
+    const [modifiedDate, setModifiedDate] = useState<string>();
     useEffect(() => {
 
 
         codeListsApi.getCustomerCodeList({ ...defaultICustomerAdvancedQuery(), pageSize: 10000 }).then((res) => {
             if (res.status === "OK") {
                 setCustomer_CustomerIDCodeList(res.responseBody);
-                const customerID = res.responseBody[0].value;
                 setValue('customerID', res.responseBody[0].value);
 				
             }
@@ -66,7 +77,6 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
         codeListsApi.getAddressCodeList({ ...defaultIAddressAdvancedQuery(), pageSize: 10000 }).then((res) => {
             if (res.status === "OK") {
                 setAddress_ShipToAddressIDCodeList(res.responseBody);
-                const shipToAddressID = res.responseBody[0].value;
                 setValue('shipToAddressID', res.responseBody[0].value);
 				
             }
@@ -75,7 +85,6 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
         codeListsApi.getAddressCodeList({ ...defaultIAddressAdvancedQuery(), pageSize: 10000 }).then((res) => {
             if (res.status === "OK") {
                 setAddress_BillToAddressIDCodeList(res.responseBody);
-                const billToAddressID = res.responseBody[0].value;
                 setValue('billToAddressID', res.responseBody[0].value);
 				
             }
@@ -115,7 +124,22 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
             .finally(() => { setCreating(false); console.log('finally'); });
     }
 
-    const renderButtonGroupWhenDialog = () => {
+
+    const renderButtonGroup_IconButtons = () => {
+        return (
+            <>
+                <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
+                <IconButton aria-label="create" color="primary" type='submit' disabled={!isValid || creating || created || !isDirty}>
+                    <SaveIcon />
+                </IconButton>
+                <IconButton aria-label="close" disabled={creating || created}>
+                    <CloseIcon />
+                </IconButton>
+            </>
+        );
+    }
+
+    const renderButtonGroup_TextAndIconButtons = () => {
         return (
             <>
                 <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
@@ -128,7 +152,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
                         type='submit'
                         fullWidth
                         variant='contained'
-                        disabled={(!isValid || creating || created) && !isDirty}
+                        disabled={!isValid || creating || created || !isDirty}
                         startIcon={<SaveIcon />}>
                         {t('Create')}
                     </Button>
@@ -147,53 +171,13 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
         );
     }
 
-    const renderButtonGroupWhenInline = () => {
-        return (
-            <>
-                <IconButton type='submit' aria-label="create" disabled={(!isValid || creating || created) && !isDirty}>
-                    <SaveIcon />
-                </IconButton>
-                <IconButton aria-label="close" onClick={() => { doneAction() }}>
-                    <CloseIcon />
-                </IconButton>
-            </>
-        );
-    }
-
-    const renderButtonGroupWhenStandaloneView = () => {
-        return (
-            <>
-                <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
-                <ButtonGroup sx={{ marginLeft: 'auto', }}
-                    disableElevation
-                    variant="contained"
-                    aria-label="navigation buttons"
-                >
-                    <Button
-                        type='submit'
-                        fullWidth
-                        variant='contained'
-                        disabled={(!isValid || creating || created) && !isDirty}
-                        startIcon={<SaveIcon />}>
-                        {t('Create')}
-                    </Button>
-                    <IconButton aria-label="close" onClick={() => { doneAction() }}>
-                        <ChevronLeftIcon />
-                    </IconButton>
-                </ButtonGroup>
-            </>
-        );
-    }
-
     return (
         <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
             <CardHeader
-                action={
-                    <>
-                        {crudViewContainer === CrudViewContainers.Inline && (renderButtonGroupWhenInline())}
-                        {(crudViewContainer === CrudViewContainers.StandaloneView) && (renderButtonGroupWhenStandaloneView())}
-                    </>
-                }
+                action={buttonContainer === ContainerOptions.ItemCardHead && <>
+                    {crudViewContainer !== CrudViewContainers.StandaloneView && renderButtonGroup_IconButtons()}
+                    {crudViewContainer === CrudViewContainers.StandaloneView && renderButtonGroup_TextAndIconButtons()}
+                </>}
                 title={t("Create_New")}
                 subheader={t("SalesOrderHeader")}
             />
@@ -220,81 +204,51 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <Controller
-                                name="orderDate"
-                                defaultValue={item.orderDate}
-                                control={control}
-                                {...register("orderDate", salesOrderHeaderFormValidationWhenCreate.orderDate)}
-                                render={
-                                    ({ field: { onChange, ...restField } }) =>
-                                        <DatePicker
-                                            ref={null}
-                                            label={t('OrderDate')}
-                                            onChange={(event) => { onChange(event); }}
-                                            renderInput={(params) =>
-                                                <TextField
-                                                    ref={null}
-                                                    fullWidth
-                                                    autoComplete='orderDate'
-                                                    error={!!errors.orderDate}
-                                                    helperText={!!errors.orderDate ? t(errors.orderDate.message) : ''}
-                                                    {...params}
-                                                />}
-                                            {...restField}
-                                        />
-                                }
+                            <DatePicker
+                                value={orderDate}
+                                label={t('OrderDate')}
+                                onChange={(event: string) => { setOrderDate(event); setValue('orderDate', event, { shouldDirty: true }); }}
+                                renderInput={(params) =>
+                                    <TextField
+                                        fullWidth
+                                        autoComplete='orderDate'
+                            			{...register("orderDate", salesOrderHeaderFormValidationWhenCreate.orderDate)}
+                                        error={!!errors.orderDate}
+                                        helperText={!!errors.orderDate ? t(errors.orderDate.message) : ''}
+                                        {...params}
+                                    />}
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <Controller
-                                name="dueDate"
-                                defaultValue={item.dueDate}
-                                control={control}
-                                {...register("dueDate", salesOrderHeaderFormValidationWhenCreate.dueDate)}
-                                render={
-                                    ({ field: { onChange, ...restField } }) =>
-                                        <DatePicker
-                                            ref={null}
-                                            label={t('DueDate')}
-                                            onChange={(event) => { onChange(event); }}
-                                            renderInput={(params) =>
-                                                <TextField
-                                                    ref={null}
-                                                    fullWidth
-                                                    autoComplete='dueDate'
-                                                    error={!!errors.dueDate}
-                                                    helperText={!!errors.dueDate ? t(errors.dueDate.message) : ''}
-                                                    {...params}
-                                                />}
-                                            {...restField}
-                                        />
-                                }
+                            <DatePicker
+                                value={dueDate}
+                                label={t('DueDate')}
+                                onChange={(event: string) => { setDueDate(event); setValue('dueDate', event, { shouldDirty: true }); }}
+                                renderInput={(params) =>
+                                    <TextField
+                                        fullWidth
+                                        autoComplete='dueDate'
+                            			{...register("dueDate", salesOrderHeaderFormValidationWhenCreate.dueDate)}
+                                        error={!!errors.dueDate}
+                                        helperText={!!errors.dueDate ? t(errors.dueDate.message) : ''}
+                                        {...params}
+                                    />}
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <Controller
-                                name="shipDate"
-                                defaultValue={item.shipDate}
-                                control={control}
-                                {...register("shipDate", salesOrderHeaderFormValidationWhenCreate.shipDate)}
-                                render={
-                                    ({ field: { onChange, ...restField } }) =>
-                                        <DatePicker
-                                            ref={null}
-                                            label={t('ShipDate')}
-                                            onChange={(event) => { onChange(event); }}
-                                            renderInput={(params) =>
-                                                <TextField
-                                                    ref={null}
-                                                    fullWidth
-                                                    autoComplete='shipDate'
-                                                    error={!!errors.shipDate}
-                                                    //helperText={!!errors.shipDate ? t(errors.shipDate.message) : ''}
-                                                    {...params}
-                                                />}
-                                            {...restField}
-                                        />
-                                }
+                            <DatePicker
+                                value={shipDate}
+                                label={t('ShipDate')}
+                                onChange={(event: string) => { setShipDate(event); setValue('shipDate', event, { shouldDirty: true }); }}
+                                renderInput={(params) =>
+                                    <TextField
+                                        fullWidth
+                                        autoComplete='shipDate'
+                            			{...register("shipDate", salesOrderHeaderFormValidationWhenCreate.shipDate)}
+                                        error={!!errors.shipDate}
+                                        helperText={!!errors.shipDate ? t(errors.shipDate.message) : ''}
+                                        {...params}
+                                    />}
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
@@ -496,36 +450,26 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <Controller
-                                name="modifiedDate"
-                                defaultValue={item.modifiedDate}
-                                control={control}
-                                {...register("modifiedDate", salesOrderHeaderFormValidationWhenCreate.modifiedDate)}
-                                render={
-                                    ({ field: { onChange, ...restField } }) =>
-                                        <DatePicker
-                                            ref={null}
-                                            label={t('ModifiedDate')}
-                                            onChange={(event) => { onChange(event); }}
-                                            renderInput={(params) =>
-                                                <TextField
-                                                    ref={null}
-                                                    fullWidth
-                                                    autoComplete='modifiedDate'
-                                                    error={!!errors.modifiedDate}
-                                                    helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                                    {...params}
-                                                />}
-                                            {...restField}
-                                        />
-                                }
+                            <DatePicker
+                                value={modifiedDate}
+                                label={t('ModifiedDate')}
+                                onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
+                                renderInput={(params) =>
+                                    <TextField
+                                        fullWidth
+                                        autoComplete='modifiedDate'
+                            			{...register("modifiedDate", salesOrderHeaderFormValidationWhenCreate.modifiedDate)}
+                                        error={!!errors.modifiedDate}
+                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                                        {...params}
+                                    />}
                             />
                         </Grid>
                     </Grid>
 				</Box>
             </CardContent>
-            {(crudViewContainer === CrudViewContainers.Dialog) && <CardActions disableSpacing>
-                {renderButtonGroupWhenDialog()}
+            {buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
+                {renderButtonGroup_TextAndIconButtons()}
             </CardActions>}
         </Card >
     );

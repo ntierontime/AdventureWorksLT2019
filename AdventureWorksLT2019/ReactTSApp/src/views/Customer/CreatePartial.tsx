@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, TextField, Typography } from '@mui/material';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
 
@@ -12,20 +11,29 @@ import { Controller } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers';
 
 
+
+
+// 1. DateTime/Integer/Decimal fields are using 'i18nFormats.??' when display
+// 2. un-comment /*getCurrency,*/ if you display money
+import { /*getCurrency,*/ i18nFormats } from 'src/i18n';
+
 import { AppDispatch } from 'src/store/Store';
 
+import { ContainerOptions } from 'src/shared/viewModels/ContainerOptions';
 import { CrudViewContainers } from 'src/shared/viewModels/CrudViewContainers';
 import { ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps';
 import { defaultCustomer, ICustomerDataModel, customerFormValidationWhenCreate } from 'src/dataModels/ICustomerDataModel';
 import { post } from 'src/slices/CustomerSlice';
 
 export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataModel>): JSX.Element {
-    const { gridColumns, scrollableCardContent, crudViewContainer } = props; // item
+    const { gridColumns, scrollableCardContent, crudViewContainer, buttonContainer } = props; // item
     const { doneAction } = props; // dialog
     const [item, setItem] = useState<ICustomerDataModel>(defaultCustomer());
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
+	// 'control' is only used by boolean fields, you can remove it if this form doesn't have it
+	// 'setValue' is only used by Dropdown List fields and DatePicker fields, you can remove it if this form doesn't have it
     const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
@@ -42,6 +50,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
     };
 
 
+    const [modifiedDate, setModifiedDate] = useState<string>();
     useEffect(() => {
 
         setCreating(false);
@@ -79,7 +88,22 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
             .finally(() => { setCreating(false); console.log('finally'); });
     }
 
-    const renderButtonGroupWhenDialog = () => {
+
+    const renderButtonGroup_IconButtons = () => {
+        return (
+            <>
+                <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
+                <IconButton aria-label="create" color="primary" type='submit' disabled={!isValid || creating || created || !isDirty}>
+                    <SaveIcon />
+                </IconButton>
+                <IconButton aria-label="close" disabled={creating || created}>
+                    <CloseIcon />
+                </IconButton>
+            </>
+        );
+    }
+
+    const renderButtonGroup_TextAndIconButtons = () => {
         return (
             <>
                 <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
@@ -92,7 +116,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
                         type='submit'
                         fullWidth
                         variant='contained'
-                        disabled={(!isValid || creating || created) && !isDirty}
+                        disabled={!isValid || creating || created || !isDirty}
                         startIcon={<SaveIcon />}>
                         {t('Create')}
                     </Button>
@@ -111,53 +135,13 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
         );
     }
 
-    const renderButtonGroupWhenInline = () => {
-        return (
-            <>
-                <IconButton type='submit' aria-label="create" disabled={(!isValid || creating || created) && !isDirty}>
-                    <SaveIcon />
-                </IconButton>
-                <IconButton aria-label="close" onClick={() => { doneAction() }}>
-                    <CloseIcon />
-                </IconButton>
-            </>
-        );
-    }
-
-    const renderButtonGroupWhenStandaloneView = () => {
-        return (
-            <>
-                <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
-                <ButtonGroup sx={{ marginLeft: 'auto', }}
-                    disableElevation
-                    variant="contained"
-                    aria-label="navigation buttons"
-                >
-                    <Button
-                        type='submit'
-                        fullWidth
-                        variant='contained'
-                        disabled={(!isValid || creating || created) && !isDirty}
-                        startIcon={<SaveIcon />}>
-                        {t('Create')}
-                    </Button>
-                    <IconButton aria-label="close" onClick={() => { doneAction() }}>
-                        <ChevronLeftIcon />
-                    </IconButton>
-                </ButtonGroup>
-            </>
-        );
-    }
-
     return (
         <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
             <CardHeader
-                action={
-                    <>
-                        {crudViewContainer === CrudViewContainers.Inline && (renderButtonGroupWhenInline())}
-                        {(crudViewContainer === CrudViewContainers.StandaloneView) && (renderButtonGroupWhenStandaloneView())}
-                    </>
-                }
+                action={buttonContainer === ContainerOptions.ItemCardHead && <>
+                    {crudViewContainer !== CrudViewContainers.StandaloneView && renderButtonGroup_IconButtons()}
+                    {crudViewContainer === CrudViewContainers.StandaloneView && renderButtonGroup_TextAndIconButtons()}
+                </>}
                 title={t("Create_New")}
                 subheader={t("Customer")}
             />
@@ -345,36 +329,26 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <Controller
-                                name="modifiedDate"
-                                defaultValue={item.modifiedDate}
-                                control={control}
-                                {...register("modifiedDate", customerFormValidationWhenCreate.modifiedDate)}
-                                render={
-                                    ({ field: { onChange, ...restField } }) =>
-                                        <DatePicker
-                                            ref={null}
-                                            label={t('ModifiedDate')}
-                                            onChange={(event) => { onChange(event); }}
-                                            renderInput={(params) =>
-                                                <TextField
-                                                    ref={null}
-                                                    fullWidth
-                                                    autoComplete='modifiedDate'
-                                                    error={!!errors.modifiedDate}
-                                                    helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                                    {...params}
-                                                />}
-                                            {...restField}
-                                        />
-                                }
+                            <DatePicker
+                                value={modifiedDate}
+                                label={t('ModifiedDate')}
+                                onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
+                                renderInput={(params) =>
+                                    <TextField
+                                        fullWidth
+                                        autoComplete='modifiedDate'
+                            			{...register("modifiedDate", customerFormValidationWhenCreate.modifiedDate)}
+                                        error={!!errors.modifiedDate}
+                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                                        {...params}
+                                    />}
                             />
                         </Grid>
                     </Grid>
 				</Box>
             </CardContent>
-            {(crudViewContainer === CrudViewContainers.Dialog) && <CardActions disableSpacing>
-                {renderButtonGroupWhenDialog()}
+            {buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
+                {renderButtonGroup_TextAndIconButtons()}
             </CardActions>}
         </Card >
     );

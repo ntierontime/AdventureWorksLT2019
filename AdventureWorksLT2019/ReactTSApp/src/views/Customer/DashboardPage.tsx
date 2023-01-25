@@ -113,20 +113,20 @@ export default function DashboardPage(): JSX.Element {
         listItems: listItems_CustomerAddresses_Via_CustomerID,
         initialLoadFromServer: true,
         hasListToolBar: true,
-        hasAdvancedSearch: true,
-        addNewButtonContainer: ContainerOptions.ToolBar,
+        hasAdvancedSearch : true,
+        addNewButtonContainer: ContainerOptions.ListToolBar,
         listToolBarSetting: {
             textSearchPlaceHolder: t("CustomerAddress"),
             hasListViewOptionsSelect: true,
             availableListViewOptions: [ListViewOptions.SlideShow, ListViewOptions.Table, ListViewOptions.Tiles],
             hasItemsSelect: true,
             hasBulkDelete: true,
-            hasBulkUpdate: true,
-            hasItemsPerRowSelect: true,
-            hasPageSizeSelect: false,
-            hasOrderBySelect: false,
-            hasSearch: false,
-            hasAdvancedSearchAccordion: false,
+            hasBulkUpdate: false,
+            hasItemsPerRowSelect: true, // When "Tiles"
+            hasPageSizeSelect: true,    // When "Table"
+            hasOrderBySelect: true,
+            hasSearch: true,			// Text Search
+            hasAdvancedSearchAccordion: true,
             hasAdvancedSearchDialog: false,
         }
     } as ListsPartialViewProps<ICustomerAddressAdvancedQuery, ICustomerAddressDataModel>;
@@ -137,20 +137,20 @@ export default function DashboardPage(): JSX.Element {
         listItems: listItems_SalesOrderHeaders_Via_CustomerID,
         initialLoadFromServer: true,
         hasListToolBar: true,
-        hasAdvancedSearch: true,
-        addNewButtonContainer: ContainerOptions.ToolBar,
+        hasAdvancedSearch : true,
+        addNewButtonContainer: ContainerOptions.ListToolBar,
         listToolBarSetting: {
             textSearchPlaceHolder: t("SalesOrderHeader"),
             hasListViewOptionsSelect: true,
             availableListViewOptions: [ListViewOptions.SlideShow, ListViewOptions.Table, ListViewOptions.Tiles],
             hasItemsSelect: true,
             hasBulkDelete: true,
-            hasBulkUpdate: true,
-            hasItemsPerRowSelect: true,
-            hasPageSizeSelect: false,
-            hasOrderBySelect: false,
-            hasSearch: false,
-            hasAdvancedSearchAccordion: false,
+            hasBulkUpdate: false,
+            hasItemsPerRowSelect: true, // When "Tiles"
+            hasPageSizeSelect: true,    // When "Table"
+            hasOrderBySelect: true,
+            hasSearch: true,			// Text Search
+            hasAdvancedSearchAccordion: true,
             hasAdvancedSearchDialog: false,
         }
     } as ListsPartialViewProps<ISalesOrderHeaderAdvancedQuery, ISalesOrderHeaderDataModel>;
@@ -161,39 +161,39 @@ export default function DashboardPage(): JSX.Element {
                 <TabContext value={tabValue}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                         <TabList onChange={handleTabChange} aria-label="Customer Dashboard tabs">
-                        <Tab label={t('Lists')} value='1' />
+                            <Tab label={t('Lists')} value='1' />
                         </TabList>
                     </Box>
-                    <TabPanel value="1">
-                    <Accordion defaultExpanded={true}>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel1a-CustomerAddresses_Via_CustomerID-content"
-                            id="panel1a-CustomerAddresses_Via_CustomerID-header"
-                        >
-                            <Link to="/CustomerAddress">
-                                <Typography variant="h5" component="h5">{t("CustomerAddress")}</Typography>
-                            </Link>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <CustomerAddressListsPartial {...listsPartialViewProps_CustomerAddresses_Via_CustomerID} />
-                        </AccordionDetails>
-                    </Accordion>
-                    <Accordion defaultExpanded={true}>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel1a-SalesOrderHeaders_Via_CustomerID-content"
-                            id="panel1a-SalesOrderHeaders_Via_CustomerID-header"
-                        >
-                            <Link to="/SalesOrderHeader">
-                                <Typography variant="h5" component="h5">{t("SalesOrderHeader")}</Typography>
-                            </Link>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <SalesOrderHeaderListsPartial {...listsPartialViewProps_SalesOrderHeaders_Via_CustomerID} />
-                        </AccordionDetails>
-                    </Accordion>
-                    </TabPanel>
+                        <TabPanel value="1">
+                        <Accordion defaultExpanded={true}>
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel1a-CustomerAddresses_Via_CustomerID-content"
+                                id="panel1a-CustomerAddresses_Via_CustomerID-header"
+                            >
+                                <Link to="/CustomerAddress">
+                                    <Typography variant="h5" component="h5">{t("CustomerAddress")}</Typography>
+                                </Link>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <CustomerAddressListsPartial {...listsPartialViewProps_CustomerAddresses_Via_CustomerID} />
+                            </AccordionDetails>
+                        </Accordion>
+                        <Accordion defaultExpanded={true}>
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel1a-SalesOrderHeaders_Via_CustomerID-content"
+                                id="panel1a-SalesOrderHeaders_Via_CustomerID-header"
+                            >
+                                <Link to="/SalesOrderHeader">
+                                    <Typography variant="h5" component="h5">{t("SalesOrderHeader")}</Typography>
+                                </Link>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <SalesOrderHeaderListsPartial {...listsPartialViewProps_SalesOrderHeaders_Via_CustomerID} />
+                            </AccordionDetails>
+                        </Accordion>
+                        </TabPanel>
                 </TabContext>
             </Grid>
             <Grid item xs={6} sm={6} md={4} lg={3} xl={2}>

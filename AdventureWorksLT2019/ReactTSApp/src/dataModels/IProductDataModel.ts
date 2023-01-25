@@ -11,8 +11,6 @@ export interface IProductDataModel {
     listPrice: number;
     size: string;
     weight: number;
-    parentID: number | null;
-    parent_Name: string;
     productCategory_Name: string;
     productCategoryID: number | null;
     productModel_Name: string;
@@ -38,8 +36,6 @@ export function defaultProduct(): IProductDataModel {
         listPrice: 0,
         size: '',
         weight: 0,
-        parentID: null,
-        parent_Name: '',
         productCategory_Name: '',
         productCategoryID: null,
         productModel_Name: '',
@@ -99,8 +95,6 @@ export const productFormValidationWhenCreate = {
         },
     },
     weight: {
-    },
-    parentID: {
     },
     productCategoryID: {
     },
@@ -166,8 +160,6 @@ export const productFormValidationWhenEdit = {
         },
     },
     weight: {
-    },
-    parentID: {
     },
     productCategoryID: {
     },

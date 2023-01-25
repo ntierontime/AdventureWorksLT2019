@@ -715,6 +715,12 @@
   <data name="Product" xml:space="preserve">
     <value>(en)Product</value>
   </data>
+  <data name="Tab_MoreDetails" xml:space="preserve">
+    <value>(en)More Details</value>
+  </data>
+  <data name="Section_ProductCategory" xml:space="preserve">
+    <value>(en)Product Category</value>
+  </data>
   <data name="Section_SalesOrderDetails_Via_ProductID" xml:space="preserve">
     <value>(en)Sales Order Details  Via  Product ID</value>
   </data>
@@ -819,9 +825,6 @@
   </data>
   <data name="SalesOrderDetail" xml:space="preserve">
     <value>(en)Sales Order Detail</value>
-  </data>
-  <data name="Tab_MoreDetails" xml:space="preserve">
-    <value>(en)More Details</value>
   </data>
   <data name="Section_Product" xml:space="preserve">
     <value>(en)Product</value>

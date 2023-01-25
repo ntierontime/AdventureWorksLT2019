@@ -1,6 +1,10 @@
 export enum ContainerOptions
 {
 	None = 'None',
-	ToolBar = 'ToolBar',
+	ListToolBar = 'ListToolBar',
 	Absolute = 'Absolute', // Snackbar instead of FAB
+
+    ItemCardHead = "ItemCardHead",
+    ItemCardToolbar = "ItemCardToolbar",
+    ItemCardBottom = "ItemCardBottom",
 }

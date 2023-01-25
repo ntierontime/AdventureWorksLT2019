@@ -1,31 +1,38 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, TextField, Typography } from '@mui/material';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
 
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Controller } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers';
 
 
+
+
+// 1. DateTime/Integer/Decimal fields are using 'i18nFormats.??' when display
+// 2. un-comment /*getCurrency,*/ if you display money
+import { /*getCurrency,*/ i18nFormats } from 'src/i18n';
+
 import { AppDispatch } from 'src/store/Store';
 
+import { ContainerOptions } from 'src/shared/viewModels/ContainerOptions';
 import { CrudViewContainers } from 'src/shared/viewModels/CrudViewContainers';
 import { ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps';
 import { defaultErrorLog, IErrorLogDataModel, errorLogFormValidationWhenCreate } from 'src/dataModels/IErrorLogDataModel';
 import { post } from 'src/slices/ErrorLogSlice';
 
 export default function CreatePartial(props: ItemPartialViewProps<IErrorLogDataModel>): JSX.Element {
-    const { gridColumns, scrollableCardContent, crudViewContainer } = props; // item
+    const { gridColumns, scrollableCardContent, crudViewContainer, buttonContainer } = props; // item
     const { doneAction } = props; // dialog
     const [item, setItem] = useState<IErrorLogDataModel>(defaultErrorLog());
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
+	// 'control' is only used by boolean fields, you can remove it if this form doesn't have it
+	// 'setValue' is only used by Dropdown List fields and DatePicker fields, you can remove it if this form doesn't have it
     const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
@@ -42,6 +49,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IErrorLogDataM
     };
 
 
+    const [errorTime, setErrorTime] = useState<string>();
     useEffect(() => {
 
         setCreating(false);
@@ -79,7 +87,22 @@ export default function CreatePartial(props: ItemPartialViewProps<IErrorLogDataM
             .finally(() => { setCreating(false); console.log('finally'); });
     }
 
-    const renderButtonGroupWhenDialog = () => {
+
+    const renderButtonGroup_IconButtons = () => {
+        return (
+            <>
+                <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
+                <IconButton aria-label="create" color="primary" type='submit' disabled={!isValid || creating || created || !isDirty}>
+                    <SaveIcon />
+                </IconButton>
+                <IconButton aria-label="close" disabled={creating || created}>
+                    <CloseIcon />
+                </IconButton>
+            </>
+        );
+    }
+
+    const renderButtonGroup_TextAndIconButtons = () => {
         return (
             <>
                 <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
@@ -92,7 +115,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IErrorLogDataM
                         type='submit'
                         fullWidth
                         variant='contained'
-                        disabled={(!isValid || creating || created) && !isDirty}
+                        disabled={!isValid || creating || created || !isDirty}
                         startIcon={<SaveIcon />}>
                         {t('Create')}
                     </Button>
@@ -111,53 +134,13 @@ export default function CreatePartial(props: ItemPartialViewProps<IErrorLogDataM
         );
     }
 
-    const renderButtonGroupWhenInline = () => {
-        return (
-            <>
-                <IconButton type='submit' aria-label="create" disabled={(!isValid || creating || created) && !isDirty}>
-                    <SaveIcon />
-                </IconButton>
-                <IconButton aria-label="close" onClick={() => { doneAction() }}>
-                    <CloseIcon />
-                </IconButton>
-            </>
-        );
-    }
-
-    const renderButtonGroupWhenStandaloneView = () => {
-        return (
-            <>
-                <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
-                <ButtonGroup sx={{ marginLeft: 'auto', }}
-                    disableElevation
-                    variant="contained"
-                    aria-label="navigation buttons"
-                >
-                    <Button
-                        type='submit'
-                        fullWidth
-                        variant='contained'
-                        disabled={(!isValid || creating || created) && !isDirty}
-                        startIcon={<SaveIcon />}>
-                        {t('Create')}
-                    </Button>
-                    <IconButton aria-label="close" onClick={() => { doneAction() }}>
-                        <ChevronLeftIcon />
-                    </IconButton>
-                </ButtonGroup>
-            </>
-        );
-    }
-
     return (
         <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
             <CardHeader
-                action={
-                    <>
-                        {crudViewContainer === CrudViewContainers.Inline && (renderButtonGroupWhenInline())}
-                        {(crudViewContainer === CrudViewContainers.StandaloneView) && (renderButtonGroupWhenStandaloneView())}
-                    </>
-                }
+                action={buttonContainer === ContainerOptions.ItemCardHead && <>
+                    {crudViewContainer !== CrudViewContainers.StandaloneView && renderButtonGroup_IconButtons()}
+                    {crudViewContainer === CrudViewContainers.StandaloneView && renderButtonGroup_TextAndIconButtons()}
+                </>}
                 title={t("Create_New")}
                 subheader={t("ErrorLog")}
             />
@@ -170,29 +153,19 @@ export default function CreatePartial(props: ItemPartialViewProps<IErrorLogDataM
                 <Box sx={{ ...scrollableCardContent }}>
                     <Grid container spacing={2}>
                         <Grid item {...gridColumns}>
-                            <Controller
-                                name="errorTime"
-                                defaultValue={item.errorTime}
-                                control={control}
-                                {...register("errorTime", errorLogFormValidationWhenCreate.errorTime)}
-                                render={
-                                    ({ field: { onChange, ...restField } }) =>
-                                        <DatePicker
-                                            ref={null}
-                                            label={t('ErrorTime')}
-                                            onChange={(event) => { onChange(event); }}
-                                            renderInput={(params) =>
-                                                <TextField
-                                                    ref={null}
-                                                    fullWidth
-                                                    autoComplete='errorTime'
-                                                    error={!!errors.errorTime}
-                                                    helperText={!!errors.errorTime ? t(errors.errorTime.message) : ''}
-                                                    {...params}
-                                                />}
-                                            {...restField}
-                                        />
-                                }
+                            <DatePicker
+                                value={errorTime}
+                                label={t('ErrorTime')}
+                                onChange={(event: string) => { setErrorTime(event); setValue('errorTime', event, { shouldDirty: true }); }}
+                                renderInput={(params) =>
+                                    <TextField
+                                        fullWidth
+                                        autoComplete='errorTime'
+                            			{...register("errorTime", errorLogFormValidationWhenCreate.errorTime)}
+                                        error={!!errors.errorTime}
+                                        helperText={!!errors.errorTime ? t(errors.errorTime.message) : ''}
+                                        {...params}
+                                    />}
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
@@ -296,8 +269,8 @@ export default function CreatePartial(props: ItemPartialViewProps<IErrorLogDataM
                     </Grid>
 				</Box>
             </CardContent>
-            {(crudViewContainer === CrudViewContainers.Dialog) && <CardActions disableSpacing>
-                {renderButtonGroupWhenDialog()}
+            {buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
+                {renderButtonGroup_TextAndIconButtons()}
             </CardActions>}
         </Card >
     );

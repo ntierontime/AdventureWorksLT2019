@@ -42,6 +42,23 @@ export const getCompositeModel = createAsyncThunk(
     }
 )
 
+export const bulkDelete = createAsyncThunk(
+    'bulkDeleteProduct',
+    async (identifiers: IProductIdentifier[], { dispatch }) => {
+        const response = await productApi.BulkDelete(identifiers);
+        return { response, identifiers };
+        // return { response: {status: 'OK'}, identifiers }; // for testing
+    }
+)
+
+export const multiItemsCUD = createAsyncThunk(
+    'multiItemsCUDProduct',
+    async (params: IMultiItemsCUDRequest<IProductIdentifier, IProductDataModel>, { dispatch }) => {
+        const response = await productApi.MultiItemsCUD(params);
+        return response;
+    }
+)
+
 export const put = createAsyncThunk(
     'putProduct',
     async (params: { identifier: IProductIdentifier, data: IProductDataModel }, { dispatch }) => {
@@ -63,6 +80,14 @@ export const post = createAsyncThunk(
     async (data: IProductDataModel, { dispatch }) => {
         const response = await productApi.Post(data);
         return response;
+    }
+)
+
+export const delete1 = createAsyncThunk(
+    'deleteProduct',
+    async (identifier: IProductIdentifier, { dispatch }) => {
+        const response = await productApi.Delete(identifier);
+        return { response, identifier };
     }
 )
 
@@ -133,6 +158,54 @@ const ProductSlice = createSlice({
             // console.log("getCompositeModel.rejected");
         });
 
+        builder.addCase(bulkDelete.pending, (state) => {
+
+            // console.log("bulkDelete.pending");
+        });
+        builder.addCase(bulkDelete.fulfilled, (state, { payload }) => {
+            if (!!payload && !!payload.response && payload.response.status === 'OK') {
+                // TODO: how to remove multiple
+                entityAdapter.removeMany(state, payload.identifiers.map(identifier => identifier.productID));
+            }
+            // console.log("bulkDelete.fulfilled");
+        });
+        builder.addCase(bulkDelete.rejected, (state, action) => {
+
+            // console.log("bulkDelete.rejected");
+        });
+
+        builder.addCase(multiItemsCUD.pending, (state) => {
+
+            // console.log("multiItemsCUD.pending");
+        });
+        builder.addCase(multiItemsCUD.fulfilled, (state, { payload }) => {
+            if (!!payload && payload.status === 'OK') {
+                if (!!payload.responseBody.updateItems) {
+                    entityAdapter.upsertMany(state, payload.responseBody.updateItems.map(item => { return { ...item, itemUIStatus: ItemUIStatus.Updated }; }));
+                }
+                if (!!payload.responseBody.newItems) {
+                    entityAdapter.upsertMany(state, payload.responseBody.newItems.map(item => { return { ...item, itemUIStatus: ItemUIStatus.New }; }));
+                }
+                if (!!payload.responseBody.mergeItems) {
+                    entityAdapter.upsertMany(state, payload.responseBody.mergeItems.map(item => {
+                        if (state.ids.find(oId => { return oId === item.productID }) !== -1) {
+                            return { ...item, itemUIStatus______: ItemUIStatus.Updated }
+                        }
+                        return { ...item, itemUIStatus______: ItemUIStatus.New }
+                    }));
+                }
+                if (!!payload.responseBody.deleteItems) {
+                    // TODO: how to remove many: 
+                    entityAdapter.removeMany(state, payload.responseBody.deleteItems.map(item => { return item.productID; }));
+                }
+            }
+            // console.log("multiItemsCUD.fulfilled");
+        });
+        builder.addCase(multiItemsCUD.rejected, (state, action) => {
+
+            // console.log("multiItemsCUD.rejected");
+        });
+
         builder.addCase(put.pending, (state) => {
 
             // console.log("put.pending");
@@ -176,6 +249,22 @@ const ProductSlice = createSlice({
         builder.addCase(post.rejected, (state, action) => {
 
             // console.log("post.rejected");
+        });
+
+        builder.addCase(delete1.pending, (state) => {
+
+            // console.log("delete.pending");
+        });
+        builder.addCase(delete1.fulfilled, (state, { payload }) => {
+            if (!!payload && !!payload.response && payload.response.status === 'OK') {
+                // TODO: how to remove one
+                entityAdapter.removeOne(state, payload.identifier.productID);
+            }
+            // console.log("delete.fulfilled");
+        });
+        builder.addCase(delete1.rejected, (state, action) => {
+
+            // console.log("delete.rejected");
         });
     }
 });

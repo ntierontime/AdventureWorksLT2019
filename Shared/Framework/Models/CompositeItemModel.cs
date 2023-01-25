@@ -6,7 +6,7 @@ namespace Framework.Models
 
         public Response<PaginationResponse> Response { get; set; } = null!;
 
-        public UIParams UIParams { get; set; } = null;
+        public UIParams UIParams { get; set; } = null!;
     }
 }
 

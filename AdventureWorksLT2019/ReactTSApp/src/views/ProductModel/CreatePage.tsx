@@ -1,0 +1,23 @@
+import { useNavigate } from "react-router-dom";
+
+import { getCRUDItemPartialViewPropsStandalone } from "src/shared/viewModels/ItemPartialViewProps";
+import { ViewItemTemplates } from "src/shared/viewModels/ViewItemTemplates";
+
+import ItemViewsPartial from "./ItemViewsPartial";
+import { IProductModelDataModel } from "src/dataModels/IProductModelDataModel";
+
+export default function CreatePage(): JSX.Element {
+    const navigate = useNavigate();
+    const crudItemPartialViewProps = getCRUDItemPartialViewPropsStandalone<IProductModelDataModel>(
+        ViewItemTemplates.Create,
+        () => {
+            navigate("-1");
+        } // go back to previous page
+    );
+
+    return (
+        <ItemViewsPartial {...crudItemPartialViewProps} />
+    );
+}
+
+

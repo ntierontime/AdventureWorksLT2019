@@ -210,10 +210,20 @@ public class ListVM : ListVMBase<SalesOrderHeaderAdvancedQuery, SalesOrderHeader
         */
         // AdvancedQuery.End DateTimeRanges
 
+        // 1. Init LaunchSalesOrderHeaderCreatePageCommand
+        LaunchCreatePageCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderCreatePageCommand(AppShellRoutes.SalesOrderHeaderListPage);
+        // 2. Init LaunchSalesOrderHeaderDeletePageCommand
+        LaunchDeletePageCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderDeletePageCommand(AppShellRoutes.SalesOrderHeaderListPage);
+        // 3. Init LaunchSalesOrderHeaderDetailsPageCommand
+        LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderDetailsPageCommand(AppShellRoutes.SalesOrderHeaderListPage);
+        // 4. Init LaunchSalesOrderHeaderEditPageCommand
+        LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderEditPageCommand(AppShellRoutes.SalesOrderHeaderListPage);
         // 5. Init LaunchSalesOrderHeaderDashboardPageCommand
         LaunchDashboardPageCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderDashboardPageCommand(AppShellRoutes.SalesOrderHeaderListPage);
         // 6. Init LaunchSalesOrderHeaderCreatePopupCommand
         LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderCreatePopupCommand();
+        // 7. Init LaunchSalesOrderHeaderDeletePopupCommand
+        LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderDeletePopupCommand();
         // 8. Init LaunchSalesOrderHeaderDetailsPopupCommand
         LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderDetailsPopupCommand();
         // 9. Init LaunchSalesOrderHeaderEditPopupCommand

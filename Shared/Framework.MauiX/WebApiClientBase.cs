@@ -1,13 +1,7 @@
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using System.Net.Http.Headers;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Framework.MauiX;
 
@@ -15,7 +9,6 @@ public abstract class WebApiClientBase
 {
     protected readonly string _rootPath;
     protected readonly string _controllerName;
-
     protected readonly HttpClient _client = null!;
 
     public WebApiClientBase(string rootPath, string controllerName)
@@ -27,6 +20,7 @@ public abstract class WebApiClientBase
 
     public async Task<TResponse> Post<TRequest, TResponse>(string url, TRequest request, bool userToken = true)
     {
+
         if (userToken)
         {
             if (_client.DefaultRequestHeaders.Contains("Authorization"))
@@ -34,9 +28,14 @@ public abstract class WebApiClientBase
             _client.DefaultRequestHeaders.Add("Authorization", "Bearer " + GetToken());
         }
 
-        var jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
-        jsonSerializerSettings.Converters.Add(new StringEnumConverter());
-        string requestJSON = JsonConvert.SerializeObject(request, Formatting.Indented, jsonSerializerSettings);
+        var options = new JsonSerializerOptions
+        {
+            IncludeFields = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        };
+        options.Converters.Add(new JsonStringEnumConverter());
+        options.Converters.Add(new NetTopologySuite.IO.Converters.GeoJsonConverterFactory());
+        string requestJSON = JsonSerializer.Serialize(request, typeof(TRequest), options);
         var httpContent = new StringContent(requestJSON, System.Text.Encoding.UTF8, "application/json");
 
         var response = await _client.PostAsync(url, httpContent);
@@ -45,11 +44,10 @@ public abstract class WebApiClientBase
         {
             try
             {
-                var content = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<TResponse>(content);
+                var result = await JsonSerializer.DeserializeAsync<TResponse>(response.Content.ReadAsStream(), options);
                 return result;
             }
-            catch
+            catch(Exception ex)
             {
                 return default(TResponse);
             }
@@ -70,17 +68,21 @@ public abstract class WebApiClientBase
             _client.DefaultRequestHeaders.Add("Authorization", "Bearer " + GetToken());
         }
 
-        var jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
-        jsonSerializerSettings.Converters.Add(new StringEnumConverter());
-        string requestJSON = JsonConvert.SerializeObject(request, Formatting.Indented, jsonSerializerSettings);
+        var options = new JsonSerializerOptions
+        {
+            IncludeFields = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        };
+        options.Converters.Add(new JsonStringEnumConverter());
+        options.Converters.Add(new NetTopologySuite.IO.Converters.GeoJsonConverterFactory());
+        string requestJSON = JsonSerializer.Serialize(request, typeof(TRequest), options);
         var httpContent = new StringContent(requestJSON, System.Text.Encoding.UTF8, "application/json");
 
         var response = await _client.PutAsync(url, httpContent);
 
         if (response.IsSuccessStatusCode)
         {
-            var content = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<TResponse>(content);
+            var result = await JsonSerializer.DeserializeAsync<TResponse>(response.Content.ReadAsStream(), options);
             return result;
         }
         return default(TResponse);
@@ -97,12 +99,18 @@ public abstract class WebApiClientBase
 
         _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+        var options = new JsonSerializerOptions
+        {
+            IncludeFields = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        };
+        options.Converters.Add(new JsonStringEnumConverter());
+        options.Converters.Add(new NetTopologySuite.IO.Converters.GeoJsonConverterFactory());
         var response = await _client.GetAsync(url);
 
         if (response.IsSuccessStatusCode)
         {
-            var content = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<TResponse>(content);
+            var result = await JsonSerializer.DeserializeAsync<TResponse>(response.Content.ReadAsStream(), options);
             return result;
         }
         else
@@ -119,12 +127,19 @@ public abstract class WebApiClientBase
                 _client.DefaultRequestHeaders.Remove("Authorization");
             _client.DefaultRequestHeaders.Add("Authorization", "Bearer " + GetToken());
         }
+
+        var options = new JsonSerializerOptions
+        {
+            IncludeFields = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+        options.Converters.Add(new JsonStringEnumConverter());
+        options.Converters.Add(new NetTopologySuite.IO.Converters.GeoJsonConverterFactory());
         var response = await _client.DeleteAsync(url);
 
         if (response.IsSuccessStatusCode)
         {
-            var content = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<TResponse>(content);
+            var result = await JsonSerializer.DeserializeAsync<TResponse>(response.Content.ReadAsStream(), options);
             return result;
         }
         return default(TResponse);

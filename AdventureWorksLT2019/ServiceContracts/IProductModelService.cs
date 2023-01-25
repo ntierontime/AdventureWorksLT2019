@@ -13,6 +13,11 @@ namespace AdventureWorksLT2019.ServiceContracts
             Dictionary<ProductModelCompositeModel.__DataOptions__, CompositeListItemRequest> listItemRequest,
             ProductModelCompositeModel.__DataOptions__[]? dataOptions = null);
 
+        Task<Response> BulkDelete(List<ProductModelIdentifier> ids);
+
+        Task<Response<MultiItemsCUDRequest<ProductModelIdentifier, ProductModelDataModel>>> MultiItemsCUD(
+            MultiItemsCUDRequest<ProductModelIdentifier, ProductModelDataModel> input);
+
         Task<Response<ProductModelDataModel>> Update(ProductModelIdentifier id, ProductModelDataModel input);
 
         Task<Response<ProductModelDataModel>> Get(ProductModelIdentifier id);
