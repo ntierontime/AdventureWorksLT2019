@@ -1,5 +1,7 @@
 npx react-native init MyApp --template react-native-template-typescript
+npm run android --deviceId=pixel_3_xl_-_api_28
 npm run android --deviceId=pixel_5_-_api_32
+npm run android --deviceId=pixel_5_-_api_32_1
 
 %ANDROID_HOME%/tools/emulator -list-avds
 
