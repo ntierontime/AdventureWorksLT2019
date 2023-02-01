@@ -6,3 +6,8 @@ npm i react-redux @reduxjs/toolkit
 npm i --save-dev @types/react-redux
 
 npm install axios
+npm install react-hook-form
+
+npm install i18next react-i18next react-native-localize
+
+npm install moment
