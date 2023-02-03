@@ -17,6 +17,4 @@ i18n.use(initReactI18next).init({
     resources: translations,
 });
 
-console.log(i18n);
-
 export default i18n;
