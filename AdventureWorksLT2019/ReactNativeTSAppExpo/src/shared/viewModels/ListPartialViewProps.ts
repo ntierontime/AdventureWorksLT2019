@@ -1,6 +1,8 @@
+import { ListViewOptions } from "../views/ListViewOptions";
 import { ViewItemTemplates } from "./ViewItemTemplates";
 
 export interface ListPartialViewProps<TDataModel, TIdentifier> {
+    listViewOption: ListViewOptions,
     listItems: TDataModel[],
     itemsPerRow: number,
 
