@@ -3,6 +3,6 @@ export const PRIMARY_TEXT_COLOR = "#686868";
 export const SECONDARY_TEXT_COLOR = "#9a9a9a";
 
 export const ROW = {
-  flexDirection: "row",
+  flexDirection: "row" as "row" | "column" | "row-reverse" | "column-reverse",
   justifyContent: "space-between",
 };
