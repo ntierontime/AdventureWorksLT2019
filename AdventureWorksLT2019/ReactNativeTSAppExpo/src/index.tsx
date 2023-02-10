@@ -1,10 +1,3 @@
-import {
-    SafeAreaView,
-    SafeAreaProvider,
-} from 'react-native-safe-area-context';
-import { Provider as StoreProvider } from 'react-redux';
-import store from './store/Store';
-
 import * as React from 'react';
 import { I18nManager } from 'react-native';
 
@@ -37,7 +30,6 @@ import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 import { isWeb } from '../utils';
 import DrawerItems from './DrawerItems';
 import App from './RootNavigator';
-import ScreenWrapper from './ScreenWrapper';
 
 const PERSISTENCE_KEY = 'NAVIGATION_STATE';
 const PREFERENCES_KEY = 'APP_PREFERENCES';
@@ -223,51 +215,46 @@ export default function PaperExample() {
   };
 
   return (
-    <StoreProvider store={store}><PaperProvider><SafeAreaProvider>
-r
-        </SafeAreaProvider></PaperProvider></StoreProvider>
+    <PaperProvider theme={customFontLoaded ? configuredFontTheme : theme}>
+      <PreferencesContext.Provider value={preferences}>
+        <React.Fragment>
+          <NavigationContainer
+            theme={combinedTheme}
+            initialState={initialState}
+            onStateChange={(state) =>
+              AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))
+            }
+          >
+            {isWeb ? (
+              <App />
+            ) : (
+              <SafeAreaInsetsContext.Consumer>
+                {(insets) => {
+                  const { left, right } = insets || { left: 0, right: 0 };
+                  const collapsedDrawerWidth = 80 + Math.max(left, right);
+                  return (
+                    <Drawer.Navigator
+                      screenOptions={{
+                        drawerStyle: collapsed && {
+                          width: collapsedDrawerWidth,
+                        },
+                      }}
+                      drawerContent={() => <DrawerContent />}
+                    >
+                      <Drawer.Screen
+                        name="Home"
+                        component={App}
+                        options={{ headerShown: false }}
+                      />
+                    </Drawer.Navigator>
+                  );
+                }}
+              </SafeAreaInsetsContext.Consumer>
+            )}
+            <StatusBar style={!theme.isV3 || theme.dark ? 'light' : 'dark'} />
+          </NavigationContainer>
+        </React.Fragment>
+      </PreferencesContext.Provider>
+    </PaperProvider>
   );
-//   return (
-//     <PaperProvider theme={customFontLoaded ? configuredFontTheme : theme}>
-//       <PreferencesContext.Provider value={preferences}>
-//         <React.Fragment>
-//           <NavigationContainer
-//             theme={combinedTheme}
-//             initialState={initialState}
-//             onStateChange={(state) =>
-//               AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))
-//             }
-//           >
-//             {isWeb ? (
-//               <App />
-//             ) : (
-//               <SafeAreaInsetsContext.Consumer>
-//                 {(insets) => {
-//                   const { left, right } = insets || { left: 0, right: 0 };
-//                   const collapsedDrawerWidth = 80 + Math.max(left, right);
-//                   return (
-//                     <Drawer.Navigator
-//                       screenOptions={{
-//                         drawerStyle: collapsed && {
-//                           width: collapsedDrawerWidth,
-//                         },
-//                       }}
-//                       drawerContent={() => <DrawerContent />}
-//                     >
-//                       <Drawer.Screen
-//                         name="Home"
-//                         component={App}
-//                         options={{ headerShown: false }}
-//                       />
-//                     </Drawer.Navigator>
-//                   );
-//                 }}
-//               </SafeAreaInsetsContext.Consumer>
-//             )}
-//             <StatusBar style={!theme.isV3 || theme.dark ? 'light' : 'dark'} />
-//           </NavigationContainer>
-//         </React.Fragment>
-//       </PreferencesContext.Provider>
-//     </PaperProvider>
-//   );
 }

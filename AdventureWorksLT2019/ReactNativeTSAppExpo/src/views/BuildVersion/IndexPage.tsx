@@ -51,16 +51,8 @@ function IndexPage() {
     } as ListsPartialViewProps<IBuildVersionAdvancedQuery, IBuildVersionDataModel>;
 
     return (
-        <SafeAreaView>
-            <View style={{ flex: 1 }}>
-                <Text>versionDate</Text>
-           </View>
-        </SafeAreaView>
-   );
-
-    // return (
-    //      <ListsPartial {...listsPartialViewProps} />
-    // );
+         <ListsPartial {...listsPartialViewProps} />
+    );
 }
 
 IndexPage.title = "Build Version IndexPage";

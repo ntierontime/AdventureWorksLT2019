@@ -32,7 +32,7 @@ import {
 } from 'react-native-paper';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 
-import { isWeb } from './utils';
+//import { isWeb } from './utils';
 import DrawerItems from './src/DrawerItems';
 import Root from './src/RootNavigator';
 
@@ -231,9 +231,7 @@ export default function App() {
                                 AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))
                             }
                         >
-                            {isWeb ? (
-                                <Root />
-                            ) : (
+
                                 <SafeAreaInsetsContext.Consumer>
                                     {(insets) => {
                                         const { left, right } = insets || { left: 0, right: 0 };
@@ -256,7 +254,6 @@ export default function App() {
                                         );
                                     }}
                                 </SafeAreaInsetsContext.Consumer>
-                            )}
                             <StatusBar style={!theme.isV3 || theme.dark ? 'light' : 'dark'} />
                         </NavigationContainer>
                     </React.Fragment>
