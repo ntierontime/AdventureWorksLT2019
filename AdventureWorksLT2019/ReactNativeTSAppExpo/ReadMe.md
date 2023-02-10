@@ -15,5 +15,6 @@ npm install moment
 npm install @rneui/themed @rneui/base
 
 
-
 npm install react-native-paper
+
+npm install ts-jest
