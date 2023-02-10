@@ -19,7 +19,7 @@ import { defaultIBuildVersionAdvancedQuery, IBuildVersionAdvancedQuery, } from '
 
 import ListsPartial from './ListsPartial';
 
-export default function IndexPage() {
+function IndexPage() {
     const { t } = useTranslation();
     const [advancedQuery, setAdvancedQuery] = useState<IBuildVersionAdvancedQuery>(defaultIBuildVersionAdvancedQuery());
     const listItems = useSelector(
@@ -62,3 +62,7 @@ export default function IndexPage() {
     //      <ListsPartial {...listsPartialViewProps} />
     // );
 }
+
+IndexPage.title = "Build Version IndexPage";
+
+export default IndexPage;

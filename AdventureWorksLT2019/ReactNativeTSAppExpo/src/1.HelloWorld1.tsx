@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 
-export default function HelloWorld1() {
+function HelloWorld1() {
   return (
     // https://reactnative.dev/docs/view
     <View
@@ -26,3 +26,7 @@ export default function HelloWorld1() {
     </View>
   );
 }
+
+HelloWorld1.title = "HelloWorld1";
+
+export default HelloWorld1;
