@@ -1,11 +1,9 @@
 import {
-    ActivityIndicator,
-    FlatList,
     SafeAreaView,
     Text,
-    TouchableOpacity,
     View,
 } from "react-native";
+
 
 import { useTranslation } from 'react-i18next';
 

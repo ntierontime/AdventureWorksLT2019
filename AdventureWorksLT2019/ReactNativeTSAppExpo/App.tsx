@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { StatusBar } from 'expo-status-bar';
+
 import {
     StyleSheet,
-    SafeAreaView,
     ScrollView,
     View,
     BackHandler
@@ -10,7 +9,12 @@ import {
 import { Text, ListItem } from "react-native-elements";
 import Constants from "expo-constants";
 
-import { Provider } from 'react-redux';
+import {
+    SafeAreaView,
+    SafeAreaProvider,
+} from 'react-native-safe-area-context';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { Provider as StoreProvider } from 'react-redux';
 import store from './src/store/Store';
 
 import { EXAMPLE_LIST } from "./src/ExampleList";
@@ -48,15 +52,15 @@ export default function App() {
     }, [exampleIndex]);
 
     if (exampleIndex !== null) return (
-        <Provider store={store}> {
+        <StoreProvider store={store}><PaperProvider><SafeAreaProvider>{
             EXAMPLE_LIST[exampleIndex].component
         }
-        </Provider>
+        </SafeAreaProvider></PaperProvider></StoreProvider>
     )
 
     return (
-        <Provider store={store}>
-            <SafeAreaView style={styles.container}>
+        <StoreProvider store={store}><PaperProvider><SafeAreaProvider>
+            <SafeAreaView>
                 <Text h4 style={styles.heading}>
                     {t('AdvancedSearch')} React Native Expo Examples
                 </Text>
@@ -75,7 +79,7 @@ export default function App() {
                     ))}
                 </ScrollView>
             </SafeAreaView>
-        </Provider>
+        </SafeAreaProvider></PaperProvider></StoreProvider>
     );
 }
 

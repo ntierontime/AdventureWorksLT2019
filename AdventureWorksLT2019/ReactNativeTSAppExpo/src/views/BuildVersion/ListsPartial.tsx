@@ -3,14 +3,17 @@ import { useEffect, useState } from 'react';
 import { useDispatch, } from 'react-redux';
 
 import {
-    ActivityIndicator,
-    FlatList,
     SafeAreaView,
     Text,
     TouchableOpacity,
     View,
 } from "react-native";
+
+import { ActivityIndicator, MD2Colors } from 'react-native-paper';
+
+import { FontAwesome5 } from "@expo/vector-icons";
 import Modal from "react-native-modal";
+import { FAB } from 'react-native-elements';
 
 import { AppDispatch } from '../../store/Store';
 import { ListsPartialViewProps } from '../../shared/viewModels/ListsPartialViewProps';
@@ -28,6 +31,7 @@ import { getBuildVersionQueryOrderBySettings, IBuildVersionAdvancedQuery, IBuild
 import HtmlTablePartial from './HtmlTablePartial';
 // import TilesPartial from './TilesPartial';
 import ItemViewsPartial from './ItemViewsPartial';
+import { PRIMARY_TEXT_COLOR, ROW, SECONDARY_TEXT_COLOR, styles } from '../style';
 
 export default function ListsPartial(props: ListsPartialViewProps<IBuildVersionAdvancedQuery, IBuildVersionDataModel>): JSX.Element {
     const { advancedQuery, setAdvancedQuery, defaultAdvancedQuery, listItems, initialLoadFromServer, hasListToolBar, listToolBarSetting, hasAdvancedSearch, addNewButtonContainer } = props;
@@ -209,7 +213,7 @@ export default function ListsPartial(props: ListsPartialViewProps<IBuildVersionA
                         isSelected={isSelected}
                     />)
                         : (
-                            <ActivityIndicator animating size="large" />
+                            <ActivityIndicator animating={true} color={MD2Colors.red800} />
                         ))}
                 {/* {listViewOption === ListViewOptions.Tiles && <TilesPartial
                         listViewOption={ListViewOptions.Tiles}
@@ -235,19 +239,32 @@ export default function ListsPartial(props: ListsPartialViewProps<IBuildVersionA
                 onBackButtonPress={handleItemDialogClose}
                 style={{ margin: 0 }}
             >
-                {currentItemOnDialog !== null
-                    ? (<ItemViewsPartial {...crudItemPartialViewProps}
-                        item={currentItemOnDialog}
-                        isItemSelected={!!currentItemOnDialog && isSelected(getIBuildVersionIdentifier(currentItemOnDialog))}
-                        totalCountInList={listItems.length}
-                        itemIndex={currentItemIndex}
-                        setItemIndex={setCurrentItemIndex}
-                        handleSelectItemClick={handleSelectItemClick} />)
-                    : (
-                        <ActivityIndicator animating size="large" />
-                    )}
+                <SafeAreaView style={styles.container}>
+                    <View style={styles.content}>
+                        <TouchableOpacity onPress={handleItemDialogClose} style={styles.closeButton}>
+                            <FontAwesome5 name="times" size={20} color="#757575" />
+                        </TouchableOpacity>
+                        {currentItemOnDialog !== null
+                            ? (<ItemViewsPartial {...crudItemPartialViewProps}
+                                item={currentItemOnDialog}
+                                isItemSelected={!!currentItemOnDialog && isSelected(getIBuildVersionIdentifier(currentItemOnDialog))}
+                                totalCountInList={listItems.length}
+                                itemIndex={currentItemIndex}
+                                setItemIndex={setCurrentItemIndex}
+                                handleSelectItemClick={handleSelectItemClick} />)
+                            : (
+                                <ActivityIndicator animating={true} color={MD2Colors.red800} />
+                            )}
+                    </View>
+                </SafeAreaView>
             </Modal>
-
+            <FAB
+                visible={true}
+                title="Navigate"
+                upperCase
+                icon={{ name: 'place', color: 'white' }}
+                size="small"
+            />
             {/* {hasAdvancedSearch && <Dialog open={openAdvancedSearchDialog} fullWidth={true} maxWidth={'lg'}>
                 <DialogContent>
                     <AdvancedSearchPartial advancedQuery={advancedQuery} submitAction={submitAdvancedSearch} doneAction={() => { handleAdvancedSearchDialogClose(); }} />
@@ -275,4 +292,3 @@ export default function ListsPartial(props: ListsPartialViewProps<IBuildVersionA
         </SafeAreaView>
     );
 }
-

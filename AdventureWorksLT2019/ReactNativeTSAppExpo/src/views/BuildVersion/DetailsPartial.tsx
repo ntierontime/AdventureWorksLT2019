@@ -1,9 +1,6 @@
 import {
-    ActivityIndicator,
-    FlatList,
     SafeAreaView,
     Text,
-    TouchableOpacity,
     View,
 } from "react-native";
 
