@@ -1,10 +1,3 @@
-// import { registerRootComponent } from 'expo';
-
-// import PaperExample from './src/index';
-
-// registerRootComponent(PaperExample);
-
-
 import * as React from 'react';
 import { I18nManager } from 'react-native';
 
@@ -34,9 +27,9 @@ import {
 } from 'react-native-paper';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 
-import { isWeb } from './utils';
-import DrawerItems from './src/DrawerItems';
-import Root from './src/RootNavigator';
+import { isWeb } from '../utils';
+import DrawerItems from './DrawerItems';
+import App from './RootNavigator';
 
 const PERSISTENCE_KEY = 'NAVIGATION_STATE';
 const PREFERENCES_KEY = 'APP_PREFERENCES';
@@ -67,11 +60,11 @@ const DrawerContent = () => {
 
 const Drawer = createDrawerNavigator<{ Home: undefined }>();
 
-export default function App() {
+export default function PaperExample() {
   useKeepAwake();
 
   const [fontsLoaded] = useFonts({
-    NotoSans: require('./assets/fonts/NotoSans-Regular.ttf'),
+    NotoSans: require('../assets/fonts/NotoSans-Regular.ttf'),
   });
 
   const [isReady, setIsReady] = React.useState(false);
@@ -233,7 +226,7 @@ export default function App() {
             }
           >
             {isWeb ? (
-              <Root />
+              <App />
             ) : (
               <SafeAreaInsetsContext.Consumer>
                 {(insets) => {
@@ -250,7 +243,7 @@ export default function App() {
                     >
                       <Drawer.Screen
                         name="Home"
-                        component={Root}
+                        component={App}
                         options={{ headerShown: false }}
                       />
                     </Drawer.Navigator>
@@ -265,82 +258,3 @@ export default function App() {
     </PaperProvider>
   );
 }
-
-
-// import React, { useState, useEffect } from "react";
-// import {
-//   StyleSheet,
-//   SafeAreaView,
-//   ScrollView,
-//   View,
-//   BackHandler,
-// } from "react-native";
-// import { Text, ListItem } from "react-native-elements";
-// import Constants from "expo-constants";
-// import { EXAMPLE_LIST } from "./example-list";
-
-// export default function App() {
-//   const [exampleIndex, setExampleIndex] = useState<number | null>(null);
-
-//   // Handle when user press Hardware Back Button
-//   useEffect(() => {
-//     const backAction = () => {
-//       // Go back to Example List
-//       if (exampleIndex !== null) {
-//         setExampleIndex(null);
-//       } 
-//       // Exit app if user currently in Example List
-//       else {
-//         BackHandler.exitApp();
-//       }
-
-//       return true;
-//     };
-
-//     // https://reactnative.dev/docs/backhandler
-//     const backHandler = BackHandler.addEventListener(
-//       "hardwareBackPress",
-//       backAction
-//     );
-
-//     return () => backHandler.remove();
-//   }, [exampleIndex]);
-
-//   if (exampleIndex !== null) return EXAMPLE_LIST[exampleIndex].component;
-
-//   return (
-//     <SafeAreaView style={styles.container}>
-//       <Text h4 style={styles.heading}>
-//         React Native Expo Examples
-//       </Text>
-
-//       <ScrollView>
-//         {EXAMPLE_LIST.map((l, i) => (
-//           <ListItem key={i} bottomDivider onPress={() => setExampleIndex(i)}>
-//             <View>
-//               <Text>Level {l.level}</Text>
-//             </View>
-
-//             <ListItem.Content>
-//               <ListItem.Title style={styles.title}>{l.name}</ListItem.Title>
-//             </ListItem.Content>
-//           </ListItem>
-//         ))}
-//       </ScrollView>
-//     </SafeAreaView>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     paddingTop: Constants.statusBarHeight,
-//   },
-//   heading: {
-//     textAlign: "center",
-//     padding: 12,
-//   },
-//   title: {
-//     fontWeight: "bold",
-//   },
-// });
