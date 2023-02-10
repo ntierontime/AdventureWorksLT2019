@@ -3,10 +3,12 @@ import React, { useState, useEffect } from "react";
 import {
     StyleSheet,
     ScrollView,
+    Text,
     View,
     BackHandler
 } from 'react-native';
-import { Text, ListItem } from "react-native-elements";
+
+import { List, Divider, Checkbox, Avatar, Switch } from 'react-native-paper';
 import Constants from "expo-constants";
 
 import {
@@ -21,6 +23,7 @@ import { EXAMPLE_LIST } from "./src/ExampleList";
 
 import { useTranslation } from 'react-i18next';
 import i18n from "./src/i18n";
+import ScreenWrapper from "./src/ScreenWrapper";
 const initI18n = i18n;
 
 export default function App() {
@@ -61,11 +64,20 @@ export default function App() {
     return (
         <StoreProvider store={store}><PaperProvider><SafeAreaProvider>
             <SafeAreaView>
-                <Text h4 style={styles.heading}>
+                <Text style={styles.heading}>
                     {t('AdvancedSearch')} React Native Expo Examples
                 </Text>
+                <ScreenWrapper>
+      <List.Section title="Text-only">
+      {EXAMPLE_LIST.map((l, i) => (
 
-                <ScrollView>
+        <List.Item key={i}  onPress={() => setExampleIndex(i)}
+          title={l.name}
+        />
+                ))}
+      </List.Section>
+    </ScreenWrapper>
+                {/* <ScrollView>
                     {EXAMPLE_LIST.map((l, i) => (
                         <ListItem key={i} bottomDivider onPress={() => setExampleIndex(i)}>
                             <View>
@@ -77,7 +89,7 @@ export default function App() {
                             </ListItem.Content>
                         </ListItem>
                     ))}
-                </ScrollView>
+                </ScrollView> */}
             </SafeAreaView>
         </SafeAreaProvider></PaperProvider></StoreProvider>
     );

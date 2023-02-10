@@ -1,29 +1,35 @@
 {
     "compilerOptions": {
-        "baseUrl": ".",
-        "target": "es5",
-        "lib": [
-            "es6",
-            "dom",
-            "dom.iterable",
-            "esnext"
-        ],
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        //"strict": true,
-        "forceConsistentCasingInFileNames": true,
-        "noFallthroughCasesInSwitch": true,
-        "module": "esnext",
-        "isolatedModules": true,
-        "sourceMap": true,
-        "rootDir": "",
-        "noImplicitReturns": true,
-        "noImplicitThis": true,
-        "noImplicitAny": true,
-        "strictNullChecks": false,
-        "suppressImplicitAnyIndexErrors": true,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
+      "baseUrl": ".",
+      "target": "es5",
+      "lib": [
+        "es6",
+        "dom",
+        "dom.iterable",
+        "esnext"
+      ],
+      "allowJs": true,
+      "skipLibCheck": true,
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+      "forceConsistentCasingInFileNames": true,
+      "noFallthroughCasesInSwitch": true,
+      "module": "esnext",
+      "moduleResolution": "node",
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "noEmit": true,
+      "jsx": "react-jsx",
+      "sourceMap": true,
+      "rootDir": "",
+      "noImplicitReturns": true,
+      "noImplicitThis": true,
+      "noImplicitAny": true,
+      "strictNullChecks": false,
+      "suppressImplicitAnyIndexErrors": true,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true
     },
     "extends": "expo/tsconfig.base"
-}
+  }
+  

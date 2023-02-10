@@ -2,6 +2,12 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
+import {
+    SafeAreaView,
+    Text,
+    View,
+} from "react-native";
+
 import { RootState } from '../../store/CombinedReducers';
 import { ContainerOptions } from '../../shared/viewModels/ContainerOptions';
 import { ListsPartialViewProps } from '../../shared/viewModels/ListsPartialViewProps';
@@ -45,6 +51,14 @@ export default function IndexPage() {
     } as ListsPartialViewProps<IBuildVersionAdvancedQuery, IBuildVersionDataModel>;
 
     return (
-        <ListsPartial {...listsPartialViewProps} />
-    );
+        <SafeAreaView>
+            <View style={{ flex: 1 }}>
+                <Text>versionDate</Text>
+           </View>
+        </SafeAreaView>
+   );
+
+    // return (
+    //      <ListsPartial {...listsPartialViewProps} />
+    // );
 }

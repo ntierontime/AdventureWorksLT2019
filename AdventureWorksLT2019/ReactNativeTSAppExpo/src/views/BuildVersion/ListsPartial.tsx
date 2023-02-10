@@ -12,8 +12,7 @@ import {
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 
 import { FontAwesome5 } from "@expo/vector-icons";
-import Modal from "react-native-modal";
-import { FAB } from 'react-native-elements';
+//import Modal from "react-native-modal";
 
 import { AppDispatch } from '../../store/Store';
 import { ListsPartialViewProps } from '../../shared/viewModels/ListsPartialViewProps';
@@ -232,7 +231,7 @@ export default function ListsPartial(props: ListsPartialViewProps<IBuildVersionA
                         isSelected={isSelected}
                     />} */}
             </View>
-
+{/* 
             <Modal
                 isVisible={openItemDialog}
                 hasBackdrop={false}
@@ -257,14 +256,14 @@ export default function ListsPartial(props: ListsPartialViewProps<IBuildVersionA
                             )}
                     </View>
                 </SafeAreaView>
-            </Modal>
-            <FAB
+            </Modal> */}
+            {/* <FAB
                 visible={true}
                 title="Navigate"
                 upperCase
                 icon={{ name: 'place', color: 'white' }}
                 size="small"
-            />
+            /> */}
             {/* {hasAdvancedSearch && <Dialog open={openAdvancedSearchDialog} fullWidth={true} maxWidth={'lg'}>
                 <DialogContent>
                     <AdvancedSearchPartial advancedQuery={advancedQuery} submitAction={submitAdvancedSearch} doneAction={() => { handleAdvancedSearchDialogClose(); }} />
