@@ -18,6 +18,47 @@ i18n.use(initReactI18next).init({
     lng: getLocales()[0].languageCode,
     fallbackLng: 'en',
     resources: translations,
+    lowerCaseLng: true,
+    debug: false,
+    fallbackNS: false,
+    interpolation: {
+        escapeValue: false, // not needed for react as it escapes by default
+    }
 });
 
 export default i18n;
+
+// https://www.i18next.com/translation-function/formatting
+export const i18nFormats = {
+    dateTime: {
+        format: "{{val, datetime}}",
+        dateShort: {
+            dateStyle: 'short',
+        },
+        dateLong: {
+            dateStyle: 'long',
+        },
+        dateFull: {
+            dateStyle: 'full',
+        },
+        dateTimeShort: {
+            dateStyle: 'short', timeStyle: 'short',
+        },
+        dateTimeLong: {
+            dateStyle: 'long', timeStyle: 'long',
+        },
+        dateTimeFull: {
+            dateStyle: 'full', timeStyle: 'full',
+        },
+    },
+    number: {
+        format: "{{val, number}}",
+    },
+    double: {
+        format: "{{val, number(minimumFractionDigits: 2)}}",
+    },
+    currency: {
+        format: "{{val, currency}}",
+    },
+};
+

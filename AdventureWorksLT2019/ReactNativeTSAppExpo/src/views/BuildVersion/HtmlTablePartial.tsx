@@ -20,15 +20,14 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IBuildVersi
     // currentItemOnDialog is only used in page navigation, you can remove it if not-in-use.
     const { listItems, hasItemsSelect, numSelected, isSelected, handleChangePage, handleSelectItemClick, handleItemDialogOpen, currentItemOnDialog, setCurrentItemOnDialog, currentItemIndex, setCurrentItemIndex } = props;
 
-    const [isModalVisible, setModalVisible] = useState(false);
-    const [currentItem, setCurrentItem] = useState<IBuildVersionDataModel>(null);
+    useEffect(() => {
+        setCurrentItemOnDialog(!!listItems && listItems.length > 0 && currentItemIndex >= 0 && currentItemIndex < listItems.length ? listItems[currentItemIndex] : null);
+    }, [currentItemIndex, listItems, setCurrentItemOnDialog]);
+
     const onItemTouched = (item: IBuildVersionDataModel, index: number) => {
         handleItemDialogOpen(ViewItemTemplates.Details, index)
         console.log(item);
     }
-    const closeModal = () => {
-        setModalVisible(false);
-    };
 
     return (
         <List.Section>
