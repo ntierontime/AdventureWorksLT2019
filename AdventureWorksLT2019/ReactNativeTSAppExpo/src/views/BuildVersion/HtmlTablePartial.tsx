@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { List, Divider, Checkbox, Avatar, Switch } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 
 import { useTranslation } from 'react-i18next';
 
@@ -10,11 +11,11 @@ import { ListPartialViewProps } from '../../shared/viewModels/ListPartialViewPro
 import { QueryOrderDirections } from '../../shared/dataModels/QueryOrderDirections';
 import { ViewItemTemplates } from '../../shared/viewModels/ViewItemTemplates';
 
-
 import { getBuildVersionAvatar, IBuildVersionDataModel } from '../../dataModels/IBuildVersionDataModel';
 import { IBuildVersionIdentifier, getIBuildVersionIdentifier, getRouteParamsOfIBuildVersionIdentifier } from '../../dataModels/IBuildVersionQueries';
 
 export default function HtmlTablePartial(props: ListPartialViewProps<IBuildVersionDataModel, IBuildVersionIdentifier>): JSX.Element {
+    const navigation = useNavigation();
     const { t } = useTranslation();
 
     // currentItemOnDialog is only used in page navigation, you can remove it if not-in-use.
@@ -24,8 +25,10 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IBuildVersi
         setCurrentItemOnDialog(!!listItems && listItems.length > 0 && currentItemIndex >= 0 && currentItemIndex < listItems.length ? listItems[currentItemIndex] : null);
     }, [currentItemIndex, listItems, setCurrentItemOnDialog]);
 
+    
     const onItemTouched = (item: IBuildVersionDataModel, index: number) => {
-        handleItemDialogOpen(ViewItemTemplates.Details, index)
+        navigation.navigate('BuildVersionEditPage', getIBuildVersionIdentifier(item));
+        //handleItemDialogOpen(ViewItemTemplates.Details, index)
         console.log(item);
     }
 

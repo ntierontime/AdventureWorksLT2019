@@ -29,7 +29,7 @@ import {
 } from 'react-native-paper';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 
-//import { isWeb } from './utils';
+import { isWeb } from './utils';
 import DrawerItems from './src/DrawerItems';
 import Root from './src/RootNavigator';
 

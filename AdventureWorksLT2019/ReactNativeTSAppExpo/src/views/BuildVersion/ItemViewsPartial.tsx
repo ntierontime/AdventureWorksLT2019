@@ -6,7 +6,7 @@ import { IBuildVersionDataModel } from '../../dataModels/IBuildVersionDataModel'
 // import CreatePartial from './CreatePartial';
 // import DeletePartial from './DeletePartial';
 import DetailsPartial from './DetailsPartial';
-// import EditPartial from './EditPartial';
+import EditPartial from './EditPartial';
 
 export default function ItemViewsPartial(props: ItemPartialViewProps<IBuildVersionDataModel>): JSX.Element {
     const { crudViewContainer, totalCountInList, itemIndex, setItemIndex } = props;
@@ -47,12 +47,6 @@ export default function ItemViewsPartial(props: ItemPartialViewProps<IBuildVersi
             props.doneAction()
         }
 
-        // 3.
-        if (crudViewContainer === CrudViewContainers.Inline) {
-            if(viewItemTemplate !== ViewItemTemplates.Details) {
-                changeViewItemTemplate(props.viewItemTemplate);
-            }
-        }
         // 4.
         else if (crudViewContainer === CrudViewContainers.Card) {
             // when master
@@ -76,9 +70,9 @@ export default function ItemViewsPartial(props: ItemPartialViewProps<IBuildVersi
             {viewItemTemplate === ViewItemTemplates.Details &&
                 <DetailsPartial {...props} previousAction={gotoPreviousItemOnDialog} nextAction={gotoNextItemOnDialog} changeViewItemTemplate={changeViewItemTemplate} doneAction={doneAction} />
             }
-            {/* {viewItemTemplate === ViewItemTemplates.Edit &&
+            {viewItemTemplate === ViewItemTemplates.Edit &&
                 <EditPartial {...props} previousAction={gotoPreviousItemOnDialog} nextAction={gotoNextItemOnDialog} changeViewItemTemplate={changeViewItemTemplate} doneAction={doneAction} />
-            } */}
+            }
         </>
     );
 }
