@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
+import { Dimensions, ScrollView, View } from 'react-native';
 
 import { Avatar, Button, Card, Checkbox, Dialog, HelperText, IconButton, MD2Colors, MD3Colors, Paragraph, Switch, Text, TextInput, } from 'react-native-paper';
 
@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 
 // 1. DateTime/Integer/Decimal fields are using 'i18nFormats.??' when display
 // 2. un-comment /*getCurrency,*/ if you display money
-import { /*getCurrency,*/ i18nFormats } from '../../i18n';
+import i18n, { /*getCurrency,*/ i18nFormats } from '../../i18n';
 import { AppDispatch } from '../../store/Store';
 
 import { ContainerOptions } from '../../shared/viewModels/ContainerOptions';
@@ -22,6 +22,7 @@ import { getBuildVersionAvatar, IBuildVersionDataModel } from '../../dataModels/
 import { getRouteParamsOfIBuildVersionIdentifier } from '../../dataModels/IBuildVersionQueries';
 import { itemViewsStyles } from '../itemViewsStyles';
 import { put } from '../../slices/BuildVersionSlice';
+import { DatePickerInput, DatePickerModal } from 'react-native-paper-dates';
 
 export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDataModel>): JSX.Element {
     const theme = useExampleTheme();
@@ -35,7 +36,7 @@ export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDat
 
     // 'control' is only used by boolean fields, you can remove it if this form doesn't have it
     // 'setValue' is only used by Dropdown List fields and DatePicker fields, you can remove it if this form doesn't have it
-    const { register, control, setValue, handleSubmit, formState: { isValid, errors, isDirty } } = useForm<IBuildVersionDataModel>({
+    const { register, control, getValues, setValue, handleSubmit, formState: { isValid, errors, isDirty } } = useForm<IBuildVersionDataModel>({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
@@ -47,7 +48,20 @@ export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDat
     const [saveMessage, setSaveMessage] = useState<string>();
 
 
-    const [versionDate, setVersionDate] = useState<string>();
+    // const [versionDate, setVersionDate] = useState<string>();
+    const [openVersionDateModal, setOpenVersionDateModal] = useState(false)
+    const onDismissVersionDate = useCallback(() => {
+        setOpenVersionDateModal(false)
+    }, [setOpenVersionDateModal])
+
+    const onConfirmVersionDate = useCallback(
+        (params: any) => {
+            setOpenVersionDateModal(false)
+            setValue('versionDate', params.date)
+        },
+        [setOpenVersionDateModal, setValue]
+    )
+
     const [modifiedDate, setModifiedDate] = useState<string>();
     useEffect(() => {
 
@@ -121,6 +135,25 @@ export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDat
                                 />
                                 <HelperText type="error">{errors.modifiedDate?.message}</HelperText>
                             </>
+                        )}
+                    />
+                </View>
+                <View style={itemViewsStyles.row}>
+                    <Controller
+                        control={control}
+                        defaultValue={t(i18nFormats.dateTime.format, { val: item.versionDate, formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
+                        name="versionDate"
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <DatePickerInput
+                                locale={i18n.language}
+                                label={t('VersionDate')}
+                                value={new Date(value)}
+                                onChange={(d) => setValue('versionDate', d.toISOString())}
+                                inputMode="start"
+                                autoComplete="birthdate-full"
+                            // mode="outlined" (see react-native-paper docs)
+                            // other react native TextInput props
+                            />
                         )}
                     />
                 </View>

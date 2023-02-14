@@ -13,7 +13,14 @@ npm install moment
 npm install react-native-paper
 
 npm install ts-jest
-npm install i18next react-i18next react-native-localize
+
+npm install i18next react-i18next 
+if not Expo
+npm install react-native-localize
+if Expo
+npm install expo-localization
 
 For string icons, we can use the name on this page, e.g. dots-vertical
 https://pictogrammers.com/library/mdi/
+
+npm install react-native-paper-dates

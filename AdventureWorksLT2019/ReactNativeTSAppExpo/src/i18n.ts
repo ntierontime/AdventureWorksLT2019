@@ -1,16 +1,20 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import { getLocales, findBestAvailableLanguage } from 'react-native-localize';
+import { getLocales } from 'expo-localization';
 
-import en from './translations/en.json';
-import es from './translations/es.json';
-import fr from './translations/fr.json';
+import {
+    en,
+    es,
+    fr,
+    registerTranslation,
+    // @ts-ignore TODO: try to fix expo to work with local library
+  } from 'react-native-paper-dates'
 
-const translations = { en: {translation: en}, es: {translation: es}, fr: {translation: fr} };
+import enJson from './translations/en.json';
+import esJson from './translations/es.json';
+import frJson from './translations/fr.json';
 
-const { languageTag } = findBestAvailableLanguage(
-    Object.keys(translations),
-  ) || { languageTag: 'en' };
+const translations = { en: {translation: enJson}, es: {translation: esJson}, fr: {translation: frJson} };
 
 i18n.use(initReactI18next).init({
     // the following line is fixing: i18next::pluralResolver: Your environment seems not to be Intl API compatible, use an Intl.PluralRules polyfill. Will fallback to the compatibilityJSON v3 format handling.
@@ -27,6 +31,19 @@ i18n.use(initReactI18next).init({
 });
 
 export default i18n;
+
+if(i18n.language === 'en') {
+    registerTranslation(i18n.language, en)
+}
+else if(i18n.language === 'es') {
+    registerTranslation(i18n.language, es)
+}
+else if(i18n.language === 'fr') {
+    registerTranslation(i18n.language, fr)
+}
+else { // this is fallback
+    registerTranslation(i18n.language, en)
+}
 
 // https://www.i18next.com/translation-function/formatting
 export const i18nFormats = {
