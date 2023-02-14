@@ -20,4 +20,5 @@ export const itemViewsStyles = StyleSheet.create({
         paddingVertical: 8,
         paddingHorizontal: 16,
     },
+    input: { marginVertical: 5, width: '100%' },
 });

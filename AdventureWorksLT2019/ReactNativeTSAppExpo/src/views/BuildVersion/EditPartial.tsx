@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
 
-import { Avatar, Button, Card, Checkbox, Dialog, IconButton, MD2Colors, Paragraph, Text, } from 'react-native-paper';
+import { Avatar, Button, Card, Checkbox, Dialog, HelperText, IconButton, MD2Colors, MD3Colors, Paragraph, Switch, Text, TextInput, } from 'react-native-paper';
 
-import { useForm } from 'react-hook-form';
+import { useForm, Controller, SubmitHandler } from "react-hook-form"
 import { useTranslation } from 'react-i18next';
 
 // 1. DateTime/Integer/Decimal fields are using 'i18nFormats.??' when display
@@ -33,9 +33,9 @@ export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDat
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
 
-	// 'control' is only used by boolean fields, you can remove it if this form doesn't have it
-	// 'setValue' is only used by Dropdown List fields and DatePicker fields, you can remove it if this form doesn't have it
-    const { register, control, setValue, handleSubmit, formState: { isValid, errors, isDirty } } = useForm({
+    // 'control' is only used by boolean fields, you can remove it if this form doesn't have it
+    // 'setValue' is only used by Dropdown List fields and DatePicker fields, you can remove it if this form doesn't have it
+    const { register, control, setValue, handleSubmit, formState: { isValid, errors, isDirty } } = useForm<IBuildVersionDataModel>({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
@@ -59,6 +59,8 @@ export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDat
 
 
     const onSubmit = (data: IBuildVersionDataModel) => {
+        console.log(data);
+
         setSaving(true);
         dispatch(put({ identifier: { systemInformationID: data.systemInformationID, versionDate: data.versionDate, modifiedDate: data.modifiedDate }, data: { ...data } }))
             .then((result) => {
@@ -79,37 +81,78 @@ export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDat
     const avatarStyle = getAvatarStyle(item.itemUIStatus______, theme);
 
     const hasCloseButton = !!doneAction && crudViewContainer === CrudViewContainers.Dialog;
-    
+
     const renderItemView = () => {
         return (
             <>
                 <View style={itemViewsStyles.row}>
-                    <TextComponent>{t('SystemInformationID')}</TextComponent>
-                    <TextComponent>{item.systemInformationID}</TextComponent>
+                    <Controller
+                        control={control}
+                        defaultValue={item.systemInformationID}
+                        name="systemInformationID"
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <>
+                                <TextInput
+                                    label={t('SystemInformationID')}
+                                    style={itemViewsStyles.input}
+                                    numeric
+                                    value={value}
+                                    onBlur={onBlur}
+                                    onChangeText={(value) => onChange(value)}
+                                />
+                                <HelperText type="error">{errors.systemInformationID?.message}</HelperText>
+                            </>
+                        )}
+                    />
                 </View>
                 <View style={itemViewsStyles.row}>
-                    <TextComponent>{t('ModifiedDate')}</TextComponent>
-                    <TextComponent>{t(i18nFormats.dateTime.format, { val: new Date(item.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}</TextComponent>
+                    <Controller
+                        control={control}
+                        defaultValue={item.modifiedDate}
+                        name="modifiedDate"
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <>
+                                <TextInput
+                                    label={t('ModifiedDate')}
+                                    style={itemViewsStyles.input}
+                                    value={value}
+                                    onBlur={onBlur}
+                                    onChangeText={(value) => onChange(value)}
+                                />
+                                <HelperText type="error">{errors.modifiedDate?.message}</HelperText>
+                            </>
+                        )}
+                    />
                 </View>
                 <View style={itemViewsStyles.row}>
                     <TextComponent>{t('IsDeleted')}</TextComponent>
-                    <Checkbox status={item.isDeleted______ ? "checked" : "unchecked"} disabled />
+                    <Controller
+                        control={control}
+                        defaultValue={item.isDeleted______}
+                        name="isDeleted______"
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <Switch
+                                value={value}
+                                color={isV3 ? MD3Colors.tertiary50 : MD2Colors.blue500}
+                                onValueChange={(value) => onChange(value)}
+                            />
+                        )}
+                    />
                 </View>
             </>
         );
     }
 
     return (
-        <form noValidate onSubmit={handleSubmit(onSubmit)}>
         <Card style={itemViewsStyles.card} >
-            {/* <Card.Title
+            <Card.Title
                 title={item.database_Version}
                 subtitle={item.versionDate}
                 left={(props: any) => <Avatar.Text style={{ ...props.style, ...avatarStyle }} label={avatar} size={40} />}
                 right={(props: any) => (
                     hasCloseButton && <IconButton icon="close" onPress={() => { doneAction(); }} />
                 )}
-            /> */}
+            />
             <ScrollView>
                 <Card.Content style={{ maxHeight: 0.8 * Dimensions.get('window').height }}>
                     {renderItemView()}
@@ -118,8 +161,11 @@ export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDat
             {crudViewContainer === CrudViewContainers.Dialog && <Card.Actions>
                 {!!previousAction && <IconButton icon="arrow-left" onPress={() => { previousAction(); }} />}
                 {!!nextAction && <IconButton icon="arrow-right" onPress={() => { nextAction(); }} />}
+                <IconButton icon="check" onPress={handleSubmit(onSubmit)} />
+            </Card.Actions>}
+            {crudViewContainer === CrudViewContainers.StandaloneView && <Card.Actions>
+                <IconButton icon="check" onPress={handleSubmit(onSubmit)} />
             </Card.Actions>}
         </Card>
-        </form>
     );
 }
