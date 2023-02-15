@@ -1,5 +1,6 @@
 import HelloWorld1 from "./1.HelloWorld1";
 import { ViewItemTemplates } from "./shared/viewModels/ViewItemTemplates";
+import CreatePage from "./views/BuildVersion/CreatePage";
 import IndexPage from "./views/BuildVersion/IndexPage"
 import ItemPage from "./views/BuildVersion/ItemPage";
 
@@ -11,6 +12,11 @@ export const StackScreenList = [
   {
     name: "BuildVersionIndexPage",
     component: <IndexPage />,
+  }
+  ,
+  {
+    name: "BuildVersionCreatePage",
+    component: <CreatePage /> as JSX.Element,
   }
   ,
   {

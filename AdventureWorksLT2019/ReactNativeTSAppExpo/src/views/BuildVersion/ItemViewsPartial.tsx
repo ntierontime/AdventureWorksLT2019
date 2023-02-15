@@ -3,7 +3,7 @@ import { CrudViewContainers } from '../../shared/viewModels/CrudViewContainers';
 import { ItemPartialViewProps } from '../../shared/viewModels/ItemPartialViewProps';
 import { ViewItemTemplates } from '../../shared/viewModels/ViewItemTemplates';
 import { IBuildVersionDataModel } from '../../dataModels/IBuildVersionDataModel';
-// import CreatePartial from './CreatePartial';
+import CreatePartial from './CreatePartial';
 // import DeletePartial from './DeletePartial';
 import DetailsPartial from './DetailsPartial';
 import EditPartial from './EditPartial';
@@ -61,10 +61,10 @@ export default function ItemViewsPartial(props: ItemPartialViewProps<IBuildVersi
 
     return (
         <>
-            {/* {viewItemTemplate === ViewItemTemplates.Create &&
+            {viewItemTemplate === ViewItemTemplates.Create &&
                 <CreatePartial {...props} />
             }
-            {viewItemTemplate === ViewItemTemplates.Delete &&
+            {/* {viewItemTemplate === ViewItemTemplates.Delete &&
                 <DeletePartial {...props} previousAction={gotoPreviousItemOnDialog} nextAction={gotoNextItemOnDialog} changeViewItemTemplate={changeViewItemTemplate} doneAction={doneAction} />
             } */}
             {viewItemTemplate === ViewItemTemplates.Details &&

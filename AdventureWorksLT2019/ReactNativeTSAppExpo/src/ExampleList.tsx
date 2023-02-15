@@ -9,6 +9,7 @@ import { useExampleTheme } from '.';
 const examples = [
     'HelloWorld1',
     'BuildVersionIndexPage',
+    'BuildVersionCreatePage',
 ]
 
 type Props = {

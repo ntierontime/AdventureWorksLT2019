@@ -15,8 +15,8 @@ export function defaultBuildVersion(): IBuildVersionDataModel {
         isDeleted______: false,
         systemInformationID: 0,
         database_Version: '',
-        versionDate: '',
-        modifiedDate: '',
+        versionDate: new Date(),
+        modifiedDate: new Date(),
     } as unknown as IBuildVersionDataModel;
 }
 

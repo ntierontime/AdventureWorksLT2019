@@ -24,3 +24,5 @@ For string icons, we can use the name on this page, e.g. dots-vertical
 https://pictogrammers.com/library/mdi/
 
 npm install react-native-paper-dates
+
+npm install react-native-paper-select

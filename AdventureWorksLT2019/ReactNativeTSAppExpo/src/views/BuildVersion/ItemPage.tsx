@@ -44,6 +44,4 @@ function ItemPage(props: {viewItemTemplate: ViewItemTemplates}): JSX.Element {
     );
 }
 
-ItemPage.title = "BuildVersionItemPage";
-
 export default ItemPage;

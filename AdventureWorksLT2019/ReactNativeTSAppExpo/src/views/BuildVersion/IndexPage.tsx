@@ -55,6 +55,4 @@ function IndexPage() {
     );
 }
 
-IndexPage.title = "Build Version IndexPage";
-
 export default IndexPage;
