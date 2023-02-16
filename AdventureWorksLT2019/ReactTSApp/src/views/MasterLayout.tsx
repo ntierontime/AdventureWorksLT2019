@@ -43,17 +43,12 @@ export default function MasterLayout() {
 
     return (
         <Box sx={{ display: 'flex' }}>
+            <AppBar open={drawerOpen && auth && auth.isAuthenticated} title={'AdventureWorksLT2019'} openDrawerHandler={handleDrawerOpen} />
             {(auth && auth.isAuthenticated) &&
-                <>
-                    <AppBar open={drawerOpen} title={'AdventureWorksLT2019'} openDrawerHandler={handleDrawerOpen} />
-                    <AppDrawer open={drawerOpen} closeDrawerHandler={handleDrawerClose} appDrawerItems={[]} />
-                </>
+                <AppDrawer open={drawerOpen} closeDrawerHandler={handleDrawerClose} appDrawerItems={[]} />
             }
-
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                {(auth && auth.isAuthenticated) &&
-                    <DrawerHeader />
-                }
+                <DrawerHeader />
                 <MasterRoutes />
             </Box>
         </Box>

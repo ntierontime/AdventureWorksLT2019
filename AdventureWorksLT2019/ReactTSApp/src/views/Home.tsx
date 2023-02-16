@@ -1,5 +1,5 @@
 export default function Home() {
     return (
-        <h1>React Router</h1>
+        <h1>Some Text</h1>
     );
 }

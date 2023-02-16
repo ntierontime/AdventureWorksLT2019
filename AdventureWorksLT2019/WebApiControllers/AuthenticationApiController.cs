@@ -39,21 +39,29 @@ namespace AdventureWorksLT2019.WebApiControllers
         [HttpPost]
         public async Task<AuthenticationResponse> Login([FromBody] LoginRequest model)
         {
-            var user = await _userManager.FindByNameAsync(model.Email);
-            var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+            return await Task.FromResult(new AuthenticationResponse
+            {
+                Succeeded = true,
+                Token = "TestToken",
+                ExpiresIn = 3600,
+                RefreshToken = "TestRefreshToken",
+                Roles = new[] { "Administrator" },
+            });
+            //var user = await _userManager.FindByNameAsync(model.Email);
+            //var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
 
-            return await GetAuthenticationResponse(user, result);
+            //return await GetAuthenticationResponse(user, result);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         public async Task<AuthenticationResponse> Logout([FromBody] LoginRequest model)
         {
-            //// TODO: set a flag? last log out time
-            //return new AuthenticationResponse { Succeeded = true };
-
-            await _signInManager.SignOutAsync();
+            // TODO: set a flag? last log out time
             return new AuthenticationResponse { Succeeded = true };
+
+            //await _signInManager.SignOutAsync();
+            //return new AuthenticationResponse { Succeeded = true };
         }
 
         // POST api/Account/Register

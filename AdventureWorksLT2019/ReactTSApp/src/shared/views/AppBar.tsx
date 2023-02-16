@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { styled } from '@mui/material/styles';
 import { Button, Grid, Menu, MenuItem, PaletteMode, Popover } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
@@ -22,6 +22,7 @@ import { logout } from 'src/slices/authenticationSlice';
 import { AppDispatch } from 'src/store/Store';
 import { useNavigate } from 'react-router-dom';
 import { Stack } from '@mui/system';
+import { RootState } from 'src/store/CombinedReducers';
 
 interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
@@ -48,6 +49,7 @@ const StyledAppBar = styled(MuiAppBar, {
 }));
 
 export default function AppBar(props: AppBarProps) {
+    const auth = useSelector((state: RootState) => state.auth);
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
@@ -142,7 +144,7 @@ export default function AppBar(props: AppBarProps) {
     return (
         <StyledAppBar position="fixed" open={props.open}>
             <Toolbar>
-                <IconButton
+                {(auth && auth.isAuthenticated) && <IconButton
                     color="inherit"
                     aria-label="open drawer"
                     onClick={props.openDrawerHandler}
@@ -153,116 +155,122 @@ export default function AppBar(props: AppBarProps) {
                     }}
                 >
                     <MenuIcon />
-                </IconButton>
+                </IconButton>}
                 <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
                     {props.title}
                 </Typography>
 
-                {/* <Button color="inherit">Login</Button>
-                <Button color="inherit">Login</Button> */}
-                <IconButton aria-label="{id}" size="large" onClick={handleProfileClick}>
-                    <AccountCircle fontSize="inherit" />
-                </IconButton>
-                <Popover
-                    id={id}
-                    open={openProfile}
-                    anchorEl={anchorProfileEl}
-                    onClose={handleProfileClose}
-                    anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'left',
-                    }}
-                >
-                    <Grid container spacing={2} padding={2}>
-                        {/* 1.1. Languages */}
-                        <Grid item xs={12}>
-                            <Item>
-                                <Stack
-                                    direction="row"
-                                    justifyContent="space-between"
-                                    alignItems="baseline"
-                                    spacing={2}
-                                >
-                                    <Typography variant='h6'>{t('Language')}</Typography>
-                                    <Button
-                                        aria-owns={openLanguage ? 'menu-appbar' : null}
-                                        aria-haspopup="true"
-                                        onClick={handleLanguageOpen}
-                                        size="small"
-                                        color="inherit">
-                                        {language}
-                                    </Button>
-                                    <Menu
-                                        id="language-appbar"
-                                        anchorEl={anchorElLanguage}
-                                        anchorOrigin={{
-                                            vertical: 'top',
-                                            horizontal: 'right',
-                                        }}
-                                        transformOrigin={{
-                                            vertical: 'top',
-                                            horizontal: 'right',
-                                        }}
-                                        open={openLanguage}
-                                        onClose={(e) => handleLanguageClose(null)}
-                                    >
-                                        {languages.map((lang: string) => {
-                                            return (
-                                                <MenuItem key={lang} onClick={(e) => changeLanguage(lang)}>{lang}</MenuItem>
-                                            );
-                                        })}
-                                    </Menu>
-                                </Stack>
-                            </Item>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Item>
-                                <Stack
-                                    direction="row"
-                                    justifyContent="space-between"
-                                    alignItems="baseline"
-                                    spacing={2}
-                                >
-                                    <Typography variant='h6'>{t('Theme')}</Typography>
-                                    <Button
-                                        aria-owns={openTheme ? 'menu-appbar' : null}
-                                        aria-haspopup="true"
-                                        onClick={handleThemeOpen}
-                                        color="inherit"
-                                        size="small"
-                                    >
-                                        {theme}
-                                    </Button>
-                                    <Menu
-                                        id="language-appbar"
-                                        anchorEl={anchorElTheme}
-                                        anchorOrigin={{
-                                            vertical: 'top',
-                                            horizontal: 'right',
-                                        }}
-                                        transformOrigin={{
-                                            vertical: 'top',
-                                            horizontal: 'right',
-                                        }}
-                                        open={openTheme}
-                                        onClose={(e) => handleThemeClose(null)}
-                                    >
-                                        {themes.map((theme1: PaletteMode) => {
-                                            return (
-                                                <MenuItem key={theme1} onClick={(e) => handleChangeTheme(theme1)}>{theme1}</MenuItem>
-                                            );
-                                        })}
-                                    </Menu>
-                                </Stack>
-                            </Item>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Item><Button variant="text" startIcon={<Logout />} onClick={(e) => handleLogout()}>
-                                {t('LogOut')}
-                            </Button></Item>
-                        </Grid>
-                    </Grid>
-               </Popover>
+                {(!!!auth || !auth.isAuthenticated) &&
+                    <>
+                        <Button color="inherit" href='/account/login'>Login</Button>
+                        <Button color="inherit">Register</Button>
+                    </>}
+                {(auth && auth.isAuthenticated) &&
+                    <>
+                        <IconButton aria-label="{id}" size="large" onClick={handleProfileClick}>
+                            <AccountCircle fontSize="inherit" />
+                        </IconButton>
+                        <Popover
+                            id={id}
+                            open={openProfile}
+                            anchorEl={anchorProfileEl}
+                            onClose={handleProfileClose}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left',
+                            }}
+                        >
+                            <Grid container spacing={2} padding={2}>
+                                {/* 1.1. Languages */}
+                                <Grid item xs={12}>
+                                    <Item>
+                                        <Stack
+                                            direction="row"
+                                            justifyContent="space-between"
+                                            alignItems="baseline"
+                                            spacing={2}
+                                        >
+                                            <Typography variant='h6'>{t('Language')}</Typography>
+                                            <Button
+                                                aria-owns={openLanguage ? 'menu-appbar' : null}
+                                                aria-haspopup="true"
+                                                onClick={handleLanguageOpen}
+                                                size="small"
+                                                color="inherit">
+                                                {language}
+                                            </Button>
+                                            <Menu
+                                                id="language-appbar"
+                                                anchorEl={anchorElLanguage}
+                                                anchorOrigin={{
+                                                    vertical: 'top',
+                                                    horizontal: 'right',
+                                                }}
+                                                transformOrigin={{
+                                                    vertical: 'top',
+                                                    horizontal: 'right',
+                                                }}
+                                                open={openLanguage}
+                                                onClose={(e) => handleLanguageClose(null)}
+                                            >
+                                                {languages.map((lang: string) => {
+                                                    return (
+                                                        <MenuItem key={lang} onClick={(e) => changeLanguage(lang)}>{lang}</MenuItem>
+                                                    );
+                                                })}
+                                            </Menu>
+                                        </Stack>
+                                    </Item>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Item>
+                                        <Stack
+                                            direction="row"
+                                            justifyContent="space-between"
+                                            alignItems="baseline"
+                                            spacing={2}
+                                        >
+                                            <Typography variant='h6'>{t('Theme')}</Typography>
+                                            <Button
+                                                aria-owns={openTheme ? 'menu-appbar' : null}
+                                                aria-haspopup="true"
+                                                onClick={handleThemeOpen}
+                                                color="inherit"
+                                                size="small"
+                                            >
+                                                {theme}
+                                            </Button>
+                                            <Menu
+                                                id="language-appbar"
+                                                anchorEl={anchorElTheme}
+                                                anchorOrigin={{
+                                                    vertical: 'top',
+                                                    horizontal: 'right',
+                                                }}
+                                                transformOrigin={{
+                                                    vertical: 'top',
+                                                    horizontal: 'right',
+                                                }}
+                                                open={openTheme}
+                                                onClose={(e) => handleThemeClose(null)}
+                                            >
+                                                {themes.map((theme1: PaletteMode) => {
+                                                    return (
+                                                        <MenuItem key={theme1} onClick={(e) => handleChangeTheme(theme1)}>{theme1}</MenuItem>
+                                                    );
+                                                })}
+                                            </Menu>
+                                        </Stack>
+                                    </Item>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Item><Button variant="text" startIcon={<Logout />} onClick={(e) => handleLogout()}>
+                                        {t('LogOut')}
+                                    </Button></Item>
+                                </Grid>
+                            </Grid>
+                        </Popover>
+                    </>}
             </Toolbar>
         </StyledAppBar>
     );

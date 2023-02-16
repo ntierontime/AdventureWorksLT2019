@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Avatar, Box, Button, Card, CardActions, CardContent, CardHeader, Checkbox, Container, CssBaseline, FilledInput, FormControl, FormControlLabel, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, LinearProgress, Link, Paper, TextField, Typography } from '@mui/material';
+import { Avatar, Button, Card, CardActions, CardContent, CardHeader, Checkbox, Container, FilledInput, FormControl, FormControlLabel, FormHelperText, IconButton, InputAdornment, InputLabel, LinearProgress, Link, Typography } from '@mui/material';
 import { AccountCircle, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
@@ -64,10 +64,10 @@ export default function LoginPage(): JSX.Element {
         if (auth.isAuthenticated) {
             const queryParams = new URLSearchParams(window.location.search)
             const from = queryParams.get("from");
-            navigate(from);
+            navigate(from ?? '/');
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [auth]);
+    }, [auth.isAuthenticated]);
 
     if (!auth.isLoggingIn && !auth.isAuthenticated) {
         return (
