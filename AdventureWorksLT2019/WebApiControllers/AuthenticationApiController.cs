@@ -53,7 +53,7 @@ namespace AdventureWorksLT2019.WebApiControllers
             //return await GetAuthenticationResponse(user, result);
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         public async Task<AuthenticationResponse> Logout([FromBody] LoginRequest model)
         {

@@ -30,6 +30,15 @@ export class AuthenticationApi extends AxiosApiBase {
                 return this.success(res);
             });
     }
+    
+    public logout = (credentials: LoginViewModel): Promise<AuthenticationResponse> => {
+        const url = "api/AuthenticationApi/logout";
+        return this.post<AuthenticationResponse, LoginViewModel, AxiosResponse<AuthenticationResponse>>(url, credentials)
+            .then(res => {
+                this.setToken(null);
+                return this.success(res);
+            });
+    }
 }
 
 export const authenticationApi = new AuthenticationApi(apiConfig);

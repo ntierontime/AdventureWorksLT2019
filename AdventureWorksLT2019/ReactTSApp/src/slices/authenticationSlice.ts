@@ -51,10 +51,22 @@ export const autoLogIn = createAsyncThunk(
 export const logout = createAsyncThunk(
     'logout',
     async () => {
-        localStorage.removeItem('user');
-        const cookies = new Cookies();
-        cookies.set(CookieKeys.Token, null);
-        new Promise(r => setTimeout(r, 1000));
+        const loggedInUser = localStorage.getItem("user");
+        if (loggedInUser) {
+            const foundUser = JSON.parse(loggedInUser);
+            const response = await authenticationApi.logout(foundUser);
+            if (response.succeeded) {
+                localStorage.removeItem('user');
+                const cookies = new Cookies();
+                cookies.set(CookieKeys.Token, null);
+
+                new Promise(r => setTimeout(r, 1000));
+                return;
+            }
+        }
+
+        // TODO: should add some alert here to say "Logout Failed"
+
     }
 )
 
