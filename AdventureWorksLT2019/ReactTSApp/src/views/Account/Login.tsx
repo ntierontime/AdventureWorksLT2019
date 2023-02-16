@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import { Avatar, Button, Checkbox, Container, CssBaseline, FormControlLabel, Grid, LinearProgress, Link, Paper, TextField, Typography } from '@mui/material';
-import { AccountCircle } from '@mui/icons-material';
+import { Avatar, Box, Button, Card, CardActions, CardContent, CardHeader, Checkbox, Container, CssBaseline, FilledInput, FormControl, FormControlLabel, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, LinearProgress, Link, Paper, TextField, Typography } from '@mui/material';
+import { AccountCircle, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -11,6 +11,7 @@ import { RootState } from 'src/store/CombinedReducers';
 import { login } from 'src/slices/authenticationSlice';
 import { LoginViewModel } from 'src/shared/viewModels/LoginViewModel';
 import { AppDispatch } from 'src/store/Store';
+import { Stack } from '@mui/system';
 
 export default function LoginPage(): JSX.Element {
     const navigate = useNavigate();
@@ -51,78 +52,105 @@ export default function LoginPage(): JSX.Element {
         }
     };
 
+    const [showPassword, setShowPassword] = React.useState(false);
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+    };
+
     useEffect(() => {
         if (auth.isAuthenticated) {
             const queryParams = new URLSearchParams(window.location.search)
             const from = queryParams.get("from");
             navigate(from);
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [auth]);
 
     if (!auth.isLoggingIn && !auth.isAuthenticated) {
         return (
             <Container component='main' maxWidth='xs'>
-                <CssBaseline />
-                <Paper>
-                    <Avatar>
-                        <AccountCircle style={{ fontSize: 45 }} />
-                    </Avatar>
-                    <Typography component='h1' variant='h4'>
-                        {t('LogIn')}
-                    </Typography>
-                    <form
-                        noValidate
-                        onSubmit={handleSubmit(onSubmit)}
-                    >
-                        <TextField
-                            name='email'
-                            label={t('Email')}
-                            variant='outlined'
-                            margin='normal'
-                            {...register("email", formValidations.email)}
-                            autoComplete='email'
-                            error={!!errors.email}
-                            fullWidth
-                            autoFocus
-                        />
-                        {errors.email && (
-                            <span>{errors.email.message}</span>
-                        )}
-                        <TextField
-                            name='password'
-                            label={t('Password')}
-                            type='password'
-                            variant='outlined'
-                            margin='normal'
-                            {...register("password", formValidations.password)}
-                            error={!!errors.password}
-                            fullWidth
-                            autoComplete='current-password'
-                        />
-                        {errors.password && (
-                            <span>{errors.password.message}</span>
-                        )}
+                <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
+                    <CardHeader
+                        title={
+                            <Typography component='h1' variant='h4'>
+                                {t('LogIn')}
+                            </Typography>
+                        }
+                        avatar={
+                            <Avatar>
+                                <AccountCircle style={{ fontSize: 45 }} />
+                            </Avatar>
+                        }
+                    />
+                    <CardContent>
+                        <FormControl fullWidth >
+                            <InputLabel htmlFor="email">Email</InputLabel>
+                            <FilledInput
+                                id="email"
+                                type='email'
+                                {...register("email", formValidations.email)}
+                                autoComplete='email'
+                                error={!!errors.email}
+                                fullWidth
+                                autoFocus
+                            />
+                            {!!errors.email && <FormHelperText>
+                                {errors.email.message}
+                            </FormHelperText>}
+                        </FormControl>
+                    </CardContent>
 
-                        <Grid container>
-                            <Grid item xs>
-                                <Link href='#' variant='body2'>
-                                    {t('UIStringResource:Account_PasswordRecovery_TitleText')}
-                                </Link>
-                            </Grid>
-                        </Grid>
-                        <Grid container>
-                            <Grid item>
-                                <FormControlLabel
-                                    label={t('RememberMe')}
-                                    name='rememberMe'
-                                    control={
-                                        <Checkbox />
-                                    }
-                                />
-                            </Grid>
-                        </Grid>
+                    <CardContent>
+                        <FormControl fullWidth >
+                            <InputLabel htmlFor="password">Password</InputLabel>
+                            <FilledInput
+                                id="password"
+                                type={showPassword ? 'text' : 'password'}
+                                name='password'
+                                {...register("password", formValidations.password)}
+                                error={!!errors.password}
+                                fullWidth
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                            edge="end"
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                            />
+                            {!!errors.password && <FormHelperText>
+                                {errors.password.message}
+                            </FormHelperText>}
+                        </FormControl>
 
+                    </CardContent>
+                    <CardActions disableSpacing>
+                        <Stack direction='row' justifyContent="space-between" alignItems="center" spacing={2} sx={{ width: '100%' }} >
+                            <FormControlLabel
+                                label={
+                                    <Typography component='span' variant='caption'>
+                                        {t('RememberMe')}
+                                    </Typography>
+                                }
+                                name='rememberMe'
+                                control={
+                                    <Checkbox />
+                                }
+                            />
+                            <Link href='#' variant='caption'>
+                                {t('ForgotYourPassword')}
+                            </Link>
+                        </Stack>
+                    </CardActions>
+                    <CardActions disableSpacing>
                         <Button
                             type='submit'
                             fullWidth
@@ -130,15 +158,17 @@ export default function LoginPage(): JSX.Element {
                             disabled={!isValid}>
                             {t('LogIn')}
                         </Button>
-                        <Grid container>
-                            <Grid item>
-                                <Link href='#' variant='body2'>
-                                    {t('Register')}
-                                </Link>
-                            </Grid>
-                        </Grid>
-                    </form>
-                </Paper>
+                    </CardActions>
+                    <CardActions disableSpacing>
+                        <Button
+                            color="secondary"
+                            href="#outlined-buttons"
+                            fullWidth
+                            variant='outlined'>
+                            {t('Register')}
+                        </Button>
+                    </CardActions>
+                </Card >
             </Container>
         );
     }
