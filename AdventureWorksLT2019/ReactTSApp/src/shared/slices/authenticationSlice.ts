@@ -179,3 +179,4 @@ const authSlice = createSlice({
 
 export const { setIsAuthenticated } = authSlice.actions;
 export default authSlice.reducer;
+

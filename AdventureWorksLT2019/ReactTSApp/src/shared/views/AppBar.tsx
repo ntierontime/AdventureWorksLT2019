@@ -18,7 +18,7 @@ import i18next from 'i18next';
 import { drawerWidth } from "../constants";
 import { Item } from './Item';
 import { supportedLngs } from 'src/i18n';
-import { logout } from 'src/slices/authenticationSlice';
+import { logout } from 'src/shared/slices/authenticationSlice';
 import { AppDispatch } from 'src/store/Store';
 import { useNavigate } from 'react-router-dom';
 import { Stack } from '@mui/system';

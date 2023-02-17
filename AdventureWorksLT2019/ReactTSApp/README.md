@@ -62,9 +62,17 @@ npm install react-material-ui-carousel (instead of npm install react-swipeable-v
 npm install react-infinite-scroll-component (infinity scroll)
 npm install yup
 
+react-cookie-consent
+https://www.npmjs.com/package/react-cookie-consent
+
+Create a simple real-time notification with .Net Core, ReactJs and SignalR
+https://labs.sogeti.com/create-a-simple-real-time-notification-with-net-core-reactjs-and-signalr/
+
 Why you should cancel your API calls in React ?
 https://dev.to/chandelieraxel/why-you-should-cancel-your-api-calls-in-react-410l
 
 https://travis.media/react-hook-form-controller-examples/
 
-_*.tsx files represents partial view.
+https://sales.vagaro.ca/compare
+
+https://www.capterra.ca/sem/lean/directory/30028/salon/software?account_campaign_id=11797449980&account_adgroup_id=134304265572&target=salon%20booking%20app&ad_id=556154230794&matchtype=b&gclsrc=aw.ds&&utm_source=ps-google&utm_medium=ppc&utm_campaign=:1:CAP:2:TLD-CA:3:All:4:AMER:5:BAU:6:SOF:7:Desktop:8:BR:9:Salon&gclid=EAIaIQobChMI39n4qJud_QIV4gOzAB3FUAHtEAAYASAAEgK2HvD_BwE

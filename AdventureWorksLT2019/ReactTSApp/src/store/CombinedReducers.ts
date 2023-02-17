@@ -1,6 +1,7 @@
 import { combineReducers } from "@reduxjs/toolkit";
 
-import auth from "src/slices/authenticationSlice"
+import app from "src/shared/slices/appSlice"
+import auth from "src/shared/slices/authenticationSlice"
 
 import buildVersionList from 'src/slices/BuildVersionSlice'
 import errorLogList from 'src/slices/ErrorLogSlice'
@@ -16,6 +17,7 @@ import salesOrderDetailList from 'src/slices/SalesOrderDetailSlice'
 import salesOrderHeaderList from 'src/slices/SalesOrderHeaderSlice'
 
 export const reducers = combineReducers({
+    app: app,
     auth: auth,
 
     buildVersionList,

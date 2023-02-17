@@ -7,6 +7,8 @@ import RegisterPage from "../shared/views/Account/Register";
 import NotFoundPage from "./NotFoundPage";
 import PrivateRouteTestPage from "./PrivateRouteTestPage";
 
+import AboutUs from "src/shared/views/Common/AboutUs";
+
 import BuildVersionRoutesPartial from 'src/routePartials/BuildVersionRoutesPartial'
 import ErrorLogRoutesPartial from 'src/routePartials/ErrorLogRoutesPartial'
 import AddressRoutesPartial from 'src/routePartials/AddressRoutesPartial'
@@ -19,6 +21,9 @@ import ProductModelRoutesPartial from 'src/routePartials/ProductModelRoutesParti
 import ProductModelProductDescriptionRoutesPartial from 'src/routePartials/ProductModelProductDescriptionRoutesPartial'
 import SalesOrderDetailRoutesPartial from 'src/routePartials/SalesOrderDetailRoutesPartial'
 import SalesOrderHeaderRoutesPartial from 'src/routePartials/SalesOrderHeaderRoutesPartial'
+import ContactUs from "src/shared/views/Common/ContactUs";
+import PrivacyPolicy from "src/shared/views/Common/PrivacyPolicy";
+import UserAgreement from "src/shared/views/Common/UserAgreement";
 
 export default function MasterRoutes(): JSX.Element {
     return (
@@ -27,11 +32,17 @@ export default function MasterRoutes(): JSX.Element {
             <Route path="autologin" element={<AutoLogIn />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="register" element={<RegisterPage />} />
+            <Route path="aboutus" element={<AboutUs />} />
+            <Route path="contactus" element={<ContactUs />} />
+            <Route path="privacypolicy" element={<PrivacyPolicy />} />
+            <Route path="useragreement" element={<UserAgreement />} />
+            
+            {/* <Route path="register" element={<RegisterPage />} /> */}
             <Route path="PrivateRouteTestPage" element={
                 <PrivateRoute>
                     <PrivateRouteTestPage />
                 </PrivateRoute>} />
-
+                
             <Route path="BuildVersion/*" element={<BuildVersionRoutesPartial />} />
             <Route path="ErrorLog/*" element={<ErrorLogRoutesPartial />} />
             <Route path="Address/*" element={<AddressRoutesPartial />} />

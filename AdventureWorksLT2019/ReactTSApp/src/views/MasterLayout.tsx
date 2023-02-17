@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 
-import { setIsAuthenticated } from 'src/slices/authenticationSlice';
+import { setIsAuthenticated } from 'src/shared/slices/authenticationSlice';
 import AppBar from 'src/shared/views/AppBar';
 import AppDrawer from 'src/views/AppDrawer';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'src/store/CombinedReducers';
 import MasterRoutes from './MasterRoutes';
+import AppFooter from 'src/shared/views/AppFooter';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -50,6 +51,7 @@ export default function MasterLayout() {
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <DrawerHeader />
                 <MasterRoutes />
+                <AppFooter />
             </Box>
         </Box>
     );

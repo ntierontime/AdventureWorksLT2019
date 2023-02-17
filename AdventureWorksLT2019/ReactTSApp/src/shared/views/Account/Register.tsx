@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import "src/i18n"
 
 import { RootState } from 'src/store/CombinedReducers';
-import { register as registerNewUser } from 'src/slices/authenticationSlice';
+import { register as registerNewUser } from 'src/shared/slices/authenticationSlice';
 import { RegisterViewModel } from 'src/shared/viewModels/RegisterViewModel';
 import { AppDispatch } from 'src/store/Store';
 import { Stack } from '@mui/system';
