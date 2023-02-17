@@ -60,6 +60,7 @@ npm install moment
 npm install @mui/lab @mui/material
 npm install react-material-ui-carousel (instead of npm install react-swipeable-views react-swipeable-views-utils)
 npm install react-infinite-scroll-component (infinity scroll)
+npm install yup
 
 Why you should cancel your API calls in React ?
 https://dev.to/chandelieraxel/why-you-should-cancel-your-api-calls-in-react-410l
@@ -67,4 +68,3 @@ https://dev.to/chandelieraxel/why-you-should-cancel-your-api-calls-in-react-410l
 https://travis.media/react-hook-form-controller-examples/
 
 _*.tsx files represents partial view.
-

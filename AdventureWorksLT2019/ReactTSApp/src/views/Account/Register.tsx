@@ -1,62 +1,73 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Avatar, Button, Card, CardActions, CardContent, CardHeader, Checkbox, Container, FilledInput, FormControl, FormControlLabel, FormHelperText, IconButton, InputAdornment, InputLabel, LinearProgress, Link, Typography } from '@mui/material';
 import { AccountCircle, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from 'react-i18next';
+
 import "src/i18n"
 
 import { RootState } from 'src/store/CombinedReducers';
-import { login } from 'src/slices/authenticationSlice';
-import { LoginViewModel } from 'src/shared/viewModels/LoginViewModel';
+import { register as registerNewUser } from 'src/slices/authenticationSlice';
+import { RegisterViewModel } from 'src/shared/viewModels/RegisterViewModel';
 import { AppDispatch } from 'src/store/Store';
 import { Stack } from '@mui/system';
 
-export default function LoginPage(): JSX.Element {
+export default function RegisterPage(): JSX.Element {
     const navigate = useNavigate();
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
     const auth = useSelector((state: RootState) => state.auth);
 
-    const { register, setValue, handleSubmit, formState: { isValid, errors } } = useForm({
+    const [eulaClickedAndRead, setEulaClickedAndRead] = useState(false)
+
+    const formValidations = Yup.object().shape({
+        email: Yup.string()
+            .required(t('EmailRequired'))
+            .email(t('EmailFormatError')),
+        password: Yup.string()
+            .required(t('PasswordRequired'))
+            .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, t('PasswordPatternError')),
+        confirmPassword: Yup.string()
+            .required(t('ConfirmPasswordRequired'))
+            .oneOf([Yup.ref('password'), null], 'ConfirmPasswordNotMatchError'),
+        confirmEulaRead: Yup.boolean()
+            .oneOf([true], 'ConfirmEulaReadError'),
+    });
+
+    const { register, reset, getValues, setValue, handleSubmit, formState: { isValid, errors } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: {
             email: '',
             password: '',
-            rememberMe: true,
-            from: ''
+            confirmPassword: '',
+            confirmEulaRead: false,
         },
+        resolver: yupResolver(formValidations)
     });
 
-    const onSubmit = (data: LoginViewModel) => {
-        dispatch(login(data));
-        setValue('password', '');
+    const onSubmit = (data: RegisterViewModel) => {
+        dispatch(registerNewUser(data));
+        reset();
     }
-
-    const formValidations = {
-        email: {
-            required: t('EmailRequired'),
-            pattern: {
-                value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                message: t('EmailFormatError'),
-            }
-        },
-        password: {
-            required: t('PasswordRequired'),
-            pattern: {
-                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                message: t('PasswordPatternError'),
-            }
-        }
-    };
 
     const [showPassword, setShowPassword] = React.useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+    };
+
+    const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+
+    const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
+
+    const handleMouseDownConfirmPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
     };
 
@@ -87,11 +98,12 @@ export default function LoginPage(): JSX.Element {
                     />
                     <CardContent>
                         <FormControl fullWidth >
-                            <InputLabel htmlFor="email">Email</InputLabel>
+                            <InputLabel htmlFor="email">{t("Email")}</InputLabel>
                             <FilledInput
+                                required
                                 id="email"
                                 type='email'
-                                {...register("email", formValidations.email)}
+                                {...register("email")}
                                 autoComplete='email'
                                 error={!!errors.email}
                                 fullWidth
@@ -105,12 +117,13 @@ export default function LoginPage(): JSX.Element {
 
                     <CardContent>
                         <FormControl fullWidth >
-                            <InputLabel htmlFor="password">Password</InputLabel>
+                            <InputLabel htmlFor="password">{t("Password")}</InputLabel>
                             <FilledInput
+                                required
                                 id="password"
                                 type={showPassword ? 'text' : 'password'}
                                 name='password'
-                                {...register("password", formValidations.password)}
+                                {...register("password")}
                                 error={!!errors.password}
                                 fullWidth
                                 endAdornment={
@@ -130,23 +143,55 @@ export default function LoginPage(): JSX.Element {
                                 {errors.password.message}
                             </FormHelperText>}
                         </FormControl>
+                    </CardContent>
+
+                    <CardContent>
+                        <FormControl fullWidth >
+                            <InputLabel htmlFor="confirmPassword">{t("ConfirmPassword")}</InputLabel>
+                            <FilledInput
+                                required
+                                id="confirmPassword"
+                                type={showConfirmPassword ? 'text' : 'password'}
+                                name='confirmPassword'
+                                {...register("confirmPassword")}
+                                error={!!errors.confirmPassword}
+                                fullWidth
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle confirmPassword visibility"
+                                            onClick={handleClickShowConfirmPassword}
+                                            onMouseDown={handleMouseDownConfirmPassword}
+                                            edge="end"
+                                        >
+                                            {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                            />
+                            {!!errors.confirmPassword && <FormHelperText>
+                                {errors.confirmPassword.message}
+                            </FormHelperText>}
+                        </FormControl>
 
                     </CardContent>
                     <CardActions disableSpacing>
-                        <Stack direction='row' justifyContent="space-between" alignItems="center" spacing={2} sx={{ width: '100%' }} >
+                        <Stack direction="row">
                             <FormControlLabel
+                                disabled={!eulaClickedAndRead}
                                 label={
                                     <Typography component='span' variant='caption'>
-                                        {t('RememberMe')}
+
                                     </Typography>
                                 }
-                                name='rememberMe'
+                                name='confirmEulaRead'
+                                {...register("confirmEulaRead")}
                                 control={
-                                    <Checkbox />
+                                    <Checkbox disabled={!eulaClickedAndRead}/>
                                 }
                             />
-                            <Link href='#' variant='caption'>
-                                {t('ForgotYourPassword')}
+                            <Link variant='caption' type="button" component="button" onClick={() => setEulaClickedAndRead(true)}>
+                                {t('ReadEula')}
                             </Link>
                         </Stack>
                     </CardActions>
@@ -156,16 +201,16 @@ export default function LoginPage(): JSX.Element {
                             fullWidth
                             variant='contained'
                             disabled={!isValid}>
-                            {t('LogIn')}
+                            {t('Register')}
                         </Button>
                     </CardActions>
                     <CardActions disableSpacing>
                         <Button
+                            href='/account/login'
                             color="secondary"
-                            href='/account/register'
                             fullWidth
                             variant='outlined'>
-                            {t('Register')}
+                            {t('Login')}
                         </Button>
                     </CardActions>
                 </Card >

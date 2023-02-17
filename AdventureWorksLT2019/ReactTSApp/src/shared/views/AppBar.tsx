@@ -163,7 +163,7 @@ export default function AppBar(props: AppBarProps) {
                 {(!!!auth || !auth.isAuthenticated) &&
                     <>
                         <Button color="inherit" href='/account/login'>Login</Button>
-                        <Button color="inherit">Register</Button>
+                        <Button color="inherit" href='/account/register'>Register</Button>
                     </>}
                 {(auth && auth.isAuthenticated) &&
                     <>

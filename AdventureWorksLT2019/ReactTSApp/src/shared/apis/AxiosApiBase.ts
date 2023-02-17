@@ -42,20 +42,17 @@ export class AxiosApiBase extends Axios {
             if (token) {
                 return {
                     ...param,
-                    defaults: {
-                        headers: {
-                            ...param.headers,
-                            "Authorization": `${token}`
-                        },
-                    }
+
+                    headers: {
+                        ...param.headers,
+                        "Authorization": `${token}`
+                    },
                 }
             }
             return {
                 ...param,
-                defaults: {
-                    headers: {
-                        ...param.headers,
-                    },
+                headers: {
+                    ...param.headers,
                 }
             }
 

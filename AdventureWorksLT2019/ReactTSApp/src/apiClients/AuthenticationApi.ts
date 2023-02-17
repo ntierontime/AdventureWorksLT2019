@@ -3,6 +3,7 @@ import { AxiosApiBase } from 'src/shared/apis/AxiosApiBase';
 import { apiConfig } from 'src/apiConfig';
 import { AuthenticationResponse } from 'src/shared/apis/AuthenticationResponse';
 import { LoginViewModel } from 'src/shared/viewModels/LoginViewModel';
+import { RegisterViewModel } from 'src/shared/viewModels/RegisterViewModel';
 
 // AuthenticationApi: no token
 export class AuthenticationApi extends AxiosApiBase {
@@ -34,6 +35,15 @@ export class AuthenticationApi extends AxiosApiBase {
     public logout = (credentials: LoginViewModel): Promise<AuthenticationResponse> => {
         const url = "api/AuthenticationApi/logout";
         return this.post<AuthenticationResponse, LoginViewModel, AxiosResponse<AuthenticationResponse>>(url, credentials)
+            .then(res => {
+                this.setToken(null);
+                return this.success(res);
+            });
+    }
+        
+    public register = (credentials: RegisterViewModel): Promise<AuthenticationResponse> => {
+        const url = "api/AuthenticationApi/register";
+        return this.post<AuthenticationResponse, RegisterViewModel, AxiosResponse<AuthenticationResponse>>(url, credentials)
             .then(res => {
                 this.setToken(null);
                 return this.success(res);

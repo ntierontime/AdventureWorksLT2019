@@ -9,7 +9,9 @@ import { CookieKeys } from "src/shared/CookieKeys";
 
 import { LoginViewModel } from "src/shared/viewModels/LoginViewModel";
 import { authenticationApi } from "src/apiClients/AuthenticationApi";
+import { RegisterViewModel } from "src/shared/viewModels/RegisterViewModel";
 
+//TODO: username and/or password should be kept in cookie/localStorage
 export const login = createAsyncThunk(
     'login',
     async ({ email, password, from }: LoginViewModel, { dispatch }) => {
@@ -70,6 +72,32 @@ export const logout = createAsyncThunk(
     }
 )
 
+export const register = createAsyncThunk(
+    'register',
+    async ({ email, password, confirmPassword }: RegisterViewModel, { dispatch }) => {
+        // TODO: the following link can authenticate with Asp.Net Core built in Identity Framework
+        const response = await authenticationApi.register({ email: email, password: password, confirmPassword: confirmPassword });
+        // const response = {
+        //     succeeded: true,
+        //     isLockedOut: false,
+        //     isNotAllowed: false,
+        //     requiresTwoFactor: false,
+        //     token: 'Fake Token',
+        //     expiresIn: 7,
+        //     refreshToken: 'Fake Rereshed Token',
+        //     entityID: 'null',
+        //     roles: ['admin']
+        // }
+        localStorage.setItem('user', JSON.stringify(response));
+
+        if (response.succeeded === true) {
+            const cookies = new Cookies();
+            cookies.set(CookieKeys.Token, response.token);
+        }
+
+        return response;
+    }
+)
 const authSlice = createSlice({
     name: "authSlice",
     initialState: {
