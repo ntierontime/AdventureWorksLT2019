@@ -86,8 +86,8 @@ export default function RegisterPage(): JSX.Element {
                 <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
                     <CardHeader
                         title={
-                            <Typography component='h1' variant='h4'>
-                                {t('LogIn')}
+                            <Typography component='h5' variant='h5'>
+                                {t('Register a new User')}
                             </Typography>
                         }
                         avatar={
