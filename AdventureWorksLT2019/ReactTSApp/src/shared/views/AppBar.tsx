@@ -143,7 +143,7 @@ export default function AppBar(props: AppBarProps) {
 
     return (
         <StyledAppBar position="fixed" open={props.open}>
-            <Toolbar>
+            <Toolbar >
                 {(auth && auth.isAuthenticated) && <IconButton
                     color="inherit"
                     aria-label="open drawer"
@@ -163,7 +163,7 @@ export default function AppBar(props: AppBarProps) {
                 {(!!!auth || !auth.isAuthenticated) &&
                     <>
                         <Button color="inherit" href='/login'>Login</Button>
-                        <Button color="inherit" href='/register'>Register</Button>
+                        <Button variant="contained" href='/register'>Register</Button>
                     </>}
                 {(auth && auth.isAuthenticated) &&
                     <>
