@@ -2,7 +2,8 @@ import { Routes, Route } from "react-router-dom";
 import PrivateRoute from "src/shared/views/PrivateRoute";
 import AutoLogIn from "./AutoLogIn";
 import Home from "./Home";
-import AccountRoutes from "./AccountRoutesPartial";
+import LoginPage from "../shared/views/Account/Login";
+import RegisterPage from "../shared/views/Account/Register";
 import NotFoundPage from "./NotFoundPage";
 import PrivateRouteTestPage from "./PrivateRouteTestPage";
 
@@ -24,7 +25,8 @@ export default function MasterRoutes(): JSX.Element {
         <Routes>
             <Route index element={<Home />} />
             <Route path="autologin" element={<AutoLogIn />} />
-            <Route path="account/*" element={<AccountRoutes />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="register" element={<RegisterPage />} />
             <Route path="PrivateRouteTestPage" element={
                 <PrivateRoute>
                     <PrivateRouteTestPage />

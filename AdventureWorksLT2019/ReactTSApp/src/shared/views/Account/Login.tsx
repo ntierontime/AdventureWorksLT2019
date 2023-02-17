@@ -162,7 +162,7 @@ export default function LoginPage(): JSX.Element {
                     <CardActions disableSpacing>
                         <Button
                             color="secondary"
-                            href='/account/register'
+                            href='/register'
                             fullWidth
                             variant='outlined'>
                             {t('Register')}
