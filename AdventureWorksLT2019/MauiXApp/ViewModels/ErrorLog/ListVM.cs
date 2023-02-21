@@ -71,8 +71,37 @@ public class ListVM : ListVMBase<ErrorLogAdvancedQuery, ErrorLogIdentifier, Erro
         */
         // AdvancedQuery.End DateTimeRanges
 
+        // 1. Init LaunchErrorLogCreatePageCommand
+        LaunchCreatePageCommand = LaunchViewCommandsHelper.GetLaunchErrorLogCreatePageCommand(AppShellRoutes.ErrorLogListPage);
+        // 2. Init LaunchErrorLogDeletePageCommand
+        LaunchDeletePageCommand = LaunchViewCommandsHelper.GetLaunchErrorLogDeletePageCommand(AppShellRoutes.ErrorLogListPage);
+        // 3. Init LaunchErrorLogDetailsPageCommand
+        LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchErrorLogDetailsPageCommand(AppShellRoutes.ErrorLogListPage);
+        // 4. Init LaunchErrorLogEditPageCommand
+        LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchErrorLogEditPageCommand(AppShellRoutes.ErrorLogListPage);
+        // 5. Init LaunchErrorLogDashboardPageCommand
+        LaunchDashboardPageCommand = LaunchViewCommandsHelper.GetLaunchErrorLogDashboardPageCommand(AppShellRoutes.ErrorLogListPage);
+        // 6. Init LaunchErrorLogCreatePopupCommand
+        LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchErrorLogCreatePopupCommand();
+        // 7. Init LaunchErrorLogDeletePopupCommand
+        LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchErrorLogDeletePopupCommand();
         // 8. Init LaunchErrorLogDetailsPopupCommand
         LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchErrorLogDetailsPopupCommand();
+        // 9. Init LaunchErrorLogEditPopupCommand
+        LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchErrorLogEditPopupCommand();
+        // 10. Init LaunchErrorLogAdvancedSearchPopupCommand
+        AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchErrorLogAdvancedSearchPopupCommand();
+        // 11. Init LaunchErrorLogListBulkActionsPopupCommand
+        ListBulkActionsLaunchCommand = new Command<string>(
+            (currentBulkActionName) =>
+            {
+                BulkUpdateItem = _dataService.GetDefault();
+                CurrentBulkActionName = currentBulkActionName;
+                var launchCommand = LaunchViewCommandsHelper.GetLaunchErrorLogListBulkActionsPopupCommand();
+                launchCommand.Execute(null);
+            },
+            (currentBulkActionName) => EnableMultiSelectCommands()
+            );
         // 12. Init LaunchErrorLogListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchErrorLogListOrderBysPopupCommand();
 

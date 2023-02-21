@@ -39,7 +39,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
                 Template = uiParams.Template ?? ViewItemTemplates.Details.ToString(),
-                UIItemFeatures = _viewFeaturesManager.GetBuildVersionUIItemFeatures(),
+                UIItemFeatures = _viewFeaturesManager.GetBuildVersionUIItemFeatures(uiParams.PagedViewOption ?? ListViewOptions.Table),
             });
 
             return result;
@@ -56,7 +56,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
                 Template = uiParams.Template ?? ViewItemTemplates.Details.ToString(),
-                UIItemFeatures = _viewFeaturesManager.GetErrorLogUIItemFeatures(),
+                UIItemFeatures = _viewFeaturesManager.GetErrorLogUIItemFeatures(uiParams.PagedViewOption ?? ListViewOptions.Table),
             });
 
             return result;
@@ -73,7 +73,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
                 Template = uiParams.Template ?? ViewItemTemplates.Details.ToString(),
-                UIItemFeatures = _viewFeaturesManager.GetAddressUIItemFeatures(),
+                UIItemFeatures = _viewFeaturesManager.GetAddressUIItemFeatures(uiParams.PagedViewOption ?? ListViewOptions.Table),
             });
 
             return result;
@@ -109,7 +109,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
                 Template = uiParams.Template ?? ViewItemTemplates.Details.ToString(),
-                UIItemFeatures = _viewFeaturesManager.GetCustomerAddressUIItemFeatures(),
+                UIItemFeatures = _viewFeaturesManager.GetCustomerAddressUIItemFeatures(uiParams.PagedViewOption ?? ListViewOptions.Table),
             });
 
             if(loadTopLevelDropDownListsFromDatabase && (topLevelDropDownListsFromDatabase == null || !topLevelDropDownListsFromDatabase.Any()))
@@ -133,7 +133,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
                 Template = uiParams.Template ?? ViewItemTemplates.Details.ToString(),
-                UIItemFeatures = _viewFeaturesManager.GetProductUIItemFeatures(),
+                UIItemFeatures = _viewFeaturesManager.GetProductUIItemFeatures(uiParams.PagedViewOption ?? ListViewOptions.Table),
             });
 
             if(loadTopLevelDropDownListsFromDatabase && (topLevelDropDownListsFromDatabase == null || !topLevelDropDownListsFromDatabase.Any()))
@@ -157,7 +157,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
                 Template = uiParams.Template ?? ViewItemTemplates.Details.ToString(),
-                UIItemFeatures = _viewFeaturesManager.GetProductCategoryUIItemFeatures(),
+                UIItemFeatures = _viewFeaturesManager.GetProductCategoryUIItemFeatures(uiParams.PagedViewOption ?? ListViewOptions.Table),
             });
 
             if(loadTopLevelDropDownListsFromDatabase && (topLevelDropDownListsFromDatabase == null || !topLevelDropDownListsFromDatabase.Any()))
@@ -179,7 +179,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
                 Template = uiParams.Template ?? ViewItemTemplates.Details.ToString(),
-                UIItemFeatures = _viewFeaturesManager.GetProductDescriptionUIItemFeatures(),
+                UIItemFeatures = _viewFeaturesManager.GetProductDescriptionUIItemFeatures(uiParams.PagedViewOption ?? ListViewOptions.Table),
             });
 
             return result;
@@ -196,7 +196,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
                 Template = uiParams.Template ?? ViewItemTemplates.Details.ToString(),
-                UIItemFeatures = _viewFeaturesManager.GetProductModelUIItemFeatures(),
+                UIItemFeatures = _viewFeaturesManager.GetProductModelUIItemFeatures(uiParams.PagedViewOption ?? ListViewOptions.Table),
             });
 
             return result;
@@ -215,7 +215,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
                 Template = uiParams.Template ?? ViewItemTemplates.Details.ToString(),
-                UIItemFeatures = _viewFeaturesManager.GetProductModelProductDescriptionUIItemFeatures(),
+                UIItemFeatures = _viewFeaturesManager.GetProductModelProductDescriptionUIItemFeatures(uiParams.PagedViewOption ?? ListViewOptions.Table),
             });
 
             if(loadTopLevelDropDownListsFromDatabase && (topLevelDropDownListsFromDatabase == null || !topLevelDropDownListsFromDatabase.Any()))
@@ -239,7 +239,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                 Status = response.Status,
                 StatusMessage = response.StatusMessage,
                 Template = uiParams.Template ?? ViewItemTemplates.Details.ToString(),
-                UIItemFeatures = _viewFeaturesManager.GetSalesOrderDetailUIItemFeatures(),
+                UIItemFeatures = _viewFeaturesManager.GetSalesOrderDetailUIItemFeatures(uiParams.PagedViewOption ?? ListViewOptions.Table),
             });
 
             if(loadTopLevelDropDownListsFromDatabase && (topLevelDropDownListsFromDatabase == null || !topLevelDropDownListsFromDatabase.Any()))

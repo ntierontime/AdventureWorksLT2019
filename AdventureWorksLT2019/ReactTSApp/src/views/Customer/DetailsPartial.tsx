@@ -59,7 +59,15 @@ export default function DetailsPartial(props: ItemPartialViewProps<ICustomerData
                         onClick={() => { nextAction() }}
                     />}
                 </ButtonGroup>}
-
+                {!!handleSelectItemClick && <ButtonGroup
+                    disableElevation
+                    variant="contained"
+                    aria-label="navigation buttons"
+                ><Checkbox
+                    color="primary"
+                    checked={isItemSelected}
+                    onChange={() => { handleSelectItemClick(item) }}
+                /></ButtonGroup>}
                 <ButtonGroup
                     disableElevation
                     variant="contained"
@@ -70,15 +78,35 @@ export default function DetailsPartial(props: ItemPartialViewProps<ICustomerData
                             <AccountTreeIcon />
                         </IconButton>
                     }
-                    {(crudViewContainer === CrudViewContainers.Card || crudViewContainer === CrudViewContainers.Inline) &&
-                        <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit, null) }}>
-                            <EditIcon />
-                        </IconButton>
+                    {(crudViewContainer === CrudViewContainers.Inline) &&
+                        <>
+                            <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, null) }}>
+                                <DeleteIcon />
+                            </IconButton>
+                            <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit, null) }}>
+                                <EditIcon />
+                            </IconButton>
+                        </>
+                    }
+                    {(crudViewContainer === CrudViewContainers.StandaloneView) &&
+                        <>
+                            <IconButton aria-label="delete" color="primary" onClick={() => { navigate("/customer/delete/" + getRouteParamsOfICustomerIdentifier(item)) }}>
+                                <DeleteIcon />
+                            </IconButton>
+                            <IconButton aria-label="edit" color="primary" onClick={() => { navigate("/customer/edit/" + getRouteParamsOfICustomerIdentifier(item)) }}>
+                                <EditIcon />
+                            </IconButton>
+                        </>
                     }
                     {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Card) &&
-                        <IconButton aria-label="edit" color="primary" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Edit) }}>
-                            <EditIcon />
-                        </IconButton>
+                        <>
+                            <IconButton aria-label="delete" color="primary" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete) }}>
+                                <DeleteIcon />
+                            </IconButton>
+                            <IconButton aria-label="edit" color="primary" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Edit) }}>
+                                <EditIcon />
+                            </IconButton>
+                        </>
                     }
                 </ButtonGroup>
                 <ButtonGroup>

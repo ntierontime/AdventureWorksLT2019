@@ -37,12 +37,6 @@ public class DashboardVM : ObservableObject
         get => m_Product;
         set => SetProperty(ref m_Product, value);
     }
-    private ProductCategoryDataModel m_ProductCategory;
-    public ProductCategoryDataModel ProductCategory
-    {
-        get => m_ProductCategory;
-        set => SetProperty(ref m_ProductCategory, value);
-    }
     private SalesOrderHeaderDataModel m_SalesOrderHeader;
     public SalesOrderHeaderDataModel SalesOrderHeader
     {
@@ -128,12 +122,6 @@ public class DashboardVM : ObservableObject
             response.Responses[SalesOrderDetailCompositeModel.__DataOptions__.Product].Status == System.Net.HttpStatusCode.OK)
         {
             Product = response.Product;
-        }
-
-        if(response.Responses.ContainsKey(SalesOrderDetailCompositeModel.__DataOptions__.ProductCategory) &&
-            response.Responses[SalesOrderDetailCompositeModel.__DataOptions__.ProductCategory].Status == System.Net.HttpStatusCode.OK)
-        {
-            ProductCategory = response.ProductCategory;
         }
 
         if(response.Responses.ContainsKey(SalesOrderDetailCompositeModel.__DataOptions__.SalesOrderHeader) &&

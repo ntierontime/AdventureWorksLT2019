@@ -39,6 +39,49 @@ namespace AdventureWorksLT2019.WebApiControllers
 
         // [Authorize]
         [Route("{AddressID}")]
+        [HttpGet]
+        public async Task<ActionResult<AddressCompositeModel>> GetCompositeModel([FromRoute]AddressIdentifier id)
+        {
+            var listItemRequests = new Dictionary<AddressCompositeModel.__DataOptions__, CompositeListItemRequest>();
+
+            listItemRequests.Add(AddressCompositeModel.__DataOptions__.CustomerAddresses_Via_AddressID,
+                new CompositeListItemRequest()
+                {
+                    PageSize = 100,
+                    OrderBys = "ModifiedDate",
+                    PaginationOption = PaginationOptions.NoPagination,
+                });
+
+            listItemRequests.Add(AddressCompositeModel.__DataOptions__.SalesOrderHeaders_Via_BillToAddressID,
+                new CompositeListItemRequest()
+                {
+                    PageSize = 100,
+                    OrderBys = "OrderDate",
+                    PaginationOption = PaginationOptions.NoPagination,
+                });
+
+            listItemRequests.Add(AddressCompositeModel.__DataOptions__.SalesOrderHeaders_Via_ShipToAddressID,
+                new CompositeListItemRequest()
+                {
+                    PageSize = 100,
+                    OrderBys = "OrderDate",
+                    PaginationOption = PaginationOptions.NoPagination,
+                });
+
+            var serviceResponse = await _thisService.GetCompositeModel(id, listItemRequests);
+            return Ok(serviceResponse);
+        }
+
+        // [Authorize]
+        [HttpPut]
+        public async Task<ActionResult> BulkDelete([FromBody]List<AddressIdentifier> ids)
+        {
+            var serviceResponse = await _thisService.BulkDelete(ids);
+            return ReturnWithoutBodyActionResult(serviceResponse);
+        }
+
+        // [Authorize]
+        [Route("{AddressID}")]
         [HttpPut]
         public async Task<ActionResult<Response<AddressDataModel>>> Put([FromRoute]AddressIdentifier id, [FromBody]AddressDataModel input)
         {
@@ -61,6 +104,15 @@ namespace AdventureWorksLT2019.WebApiControllers
         {
             var serviceResponse = await _thisService.Create(input);
             return ReturnActionResult(serviceResponse);
+        }
+
+        // [Authorize]
+        [Route("{AddressID}")]
+        [HttpDelete]
+        public async Task<ActionResult> Delete([FromRoute]AddressIdentifier id)
+        {
+            var serviceResponse = await _thisService.Delete(id);
+            return ReturnWithoutBodyActionResult(serviceResponse);
         }
 
         /*

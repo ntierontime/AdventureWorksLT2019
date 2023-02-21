@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { getCRUDItemPartialViewPropsStandalone } from "src/shared/viewModels/ItemPartialViewProps";
@@ -10,7 +10,6 @@ import { IAddressDataModel } from "src/dataModels/IAddressDataModel";
 
 export default function CreatePage(): JSX.Element {
     const { t } = useTranslation();
-
     const navigate = useNavigate();
     const crudItemPartialViewProps = getCRUDItemPartialViewPropsStandalone<IAddressDataModel>(
         ViewItemTemplates.Create,

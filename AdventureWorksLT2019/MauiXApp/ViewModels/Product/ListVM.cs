@@ -210,14 +210,37 @@ public class ListVM : ListVMBase<ProductAdvancedQuery, ProductIdentifier, Produc
         */
         // AdvancedQuery.End DateTimeRanges
 
+        // 1. Init LaunchProductCreatePageCommand
+        LaunchCreatePageCommand = LaunchViewCommandsHelper.GetLaunchProductCreatePageCommand(AppShellRoutes.ProductListPage);
+        // 2. Init LaunchProductDeletePageCommand
+        LaunchDeletePageCommand = LaunchViewCommandsHelper.GetLaunchProductDeletePageCommand(AppShellRoutes.ProductListPage);
+        // 3. Init LaunchProductDetailsPageCommand
+        LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchProductDetailsPageCommand(AppShellRoutes.ProductListPage);
+        // 4. Init LaunchProductEditPageCommand
+        LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchProductEditPageCommand(AppShellRoutes.ProductListPage);
         // 5. Init LaunchProductDashboardPageCommand
         LaunchDashboardPageCommand = LaunchViewCommandsHelper.GetLaunchProductDashboardPageCommand(AppShellRoutes.ProductListPage);
         // 6. Init LaunchProductCreatePopupCommand
         LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchProductCreatePopupCommand();
+        // 7. Init LaunchProductDeletePopupCommand
+        LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchProductDeletePopupCommand();
         // 8. Init LaunchProductDetailsPopupCommand
         LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchProductDetailsPopupCommand();
         // 9. Init LaunchProductEditPopupCommand
         LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchProductEditPopupCommand();
+        // 10. Init LaunchProductAdvancedSearchPopupCommand
+        AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductAdvancedSearchPopupCommand();
+        // 11. Init LaunchProductListBulkActionsPopupCommand
+        ListBulkActionsLaunchCommand = new Command<string>(
+            (currentBulkActionName) =>
+            {
+                BulkUpdateItem = _dataService.GetDefault();
+                CurrentBulkActionName = currentBulkActionName;
+                var launchCommand = LaunchViewCommandsHelper.GetLaunchProductListBulkActionsPopupCommand();
+                launchCommand.Execute(null);
+            },
+            (currentBulkActionName) => EnableMultiSelectCommands()
+            );
         // 12. Init LaunchProductListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductListOrderBysPopupCommand();
 

@@ -56,17 +56,18 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             };
         }
 
-        public UIItemFeatures GetBuildVersionUIItemFeatures()
+        public UIItemFeatures GetBuildVersionUIItemFeatures(ListViewOptions pagedViewOptionForBulkSelectCheckBox)
         {
             var result = new UIItemFeatures
             {
-                PrimayCreateViewContainer = CrudViewContainers.None,
-                PrimayDeleteViewContainer = CrudViewContainers.None,
+                PrimayCreateViewContainer = CrudViewContainers.Dialog,
+                PrimayDeleteViewContainer = CrudViewContainers.Dialog,
                 PrimayDetailsViewContainer = CrudViewContainers.Dialog,
-                PrimayEditViewContainer = CrudViewContainers.None,
+                PrimayEditViewContainer = CrudViewContainers.Dialog,
 
+                ShowListBulkSelectCheckbox = pagedViewOptionForBulkSelectCheckBox != ListViewOptions.Card,
                 ShowItemButtons = true,
-                CanGotoDashboard = false,
+                CanGotoDashboard = true,
             };
 
             return result;
@@ -86,18 +87,21 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
 
                     PrimaryPagedViewOption = ListViewOptions.Table,
 
-                    PrimayCreateViewContainer = CrudViewContainers.None,
-                    PrimayDeleteViewContainer = CrudViewContainers.None,
+                    PrimayCreateViewContainer = CrudViewContainers.Dialog,
+                    PrimayDeleteViewContainer = CrudViewContainers.Dialog,
                     PrimayDetailsViewContainer = CrudViewContainers.Dialog,
-                    PrimayEditViewContainer = CrudViewContainers.None,
+                    PrimayEditViewContainer = CrudViewContainers.Dialog,
 
-                    CanGotoDashboard = false,
-                    CanBulkDelete = false,
-                    CanBulkActions = false,
+                    CanGotoDashboard = true,
+                    CanBulkDelete = true,
+                    CanBulkActions = true,
 
                     AvailableListViews = new List<ListViewOptions>
                     {
-                        ListViewOptions.Table
+                        ListViewOptions.Table,
+                        ListViewOptions.Tiles,
+                        ListViewOptions.SlideShow,
+                        ListViewOptions.EditableTable
                     },
                 },
             };
@@ -107,17 +111,18 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             return result;
         }
 
-        public UIItemFeatures GetErrorLogUIItemFeatures()
+        public UIItemFeatures GetErrorLogUIItemFeatures(ListViewOptions pagedViewOptionForBulkSelectCheckBox)
         {
             var result = new UIItemFeatures
             {
                 PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                PrimayDeleteViewContainer = CrudViewContainers.None,
+                PrimayDeleteViewContainer = CrudViewContainers.Dialog,
                 PrimayDetailsViewContainer = CrudViewContainers.Dialog,
                 PrimayEditViewContainer = CrudViewContainers.Dialog,
 
+                ShowListBulkSelectCheckbox = pagedViewOptionForBulkSelectCheckBox != ListViewOptions.Card,
                 ShowItemButtons = true,
-                CanGotoDashboard = false,
+                CanGotoDashboard = true,
             };
 
             return result;
@@ -138,17 +143,20 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     PrimaryPagedViewOption = ListViewOptions.Table,
 
                     PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                    PrimayDeleteViewContainer = CrudViewContainers.None,
+                    PrimayDeleteViewContainer = CrudViewContainers.Dialog,
                     PrimayDetailsViewContainer = CrudViewContainers.Dialog,
                     PrimayEditViewContainer = CrudViewContainers.Dialog,
 
-                    CanGotoDashboard = false,
-                    CanBulkDelete = false,
-                    CanBulkActions = false,
+                    CanGotoDashboard = true,
+                    CanBulkDelete = true,
+                    CanBulkActions = true,
 
                     AvailableListViews = new List<ListViewOptions>
                     {
-                        ListViewOptions.Table
+                        ListViewOptions.Table,
+                        ListViewOptions.Tiles,
+                        ListViewOptions.SlideShow,
+                        ListViewOptions.EditableTable
                     },
                 },
             };
@@ -158,17 +166,18 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             return result;
         }
 
-        public UIItemFeatures GetAddressUIItemFeatures()
+        public UIItemFeatures GetAddressUIItemFeatures(ListViewOptions pagedViewOptionForBulkSelectCheckBox)
         {
             var result = new UIItemFeatures
             {
                 PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                PrimayDeleteViewContainer = CrudViewContainers.None,
+                PrimayDeleteViewContainer = CrudViewContainers.Dialog,
                 PrimayDetailsViewContainer = CrudViewContainers.Dialog,
                 PrimayEditViewContainer = CrudViewContainers.Dialog,
 
+                ShowListBulkSelectCheckbox = pagedViewOptionForBulkSelectCheckBox != ListViewOptions.Card,
                 ShowItemButtons = true,
-                CanGotoDashboard = false,
+                CanGotoDashboard = true,
             };
 
             return result;
@@ -189,17 +198,20 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     PrimaryPagedViewOption = ListViewOptions.Table,
 
                     PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                    PrimayDeleteViewContainer = CrudViewContainers.None,
+                    PrimayDeleteViewContainer = CrudViewContainers.Dialog,
                     PrimayDetailsViewContainer = CrudViewContainers.Dialog,
                     PrimayEditViewContainer = CrudViewContainers.Dialog,
 
-                    CanGotoDashboard = false,
-                    CanBulkDelete = false,
-                    CanBulkActions = false,
+                    CanGotoDashboard = true,
+                    CanBulkDelete = true,
+                    CanBulkActions = true,
 
                     AvailableListViews = new List<ListViewOptions>
                     {
-                        ListViewOptions.Table
+                        ListViewOptions.Table,
+                        ListViewOptions.Tiles,
+                        ListViewOptions.SlideShow,
+                        ListViewOptions.EditableTable
                     },
                 },
             };
@@ -214,7 +226,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             var result = new UIItemFeatures
             {
                 PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                PrimayDeleteViewContainer = CrudViewContainers.None,
+                PrimayDeleteViewContainer = CrudViewContainers.Dialog,
                 PrimayDetailsViewContainer = CrudViewContainers.Dialog,
                 PrimayEditViewContainer = CrudViewContainers.Dialog,
 
@@ -241,7 +253,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     PrimaryPagedViewOption = ListViewOptions.Table,
 
                     PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                    PrimayDeleteViewContainer = CrudViewContainers.None,
+                    PrimayDeleteViewContainer = CrudViewContainers.Dialog,
                     PrimayDetailsViewContainer = CrudViewContainers.Dialog,
                     PrimayEditViewContainer = CrudViewContainers.Dialog,
 
@@ -251,7 +263,10 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
 
                     AvailableListViews = new List<ListViewOptions>
                     {
-                        ListViewOptions.Table
+                        ListViewOptions.Table,
+                        ListViewOptions.Tiles,
+                        ListViewOptions.SlideShow,
+                        ListViewOptions.EditableTable
                     },
                 },
             };
@@ -261,17 +276,18 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             return result;
         }
 
-        public UIItemFeatures GetCustomerAddressUIItemFeatures()
+        public UIItemFeatures GetCustomerAddressUIItemFeatures(ListViewOptions pagedViewOptionForBulkSelectCheckBox)
         {
             var result = new UIItemFeatures
             {
-                PrimayCreateViewContainer = CrudViewContainers.None,
-                PrimayDeleteViewContainer = CrudViewContainers.None,
+                PrimayCreateViewContainer = CrudViewContainers.Dialog,
+                PrimayDeleteViewContainer = CrudViewContainers.Dialog,
                 PrimayDetailsViewContainer = CrudViewContainers.Dialog,
-                PrimayEditViewContainer = CrudViewContainers.None,
+                PrimayEditViewContainer = CrudViewContainers.Dialog,
 
+                ShowListBulkSelectCheckbox = pagedViewOptionForBulkSelectCheckBox != ListViewOptions.Card,
                 ShowItemButtons = true,
-                CanGotoDashboard = false,
+                CanGotoDashboard = true,
             };
 
             return result;
@@ -291,18 +307,21 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
 
                     PrimaryPagedViewOption = ListViewOptions.Table,
 
-                    PrimayCreateViewContainer = CrudViewContainers.None,
-                    PrimayDeleteViewContainer = CrudViewContainers.None,
+                    PrimayCreateViewContainer = CrudViewContainers.Dialog,
+                    PrimayDeleteViewContainer = CrudViewContainers.Dialog,
                     PrimayDetailsViewContainer = CrudViewContainers.Dialog,
-                    PrimayEditViewContainer = CrudViewContainers.None,
+                    PrimayEditViewContainer = CrudViewContainers.Dialog,
 
-                    CanGotoDashboard = false,
-                    CanBulkDelete = false,
-                    CanBulkActions = false,
+                    CanGotoDashboard = true,
+                    CanBulkDelete = true,
+                    CanBulkActions = true,
 
                     AvailableListViews = new List<ListViewOptions>
                     {
-                        ListViewOptions.Table
+                        ListViewOptions.Table,
+                        ListViewOptions.Tiles,
+                        ListViewOptions.SlideShow,
+                        ListViewOptions.EditableTable
                     },
                 },
             };
@@ -312,15 +331,16 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             return result;
         }
 
-        public UIItemFeatures GetProductUIItemFeatures()
+        public UIItemFeatures GetProductUIItemFeatures(ListViewOptions pagedViewOptionForBulkSelectCheckBox)
         {
             var result = new UIItemFeatures
             {
                 PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                PrimayDeleteViewContainer = CrudViewContainers.None,
+                PrimayDeleteViewContainer = CrudViewContainers.Dialog,
                 PrimayDetailsViewContainer = CrudViewContainers.Dialog,
                 PrimayEditViewContainer = CrudViewContainers.Dialog,
 
+                ShowListBulkSelectCheckbox = pagedViewOptionForBulkSelectCheckBox != ListViewOptions.Card,
                 ShowItemButtons = true,
                 CanGotoDashboard = true,
             };
@@ -343,17 +363,20 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     PrimaryPagedViewOption = ListViewOptions.Table,
 
                     PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                    PrimayDeleteViewContainer = CrudViewContainers.None,
+                    PrimayDeleteViewContainer = CrudViewContainers.Dialog,
                     PrimayDetailsViewContainer = CrudViewContainers.Dialog,
                     PrimayEditViewContainer = CrudViewContainers.Dialog,
 
                     CanGotoDashboard = true,
-                    CanBulkDelete = false,
-                    CanBulkActions = false,
+                    CanBulkDelete = true,
+                    CanBulkActions = true,
 
                     AvailableListViews = new List<ListViewOptions>
                     {
-                        ListViewOptions.Table
+                        ListViewOptions.Table,
+                        ListViewOptions.Tiles,
+                        ListViewOptions.SlideShow,
+                        ListViewOptions.EditableTable
                     },
                 },
             };
@@ -363,15 +386,16 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             return result;
         }
 
-        public UIItemFeatures GetProductCategoryUIItemFeatures()
+        public UIItemFeatures GetProductCategoryUIItemFeatures(ListViewOptions pagedViewOptionForBulkSelectCheckBox)
         {
             var result = new UIItemFeatures
             {
-                PrimayCreateViewContainer = CrudViewContainers.Inline,
-                PrimayDeleteViewContainer = CrudViewContainers.None,
-                PrimayDetailsViewContainer = CrudViewContainers.Inline,
-                PrimayEditViewContainer = CrudViewContainers.Inline,
+                PrimayCreateViewContainer = CrudViewContainers.Dialog,
+                PrimayDeleteViewContainer = CrudViewContainers.Dialog,
+                PrimayDetailsViewContainer = CrudViewContainers.Dialog,
+                PrimayEditViewContainer = CrudViewContainers.Dialog,
 
+                ShowListBulkSelectCheckbox = pagedViewOptionForBulkSelectCheckBox != ListViewOptions.Card,
                 ShowItemButtons = true,
                 CanGotoDashboard = true,
             };
@@ -393,18 +417,21 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
 
                     PrimaryPagedViewOption = ListViewOptions.Table,
 
-                    PrimayCreateViewContainer = CrudViewContainers.Inline,
-                    PrimayDeleteViewContainer = CrudViewContainers.None,
-                    PrimayDetailsViewContainer = CrudViewContainers.Inline,
-                    PrimayEditViewContainer = CrudViewContainers.Inline,
+                    PrimayCreateViewContainer = CrudViewContainers.Dialog,
+                    PrimayDeleteViewContainer = CrudViewContainers.Dialog,
+                    PrimayDetailsViewContainer = CrudViewContainers.Dialog,
+                    PrimayEditViewContainer = CrudViewContainers.Dialog,
 
                     CanGotoDashboard = true,
-                    CanBulkDelete = false,
-                    CanBulkActions = false,
+                    CanBulkDelete = true,
+                    CanBulkActions = true,
 
                     AvailableListViews = new List<ListViewOptions>
                     {
-                        ListViewOptions.Table
+                        ListViewOptions.Table,
+                        ListViewOptions.Tiles,
+                        ListViewOptions.SlideShow,
+                        ListViewOptions.EditableTable
                     },
                 },
             };
@@ -414,17 +441,18 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             return result;
         }
 
-        public UIItemFeatures GetProductDescriptionUIItemFeatures()
+        public UIItemFeatures GetProductDescriptionUIItemFeatures(ListViewOptions pagedViewOptionForBulkSelectCheckBox)
         {
             var result = new UIItemFeatures
             {
-                PrimayCreateViewContainer = CrudViewContainers.Inline,
-                PrimayDeleteViewContainer = CrudViewContainers.None,
-                PrimayDetailsViewContainer = CrudViewContainers.Inline,
-                PrimayEditViewContainer = CrudViewContainers.Inline,
+                PrimayCreateViewContainer = CrudViewContainers.Dialog,
+                PrimayDeleteViewContainer = CrudViewContainers.Dialog,
+                PrimayDetailsViewContainer = CrudViewContainers.Dialog,
+                PrimayEditViewContainer = CrudViewContainers.Dialog,
 
+                ShowListBulkSelectCheckbox = pagedViewOptionForBulkSelectCheckBox != ListViewOptions.Card,
                 ShowItemButtons = true,
-                CanGotoDashboard = false,
+                CanGotoDashboard = true,
             };
 
             return result;
@@ -444,18 +472,21 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
 
                     PrimaryPagedViewOption = ListViewOptions.Table,
 
-                    PrimayCreateViewContainer = CrudViewContainers.Inline,
-                    PrimayDeleteViewContainer = CrudViewContainers.None,
-                    PrimayDetailsViewContainer = CrudViewContainers.Inline,
-                    PrimayEditViewContainer = CrudViewContainers.Inline,
+                    PrimayCreateViewContainer = CrudViewContainers.Dialog,
+                    PrimayDeleteViewContainer = CrudViewContainers.Dialog,
+                    PrimayDetailsViewContainer = CrudViewContainers.Dialog,
+                    PrimayEditViewContainer = CrudViewContainers.Dialog,
 
-                    CanGotoDashboard = false,
-                    CanBulkDelete = false,
-                    CanBulkActions = false,
+                    CanGotoDashboard = true,
+                    CanBulkDelete = true,
+                    CanBulkActions = true,
 
                     AvailableListViews = new List<ListViewOptions>
                     {
-                        ListViewOptions.Table
+                        ListViewOptions.Table,
+                        ListViewOptions.Tiles,
+                        ListViewOptions.SlideShow,
+                        ListViewOptions.EditableTable
                     },
                 },
             };
@@ -465,15 +496,16 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             return result;
         }
 
-        public UIItemFeatures GetProductModelUIItemFeatures()
+        public UIItemFeatures GetProductModelUIItemFeatures(ListViewOptions pagedViewOptionForBulkSelectCheckBox)
         {
             var result = new UIItemFeatures
             {
-                PrimayCreateViewContainer = CrudViewContainers.Inline,
-                PrimayDeleteViewContainer = CrudViewContainers.None,
-                PrimayDetailsViewContainer = CrudViewContainers.Inline,
-                PrimayEditViewContainer = CrudViewContainers.Inline,
+                PrimayCreateViewContainer = CrudViewContainers.Dialog,
+                PrimayDeleteViewContainer = CrudViewContainers.Dialog,
+                PrimayDetailsViewContainer = CrudViewContainers.Dialog,
+                PrimayEditViewContainer = CrudViewContainers.Dialog,
 
+                ShowListBulkSelectCheckbox = pagedViewOptionForBulkSelectCheckBox != ListViewOptions.Card,
                 ShowItemButtons = true,
                 CanGotoDashboard = true,
             };
@@ -495,18 +527,21 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
 
                     PrimaryPagedViewOption = ListViewOptions.Table,
 
-                    PrimayCreateViewContainer = CrudViewContainers.Inline,
-                    PrimayDeleteViewContainer = CrudViewContainers.None,
-                    PrimayDetailsViewContainer = CrudViewContainers.Inline,
-                    PrimayEditViewContainer = CrudViewContainers.Inline,
+                    PrimayCreateViewContainer = CrudViewContainers.Dialog,
+                    PrimayDeleteViewContainer = CrudViewContainers.Dialog,
+                    PrimayDetailsViewContainer = CrudViewContainers.Dialog,
+                    PrimayEditViewContainer = CrudViewContainers.Dialog,
 
                     CanGotoDashboard = true,
-                    CanBulkDelete = false,
-                    CanBulkActions = false,
+                    CanBulkDelete = true,
+                    CanBulkActions = true,
 
                     AvailableListViews = new List<ListViewOptions>
                     {
-                        ListViewOptions.Table
+                        ListViewOptions.Table,
+                        ListViewOptions.Tiles,
+                        ListViewOptions.SlideShow,
+                        ListViewOptions.EditableTable
                     },
                 },
             };
@@ -516,17 +551,18 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             return result;
         }
 
-        public UIItemFeatures GetProductModelProductDescriptionUIItemFeatures()
+        public UIItemFeatures GetProductModelProductDescriptionUIItemFeatures(ListViewOptions pagedViewOptionForBulkSelectCheckBox)
         {
             var result = new UIItemFeatures
             {
-                PrimayCreateViewContainer = CrudViewContainers.None,
-                PrimayDeleteViewContainer = CrudViewContainers.None,
+                PrimayCreateViewContainer = CrudViewContainers.Dialog,
+                PrimayDeleteViewContainer = CrudViewContainers.Dialog,
                 PrimayDetailsViewContainer = CrudViewContainers.Dialog,
-                PrimayEditViewContainer = CrudViewContainers.None,
+                PrimayEditViewContainer = CrudViewContainers.Dialog,
 
+                ShowListBulkSelectCheckbox = pagedViewOptionForBulkSelectCheckBox != ListViewOptions.Card,
                 ShowItemButtons = true,
-                CanGotoDashboard = false,
+                CanGotoDashboard = true,
             };
 
             return result;
@@ -546,18 +582,21 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
 
                     PrimaryPagedViewOption = ListViewOptions.Table,
 
-                    PrimayCreateViewContainer = CrudViewContainers.None,
-                    PrimayDeleteViewContainer = CrudViewContainers.None,
+                    PrimayCreateViewContainer = CrudViewContainers.Dialog,
+                    PrimayDeleteViewContainer = CrudViewContainers.Dialog,
                     PrimayDetailsViewContainer = CrudViewContainers.Dialog,
-                    PrimayEditViewContainer = CrudViewContainers.None,
+                    PrimayEditViewContainer = CrudViewContainers.Dialog,
 
-                    CanGotoDashboard = false,
-                    CanBulkDelete = false,
-                    CanBulkActions = false,
+                    CanGotoDashboard = true,
+                    CanBulkDelete = true,
+                    CanBulkActions = true,
 
                     AvailableListViews = new List<ListViewOptions>
                     {
-                        ListViewOptions.Table
+                        ListViewOptions.Table,
+                        ListViewOptions.Tiles,
+                        ListViewOptions.SlideShow,
+                        ListViewOptions.EditableTable
                     },
                 },
             };
@@ -567,17 +606,18 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             return result;
         }
 
-        public UIItemFeatures GetSalesOrderDetailUIItemFeatures()
+        public UIItemFeatures GetSalesOrderDetailUIItemFeatures(ListViewOptions pagedViewOptionForBulkSelectCheckBox)
         {
             var result = new UIItemFeatures
             {
-                PrimayCreateViewContainer = CrudViewContainers.None,
-                PrimayDeleteViewContainer = CrudViewContainers.None,
+                PrimayCreateViewContainer = CrudViewContainers.Dialog,
+                PrimayDeleteViewContainer = CrudViewContainers.Dialog,
                 PrimayDetailsViewContainer = CrudViewContainers.Dialog,
-                PrimayEditViewContainer = CrudViewContainers.None,
+                PrimayEditViewContainer = CrudViewContainers.Dialog,
 
+                ShowListBulkSelectCheckbox = pagedViewOptionForBulkSelectCheckBox != ListViewOptions.Card,
                 ShowItemButtons = true,
-                CanGotoDashboard = false,
+                CanGotoDashboard = true,
             };
 
             return result;
@@ -597,18 +637,21 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
 
                     PrimaryPagedViewOption = ListViewOptions.Table,
 
-                    PrimayCreateViewContainer = CrudViewContainers.None,
-                    PrimayDeleteViewContainer = CrudViewContainers.None,
+                    PrimayCreateViewContainer = CrudViewContainers.Dialog,
+                    PrimayDeleteViewContainer = CrudViewContainers.Dialog,
                     PrimayDetailsViewContainer = CrudViewContainers.Dialog,
-                    PrimayEditViewContainer = CrudViewContainers.None,
+                    PrimayEditViewContainer = CrudViewContainers.Dialog,
 
-                    CanGotoDashboard = false,
-                    CanBulkDelete = false,
-                    CanBulkActions = false,
+                    CanGotoDashboard = true,
+                    CanBulkDelete = true,
+                    CanBulkActions = true,
 
                     AvailableListViews = new List<ListViewOptions>
                     {
-                        ListViewOptions.Table
+                        ListViewOptions.Table,
+                        ListViewOptions.Tiles,
+                        ListViewOptions.SlideShow,
+                        ListViewOptions.EditableTable
                     },
                 },
             };
@@ -623,7 +666,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
             var result = new UIItemFeatures
             {
                 PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                PrimayDeleteViewContainer = CrudViewContainers.None,
+                PrimayDeleteViewContainer = CrudViewContainers.Dialog,
                 PrimayDetailsViewContainer = CrudViewContainers.Dialog,
                 PrimayEditViewContainer = CrudViewContainers.Dialog,
 
@@ -650,7 +693,7 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
                     PrimaryPagedViewOption = ListViewOptions.Table,
 
                     PrimayCreateViewContainer = CrudViewContainers.Dialog,
-                    PrimayDeleteViewContainer = CrudViewContainers.None,
+                    PrimayDeleteViewContainer = CrudViewContainers.Dialog,
                     PrimayDetailsViewContainer = CrudViewContainers.Dialog,
                     PrimayEditViewContainer = CrudViewContainers.Dialog,
 
@@ -660,7 +703,10 @@ namespace AdventureWorksLT2019.MvcWebApp.Models
 
                     AvailableListViews = new List<ListViewOptions>
                     {
-                        ListViewOptions.Table
+                        ListViewOptions.Table,
+                        ListViewOptions.Tiles,
+                        ListViewOptions.SlideShow,
+                        ListViewOptions.EditableTable
                     },
                 },
             };

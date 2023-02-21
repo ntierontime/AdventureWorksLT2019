@@ -94,6 +94,11 @@
                     <label asp-for="Model!.ModifiedDate" class="control-label" for="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.ModifiedDate))"></label>
                     <input asp-for="Model!.ModifiedDate" readonly class="form-control " id="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.ModifiedDate))" name="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.ModifiedDate))" data-nt-value="@Model!.Model!.ModifiedDate"/>
                 </div>
+                <div class="form-group">
+                    <label asp-for="Model!.ParentID" class="control-label" for="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.ParentID))"></label>                <div class="form-control" readonly>
+                    <a asp-area="" asp-controller="ProductCategory" asp-action="Dashboard" asp-route-productcategoryid="@Model!.Model!.ParentID">@Model!.Model!.Parent_Name</a>
+                </div>
+                </div>
             </div>
             <div class="card-footer">
                 <div class="btn-group" role="group" aria-label="...">

@@ -42,6 +42,19 @@ public class ProductService : DataServiceBase<ProductAdvancedQuery, ProductIdent
         return response;
     }
 
+    public override async Task<Response> BulkDelete(List<ProductIdentifier> ids)
+    {
+        var response = await _thisApiClient.BulkDelete(ids);
+        return response;
+    }
+
+    public override async Task<Response<MultiItemsCUDRequest<ProductIdentifier, ProductDataModel>>> MultiItemsCUD(
+        MultiItemsCUDRequest<ProductIdentifier, ProductDataModel> input)
+    {
+        var response = await _thisApiClient.MultiItemsCUD(input);
+        return response;
+    }
+
     public override async Task<Response<ProductDataModel>> Update(ProductIdentifier id, ProductDataModel input)
     {
         var response = await _thisApiClient.Update(id, input);
@@ -57,6 +70,12 @@ public class ProductService : DataServiceBase<ProductAdvancedQuery, ProductIdent
     public override async Task<Response<ProductDataModel>> Create(ProductDataModel input)
     {
         var response = await _thisApiClient.Create(input);
+        return response;
+    }
+
+    public override async Task<Response> Delete(ProductIdentifier id)
+    {
+        var response = await _thisApiClient.Delete(id);
         return response;
     }
 

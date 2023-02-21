@@ -19,15 +19,15 @@ export default function ItemPage(props: {viewItemTemplate: ViewItemTemplates}): 
     const [item, setItem] = useState<IAddressDataModel>(null);
 
     useEffect(() => {
-        props
-        // if you want to change page title <html><head><title>...</title></head></html>
         addressApi.Get({addressID})
             .then((res)=>{
                 if(res.status === "OK") {
-                    setItem(res.responseBody)
+                    setItem(res.responseBody);
+
+					// // if you want to change page title <html><head><title>...</title></head></html>
                     // document.title = props.viewItemTemplate === ViewItemTemplates.Edit 
-                    //     ? t("Edit") + res.responseBody.city
-                    //     : res.responseBody.city;
+                    //     ? t("Edit") + res.responseBody.
+                    //     : res.responseBody.;
                 }
             })
             .finally(() => {});

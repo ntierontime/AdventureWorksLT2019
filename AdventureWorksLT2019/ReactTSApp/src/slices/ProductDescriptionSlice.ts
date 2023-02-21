@@ -42,6 +42,23 @@ export const getCompositeModel = createAsyncThunk(
     }
 )
 
+export const bulkDelete = createAsyncThunk(
+    'bulkDeleteProductDescription',
+    async (identifiers: IProductDescriptionIdentifier[], { dispatch }) => {
+        const response = await productDescriptionApi.BulkDelete(identifiers);
+        return { response, identifiers };
+        // return { response: {status: 'OK'}, identifiers }; // for testing
+    }
+)
+
+export const multiItemsCUD = createAsyncThunk(
+    'multiItemsCUDProductDescription',
+    async (params: IMultiItemsCUDRequest<IProductDescriptionIdentifier, IProductDescriptionDataModel>, { dispatch }) => {
+        const response = await productDescriptionApi.MultiItemsCUD(params);
+        return response;
+    }
+)
+
 export const put = createAsyncThunk(
     'putProductDescription',
     async (params: { identifier: IProductDescriptionIdentifier, data: IProductDescriptionDataModel }, { dispatch }) => {
@@ -139,6 +156,54 @@ const ProductDescriptionSlice = createSlice({
         builder.addCase(getCompositeModel.rejected, (state, action) => {
 
             // console.log("getCompositeModel.rejected");
+        });
+
+        builder.addCase(bulkDelete.pending, (state) => {
+
+            // console.log("bulkDelete.pending");
+        });
+        builder.addCase(bulkDelete.fulfilled, (state, { payload }) => {
+            if (!!payload && !!payload.response && payload.response.status === 'OK') {
+                // TODO: how to remove multiple
+                entityAdapter.removeMany(state, payload.identifiers.map(identifier => identifier.productDescriptionID));
+            }
+            // console.log("bulkDelete.fulfilled");
+        });
+        builder.addCase(bulkDelete.rejected, (state, action) => {
+
+            // console.log("bulkDelete.rejected");
+        });
+
+        builder.addCase(multiItemsCUD.pending, (state) => {
+
+            // console.log("multiItemsCUD.pending");
+        });
+        builder.addCase(multiItemsCUD.fulfilled, (state, { payload }) => {
+            if (!!payload && payload.status === 'OK') {
+                if (!!payload.responseBody.updateItems) {
+                    entityAdapter.upsertMany(state, payload.responseBody.updateItems.map(item => { return { ...item, itemUIStatus: ItemUIStatus.Updated }; }));
+                }
+                if (!!payload.responseBody.newItems) {
+                    entityAdapter.upsertMany(state, payload.responseBody.newItems.map(item => { return { ...item, itemUIStatus: ItemUIStatus.New }; }));
+                }
+                if (!!payload.responseBody.mergeItems) {
+                    entityAdapter.upsertMany(state, payload.responseBody.mergeItems.map(item => {
+                        if (state.ids.find(oId => { return oId === item.productDescriptionID }) !== -1) {
+                            return { ...item, itemUIStatus______: ItemUIStatus.Updated }
+                        }
+                        return { ...item, itemUIStatus______: ItemUIStatus.New }
+                    }));
+                }
+                if (!!payload.responseBody.deleteItems) {
+                    // TODO: how to remove many: 
+                    entityAdapter.removeMany(state, payload.responseBody.deleteItems.map(item => { return item.productDescriptionID; }));
+                }
+            }
+            // console.log("multiItemsCUD.fulfilled");
+        });
+        builder.addCase(multiItemsCUD.rejected, (state, action) => {
+
+            // console.log("multiItemsCUD.rejected");
         });
 
         builder.addCase(put.pending, (state) => {

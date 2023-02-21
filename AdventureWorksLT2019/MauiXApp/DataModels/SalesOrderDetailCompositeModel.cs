@@ -6,7 +6,6 @@ public partial class SalesOrderDetailCompositeModel : CompositeModel<SalesOrderD
 {
         // 2. AncestorTable = 2,
         public ProductDataModel Product { get; set; }
-        public ProductCategoryDataModel ProductCategory { get; set; }
         public SalesOrderHeaderDataModel SalesOrderHeader { get; set; }
 
     public enum __DataOptions__
@@ -14,7 +13,6 @@ public partial class SalesOrderDetailCompositeModel : CompositeModel<SalesOrderD
         __Master__,
         // 2. AncestorTable
         Product,
-        ProductCategory,
         SalesOrderHeader,
 
     }

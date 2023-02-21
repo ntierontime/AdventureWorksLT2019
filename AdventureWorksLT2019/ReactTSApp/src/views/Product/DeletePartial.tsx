@@ -312,6 +312,17 @@ export default function DeletePartial(props: ItemPartialViewProps<IProductDataMo
                                 alignItems="center"
                                 spacing={2}
                             >
+                                <Typography>{t("ParentID")}</Typography>
+                                <Link to={"/productCategory/Details/" + item.parentID}>{item.parent_Name}</Link>
+                            </Stack>
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <Stack sx={{ p: 2 }}
+                                direction="row"
+                                justifyContent="space-between"
+                                alignItems="center"
+                                spacing={2}
+                            >
                                 <Typography>{t("ProductCategoryID")}</Typography>
                                 <Link to={"/productCategory/Details/" + item.productCategoryID}>{item.productCategory_Name}</Link>
                             </Stack>

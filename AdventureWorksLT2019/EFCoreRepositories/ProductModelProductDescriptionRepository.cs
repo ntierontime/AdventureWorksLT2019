@@ -107,6 +107,164 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
+        private IQueryable<ProductModelProductDescription> GetIQueryableByPrimaryIdentifierList(
+            List<ProductModelProductDescriptionIdentifier> ids)
+        {
+            var queryable =
+                from t in _dbcontext.ProductModelProductDescription
+
+                select t;
+
+            return queryable;
+        }
+
+        public async Task<Response> BulkDelete(List<ProductModelProductDescriptionIdentifier> ids)
+        {
+            try
+            {
+                var queryable = GetIQueryableByPrimaryIdentifierList(ids);
+                var result = await queryable.BatchDeleteAsync();
+
+                return await Task<Response>.FromResult(
+                    new Response
+                    {
+                        Status = HttpStatusCode.OK,
+                    });
+            }
+            catch (Exception ex)
+            {
+                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
+        public async Task<Response<MultiItemsCUDRequest<ProductModelProductDescriptionIdentifier, ProductModelProductDescriptionDataModel.DefaultView>>> MultiItemsCUD(
+            MultiItemsCUDRequest<ProductModelProductDescriptionIdentifier, ProductModelProductDescriptionDataModel.DefaultView> input)
+        {
+            // 1. DeleteItems, return if Failed
+            if (input.DeleteItems != null)
+            {
+                var responseOfDeleteItems = await this.BulkDelete(input.DeleteItems);
+                if (responseOfDeleteItems != null && responseOfDeleteItems.Status != HttpStatusCode.OK)
+                {
+                    return new Response<MultiItemsCUDRequest<ProductModelProductDescriptionIdentifier, ProductModelProductDescriptionDataModel.DefaultView>> { Status = responseOfDeleteItems.Status, StatusMessage = "Deletion Failed. " + responseOfDeleteItems.StatusMessage };
+                }
+            }
+
+            // 2. return OK, if no more NewItems and UpdateItems
+            if (!(input.NewItems != null && input.NewItems.Count > 0 ||
+                input.UpdateItems != null && input.UpdateItems.Count > 0))
+            {
+                return new Response<MultiItemsCUDRequest<ProductModelProductDescriptionIdentifier, ProductModelProductDescriptionDataModel.DefaultView>> { Status = HttpStatusCode.OK };
+            }
+
+            // 3. NewItems and UpdateItems
+            try
+            {
+                // 3.1.1. NewItems if any
+                List<ProductModelProductDescription> newEFItems = new();
+                if (input.NewItems != null && input.NewItems.Count > 0)
+                {
+                    foreach (var item in input.NewItems)
+                    {
+                        var toInsert = new ProductModelProductDescription
+                        {
+                            ProductModelID = item.ProductModelID,
+                            ProductDescriptionID = item.ProductDescriptionID,
+                            Culture = item.Culture,
+                            ModifiedDate = item.ModifiedDate,
+                        };
+                        _dbcontext.ProductModelProductDescription.Add(toInsert);
+                        newEFItems.Add(toInsert);
+                    }
+                }
+
+                // 3.1.2. UpdateItems if any
+                if (input.UpdateItems != null && input.UpdateItems.Count > 0)
+                {
+                    foreach (var item in input.UpdateItems)
+                    {
+                        var existing =
+                            (from t in _dbcontext.ProductModelProductDescription
+                             where
+
+                             t.ProductModelID == item.ProductModelID
+                             select t).SingleOrDefault();
+
+                        if (existing != null)
+                        {
+                            // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
+                            existing.ProductModelID = item.ProductModelID;
+                            existing.ProductDescriptionID = item.ProductDescriptionID;
+                            existing.Culture = item.Culture;
+                            existing.ModifiedDate = item.ModifiedDate;
+                        }
+                    }
+                }
+                await _dbcontext.SaveChangesAsync();
+
+                // 3.2 Load Response
+                var identifierListToloadResponseItems = new List<int>();
+
+                if (input.NewItems != null && input.NewItems.Count > 0)
+                {
+                    identifierListToloadResponseItems.AddRange(
+                        from t in newEFItems
+                        select t.ProductModelID);
+                }
+                if (input.UpdateItems != null && input.UpdateItems.Count > 0)
+                {
+                    identifierListToloadResponseItems.AddRange(
+                        from t in input.UpdateItems
+                        select t.ProductModelID);
+                }
+
+                var responseBodyWithNewAndUpdatedItems =
+                    (from t in _dbcontext.ProductModelProductDescription
+                    join ProductDescription in _dbcontext.ProductDescription on t.ProductDescriptionID equals ProductDescription.ProductDescriptionID// \ProductDescriptionID
+                    join ProductModel in _dbcontext.ProductModel on t.ProductModelID equals ProductModel.ProductModelID// \ProductModelID
+                    where identifierListToloadResponseItems.Contains(t.ProductModelID)
+
+                    select new ProductModelProductDescriptionDataModel.DefaultView
+                    {
+
+                        ProductModelID = t.ProductModelID,
+                        ProductDescriptionID = t.ProductDescriptionID,
+                        Culture = t.Culture,
+                        rowguid = t.rowguid,
+                        ModifiedDate = t.ModifiedDate,
+                        ProductDescription_Name = ProductDescription.Description,
+                        ProductModel_Name = ProductModel.Name,
+
+                    }).ToList();
+
+                // 3.3. Final Response
+                var response = new Response<MultiItemsCUDRequest<ProductModelProductDescriptionIdentifier, ProductModelProductDescriptionDataModel.DefaultView>>
+                {
+                    Status = HttpStatusCode.OK,
+                    ResponseBody = new MultiItemsCUDRequest<ProductModelProductDescriptionIdentifier, ProductModelProductDescriptionDataModel.DefaultView>
+                    {
+                        NewItems =
+                            input.NewItems != null && input.NewItems.Count > 0
+                                ? responseBodyWithNewAndUpdatedItems.Where(t => newEFItems.Any(t1 => t1.ProductModelID == t.ProductModelID)).ToList()
+                                : null,
+                        UpdateItems =
+                            input.UpdateItems != null && input.UpdateItems.Count > 0
+                                ? responseBodyWithNewAndUpdatedItems.Where(t => input.UpdateItems.Any(t1 => t1.ProductModelID == t.ProductModelID)).ToList()
+                                : null,
+                    }
+                };
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(new Response<MultiItemsCUDRequest<ProductModelProductDescriptionIdentifier, ProductModelProductDescriptionDataModel.DefaultView>>
+                {
+                    Status = HttpStatusCode.InternalServerError,
+                    StatusMessage = "Create And/Or Update Failed. " + ex.Message
+                });
+            }
+        }
+
         public async Task<Response<ProductModelProductDescriptionDataModel.DefaultView>> Update(ProductModelProductDescriptionIdentifier id, ProductModelProductDescriptionDataModel input)
         {
             if (input == null)
@@ -269,6 +427,42 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             catch (Exception ex)
             {
                 return await Task<Response<ProductModelProductDescriptionDataModel.DefaultView>>.FromResult(new Response<ProductModelProductDescriptionDataModel.DefaultView> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
+        public async Task<Response> Delete(ProductModelProductDescriptionIdentifier id)
+        {
+            if (id == null)
+                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.BadRequest });
+
+            try
+            {
+                var existing =
+                    (from t in _dbcontext.ProductModelProductDescription
+                     where
+
+                    t.ProductModelID == id.ProductModelID
+                    &&
+                    t.ProductDescriptionID == id.ProductDescriptionID
+                    &&
+                    t.Culture == id.Culture
+                     select t).SingleOrDefault();
+
+                if (existing == null)
+                    return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.NotFound });
+
+                _dbcontext.ProductModelProductDescription.Remove(existing);
+                await _dbcontext.SaveChangesAsync();
+
+                return await Task<Response>.FromResult(
+                    new Response
+                    {
+                        Status = HttpStatusCode.OK,
+                    });
+            }
+            catch (Exception ex)
+            {
+                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
             }
         }
 

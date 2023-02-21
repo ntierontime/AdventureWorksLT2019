@@ -76,6 +76,9 @@
 <td class="pt-0 pb-0">
     @Html.DisplayFor(m=>m.Model!.ModifiedDate)
 </td>
+<td class="pt-0 pb-0">
+    <a asp-area="" asp-controller="ProductCategory" asp-action="Dashboard" asp-route-productcategoryid="@Model!.Model!.ParentID">@Model!.Model!.Parent_Name</a>
+</td>
 @if (Model!.UIItemFeatures.ShowItemUIStatus)
 {
     <td class="form-group nt-item-status text-center" style="width: 1% !important;">
