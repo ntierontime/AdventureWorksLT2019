@@ -210,6 +210,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
                                 onChange={(event: string) => { setOrderDate(event); setValue('orderDate', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='orderDate'
                             			{...register("orderDate", salesOrderHeaderFormValidationWhenCreate.orderDate)}
@@ -226,6 +227,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
                                 onChange={(event: string) => { setDueDate(event); setValue('dueDate', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='dueDate'
                             			{...register("dueDate", salesOrderHeaderFormValidationWhenCreate.dueDate)}
@@ -242,6 +244,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
                                 onChange={(event: string) => { setShipDate(event); setValue('shipDate', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='shipDate'
                             			{...register("shipDate", salesOrderHeaderFormValidationWhenCreate.shipDate)}
@@ -456,6 +459,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderHea
                                 onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='modifiedDate'
                             			{...register("modifiedDate", salesOrderHeaderFormValidationWhenCreate.modifiedDate)}

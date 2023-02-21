@@ -30,6 +30,7 @@ import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 import { getAvatarStyle } from 'src/shared/views/ThemeRelated';
 
 import { getProductModelProductDescriptionAvatar, IProductModelProductDescriptionDataModel, productModelProductDescriptionFormValidationWhenEdit } from 'src/dataModels/IProductModelProductDescriptionDataModel';
+import { getIProductModelProductDescriptionIdentifier } from 'src/dataModels/IProductModelProductDescriptionQueries';
 import { put } from 'src/slices/ProductModelProductDescriptionSlice';
 
 export default function EditPartial(props: ItemPartialViewProps<IProductModelProductDescriptionDataModel>): JSX.Element {
@@ -82,7 +83,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelPro
 
     const onSubmit = (data: IProductModelProductDescriptionDataModel) => {
         setSaving(true);
-        dispatch(put({ identifier: { productModelID: data.productModelID, productDescriptionID: data.productDescriptionID, culture: data.culture }, data: { ...data } }))
+        dispatch(put({ identifier: getIProductModelProductDescriptionIdentifier(data), data: { ...data } }))
             .then((result) => {
                 if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
                     setSaveMessage(t('SuccessfullySaved'));
@@ -104,15 +105,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelPro
 
     const renderButtonGroup_IconButtons = () => {
         return (
-            <>                {!!handleSelectItemClick && <ButtonGroup
-                    disableElevation
-                    variant="contained"
-                    aria-label="navigation buttons"
-                ><Checkbox
-                    color="primary"
-                    checked={isItemSelected}
-                    onChange={() => { handleSelectItemClick(item) }}
-                /></ButtonGroup>}
+            <>
 				{(!!previousAction || !!nextAction) && <ButtonGroup
                     disableElevation
                     variant="contained"
@@ -308,6 +301,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelPro
                                 onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='modifiedDate'
                             			{...register("modifiedDate", productModelProductDescriptionFormValidationWhenEdit.modifiedDate)}

@@ -35,26 +35,6 @@ public class CustomerAddressService : DataServiceBase<CustomerAddressAdvancedQue
         return response;
     }
 
-    public async Task<CustomerAddressCompositeModel> GetCompositeModel(
-        CustomerAddressIdentifier id)
-    {
-        var response = await _thisApiClient.GetCompositeModel(id);
-        return response;
-    }
-
-    public override async Task<Response> BulkDelete(List<CustomerAddressIdentifier> ids)
-    {
-        var response = await _thisApiClient.BulkDelete(ids);
-        return response;
-    }
-
-    public override async Task<Response<MultiItemsCUDRequest<CustomerAddressIdentifier, CustomerAddressDataModel>>> MultiItemsCUD(
-        MultiItemsCUDRequest<CustomerAddressIdentifier, CustomerAddressDataModel> input)
-    {
-        var response = await _thisApiClient.MultiItemsCUD(input);
-        return response;
-    }
-
     public override async Task<Response<CustomerAddressDataModel>> Update(CustomerAddressIdentifier id, CustomerAddressDataModel input)
     {
         var response = await _thisApiClient.Update(id, input);
@@ -70,12 +50,6 @@ public class CustomerAddressService : DataServiceBase<CustomerAddressAdvancedQue
     public override async Task<Response<CustomerAddressDataModel>> Create(CustomerAddressDataModel input)
     {
         var response = await _thisApiClient.Create(input);
-        return response;
-    }
-
-    public override async Task<Response> Delete(CustomerAddressIdentifier id)
-    {
-        var response = await _thisApiClient.Delete(id);
         return response;
     }
 

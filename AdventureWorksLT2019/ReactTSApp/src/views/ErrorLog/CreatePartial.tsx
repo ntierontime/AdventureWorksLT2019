@@ -159,6 +159,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IErrorLogDataM
                                 onChange={(event: string) => { setErrorTime(event); setValue('errorTime', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='errorTime'
                             			{...register("errorTime", errorLogFormValidationWhenCreate.errorTime)}

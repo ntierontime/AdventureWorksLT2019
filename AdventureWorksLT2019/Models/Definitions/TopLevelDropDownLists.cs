@@ -6,9 +6,14 @@ namespace AdventureWorksLT2019.Models.Definitions
         ErrorLog,
         Address,
         Customer,
+        CustomerAddress,
+        Product,
         ProductCategory,
         ProductDescription,
         ProductModel,
+        ProductModelProductDescription,
+        SalesOrderDetail,
+        SalesOrderHeader,
     }
 }
 

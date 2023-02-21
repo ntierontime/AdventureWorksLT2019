@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
-import { setIsAuthenticated } from 'src/slices/authenticationSlice';
+import { setIsAuthenticated } from 'src/shared/slices/authenticationSlice';
 import AppBar from 'src/shared/views/AppBar';
 import AppDrawer from 'src/views/AppDrawer';
-import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'src/store/CombinedReducers';
 import MasterRoutes from './MasterRoutes';
+import AppFooter from 'src/shared/views/AppFooter';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -19,6 +21,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function MasterLayout() {
+    const { t } = useTranslation();
     const auth = useSelector((state: RootState) => state.auth);
     const dispatch = useDispatch();
 
@@ -43,18 +46,14 @@ export default function MasterLayout() {
 
     return (
         <Box sx={{ display: 'flex' }}>
+            <AppBar open={drawerOpen && auth && auth.isAuthenticated} title={t('AdventureWorksLT2019')} openDrawerHandler={handleDrawerOpen} />
             {(auth && auth.isAuthenticated) &&
-                <>
-                    <AppBar open={drawerOpen} title={'AdventureWorksLT2019'} openDrawerHandler={handleDrawerOpen} />
-                    <AppDrawer open={drawerOpen} closeDrawerHandler={handleDrawerClose} appDrawerItems={[]} />
-                </>
+                <AppDrawer open={drawerOpen} closeDrawerHandler={handleDrawerClose} appDrawerItems={[]} />
             }
-
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                {(auth && auth.isAuthenticated) &&
-                    <DrawerHeader />
-                }
+                <DrawerHeader />
                 <MasterRoutes />
+                <AppFooter />
             </Box>
         </Box>
     );

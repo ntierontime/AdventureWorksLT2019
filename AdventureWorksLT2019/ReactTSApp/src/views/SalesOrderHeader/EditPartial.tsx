@@ -31,6 +31,7 @@ import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 import { getAvatarStyle } from 'src/shared/views/ThemeRelated';
 
 import { getSalesOrderHeaderAvatar, ISalesOrderHeaderDataModel, salesOrderHeaderFormValidationWhenEdit } from 'src/dataModels/ISalesOrderHeaderDataModel';
+import { getISalesOrderHeaderIdentifier } from 'src/dataModels/ISalesOrderHeaderQueries';
 import { put } from 'src/slices/SalesOrderHeaderSlice';
 
 export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeaderDataModel>): JSX.Element {
@@ -94,7 +95,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
 
     const onSubmit = (data: ISalesOrderHeaderDataModel) => {
         setSaving(true);
-        dispatch(put({ identifier: { salesOrderID: data.salesOrderID }, data: { ...data } }))
+        dispatch(put({ identifier: getISalesOrderHeaderIdentifier(data), data: { ...data } }))
             .then((result) => {
                 if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
                     setSaveMessage(t('SuccessfullySaved'));
@@ -116,15 +117,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
 
     const renderButtonGroup_IconButtons = () => {
         return (
-            <>                {!!handleSelectItemClick && <ButtonGroup
-                    disableElevation
-                    variant="contained"
-                    aria-label="navigation buttons"
-                ><Checkbox
-                    color="primary"
-                    checked={isItemSelected}
-                    onChange={() => { handleSelectItemClick(item) }}
-                /></ButtonGroup>}
+            <>
 				{(!!previousAction || !!nextAction) && <ButtonGroup
                     disableElevation
                     variant="contained"
@@ -286,6 +279,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                                 onChange={(event: string) => { setOrderDate(event); setValue('orderDate', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='orderDate'
                             			{...register("orderDate", salesOrderHeaderFormValidationWhenEdit.orderDate)}
@@ -302,6 +296,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                                 onChange={(event: string) => { setDueDate(event); setValue('dueDate', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='dueDate'
                             			{...register("dueDate", salesOrderHeaderFormValidationWhenEdit.dueDate)}
@@ -318,6 +313,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                                 onChange={(event: string) => { setShipDate(event); setValue('shipDate', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='shipDate'
                             			{...register("shipDate", salesOrderHeaderFormValidationWhenEdit.shipDate)}
@@ -571,6 +567,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                                 onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='modifiedDate'
                             			{...register("modifiedDate", salesOrderHeaderFormValidationWhenEdit.modifiedDate)}

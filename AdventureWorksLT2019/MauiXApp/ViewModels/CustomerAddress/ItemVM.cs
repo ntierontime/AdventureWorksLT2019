@@ -68,10 +68,8 @@ public class ItemVM : ItemVMBase<CustomerAddressIdentifier, CustomerAddressDataM
     {
 
         LaunchCustomerFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchCustomerEditPopupCommand();
-        //LaunchCustomerFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchCustomerEditPageCommand(AppShellRoutes.CustomerAddressListPage);
 
         LaunchAddressFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchAddressEditPopupCommand();
-        //LaunchAddressFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchAddressEditPageCommand(AppShellRoutes.CustomerAddressListPage);
 
         WeakReferenceMessenger.Default.Register<ItemVM, CustomerAddressIdentifierMessage>(
            this, async (r, m) =>

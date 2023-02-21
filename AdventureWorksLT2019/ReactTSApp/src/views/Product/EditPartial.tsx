@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 import { DatePicker } from '@mui/x-date-pickers';
 import { INameValuePair } from 'src/shared/dataModels/INameValuePair';
 import { codeListsApi } from 'src/apiClients/CodeListsApi';
-import { defaultIProductCategoryAdvancedQuery } from 'src/dataModels/IProductCategoryQueries';
+import { IProductCategoryAdvancedQuery, defaultIProductCategoryAdvancedQuery } from 'src/dataModels/IProductCategoryQueries';
 import { defaultIProductModelAdvancedQuery } from 'src/dataModels/IProductModelQueries';
 
 
@@ -30,6 +30,7 @@ import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 import { getAvatarStyle } from 'src/shared/views/ThemeRelated';
 
 import { getProductAvatar, IProductDataModel, productFormValidationWhenEdit } from 'src/dataModels/IProductDataModel';
+import { getIProductIdentifier } from 'src/dataModels/IProductQueries';
 import { put } from 'src/slices/ProductSlice';
 
 export default function EditPartial(props: ItemPartialViewProps<IProductDataModel>): JSX.Element {
@@ -53,6 +54,9 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
 
 
 
+    const [productCategory_ParentIDCodeList, setProductCategory_ParentIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.parent_Name, value: item.parentID, selected: false }]);
+
+    const [iProductCategoryAdvancedQuery_ProductCategoryID, setIProductCategoryAdvancedQuery_ProductCategoryID] = useState<IProductCategoryAdvancedQuery>({ ...defaultIProductCategoryAdvancedQuery(), parentProductCategoryID: item.parentID, pageSize: 10000 });
     const [productCategory_ProductCategoryIDCodeList, setProductCategory_ProductCategoryIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productCategory_Name, value: item.productCategoryID, selected: false }]);
 
     const [productModel_ProductModelIDCodeList, setProductModel_ProductModelIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productModel_Name, value: item.productModelID, selected: false }]);
@@ -65,9 +69,11 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
 
         codeListsApi.getProductCategoryCodeList({ ...defaultIProductCategoryAdvancedQuery(), pageSize: 10000 }).then((res) => {
             if (res.status === "OK") {
-                setProductCategory_ProductCategoryIDCodeList(res.responseBody);
+                setProductCategory_ParentIDCodeList(res.responseBody);
             }
         });
+
+        getProductCategory_ProductCategoryIDCodeList(iProductCategoryAdvancedQuery_ProductCategoryID, false, false);
 
         codeListsApi.getProductModelCodeList({ ...defaultIProductModelAdvancedQuery(), pageSize: 10000 }).then((res) => {
             if (res.status === "OK") {
@@ -82,10 +88,53 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
 
 
 
+    const onParentIDChanged = (event: React.PointerEvent<INameValuePair>) => {
+        console.log("ParentID");
+        // name is the property name, value is the selected value
+        const nameValuePair = event.target as unknown as INameValuePair;
+
+        const parentID = nameValuePair.value as number;
+        onParentIDChanged_LoadChildren(parentID);
+    }
+
+    const onParentIDChanged_LoadChildren = (parentID: number) => {
+
+        const iProductCategoryAdvancedQuery_ProductCategoryID_Here = { ...iProductCategoryAdvancedQuery_ProductCategoryID, parentProductCategoryID: parentID };
+        setIProductCategoryAdvancedQuery_ProductCategoryID(iProductCategoryAdvancedQuery_ProductCategoryID_Here);
+        getProductCategory_ProductCategoryIDCodeList(iProductCategoryAdvancedQuery_ProductCategoryID, true, false);
+    }
+
+
+    const getProductCategory_ProductCategoryIDCodeList = (query: IProductCategoryAdvancedQuery, toSetSelectedValue: boolean, setCodeListToEmpty: boolean) => {
+        if (!setCodeListToEmpty) {
+            codeListsApi.getProductCategoryCodeList({ ...query, pageSize: 10000 }).then((res) => {
+                if (res.status === "OK") {
+                    if (toSetSelectedValue) {
+                        if (res.responseBody.findIndex(t => t.value === item.productCategoryID) === -1) {
+                            if (res.responseBody.length > 0) {
+                                setValue('productCategoryID', res.responseBody[0].value);
+                            }
+                            else {
+                                setValue('productCategoryID', -1);
+                            }
+                        }
+                        else {
+                            setValue('productCategoryID', item.productCategoryID);
+                        }
+                    }
+                    setProductCategory_ProductCategoryIDCodeList(res.responseBody);
+                }
+            });
+        }
+        else {
+            setProductCategory_ProductCategoryIDCodeList([]);
+            setValue('productCategoryID', -1);
+        }
+    }
 
     const onSubmit = (data: IProductDataModel) => {
         setSaving(true);
-        dispatch(put({ identifier: { productID: data.productID }, data: { ...data } }))
+        dispatch(put({ identifier: getIProductIdentifier(data), data: { ...data } }))
             .then((result) => {
                 if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
                     setSaveMessage(t('SuccessfullySaved'));
@@ -107,15 +156,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
 
     const renderButtonGroup_IconButtons = () => {
         return (
-            <>                {!!handleSelectItemClick && <ButtonGroup
-                    disableElevation
-                    variant="contained"
-                    aria-label="navigation buttons"
-                ><Checkbox
-                    color="primary"
-                    checked={isItemSelected}
-                    onChange={() => { handleSelectItemClick(item) }}
-                /></ButtonGroup>}
+            <>
 				{(!!previousAction || !!nextAction) && <ButtonGroup
                     disableElevation
                     variant="contained"
@@ -356,6 +397,24 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                         </Grid>
                         <Grid item {...gridColumns}>
                             <TextField
+                                label={t("ParentID")}
+                                id="parentIDSelect"
+                                select
+                                name='parentID'
+                                {...register("parentID", productFormValidationWhenEdit.parentID)}
+                                autoComplete='parentID'
+                                variant="outlined"
+                                fullWidth
+                                defaultValue={item.parentID}
+                            	onChange={(event: any) => { onParentIDChanged(event) }}
+                            >
+                                {productCategory_ParentIDCodeList && productCategory_ParentIDCodeList.map((v, index) => {
+                                    return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
+                                })}
+                            </TextField>
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
                                 label={t("ProductCategoryID")}
                                 id="productCategoryIDSelect"
                                 select
@@ -395,6 +454,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                                 onChange={(event: string) => { setSellStartDate(event); setValue('sellStartDate', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='sellStartDate'
                             			{...register("sellStartDate", productFormValidationWhenEdit.sellStartDate)}
@@ -411,6 +471,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                                 onChange={(event: string) => { setSellEndDate(event); setValue('sellEndDate', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='sellEndDate'
                             			{...register("sellEndDate", productFormValidationWhenEdit.sellEndDate)}
@@ -427,6 +488,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                                 onChange={(event: string) => { setDiscontinuedDate(event); setValue('discontinuedDate', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='discontinuedDate'
                             			{...register("discontinuedDate", productFormValidationWhenEdit.discontinuedDate)}
@@ -484,6 +546,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                                 onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='modifiedDate'
                             			{...register("modifiedDate", productFormValidationWhenEdit.modifiedDate)}

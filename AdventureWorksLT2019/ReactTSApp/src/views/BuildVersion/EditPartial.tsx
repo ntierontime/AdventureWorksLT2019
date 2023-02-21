@@ -27,6 +27,7 @@ import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 import { getAvatarStyle } from 'src/shared/views/ThemeRelated';
 
 import { getBuildVersionAvatar, IBuildVersionDataModel, buildVersionFormValidationWhenEdit } from 'src/dataModels/IBuildVersionDataModel';
+import { getIBuildVersionIdentifier } from 'src/dataModels/IBuildVersionQueries';
 import { put } from 'src/slices/BuildVersionSlice';
 
 export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDataModel>): JSX.Element {
@@ -64,7 +65,7 @@ export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDat
 
     const onSubmit = (data: IBuildVersionDataModel) => {
         setSaving(true);
-        dispatch(put({ identifier: { systemInformationID: data.systemInformationID, versionDate: data.versionDate, modifiedDate: data.modifiedDate }, data: { ...data } }))
+        dispatch(put({ identifier: getIBuildVersionIdentifier(data), data: { ...data } }))
             .then((result) => {
                 if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
                     setSaveMessage(t('SuccessfullySaved'));
@@ -86,15 +87,7 @@ export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDat
 
     const renderButtonGroup_IconButtons = () => {
         return (
-            <>                {!!handleSelectItemClick && <ButtonGroup
-                    disableElevation
-                    variant="contained"
-                    aria-label="navigation buttons"
-                ><Checkbox
-                    color="primary"
-                    checked={isItemSelected}
-                    onChange={() => { handleSelectItemClick(item) }}
-                /></ButtonGroup>}
+            <>
 				{(!!previousAction || !!nextAction) && <ButtonGroup
                     disableElevation
                     variant="contained"
@@ -256,6 +249,7 @@ export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDat
                                 onChange={(event: string) => { setVersionDate(event); setValue('versionDate', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='versionDate'
                             			{...register("versionDate", buildVersionFormValidationWhenEdit.versionDate)}
@@ -272,6 +266,7 @@ export default function EditPartial(props: ItemPartialViewProps<IBuildVersionDat
                                 onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='modifiedDate'
                             			{...register("modifiedDate", buildVersionFormValidationWhenEdit.modifiedDate)}

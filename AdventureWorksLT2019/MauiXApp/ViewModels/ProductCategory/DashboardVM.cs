@@ -68,13 +68,8 @@ public class DashboardVM : ObservableObject
             });
 
         LaunchMaster_ProductCategoryFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryDetailsPopupCommand();
-        //LaunchMaster_ProductCategoryFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryDetailsPageCommand(AppShellRoutes.ProductCategoryListPage);
 
     // 4. ListTable = 4,
-            LaunchList_ProductItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductDetailsPopupCommand();
-            //LaunchList_ProductItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductDetailsPageCommand(AppShellRoutes.ProductCategoryDashboardPage);
-            LaunchList_ProductCategoryItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryDetailsPopupCommand();
-            //LaunchList_ProductCategoryItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryDetailsPageCommand(AppShellRoutes.ProductCategoryDashboardPage);
 
         CloseCommand = AppShellService.ShellGotoAbsoluteCommand;
 

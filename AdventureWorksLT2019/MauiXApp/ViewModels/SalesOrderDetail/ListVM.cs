@@ -272,37 +272,12 @@ public class ListVM : ListVMBase<SalesOrderDetailAdvancedQuery, SalesOrderDetail
         */
         // AdvancedQuery.End DateTimeRanges
 
-        // 1. Init LaunchSalesOrderDetailCreatePageCommand
-        LaunchCreatePageCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderDetailCreatePageCommand(AppShellRoutes.SalesOrderDetailListPage);
-        // 2. Init LaunchSalesOrderDetailDeletePageCommand
-        LaunchDeletePageCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderDetailDeletePageCommand(AppShellRoutes.SalesOrderDetailListPage);
-        // 3. Init LaunchSalesOrderDetailDetailsPageCommand
-        LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderDetailDetailsPageCommand(AppShellRoutes.SalesOrderDetailListPage);
-        // 4. Init LaunchSalesOrderDetailEditPageCommand
-        LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderDetailEditPageCommand(AppShellRoutes.SalesOrderDetailListPage);
-        // 5. Init LaunchSalesOrderDetailDashboardPageCommand
-        LaunchDashboardPageCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderDetailDashboardPageCommand(AppShellRoutes.SalesOrderDetailListPage);
         // 6. Init LaunchSalesOrderDetailCreatePopupCommand
         LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderDetailCreatePopupCommand();
-        // 7. Init LaunchSalesOrderDetailDeletePopupCommand
-        LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderDetailDeletePopupCommand();
         // 8. Init LaunchSalesOrderDetailDetailsPopupCommand
         LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderDetailDetailsPopupCommand();
         // 9. Init LaunchSalesOrderDetailEditPopupCommand
         LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderDetailEditPopupCommand();
-        // 10. Init LaunchSalesOrderDetailAdvancedSearchPopupCommand
-        AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderDetailAdvancedSearchPopupCommand();
-        // 11. Init LaunchSalesOrderDetailListBulkActionsPopupCommand
-        ListBulkActionsLaunchCommand = new Command<string>(
-            (currentBulkActionName) =>
-            {
-                BulkUpdateItem = _dataService.GetDefault();
-                CurrentBulkActionName = currentBulkActionName;
-                var launchCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderDetailListBulkActionsPopupCommand();
-                launchCommand.Execute(null);
-            },
-            (currentBulkActionName) => EnableMultiSelectCommands()
-            );
         // 12. Init LaunchSalesOrderDetailListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderDetailListOrderBysPopupCommand();
 

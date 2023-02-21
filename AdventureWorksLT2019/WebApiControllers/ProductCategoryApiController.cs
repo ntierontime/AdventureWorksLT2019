@@ -64,49 +64,6 @@ namespace AdventureWorksLT2019.WebApiControllers
             return Ok(serviceResponse);
         }
 
-        // [Authorize]
-        [HttpPut]
-        public async Task<ActionResult> BulkDelete([FromBody]List<ProductCategoryIdentifier> ids)
-        {
-            var serviceResponse = await _thisService.BulkDelete(ids);
-            return ReturnWithoutBodyActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [Route("{ProductCategoryID}")]
-        [HttpPut]
-        public async Task<ActionResult<Response<ProductCategoryDataModel.DefaultView>>> Put([FromRoute]ProductCategoryIdentifier id, [FromBody]ProductCategoryDataModel input)
-        {
-            var serviceResponse = await _thisService.Update(id, input);
-            return ReturnActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [Route("{ProductCategoryID}")]
-        [HttpGet]
-        public async Task<ActionResult<Response<ProductCategoryDataModel.DefaultView>>> Get([FromRoute]ProductCategoryIdentifier id)
-        {
-            var serviceResponse = await _thisService.Get(id);
-            return ReturnActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [HttpPost]
-        public async Task<ActionResult<Response<ProductCategoryDataModel.DefaultView>>> Post(ProductCategoryDataModel input)
-        {
-            var serviceResponse = await _thisService.Create(input);
-            return ReturnActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [Route("{ProductCategoryID}")]
-        [HttpDelete]
-        public async Task<ActionResult> Delete([FromRoute]ProductCategoryIdentifier id)
-        {
-            var serviceResponse = await _thisService.Delete(id);
-            return ReturnWithoutBodyActionResult(serviceResponse);
-        }
-
         /*
         // [Authorize]
         [HttpGet, ActionName("HeartBeat")]

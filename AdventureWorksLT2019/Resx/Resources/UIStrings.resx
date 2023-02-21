@@ -118,8 +118,38 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   
+  <data name="_APPLICATION_TITLE_" xml:space="preserve">
+    <value>(en)(en)AdventureWorksLT2019</value>
+  </data>
+  <data name="AboutUs" xml:space="preserve">
+    <value>(en)About Us</value>
+  </data>
+  <data name="AccountNumber" xml:space="preserve">
+    <value>(en)Account Number</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>(en)Address</value>
+  </data>
+  <data name="AddressID" xml:space="preserve">
+    <value>(en)Address ID</value>
+  </data>
+  <data name="AddressID_is_required" xml:space="preserve">
+    <value>(en)AddressID is required</value>
+  </data>
+  <data name="AddressLine1" xml:space="preserve">
+    <value>(en)Address Line 1</value>
+  </data>
+  <data name="AddressLine2" xml:space="preserve">
+    <value>(en)Address Line 2</value>
+  </data>
+  <data name="AddressType" xml:space="preserve">
+    <value>(en)Address Type</value>
+  </data>
   <data name="AdvancedSearch" xml:space="preserve">
     <value>(en)Advanced Search</value>
+  </data>
+  <data name="AppleAppStore" xml:space="preserve">
+    <value>(en)Apple App Store</value>
   </data>
   <data name="Arabic" xml:space="preserve">
     <value>(en)عربي</value>
@@ -133,14 +163,41 @@
   <data name="Back_to_List" xml:space="preserve">
     <value>(en)Back to List</value>
   </data>
+  <data name="BillTo" xml:space="preserve">
+    <value>(en)Address</value>
+  </data>
+  <data name="BillToAddressID" xml:space="preserve">
+    <value>(en)Address</value>
+  </data>
+  <data name="BuildVersion" xml:space="preserve">
+    <value>(en)Build Version</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>(en)Cancel</value>
+  </data>
+  <data name="CatalogDescription" xml:space="preserve">
+    <value>(en)Catalog Description</value>
   </data>
   <data name="ChinesseSimplified" xml:space="preserve">
     <value>(en)汉语</value>
   </data>
+  <data name="City" xml:space="preserve">
+    <value>(en)City</value>
+  </data>
   <data name="Clear" xml:space="preserve">
     <value>(en)Clear</value>
+  </data>
+  <data name="Color" xml:space="preserve">
+    <value>(en)Color</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>(en)Comment</value>
+  </data>
+  <data name="Company" xml:space="preserve">
+    <value>(en)Company</value>
+  </data>
+  <data name="CompanyName" xml:space="preserve">
+    <value>(en)Company Name</value>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>(en)Confirm Password</value>
@@ -154,6 +211,9 @@
   <data name="Contains" xml:space="preserve">
     <value>(en)Contains</value>
   </data>
+  <data name="CountryRegion" xml:space="preserve">
+    <value>(en)Country Region</value>
+  </data>
   <data name="Create" xml:space="preserve">
     <value>(en)Create</value>
   </data>
@@ -163,11 +223,32 @@
   <data name="CreateAnotherOne" xml:space="preserve">
     <value>(en)Create Another One</value>
   </data>
+  <data name="CreditCardApprovalCode" xml:space="preserve">
+    <value>(en)Credit Card Approval Code</value>
+  </data>
+  <data name="Culture_" xml:space="preserve">
+    <value>(en)Culture</value>
+  </data>
+  <data name="Customer" xml:space="preserve">
+    <value>(en)Customer</value>
+  </data>
+  <data name="CustomerAddress" xml:space="preserve">
+    <value>(en)Customer Address</value>
+  </data>
+  <data name="CustomerID" xml:space="preserve">
+    <value>(en)Customer ID</value>
+  </data>
+  <data name="CustomerID_is_required" xml:space="preserve">
+    <value>(en)CustomerID is required</value>
+  </data>
   <data name="Dark" xml:space="preserve">
     <value>(en)Dark</value>
   </data>
   <data name="Dashboard" xml:space="preserve">
     <value>(en)Dashboard</value>
+  </data>
+  <data name="Database_Version" xml:space="preserve">
+    <value>(en)Database _ Version</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>(en)Delete</value>
@@ -181,17 +262,38 @@
   <data name="DeletionFailed" xml:space="preserve">
     <value>(en)Deletion Failed.</value>
   </data>
+  <data name="Description" xml:space="preserve">
+    <value>(en)Description</value>
+  </data>
   <data name="Details" xml:space="preserve">
     <value>(en)Details</value>
   </data>
+  <data name="DiscontinuedDate" xml:space="preserve">
+    <value>(en)Discontinued Date</value>
+  </data>
+  <data name="Discover" xml:space="preserve">
+    <value>(en)Discover</value>
+  </data>
   <data name="Done" xml:space="preserve">
     <value>(en)Done</value>
+  </data>
+  <data name="DownloadApp" xml:space="preserve">
+    <value>(en)Download App</value>
+  </data>
+  <data name="DueDate" xml:space="preserve">
+    <value>(en)Due Date</value>
+  </data>
+  <data name="DueDate_is_required" xml:space="preserve">
+    <value>(en)DueDate is required</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>(en)Edit</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>(en)Email</value>
+  </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>(en)Email Address</value>
   </data>
   <data name="EmailFormatError" xml:space="preserve">
     <value>(en)Email Format Error</value>
@@ -205,6 +307,42 @@
   <data name="English" xml:space="preserve">
     <value>(en)English</value>
   </data>
+  <data name="Error404" xml:space="preserve">
+    <value>(en)Page Not Found</value>
+  </data>
+  <data name="ErrorLine" xml:space="preserve">
+    <value>(en)Error Line</value>
+  </data>
+  <data name="ErrorLog" xml:space="preserve">
+    <value>(en)Error Log</value>
+  </data>
+  <data name="ErrorLogID" xml:space="preserve">
+    <value>(en)Error Log ID</value>
+  </data>
+  <data name="ErrorMessage" xml:space="preserve">
+    <value>(en)Error Message</value>
+  </data>
+  <data name="ErrorNumber" xml:space="preserve">
+    <value>(en)Error Number</value>
+  </data>
+  <data name="ErrorNumber_is_required" xml:space="preserve">
+    <value>(en)ErrorNumber is required</value>
+  </data>
+  <data name="ErrorProcedure" xml:space="preserve">
+    <value>(en)Error Procedure</value>
+  </data>
+  <data name="ErrorSeverity" xml:space="preserve">
+    <value>(en)Error Severity</value>
+  </data>
+  <data name="ErrorState" xml:space="preserve">
+    <value>(en)Error State</value>
+  </data>
+  <data name="ErrorTime" xml:space="preserve">
+    <value>(en)Error Time</value>
+  </data>
+  <data name="ErrorTime_is_required" xml:space="preserve">
+    <value>(en)ErrorTime is required</value>
+  </data>
   <data name="ExportToCsv" xml:space="preserve">
     <value>(en)Export to Csv</value>
   </data>
@@ -217,8 +355,14 @@
   <data name="First" xml:space="preserve">
     <value>(en)First</value>
   </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>(en)First Name</value>
+  </data>
   <data name="FirstTimeUser" xml:space="preserve">
     <value>(en)First Time User</value>
+  </data>
+  <data name="ForgotYourPassword" xml:space="preserve">
+    <value>(en)Forgot Your Password</value>
   </data>
   <data name="Format_All" xml:space="preserve">
     <value>(en)-- All {0} --</value>
@@ -232,8 +376,17 @@
   <data name="Format_SearchTextDescription" xml:space="preserve">
     <value>(en)Search text in {0} field</value>
   </data>
+  <data name="Freight" xml:space="preserve">
+    <value>(en)Freight</value>
+  </data>
+  <data name="Freight_is_required" xml:space="preserve">
+    <value>(en)Freight is required</value>
+  </data>
   <data name="French" xml:space="preserve">
     <value>(en)français</value>
+  </data>
+  <data name="GoogleAppStore" xml:space="preserve">
+    <value>(en)Google App Store</value>
   </data>
   <data name="HideAdvancedSearch" xml:space="preserve">
     <value>(en)Hide Advanced Search</value>
@@ -253,8 +406,20 @@
   <data name="Last" xml:space="preserve">
     <value>(en)Last</value>
   </data>
+  <data name="LastName" xml:space="preserve">
+    <value>(en)Last Name</value>
+  </data>
   <data name="Light" xml:space="preserve">
     <value>(en)Light</value>
+  </data>
+  <data name="LineTotal" xml:space="preserve">
+    <value>(en)Line Total</value>
+  </data>
+  <data name="ListPrice" xml:space="preserve">
+    <value>(en)List Price</value>
+  </data>
+  <data name="ListPrice_is_required" xml:space="preserve">
+    <value>(en)ListPrice is required</value>
   </data>
   <data name="LogIn" xml:space="preserve">
     <value>(en)LogIn</value>
@@ -262,20 +427,65 @@
   <data name="LogOut" xml:space="preserve">
     <value>(en)Log Out</value>
   </data>
+  <data name="MiddleName" xml:space="preserve">
+    <value>(en)Middle Name</value>
+  </data>
+  <data name="ModifiedDate" xml:space="preserve">
+    <value>(en)Modified Date</value>
+  </data>
+  <data name="ModifiedDate_is_required" xml:space="preserve">
+    <value>(en)ModifiedDate is required</value>
+  </data>
   <data name="More" xml:space="preserve">
     <value>(en)More</value>
   </data>
   <data name="MoreDetails" xml:space="preserve">
     <value>(en)More Details</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>(en)Name</value>
+  </data>
+  <data name="NameStyle" xml:space="preserve">
+    <value>(en)Name Style</value>
+  </data>
+  <data name="NameStyle_is_required" xml:space="preserve">
+    <value>(en)NameStyle is required</value>
+  </data>
   <data name="Next" xml:space="preserve">
     <value>(en)Next</value>
+  </data>
+  <data name="OnlineOrderFlag" xml:space="preserve">
+    <value>(en)Online Order Flag</value>
+  </data>
+  <data name="OnlineOrderFlag_is_required" xml:space="preserve">
+    <value>(en)OnlineOrderFlag is required</value>
+  </data>
+  <data name="OrderDate" xml:space="preserve">
+    <value>(en)Order Date</value>
+  </data>
+  <data name="OrderDate_is_required" xml:space="preserve">
+    <value>(en)OrderDate is required</value>
+  </data>
+  <data name="OrderQty" xml:space="preserve">
+    <value>(en)Order Qty</value>
+  </data>
+  <data name="OrderQty_is_required" xml:space="preserve">
+    <value>(en)OrderQty is required</value>
   </data>
   <data name="PageSize" xml:space="preserve">
     <value>(en)Page Size</value>
   </data>
+  <data name="Parent" xml:space="preserve">
+    <value>(en)Product Category</value>
+  </data>
+  <data name="ParentProductCategoryID" xml:space="preserve">
+    <value>(en)Product Category</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>(en)Password</value>
+  </data>
+  <data name="PasswordHash" xml:space="preserve">
+    <value>(en)Password Hash</value>
   </data>
   <data name="PasswordPatternError" xml:space="preserve">
     <value>(en)Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character:</value>
@@ -283,11 +493,20 @@
   <data name="PasswordRequired" xml:space="preserve">
     <value>(en)Password is Required</value>
   </data>
+  <data name="PasswordSalt" xml:space="preserve">
+    <value>(en)Password Salt</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>(en)Phone</value>
+  </data>
   <data name="Please_confirm_you_going_to_set_selected_items_to" xml:space="preserve">
     <value>(en)Please confirm you going to move selected items to {0}</value>
   </data>
   <data name="Please_confirm_you_want_to_delete_selected" xml:space="preserve">
     <value>(en)Please confirm you want to delete selected {0}</value>
+  </data>
+  <data name="PostalCode" xml:space="preserve">
+    <value>(en)Postal Code</value>
   </data>
   <data name="PreDefinedDateTimeRanges_AllTime" xml:space="preserve">
     <value>(en)All</value>
@@ -358,6 +577,57 @@
   <data name="Previous" xml:space="preserve">
     <value>(en)Previous</value>
   </data>
+  <data name="Product" xml:space="preserve">
+    <value>(en)Product</value>
+  </data>
+  <data name="ProductCategory" xml:space="preserve">
+    <value>(en)Product Category</value>
+  </data>
+  <data name="ProductCategory_Parent" xml:space="preserve">
+    <value>(en)Product Category</value>
+  </data>
+  <data name="ProductCategoryID" xml:space="preserve">
+    <value>(en)Product Category</value>
+  </data>
+  <data name="ProductDescription" xml:space="preserve">
+    <value>(en)Product Description</value>
+  </data>
+  <data name="ProductDescriptionID" xml:space="preserve">
+    <value>(en)Product Description ID</value>
+  </data>
+  <data name="ProductDescriptionID_is_required" xml:space="preserve">
+    <value>(en)ProductDescriptionID is required</value>
+  </data>
+  <data name="ProductID" xml:space="preserve">
+    <value>(en)Product ID</value>
+  </data>
+  <data name="ProductID_is_required" xml:space="preserve">
+    <value>(en)ProductID is required</value>
+  </data>
+  <data name="ProductModel" xml:space="preserve">
+    <value>(en)Product Model</value>
+  </data>
+  <data name="ProductModelID" xml:space="preserve">
+    <value>(en)Product Model</value>
+  </data>
+  <data name="ProductModelID_is_required" xml:space="preserve">
+    <value>(en)ProductModelID is required</value>
+  </data>
+  <data name="ProductModelProductDescription" xml:space="preserve">
+    <value>(en)Product Model Product Description</value>
+  </data>
+  <data name="ProductNumber" xml:space="preserve">
+    <value>(en)Product Number</value>
+  </data>
+  <data name="PurchaseOrderNumber" xml:space="preserve">
+    <value>(en)Purchase Order Number</value>
+  </data>
+  <data name="ReadEula" xml:space="preserve">
+    <value>(en)Read Eula</value>
+  </data>
+  <data name="RecursivePath__" xml:space="preserve">
+    <value>(en)Recursive Path __</value>
+  </data>
   <data name="Register" xml:space="preserve">
     <value>(en)Register</value>
   </data>
@@ -367,155 +637,11 @@
   <data name="RememberMe" xml:space="preserve">
     <value>(en)Remember Me</value>
   </data>
-  <data name="Save" xml:space="preserve">
-    <value>(en)Save</value>
+  <data name="RevisionNumber" xml:space="preserve">
+    <value>(en)Revision Number</value>
   </data>
-  <data name="SearchTextDescription" xml:space="preserve">
-    <value>(en)Search text in all text fields</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>(en)Select</value>
-  </data>
-  <data name="Settings" xml:space="preserve">
-    <value>(en)Settings</value>
-  </data>
-  <data name="ShowAdvancedSearch" xml:space="preserve">
-    <value>(en)Show Advanced Search</value>
-  </data>
-  <data name="Sort" xml:space="preserve">
-    <value>(en)Sort</value>
-  </data>
-  <data name="Spanish" xml:space="preserve">
-    <value>(en)Española</value>
-  </data>
-  <data name="StartsWith" xml:space="preserve">
-    <value>(en)Starts With</value>
-  </data>
-  <data name="SuccessfullySaved" xml:space="preserve">
-    <value>(en)Successfully Saved</value>
-  </data>
-  <data name="Tab_AlsoA" xml:space="preserve">
-    <value>(en)Also a ...</value>
-  </data>
-  <data name="Theme" xml:space="preserve">
-    <value>(en)Theme</value>
-  </data>
-  <data name="TileSize" xml:space="preserve">
-    <value>(en)Tile Size</value>
-  </data>
-  <data name="SystemInformationID" xml:space="preserve">
-    <value>(en)System Information ID</value>
-  </data>
-  <data name="Database_Version" xml:space="preserve">
-    <value>(en)Database _ Version</value>
-  </data>
-  <data name="The_length_of_Database_Version_should_be_1_to_25" xml:space="preserve">
-    <value>(en)The length of Database_Version should be 1 to 25</value>
-  </data>
-  <data name="VersionDate" xml:space="preserve">
-    <value>(en)Version Date</value>
-  </data>
-  <data name="VersionDate_is_required" xml:space="preserve">
-    <value>(en)VersionDate is required</value>
-  </data>
-  <data name="ModifiedDate" xml:space="preserve">
-    <value>(en)Modified Date</value>
-  </data>
-  <data name="ModifiedDate_is_required" xml:space="preserve">
-    <value>(en)ModifiedDate is required</value>
-  </data>
-  <data name="Value" xml:space="preserve">
-    <value>(en)Value</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>(en)Name</value>
-  </data>
-  <data name="BuildVersion" xml:space="preserve">
-    <value>(en)Build Version</value>
-  </data>
-  <data name="ErrorLogID" xml:space="preserve">
-    <value>(en)Error Log ID</value>
-  </data>
-  <data name="ErrorTime" xml:space="preserve">
-    <value>(en)Error Time</value>
-  </data>
-  <data name="ErrorTime_is_required" xml:space="preserve">
-    <value>(en)ErrorTime is required</value>
-  </data>
-  <data name="UserName" xml:space="preserve">
-    <value>(en)User Name</value>
-  </data>
-  <data name="The_length_of_UserName_should_be_1_to_128" xml:space="preserve">
-    <value>(en)The length of UserName should be 1 to 128</value>
-  </data>
-  <data name="ErrorNumber" xml:space="preserve">
-    <value>(en)Error Number</value>
-  </data>
-  <data name="ErrorNumber_is_required" xml:space="preserve">
-    <value>(en)ErrorNumber is required</value>
-  </data>
-  <data name="ErrorSeverity" xml:space="preserve">
-    <value>(en)Error Severity</value>
-  </data>
-  <data name="ErrorState" xml:space="preserve">
-    <value>(en)Error State</value>
-  </data>
-  <data name="ErrorProcedure" xml:space="preserve">
-    <value>(en)Error Procedure</value>
-  </data>
-  <data name="The_length_of_ErrorProcedure_should_be_0_to_126" xml:space="preserve">
-    <value>(en)The length of ErrorProcedure should be 0 to 126</value>
-  </data>
-  <data name="ErrorLine" xml:space="preserve">
-    <value>(en)Error Line</value>
-  </data>
-  <data name="ErrorMessage" xml:space="preserve">
-    <value>(en)Error Message</value>
-  </data>
-  <data name="The_length_of_ErrorMessage_should_be_1_to_4000" xml:space="preserve">
-    <value>(en)The length of ErrorMessage should be 1 to 4000</value>
-  </data>
-  <data name="ErrorLog" xml:space="preserve">
-    <value>(en)Error Log</value>
-  </data>
-  <data name="AddressID" xml:space="preserve">
-    <value>(en)Address ID</value>
-  </data>
-  <data name="AddressLine1" xml:space="preserve">
-    <value>(en)Address Line 1</value>
-  </data>
-  <data name="The_length_of_AddressLine1_should_be_1_to_60" xml:space="preserve">
-    <value>(en)The length of AddressLine1 should be 1 to 60</value>
-  </data>
-  <data name="AddressLine2" xml:space="preserve">
-    <value>(en)Address Line 2</value>
-  </data>
-  <data name="The_length_of_AddressLine2_should_be_0_to_60" xml:space="preserve">
-    <value>(en)The length of AddressLine2 should be 0 to 60</value>
-  </data>
-  <data name="City" xml:space="preserve">
-    <value>(en)City</value>
-  </data>
-  <data name="The_length_of_City_should_be_1_to_30" xml:space="preserve">
-    <value>(en)The length of City should be 1 to 30</value>
-  </data>
-  <data name="StateProvince" xml:space="preserve">
-    <value>(en)State Province</value>
-  </data>
-  <data name="The_length_of_StateProvince_should_be_1_to_50" xml:space="preserve">
-    <value>(en)The length of StateProvince should be 1 to 50</value>
-  </data>
-  <data name="CountryRegion" xml:space="preserve">
-    <value>(en)Country Region</value>
-  </data>
-  <data name="The_length_of_CountryRegion_should_be_1_to_50" xml:space="preserve">
-    <value>(en)The length of CountryRegion should be 1 to 50</value>
-  </data>
-  <data name="PostalCode" xml:space="preserve">
-    <value>(en)Postal Code</value>
-  </data>
-  <data name="The_length_of_PostalCode_should_be_1_to_15" xml:space="preserve">
-    <value>(en)The length of PostalCode should be 1 to 15</value>
+  <data name="RevisionNumber_is_required" xml:space="preserve">
+    <value>(en)RevisionNumber is required</value>
   </data>
   <data name="rowguid" xml:space="preserve">
     <value>(en)rowguid</value>
@@ -523,257 +649,14 @@
   <data name="rowguid_is_required" xml:space="preserve">
     <value>(en)rowguid is required</value>
   </data>
-  <data name="Address" xml:space="preserve">
-    <value>(en)Address</value>
+  <data name="SalesOrderDetail" xml:space="preserve">
+    <value>(en)Sales Order Detail</value>
   </data>
-  <data name="Tab_Lists" xml:space="preserve">
-    <value>(en)Lists</value>
+  <data name="SalesOrderDetailID" xml:space="preserve">
+    <value>(en)Sales Order Detail ID</value>
   </data>
-  <data name="Section_CustomerAddresses_Via_AddressID" xml:space="preserve">
-    <value>(en)Customer Addresses  Via  Address ID</value>
-  </data>
-  <data name="Section_SalesOrderHeaders_Via_BillToAddressID" xml:space="preserve">
-    <value>(en)Sales Order Headers  Via  Bill To Address ID</value>
-  </data>
-  <data name="Section_SalesOrderHeaders_Via_ShipToAddressID" xml:space="preserve">
-    <value>(en)Sales Order Headers  Via  Ship To Address ID</value>
-  </data>
-  <data name="CustomerID" xml:space="preserve">
-    <value>(en)Customer ID</value>
-  </data>
-  <data name="NameStyle" xml:space="preserve">
-    <value>(en)Name Style</value>
-  </data>
-  <data name="NameStyle_is_required" xml:space="preserve">
-    <value>(en)NameStyle is required</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>(en)Title</value>
-  </data>
-  <data name="The_length_of_Title_should_be_0_to_8" xml:space="preserve">
-    <value>(en)The length of Title should be 0 to 8</value>
-  </data>
-  <data name="FirstName" xml:space="preserve">
-    <value>(en)First Name</value>
-  </data>
-  <data name="The_length_of_FirstName_should_be_1_to_50" xml:space="preserve">
-    <value>(en)The length of FirstName should be 1 to 50</value>
-  </data>
-  <data name="MiddleName" xml:space="preserve">
-    <value>(en)Middle Name</value>
-  </data>
-  <data name="The_length_of_MiddleName_should_be_0_to_50" xml:space="preserve">
-    <value>(en)The length of MiddleName should be 0 to 50</value>
-  </data>
-  <data name="LastName" xml:space="preserve">
-    <value>(en)Last Name</value>
-  </data>
-  <data name="The_length_of_LastName_should_be_1_to_50" xml:space="preserve">
-    <value>(en)The length of LastName should be 1 to 50</value>
-  </data>
-  <data name="Suffix" xml:space="preserve">
-    <value>(en)Suffix</value>
-  </data>
-  <data name="The_length_of_Suffix_should_be_0_to_10" xml:space="preserve">
-    <value>(en)The length of Suffix should be 0 to 10</value>
-  </data>
-  <data name="CompanyName" xml:space="preserve">
-    <value>(en)Company Name</value>
-  </data>
-  <data name="The_length_of_CompanyName_should_be_0_to_128" xml:space="preserve">
-    <value>(en)The length of CompanyName should be 0 to 128</value>
-  </data>
-  <data name="SalesPerson" xml:space="preserve">
-    <value>(en)Sales Person</value>
-  </data>
-  <data name="The_length_of_SalesPerson_should_be_0_to_256" xml:space="preserve">
-    <value>(en)The length of SalesPerson should be 0 to 256</value>
-  </data>
-  <data name="EmailAddress" xml:space="preserve">
-    <value>(en)Email Address</value>
-  </data>
-  <data name="The_length_of_EmailAddress_should_be_0_to_50" xml:space="preserve">
-    <value>(en)The length of EmailAddress should be 0 to 50</value>
-  </data>
-  <data name="Phone" xml:space="preserve">
-    <value>(en)Phone</value>
-  </data>
-  <data name="The_length_of_Phone_should_be_0_to_25" xml:space="preserve">
-    <value>(en)The length of Phone should be 0 to 25</value>
-  </data>
-  <data name="PasswordHash" xml:space="preserve">
-    <value>(en)Password Hash</value>
-  </data>
-  <data name="The_length_of_PasswordHash_should_be_1_to_128" xml:space="preserve">
-    <value>(en)The length of PasswordHash should be 1 to 128</value>
-  </data>
-  <data name="PasswordSalt" xml:space="preserve">
-    <value>(en)Password Salt</value>
-  </data>
-  <data name="The_length_of_PasswordSalt_should_be_1_to_10" xml:space="preserve">
-    <value>(en)The length of PasswordSalt should be 1 to 10</value>
-  </data>
-  <data name="Customer" xml:space="preserve">
-    <value>(en)Customer</value>
-  </data>
-  <data name="Section_CustomerAddresses_Via_CustomerID" xml:space="preserve">
-    <value>(en)Customer Addresses  Via  Customer ID</value>
-  </data>
-  <data name="Section_SalesOrderHeaders_Via_CustomerID" xml:space="preserve">
-    <value>(en)Sales Order Headers  Via  Customer ID</value>
-  </data>
-  <data name="CustomerID_is_required" xml:space="preserve">
-    <value>(en)CustomerID is required</value>
-  </data>
-  <data name="AddressID_is_required" xml:space="preserve">
-    <value>(en)AddressID is required</value>
-  </data>
-  <data name="AddressType" xml:space="preserve">
-    <value>(en)Address Type</value>
-  </data>
-  <data name="The_length_of_AddressType_should_be_1_to_50" xml:space="preserve">
-    <value>(en)The length of AddressType should be 1 to 50</value>
-  </data>
-  <data name="CustomerAddress" xml:space="preserve">
-    <value>(en)Customer Address</value>
-  </data>
-  <data name="ProductID" xml:space="preserve">
-    <value>(en)Product ID</value>
-  </data>
-  <data name="The_length_of_Name_should_be_1_to_50" xml:space="preserve">
-    <value>(en)The length of Name should be 1 to 50</value>
-  </data>
-  <data name="ProductNumber" xml:space="preserve">
-    <value>(en)Product Number</value>
-  </data>
-  <data name="The_length_of_ProductNumber_should_be_1_to_25" xml:space="preserve">
-    <value>(en)The length of ProductNumber should be 1 to 25</value>
-  </data>
-  <data name="Color" xml:space="preserve">
-    <value>(en)Color</value>
-  </data>
-  <data name="The_length_of_Color_should_be_0_to_15" xml:space="preserve">
-    <value>(en)The length of Color should be 0 to 15</value>
-  </data>
-  <data name="StandardCost" xml:space="preserve">
-    <value>(en)Standard Cost</value>
-  </data>
-  <data name="StandardCost_is_required" xml:space="preserve">
-    <value>(en)StandardCost is required</value>
-  </data>
-  <data name="ListPrice" xml:space="preserve">
-    <value>(en)List Price</value>
-  </data>
-  <data name="ListPrice_is_required" xml:space="preserve">
-    <value>(en)ListPrice is required</value>
-  </data>
-  <data name="Size" xml:space="preserve">
-    <value>(en)Size</value>
-  </data>
-  <data name="The_length_of_Size_should_be_0_to_5" xml:space="preserve">
-    <value>(en)The length of Size should be 0 to 5</value>
-  </data>
-  <data name="Weight" xml:space="preserve">
-    <value>(en)Weight</value>
-  </data>
-  <data name="ProductCategoryID" xml:space="preserve">
-    <value>(en)Product Category</value>
-  </data>
-  <data name="ProductModelID" xml:space="preserve">
-    <value>(en)Product Model</value>
-  </data>
-  <data name="SellStartDate" xml:space="preserve">
-    <value>(en)Sell Start Date</value>
-  </data>
-  <data name="SellStartDate_is_required" xml:space="preserve">
-    <value>(en)SellStartDate is required</value>
-  </data>
-  <data name="SellEndDate" xml:space="preserve">
-    <value>(en)Sell End Date</value>
-  </data>
-  <data name="DiscontinuedDate" xml:space="preserve">
-    <value>(en)Discontinued Date</value>
-  </data>
-  <data name="ThumbNailPhoto" xml:space="preserve">
-    <value>(en)Thumb Nail Photo</value>
-  </data>
-  <data name="ThumbnailPhotoFileName" xml:space="preserve">
-    <value>(en)Thumbnail Photo File Name</value>
-  </data>
-  <data name="The_length_of_ThumbnailPhotoFileName_should_be_0_to_50" xml:space="preserve">
-    <value>(en)The length of ThumbnailPhotoFileName should be 0 to 50</value>
-  </data>
-  <data name="ProductCategory" xml:space="preserve">
-    <value>(en)Product Category</value>
-  </data>
-  <data name="ProductModel" xml:space="preserve">
-    <value>(en)Product Model</value>
-  </data>
-  <data name="Parent" xml:space="preserve">
-    <value>(en)Product Category</value>
-  </data>
-  <data name="Product" xml:space="preserve">
-    <value>(en)Product</value>
-  </data>
-  <data name="Tab_MoreDetails" xml:space="preserve">
-    <value>(en)More Details</value>
-  </data>
-  <data name="Section_ProductCategory" xml:space="preserve">
-    <value>(en)Product Category</value>
-  </data>
-  <data name="Section_SalesOrderDetails_Via_ProductID" xml:space="preserve">
-    <value>(en)Sales Order Details  Via  Product ID</value>
-  </data>
-  <data name="ParentProductCategoryID" xml:space="preserve">
-    <value>(en)Product Category</value>
-  </data>
-  <data name="RecursivePath__" xml:space="preserve">
-    <value>(en)Recursive Path __</value>
-  </data>
-  <data name="Section_Products_Via_ProductCategoryID" xml:space="preserve">
-    <value>(en)Products  Via  Product Category ID</value>
-  </data>
-  <data name="Section_ProductCategories_Via_ParentProductCategoryID" xml:space="preserve">
-    <value>(en)Product Categories  Via  Parent Product Category ID</value>
-  </data>
-  <data name="ProductDescriptionID" xml:space="preserve">
-    <value>(en)Product Description ID</value>
-  </data>
-  <data name="Description" xml:space="preserve">
-    <value>(en)Description</value>
-  </data>
-  <data name="The_length_of_Description_should_be_1_to_400" xml:space="preserve">
-    <value>(en)The length of Description should be 1 to 400</value>
-  </data>
-  <data name="ProductDescription" xml:space="preserve">
-    <value>(en)Product Description</value>
-  </data>
-  <data name="Section_ProductModelProductDescriptions_Via_ProductDescriptionID" xml:space="preserve">
-    <value>(en)Product Model Product Descriptions  Via  Product Description ID</value>
-  </data>
-  <data name="CatalogDescription" xml:space="preserve">
-    <value>(en)Catalog Description</value>
-  </data>
-  <data name="Section_Products_Via_ProductModelID" xml:space="preserve">
-    <value>(en)Products  Via  Product Model ID</value>
-  </data>
-  <data name="Section_ProductModelProductDescriptions_Via_ProductModelID" xml:space="preserve">
-    <value>(en)Product Model Product Descriptions  Via  Product Model ID</value>
-  </data>
-  <data name="ProductModelID_is_required" xml:space="preserve">
-    <value>(en)ProductModelID is required</value>
-  </data>
-  <data name="ProductDescriptionID_is_required" xml:space="preserve">
-    <value>(en)ProductDescriptionID is required</value>
-  </data>
-  <data name="Culture_" xml:space="preserve">
-    <value>(en)Culture</value>
-  </data>
-  <data name="The_length_of_Culture_should_be_1_to_6" xml:space="preserve">
-    <value>(en)The length of Culture should be 1 to 6</value>
-  </data>
-  <data name="ProductModelProductDescription" xml:space="preserve">
-    <value>(en)Product Model Product Description</value>
+  <data name="SalesOrderHeader" xml:space="preserve">
+    <value>(en)Sales Order Header</value>
   </data>
   <data name="SalesOrderID" xml:space="preserve">
     <value>(en)Sales Order Header</value>
@@ -781,17 +664,269 @@
   <data name="SalesOrderID_is_required" xml:space="preserve">
     <value>(en)SalesOrderID is required</value>
   </data>
-  <data name="SalesOrderDetailID" xml:space="preserve">
-    <value>(en)Sales Order Detail ID</value>
+  <data name="SalesOrderNumber" xml:space="preserve">
+    <value>(en)Sales Order Number</value>
   </data>
-  <data name="OrderQty" xml:space="preserve">
-    <value>(en)Order Qty</value>
+  <data name="SalesPerson" xml:space="preserve">
+    <value>(en)Sales Person</value>
   </data>
-  <data name="OrderQty_is_required" xml:space="preserve">
-    <value>(en)OrderQty is required</value>
+  <data name="Save" xml:space="preserve">
+    <value>(en)Save</value>
   </data>
-  <data name="ProductID_is_required" xml:space="preserve">
-    <value>(en)ProductID is required</value>
+  <data name="SearchTextDescription" xml:space="preserve">
+    <value>(en)Search text in all text fields</value>
+  </data>
+  <data name="Section_CustomerAddresses_Via_AddressID" xml:space="preserve">
+    <value>(en)Customer Addresses  Via  Address ID</value>
+  </data>
+  <data name="Section_CustomerAddresses_Via_CustomerID" xml:space="preserve">
+    <value>(en)Customer Addresses  Via  Customer ID</value>
+  </data>
+  <data name="Section_Product" xml:space="preserve">
+    <value>(en)Product</value>
+  </data>
+  <data name="Section_ProductCategories_Via_ParentProductCategoryID" xml:space="preserve">
+    <value>(en)Product Categories  Via  Parent Product Category ID</value>
+  </data>
+  <data name="Section_ProductModelProductDescriptions_Via_ProductDescriptionID" xml:space="preserve">
+    <value>(en)Product Model Product Descriptions  Via  Product Description ID</value>
+  </data>
+  <data name="Section_ProductModelProductDescriptions_Via_ProductModelID" xml:space="preserve">
+    <value>(en)Product Model Product Descriptions  Via  Product Model ID</value>
+  </data>
+  <data name="Section_Products_Via_ProductCategoryID" xml:space="preserve">
+    <value>(en)Products  Via  Product Category ID</value>
+  </data>
+  <data name="Section_Products_Via_ProductModelID" xml:space="preserve">
+    <value>(en)Products  Via  Product Model ID</value>
+  </data>
+  <data name="Section_SalesOrderDetails_Via_ProductID" xml:space="preserve">
+    <value>(en)Sales Order Details  Via  Product ID</value>
+  </data>
+  <data name="Section_SalesOrderDetails_Via_SalesOrderID" xml:space="preserve">
+    <value>(en)Sales Order Details  Via  Sales Order ID</value>
+  </data>
+  <data name="Section_SalesOrderHeader" xml:space="preserve">
+    <value>(en)Sales Order Header</value>
+  </data>
+  <data name="Section_SalesOrderHeaders_Via_BillToAddressID" xml:space="preserve">
+    <value>(en)Sales Order Headers  Via  Bill To Address ID</value>
+  </data>
+  <data name="Section_SalesOrderHeaders_Via_CustomerID" xml:space="preserve">
+    <value>(en)Sales Order Headers  Via  Customer ID</value>
+  </data>
+  <data name="Section_SalesOrderHeaders_Via_ShipToAddressID" xml:space="preserve">
+    <value>(en)Sales Order Headers  Via  Ship To Address ID</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>(en)Select</value>
+  </data>
+  <data name="SellEndDate" xml:space="preserve">
+    <value>(en)Sell End Date</value>
+  </data>
+  <data name="SellStartDate" xml:space="preserve">
+    <value>(en)Sell Start Date</value>
+  </data>
+  <data name="SellStartDate_is_required" xml:space="preserve">
+    <value>(en)SellStartDate is required</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>(en)Settings</value>
+  </data>
+  <data name="ShipDate" xml:space="preserve">
+    <value>(en)Ship Date</value>
+  </data>
+  <data name="ShipMethod" xml:space="preserve">
+    <value>(en)Ship Method</value>
+  </data>
+  <data name="ShipTo" xml:space="preserve">
+    <value>(en)Address</value>
+  </data>
+  <data name="ShipToAddressID" xml:space="preserve">
+    <value>(en)Address</value>
+  </data>
+  <data name="ShowAdvancedSearch" xml:space="preserve">
+    <value>(en)Show Advanced Search</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>(en)Size</value>
+  </data>
+  <data name="Sort" xml:space="preserve">
+    <value>(en)Sort</value>
+  </data>
+  <data name="Spanish" xml:space="preserve">
+    <value>(en)Española</value>
+  </data>
+  <data name="StandardCost" xml:space="preserve">
+    <value>(en)Standard Cost</value>
+  </data>
+  <data name="StandardCost_is_required" xml:space="preserve">
+    <value>(en)StandardCost is required</value>
+  </data>
+  <data name="StartsWith" xml:space="preserve">
+    <value>(en)Starts With</value>
+  </data>
+  <data name="StateProvince" xml:space="preserve">
+    <value>(en)State Province</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>(en)Status</value>
+  </data>
+  <data name="Status_is_required" xml:space="preserve">
+    <value>(en)Status is required</value>
+  </data>
+  <data name="SubTotal" xml:space="preserve">
+    <value>(en)Sub Total</value>
+  </data>
+  <data name="SubTotal_is_required" xml:space="preserve">
+    <value>(en)SubTotal is required</value>
+  </data>
+  <data name="SuccessfullySaved" xml:space="preserve">
+    <value>(en)Successfully Saved</value>
+  </data>
+  <data name="Suffix" xml:space="preserve">
+    <value>(en)Suffix</value>
+  </data>
+  <data name="SystemInformationID" xml:space="preserve">
+    <value>(en)System Information ID</value>
+  </data>
+  <data name="Tab_AlsoA" xml:space="preserve">
+    <value>(en)Also a ...</value>
+  </data>
+  <data name="Tab_Lists" xml:space="preserve">
+    <value>(en)Lists</value>
+  </data>
+  <data name="Tab_MoreDetails" xml:space="preserve">
+    <value>(en)More Details</value>
+  </data>
+  <data name="TaxAmt" xml:space="preserve">
+    <value>(en)Tax Amt</value>
+  </data>
+  <data name="TaxAmt_is_required" xml:space="preserve">
+    <value>(en)TaxAmt is required</value>
+  </data>
+  <data name="The_length_of_AccountNumber_should_be_0_to_15" xml:space="preserve">
+    <value>(en)The length of AccountNumber should be 0 to 15</value>
+  </data>
+  <data name="The_length_of_AddressLine1_should_be_1_to_60" xml:space="preserve">
+    <value>(en)The length of AddressLine1 should be 1 to 60</value>
+  </data>
+  <data name="The_length_of_AddressLine2_should_be_0_to_60" xml:space="preserve">
+    <value>(en)The length of AddressLine2 should be 0 to 60</value>
+  </data>
+  <data name="The_length_of_AddressType_should_be_1_to_50" xml:space="preserve">
+    <value>(en)The length of AddressType should be 1 to 50</value>
+  </data>
+  <data name="The_length_of_City_should_be_1_to_30" xml:space="preserve">
+    <value>(en)The length of City should be 1 to 30</value>
+  </data>
+  <data name="The_length_of_Color_should_be_0_to_15" xml:space="preserve">
+    <value>(en)The length of Color should be 0 to 15</value>
+  </data>
+  <data name="The_length_of_Comment_should_be_0_to_MAX" xml:space="preserve">
+    <value>(en)The length of Comment should be 0 to MAX</value>
+  </data>
+  <data name="The_length_of_CompanyName_should_be_0_to_128" xml:space="preserve">
+    <value>(en)The length of CompanyName should be 0 to 128</value>
+  </data>
+  <data name="The_length_of_CountryRegion_should_be_1_to_50" xml:space="preserve">
+    <value>(en)The length of CountryRegion should be 1 to 50</value>
+  </data>
+  <data name="The_length_of_CreditCardApprovalCode_should_be_0_to_15" xml:space="preserve">
+    <value>(en)The length of CreditCardApprovalCode should be 0 to 15</value>
+  </data>
+  <data name="The_length_of_Culture_should_be_1_to_6" xml:space="preserve">
+    <value>(en)The length of Culture should be 1 to 6</value>
+  </data>
+  <data name="The_length_of_Database_Version_should_be_1_to_25" xml:space="preserve">
+    <value>(en)The length of Database_Version should be 1 to 25</value>
+  </data>
+  <data name="The_length_of_Description_should_be_1_to_400" xml:space="preserve">
+    <value>(en)The length of Description should be 1 to 400</value>
+  </data>
+  <data name="The_length_of_EmailAddress_should_be_0_to_50" xml:space="preserve">
+    <value>(en)The length of EmailAddress should be 0 to 50</value>
+  </data>
+  <data name="The_length_of_ErrorMessage_should_be_1_to_4000" xml:space="preserve">
+    <value>(en)The length of ErrorMessage should be 1 to 4000</value>
+  </data>
+  <data name="The_length_of_ErrorProcedure_should_be_0_to_126" xml:space="preserve">
+    <value>(en)The length of ErrorProcedure should be 0 to 126</value>
+  </data>
+  <data name="The_length_of_FirstName_should_be_1_to_50" xml:space="preserve">
+    <value>(en)The length of FirstName should be 1 to 50</value>
+  </data>
+  <data name="The_length_of_LastName_should_be_1_to_50" xml:space="preserve">
+    <value>(en)The length of LastName should be 1 to 50</value>
+  </data>
+  <data name="The_length_of_MiddleName_should_be_0_to_50" xml:space="preserve">
+    <value>(en)The length of MiddleName should be 0 to 50</value>
+  </data>
+  <data name="The_length_of_Name_should_be_1_to_50" xml:space="preserve">
+    <value>(en)The length of Name should be 1 to 50</value>
+  </data>
+  <data name="The_length_of_PasswordHash_should_be_1_to_128" xml:space="preserve">
+    <value>(en)The length of PasswordHash should be 1 to 128</value>
+  </data>
+  <data name="The_length_of_PasswordSalt_should_be_1_to_10" xml:space="preserve">
+    <value>(en)The length of PasswordSalt should be 1 to 10</value>
+  </data>
+  <data name="The_length_of_Phone_should_be_0_to_25" xml:space="preserve">
+    <value>(en)The length of Phone should be 0 to 25</value>
+  </data>
+  <data name="The_length_of_PostalCode_should_be_1_to_15" xml:space="preserve">
+    <value>(en)The length of PostalCode should be 1 to 15</value>
+  </data>
+  <data name="The_length_of_ProductNumber_should_be_1_to_25" xml:space="preserve">
+    <value>(en)The length of ProductNumber should be 1 to 25</value>
+  </data>
+  <data name="The_length_of_PurchaseOrderNumber_should_be_0_to_25" xml:space="preserve">
+    <value>(en)The length of PurchaseOrderNumber should be 0 to 25</value>
+  </data>
+  <data name="The_length_of_SalesOrderNumber_should_be_0_to_25" xml:space="preserve">
+    <value>(en)The length of SalesOrderNumber should be 0 to 25</value>
+  </data>
+  <data name="The_length_of_SalesPerson_should_be_0_to_256" xml:space="preserve">
+    <value>(en)The length of SalesPerson should be 0 to 256</value>
+  </data>
+  <data name="The_length_of_ShipMethod_should_be_1_to_50" xml:space="preserve">
+    <value>(en)The length of ShipMethod should be 1 to 50</value>
+  </data>
+  <data name="The_length_of_Size_should_be_0_to_5" xml:space="preserve">
+    <value>(en)The length of Size should be 0 to 5</value>
+  </data>
+  <data name="The_length_of_StateProvince_should_be_1_to_50" xml:space="preserve">
+    <value>(en)The length of StateProvince should be 1 to 50</value>
+  </data>
+  <data name="The_length_of_Suffix_should_be_0_to_10" xml:space="preserve">
+    <value>(en)The length of Suffix should be 0 to 10</value>
+  </data>
+  <data name="The_length_of_ThumbnailPhotoFileName_should_be_0_to_50" xml:space="preserve">
+    <value>(en)The length of ThumbnailPhotoFileName should be 0 to 50</value>
+  </data>
+  <data name="The_length_of_Title_should_be_0_to_8" xml:space="preserve">
+    <value>(en)The length of Title should be 0 to 8</value>
+  </data>
+  <data name="The_length_of_UserName_should_be_1_to_128" xml:space="preserve">
+    <value>(en)The length of UserName should be 1 to 128</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>(en)Theme</value>
+  </data>
+  <data name="ThumbNailPhoto" xml:space="preserve">
+    <value>(en)Thumb Nail Photo</value>
+  </data>
+  <data name="ThumbnailPhotoFileName" xml:space="preserve">
+    <value>(en)Thumbnail Photo File Name</value>
+  </data>
+  <data name="TileSize" xml:space="preserve">
+    <value>(en)Tile Size</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>(en)Title</value>
+  </data>
+  <data name="TotalDue" xml:space="preserve">
+    <value>(en)Total Due</value>
   </data>
   <data name="UnitPrice" xml:space="preserve">
     <value>(en)Unit Price</value>
@@ -805,128 +940,23 @@
   <data name="UnitPriceDiscount_is_required" xml:space="preserve">
     <value>(en)UnitPriceDiscount is required</value>
   </data>
-  <data name="LineTotal" xml:space="preserve">
-    <value>(en)Line Total</value>
+  <data name="UserAgreement" xml:space="preserve">
+    <value>(en)Privacy Policy</value>
   </data>
-  <data name="SalesOrderHeader" xml:space="preserve">
-    <value>(en)Sales Order Header</value>
+  <data name="UserName" xml:space="preserve">
+    <value>(en)User Name</value>
   </data>
-  <data name="SalesOrderNumber" xml:space="preserve">
-    <value>(en)Sales Order Number</value>
+  <data name="Value" xml:space="preserve">
+    <value>(en)Value</value>
   </data>
-  <data name="ProductCategory_Parent" xml:space="preserve">
-    <value>(en)Product Category</value>
+  <data name="VersionDate" xml:space="preserve">
+    <value>(en)Version Date</value>
   </data>
-  <data name="BillTo" xml:space="preserve">
-    <value>(en)Address</value>
+  <data name="VersionDate_is_required" xml:space="preserve">
+    <value>(en)VersionDate is required</value>
   </data>
-  <data name="ShipTo" xml:space="preserve">
-    <value>(en)Address</value>
-  </data>
-  <data name="SalesOrderDetail" xml:space="preserve">
-    <value>(en)Sales Order Detail</value>
-  </data>
-  <data name="Section_Product" xml:space="preserve">
-    <value>(en)Product</value>
-  </data>
-  <data name="Section_SalesOrderHeader" xml:space="preserve">
-    <value>(en)Sales Order Header</value>
-  </data>
-  <data name="RevisionNumber" xml:space="preserve">
-    <value>(en)Revision Number</value>
-  </data>
-  <data name="RevisionNumber_is_required" xml:space="preserve">
-    <value>(en)RevisionNumber is required</value>
-  </data>
-  <data name="OrderDate" xml:space="preserve">
-    <value>(en)Order Date</value>
-  </data>
-  <data name="OrderDate_is_required" xml:space="preserve">
-    <value>(en)OrderDate is required</value>
-  </data>
-  <data name="DueDate" xml:space="preserve">
-    <value>(en)Due Date</value>
-  </data>
-  <data name="DueDate_is_required" xml:space="preserve">
-    <value>(en)DueDate is required</value>
-  </data>
-  <data name="ShipDate" xml:space="preserve">
-    <value>(en)Ship Date</value>
-  </data>
-  <data name="Status" xml:space="preserve">
-    <value>(en)Status</value>
-  </data>
-  <data name="Status_is_required" xml:space="preserve">
-    <value>(en)Status is required</value>
-  </data>
-  <data name="OnlineOrderFlag" xml:space="preserve">
-    <value>(en)Online Order Flag</value>
-  </data>
-  <data name="OnlineOrderFlag_is_required" xml:space="preserve">
-    <value>(en)OnlineOrderFlag is required</value>
-  </data>
-  <data name="The_length_of_SalesOrderNumber_should_be_0_to_25" xml:space="preserve">
-    <value>(en)The length of SalesOrderNumber should be 0 to 25</value>
-  </data>
-  <data name="PurchaseOrderNumber" xml:space="preserve">
-    <value>(en)Purchase Order Number</value>
-  </data>
-  <data name="The_length_of_PurchaseOrderNumber_should_be_0_to_25" xml:space="preserve">
-    <value>(en)The length of PurchaseOrderNumber should be 0 to 25</value>
-  </data>
-  <data name="AccountNumber" xml:space="preserve">
-    <value>(en)Account Number</value>
-  </data>
-  <data name="The_length_of_AccountNumber_should_be_0_to_15" xml:space="preserve">
-    <value>(en)The length of AccountNumber should be 0 to 15</value>
-  </data>
-  <data name="ShipToAddressID" xml:space="preserve">
-    <value>(en)Address</value>
-  </data>
-  <data name="BillToAddressID" xml:space="preserve">
-    <value>(en)Address</value>
-  </data>
-  <data name="ShipMethod" xml:space="preserve">
-    <value>(en)Ship Method</value>
-  </data>
-  <data name="The_length_of_ShipMethod_should_be_1_to_50" xml:space="preserve">
-    <value>(en)The length of ShipMethod should be 1 to 50</value>
-  </data>
-  <data name="CreditCardApprovalCode" xml:space="preserve">
-    <value>(en)Credit Card Approval Code</value>
-  </data>
-  <data name="The_length_of_CreditCardApprovalCode_should_be_0_to_15" xml:space="preserve">
-    <value>(en)The length of CreditCardApprovalCode should be 0 to 15</value>
-  </data>
-  <data name="SubTotal" xml:space="preserve">
-    <value>(en)Sub Total</value>
-  </data>
-  <data name="SubTotal_is_required" xml:space="preserve">
-    <value>(en)SubTotal is required</value>
-  </data>
-  <data name="TaxAmt" xml:space="preserve">
-    <value>(en)Tax Amt</value>
-  </data>
-  <data name="TaxAmt_is_required" xml:space="preserve">
-    <value>(en)TaxAmt is required</value>
-  </data>
-  <data name="Freight" xml:space="preserve">
-    <value>(en)Freight</value>
-  </data>
-  <data name="Freight_is_required" xml:space="preserve">
-    <value>(en)Freight is required</value>
-  </data>
-  <data name="TotalDue" xml:space="preserve">
-    <value>(en)Total Due</value>
-  </data>
-  <data name="Comment" xml:space="preserve">
-    <value>(en)Comment</value>
-  </data>
-  <data name="The_length_of_Comment_should_be_0_to_MAX" xml:space="preserve">
-    <value>(en)The length of Comment should be 0 to MAX</value>
-  </data>
-  <data name="Section_SalesOrderDetails_Via_SalesOrderID" xml:space="preserve">
-    <value>(en)Sales Order Details  Via  Sales Order ID</value>
+  <data name="Weight" xml:space="preserve">
+    <value>(en)Weight</value>
   </data>
 
 </root>

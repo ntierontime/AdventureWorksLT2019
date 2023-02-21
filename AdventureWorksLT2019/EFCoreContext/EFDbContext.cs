@@ -67,7 +67,7 @@ namespace AdventureWorksLT2019.EFCoreContext
                     .ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Database_Version)
-                    .HasColumnName("[Database Versio")
+                    .HasColumnName("Database Version")
                     .IsRequired()
                     .HasMaxLength(25);
 

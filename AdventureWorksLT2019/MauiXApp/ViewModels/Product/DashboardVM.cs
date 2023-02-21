@@ -30,13 +30,6 @@ public class DashboardVM : ObservableObject
         set => SetProperty(ref m___Master__, value);
     }
 
-    // 2. AncestorTable = 2,
-    private ProductCategoryDataModel m_ProductCategory;
-    public ProductCategoryDataModel ProductCategory
-    {
-        get => m_ProductCategory;
-        set => SetProperty(ref m_ProductCategory, value);
-    }
     // 4. ListTable = 4,
     private ObservableCollection<SalesOrderDetailDataModel> m_SalesOrderDetails_Via_ProductID = new();
     public ObservableCollection<SalesOrderDetailDataModel> SalesOrderDetails_Via_ProductID
@@ -70,14 +63,10 @@ public class DashboardVM : ObservableObject
             });
 
         LaunchMaster_ProductCategoryFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryDetailsPopupCommand();
-        //LaunchMaster_ProductCategoryFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryDetailsPageCommand(AppShellRoutes.ProductListPage);
 
         LaunchMaster_ProductModelFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductModelDetailsPopupCommand();
-        //LaunchMaster_ProductModelFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductModelDetailsPageCommand(AppShellRoutes.ProductListPage);
 
     // 4. ListTable = 4,
-            LaunchList_SalesOrderDetailItemViewCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderDetailDetailsPopupCommand();
-            //LaunchList_SalesOrderDetailItemViewCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderDetailDetailsPageCommand(AppShellRoutes.ProductDashboardPage);
 
         CloseCommand = AppShellService.ShellGotoAbsoluteCommand;
 
@@ -103,14 +92,6 @@ public class DashboardVM : ObservableObject
         }
 
         __Master__ = response.__Master__;
-
-        // 2. AncestorTable = 2,
-
-        if(response.Responses.ContainsKey(ProductCompositeModel.__DataOptions__.ProductCategory) &&
-            response.Responses[ProductCompositeModel.__DataOptions__.ProductCategory].Status == System.Net.HttpStatusCode.OK)
-        {
-            ProductCategory = response.ProductCategory;
-        }
 
         // 4. ListTable = 4,
 

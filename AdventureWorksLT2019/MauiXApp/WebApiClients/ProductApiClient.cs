@@ -31,23 +31,6 @@ public partial class ProductApiClient : WebApiClientBase
         return response;
     }
 
-    public async Task<Response> BulkDelete(List<ProductIdentifier> ids)
-    {
-        const string actionName = nameof(BulkDelete);
-        string url = GetHttpRequestUrl(actionName);
-        var response = await Put<List<ProductIdentifier>, Response>(url, ids);
-        return response;
-    }
-
-    public async Task<Response<MultiItemsCUDRequest<ProductIdentifier, ProductDataModel>>> MultiItemsCUD(
-        MultiItemsCUDRequest<ProductIdentifier, ProductDataModel> input)
-    {
-        const string actionName = nameof(MultiItemsCUD);
-        string url = GetHttpRequestUrl(actionName);
-        var response = await Post<MultiItemsCUDRequest<ProductIdentifier, ProductDataModel>, Response<MultiItemsCUDRequest<ProductIdentifier, ProductDataModel>>>(url, input);
-        return response;
-    }
-
     public async Task<Response<ProductDataModel>> Update(ProductIdentifier id, ProductDataModel input)
     {
         const string actionName = nameof(Update);
@@ -69,14 +52,6 @@ public partial class ProductApiClient : WebApiClientBase
         const string actionName = nameof(Create);
         string url = GetHttpRequestUrl(actionName);
         var response = await Post<ProductDataModel, Response<ProductDataModel>>(url, input);
-        return response;
-    }
-
-    public async Task<Response> Delete(ProductIdentifier id)
-    {
-        const string actionName = nameof(Get);
-        string url = GetHttpRequestUrl(actionName, id.GetWebApiRoute());
-        var response = await Delete<Response>(url);
         return response;
     }
 }

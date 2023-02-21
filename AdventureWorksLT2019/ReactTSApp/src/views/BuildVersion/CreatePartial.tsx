@@ -174,6 +174,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IBuildVersionD
                                 onChange={(event: string) => { setVersionDate(event); setValue('versionDate', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='versionDate'
                             			{...register("versionDate", buildVersionFormValidationWhenCreate.versionDate)}
@@ -190,6 +191,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IBuildVersionD
                                 onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='modifiedDate'
                             			{...register("modifiedDate", buildVersionFormValidationWhenCreate.modifiedDate)}

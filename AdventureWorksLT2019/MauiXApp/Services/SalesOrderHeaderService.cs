@@ -42,22 +42,9 @@ public class SalesOrderHeaderService : DataServiceBase<SalesOrderHeaderAdvancedQ
         return response;
     }
 
-    public override async Task<Response> BulkDelete(List<SalesOrderHeaderIdentifier> ids)
-    {
-        var response = await _thisApiClient.BulkDelete(ids);
-        return response;
-    }
-
     public override async Task<ListResponse<SalesOrderHeaderDataModel[]>> BulkUpdate(BatchActionRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel> data)
     {
         var response = await _thisApiClient.BulkUpdate(data);
-        return response;
-    }
-
-    public override async Task<Response<MultiItemsCUDRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel>>> MultiItemsCUD(
-        MultiItemsCUDRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel> input)
-    {
-        var response = await _thisApiClient.MultiItemsCUD(input);
         return response;
     }
 
@@ -76,12 +63,6 @@ public class SalesOrderHeaderService : DataServiceBase<SalesOrderHeaderAdvancedQ
     public override async Task<Response<SalesOrderHeaderDataModel>> Create(SalesOrderHeaderDataModel input)
     {
         var response = await _thisApiClient.Create(input);
-        return response;
-    }
-
-    public override async Task<Response> Delete(SalesOrderHeaderIdentifier id)
-    {
-        var response = await _thisApiClient.Delete(id);
         return response;
     }
 

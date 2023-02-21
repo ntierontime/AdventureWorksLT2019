@@ -48,17 +48,17 @@ export default function DashboardPage(): JSX.Element {
 
 
     const listItems_Products_Via_ProductCategoryID = useSelector(
-        (state: RootState) => productSelectors.selectAll(state).filter(t => t.productCategoryID === productCategoryID)
+        (state: RootState) => productSelectors.selectAll(state).filter(t => t.productCategoryID === compositeModel?.__Master__?.productCategoryID)
     );
 
-    const defaultIProductAdvancedQuery_Products_Via_ProductCategoryID = { ...defaultIProductAdvancedQuery(), productCategoryID: productCategoryID };
+    const defaultIProductAdvancedQuery_Products_Via_ProductCategoryID = { ...defaultIProductAdvancedQuery(), productCategoryID: compositeModel?.__Master__?.productCategoryID };
     const [advancedQuery_Products_Via_ProductCategoryID, setAdvancedQuery_Products_Via_ProductCategoryID] = useState<IProductAdvancedQuery>(defaultIProductAdvancedQuery_Products_Via_ProductCategoryID);
 
     const listItems_ProductCategories_Via_ParentProductCategoryID = useSelector(
-        (state: RootState) => productCategorySelectors.selectAll(state).filter(t => t.parentProductCategoryID === productCategoryID)
+        (state: RootState) => productCategorySelectors.selectAll(state).filter(t => t.parentProductCategoryID === compositeModel?.__Master__?.productCategoryID)
     );
 
-    const defaultIProductCategoryAdvancedQuery_ProductCategories_Via_ParentProductCategoryID = { ...defaultIProductCategoryAdvancedQuery(), parentProductCategoryID: productCategoryID };
+    const defaultIProductCategoryAdvancedQuery_ProductCategories_Via_ParentProductCategoryID = { ...defaultIProductCategoryAdvancedQuery(), parentProductCategoryID: compositeModel?.__Master__?.productCategoryID };
     const [advancedQuery_ProductCategories_Via_ParentProductCategoryID, setAdvancedQuery_ProductCategories_Via_ParentProductCategoryID] = useState<IProductCategoryAdvancedQuery>(defaultIProductCategoryAdvancedQuery_ProductCategories_Via_ParentProductCategoryID);
 
     useEffect(() => {
@@ -67,6 +67,9 @@ export default function DashboardPage(): JSX.Element {
             .then((res) => {
                 //console.log(res);
                 setCompositeModel(res);
+                // // if you want to change page title <html><head><title>...</title></head></html>
+                // document.title = res.__Master__.
+
 
                 const Products_Via_ProductCategoryIDListResponseA = res.responses[IProductCategoryCompositeModel_DataOptions__.Products_Via_ProductCategoryID];
                 console.log(Products_Via_ProductCategoryIDListResponseA);
@@ -116,10 +119,10 @@ export default function DashboardPage(): JSX.Element {
         addNewButtonContainer: ContainerOptions.ListToolBar,
         listToolBarSetting: {
             textSearchPlaceHolder: t("Product"),
-            hasListViewOptionsSelect: true,
-            availableListViewOptions: [ListViewOptions.SlideShow, ListViewOptions.Table, ListViewOptions.Tiles],
-            hasItemsSelect: true,
-            hasBulkDelete: true,
+            hasListViewOptionsSelect: false,
+            availableListViewOptions: [ListViewOptions.Table],
+            hasItemsSelect: false,
+            hasBulkDelete: false,
             hasBulkUpdate: false,
             hasItemsPerRowSelect: true, // When "Tiles"
             hasPageSizeSelect: true,    // When "Table"
@@ -140,10 +143,10 @@ export default function DashboardPage(): JSX.Element {
         addNewButtonContainer: ContainerOptions.ListToolBar,
         listToolBarSetting: {
             textSearchPlaceHolder: t("ProductCategory"),
-            hasListViewOptionsSelect: true,
-            availableListViewOptions: [ListViewOptions.SlideShow, ListViewOptions.Table, ListViewOptions.Tiles],
-            hasItemsSelect: true,
-            hasBulkDelete: true,
+            hasListViewOptionsSelect: false,
+            availableListViewOptions: [ListViewOptions.Table],
+            hasItemsSelect: false,
+            hasBulkDelete: false,
             hasBulkUpdate: false,
             hasItemsPerRowSelect: true, // When "Tiles"
             hasPageSizeSelect: true,    // When "Table"

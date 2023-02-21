@@ -4,8 +4,6 @@ import { Checkbox, FormControlLabel, IconButton, Pagination, Popover, Stack, Swi
 
 import { Link } from 'react-router-dom';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
-import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
-import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
@@ -121,6 +119,12 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDat
             label: t('Weight'),
         },
         {
+            id: 'parentID',
+            numeric: true,
+            disablePadding: true,
+            label: t('ParentID'),
+        },
+        {
             id: 'productCategoryID',
             numeric: true,
             disablePadding: true,
@@ -212,7 +216,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDat
                                         key={key}
                                         selected={isItemSelected}
                                     >
-                                        {!!handleSelectItemClick && <TableCell padding="checkbox">
+                                        {hasItemsSelect && !!handleSelectItemClick && <TableCell padding="checkbox">
                                             <Checkbox
                                                 color="primary"
                                                 checked={isItemSelected}
@@ -237,6 +241,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDat
                                         <TableCell align='right'>{t(i18nFormats.double.format, { val: row.listPrice })}</TableCell>
                                         <TableCell align='right'>{row.size}</TableCell>
                                         <TableCell align='right'>{t(i18nFormats.double.format, { val: row.weight })}</TableCell>
+                                        <TableCell align='right'><Link to={"/productCategory/Details/" + row.parentID}>{row.parent_Name}</Link></TableCell>
                                         <TableCell align='right'><Link to={"/productCategory/Details/" + row.productCategoryID}>{row.productCategory_Name}</Link></TableCell>
                                         <TableCell align='right'><Link to={"/productModel/Details/" + row.productModelID}>{row.productModel_Name}</Link></TableCell>
                                         <TableCell align='right'>{t(i18nFormats.dateTime.format, { val: new Date(row.sellStartDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}</TableCell>
@@ -280,22 +285,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDat
                 }}
                 disableRestoreFocus
             >
-                <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, null) }}>
-                    <DeleteIcon />
-                </IconButton>
-                <IconButton aria-label="details" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Details, null) }}>
-                    <BusinessCenterIcon />
-                </IconButton>
                 <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit, null) }}>
-                    <EditIcon />
-                </IconButton>
-                <IconButton aria-label="delete" color="primary" onClick={() => { navigate("/product/delete/" + getRouteParamsOfIProductIdentifier(currentItemOnDialog)) }}>
-                    <DeleteIcon />
-                </IconButton>
-                <IconButton aria-label="details" color="primary" onClick={() => { navigate("/product/details/" + getRouteParamsOfIProductIdentifier(currentItemOnDialog)) }}>
-                    <BusinessCenterIcon />
-                </IconButton>
-                <IconButton aria-label="edit" color="primary" onClick={() => { navigate("/product/edit/" + getRouteParamsOfIProductIdentifier(currentItemOnDialog)) }}>
                     <EditIcon />
                 </IconButton>
                 <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/product/dashboard/" + getRouteParamsOfIProductIdentifier(currentItemOnDialog)) }}>

@@ -16,10 +16,7 @@
     data-nt-loaditem-url="@Url.Action("AjaxLoadItem", "SalesOrderHeader")"
     data-nt-createitem-url="@Url.Action("AjaxCreate", "SalesOrderHeader")"
     data-nt-updateitem-url="@Url.Action("AjaxEdit", "SalesOrderHeader")"
-    data-nt-deleteitem-url="@Url.Action("AjaxDelete", "SalesOrderHeader")"
-    data-nt-bulk-delete-url="@Url.Action("AjaxBulkDelete", "SalesOrderHeader")"
-    data-nt-bulk-update-url="@Url.Action("AjaxBulkUpdate", "SalesOrderHeader")"
-    data-nt-multiitems-submit-url="@Url.Action("AjaxMultiItemsCUDSubmit", "SalesOrderHeader")">
+    data-nt-bulk-update-url="@Url.Action("AjaxBulkUpdate", "SalesOrderHeader")">
     <div class="card-header">
         @if (Model!.UIListSetting == null || Model!.UIListSetting.UIListFeatures.HasPageSizeList || Model!.UIListSetting.UIListFeatures.HasOrderByList)
         {
@@ -56,24 +53,6 @@
                 </ul>
             </div>
         }
-        <div class="btn-group float-end mt-1" role="group" aria-label="View Options">
-            <input type="radio" class="btn-check nt-radio-pagedviewoption" name="btnradio" id="btnradio-Table" autocomplete="off"
-                data-bs-toggle="modal" data-bs-target="#fullScreenLoading"
-                data-nt-value="Table" data-nt-paginationoptionupdatevalue="PageIndexesAndAllButtons" @(Model!.UIListSetting!.UIParams.PagedViewOption==ListViewOptions.Table ? "checked": "")>
-            <label class="btn btn-outline-primary" for="btnradio-Table" title="Table" aria-label="Table"><i class="fa-solid fa-table-list"></i></label>
-            <input type="radio" class="btn-check nt-radio-pagedviewoption" name="btnradio" id="btnradio-Tiles" autocomplete="off"
-                data-bs-toggle="modal" data-bs-target="#fullScreenLoading"
-                data-nt-value="Tiles" data-nt-paginationoptionupdatevalue="LoadMore" @(Model!.UIListSetting.UIParams.PagedViewOption==ListViewOptions.Tiles ? "checked": "")>
-            <label class="btn btn-outline-primary" for="btnradio-Tiles" title="Tiles" aria-label="Tiles"><i class="fa-solid fa-grip"></i></label>
-            <input type="radio" class="btn-check nt-radio-pagedviewoption" name="btnradio" id="btnradio-SlideShow" autocomplete="off"
-                data-bs-toggle="modal" data-bs-target="#fullScreenLoading"
-                data-nt-value="SlideShow" data-nt-paginationoptionupdatevalue="NoPagination" @(Model!.UIListSetting.UIParams.PagedViewOption==ListViewOptions.SlideShow ? "checked": "")>
-            <label class="btn btn-outline-primary" for="btnradio-SlideShow" title="SlideShow" aria-label="SlideShow"><i class="fa-solid fa-circle-play"></i></label>
-            <input type="radio" class="btn-check nt-radio-pagedviewoption" name="btnradio" id="btnradio-EditableTable" autocomplete="off"
-                data-bs-toggle="modal" data-bs-target="#fullScreenLoading"
-                data-nt-value="EditableTable" data-nt-paginationoptionupdatevalue="PageIndexesAndAllButtons" @(Model!.UIListSetting!.UIParams.PagedViewOption == ListViewOptions.EditableTable ? "checked": "")>
-            <label class="btn btn-outline-primary" for="btnradio-EditableTable" title="EditableTable" aria-label="EditableTable"><i class="fa-solid fa-pen-ruler"></i></label>
-        </div>
         @if (Model!.UIListSetting == null || Model!.UIListSetting.ShowListBulkActionRelated(true))
         {
             <div class="btn-group m-0 p-0 float-start nt-bulk-select-filter">
@@ -110,23 +89,6 @@
         @if (Model!.UIListSetting == null || Model!.UIListSetting.ShowListBulkActionRelated(false))
         {
             <div class="btn-group float-start ps-4 nt-bulk-actions-container" style="display:none">
-                <button type="button" class="btn btn-default nt-bulk-delete" data-bs-toggle="modal" data-bs-target="#simpleActionConfirmationDialog"
-                    data-nt-confirmation-message="@string.Format(localizor.Get("Please_confirm_you_want_to_delete_selected"), localizor.Get("SalesOrderHeader"))" title="@localizor.Get("Delete")">
-                    <i class="fa fa-trash"></i>
-                </button>
-            </div>
-        }
-        @if (Model!.UIListSetting == null || Model!.UIListSetting.HasEditableList())
-        {
-            <div class="btn-group float-start ps-0 nt-multiitem-editing-buttons" style="display:none;">
-                <button disabled type="button" class="btn btn-default btn-nt-multiitems-editing-submit" data-bs-toggle="modal" data-bs-target="#simpleActionConfirmationDialog"
-                    data-nt-confirmation-message="@string.Format(localizor.Get("Please_confirm_you_want_to_update_these_Data"), localizor.Get("SalesOrderHeader"))" title="@localizor.Get("Save")">
-                    <i class="fa-solid fa-floppy-disk"></i><span class="submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Save")</span>
-                </button>
-                <button type="button" class="btn btn-default btn-nt-multiitems-editing-cancel" data-bs-toggle="modal" data-bs-target="#simpleActionConfirmationDialog"
-                    data-nt-confirmation-message="@string.Format(localizor.Get("Please_confirm_you_want_to_update_these_Data"), localizor.Get("SalesOrderHeader"))" title="@localizor.Get("Save")">
-                    <i class="fa-solid fa-circle-xmark"></i><span class="submit-text hidden-xs hidden-sm visible-md-inline visible-lg-inline ms-1">@localizor.Get("Cancel")</span>
-                </button>
             </div>
         }
     </div>
@@ -150,12 +112,6 @@
         <div class="float-start ms-5 ps-5 border-2 nt-singlton-message-popup bg-info" style="display:none">
         </div>
         <div class="btn-group float-end m-4">
-            @if (Model!.UIListSetting == null || Model!.UIListSetting.CanGotoCreate(@CrudViewContainers.StandaloneView))
-            {
-                <a asp-area="" asp-controller="SalesOrderHeader" asp-action="Create" class="btn btn-secondary" role="button" title="@localizor.Get("Create")">
-                    <i class="fa fa-plus"></i>
-                </a>
-            }
             @if (Model!.UIListSetting == null || Model!.UIListSetting.CanGotoCreate(@CrudViewContainers.Dialog))
             {
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crudActionDialog" title="@localizor.Get("Create_New")"

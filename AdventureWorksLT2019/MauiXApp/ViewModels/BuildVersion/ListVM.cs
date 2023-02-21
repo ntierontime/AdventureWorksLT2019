@@ -92,37 +92,8 @@ public class ListVM : ListVMBase<BuildVersionAdvancedQuery, BuildVersionIdentifi
         */
         // AdvancedQuery.End DateTimeRanges
 
-        // 1. Init LaunchBuildVersionCreatePageCommand
-        LaunchCreatePageCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionCreatePageCommand(AppShellRoutes.BuildVersionListPage);
-        // 2. Init LaunchBuildVersionDeletePageCommand
-        LaunchDeletePageCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionDeletePageCommand(AppShellRoutes.BuildVersionListPage);
-        // 3. Init LaunchBuildVersionDetailsPageCommand
-        LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionDetailsPageCommand(AppShellRoutes.BuildVersionListPage);
-        // 4. Init LaunchBuildVersionEditPageCommand
-        LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionEditPageCommand(AppShellRoutes.BuildVersionListPage);
-        // 5. Init LaunchBuildVersionDashboardPageCommand
-        LaunchDashboardPageCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionDashboardPageCommand(AppShellRoutes.BuildVersionListPage);
-        // 6. Init LaunchBuildVersionCreatePopupCommand
-        LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionCreatePopupCommand();
-        // 7. Init LaunchBuildVersionDeletePopupCommand
-        LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionDeletePopupCommand();
         // 8. Init LaunchBuildVersionDetailsPopupCommand
         LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionDetailsPopupCommand();
-        // 9. Init LaunchBuildVersionEditPopupCommand
-        LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionEditPopupCommand();
-        // 10. Init LaunchBuildVersionAdvancedSearchPopupCommand
-        AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionAdvancedSearchPopupCommand();
-        // 11. Init LaunchBuildVersionListBulkActionsPopupCommand
-        ListBulkActionsLaunchCommand = new Command<string>(
-            (currentBulkActionName) =>
-            {
-                BulkUpdateItem = _dataService.GetDefault();
-                CurrentBulkActionName = currentBulkActionName;
-                var launchCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionListBulkActionsPopupCommand();
-                launchCommand.Execute(null);
-            },
-            (currentBulkActionName) => EnableMultiSelectCommands()
-            );
         // 12. Init LaunchBuildVersionListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchBuildVersionListOrderBysPopupCommand();
 
