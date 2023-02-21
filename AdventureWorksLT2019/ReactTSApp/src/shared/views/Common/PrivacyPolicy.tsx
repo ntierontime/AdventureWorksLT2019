@@ -6,7 +6,7 @@ export default function PrivacyPolicy() {
             
     // // if you want to change page title <html><head><title>...</title></head></html>
     // useEffect(() => {
-    //     document.title = t("_APPLICATION_TITLE") + " " + t("PrivacyPolicy");
+    //     document.title = t("_APPLICATION_TITLE_") + " " + t("PrivacyPolicy");
     // }, []);
 
     return (

@@ -73,7 +73,7 @@ export default function RegisterPage(): JSX.Element {
 
     // // if you want to change page title <html><head><title>...</title></head></html>
     // useEffect(() => {
-    //     document.title = t("_APPLICATION_TITLE") + " " + t("RegisterANewUser");
+    //     document.title = t("_APPLICATION_TITLE_") + " " + t("RegisterANewUser");
     // }, []);
 
     useEffect(() => {

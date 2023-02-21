@@ -8,7 +8,7 @@ export default function NotFoundPage() {
 
     // // if you want to change page title <html><head><title>...</title></head></html>
     // useEffect(() => {
-    //     document.title = t("_APPLICATION_TITLE") + " " + t("Error404");
+    //     document.title = t("_APPLICATION_TITLE_") + " " + t("Error404");
     // }, []);
 
     return (
