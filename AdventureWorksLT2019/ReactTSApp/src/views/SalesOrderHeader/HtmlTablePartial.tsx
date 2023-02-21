@@ -4,6 +4,8 @@ import { Checkbox, FormControlLabel, IconButton, Pagination, Popover, Stack, Swi
 
 import { Link } from 'react-router-dom';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
@@ -313,7 +315,22 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ISalesOrder
                 }}
                 disableRestoreFocus
             >
+                <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, null) }}>
+                    <DeleteIcon />
+                </IconButton>
+                <IconButton aria-label="details" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Details, null) }}>
+                    <BusinessCenterIcon />
+                </IconButton>
                 <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit, null) }}>
+                    <EditIcon />
+                </IconButton>
+                <IconButton aria-label="delete" color="primary" onClick={() => { navigate("/salesOrderHeader/delete/" + getRouteParamsOfISalesOrderHeaderIdentifier(currentItemOnDialog)) }}>
+                    <DeleteIcon />
+                </IconButton>
+                <IconButton aria-label="details" color="primary" onClick={() => { navigate("/salesOrderHeader/details/" + getRouteParamsOfISalesOrderHeaderIdentifier(currentItemOnDialog)) }}>
+                    <BusinessCenterIcon />
+                </IconButton>
+                <IconButton aria-label="edit" color="primary" onClick={() => { navigate("/salesOrderHeader/edit/" + getRouteParamsOfISalesOrderHeaderIdentifier(currentItemOnDialog)) }}>
                     <EditIcon />
                 </IconButton>
                 <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/salesOrderHeader/dashboard/" + getRouteParamsOfISalesOrderHeaderIdentifier(currentItemOnDialog)) }}>

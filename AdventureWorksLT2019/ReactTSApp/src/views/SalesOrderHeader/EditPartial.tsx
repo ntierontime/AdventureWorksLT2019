@@ -117,7 +117,15 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
 
     const renderButtonGroup_IconButtons = () => {
         return (
-            <>
+            <>                {!!handleSelectItemClick && <ButtonGroup
+                    disableElevation
+                    variant="contained"
+                    aria-label="navigation buttons"
+                ><Checkbox
+                    color="primary"
+                    checked={isItemSelected}
+                    onChange={() => { handleSelectItemClick(item) }}
+                /></ButtonGroup>}
 				{(!!previousAction || !!nextAction) && <ButtonGroup
                     disableElevation
                     variant="contained"

@@ -119,10 +119,10 @@ export default function DashboardPage(): JSX.Element {
         addNewButtonContainer: ContainerOptions.ListToolBar,
         listToolBarSetting: {
             textSearchPlaceHolder: t("Product"),
-            hasListViewOptionsSelect: false,
-            availableListViewOptions: [ListViewOptions.Table],
-            hasItemsSelect: false,
-            hasBulkDelete: false,
+            hasListViewOptionsSelect: true,
+            availableListViewOptions: [ListViewOptions.SlideShow, ListViewOptions.Table, ListViewOptions.Tiles],
+            hasItemsSelect: true,
+            hasBulkDelete: true,
             hasBulkUpdate: false,
             hasItemsPerRowSelect: true, // When "Tiles"
             hasPageSizeSelect: true,    // When "Table"
@@ -143,10 +143,10 @@ export default function DashboardPage(): JSX.Element {
         addNewButtonContainer: ContainerOptions.ListToolBar,
         listToolBarSetting: {
             textSearchPlaceHolder: t("ProductCategory"),
-            hasListViewOptionsSelect: false,
-            availableListViewOptions: [ListViewOptions.Table],
-            hasItemsSelect: false,
-            hasBulkDelete: false,
+            hasListViewOptionsSelect: true,
+            availableListViewOptions: [ListViewOptions.SlideShow, ListViewOptions.Table, ListViewOptions.Tiles],
+            hasItemsSelect: true,
+            hasBulkDelete: true,
             hasBulkUpdate: false,
             hasItemsPerRowSelect: true, // When "Tiles"
             hasPageSizeSelect: true,    // When "Table"

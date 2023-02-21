@@ -107,6 +107,12 @@
                         <input asp-for="Model!.ModifiedDate" class="form-control nt-form-data" id="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.ModifiedDate))" name="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.ModifiedDate))" data-nt-value="@Model!.Model!.ModifiedDate"/>
                         <span asp-validation-for="Model!.ModifiedDate" class="text-danger" data-valmsg-for="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.ModifiedDate))"></span>
                     </div>
+                    <div class="form-group">
+                        <label asp-for="Model!.ParentID" class="control-label" for="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.ParentID))"></label>
+                        <select asp-for="Model!.ParentID" class="form-control form-select nt-form-data nt-ddlcascading" data-childlisturl="@Url.Action("GetProductCategoryCodeList","SelectListsApi")" data-nt-queryparamname="parentProductCategoryID" data-nt-targetchild="ProductCategoryID"
+                            data-nt-value="@Model!.Model!.ParentID" id="@Model!.HtmlId(nameof(ProductDataModel.DefaultView.ParentID))"  name="@Model!.HtmlName(nameof(ProductDataModel.DefaultView.ParentID))">
+                        </select>
+                    </div>
                 </div>
                 <div class="card-footer">
                     <div class="btn-group" role="group" aria-label="...">

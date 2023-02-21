@@ -22,6 +22,32 @@ public partial class SalesOrderDetailApiClient : WebApiClientBase
         return response;
     }
 
+    public async Task<SalesOrderDetailCompositeModel> GetCompositeModel(
+        SalesOrderDetailIdentifier id)
+    {
+        const string actionName = nameof(GetCompositeModel);
+        string url = GetHttpRequestUrl(actionName, id.GetWebApiRoute());
+        var response = await Get<SalesOrderDetailCompositeModel>(url);
+        return response;
+    }
+
+    public async Task<Response> BulkDelete(List<SalesOrderDetailIdentifier> ids)
+    {
+        const string actionName = nameof(BulkDelete);
+        string url = GetHttpRequestUrl(actionName);
+        var response = await Put<List<SalesOrderDetailIdentifier>, Response>(url, ids);
+        return response;
+    }
+
+    public async Task<Response<MultiItemsCUDRequest<SalesOrderDetailIdentifier, SalesOrderDetailDataModel>>> MultiItemsCUD(
+        MultiItemsCUDRequest<SalesOrderDetailIdentifier, SalesOrderDetailDataModel> input)
+    {
+        const string actionName = nameof(MultiItemsCUD);
+        string url = GetHttpRequestUrl(actionName);
+        var response = await Post<MultiItemsCUDRequest<SalesOrderDetailIdentifier, SalesOrderDetailDataModel>, Response<MultiItemsCUDRequest<SalesOrderDetailIdentifier, SalesOrderDetailDataModel>>>(url, input);
+        return response;
+    }
+
     public async Task<Response<SalesOrderDetailDataModel>> Update(SalesOrderDetailIdentifier id, SalesOrderDetailDataModel input)
     {
         const string actionName = nameof(Update);
@@ -43,6 +69,14 @@ public partial class SalesOrderDetailApiClient : WebApiClientBase
         const string actionName = nameof(Create);
         string url = GetHttpRequestUrl(actionName);
         var response = await Post<SalesOrderDetailDataModel, Response<SalesOrderDetailDataModel>>(url, input);
+        return response;
+    }
+
+    public async Task<Response> Delete(SalesOrderDetailIdentifier id)
+    {
+        const string actionName = nameof(Get);
+        string url = GetHttpRequestUrl(actionName, id.GetWebApiRoute());
+        var response = await Delete<Response>(url);
         return response;
     }
 }

@@ -5,7 +5,6 @@ namespace AdventureWorksLT2019.Models
     {
         // 2. AncestorTable = 2,
         public ProductDataModel.DefaultView? Product { get; set; }
-        public ProductCategoryDataModel.DefaultView? ProductCategory { get; set; }
         public SalesOrderHeaderDataModel.DefaultView? SalesOrderHeader { get; set; }
 
         public enum __DataOptions__
@@ -13,7 +12,6 @@ namespace AdventureWorksLT2019.Models
             __Master__,
             // 2. AncestorTable
             Product,
-            ProductCategory,
             SalesOrderHeader,
 
         }

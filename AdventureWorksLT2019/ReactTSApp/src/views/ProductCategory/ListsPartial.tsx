@@ -13,11 +13,13 @@ import { getCRUDItemPartialViewPropsOnDialog, ItemPartialViewProps } from 'src/s
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 
 import { IProductCategoryDataModel } from 'src/dataModels/IProductCategoryDataModel';
-import { search } from 'src/slices/ProductCategorySlice';
-import { getProductCategoryQueryOrderBySettings, IProductCategoryAdvancedQuery, IProductCategoryIdentifier } from 'src/dataModels/IProductCategoryQueries';
+import { search, bulkDelete } from 'src/slices/ProductCategorySlice';
+import { getProductCategoryQueryOrderBySettings, IProductCategoryAdvancedQuery, IProductCategoryIdentifier, getIProductCategoryIdentifier, compareIProductCategoryIdentifier } from 'src/dataModels/IProductCategoryQueries';
 
 import AdvancedSearchPartial from './AdvancedSearchPartial';
+import CarouselPartial from './CarouselPartial';
 import HtmlTablePartial from './HtmlTablePartial';
+import TilesPartial from './TilesPartial';
 import ItemViewsPartial from './ItemViewsPartial';
 
 export default function ListsPartial(props: ListsPartialViewProps<IProductCategoryAdvancedQuery, IProductCategoryDataModel>): JSX.Element {
@@ -29,8 +31,51 @@ export default function ListsPartial(props: ListsPartialViewProps<IProductCatego
     const [listViewOption, setListViewOption] = useState<ListViewOptions>(ListViewOptions.Table);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const serverOrderBys = getProductCategoryQueryOrderBySettings();
+    const [itemsPerRow, setItemsPerRow] = useState<number>(3); // only for ListViewOptions.Tiles, should use MediaQuery(windows size)
 
 
+
+    // 2. Bulk actions on Top Toolbar
+    // 2.1.1. Top Toolbar - Select All Checkbox
+    const [selected, setSelected] = useState<readonly IProductCategoryIdentifier[]>([]);
+    const isSelected = (identifier: IProductCategoryIdentifier) => selected.findIndex(t => { return compareIProductCategoryIdentifier(identifier, t); }) !== -1;
+    const numSelected = selected.length;
+
+    const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.checked) {
+            const newSelected = listItems.map((n) => getIProductCategoryIdentifier(n));
+            setSelected(newSelected);
+            return;
+        }
+        setSelected([]);
+    };
+    // 2.1.2. Selected/De-Select one item
+    const handleSelectItemClick = (item: IProductCategoryDataModel) => {
+        const selectedIndex = selected.findIndex(t => compareIProductCategoryIdentifier(t, item));
+        let newSelected: readonly IProductCategoryIdentifier[] = [];
+
+        if (selectedIndex === -1) {
+            newSelected = newSelected.concat(selected, getIProductCategoryIdentifier(item));
+        } else if (selectedIndex === 0) {
+            newSelected = newSelected.concat(selected.slice(1));
+        } else if (selectedIndex === selected.length - 1) {
+            newSelected = newSelected.concat(selected.slice(0, -1));
+        } else if (selectedIndex > 0) {
+            newSelected = newSelected.concat(
+                selected.slice(0, selectedIndex),
+                selected.slice(selectedIndex + 1),
+            );
+        }
+
+        setSelected(newSelected);
+    };
+
+
+    // 2.2. Top Toolbar - Delete Selected Rows/Items
+    const handleDeleteSelected = () => {
+        dispatch(bulkDelete(selected.map(t => t)));
+        // console.log("handleDeleteSelected");
+    };
 
     // 3.1. Top Toolbar - Advanced Search Dialog
     const [openAdvancedSearchDialog, setOpenAdvancedSearchDialog] = useState(false);
@@ -85,6 +130,15 @@ export default function ListsPartial(props: ListsPartialViewProps<IProductCatego
         }
     };
 
+    // 4.2. Bottom Toolbar - Pagination - Load More
+    const handlePaginationLoadMore = (event: React.ChangeEvent<unknown>, value: number) => {
+        advancedQuery.pageIndex++;
+        if (!isLoading) {
+            setIsLoading(true);
+            dispatch(search(advancedQuery)).finally(() => { setIsLoading(false); });
+        }
+    };
+
     useEffect(() => {
         if (initialLoadFromServer) {
             submitAdvancedSearch(advancedQuery);
@@ -118,17 +172,17 @@ export default function ListsPartial(props: ListsPartialViewProps<IProductCatego
             rowCount,
             submitAdvancedSearch,
 
-            setSelected: null,
-            numSelected: 0,
-            handleSelectAllClick: null,
+            setSelected,
+            numSelected,
+            handleSelectAllClick,
 
-            handleDeleteSelected: null,
+            handleDeleteSelected,
 
             listViewOption,
             setListViewOption,
 
-            itemsPerRow: 1,
-            setItemsPerRow: null,
+            itemsPerRow,
+            setItemsPerRow,
 
             serverOrderBys,
 
@@ -151,21 +205,53 @@ export default function ListsPartial(props: ListsPartialViewProps<IProductCatego
                     {hasAdvancedSearch && <Collapse in={advancedSearchExpanded} timeout="auto" unmountOnExit>
                         <AdvancedSearchPartial advancedQuery={advancedQuery} submitAction={submitAdvancedSearch} doneAction={() => { handleAdvancedSearchExpandClose(); }} />
                     </Collapse>}
-                    {listViewOption === ListViewOptions.Table && <HtmlTablePartial
-                        listViewOption={ListViewOptions.Table}
+                    {listViewOption === ListViewOptions.SlideShow && <CarouselPartial
+                        listViewOption={ListViewOptions.SlideShow}
                         listItems={listItems}
-                        itemsPerRow={1}
-						hasItemsSelect={false}
-                        numSelected={0}
-                        selected={[]}
-                        handleChangePage={handlePaginationChangePage}
-                        handleSelectItemClick={null}
+                        itemsPerRow={itemsPerRow}
+						hasItemsSelect={hasListToolBar && (listToolBarSetting?.hasItemsSelect ?? false)}
+                        numSelected={numSelected}
+                        selected={selected}
+                        handleChangePage={handlePaginationLoadMore}
+                        handleSelectItemClick={handleSelectItemClick}
                         handleItemDialogOpen={handleItemDialogOpen}
                         currentItemOnDialog={currentItemOnDialog}
                         setCurrentItemOnDialog={setCurrentItemOnDialog}
                         currentItemIndex={currentItemIndex}
                         setCurrentItemIndex={setCurrentItemIndex}
-                        isSelected={(identifier: IProductCategoryIdentifier) => { return false; }}
+                        isSelected={isSelected}
+                    />}
+                    {listViewOption === ListViewOptions.Table && <HtmlTablePartial
+                        listViewOption={ListViewOptions.Table}
+                        listItems={listItems}
+                        itemsPerRow={itemsPerRow}
+						hasItemsSelect={hasListToolBar && (listToolBarSetting?.hasItemsSelect ?? false)}
+                        numSelected={numSelected}
+                        selected={selected}
+                        handleChangePage={handlePaginationChangePage}
+                        handleSelectItemClick={handleSelectItemClick}
+                        handleItemDialogOpen={handleItemDialogOpen}
+                        currentItemOnDialog={currentItemOnDialog}
+                        setCurrentItemOnDialog={setCurrentItemOnDialog}
+                        currentItemIndex={currentItemIndex}
+                        setCurrentItemIndex={setCurrentItemIndex}
+                        isSelected={isSelected}
+                    />}
+                    {listViewOption === ListViewOptions.Tiles && <TilesPartial
+                        listViewOption={ListViewOptions.Tiles}
+                        listItems={listItems}
+                        itemsPerRow={itemsPerRow}
+						hasItemsSelect={hasListToolBar && (listToolBarSetting?.hasItemsSelect ?? false)}
+                        numSelected={numSelected}
+                        selected={selected}
+                        handleChangePage={handlePaginationLoadMore}
+                        handleSelectItemClick={handleSelectItemClick}
+                        handleItemDialogOpen={handleItemDialogOpen}
+                        currentItemOnDialog={currentItemOnDialog}
+                        setCurrentItemOnDialog={setCurrentItemOnDialog}
+                        currentItemIndex={currentItemIndex}
+                        setCurrentItemIndex={setCurrentItemIndex}
+                        isSelected={isSelected}
                     />}
                 </Paper>
             </Box>
@@ -177,11 +263,11 @@ export default function ListsPartial(props: ListsPartialViewProps<IProductCatego
             <Dialog open={openItemDialog} fullWidth={true} maxWidth={'lg'}>
                 <ItemViewsPartial {...crudItemPartialViewProps} 
                     item={currentItemOnDialog} 
-                    isItemSelected={false} 
+                    isItemSelected={!!currentItemOnDialog && isSelected(getIProductCategoryIdentifier(currentItemOnDialog))} 
                     totalCountInList={listItems.length} 
                     itemIndex={currentItemIndex} 
                     setItemIndex={setCurrentItemIndex} 
-                    handleSelectItemClick={null} />
+                    handleSelectItemClick={handleSelectItemClick} />
             </Dialog>
             {addNewButtonContainer === ContainerOptions.Absolute && <Snackbar
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}

@@ -14,6 +14,10 @@ export class ProductDescriptionApi extends AxiosApiBaseGeneric<IProductDescripti
 
         this.url_GetCompositeModel = "api/ProductDescriptionApi/GetCompositeModel";
 
+        this.url_BulkDelete = "api/ProductDescriptionApi/BulkDelete";
+
+        this.url_MultiItemsCUD = "api/ProductDescriptionApi/MultiItemsCUD";
+
         this.url_Put = "api/ProductDescriptionApi/Put";
 
         this.url_Get = "api/ProductDescriptionApi/Get";

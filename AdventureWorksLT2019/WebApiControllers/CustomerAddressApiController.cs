@@ -37,6 +37,60 @@ namespace AdventureWorksLT2019.WebApiControllers
             return ReturnActionResult(serviceResponse);
         }
 
+        // [Authorize]
+        [Route("{CustomerID}/{AddressID}")]
+        [HttpGet]
+        public async Task<ActionResult<CustomerAddressCompositeModel>> GetCompositeModel([FromRoute]CustomerAddressIdentifier id)
+        {
+            var listItemRequests = new Dictionary<CustomerAddressCompositeModel.__DataOptions__, CompositeListItemRequest>();
+
+            var serviceResponse = await _thisService.GetCompositeModel(id, listItemRequests);
+            return Ok(serviceResponse);
+        }
+
+        // [Authorize]
+        [HttpPut]
+        public async Task<ActionResult> BulkDelete([FromBody]List<CustomerAddressIdentifier> ids)
+        {
+            var serviceResponse = await _thisService.BulkDelete(ids);
+            return ReturnWithoutBodyActionResult(serviceResponse);
+        }
+
+        // [Authorize]
+        [Route("{CustomerID}/{AddressID}")]
+        [HttpPut]
+        public async Task<ActionResult<Response<CustomerAddressDataModel.DefaultView>>> Put([FromRoute]CustomerAddressIdentifier id, [FromBody]CustomerAddressDataModel input)
+        {
+            var serviceResponse = await _thisService.Update(id, input);
+            return ReturnActionResult(serviceResponse);
+        }
+
+        // [Authorize]
+        [Route("{CustomerID}/{AddressID}")]
+        [HttpGet]
+        public async Task<ActionResult<Response<CustomerAddressDataModel.DefaultView>>> Get([FromRoute]CustomerAddressIdentifier id)
+        {
+            var serviceResponse = await _thisService.Get(id);
+            return ReturnActionResult(serviceResponse);
+        }
+
+        // [Authorize]
+        [HttpPost]
+        public async Task<ActionResult<Response<CustomerAddressDataModel.DefaultView>>> Post(CustomerAddressDataModel input)
+        {
+            var serviceResponse = await _thisService.Create(input);
+            return ReturnActionResult(serviceResponse);
+        }
+
+        // [Authorize]
+        [Route("{CustomerID}/{AddressID}")]
+        [HttpDelete]
+        public async Task<ActionResult> Delete([FromRoute]CustomerAddressIdentifier id)
+        {
+            var serviceResponse = await _thisService.Delete(id);
+            return ReturnWithoutBodyActionResult(serviceResponse);
+        }
+
         /*
         // [Authorize]
         [HttpGet, ActionName("HeartBeat")]

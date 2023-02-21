@@ -37,6 +37,60 @@ namespace AdventureWorksLT2019.WebApiControllers
             return ReturnActionResult(serviceResponse);
         }
 
+        // [Authorize]
+        [Route("{SystemInformationID}/{VersionDate}/{ModifiedDate}")]
+        [HttpGet]
+        public async Task<ActionResult<BuildVersionCompositeModel>> GetCompositeModel([FromRoute]BuildVersionIdentifier id)
+        {
+            var listItemRequests = new Dictionary<BuildVersionCompositeModel.__DataOptions__, CompositeListItemRequest>();
+
+            var serviceResponse = await _thisService.GetCompositeModel(id, listItemRequests);
+            return Ok(serviceResponse);
+        }
+
+        // [Authorize]
+        [HttpPut]
+        public async Task<ActionResult> BulkDelete([FromBody]List<BuildVersionIdentifier> ids)
+        {
+            var serviceResponse = await _thisService.BulkDelete(ids);
+            return ReturnWithoutBodyActionResult(serviceResponse);
+        }
+
+        // [Authorize]
+        [Route("{SystemInformationID}/{VersionDate}/{ModifiedDate}")]
+        [HttpPut]
+        public async Task<ActionResult<Response<BuildVersionDataModel>>> Put([FromRoute]BuildVersionIdentifier id, [FromBody]BuildVersionDataModel input)
+        {
+            var serviceResponse = await _thisService.Update(id, input);
+            return ReturnActionResult(serviceResponse);
+        }
+
+        // [Authorize]
+        [Route("{SystemInformationID}/{VersionDate}/{ModifiedDate}")]
+        [HttpGet]
+        public async Task<ActionResult<Response<BuildVersionDataModel>>> Get([FromRoute]BuildVersionIdentifier id)
+        {
+            var serviceResponse = await _thisService.Get(id);
+            return ReturnActionResult(serviceResponse);
+        }
+
+        // [Authorize]
+        [HttpPost]
+        public async Task<ActionResult<Response<BuildVersionDataModel>>> Post(BuildVersionDataModel input)
+        {
+            var serviceResponse = await _thisService.Create(input);
+            return ReturnActionResult(serviceResponse);
+        }
+
+        // [Authorize]
+        [Route("{SystemInformationID}/{VersionDate}/{ModifiedDate}")]
+        [HttpDelete]
+        public async Task<ActionResult> Delete([FromRoute]BuildVersionIdentifier id)
+        {
+            var serviceResponse = await _thisService.Delete(id);
+            return ReturnWithoutBodyActionResult(serviceResponse);
+        }
+
         /*
         // [Authorize]
         [HttpGet, ActionName("HeartBeat")]

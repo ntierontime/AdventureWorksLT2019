@@ -47,31 +47,6 @@
                             </div>
                         </div>
                     }
-                    @if (Model!.Responses.ContainsKey(SalesOrderDetailCompositeModel.__DataOptions__.ProductCategory))
-                    {
-                        var vm = await dashboardViewModelHelper.GetProductCategoryMvcItemViewModel(Model!.ProductCategory!, Model.Get(SalesOrderDetailCompositeModel.__DataOptions__.ProductCategory));
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="panelsStayOpen-heading-productCategory">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-productCategory" aria-expanded="true" aria-controls="panelsStayOpen-productCategory">
-                                    @localizor.Get("Section_ProductCategory")
-                                </button>
-                            </h2>
-                            <div id="panelsStayOpen-collapse-productCategory" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-heading-productCategory">
-                                <div class="accordion-body p-0">
-                                    <div class="nt-list-wrapper"
-                                         data-nt-bs-modalsize="Large"
-                                         data-nt-loaditem-url="@Url.Action("AjaxLoadItem", "ProductCategory")"
-                                         data-nt-createitem-url="@Url.Action("AjaxCreate", "ProductCategory")"
-                                         data-nt-updateitem-url="@Url.Action("AjaxEdit", "ProductCategory")"
-                                         data-nt-deleteitem-url="@Url.Action("AjaxDelete", "ProductCategory")">
-                                        <div class="nt-listitem" data-nt-route-id="@routeId">
-                                            @await Html.PartialAsync("~/Views/ProductCategory/_TileDetailsItem.cshtml", vm)
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
                     @if (Model!.Responses.ContainsKey(SalesOrderDetailCompositeModel.__DataOptions__.SalesOrderHeader))
                     {
                         var vm = await dashboardViewModelHelper.GetSalesOrderHeaderMvcItemViewModel(Model!.SalesOrderHeader!, Model.Get(SalesOrderDetailCompositeModel.__DataOptions__.SalesOrderHeader));

@@ -14,13 +14,19 @@ export class SalesOrderHeaderApi extends AxiosApiBaseGeneric<ISalesOrderHeaderDa
 
         this.url_GetCompositeModel = "api/SalesOrderHeaderApi/GetCompositeModel";
 
+        this.url_BulkDelete = "api/SalesOrderHeaderApi/BulkDelete";
+
         this.url_BulkUpdate = "api/SalesOrderHeaderApi/BulkUpdate";
+
+        this.url_MultiItemsCUD = "api/SalesOrderHeaderApi/MultiItemsCUD";
 
         this.url_Put = "api/SalesOrderHeaderApi/Put";
 
         this.url_Get = "api/SalesOrderHeaderApi/Get";
 
         this.url_Post = "api/SalesOrderHeaderApi/Post";
+
+        this.url_Delete = "api/SalesOrderHeaderApi/Delete";
 
         // this middleware is been called right before the http request is made.
         this.interceptors.request.use((param: AxiosRequestConfig) => ({

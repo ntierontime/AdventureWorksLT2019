@@ -45,10 +45,10 @@ export default function DashboardPage(): JSX.Element {
 
 
     const listItems_ProductModelProductDescriptions_Via_ProductDescriptionID = useSelector(
-        (state: RootState) => productModelProductDescriptionSelectors.selectAll(state).filter(t => t.productDescriptionID === productDescriptionID)
+        (state: RootState) => productModelProductDescriptionSelectors.selectAll(state).filter(t => t.productDescriptionID === compositeModel?.__Master__?.productDescriptionID)
     );
 
-    const defaultIProductModelProductDescriptionAdvancedQuery_ProductModelProductDescriptions_Via_ProductDescriptionID = { ...defaultIProductModelProductDescriptionAdvancedQuery(), productDescriptionID: productDescriptionID };
+    const defaultIProductModelProductDescriptionAdvancedQuery_ProductModelProductDescriptions_Via_ProductDescriptionID = { ...defaultIProductModelProductDescriptionAdvancedQuery(), productDescriptionID: compositeModel?.__Master__?.productDescriptionID };
     const [advancedQuery_ProductModelProductDescriptions_Via_ProductDescriptionID, setAdvancedQuery_ProductModelProductDescriptions_Via_ProductDescriptionID] = useState<IProductModelProductDescriptionAdvancedQuery>(defaultIProductModelProductDescriptionAdvancedQuery_ProductModelProductDescriptions_Via_ProductDescriptionID);
 
     useEffect(() => {
@@ -57,6 +57,9 @@ export default function DashboardPage(): JSX.Element {
             .then((res) => {
                 //console.log(res);
                 setCompositeModel(res);
+                // // if you want to change page title <html><head><title>...</title></head></html>
+                // document.title = res.__Master__.
+
 
                 const ProductModelProductDescriptions_Via_ProductDescriptionIDListResponseA = res.responses[IProductDescriptionCompositeModel_DataOptions__.ProductModelProductDescriptions_Via_ProductDescriptionID];
                 console.log(ProductModelProductDescriptions_Via_ProductDescriptionIDListResponseA);

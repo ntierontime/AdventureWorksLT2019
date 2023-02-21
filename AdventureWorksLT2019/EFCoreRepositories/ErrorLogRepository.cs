@@ -112,6 +112,173 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
+        private IQueryable<ErrorLog> GetIQueryableByPrimaryIdentifierList(
+            List<ErrorLogIdentifier> ids)
+        {
+            var idList = ids.Select(t => t.ErrorLogID).ToList();
+            var queryable =
+                from t in _dbcontext.ErrorLog
+                where idList.Contains(t.ErrorLogID)
+                select t;
+
+            return queryable;
+        }
+
+        public async Task<Response> BulkDelete(List<ErrorLogIdentifier> ids)
+        {
+            try
+            {
+                var queryable = GetIQueryableByPrimaryIdentifierList(ids);
+                var result = await queryable.BatchDeleteAsync();
+
+                return await Task<Response>.FromResult(
+                    new Response
+                    {
+                        Status = HttpStatusCode.OK,
+                    });
+            }
+            catch (Exception ex)
+            {
+                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
+        public async Task<Response<MultiItemsCUDRequest<ErrorLogIdentifier, ErrorLogDataModel>>> MultiItemsCUD(
+            MultiItemsCUDRequest<ErrorLogIdentifier, ErrorLogDataModel> input)
+        {
+            // 1. DeleteItems, return if Failed
+            if (input.DeleteItems != null)
+            {
+                var responseOfDeleteItems = await this.BulkDelete(input.DeleteItems);
+                if (responseOfDeleteItems != null && responseOfDeleteItems.Status != HttpStatusCode.OK)
+                {
+                    return new Response<MultiItemsCUDRequest<ErrorLogIdentifier, ErrorLogDataModel>> { Status = responseOfDeleteItems.Status, StatusMessage = "Deletion Failed. " + responseOfDeleteItems.StatusMessage };
+                }
+            }
+
+            // 2. return OK, if no more NewItems and UpdateItems
+            if (!(input.NewItems != null && input.NewItems.Count > 0 ||
+                input.UpdateItems != null && input.UpdateItems.Count > 0))
+            {
+                return new Response<MultiItemsCUDRequest<ErrorLogIdentifier, ErrorLogDataModel>> { Status = HttpStatusCode.OK };
+            }
+
+            // 3. NewItems and UpdateItems
+            try
+            {
+                // 3.1.1. NewItems if any
+                List<ErrorLog> newEFItems = new();
+                if (input.NewItems != null && input.NewItems.Count > 0)
+                {
+                    foreach (var item in input.NewItems)
+                    {
+                        var toInsert = new ErrorLog
+                        {
+                            ErrorTime = item.ErrorTime,
+                            UserName = item.UserName,
+                            ErrorNumber = item.ErrorNumber,
+                            ErrorSeverity = item.ErrorSeverity,
+                            ErrorState = item.ErrorState,
+                            ErrorProcedure = item.ErrorProcedure,
+                            ErrorLine = item.ErrorLine,
+                            ErrorMessage = item.ErrorMessage,
+                        };
+                        _dbcontext.ErrorLog.Add(toInsert);
+                        newEFItems.Add(toInsert);
+                    }
+                }
+
+                // 3.1.2. UpdateItems if any
+                if (input.UpdateItems != null && input.UpdateItems.Count > 0)
+                {
+                    foreach (var item in input.UpdateItems)
+                    {
+                        var existing =
+                            (from t in _dbcontext.ErrorLog
+                             where
+
+                             t.ErrorLogID == item.ErrorLogID
+                             select t).SingleOrDefault();
+
+                        if (existing != null)
+                        {
+                            // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
+                            existing.ErrorTime = item.ErrorTime;
+                            existing.UserName = item.UserName;
+                            existing.ErrorNumber = item.ErrorNumber;
+                            existing.ErrorSeverity = item.ErrorSeverity;
+                            existing.ErrorState = item.ErrorState;
+                            existing.ErrorProcedure = item.ErrorProcedure;
+                            existing.ErrorLine = item.ErrorLine;
+                            existing.ErrorMessage = item.ErrorMessage;
+                        }
+                    }
+                }
+                await _dbcontext.SaveChangesAsync();
+
+                // 3.2 Load Response
+                var identifierListToloadResponseItems = new List<int>();
+
+                if (input.NewItems != null && input.NewItems.Count > 0)
+                {
+                    identifierListToloadResponseItems.AddRange(
+                        from t in newEFItems
+                        select t.ErrorLogID);
+                }
+                if (input.UpdateItems != null && input.UpdateItems.Count > 0)
+                {
+                    identifierListToloadResponseItems.AddRange(
+                        from t in input.UpdateItems
+                        select t.ErrorLogID);
+                }
+
+                var responseBodyWithNewAndUpdatedItems =
+                    (from t in _dbcontext.ErrorLog
+                    where identifierListToloadResponseItems.Contains(t.ErrorLogID)
+
+                    select new ErrorLogDataModel
+                    {
+
+                        ErrorLogID = t.ErrorLogID,
+                        ErrorTime = t.ErrorTime,
+                        UserName = t.UserName,
+                        ErrorNumber = t.ErrorNumber,
+                        ErrorSeverity = t.ErrorSeverity,
+                        ErrorState = t.ErrorState,
+                        ErrorProcedure = t.ErrorProcedure,
+                        ErrorLine = t.ErrorLine,
+                        ErrorMessage = t.ErrorMessage,
+
+                    }).ToList();
+
+                // 3.3. Final Response
+                var response = new Response<MultiItemsCUDRequest<ErrorLogIdentifier, ErrorLogDataModel>>
+                {
+                    Status = HttpStatusCode.OK,
+                    ResponseBody = new MultiItemsCUDRequest<ErrorLogIdentifier, ErrorLogDataModel>
+                    {
+                        NewItems =
+                            input.NewItems != null && input.NewItems.Count > 0
+                                ? responseBodyWithNewAndUpdatedItems.Where(t => newEFItems.Any(t1 => t1.ErrorLogID == t.ErrorLogID)).ToList()
+                                : null,
+                        UpdateItems =
+                            input.UpdateItems != null && input.UpdateItems.Count > 0
+                                ? responseBodyWithNewAndUpdatedItems.Where(t => input.UpdateItems.Any(t1 => t1.ErrorLogID == t.ErrorLogID)).ToList()
+                                : null,
+                    }
+                };
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(new Response<MultiItemsCUDRequest<ErrorLogIdentifier, ErrorLogDataModel>>
+                {
+                    Status = HttpStatusCode.InternalServerError,
+                    StatusMessage = "Create And/Or Update Failed. " + ex.Message
+                });
+            }
+        }
+
         public async Task<Response<ErrorLogDataModel>> Update(ErrorLogIdentifier id, ErrorLogDataModel input)
         {
             if (input == null)
@@ -249,6 +416,38 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             catch (Exception ex)
             {
                 return await Task<Response<ErrorLogDataModel>>.FromResult(new Response<ErrorLogDataModel> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
+        public async Task<Response> Delete(ErrorLogIdentifier id)
+        {
+            if (id == null)
+                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.BadRequest });
+
+            try
+            {
+                var existing =
+                    (from t in _dbcontext.ErrorLog
+                     where
+
+                    t.ErrorLogID == id.ErrorLogID
+                     select t).SingleOrDefault();
+
+                if (existing == null)
+                    return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.NotFound });
+
+                _dbcontext.ErrorLog.Remove(existing);
+                await _dbcontext.SaveChangesAsync();
+
+                return await Task<Response>.FromResult(
+                    new Response
+                    {
+                        Status = HttpStatusCode.OK,
+                    });
+            }
+            catch (Exception ex)
+            {
+                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
             }
         }
 

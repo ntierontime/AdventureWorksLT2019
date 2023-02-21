@@ -2,9 +2,13 @@ import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Checkbox, FormControlLabel, IconButton, Pagination, Popover, Stack, Switch, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 // un-comment /*getCurrency,*/ if you display money
@@ -23,6 +27,7 @@ import { IErrorLogIdentifier, getIErrorLogIdentifier, getRouteParamsOfIErrorLogI
 
 export default function HtmlTablePartial(props: ListPartialViewProps<IErrorLogDataModel, IErrorLogIdentifier>): JSX.Element {
     const { t } = useTranslation();
+    const navigate = useNavigate();
     // currentItemOnDialog is only used in page navigation, you can remove it if not-in-use.
     const { listItems, hasItemsSelect, numSelected, isSelected, handleChangePage, handleSelectItemClick, handleItemDialogOpen, currentItemOnDialog, setCurrentItemOnDialog, currentItemIndex, setCurrentItemIndex } = props;
     const [order, setOrder] = useState<QueryOrderDirections>('asc');
@@ -218,8 +223,26 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IErrorLogDa
                 }}
                 disableRestoreFocus
             >
+                <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, null) }}>
+                    <DeleteIcon />
+                </IconButton>
+                <IconButton aria-label="details" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Details, null) }}>
+                    <BusinessCenterIcon />
+                </IconButton>
                 <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit, null) }}>
                     <EditIcon />
+                </IconButton>
+                <IconButton aria-label="delete" color="primary" onClick={() => { navigate("/errorLog/delete/" + getRouteParamsOfIErrorLogIdentifier(currentItemOnDialog)) }}>
+                    <DeleteIcon />
+                </IconButton>
+                <IconButton aria-label="details" color="primary" onClick={() => { navigate("/errorLog/details/" + getRouteParamsOfIErrorLogIdentifier(currentItemOnDialog)) }}>
+                    <BusinessCenterIcon />
+                </IconButton>
+                <IconButton aria-label="edit" color="primary" onClick={() => { navigate("/errorLog/edit/" + getRouteParamsOfIErrorLogIdentifier(currentItemOnDialog)) }}>
+                    <EditIcon />
+                </IconButton>
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/errorLog/dashboard/" + getRouteParamsOfIErrorLogIdentifier(currentItemOnDialog)) }}>
+                    <AccountTreeIcon />
                 </IconButton>
             </Popover>
             {!!handleChangePage && !numSelected && <Stack direction="row" onMouseEnter={() => { handleItemActionsPopoverClose(); }}>

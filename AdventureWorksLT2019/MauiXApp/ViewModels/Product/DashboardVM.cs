@@ -63,10 +63,14 @@ public class DashboardVM : ObservableObject
             });
 
         LaunchMaster_ProductCategoryFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryDetailsPopupCommand();
+        //LaunchMaster_ProductCategoryFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryDetailsPageCommand(AppShellRoutes.ProductListPage);
 
         LaunchMaster_ProductModelFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductModelDetailsPopupCommand();
+        //LaunchMaster_ProductModelFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductModelDetailsPageCommand(AppShellRoutes.ProductListPage);
 
     // 4. ListTable = 4,
+            LaunchList_SalesOrderDetailItemViewCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderDetailDetailsPopupCommand();
+            //LaunchList_SalesOrderDetailItemViewCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderDetailDetailsPageCommand(AppShellRoutes.ProductDashboardPage);
 
         CloseCommand = AppShellService.ShellGotoAbsoluteCommand;
 

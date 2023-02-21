@@ -2,9 +2,13 @@ import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Checkbox, FormControlLabel, IconButton, Pagination, Popover, Stack, Switch, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 // un-comment /*getCurrency,*/ if you display money
@@ -23,6 +27,7 @@ import { IProductDescriptionIdentifier, getIProductDescriptionIdentifier, getRou
 
 export default function HtmlTablePartial(props: ListPartialViewProps<IProductDescriptionDataModel, IProductDescriptionIdentifier>): JSX.Element {
     const { t } = useTranslation();
+    const navigate = useNavigate();
     // currentItemOnDialog is only used in page navigation, you can remove it if not-in-use.
     const { listItems, hasItemsSelect, numSelected, isSelected, handleChangePage, handleSelectItemClick, handleItemDialogOpen, currentItemOnDialog, setCurrentItemOnDialog, currentItemIndex, setCurrentItemIndex } = props;
     const [order, setOrder] = useState<QueryOrderDirections>('asc');
@@ -183,8 +188,26 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDes
                 }}
                 disableRestoreFocus
             >
+                <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, null) }}>
+                    <DeleteIcon />
+                </IconButton>
+                <IconButton aria-label="details" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Details, null) }}>
+                    <BusinessCenterIcon />
+                </IconButton>
                 <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit, null) }}>
                     <EditIcon />
+                </IconButton>
+                <IconButton aria-label="delete" color="primary" onClick={() => { navigate("/productDescription/delete/" + getRouteParamsOfIProductDescriptionIdentifier(currentItemOnDialog)) }}>
+                    <DeleteIcon />
+                </IconButton>
+                <IconButton aria-label="details" color="primary" onClick={() => { navigate("/productDescription/details/" + getRouteParamsOfIProductDescriptionIdentifier(currentItemOnDialog)) }}>
+                    <BusinessCenterIcon />
+                </IconButton>
+                <IconButton aria-label="edit" color="primary" onClick={() => { navigate("/productDescription/edit/" + getRouteParamsOfIProductDescriptionIdentifier(currentItemOnDialog)) }}>
+                    <EditIcon />
+                </IconButton>
+                <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/productDescription/dashboard/" + getRouteParamsOfIProductDescriptionIdentifier(currentItemOnDialog)) }}>
+                    <AccountTreeIcon />
                 </IconButton>
             </Popover>
             {!!handleChangePage && !numSelected && <Stack direction="row" onMouseEnter={() => { handleItemActionsPopoverClose(); }}>

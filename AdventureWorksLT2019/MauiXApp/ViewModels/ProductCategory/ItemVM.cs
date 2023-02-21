@@ -44,6 +44,7 @@ public class ItemVM : ItemVMBase<ProductCategoryIdentifier, ProductCategoryDataM
     {
 
         LaunchProductCategoryFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryEditPopupCommand();
+        //LaunchProductCategoryFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryEditPageCommand(AppShellRoutes.ProductCategoryListPage);
 
         WeakReferenceMessenger.Default.Register<ItemVM, ProductCategoryIdentifierMessage>(
            this, async (r, m) =>
