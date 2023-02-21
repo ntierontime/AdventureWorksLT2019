@@ -75,7 +75,10 @@ export default function DashboardPage(): JSX.Element {
             .then((res) => {
                 //console.log(res);
                 setCompositeModel(res);
-
+                
+                // // if you want to change page title <html><head><title>...</title></head></html>
+                // document.title = res.__Master__.city
+                
                 const CustomerAddresses_Via_AddressIDListResponseA = res.responses[IAddressCompositeModel_DataOptions__.CustomerAddresses_Via_AddressID];
                 console.log(CustomerAddresses_Via_AddressIDListResponseA);
                 const CustomerAddresses_Via_AddressIDListResponse = {

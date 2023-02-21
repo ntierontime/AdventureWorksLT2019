@@ -60,7 +60,8 @@ npm install moment
 npm install @mui/lab @mui/material
 npm install react-material-ui-carousel (instead of npm install react-swipeable-views react-swipeable-views-utils)
 npm install react-infinite-scroll-component (infinity scroll)
-npm install yup
+npm install @hookform/resolvers yup
+
 
 react-cookie-consent
 https://www.npmjs.com/package/react-cookie-consent

@@ -71,6 +71,11 @@ export default function RegisterPage(): JSX.Element {
         event.preventDefault();
     };
 
+    // // if you want to change page title <html><head><title>...</title></head></html>
+    // useEffect(() => {
+    //     document.title = t("_APPLICATION_TITLE") + " " + t("RegisterANewUser");
+    // }, []);
+
     useEffect(() => {
         if (auth.isAuthenticated) {
             const queryParams = new URLSearchParams(window.location.search)
@@ -87,7 +92,7 @@ export default function RegisterPage(): JSX.Element {
                     <CardHeader
                         title={
                             <Typography component='h5' variant='h5'>
-                                {t('Register a new User')}
+                                {t('RegisterANewUser')}
                             </Typography>
                         }
                         avatar={

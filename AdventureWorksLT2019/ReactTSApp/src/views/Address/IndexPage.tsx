@@ -43,6 +43,11 @@ export default function IndexPage() {
         }
     } as ListsPartialViewProps<IAddressAdvancedQuery, IAddressDataModel>;
 
+    // // if you want to change page title <html><head><title>...</title></head></html>
+    // useEffect(() => {
+    //     document.title = t("Address") + ":" + t("_APPLICATION_TITLE");
+    // }, []);
+
     return (
         <ListsPartial {...listsPartialViewProps} />
     );

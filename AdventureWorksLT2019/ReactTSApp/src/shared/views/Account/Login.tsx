@@ -59,6 +59,11 @@ export default function LoginPage(): JSX.Element {
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
     };
+    
+    // // if you want to change page title <html><head><title>...</title></head></html>
+    // useEffect(() => {
+    //     document.title = t("_APPLICATION_TITLE") + " " + t("LogIn");
+    // }, []);
 
     useEffect(() => {
         if (auth.isAuthenticated) {
