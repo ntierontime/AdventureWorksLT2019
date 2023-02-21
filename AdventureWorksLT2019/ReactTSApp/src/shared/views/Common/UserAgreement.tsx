@@ -6,7 +6,7 @@ export default function UserAgreement() {
                 
     // // if you want to change page title <html><head><title>...</title></head></html>
     // useEffect(() => {
-    //     document.title = t("_APPLICATION_TITLE") + " " + t("UserAgreement");
+    //     document.title = t("_APPLICATION_TITLE_") + " " + t("UserAgreement");
     // }, []);
 
     return (
