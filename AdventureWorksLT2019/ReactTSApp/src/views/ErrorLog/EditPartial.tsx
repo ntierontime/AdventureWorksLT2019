@@ -27,6 +27,7 @@ import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 import { getAvatarStyle } from 'src/shared/views/ThemeRelated';
 
 import { getErrorLogAvatar, IErrorLogDataModel, errorLogFormValidationWhenEdit } from 'src/dataModels/IErrorLogDataModel';
+import { getIErrorLogIdentifier } from 'src/dataModels/IErrorLogQueries';
 import { put } from 'src/slices/ErrorLogSlice';
 
 export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataModel>): JSX.Element {
@@ -63,7 +64,7 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
 
     const onSubmit = (data: IErrorLogDataModel) => {
         setSaving(true);
-        dispatch(put({ identifier: { errorLogID: data.errorLogID }, data: { ...data } }))
+        dispatch(put({ identifier: getIErrorLogIdentifier(data), data: { ...data } }))
             .then((result) => {
                 if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
                     setSaveMessage(t('SuccessfullySaved'));
@@ -85,15 +86,7 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
 
     const renderButtonGroup_IconButtons = () => {
         return (
-            <>                {!!handleSelectItemClick && <ButtonGroup
-                    disableElevation
-                    variant="contained"
-                    aria-label="navigation buttons"
-                ><Checkbox
-                    color="primary"
-                    checked={isItemSelected}
-                    onChange={() => { handleSelectItemClick(item) }}
-                /></ButtonGroup>}
+            <>
 				{(!!previousAction || !!nextAction) && <ButtonGroup
                     disableElevation
                     variant="contained"
@@ -241,6 +234,7 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
                                 onChange={(event: string) => { setErrorTime(event); setValue('errorTime', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='errorTime'
                             			{...register("errorTime", errorLogFormValidationWhenEdit.errorTime)}

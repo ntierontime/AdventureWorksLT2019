@@ -208,22 +208,16 @@ public class ItemVM : ItemVMBase<SalesOrderDetailIdentifier, SalesOrderDetailDat
     {
 
         LaunchSalesOrderHeaderFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderEditPopupCommand();
-        //LaunchSalesOrderHeaderFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchSalesOrderHeaderEditPageCommand(AppShellRoutes.SalesOrderDetailListPage);
 
         LaunchProductFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductEditPopupCommand();
-        //LaunchProductFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductEditPageCommand(AppShellRoutes.SalesOrderDetailListPage);
 
         LaunchProductCategoryFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryEditPopupCommand();
-        //LaunchProductCategoryFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductCategoryEditPageCommand(AppShellRoutes.SalesOrderDetailListPage);
 
         LaunchProductModelFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductModelEditPopupCommand();
-        //LaunchProductModelFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchProductModelEditPageCommand(AppShellRoutes.SalesOrderDetailListPage);
 
         LaunchAddressFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchAddressEditPopupCommand();
-        //LaunchAddressFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchAddressEditPageCommand(AppShellRoutes.SalesOrderDetailListPage);
 
         LaunchCustomerFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchCustomerEditPopupCommand();
-        //LaunchCustomerFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchCustomerEditPageCommand(AppShellRoutes.SalesOrderDetailListPage);
 
         WeakReferenceMessenger.Default.Register<ItemVM, SalesOrderDetailIdentifierMessage>(
            this, async (r, m) =>

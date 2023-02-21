@@ -35,26 +35,6 @@ public class BuildVersionService : DataServiceBase<BuildVersionAdvancedQuery, Bu
         return response;
     }
 
-    public async Task<BuildVersionCompositeModel> GetCompositeModel(
-        BuildVersionIdentifier id)
-    {
-        var response = await _thisApiClient.GetCompositeModel(id);
-        return response;
-    }
-
-    public override async Task<Response> BulkDelete(List<BuildVersionIdentifier> ids)
-    {
-        var response = await _thisApiClient.BulkDelete(ids);
-        return response;
-    }
-
-    public override async Task<Response<MultiItemsCUDRequest<BuildVersionIdentifier, BuildVersionDataModel>>> MultiItemsCUD(
-        MultiItemsCUDRequest<BuildVersionIdentifier, BuildVersionDataModel> input)
-    {
-        var response = await _thisApiClient.MultiItemsCUD(input);
-        return response;
-    }
-
     public override async Task<Response<BuildVersionDataModel>> Update(BuildVersionIdentifier id, BuildVersionDataModel input)
     {
         var response = await _thisApiClient.Update(id, input);
@@ -70,12 +50,6 @@ public class BuildVersionService : DataServiceBase<BuildVersionAdvancedQuery, Bu
     public override async Task<Response<BuildVersionDataModel>> Create(BuildVersionDataModel input)
     {
         var response = await _thisApiClient.Create(input);
-        return response;
-    }
-
-    public override async Task<Response> Delete(BuildVersionIdentifier id)
-    {
-        var response = await _thisApiClient.Delete(id);
         return response;
     }
 

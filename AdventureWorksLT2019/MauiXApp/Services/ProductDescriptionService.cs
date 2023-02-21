@@ -42,19 +42,6 @@ public class ProductDescriptionService : DataServiceBase<ProductDescriptionAdvan
         return response;
     }
 
-    public override async Task<Response> BulkDelete(List<ProductDescriptionIdentifier> ids)
-    {
-        var response = await _thisApiClient.BulkDelete(ids);
-        return response;
-    }
-
-    public override async Task<Response<MultiItemsCUDRequest<ProductDescriptionIdentifier, ProductDescriptionDataModel>>> MultiItemsCUD(
-        MultiItemsCUDRequest<ProductDescriptionIdentifier, ProductDescriptionDataModel> input)
-    {
-        var response = await _thisApiClient.MultiItemsCUD(input);
-        return response;
-    }
-
     public override async Task<Response<ProductDescriptionDataModel>> Update(ProductDescriptionIdentifier id, ProductDescriptionDataModel input)
     {
         var response = await _thisApiClient.Update(id, input);

@@ -14,10 +14,6 @@ export class ProductModelApi extends AxiosApiBaseGeneric<IProductModelDataModel,
 
         this.url_GetCompositeModel = "api/ProductModelApi/GetCompositeModel";
 
-        this.url_BulkDelete = "api/ProductModelApi/BulkDelete";
-
-        this.url_MultiItemsCUD = "api/ProductModelApi/MultiItemsCUD";
-
         this.url_Put = "api/ProductModelApi/Put";
 
         this.url_Get = "api/ProductModelApi/Get";

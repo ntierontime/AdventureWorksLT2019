@@ -45,10 +45,10 @@ export default function DashboardPage(): JSX.Element {
 
 
     const listItems_SalesOrderDetails_Via_SalesOrderID = useSelector(
-        (state: RootState) => salesOrderDetailSelectors.selectAll(state).filter(t => t.salesOrderID === salesOrderID)
+        (state: RootState) => salesOrderDetailSelectors.selectAll(state).filter(t => t.salesOrderID === compositeModel?.__Master__?.salesOrderID)
     );
 
-    const defaultISalesOrderDetailAdvancedQuery_SalesOrderDetails_Via_SalesOrderID = { ...defaultISalesOrderDetailAdvancedQuery(), salesOrderID: salesOrderID };
+    const defaultISalesOrderDetailAdvancedQuery_SalesOrderDetails_Via_SalesOrderID = { ...defaultISalesOrderDetailAdvancedQuery(), salesOrderID: compositeModel?.__Master__?.salesOrderID };
     const [advancedQuery_SalesOrderDetails_Via_SalesOrderID, setAdvancedQuery_SalesOrderDetails_Via_SalesOrderID] = useState<ISalesOrderDetailAdvancedQuery>(defaultISalesOrderDetailAdvancedQuery_SalesOrderDetails_Via_SalesOrderID);
 
     useEffect(() => {
@@ -57,6 +57,9 @@ export default function DashboardPage(): JSX.Element {
             .then((res) => {
                 //console.log(res);
                 setCompositeModel(res);
+                // // if you want to change page title <html><head><title>...</title></head></html>
+                // document.title = res.__Master__.
+
 
                 const SalesOrderDetails_Via_SalesOrderIDListResponseA = res.responses[ISalesOrderHeaderCompositeModel_DataOptions__.SalesOrderDetails_Via_SalesOrderID];
                 console.log(SalesOrderDetails_Via_SalesOrderIDListResponseA);
@@ -96,10 +99,10 @@ export default function DashboardPage(): JSX.Element {
         addNewButtonContainer: ContainerOptions.ListToolBar,
         listToolBarSetting: {
             textSearchPlaceHolder: t("SalesOrderDetail"),
-            hasListViewOptionsSelect: true,
-            availableListViewOptions: [ListViewOptions.SlideShow, ListViewOptions.Table, ListViewOptions.Tiles],
-            hasItemsSelect: true,
-            hasBulkDelete: true,
+            hasListViewOptionsSelect: false,
+            availableListViewOptions: [ListViewOptions.Table],
+            hasItemsSelect: false,
+            hasBulkDelete: false,
             hasBulkUpdate: false,
             hasItemsPerRowSelect: true, // When "Tiles"
             hasPageSizeSelect: true,    // When "Table"

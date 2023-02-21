@@ -49,17 +49,17 @@ export default function DashboardPage(): JSX.Element {
 
 
     const listItems_CustomerAddresses_Via_CustomerID = useSelector(
-        (state: RootState) => customerAddressSelectors.selectAll(state).filter(t => t.customerID === customerID)
+        (state: RootState) => customerAddressSelectors.selectAll(state).filter(t => t.customerID === compositeModel?.__Master__?.customerID)
     );
 
-    const defaultICustomerAddressAdvancedQuery_CustomerAddresses_Via_CustomerID = { ...defaultICustomerAddressAdvancedQuery(), customerID: customerID };
+    const defaultICustomerAddressAdvancedQuery_CustomerAddresses_Via_CustomerID = { ...defaultICustomerAddressAdvancedQuery(), customerID: compositeModel?.__Master__?.customerID };
     const [advancedQuery_CustomerAddresses_Via_CustomerID, setAdvancedQuery_CustomerAddresses_Via_CustomerID] = useState<ICustomerAddressAdvancedQuery>(defaultICustomerAddressAdvancedQuery_CustomerAddresses_Via_CustomerID);
 
     const listItems_SalesOrderHeaders_Via_CustomerID = useSelector(
-        (state: RootState) => salesOrderHeaderSelectors.selectAll(state).filter(t => t.customerID === customerID)
+        (state: RootState) => salesOrderHeaderSelectors.selectAll(state).filter(t => t.customerID === compositeModel?.__Master__?.customerID)
     );
 
-    const defaultISalesOrderHeaderAdvancedQuery_SalesOrderHeaders_Via_CustomerID = { ...defaultISalesOrderHeaderAdvancedQuery(), customerID: customerID };
+    const defaultISalesOrderHeaderAdvancedQuery_SalesOrderHeaders_Via_CustomerID = { ...defaultISalesOrderHeaderAdvancedQuery(), customerID: compositeModel?.__Master__?.customerID };
     const [advancedQuery_SalesOrderHeaders_Via_CustomerID, setAdvancedQuery_SalesOrderHeaders_Via_CustomerID] = useState<ISalesOrderHeaderAdvancedQuery>(defaultISalesOrderHeaderAdvancedQuery_SalesOrderHeaders_Via_CustomerID);
 
     useEffect(() => {
@@ -68,6 +68,9 @@ export default function DashboardPage(): JSX.Element {
             .then((res) => {
                 //console.log(res);
                 setCompositeModel(res);
+                // // if you want to change page title <html><head><title>...</title></head></html>
+                // document.title = res.__Master__.
+
 
                 const CustomerAddresses_Via_CustomerIDListResponseA = res.responses[ICustomerCompositeModel_DataOptions__.CustomerAddresses_Via_CustomerID];
                 console.log(CustomerAddresses_Via_CustomerIDListResponseA);
@@ -117,10 +120,10 @@ export default function DashboardPage(): JSX.Element {
         addNewButtonContainer: ContainerOptions.ListToolBar,
         listToolBarSetting: {
             textSearchPlaceHolder: t("CustomerAddress"),
-            hasListViewOptionsSelect: true,
-            availableListViewOptions: [ListViewOptions.SlideShow, ListViewOptions.Table, ListViewOptions.Tiles],
-            hasItemsSelect: true,
-            hasBulkDelete: true,
+            hasListViewOptionsSelect: false,
+            availableListViewOptions: [ListViewOptions.Table],
+            hasItemsSelect: false,
+            hasBulkDelete: false,
             hasBulkUpdate: false,
             hasItemsPerRowSelect: true, // When "Tiles"
             hasPageSizeSelect: true,    // When "Table"
@@ -141,10 +144,10 @@ export default function DashboardPage(): JSX.Element {
         addNewButtonContainer: ContainerOptions.ListToolBar,
         listToolBarSetting: {
             textSearchPlaceHolder: t("SalesOrderHeader"),
-            hasListViewOptionsSelect: true,
-            availableListViewOptions: [ListViewOptions.SlideShow, ListViewOptions.Table, ListViewOptions.Tiles],
-            hasItemsSelect: true,
-            hasBulkDelete: true,
+            hasListViewOptionsSelect: false,
+            availableListViewOptions: [ListViewOptions.Table],
+            hasItemsSelect: false,
+            hasBulkDelete: false,
             hasBulkUpdate: false,
             hasItemsPerRowSelect: true, // When "Tiles"
             hasPageSizeSelect: true,    // When "Table"

@@ -51,26 +51,6 @@ namespace AdventureWorksLT2019.Services
 
             var tasks = new List<Task>();
 
-            // 2. AncestorTable = 2,
-
-            if (dataOptions == null || dataOptions.Contains(ProductCompositeModel.__DataOptions__.ProductCategory))
-            {
-                tasks.Add(Task.Run(async () =>
-                {
-                    using (var scope = _serviceScopeFactor.CreateScope())
-                    {
-                        var productCategoryRepository = scope.ServiceProvider.GetRequiredService<IProductCategoryRepository>();
-                        var idQuery = new ProductCategoryIdentifier { ProductCategoryID = masterResponse.ResponseBody.ProductCategoryID };
-                        var response = await productCategoryRepository.Get(idQuery);
-                        responses.TryAdd(ProductCompositeModel.__DataOptions__.ProductCategory, new Response<PaginationResponse> { Status = response.Status, StatusMessage = response.StatusMessage });
-                        if(response.Status == HttpStatusCode.OK)
-                        {
-                            successResponse.ProductCategory = response.ResponseBody;
-                        }
-                    }
-                }));
-            }
-
             // 4. ListTable = 4,
 
             if (dataOptions == null || dataOptions.Contains(ProductCompositeModel.__DataOptions__.SalesOrderDetails_Via_ProductID))
@@ -111,17 +91,6 @@ namespace AdventureWorksLT2019.Services
             return successResponse;
         }
 
-        public async Task<Response> BulkDelete(List<ProductIdentifier> ids)
-        {
-            return await _thisRepository.BulkDelete(ids);
-        }
-
-        public async Task<Response<MultiItemsCUDRequest<ProductIdentifier, ProductDataModel.DefaultView>>> MultiItemsCUD(
-            MultiItemsCUDRequest<ProductIdentifier, ProductDataModel.DefaultView> input)
-        {
-            return await _thisRepository.MultiItemsCUD(input);
-        }
-
         public async Task<Response<ProductDataModel.DefaultView>> Update(ProductIdentifier id, ProductDataModel input)
         {
             return await _thisRepository.Update(id, input);
@@ -141,11 +110,6 @@ namespace AdventureWorksLT2019.Services
         {
             // TODO: please set default value here
             return new ProductDataModel.DefaultView { ItemUIStatus______ = ItemUIStatus.New };
-        }
-
-        public async Task<Response> Delete(ProductIdentifier id)
-        {
-            return await _thisRepository.Delete(id);
         }
 
         public async Task<ListResponse<NameValuePair[]>> GetCodeList(

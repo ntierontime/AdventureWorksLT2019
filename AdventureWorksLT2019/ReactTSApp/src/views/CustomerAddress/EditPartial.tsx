@@ -30,6 +30,7 @@ import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 import { getAvatarStyle } from 'src/shared/views/ThemeRelated';
 
 import { getCustomerAddressAvatar, ICustomerAddressDataModel, customerAddressFormValidationWhenEdit } from 'src/dataModels/ICustomerAddressDataModel';
+import { getICustomerAddressIdentifier } from 'src/dataModels/ICustomerAddressQueries';
 import { put } from 'src/slices/CustomerAddressSlice';
 
 export default function EditPartial(props: ItemPartialViewProps<ICustomerAddressDataModel>): JSX.Element {
@@ -82,7 +83,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerAddress
 
     const onSubmit = (data: ICustomerAddressDataModel) => {
         setSaving(true);
-        dispatch(put({ identifier: { customerID: data.customerID, addressID: data.addressID }, data: { ...data } }))
+        dispatch(put({ identifier: getICustomerAddressIdentifier(data), data: { ...data } }))
             .then((result) => {
                 if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
                     setSaveMessage(t('SuccessfullySaved'));
@@ -104,15 +105,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerAddress
 
     const renderButtonGroup_IconButtons = () => {
         return (
-            <>                {!!handleSelectItemClick && <ButtonGroup
-                    disableElevation
-                    variant="contained"
-                    aria-label="navigation buttons"
-                ><Checkbox
-                    color="primary"
-                    checked={isItemSelected}
-                    onChange={() => { handleSelectItemClick(item) }}
-                /></ButtonGroup>}
+            <>
 				{(!!previousAction || !!nextAction) && <ButtonGroup
                     disableElevation
                     variant="contained"
@@ -308,6 +301,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerAddress
                                 onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='modifiedDate'
                             			{...register("modifiedDate", customerAddressFormValidationWhenEdit.modifiedDate)}

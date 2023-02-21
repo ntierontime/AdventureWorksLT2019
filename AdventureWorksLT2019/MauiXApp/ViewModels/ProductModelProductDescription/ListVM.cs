@@ -122,37 +122,12 @@ public class ListVM : ListVMBase<ProductModelProductDescriptionAdvancedQuery, Pr
         */
         // AdvancedQuery.End DateTimeRanges
 
-        // 1. Init LaunchProductModelProductDescriptionCreatePageCommand
-        LaunchCreatePageCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionCreatePageCommand(AppShellRoutes.ProductModelProductDescriptionListPage);
-        // 2. Init LaunchProductModelProductDescriptionDeletePageCommand
-        LaunchDeletePageCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionDeletePageCommand(AppShellRoutes.ProductModelProductDescriptionListPage);
-        // 3. Init LaunchProductModelProductDescriptionDetailsPageCommand
-        LaunchDetailsPageCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionDetailsPageCommand(AppShellRoutes.ProductModelProductDescriptionListPage);
-        // 4. Init LaunchProductModelProductDescriptionEditPageCommand
-        LaunchEditPageCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionEditPageCommand(AppShellRoutes.ProductModelProductDescriptionListPage);
-        // 5. Init LaunchProductModelProductDescriptionDashboardPageCommand
-        LaunchDashboardPageCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionDashboardPageCommand(AppShellRoutes.ProductModelProductDescriptionListPage);
         // 6. Init LaunchProductModelProductDescriptionCreatePopupCommand
         LaunchCreatePopupCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionCreatePopupCommand();
-        // 7. Init LaunchProductModelProductDescriptionDeletePopupCommand
-        LaunchDeletePopupCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionDeletePopupCommand();
         // 8. Init LaunchProductModelProductDescriptionDetailsPopupCommand
         LaunchDetailsPopupCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionDetailsPopupCommand();
         // 9. Init LaunchProductModelProductDescriptionEditPopupCommand
         LaunchEditPopupCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionEditPopupCommand();
-        // 10. Init LaunchProductModelProductDescriptionAdvancedSearchPopupCommand
-        AdvancedSearchLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionAdvancedSearchPopupCommand();
-        // 11. Init LaunchProductModelProductDescriptionListBulkActionsPopupCommand
-        ListBulkActionsLaunchCommand = new Command<string>(
-            (currentBulkActionName) =>
-            {
-                BulkUpdateItem = _dataService.GetDefault();
-                CurrentBulkActionName = currentBulkActionName;
-                var launchCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionListBulkActionsPopupCommand();
-                launchCommand.Execute(null);
-            },
-            (currentBulkActionName) => EnableMultiSelectCommands()
-            );
         // 12. Init LaunchProductModelProductDescriptionListOrderBysPopupCommand
         ListOrderBysLaunchCommand = LaunchViewCommandsHelper.GetLaunchProductModelProductDescriptionListOrderBysPopupCommand();
 

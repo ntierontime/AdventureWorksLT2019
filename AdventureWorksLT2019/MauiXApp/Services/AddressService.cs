@@ -42,19 +42,6 @@ public class AddressService : DataServiceBase<AddressAdvancedQuery, AddressIdent
         return response;
     }
 
-    public override async Task<Response> BulkDelete(List<AddressIdentifier> ids)
-    {
-        var response = await _thisApiClient.BulkDelete(ids);
-        return response;
-    }
-
-    public override async Task<Response<MultiItemsCUDRequest<AddressIdentifier, AddressDataModel>>> MultiItemsCUD(
-        MultiItemsCUDRequest<AddressIdentifier, AddressDataModel> input)
-    {
-        var response = await _thisApiClient.MultiItemsCUD(input);
-        return response;
-    }
-
     public override async Task<Response<AddressDataModel>> Update(AddressIdentifier id, AddressDataModel input)
     {
         var response = await _thisApiClient.Update(id, input);
@@ -70,12 +57,6 @@ public class AddressService : DataServiceBase<AddressAdvancedQuery, AddressIdent
     public override async Task<Response<AddressDataModel>> Create(AddressDataModel input)
     {
         var response = await _thisApiClient.Create(input);
-        return response;
-    }
-
-    public override async Task<Response> Delete(AddressIdentifier id)
-    {
-        var response = await _thisApiClient.Delete(id);
         return response;
     }
 

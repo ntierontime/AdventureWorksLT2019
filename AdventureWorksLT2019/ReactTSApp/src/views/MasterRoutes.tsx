@@ -8,6 +8,9 @@ import NotFoundPage from "./NotFoundPage";
 import PrivateRouteTestPage from "./PrivateRouteTestPage";
 
 import AboutUs from "src/shared/views/Common/AboutUs";
+import ContactUs from "src/shared/views/Common/ContactUs";
+import PrivacyPolicy from "src/shared/views/Common/PrivacyPolicy";
+import UserAgreement from "src/shared/views/Common/UserAgreement";
 
 import BuildVersionRoutesPartial from 'src/routePartials/BuildVersionRoutesPartial'
 import ErrorLogRoutesPartial from 'src/routePartials/ErrorLogRoutesPartial'
@@ -21,9 +24,6 @@ import ProductModelRoutesPartial from 'src/routePartials/ProductModelRoutesParti
 import ProductModelProductDescriptionRoutesPartial from 'src/routePartials/ProductModelProductDescriptionRoutesPartial'
 import SalesOrderDetailRoutesPartial from 'src/routePartials/SalesOrderDetailRoutesPartial'
 import SalesOrderHeaderRoutesPartial from 'src/routePartials/SalesOrderHeaderRoutesPartial'
-import ContactUs from "src/shared/views/Common/ContactUs";
-import PrivacyPolicy from "src/shared/views/Common/PrivacyPolicy";
-import UserAgreement from "src/shared/views/Common/UserAgreement";
 
 export default function MasterRoutes(): JSX.Element {
     return (
@@ -37,12 +37,11 @@ export default function MasterRoutes(): JSX.Element {
             <Route path="privacypolicy" element={<PrivacyPolicy />} />
             <Route path="useragreement" element={<UserAgreement />} />
             
-            {/* <Route path="register" element={<RegisterPage />} /> */}
             <Route path="PrivateRouteTestPage" element={
                 <PrivateRoute>
                     <PrivateRouteTestPage />
                 </PrivateRoute>} />
-                
+
             <Route path="BuildVersion/*" element={<BuildVersionRoutesPartial />} />
             <Route path="ErrorLog/*" element={<ErrorLogRoutesPartial />} />
             <Route path="Address/*" element={<AddressRoutesPartial />} />

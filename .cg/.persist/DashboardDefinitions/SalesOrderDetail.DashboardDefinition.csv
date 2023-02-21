@@ -1,6 +1,6 @@
 ﻿TABLE_SCHEMA,TABLE_NAME,Enabled,DeepFKType,Order,PropertyNameInDashboardVM,BaseTableName,MasterTableName,ForeignKeyTableName,EntityReferenceSimpleFullPath,EntityReferenceName,CachingOption,IsRequired,IsATab,InXamarinFormsVM,FuntionDashboardName,InBaseTableFuntionDashboard,InWizard,WizardOrder
 SalesLT,SalesOrderDetail,True,AncestorTable,1,Product,,,,\ProductID,,UpdateCacheWhenViewLoaded,False,False,False,MoreDetails,False,False,0
-SalesLT,SalesOrderDetail,True,AncestorTable,2,ProductCategory,,,,\ProductID\ProductCategoryID,,UpdateCacheWhenViewLoaded,False,False,False,MoreDetails,False,False,0
+SalesLT,SalesOrderDetail,False,AncestorTable,2,ProductCategory,,,,\ProductID\ProductCategoryID,,UpdateCacheWhenViewLoaded,False,False,False,MoreDetails,False,False,0
 SalesLT,SalesOrderDetail,False,AncestorTable,3,ProductCategory_Parent,,,,\ProductID\ProductCategoryID\ParentProductCategoryID,,UpdateCacheWhenViewLoaded,False,False,False,MoreDetails,False,False,0
 SalesLT,SalesOrderDetail,False,AncestorTable,4,ProductModel,,,,\ProductID\ProductModelID,,UpdateCacheWhenViewLoaded,False,False,False,MoreDetails,False,False,0
 SalesLT,SalesOrderDetail,True,AncestorTable,5,SalesOrderHeader,,,,\SalesOrderID,,UpdateCacheWhenViewLoaded,False,False,False,MoreDetails,False,False,0

@@ -90,10 +90,8 @@ public class ItemVM : ItemVMBase<SalesOrderHeaderIdentifier, SalesOrderHeaderDat
     {
 
         LaunchCustomerFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchCustomerEditPopupCommand();
-        //LaunchCustomerFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchCustomerEditPageCommand(AppShellRoutes.SalesOrderHeaderListPage);
 
         LaunchAddressFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchAddressEditPopupCommand();
-        //LaunchAddressFKItemViewCommand = LaunchViewCommandsHelper.GetLaunchAddressEditPageCommand(AppShellRoutes.SalesOrderHeaderListPage);
 
         WeakReferenceMessenger.Default.Register<ItemVM, SalesOrderHeaderIdentifierMessage>(
            this, async (r, m) =>

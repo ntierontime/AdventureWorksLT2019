@@ -8,18 +8,11 @@ namespace AdventureWorksLT2019.RepositoryContracts
         Task<ListResponse<ErrorLogDataModel[]>> Search(
             ErrorLogAdvancedQuery query);
 
-        Task<Response> BulkDelete(List<ErrorLogIdentifier> ids);
-
-        Task<Response<MultiItemsCUDRequest<ErrorLogIdentifier, ErrorLogDataModel>>> MultiItemsCUD(
-            MultiItemsCUDRequest<ErrorLogIdentifier, ErrorLogDataModel> input);
-
         Task<Response<ErrorLogDataModel>> Update(ErrorLogIdentifier id, ErrorLogDataModel input);
 
         Task<Response<ErrorLogDataModel>> Get(ErrorLogIdentifier id);
 
         Task<Response<ErrorLogDataModel>> Create(ErrorLogDataModel input);
-
-        Task<Response> Delete(ErrorLogIdentifier id);
 
         Task<ListResponse<NameValuePair[]>> GetCodeList(
             ErrorLogAdvancedQuery query);

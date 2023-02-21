@@ -31,28 +31,11 @@ public partial class CustomerApiClient : WebApiClientBase
         return response;
     }
 
-    public async Task<Response> BulkDelete(List<CustomerIdentifier> ids)
-    {
-        const string actionName = nameof(BulkDelete);
-        string url = GetHttpRequestUrl(actionName);
-        var response = await Put<List<CustomerIdentifier>, Response>(url, ids);
-        return response;
-    }
-
     public async Task<ListResponse<CustomerDataModel[]>> BulkUpdate(BatchActionRequest<CustomerIdentifier, CustomerDataModel> data)
     {
         const string actionName = nameof(BulkUpdate);
         string url = GetHttpRequestUrl(actionName);
         var response = await Put<BatchActionRequest<CustomerIdentifier, CustomerDataModel>, ListResponse<CustomerDataModel[]>>(url, data);
-        return response;
-    }
-
-    public async Task<Response<MultiItemsCUDRequest<CustomerIdentifier, CustomerDataModel>>> MultiItemsCUD(
-        MultiItemsCUDRequest<CustomerIdentifier, CustomerDataModel> input)
-    {
-        const string actionName = nameof(MultiItemsCUD);
-        string url = GetHttpRequestUrl(actionName);
-        var response = await Post<MultiItemsCUDRequest<CustomerIdentifier, CustomerDataModel>, Response<MultiItemsCUDRequest<CustomerIdentifier, CustomerDataModel>>>(url, input);
         return response;
     }
 
@@ -77,14 +60,6 @@ public partial class CustomerApiClient : WebApiClientBase
         const string actionName = nameof(Create);
         string url = GetHttpRequestUrl(actionName);
         var response = await Post<CustomerDataModel, Response<CustomerDataModel>>(url, input);
-        return response;
-    }
-
-    public async Task<Response> Delete(CustomerIdentifier id)
-    {
-        const string actionName = nameof(Get);
-        string url = GetHttpRequestUrl(actionName, id.GetWebApiRoute());
-        var response = await Delete<Response>(url);
         return response;
     }
 }

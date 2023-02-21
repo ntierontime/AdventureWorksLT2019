@@ -258,6 +258,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ISalesOrderDet
                                 onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='modifiedDate'
                             			{...register("modifiedDate", salesOrderDetailFormValidationWhenCreate.modifiedDate)}

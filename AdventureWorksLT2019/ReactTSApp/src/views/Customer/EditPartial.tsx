@@ -28,6 +28,7 @@ import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 import { getAvatarStyle } from 'src/shared/views/ThemeRelated';
 
 import { getCustomerAvatar, ICustomerDataModel, customerFormValidationWhenEdit } from 'src/dataModels/ICustomerDataModel';
+import { getICustomerIdentifier } from 'src/dataModels/ICustomerQueries';
 import { put } from 'src/slices/CustomerSlice';
 
 export default function EditPartial(props: ItemPartialViewProps<ICustomerDataModel>): JSX.Element {
@@ -64,7 +65,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
 
     const onSubmit = (data: ICustomerDataModel) => {
         setSaving(true);
-        dispatch(put({ identifier: { customerID: data.customerID }, data: { ...data } }))
+        dispatch(put({ identifier: getICustomerIdentifier(data), data: { ...data } }))
             .then((result) => {
                 if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
                     setSaveMessage(t('SuccessfullySaved'));
@@ -86,15 +87,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
 
     const renderButtonGroup_IconButtons = () => {
         return (
-            <>                {!!handleSelectItemClick && <ButtonGroup
-                    disableElevation
-                    variant="contained"
-                    aria-label="navigation buttons"
-                ><Checkbox
-                    color="primary"
-                    checked={isItemSelected}
-                    onChange={() => { handleSelectItemClick(item) }}
-                /></ButtonGroup>}
+            <>
 				{(!!previousAction || !!nextAction) && <ButtonGroup
                     disableElevation
                     variant="contained"
@@ -430,6 +423,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
                                 onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='modifiedDate'
                             			{...register("modifiedDate", customerFormValidationWhenEdit.modifiedDate)}

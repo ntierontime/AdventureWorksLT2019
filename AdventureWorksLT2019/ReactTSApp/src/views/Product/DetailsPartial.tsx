@@ -60,15 +60,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IProductDataM
                         onClick={() => { nextAction() }}
                     />}
                 </ButtonGroup>}
-                {!!handleSelectItemClick && <ButtonGroup
-                    disableElevation
-                    variant="contained"
-                    aria-label="navigation buttons"
-                ><Checkbox
-                    color="primary"
-                    checked={isItemSelected}
-                    onChange={() => { handleSelectItemClick(item) }}
-                /></ButtonGroup>}
+
                 <ButtonGroup
                     disableElevation
                     variant="contained"
@@ -79,35 +71,15 @@ export default function DetailsPartial(props: ItemPartialViewProps<IProductDataM
                             <AccountTreeIcon />
                         </IconButton>
                     }
-                    {(crudViewContainer === CrudViewContainers.Inline) &&
-                        <>
-                            <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, null) }}>
-                                <DeleteIcon />
-                            </IconButton>
-                            <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit, null) }}>
-                                <EditIcon />
-                            </IconButton>
-                        </>
-                    }
-                    {(crudViewContainer === CrudViewContainers.StandaloneView) &&
-                        <>
-                            <IconButton aria-label="delete" color="primary" onClick={() => { navigate("/product/delete/" + getRouteParamsOfIProductIdentifier(item)) }}>
-                                <DeleteIcon />
-                            </IconButton>
-                            <IconButton aria-label="edit" color="primary" onClick={() => { navigate("/product/edit/" + getRouteParamsOfIProductIdentifier(item)) }}>
-                                <EditIcon />
-                            </IconButton>
-                        </>
+                    {(crudViewContainer === CrudViewContainers.Card || crudViewContainer === CrudViewContainers.Inline) &&
+                        <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit, null) }}>
+                            <EditIcon />
+                        </IconButton>
                     }
                     {(crudViewContainer === CrudViewContainers.Dialog || crudViewContainer === CrudViewContainers.Card) &&
-                        <>
-                            <IconButton aria-label="delete" color="primary" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Delete) }}>
-                                <DeleteIcon />
-                            </IconButton>
-                            <IconButton aria-label="edit" color="primary" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Edit) }}>
-                                <EditIcon />
-                            </IconButton>
-                        </>
+                        <IconButton aria-label="edit" color="primary" onClick={() => { changeViewItemTemplate(ViewItemTemplates.Edit) }}>
+                            <EditIcon />
+                        </IconButton>
                     }
                 </ButtonGroup>
                 <ButtonGroup>
@@ -252,6 +224,17 @@ export default function DetailsPartial(props: ItemPartialViewProps<IProductDataM
                                     readOnly: true
                                 }}
                             />
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <Stack sx={{ p: 2 }}
+                                direction="row"
+                                justifyContent="space-between"
+                                alignItems="center"
+                                spacing={2}
+                            >
+                                <Typography>{t("ParentID")}</Typography>
+                                <Link to={"/productCategory/Details/" + item.parentID}>{item.parent_Name}</Link>
+                            </Stack>
                         </Grid>
                         <Grid item {...gridColumns}>
                             <Stack sx={{ p: 2 }}

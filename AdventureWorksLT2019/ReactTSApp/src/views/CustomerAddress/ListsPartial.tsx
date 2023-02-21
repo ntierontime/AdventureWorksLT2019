@@ -1,83 +1,35 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useDispatch, } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { Box, Paper, Dialog, DialogContent, Collapse, Snackbar, ButtonGroup, IconButton } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
+import { Box, Paper, Dialog, DialogContent, Collapse } from '@mui/material';
+
 
 import { AppDispatch } from 'src/store/Store';
 import { ListsPartialViewProps } from 'src/shared/viewModels/ListsPartialViewProps';
 import ListToolBar, { ListToolBarProps } from 'src/shared/views/ListToolBar';
 import { ListViewOptions } from 'src/shared/views/ListViewOptions';
-import { ContainerOptions } from 'src/shared/viewModels/ContainerOptions';
 import { getCRUDItemPartialViewPropsOnDialog, ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps';
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 
 import { ICustomerAddressDataModel } from 'src/dataModels/ICustomerAddressDataModel';
-import { search, bulkDelete } from 'src/slices/CustomerAddressSlice';
-import { getCustomerAddressQueryOrderBySettings, ICustomerAddressAdvancedQuery, ICustomerAddressIdentifier, getICustomerAddressIdentifier, compareICustomerAddressIdentifier } from 'src/dataModels/ICustomerAddressQueries';
+import { search } from 'src/slices/CustomerAddressSlice';
+import { getCustomerAddressQueryOrderBySettings, ICustomerAddressAdvancedQuery, ICustomerAddressIdentifier } from 'src/dataModels/ICustomerAddressQueries';
 
 import AdvancedSearchPartial from './AdvancedSearchPartial';
-import CarouselPartial from './CarouselPartial';
 import HtmlTablePartial from './HtmlTablePartial';
-import TilesPartial from './TilesPartial';
 import ItemViewsPartial from './ItemViewsPartial';
 
 export default function ListsPartial(props: ListsPartialViewProps<ICustomerAddressAdvancedQuery, ICustomerAddressDataModel>): JSX.Element {
-    const { advancedQuery, setAdvancedQuery, defaultAdvancedQuery, listItems, initialLoadFromServer, hasListToolBar, listToolBarSetting, hasAdvancedSearch, addNewButtonContainer } = props;
+    const { advancedQuery, setAdvancedQuery, defaultAdvancedQuery, listItems, initialLoadFromServer, hasListToolBar, listToolBarSetting, hasAdvancedSearch } = props;
     const rowCount = listItems.length;
 
-    const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
 
     const [listViewOption, setListViewOption] = useState<ListViewOptions>(ListViewOptions.Table);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const serverOrderBys = getCustomerAddressQueryOrderBySettings();
-    const [itemsPerRow, setItemsPerRow] = useState<number>(3); // only for ListViewOptions.Tiles, should use MediaQuery(windows size)
 
 
-
-    // 2. Bulk actions on Top Toolbar
-    // 2.1.1. Top Toolbar - Select All Checkbox
-    const [selected, setSelected] = useState<readonly ICustomerAddressIdentifier[]>([]);
-    const isSelected = (identifier: ICustomerAddressIdentifier) => selected.findIndex(t => { return compareICustomerAddressIdentifier(identifier, t); }) !== -1;
-    const numSelected = selected.length;
-
-    const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.checked) {
-            const newSelected = listItems.map((n) => getICustomerAddressIdentifier(n));
-            setSelected(newSelected);
-            return;
-        }
-        setSelected([]);
-    };
-    // 2.1.2. Selected/De-Select one item
-    const handleSelectItemClick = (item: ICustomerAddressDataModel) => {
-        const selectedIndex = selected.findIndex(t => compareICustomerAddressIdentifier(t, item));
-        let newSelected: readonly ICustomerAddressIdentifier[] = [];
-
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, getICustomerAddressIdentifier(item));
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1),
-            );
-        }
-
-        setSelected(newSelected);
-    };
-
-
-    // 2.2. Top Toolbar - Delete Selected Rows/Items
-    const handleDeleteSelected = () => {
-        dispatch(bulkDelete(selected.map(t => t)));
-        // console.log("handleDeleteSelected");
-    };
 
     // 3.1. Top Toolbar - Advanced Search Dialog
     const [openAdvancedSearchDialog, setOpenAdvancedSearchDialog] = useState(false);
@@ -132,15 +84,6 @@ export default function ListsPartial(props: ListsPartialViewProps<ICustomerAddre
         }
     };
 
-    // 4.2. Bottom Toolbar - Pagination - Load More
-    const handlePaginationLoadMore = (event: React.ChangeEvent<unknown>, value: number) => {
-        advancedQuery.pageIndex++;
-        if (!isLoading) {
-            setIsLoading(true);
-            dispatch(search(advancedQuery)).finally(() => { setIsLoading(false); });
-        }
-    };
-
     useEffect(() => {
         if (initialLoadFromServer) {
             submitAdvancedSearch(advancedQuery);
@@ -174,17 +117,17 @@ export default function ListsPartial(props: ListsPartialViewProps<ICustomerAddre
             rowCount,
             submitAdvancedSearch,
 
-            setSelected,
-            numSelected,
-            handleSelectAllClick,
+            setSelected: null,
+            numSelected: 0,
+            handleSelectAllClick: null,
 
-            handleDeleteSelected,
+            handleDeleteSelected: null,
 
             listViewOption,
             setListViewOption,
 
-            itemsPerRow,
-            setItemsPerRow,
+            itemsPerRow: 1,
+            setItemsPerRow: null,
 
             serverOrderBys,
 
@@ -192,8 +135,8 @@ export default function ListsPartial(props: ListsPartialViewProps<ICustomerAddre
             handleAdvancedSearchExpandClick,
             handleAdvancedSearchDialogOpen,
 
-            hasAddNewButton: addNewButtonContainer === ContainerOptions.ListToolBar,
-            handleAddNewClick: () => { navigate('/customerAddress/create'); },
+            hasAddNewButton: false,
+            handleAddNewClick: null,
         } as ListToolBarProps<ICustomerAddressAdvancedQuery, ICustomerAddressIdentifier>;
 
         return <ListToolBar {...topToolbarProps} />
@@ -207,53 +150,21 @@ export default function ListsPartial(props: ListsPartialViewProps<ICustomerAddre
                     {hasAdvancedSearch && <Collapse in={advancedSearchExpanded} timeout="auto" unmountOnExit>
                         <AdvancedSearchPartial advancedQuery={advancedQuery} submitAction={submitAdvancedSearch} doneAction={() => { handleAdvancedSearchExpandClose(); }} />
                     </Collapse>}
-                    {listViewOption === ListViewOptions.SlideShow && <CarouselPartial
-                        listViewOption={ListViewOptions.SlideShow}
-                        listItems={listItems}
-                        itemsPerRow={itemsPerRow}
-						hasItemsSelect={hasListToolBar && (listToolBarSetting?.hasItemsSelect ?? false)}
-                        numSelected={numSelected}
-                        selected={selected}
-                        handleChangePage={handlePaginationLoadMore}
-                        handleSelectItemClick={handleSelectItemClick}
-                        handleItemDialogOpen={handleItemDialogOpen}
-                        currentItemOnDialog={currentItemOnDialog}
-                        setCurrentItemOnDialog={setCurrentItemOnDialog}
-                        currentItemIndex={currentItemIndex}
-                        setCurrentItemIndex={setCurrentItemIndex}
-                        isSelected={isSelected}
-                    />}
                     {listViewOption === ListViewOptions.Table && <HtmlTablePartial
                         listViewOption={ListViewOptions.Table}
                         listItems={listItems}
-                        itemsPerRow={itemsPerRow}
-						hasItemsSelect={hasListToolBar && (listToolBarSetting?.hasItemsSelect ?? false)}
-                        numSelected={numSelected}
-                        selected={selected}
+                        itemsPerRow={1}
+						hasItemsSelect={false}
+                        numSelected={0}
+                        selected={[]}
                         handleChangePage={handlePaginationChangePage}
-                        handleSelectItemClick={handleSelectItemClick}
+                        handleSelectItemClick={null}
                         handleItemDialogOpen={handleItemDialogOpen}
                         currentItemOnDialog={currentItemOnDialog}
                         setCurrentItemOnDialog={setCurrentItemOnDialog}
                         currentItemIndex={currentItemIndex}
                         setCurrentItemIndex={setCurrentItemIndex}
-                        isSelected={isSelected}
-                    />}
-                    {listViewOption === ListViewOptions.Tiles && <TilesPartial
-                        listViewOption={ListViewOptions.Tiles}
-                        listItems={listItems}
-                        itemsPerRow={itemsPerRow}
-						hasItemsSelect={hasListToolBar && (listToolBarSetting?.hasItemsSelect ?? false)}
-                        numSelected={numSelected}
-                        selected={selected}
-                        handleChangePage={handlePaginationLoadMore}
-                        handleSelectItemClick={handleSelectItemClick}
-                        handleItemDialogOpen={handleItemDialogOpen}
-                        currentItemOnDialog={currentItemOnDialog}
-                        setCurrentItemOnDialog={setCurrentItemOnDialog}
-                        currentItemIndex={currentItemIndex}
-                        setCurrentItemIndex={setCurrentItemIndex}
-                        isSelected={isSelected}
+                        isSelected={(identifier: ICustomerAddressIdentifier) => { return false; }}
                     />}
                 </Paper>
             </Box>
@@ -265,22 +176,12 @@ export default function ListsPartial(props: ListsPartialViewProps<ICustomerAddre
             <Dialog open={openItemDialog} fullWidth={true} maxWidth={'lg'}>
                 <ItemViewsPartial {...crudItemPartialViewProps} 
                     item={currentItemOnDialog} 
-                    isItemSelected={!!currentItemOnDialog && isSelected(getICustomerAddressIdentifier(currentItemOnDialog))} 
+                    isItemSelected={false} 
                     totalCountInList={listItems.length} 
                     itemIndex={currentItemIndex} 
                     setItemIndex={setCurrentItemIndex} 
-                    handleSelectItemClick={handleSelectItemClick} />
+                    handleSelectItemClick={null} />
             </Dialog>
-            {addNewButtonContainer === ContainerOptions.Absolute && <Snackbar
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                open={true}
-            >
-                <ButtonGroup orientation='horizontal'>
-                    <IconButton onClick={() => { navigate('/customerAddress/create'); }} aria-label="create" component="label" size="large" color='primary' sx={{ backgroundColor: 'gray' }}>
-                        <AddIcon />
-                    </IconButton>
-                </ButtonGroup>
-            </Snackbar>}
 		</>
     );
 }

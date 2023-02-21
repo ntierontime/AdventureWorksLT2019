@@ -42,40 +42,12 @@
                         <SwipeView>
                             <SwipeView.LeftItems>
                                 <SwipeItems>
-                                    <SwipeItem Text="{l:Localize Delete}"
-                                        BackgroundColor="LightPink"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDeletePopupCommand}"
-                                        CommandParameter="{Binding ErrorLogID}" />
                                     <SwipeItem Text="{l:Localize Details}"
                                         BackgroundColor="LightPink"
                                         Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDetailsPopupCommand}"
                                         CommandParameter="{Binding ErrorLogID}" />
-                                    <SwipeItem Text="{l:Localize Edit}"
-                                        BackgroundColor="LightPink"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchEditPopupCommand}"
-                                        CommandParameter="{Binding ErrorLogID}" />
                                 </SwipeItems>
                             </SwipeView.LeftItems>
-                            <SwipeView.RightItems>
-                                <SwipeItems>
-                                    <SwipeItem Text="{l:Localize Delete}"
-                                        BackgroundColor="LightPink"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDeletePageCommand}"
-                                        CommandParameter="{Binding ErrorLogID}" />
-                                    <SwipeItem Text="{l:Localize Details}"
-                                        BackgroundColor="LightPink"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDetailsPageCommand}"
-                                        CommandParameter="{Binding ErrorLogID}" />
-                                    <SwipeItem Text="{l:Localize Edit}"
-                                        BackgroundColor="LightPink"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchEditPageCommand}"
-                                        CommandParameter="{Binding ErrorLogID}" />
-                                    <SwipeItem Text="{l:Localize Dashboard}"
-                                        BackgroundColor="LightPink"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDashboardPageCommand}"
-                                        CommandParameter="{Binding ErrorLogID}" />
-                                </SwipeItems>
-                            </SwipeView.RightItems>
                             <Grid Padding="10" HorizontalOptions="FillAndExpand">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="60" />
@@ -101,26 +73,8 @@
                                     Style="{StaticResource SubTitleLabelStyle}"
                                     Text="{Binding ErrorTime}" />
                                 <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"  Margin="0" Padding="5,0,10,0">
-                                    <Button Style="{StaticResource ToolbarDeleteIconButtonStyle}" Margin="0"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDeletePopupCommand}"
-                                        CommandParameter="{Binding ErrorLogID}" />
                                     <Button Style="{StaticResource ToolbarDetailsIconButtonStyle}" Margin="0"
                                         Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDetailsPopupCommand}"
-                                        CommandParameter="{Binding ErrorLogID}" />
-                                    <Button Style="{StaticResource ToolbarEditIconButtonStyle}" Margin="0"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchEditPopupCommand}"
-                                        CommandParameter="{Binding ErrorLogID}" />
-                                    <Button Style="{StaticResource ToolbarDeleteIconButtonStyle}" Margin="0"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDeletePageCommand}"
-                                        CommandParameter="{Binding ErrorLogID}" />
-                                    <Button Style="{StaticResource ToolbarDetailsIconButtonStyle}" Margin="0"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDetailsPageCommand}"
-                                        CommandParameter="{Binding ErrorLogID}" />
-                                    <Button Style="{StaticResource ToolbarEditIconButtonStyle}" Margin="0"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchEditPageCommand}"
-                                        CommandParameter="{Binding ErrorLogID}" />
-                                    <Button Style="{StaticResource ToolbarDashboardIconButtonStyle}" Margin="0"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchDashboardPageCommand}"
                                         CommandParameter="{Binding ErrorLogID}" />
                                 </HorizontalStackLayout>
                             </Grid>
@@ -130,10 +84,6 @@
             </CollectionView>
         </RefreshView>
         <HorizontalStackLayout x:Name="ButtonsWhenNonMultipleSelection" HorizontalOptions="End" VerticalOptions="End" Margin="0,0,20,20" IsVisible="{Binding CurrentSelectionMode, Converter={StaticResource ListSelectModeSingleConverter}}" >
-            <Button Style="{StaticResource AddIconButtonStyle}"
-                Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchCreatePopupCommand}" />
-            <Button Style="{StaticResource AddIconButtonStyle}"
-                Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.LaunchCreatePageCommand}" />
             <Button Grid.Column="2" Style="{StaticResource LaunchAdvancedSearchIconButtonStyle}"
                     Command="{Binding AdvancedSearchLaunchCommand}"
                     />
@@ -147,16 +97,5 @@
                 <Label Text="{x:Static fmif:MaterialIcons.South}" FontFamily="{x:Static fmif:MaterialIconFamilies.MaterialIconRegular}" FontSize="Medium" VerticalOptions="CenterAndExpand" HorizontalOptions="End" TextColor="Black" IsVisible="{Binding CurrentQueryOrderBySetting.Direction, Converter={StaticResource DirectionAscendingConverter}}"></Label>
             </Grid>
         </HorizontalStackLayout>
-        <VerticalStackLayout
-            x:Name="ButtonsWhenMultipleSelection"
-            HorizontalOptions="End" VerticalOptions="End" Margin="0,0,20,20"
-            IsVisible="{Binding CurrentSelectionMode, Converter={StaticResource ListSelectModeMultipleConverter}}" >
-            <Button
-                Command="{Binding BulkDeleteCommand}"
-                Text="{l:Localize Delete}" />
-            <Button
-                Command="{Binding ClearSelectedItemsCommand}"
-                Text="{l:Localize Clear}" />
-        </VerticalStackLayout>
     </Grid>
 </ContentPage>

@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { DatePicker } from '@mui/x-date-pickers';
 import { INameValuePair } from 'src/shared/dataModels/INameValuePair';
 import { codeListsApi } from 'src/apiClients/CodeListsApi';
-import { defaultIProductCategoryAdvancedQuery } from 'src/dataModels/IProductCategoryQueries';
+import { IProductCategoryAdvancedQuery, defaultIProductCategoryAdvancedQuery } from 'src/dataModels/IProductCategoryQueries';
 import { defaultIProductModelAdvancedQuery } from 'src/dataModels/IProductModelQueries';
 
 
@@ -53,6 +53,9 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
 
 
 
+    const [productCategory_ParentIDCodeList, setProductCategory_ParentIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.parent_Name, value: item.parentID, selected: false }]);
+
+    const [iProductCategoryAdvancedQuery_ProductCategoryID, setIProductCategoryAdvancedQuery_ProductCategoryID] = useState<IProductCategoryAdvancedQuery>({ ...defaultIProductCategoryAdvancedQuery(), parentProductCategoryID: item.parentID, pageSize: 10000 });
     const [productCategory_ProductCategoryIDCodeList, setProductCategory_ProductCategoryIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productCategory_Name, value: item.productCategoryID, selected: false }]);
 
     const [productModel_ProductModelIDCodeList, setProductModel_ProductModelIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.productModel_Name, value: item.productModelID, selected: false }]);
@@ -65,9 +68,9 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
 
         codeListsApi.getProductCategoryCodeList({ ...defaultIProductCategoryAdvancedQuery(), pageSize: 10000 }).then((res) => {
             if (res.status === "OK") {
-                setProductCategory_ProductCategoryIDCodeList(res.responseBody);
-                setValue('productCategoryID', res.responseBody[0].value);
-				
+                setProductCategory_ParentIDCodeList(res.responseBody);
+                setValue('parentID', res.responseBody[0].value);
+				onParentIDChanged_LoadChildren(res.responseBody[0].value);
             }
         });
 
@@ -86,6 +89,49 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
 
 
 
+    const onParentIDChanged = (event: React.PointerEvent<INameValuePair>) => {
+        console.log("ParentID");
+        // name is the property name, value is the selected value
+        const nameValuePair = event.target as unknown as INameValuePair;
+
+        const parentID = nameValuePair.value as number;
+        onParentIDChanged_LoadChildren(parentID);
+    }
+
+    const onParentIDChanged_LoadChildren = (parentID: number) => {
+
+        const iProductCategoryAdvancedQuery_ProductCategoryID_Here = { ...iProductCategoryAdvancedQuery_ProductCategoryID, parentProductCategoryID: parentID };
+        setIProductCategoryAdvancedQuery_ProductCategoryID(iProductCategoryAdvancedQuery_ProductCategoryID_Here);
+        getProductCategory_ProductCategoryIDCodeList(iProductCategoryAdvancedQuery_ProductCategoryID, true, false);
+    }
+
+
+    const getProductCategory_ProductCategoryIDCodeList = (query: IProductCategoryAdvancedQuery, toSetSelectedValue: boolean, setCodeListToEmpty: boolean) => {
+        if (!setCodeListToEmpty) {
+            codeListsApi.getProductCategoryCodeList({ ...query, pageSize: 10000 }).then((res) => {
+                if (res.status === "OK") {
+                    if (toSetSelectedValue) {
+                        if (res.responseBody.findIndex(t => t.value === item.productCategoryID) === -1) {
+                            if (res.responseBody.length > 0) {
+                                setValue('productCategoryID', res.responseBody[0].value);
+                            }
+                            else {
+                                setValue('productCategoryID', -1);
+                            }
+                        }
+                        else {
+                            setValue('productCategoryID', item.productCategoryID);
+                        }
+                    }
+                    setProductCategory_ProductCategoryIDCodeList(res.responseBody);
+                }
+            });
+        }
+        else {
+            setProductCategory_ProductCategoryIDCodeList([]);
+            setValue('productCategoryID', -1);
+        }
+    }
 
     const onSubmit = () => {
         setCreating(true);
@@ -278,6 +324,24 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
                         </Grid>
                         <Grid item {...gridColumns}>
                             <TextField
+                                label={t("ParentID")}
+                                id="parentIDSelect"
+                                select
+                                name='parentID'
+                                {...register("parentID", productFormValidationWhenCreate.parentID)}
+                                autoComplete='parentID'
+                                variant="outlined"
+                                fullWidth
+                                defaultValue={item.parentID}
+                            	onChange={(event: any) => { onParentIDChanged(event) }}
+                            >
+                                {productCategory_ParentIDCodeList && productCategory_ParentIDCodeList.map((v, index) => {
+                                    return (<MenuItem key={v.value} value={v.value}>{v.name}</MenuItem>)
+                                })}
+                            </TextField>
+                        </Grid>
+                        <Grid item {...gridColumns}>
+                            <TextField
                                 label={t("ProductCategoryID")}
                                 id="productCategoryIDSelect"
                                 select
@@ -317,6 +381,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
                                 onChange={(event: string) => { setSellStartDate(event); setValue('sellStartDate', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='sellStartDate'
                             			{...register("sellStartDate", productFormValidationWhenCreate.sellStartDate)}
@@ -333,6 +398,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
                                 onChange={(event: string) => { setSellEndDate(event); setValue('sellEndDate', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='sellEndDate'
                             			{...register("sellEndDate", productFormValidationWhenCreate.sellEndDate)}
@@ -349,6 +415,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
                                 onChange={(event: string) => { setDiscontinuedDate(event); setValue('discontinuedDate', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='discontinuedDate'
                             			{...register("discontinuedDate", productFormValidationWhenCreate.discontinuedDate)}
@@ -393,6 +460,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
                                 onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='modifiedDate'
                             			{...register("modifiedDate", productFormValidationWhenCreate.modifiedDate)}

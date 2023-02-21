@@ -4,8 +4,6 @@ import { Checkbox, FormControlLabel, IconButton, Pagination, Popover, Stack, Swi
 
 import { Link } from 'react-router-dom';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
-import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
-import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
@@ -140,7 +138,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductCat
                                         key={key}
                                         selected={isItemSelected}
                                     >
-                                        {!!handleSelectItemClick && <TableCell padding="checkbox">
+                                        {hasItemsSelect && !!handleSelectItemClick && <TableCell padding="checkbox">
                                             <Checkbox
                                                 color="primary"
                                                 checked={isItemSelected}
@@ -196,22 +194,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductCat
                 }}
                 disableRestoreFocus
             >
-                <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, null) }}>
-                    <DeleteIcon />
-                </IconButton>
-                <IconButton aria-label="details" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Details, null) }}>
-                    <BusinessCenterIcon />
-                </IconButton>
                 <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit, null) }}>
-                    <EditIcon />
-                </IconButton>
-                <IconButton aria-label="delete" color="primary" onClick={() => { navigate("/productCategory/delete/" + getRouteParamsOfIProductCategoryIdentifier(currentItemOnDialog)) }}>
-                    <DeleteIcon />
-                </IconButton>
-                <IconButton aria-label="details" color="primary" onClick={() => { navigate("/productCategory/details/" + getRouteParamsOfIProductCategoryIdentifier(currentItemOnDialog)) }}>
-                    <BusinessCenterIcon />
-                </IconButton>
-                <IconButton aria-label="edit" color="primary" onClick={() => { navigate("/productCategory/edit/" + getRouteParamsOfIProductCategoryIdentifier(currentItemOnDialog)) }}>
                     <EditIcon />
                 </IconButton>
                 <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/productCategory/dashboard/" + getRouteParamsOfIProductCategoryIdentifier(currentItemOnDialog)) }}>

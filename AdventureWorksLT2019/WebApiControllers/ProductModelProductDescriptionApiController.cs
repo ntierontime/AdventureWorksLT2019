@@ -37,60 +37,6 @@ namespace AdventureWorksLT2019.WebApiControllers
             return ReturnActionResult(serviceResponse);
         }
 
-        // [Authorize]
-        [Route("{ProductModelID}/{ProductDescriptionID}/{Culture}")]
-        [HttpGet]
-        public async Task<ActionResult<ProductModelProductDescriptionCompositeModel>> GetCompositeModel([FromRoute]ProductModelProductDescriptionIdentifier id)
-        {
-            var listItemRequests = new Dictionary<ProductModelProductDescriptionCompositeModel.__DataOptions__, CompositeListItemRequest>();
-
-            var serviceResponse = await _thisService.GetCompositeModel(id, listItemRequests);
-            return Ok(serviceResponse);
-        }
-
-        // [Authorize]
-        [HttpPut]
-        public async Task<ActionResult> BulkDelete([FromBody]List<ProductModelProductDescriptionIdentifier> ids)
-        {
-            var serviceResponse = await _thisService.BulkDelete(ids);
-            return ReturnWithoutBodyActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [Route("{ProductModelID}/{ProductDescriptionID}/{Culture}")]
-        [HttpPut]
-        public async Task<ActionResult<Response<ProductModelProductDescriptionDataModel.DefaultView>>> Put([FromRoute]ProductModelProductDescriptionIdentifier id, [FromBody]ProductModelProductDescriptionDataModel input)
-        {
-            var serviceResponse = await _thisService.Update(id, input);
-            return ReturnActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [Route("{ProductModelID}/{ProductDescriptionID}/{Culture}")]
-        [HttpGet]
-        public async Task<ActionResult<Response<ProductModelProductDescriptionDataModel.DefaultView>>> Get([FromRoute]ProductModelProductDescriptionIdentifier id)
-        {
-            var serviceResponse = await _thisService.Get(id);
-            return ReturnActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [HttpPost]
-        public async Task<ActionResult<Response<ProductModelProductDescriptionDataModel.DefaultView>>> Post(ProductModelProductDescriptionDataModel input)
-        {
-            var serviceResponse = await _thisService.Create(input);
-            return ReturnActionResult(serviceResponse);
-        }
-
-        // [Authorize]
-        [Route("{ProductModelID}/{ProductDescriptionID}/{Culture}")]
-        [HttpDelete]
-        public async Task<ActionResult> Delete([FromRoute]ProductModelProductDescriptionIdentifier id)
-        {
-            var serviceResponse = await _thisService.Delete(id);
-            return ReturnWithoutBodyActionResult(serviceResponse);
-        }
-
         /*
         // [Authorize]
         [HttpGet, ActionName("HeartBeat")]

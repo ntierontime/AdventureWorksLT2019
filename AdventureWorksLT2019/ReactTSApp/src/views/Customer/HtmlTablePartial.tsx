@@ -3,8 +3,6 @@ import { useSelector } from 'react-redux';
 import { Checkbox, FormControlLabel, IconButton, Pagination, Popover, Stack, Switch, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
-import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
-import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
@@ -199,7 +197,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ICustomerDa
                                         key={key}
                                         selected={isItemSelected}
                                     >
-                                        {!!handleSelectItemClick && <TableCell padding="checkbox">
+                                        {hasItemsSelect && !!handleSelectItemClick && <TableCell padding="checkbox">
                                             <Checkbox
                                                 color="primary"
                                                 checked={isItemSelected}
@@ -265,22 +263,7 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ICustomerDa
                 }}
                 disableRestoreFocus
             >
-                <IconButton aria-label="delete" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Delete, null) }}>
-                    <DeleteIcon />
-                </IconButton>
-                <IconButton aria-label="details" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Details, null) }}>
-                    <BusinessCenterIcon />
-                </IconButton>
                 <IconButton aria-label="edit" color="primary" onClick={() => { handleItemDialogOpen(ViewItemTemplates.Edit, null) }}>
-                    <EditIcon />
-                </IconButton>
-                <IconButton aria-label="delete" color="primary" onClick={() => { navigate("/customer/delete/" + getRouteParamsOfICustomerIdentifier(currentItemOnDialog)) }}>
-                    <DeleteIcon />
-                </IconButton>
-                <IconButton aria-label="details" color="primary" onClick={() => { navigate("/customer/details/" + getRouteParamsOfICustomerIdentifier(currentItemOnDialog)) }}>
-                    <BusinessCenterIcon />
-                </IconButton>
-                <IconButton aria-label="edit" color="primary" onClick={() => { navigate("/customer/edit/" + getRouteParamsOfICustomerIdentifier(currentItemOnDialog)) }}>
                     <EditIcon />
                 </IconButton>
                 <IconButton aria-label="dashboard" color="primary" onClick={() => { navigate("/customer/dashboard/" + getRouteParamsOfICustomerIdentifier(currentItemOnDialog)) }}>

@@ -29,10 +29,10 @@ export default function IndexPage() {
         addNewButtonContainer: ContainerOptions.Absolute, // at bottom-right using SnackBar
         listToolBarSetting: {
             textSearchPlaceHolder: t("Search") + ' ' + t("ErrorLog"),
-            hasListViewOptionsSelect: true,
-	        availableListViewOptions: [ListViewOptions.SlideShow, ListViewOptions.Table, ListViewOptions.Tiles],
-            hasItemsSelect: true,
-            hasBulkDelete: true,
+            hasListViewOptionsSelect: false,
+	        availableListViewOptions: [ListViewOptions.Table],
+            hasItemsSelect: false,
+            hasBulkDelete: false,
             hasBulkUpdate: false,
             hasItemsPerRowSelect: true, // When "Tiles"
             hasPageSizeSelect: true,    // When "Table"
@@ -42,6 +42,11 @@ export default function IndexPage() {
             hasAdvancedSearchDialog: true,
         }
     } as ListsPartialViewProps<IErrorLogAdvancedQuery, IErrorLogDataModel>;
+	
+	// // if you want to change page title <html><head><title>...</title></head></html>
+    // useEffect(() => {
+    //     document.title = t("ErrorLog") + ":" + t("_APPLICATION_TITLE_");
+    // }, []);
 
     return (
         <ListsPartial {...listsPartialViewProps} />

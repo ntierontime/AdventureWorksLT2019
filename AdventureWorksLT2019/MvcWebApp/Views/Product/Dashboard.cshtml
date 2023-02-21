@@ -16,43 +16,11 @@
     <div class="col-12 col-md-8 col-lg-9 nopadding">
         <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="moredetails-tab" data-bs-toggle="tab" data-bs-target="#moredetails" type="button" role="tab" aria-controls="moredetails" aria-selected="true"><i class="fa fa-list me-2"></i>@localizor.Get("Tab_MoreDetails")</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="lists-tab" data-bs-toggle="tab" data-bs-target="#lists" type="button" role="tab" aria-controls="lists" aria-selected="true"><i class="fa fa-list me-2"></i>@localizor.Get("Tab_Lists")</button>
+                <button class="nav-link active" id="lists-tab" data-bs-toggle="tab" data-bs-target="#lists" type="button" role="tab" aria-controls="lists" aria-selected="true"><i class="fa fa-list me-2"></i>@localizor.Get("Tab_Lists")</button>
             </li>
         </ul>
         <div class="tab-content" id="dashboardTabContent">
-            <div class="tab-pane fade show active" id="moredetails" role="tabpanel" aria-labelledby="moredetails-tab">
-                <div class="accordion" id="moreDetailsPanels">
-                    @if (Model!.Responses.ContainsKey(ProductCompositeModel.__DataOptions__.ProductCategory))
-                    {
-                        var vm = await dashboardViewModelHelper.GetProductCategoryMvcItemViewModel(Model!.ProductCategory!, Model.Get(ProductCompositeModel.__DataOptions__.ProductCategory));
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="panelsStayOpen-heading-productCategory">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-productCategory" aria-expanded="true" aria-controls="panelsStayOpen-productCategory">
-                                    @localizor.Get("Section_ProductCategory")
-                                </button>
-                            </h2>
-                            <div id="panelsStayOpen-collapse-productCategory" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-heading-productCategory">
-                                <div class="accordion-body p-0">
-                                    <div class="nt-list-wrapper"
-                                         data-nt-bs-modalsize="Large"
-                                         data-nt-loaditem-url="@Url.Action("AjaxLoadItem", "ProductCategory")"
-                                         data-nt-createitem-url="@Url.Action("AjaxCreate", "ProductCategory")"
-                                         data-nt-updateitem-url="@Url.Action("AjaxEdit", "ProductCategory")"
-                                         data-nt-deleteitem-url="@Url.Action("AjaxDelete", "ProductCategory")">
-                                        <div class="nt-listitem" data-nt-route-id="@routeId">
-                                            @await Html.PartialAsync("~/Views/ProductCategory/_TileDetailsItem.cshtml", vm)
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
-            <div class="tab-pane fade show" id="lists" role="tabpanel" aria-labelledby="lists-tab">
+            <div class="tab-pane fade show active" id="lists" role="tabpanel" aria-labelledby="lists-tab">
                 <div class="accordion" id="listsPanels">
                     @if (Model!.Responses.ContainsKey(ProductCompositeModel.__DataOptions__.SalesOrderDetails_Via_ProductID))
                     {
@@ -94,8 +62,7 @@
              data-nt-bs-modalsize="Large"
              data-nt-loaditem-url="@Url.Action("AjaxLoadItem", "Product")"
              data-nt-createitem-url="@Url.Action("AjaxCreate", "Product")"
-             data-nt-updateitem-url="@Url.Action("AjaxEdit", "Product")"
-             data-nt-deleteitem-url="@Url.Action("AjaxDelete", "Product")">
+             data-nt-updateitem-url="@Url.Action("AjaxEdit", "Product")">
             <div class="nt-listitem" data-nt-route-id="@routeId">
                 @await Html.PartialAsync("~/Views/Product/_TileDetailsItem.cshtml", masterVM)
             </div>
