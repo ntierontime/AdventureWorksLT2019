@@ -8,6 +8,7 @@ import { PaginationOptions } from "src/shared/dataModels/PaginationOptions";
 import { RootState } from "src/store/CombinedReducers";
 
 import { IBuildVersionDataModel } from 'src/dataModels/IBuildVersionDataModel';
+import { IBuildVersionCompositeModel } from "src/dataModels/IBuildVersionCompositeModel";
 import { getRouteParamsOfIBuildVersionIdentifier, IBuildVersionAdvancedQuery, IBuildVersionIdentifier } from 'src/dataModels/IBuildVersionQueries';
 import { buildVersionApi } from "src/apiClients/BuildVersionApi";
 
@@ -88,6 +89,14 @@ export const delete1 = createAsyncThunk(
     async (identifier: IBuildVersionIdentifier, { dispatch }) => {
         const response = await buildVersionApi.Delete(identifier);
         return { response, identifier };
+    }
+)
+
+export const createComposite = createAsyncThunk(
+    'createCompositeBuildVersion',
+    async (params: IBuildVersionCompositeModel, { dispatch }) => {
+        const response = await buildVersionApi.CreateComposite(params);
+        return response;
     }
 )
 
@@ -265,6 +274,21 @@ const BuildVersionSlice = createSlice({
         builder.addCase(delete1.rejected, (state, action) => {
 
             // console.log("delete.rejected");
+        });
+
+        builder.addCase(createComposite.pending, (state) => {
+
+            // console.log("createComposite.pending");
+        });
+        builder.addCase(createComposite.fulfilled, (state, { payload }) => {
+            if (!!payload && payload.status === 'OK') {
+                entityAdapter.upsertOne(state, { ...payload.responseBody, itemUIStatus______: ItemUIStatus.New });
+            }
+            // console.log("createComposite.fulfilled");
+        });
+        builder.addCase(createComposite.rejected, (state, action) => {
+
+            // console.log("createComposite.rejected");
         });
     }
 });

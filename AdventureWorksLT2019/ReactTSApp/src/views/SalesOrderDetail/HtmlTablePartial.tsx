@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Checkbox, FormControlLabel, IconButton, Pagination, Popover, Stack, Switch, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
+import { Checkbox, FormControlLabel, IconButton, Link, Pagination, Popover, Stack, Switch, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 
-import { Link } from 'react-router-dom';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -180,11 +179,11 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ISalesOrder
                                             scope="row"
                                             padding="none"
                                         >
-                                            <Link to={"/salesOrderHeader/Details/" + row.salesOrderID}>{row.salesOrderHeader_Name}</Link>
+                                            <Link href={"/salesOrderHeader/Details/" + row.salesOrderID}>{row.salesOrderHeader_Name}</Link>
                                         </TableCell>
                                         <TableCell align='right'>{row.salesOrderDetailID}</TableCell>
                                         <TableCell align='right'>{t(i18nFormats.number.format, { val: row.orderQty })}</TableCell>
-                                        <TableCell align='right'><Link to={"/product/Details/" + row.productID}>{row.product_Name}</Link></TableCell>
+                                        <TableCell align='right'><Link href={"/product/Details/" + row.productID}>{row.product_Name}</Link></TableCell>
                                         <TableCell align='right'>{t(i18nFormats.double.format, { val: row.unitPrice })}</TableCell>
                                         <TableCell align='right'>{t(i18nFormats.double.format, { val: row.unitPriceDiscount })}</TableCell>
                                         <TableCell align='right'>{t(i18nFormats.double.format, { val: row.lineTotal })}</TableCell>

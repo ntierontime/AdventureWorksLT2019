@@ -176,7 +176,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IProductDescri
 
     return (
         <Card>
-            <CardHeader
+            {crudViewContainer !== CrudViewContainers.Wizard && <CardHeader
                 avatar={
                     <Avatar sx={avatarStyle} aria-label={item.description}>
                         {avatar}
@@ -188,18 +188,18 @@ export default function DeletePartial(props: ItemPartialViewProps<IProductDescri
                 </>}
                 title={item.description}
                 subheader={t(i18nFormats.dateTime.format, { val: new Date(item.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-            />
-            {buttonContainer === ContainerOptions.ItemCardToolbar && <CardActions disableSpacing>
+            />}
+            {crudViewContainer !== CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardToolbar && <CardActions disableSpacing>
                 {renderButtonGroup_IconButtons()}
             </CardActions>}
-            <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
+            {crudViewContainer !== CrudViewContainers.Wizard && !!deleteMessage && <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
                 <Typography variant="subtitle1">
                     {deleteMessage}
                 </Typography>
-            </CardContent>
+            </CardContent>}
             <CardContent>
                 <Box sx={{ ...scrollableCardContent }}>
-                    <Grid container spacing={2}>
+                    <Grid container spacing={1}>
                         <Grid item {...gridColumns}>
                             <TextField
                                 name='productDescriptionID'
@@ -246,6 +246,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IProductDescri
                                 onChange={() => { }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='modifiedDate'
                                         {...params}
@@ -258,7 +259,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IProductDescri
                     </Grid>
 				</Box>
             </CardContent>
-            {buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
+            {crudViewContainer !== CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
                 {renderButtonGroup_TextAndIconButtons()}
             </CardActions>}
         </Card >

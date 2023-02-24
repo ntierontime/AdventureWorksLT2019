@@ -711,6 +711,62 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
+        public async Task<Response<ProductDataModel.DefaultView>> CreateComposite(ProductCompositeModel input)
+        {
+            if (input == null)
+                return await Task<Response<ProductDataModel.DefaultView>>.FromResult(new Response<ProductDataModel.DefaultView> { Status = HttpStatusCode.BadRequest });
+            try
+            {
+                // 1. Master: Product
+                var master = new Product
+                {
+                    // Properties.1. Value Type Properties
+                    Name = input.__Master__!.Name,
+                    ProductNumber = input.__Master__!.ProductNumber,
+                    Color = input.__Master__!.Color,
+                    StandardCost = input.__Master__!.StandardCost,
+                    ListPrice = input.__Master__!.ListPrice,
+                    Size = input.__Master__!.Size,
+                    Weight = input.__Master__!.Weight,
+                    ProductCategoryID = input.__Master__!.ProductCategoryID,
+                    ProductModelID = input.__Master__!.ProductModelID,
+                    SellStartDate = input.__Master__!.SellStartDate,
+                    SellEndDate = input.__Master__!.SellEndDate,
+                    DiscontinuedDate = input.__Master__!.DiscontinuedDate,
+                    ThumbNailPhoto = input.__Master__!.ThumbNailPhoto,
+                    ThumbnailPhotoFileName = input.__Master__!.ThumbnailPhotoFileName,
+                    rowguid = input.__Master__!.rowguid,
+                    ModifiedDate = input.__Master__!.ModifiedDate,
+                };
+                // 2.1.1. ListTable Product.SalesOrderDetail
+                if(input.SalesOrderDetails_Via_ProductID != null)
+                {
+                    foreach(var item in input.SalesOrderDetails_Via_ProductID)
+                    {
+                        master.SalesOrderDetail.Add(new SalesOrderDetail
+                        {
+                                OrderQty = item.OrderQty,
+                                ProductID = item.ProductID,
+                                UnitPrice = item.UnitPrice,
+                                UnitPriceDiscount = item.UnitPriceDiscount,
+                                rowguid = item.rowguid,
+                                ModifiedDate = item.ModifiedDate,
+                        });
+                    }
+                }
+
+                _dbcontext.Product.Add(master);
+
+                await _dbcontext.SaveChangesAsync();
+
+                return await Get(new ProductIdentifier { ProductID = master.ProductID, });
+            }
+            catch (Exception ex)
+            {
+                return await Task<Response<ProductDataModel.DefaultView>>.FromResult(new Response<ProductDataModel.DefaultView> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
     }
 }
 

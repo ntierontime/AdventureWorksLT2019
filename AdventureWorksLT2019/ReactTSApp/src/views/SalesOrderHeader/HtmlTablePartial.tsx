@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Checkbox, FormControlLabel, IconButton, Pagination, Popover, Stack, Switch, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
+import { Checkbox, FormControlLabel, IconButton, Link, Pagination, Popover, Stack, Switch, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 
-import { Link } from 'react-router-dom';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -269,9 +268,9 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ISalesOrder
                                         <TableCell align='right'>{row.salesOrderNumber}</TableCell>
                                         <TableCell align='right'>{row.purchaseOrderNumber}</TableCell>
                                         <TableCell align='right'>{row.accountNumber}</TableCell>
-                                        <TableCell align='right'><Link to={"/customer/Details/" + row.customerID}>{row.customer_Name}</Link></TableCell>
-                                        <TableCell align='right'><Link to={"/address/Details/" + row.shipToAddressID}>{row.shipTo_Name}</Link></TableCell>
-                                        <TableCell align='right'><Link to={"/address/Details/" + row.billToAddressID}>{row.billTo_Name}</Link></TableCell>
+                                        <TableCell align='right'><Link href={"/customer/Details/" + row.customerID}>{row.customer_Name}</Link></TableCell>
+                                        <TableCell align='right'><Link href={"/address/Details/" + row.shipToAddressID}>{row.shipTo_Name}</Link></TableCell>
+                                        <TableCell align='right'><Link href={"/address/Details/" + row.billToAddressID}>{row.billTo_Name}</Link></TableCell>
                                         <TableCell align='right'>{row.shipMethod}</TableCell>
                                         <TableCell align='right'>{row.creditCardApprovalCode}</TableCell>
                                         <TableCell align='right'>{t(i18nFormats.double.format, { val: row.subTotal })}</TableCell>

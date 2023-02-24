@@ -132,7 +132,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IErrorLogData
 
     return (
         <Card sx={{ minHeight: '100%' }}>
-            <CardHeader
+            {crudViewContainer !== CrudViewContainers.Wizard && <CardHeader
                 avatar={
                     <Avatar sx={avatarStyle} aria-label={item.userName}>
                         {avatar}
@@ -141,13 +141,13 @@ export default function DetailsPartial(props: ItemPartialViewProps<IErrorLogData
                 action={buttonContainer === ContainerOptions.ItemCardHead && renderButtonGroup_IconButtons()}
                 title={item.userName}
                 subheader={t(i18nFormats.dateTime.format, { val: new Date(item.errorTime), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-            />
-            {buttonContainer === ContainerOptions.ItemCardToolbar && <CardActions disableSpacing>
+            />}
+            {crudViewContainer !== CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardToolbar && <CardActions disableSpacing>
                 {renderButtonGroup_IconButtons()}
             </CardActions>}
             <CardContent>
                 <Box sx={{ ...scrollableCardContent }}>
-                    <Grid container spacing={2}>
+                    <Grid container spacing={1}>
                         <Grid item {...gridColumns}>
                             <TextField
                                 name='errorLogID'
@@ -168,6 +168,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IErrorLogData
                                 onChange={() => { }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='errorTime'
                                         {...params}
@@ -271,7 +272,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IErrorLogData
                     </Grid>
 				</Box>
             </CardContent>
-            {/* {buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
+            {/* {crudViewContainer !== CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
                 {renderButtonGroup_IconButtons()}
             </CardActions>} */}
         </Card >

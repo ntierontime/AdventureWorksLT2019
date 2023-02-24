@@ -25,6 +25,8 @@ namespace AdventureWorksLT2019.RepositoryContracts
 
         Task<ListResponse<NameValuePair[]>> GetCodeList(
             SalesOrderHeaderAdvancedQuery query);
+
+        Task<Response<SalesOrderHeaderDataModel.DefaultView>> CreateComposite(SalesOrderHeaderCompositeModel input);
     }
 }
 

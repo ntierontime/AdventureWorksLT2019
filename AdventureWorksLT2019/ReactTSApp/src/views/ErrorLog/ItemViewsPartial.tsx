@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { CrudViewContainers } from 'src/shared/viewModels/CrudViewContainers';
 import { ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps';
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
-import { IErrorLogDataModel } from 'src/dataModels/IErrorLogDataModel';
+import { defaultErrorLog, IErrorLogDataModel } from 'src/dataModels/IErrorLogDataModel';
 import CreatePartial from './CreatePartial';
 import DeletePartial from './DeletePartial';
 import DetailsPartial from './DetailsPartial';
@@ -68,7 +68,7 @@ export default function ItemViewsPartial(props: ItemPartialViewProps<IErrorLogDa
     return (
         <>
             {viewItemTemplate === ViewItemTemplates.Create &&
-                <CreatePartial {...props} />
+                <CreatePartial {...props}  item = {defaultErrorLog()}/>
             }
             {viewItemTemplate === ViewItemTemplates.Delete &&
                 <DeletePartial {...props} previousAction={gotoPreviousItemOnDialog} nextAction={gotoNextItemOnDialog} changeViewItemTemplate={changeViewItemTemplate} doneAction={doneAction} />

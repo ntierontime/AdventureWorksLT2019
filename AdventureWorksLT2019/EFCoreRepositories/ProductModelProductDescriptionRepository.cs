@@ -546,6 +546,35 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
+        public async Task<Response<ProductModelProductDescriptionDataModel.DefaultView>> CreateComposite(ProductModelProductDescriptionCompositeModel input)
+        {
+            if (input == null)
+                return await Task<Response<ProductModelProductDescriptionDataModel.DefaultView>>.FromResult(new Response<ProductModelProductDescriptionDataModel.DefaultView> { Status = HttpStatusCode.BadRequest });
+            try
+            {
+                // 1. Master: ProductModelProductDescription
+                var master = new ProductModelProductDescription
+                {
+                    // Properties.1. Value Type Properties
+                    ProductModelID = input.__Master__!.ProductModelID,
+                    ProductDescriptionID = input.__Master__!.ProductDescriptionID,
+                    Culture = input.__Master__!.Culture,
+                    rowguid = input.__Master__!.rowguid,
+                    ModifiedDate = input.__Master__!.ModifiedDate,
+                };
+
+                _dbcontext.ProductModelProductDescription.Add(master);
+
+                await _dbcontext.SaveChangesAsync();
+
+                return await Get(new ProductModelProductDescriptionIdentifier { ProductModelID = master.ProductModelID, ProductDescriptionID = master.ProductDescriptionID, Culture = master.Culture, });
+            }
+            catch (Exception ex)
+            {
+                return await Task<Response<ProductModelProductDescriptionDataModel.DefaultView>>.FromResult(new Response<ProductModelProductDescriptionDataModel.DefaultView> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
     }
 }
 

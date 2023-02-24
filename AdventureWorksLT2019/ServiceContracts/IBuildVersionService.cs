@@ -29,6 +29,8 @@ namespace AdventureWorksLT2019.ServiceContracts
 
         Task<ListResponse<NameValuePair[]>> GetCodeList(
             BuildVersionAdvancedQuery query);
+
+        Task<Response<BuildVersionDataModel>> CreateComposite(BuildVersionCompositeModel input);
     }
 }
 

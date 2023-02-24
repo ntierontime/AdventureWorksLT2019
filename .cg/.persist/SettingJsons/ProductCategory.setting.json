@@ -120,7 +120,7 @@
         "idInDefaultDataView": true,
         "uniqueConstraintInDefaultDataView": true,
         "propertiesInDefaultDataView": null,
-        "createdDate": "2023-02-21T00:00:00"
+        "createdDate": "2023-02-23T00:00:00"
       },
       "tablE_SCHEMA": "SalesLT",
       "tablE_NAME": "ProductCategory",
@@ -129,10 +129,10 @@
       "isTop": true,
       "pkTypeFullName": "AdventureWorksLT2019Model.ProductCategory",
       "pkPropertyName": "ProductCategoryID",
-      "key": "AdventureWorksLT2019Model.ProductCategory",
+      "fkTypeFullName": "AdventureWorksLT2019Model.ProductCategory",
       "fkPropertyName": "ParentProductCategoryID",
-      "key1": "FK_ProductCategory_ProductCategory_ParentProductCategoryID_ProductCategoryID",
-      "key2": "t",
+      "fkName": "FK_ProductCategory_ProductCategory_ParentProductCategoryID_ProductCategoryID",
+      "fkAlias": "t",
       "propertyName_Origin_InThisType": "ParentProductCategoryID",
       "childEntityReferenceSimpleFullPath": null,
       "bottomChildTypeName": "ProductCategory",

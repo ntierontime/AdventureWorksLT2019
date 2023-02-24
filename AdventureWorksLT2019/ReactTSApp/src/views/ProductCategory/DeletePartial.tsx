@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, Stack, TextField, Typography, useTheme } from '@mui/material';
+import { Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, Link, Stack, TextField, Typography, useTheme } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -10,7 +10,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import { useTranslation } from 'react-i18next';
 
-import { Link } from 'react-router-dom';
 import { DatePicker } from '@mui/x-date-pickers';
 
 
@@ -177,7 +176,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IProductCatego
 
     return (
         <Card>
-            <CardHeader
+            {crudViewContainer !== CrudViewContainers.Wizard && <CardHeader
                 avatar={
                     <Avatar sx={avatarStyle} aria-label={item.name}>
                         {avatar}
@@ -189,18 +188,18 @@ export default function DeletePartial(props: ItemPartialViewProps<IProductCatego
                 </>}
                 title={item.name}
                 subheader={t(i18nFormats.dateTime.format, { val: new Date(item.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-            />
-            {buttonContainer === ContainerOptions.ItemCardToolbar && <CardActions disableSpacing>
+            />}
+            {crudViewContainer !== CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardToolbar && <CardActions disableSpacing>
                 {renderButtonGroup_IconButtons()}
             </CardActions>}
-            <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
+            {crudViewContainer !== CrudViewContainers.Wizard && !!deleteMessage && <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
                 <Typography variant="subtitle1">
                     {deleteMessage}
                 </Typography>
-            </CardContent>
+            </CardContent>}
             <CardContent>
                 <Box sx={{ ...scrollableCardContent }}>
-                    <Grid container spacing={2}>
+                    <Grid container spacing={1}>
                         <Grid item {...gridColumns}>
                             <TextField
                                 name='productCategoryID'
@@ -222,7 +221,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IProductCatego
                                 spacing={2}
                             >
                                 <Typography>{t("ParentProductCategoryID")}</Typography>
-                                <Link to={"/productCategory/Details/" + item.parentProductCategoryID}>{item.parent_Name}</Link>
+                                <Link href={"/productCategory/Details/" + item.parentProductCategoryID}>{item.parent_Name}</Link>
                             </Stack>
                         </Grid>
                         <Grid item {...gridColumns}>
@@ -258,6 +257,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IProductCatego
                                 onChange={() => { }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='modifiedDate'
                                         {...params}
@@ -270,7 +270,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IProductCatego
                     </Grid>
 				</Box>
             </CardContent>
-            {buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
+            {crudViewContainer !== CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
                 {renderButtonGroup_TextAndIconButtons()}
             </CardActions>}
         </Card >

@@ -141,67 +141,130 @@ export default function AppDrawer(props: AppDrawerProps) {
     // TODO: For testing purpose, developer can remove this list and related code
     const appDrawerItems_CreatePages = [
         {
-            label: 'Create New BuildVersion',
+            label: 'New BuildVersion',
             icon: <HelpOutlineIcon />,
             url: '/BuildVersion/Create',
         },
         {
-            label: 'Create New ErrorLog',
+            label: 'New ErrorLog',
             icon: <HelpOutlineIcon />,
             url: '/ErrorLog/Create',
         },
         {
-            label: 'Create New Address',
+            label: 'New Address',
             icon: <HelpOutlineIcon />,
             url: '/Address/Create',
         },
         {
-            label: 'Create New Customer',
+            label: 'New Customer',
             icon: <HelpOutlineIcon />,
             url: '/Customer/Create',
         },
         {
-            label: 'Create New CustomerAddress',
+            label: 'New CustomerAddress',
             icon: <HelpOutlineIcon />,
             url: '/CustomerAddress/Create',
         },
         {
-            label: 'Create New Product',
+            label: 'New Product',
             icon: <HelpOutlineIcon />,
             url: '/Product/Create',
         },
         {
-            label: 'Create New ProductCategory',
+            label: 'New ProductCategory',
             icon: <HelpOutlineIcon />,
             url: '/ProductCategory/Create',
         },
         {
-            label: 'Create New ProductDescription',
+            label: 'New ProductDescription',
             icon: <HelpOutlineIcon />,
             url: '/ProductDescription/Create',
         },
         {
-            label: 'Create New ProductModel',
+            label: 'New ProductModel',
             icon: <HelpOutlineIcon />,
             url: '/ProductModel/Create',
         },
         {
-            label: 'Create New ProductModelProductDescription',
+            label: 'New ProductModelProductDescription',
             icon: <HelpOutlineIcon />,
             url: '/ProductModelProductDescription/Create',
         },
         {
-            label: 'Create New SalesOrderDetail',
+            label: 'New SalesOrderDetail',
             icon: <HelpOutlineIcon />,
             url: '/SalesOrderDetail/Create',
         },
         {
-            label: 'Create New SalesOrderHeader',
+            label: 'New SalesOrderHeader',
             icon: <HelpOutlineIcon />,
             url: '/SalesOrderHeader/Create',
         },
     ];
-
+	
+    // TODO: For testing purpose, developer can remove this list and related code
+    const appDrawerItems_CreateWizardPages = [
+        {
+            label: 'BuildVersion Wizard',
+            icon: <HelpOutlineIcon />,
+            url: '/BuildVersion/CreateWizard',
+        },
+        {
+            label: 'ErrorLog Wizard',
+            icon: <HelpOutlineIcon />,
+            url: '/ErrorLog/CreateWizard',
+        },
+        {
+            label: 'Address Wizard',
+            icon: <HelpOutlineIcon />,
+            url: '/Address/CreateWizard',
+        },
+        {
+            label: 'Customer Wizard',
+            icon: <HelpOutlineIcon />,
+            url: '/Customer/CreateWizard',
+        },
+        {
+            label: 'CustomerAddress Wizard',
+            icon: <HelpOutlineIcon />,
+            url: '/CustomerAddress/CreateWizard',
+        },
+        {
+            label: 'Product Wizard',
+            icon: <HelpOutlineIcon />,
+            url: '/Product/CreateWizard',
+        },
+        {
+            label: 'ProductCategory Wizard',
+            icon: <HelpOutlineIcon />,
+            url: '/ProductCategory/CreateWizard',
+        },
+        {
+            label: 'ProductDescription Wizard',
+            icon: <HelpOutlineIcon />,
+            url: '/ProductDescription/CreateWizard',
+        },
+        {
+            label: 'ProductModel Wizard',
+            icon: <HelpOutlineIcon />,
+            url: '/ProductModel/CreateWizard',
+        },
+        {
+            label: 'ProductModelProductDescription Wizard',
+            icon: <HelpOutlineIcon />,
+            url: '/ProductModelProductDescription/CreateWizard',
+        },
+        {
+            label: 'SalesOrderDetail Wizard',
+            icon: <HelpOutlineIcon />,
+            url: '/SalesOrderDetail/CreateWizard',
+        },
+        {
+            label: 'SalesOrderHeader Wizard',
+            icon: <HelpOutlineIcon />,
+            url: '/SalesOrderHeader/CreateWizard',
+        },
+    ];
 
     return (
         <Drawer variant="permanent" open={props.open}>
@@ -210,6 +273,43 @@ export default function AppDrawer(props: AppDrawerProps) {
                     {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                 </IconButton>
             </DrawerHeader>
+            <Divider />
+            {!!appDrawerItems_CreateWizardPages && <Accordion>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                >
+					<HelpOutlineIcon />
+                    <Typography>Create Wizard Pages</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <List>
+                        {appDrawerItems_CreateWizardPages.map((item, index) => (
+                            <ListItemButton
+                                key={item.label}
+                                sx={{
+                                    minHeight: 48,
+                                    justifyContent: props.open ? 'initial' : 'center',
+                                    px: 2.5,
+                                }}
+                                onClick={() => { navigate(item.url) }}
+                            >
+                                <ListItemIcon
+                                    sx={{
+                                        minWidth: 0,
+                                        mr: props.open ? 3 : 'auto',
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                    {item.icon}
+                                </ListItemIcon>
+                                <ListItemText primary={item.label} sx={{ opacity: props.open ? 1 : 0 }} />
+                            </ListItemButton>
+                        ))}
+                    </List>
+                </AccordionDetails>
+            </Accordion>}
             <Divider />
             {!!appDrawerItems_IndexPages && <Accordion>
                 <AccordionSummary

@@ -3,6 +3,7 @@ import PrivateRoute from "src/shared/views/PrivateRoute";
 
 import { ViewItemTemplates } from "src/shared/viewModels/ViewItemTemplates";
 import CreatePage from 'src/views/Address/CreatePage'
+import CreateWizardPage from 'src/views/Address/CreateWizardPage'
 import DashboardPage from 'src/views/Address/DashboardPage'
 import IndexPage from 'src/views/Address/IndexPage'
 import ItemPage from 'src/views/Address/ItemPage'
@@ -16,6 +17,7 @@ export default function AddressRoutesPartial(): JSX.Element {
 			<Route path="Details/:addressID" element={<PrivateRoute> <ItemPage viewItemTemplate={ViewItemTemplates.Details} /> </PrivateRoute>} />
 			<Route path="Edit/:addressID" element={<PrivateRoute> <ItemPage viewItemTemplate={ViewItemTemplates.Edit} /> </PrivateRoute>} />
 			<Route path="Dashboard/:addressID" element={<PrivateRoute> <DashboardPage /> </PrivateRoute>} />
+			<Route path="CreateWizard" element={<PrivateRoute> <CreateWizardPage /> </PrivateRoute>} />
         </Routes>);
 }
 

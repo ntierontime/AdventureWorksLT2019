@@ -25,6 +25,8 @@ namespace AdventureWorksLT2019.RepositoryContracts
 
         Task<ListResponse<NameValuePair[]>> GetCodeList(
             CustomerAdvancedQuery query);
+
+        Task<Response<CustomerDataModel>> CreateComposite(CustomerCompositeModel input);
     }
 }
 

@@ -484,6 +484,33 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
+        public async Task<Response<BuildVersionDataModel>> CreateComposite(BuildVersionCompositeModel input)
+        {
+            if (input == null)
+                return await Task<Response<BuildVersionDataModel>>.FromResult(new Response<BuildVersionDataModel> { Status = HttpStatusCode.BadRequest });
+            try
+            {
+                // 1. Master: BuildVersion
+                var master = new BuildVersion
+                {
+                    // Properties.1. Value Type Properties
+                    Database_Version = input.__Master__!.Database_Version,
+                    VersionDate = input.__Master__!.VersionDate,
+                    ModifiedDate = input.__Master__!.ModifiedDate,
+                };
+
+                _dbcontext.BuildVersion.Add(master);
+
+                await _dbcontext.SaveChangesAsync();
+
+                return await Get(new BuildVersionIdentifier { SystemInformationID = master.SystemInformationID, VersionDate = master.VersionDate, ModifiedDate = master.ModifiedDate, });
+            }
+            catch (Exception ex)
+            {
+                return await Task<Response<BuildVersionDataModel>>.FromResult(new Response<BuildVersionDataModel> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
     }
 }
 

@@ -534,6 +534,38 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
+        public async Task<Response<ErrorLogDataModel>> CreateComposite(ErrorLogCompositeModel input)
+        {
+            if (input == null)
+                return await Task<Response<ErrorLogDataModel>>.FromResult(new Response<ErrorLogDataModel> { Status = HttpStatusCode.BadRequest });
+            try
+            {
+                // 1. Master: ErrorLog
+                var master = new ErrorLog
+                {
+                    // Properties.1. Value Type Properties
+                    ErrorTime = input.__Master__!.ErrorTime,
+                    UserName = input.__Master__!.UserName,
+                    ErrorNumber = input.__Master__!.ErrorNumber,
+                    ErrorSeverity = input.__Master__!.ErrorSeverity,
+                    ErrorState = input.__Master__!.ErrorState,
+                    ErrorProcedure = input.__Master__!.ErrorProcedure,
+                    ErrorLine = input.__Master__!.ErrorLine,
+                    ErrorMessage = input.__Master__!.ErrorMessage,
+                };
+
+                _dbcontext.ErrorLog.Add(master);
+
+                await _dbcontext.SaveChangesAsync();
+
+                return await Get(new ErrorLogIdentifier { ErrorLogID = master.ErrorLogID, });
+            }
+            catch (Exception ex)
+            {
+                return await Task<Response<ErrorLogDataModel>>.FromResult(new Response<ErrorLogDataModel> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
     }
 }
 

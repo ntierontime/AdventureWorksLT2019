@@ -8,6 +8,7 @@ import { PaginationOptions } from "src/shared/dataModels/PaginationOptions";
 import { RootState } from "src/store/CombinedReducers";
 
 import { IProductDataModel } from 'src/dataModels/IProductDataModel';
+import { IProductCompositeModel } from "src/dataModels/IProductCompositeModel";
 import { getRouteParamsOfIProductIdentifier, IProductAdvancedQuery, IProductIdentifier } from 'src/dataModels/IProductQueries';
 import { productApi } from "src/apiClients/ProductApi";
 
@@ -88,6 +89,14 @@ export const delete1 = createAsyncThunk(
     async (identifier: IProductIdentifier, { dispatch }) => {
         const response = await productApi.Delete(identifier);
         return { response, identifier };
+    }
+)
+
+export const createComposite = createAsyncThunk(
+    'createCompositeProduct',
+    async (params: IProductCompositeModel, { dispatch }) => {
+        const response = await productApi.CreateComposite(params);
+        return response;
     }
 )
 
@@ -265,6 +274,21 @@ const ProductSlice = createSlice({
         builder.addCase(delete1.rejected, (state, action) => {
 
             // console.log("delete.rejected");
+        });
+
+        builder.addCase(createComposite.pending, (state) => {
+
+            // console.log("createComposite.pending");
+        });
+        builder.addCase(createComposite.fulfilled, (state, { payload }) => {
+            if (!!payload && payload.status === 'OK') {
+                entityAdapter.upsertOne(state, { ...payload.responseBody, itemUIStatus______: ItemUIStatus.New });
+            }
+            // console.log("createComposite.fulfilled");
+        });
+        builder.addCase(createComposite.rejected, (state, action) => {
+
+            // console.log("createComposite.rejected");
         });
     }
 });

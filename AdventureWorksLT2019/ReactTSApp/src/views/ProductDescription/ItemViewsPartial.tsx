@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { CrudViewContainers } from 'src/shared/viewModels/CrudViewContainers';
 import { ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps';
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
-import { IProductDescriptionDataModel } from 'src/dataModels/IProductDescriptionDataModel';
+import { defaultProductDescription, IProductDescriptionDataModel } from 'src/dataModels/IProductDescriptionDataModel';
 import CreatePartial from './CreatePartial';
 import DeletePartial from './DeletePartial';
 import DetailsPartial from './DetailsPartial';
@@ -68,7 +68,7 @@ export default function ItemViewsPartial(props: ItemPartialViewProps<IProductDes
     return (
         <>
             {viewItemTemplate === ViewItemTemplates.Create &&
-                <CreatePartial {...props} />
+                <CreatePartial {...props}  item = {defaultProductDescription()}/>
             }
             {viewItemTemplate === ViewItemTemplates.Delete &&
                 <DeletePartial {...props} previousAction={gotoPreviousItemOnDialog} nextAction={gotoNextItemOnDialog} changeViewItemTemplate={changeViewItemTemplate} doneAction={doneAction} />

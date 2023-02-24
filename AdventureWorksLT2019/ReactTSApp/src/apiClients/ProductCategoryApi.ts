@@ -26,6 +26,8 @@ export class ProductCategoryApi extends AxiosApiBaseGeneric<IProductCategoryData
 
         this.url_Delete = "api/ProductCategoryApi/Delete";
 
+        this.url_CreateComposite = "api/ProductCategoryApi/CreateComposite";
+
         // this middleware is been called right before the http request is made.
         this.interceptors.request.use((param: AxiosRequestConfig) => ({
             ...param,

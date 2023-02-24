@@ -3,6 +3,7 @@ import PrivateRoute from "src/shared/views/PrivateRoute";
 
 import { ViewItemTemplates } from "src/shared/viewModels/ViewItemTemplates";
 import CreatePage from 'src/views/ErrorLog/CreatePage'
+import CreateWizardPage from 'src/views/ErrorLog/CreateWizardPage'
 import DashboardPage from 'src/views/ErrorLog/DashboardPage'
 import IndexPage from 'src/views/ErrorLog/IndexPage'
 import ItemPage from 'src/views/ErrorLog/ItemPage'
@@ -16,6 +17,7 @@ export default function ErrorLogRoutesPartial(): JSX.Element {
 			<Route path="Details/:errorLogID" element={<PrivateRoute> <ItemPage viewItemTemplate={ViewItemTemplates.Details} /> </PrivateRoute>} />
 			<Route path="Edit/:errorLogID" element={<PrivateRoute> <ItemPage viewItemTemplate={ViewItemTemplates.Edit} /> </PrivateRoute>} />
 			<Route path="Dashboard/:errorLogID" element={<PrivateRoute> <DashboardPage /> </PrivateRoute>} />
+			<Route path="CreateWizard" element={<PrivateRoute> <CreateWizardPage /> </PrivateRoute>} />
         </Routes>);
 }
 

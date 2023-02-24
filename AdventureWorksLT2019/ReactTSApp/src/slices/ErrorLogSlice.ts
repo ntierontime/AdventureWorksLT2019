@@ -8,6 +8,7 @@ import { PaginationOptions } from "src/shared/dataModels/PaginationOptions";
 import { RootState } from "src/store/CombinedReducers";
 
 import { IErrorLogDataModel } from 'src/dataModels/IErrorLogDataModel';
+import { IErrorLogCompositeModel } from "src/dataModels/IErrorLogCompositeModel";
 import { getRouteParamsOfIErrorLogIdentifier, IErrorLogAdvancedQuery, IErrorLogIdentifier } from 'src/dataModels/IErrorLogQueries';
 import { errorLogApi } from "src/apiClients/ErrorLogApi";
 
@@ -88,6 +89,14 @@ export const delete1 = createAsyncThunk(
     async (identifier: IErrorLogIdentifier, { dispatch }) => {
         const response = await errorLogApi.Delete(identifier);
         return { response, identifier };
+    }
+)
+
+export const createComposite = createAsyncThunk(
+    'createCompositeErrorLog',
+    async (params: IErrorLogCompositeModel, { dispatch }) => {
+        const response = await errorLogApi.CreateComposite(params);
+        return response;
     }
 )
 
@@ -265,6 +274,21 @@ const ErrorLogSlice = createSlice({
         builder.addCase(delete1.rejected, (state, action) => {
 
             // console.log("delete.rejected");
+        });
+
+        builder.addCase(createComposite.pending, (state) => {
+
+            // console.log("createComposite.pending");
+        });
+        builder.addCase(createComposite.fulfilled, (state, { payload }) => {
+            if (!!payload && payload.status === 'OK') {
+                entityAdapter.upsertOne(state, { ...payload.responseBody, itemUIStatus______: ItemUIStatus.New });
+            }
+            // console.log("createComposite.fulfilled");
+        });
+        builder.addCase(createComposite.rejected, (state, action) => {
+
+            // console.log("createComposite.rejected");
         });
     }
 });

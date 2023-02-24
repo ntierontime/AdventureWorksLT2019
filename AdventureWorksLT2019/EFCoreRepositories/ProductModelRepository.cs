@@ -474,6 +474,73 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
+        public async Task<Response<ProductModelDataModel>> CreateComposite(ProductModelCompositeModel input)
+        {
+            if (input == null)
+                return await Task<Response<ProductModelDataModel>>.FromResult(new Response<ProductModelDataModel> { Status = HttpStatusCode.BadRequest });
+            try
+            {
+                // 1. Master: ProductModel
+                var master = new ProductModel
+                {
+                    // Properties.1. Value Type Properties
+                    Name = input.__Master__!.Name,
+                    CatalogDescription = input.__Master__!.CatalogDescription,
+                    rowguid = input.__Master__!.rowguid,
+                    ModifiedDate = input.__Master__!.ModifiedDate,
+                };
+                // 2.1.1. ListTable ProductModel.Product
+                if(input.Products_Via_ProductModelID != null)
+                {
+                    foreach(var item in input.Products_Via_ProductModelID)
+                    {
+                        master.Product.Add(new Product
+                        {
+                                Name = item.Name,
+                                ProductNumber = item.ProductNumber,
+                                Color = item.Color,
+                                StandardCost = item.StandardCost,
+                                ListPrice = item.ListPrice,
+                                Size = item.Size,
+                                Weight = item.Weight,
+                                ProductCategoryID = item.ProductCategoryID,
+                                ProductModelID = item.ProductModelID,
+                                SellStartDate = item.SellStartDate,
+                                SellEndDate = item.SellEndDate,
+                                DiscontinuedDate = item.DiscontinuedDate,
+                                ThumbNailPhoto = item.ThumbNailPhoto,
+                                ThumbnailPhotoFileName = item.ThumbnailPhotoFileName,
+                                rowguid = item.rowguid,
+                                ModifiedDate = item.ModifiedDate,
+                        });
+                    }
+                }
+                // 2.1.2. ListTable ProductModel.ProductModelProductDescription
+                if(input.ProductModelProductDescriptions_Via_ProductModelID != null)
+                {
+                    foreach(var item in input.ProductModelProductDescriptions_Via_ProductModelID)
+                    {
+                        master.ProductModelProductDescription.Add(new ProductModelProductDescription
+                        {
+                                Culture = item.Culture,
+                                rowguid = item.rowguid,
+                                ModifiedDate = item.ModifiedDate,
+                        });
+                    }
+                }
+
+                _dbcontext.ProductModel.Add(master);
+
+                await _dbcontext.SaveChangesAsync();
+
+                return await Get(new ProductModelIdentifier { ProductModelID = master.ProductModelID, });
+            }
+            catch (Exception ex)
+            {
+                return await Task<Response<ProductModelDataModel>>.FromResult(new Response<ProductModelDataModel> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
     }
 }
 

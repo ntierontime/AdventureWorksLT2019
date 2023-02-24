@@ -540,6 +540,35 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
+        public async Task<Response<CustomerAddressDataModel.DefaultView>> CreateComposite(CustomerAddressCompositeModel input)
+        {
+            if (input == null)
+                return await Task<Response<CustomerAddressDataModel.DefaultView>>.FromResult(new Response<CustomerAddressDataModel.DefaultView> { Status = HttpStatusCode.BadRequest });
+            try
+            {
+                // 1. Master: CustomerAddress
+                var master = new CustomerAddress
+                {
+                    // Properties.1. Value Type Properties
+                    CustomerID = input.__Master__!.CustomerID,
+                    AddressID = input.__Master__!.AddressID,
+                    AddressType = input.__Master__!.AddressType,
+                    rowguid = input.__Master__!.rowguid,
+                    ModifiedDate = input.__Master__!.ModifiedDate,
+                };
+
+                _dbcontext.CustomerAddress.Add(master);
+
+                await _dbcontext.SaveChangesAsync();
+
+                return await Get(new CustomerAddressIdentifier { CustomerID = master.CustomerID, AddressID = master.AddressID, });
+            }
+            catch (Exception ex)
+            {
+                return await Task<Response<CustomerAddressDataModel.DefaultView>>.FromResult(new Response<CustomerAddressDataModel.DefaultView> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
     }
 }
 

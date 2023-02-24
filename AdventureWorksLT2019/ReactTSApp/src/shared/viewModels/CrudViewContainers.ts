@@ -4,4 +4,5 @@ export enum CrudViewContainers {
     Dialog = 'Dialog',
     Inline = 'Inline',
     Card = 'Card',
+    Wizard = 'Wizard',
 }

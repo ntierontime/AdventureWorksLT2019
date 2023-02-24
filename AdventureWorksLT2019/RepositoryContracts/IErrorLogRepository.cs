@@ -23,6 +23,8 @@ namespace AdventureWorksLT2019.RepositoryContracts
 
         Task<ListResponse<NameValuePair[]>> GetCodeList(
             ErrorLogAdvancedQuery query);
+
+        Task<Response<ErrorLogDataModel>> CreateComposite(ErrorLogCompositeModel input);
     }
 }
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, Stack, TextField, Typography, useTheme } from '@mui/material';
+import { Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, Link, Stack, TextField, Typography, useTheme } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -11,7 +11,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
 
 import { DatePicker } from '@mui/x-date-pickers';
-import { Link } from 'react-router-dom';
 
 
 // 1. DateTime/Integer/Decimal fields are using 'i18nFormats.??' when display
@@ -177,7 +176,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderHea
 
     return (
         <Card>
-            <CardHeader
+            {crudViewContainer !== CrudViewContainers.Wizard && <CardHeader
                 avatar={
                     <Avatar sx={avatarStyle} aria-label={item.salesOrderNumber}>
                         {avatar}
@@ -189,18 +188,18 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderHea
                 </>}
                 title={item.salesOrderNumber}
                 subheader={t(i18nFormats.dateTime.format, { val: new Date(item.orderDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-            />
-            {buttonContainer === ContainerOptions.ItemCardToolbar && <CardActions disableSpacing>
+            />}
+            {crudViewContainer !== CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardToolbar && <CardActions disableSpacing>
                 {renderButtonGroup_IconButtons()}
             </CardActions>}
-            <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
+            {crudViewContainer !== CrudViewContainers.Wizard && !!deleteMessage && <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
                 <Typography variant="subtitle1">
                     {deleteMessage}
                 </Typography>
-            </CardContent>
+            </CardContent>}
             <CardContent>
                 <Box sx={{ ...scrollableCardContent }}>
-                    <Grid container spacing={2}>
+                    <Grid container spacing={1}>
                         <Grid item {...gridColumns}>
                             <TextField
                                 name='salesOrderID'
@@ -234,6 +233,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderHea
                                 onChange={() => { }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='orderDate'
                                         {...params}
@@ -250,6 +250,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderHea
                                 onChange={() => { }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='dueDate'
                                         {...params}
@@ -266,6 +267,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderHea
                                 onChange={() => { }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='shipDate'
                                         {...params}
@@ -338,7 +340,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderHea
                                 spacing={2}
                             >
                                 <Typography>{t("CustomerID")}</Typography>
-                                <Link to={"/customer/Details/" + item.customerID}>{item.customer_Name}</Link>
+                                <Link href={"/customer/Details/" + item.customerID}>{item.customer_Name}</Link>
                             </Stack>
                         </Grid>
                         <Grid item {...gridColumns}>
@@ -349,7 +351,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderHea
                                 spacing={2}
                             >
                                 <Typography>{t("ShipToAddressID")}</Typography>
-                                <Link to={"/address/Details/" + item.shipToAddressID}>{item.shipTo_Name}</Link>
+                                <Link href={"/address/Details/" + item.shipToAddressID}>{item.shipTo_Name}</Link>
                             </Stack>
                         </Grid>
                         <Grid item {...gridColumns}>
@@ -360,7 +362,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderHea
                                 spacing={2}
                             >
                                 <Typography>{t("BillToAddressID")}</Typography>
-                                <Link to={"/address/Details/" + item.billToAddressID}>{item.billTo_Name}</Link>
+                                <Link href={"/address/Details/" + item.billToAddressID}>{item.billTo_Name}</Link>
                             </Stack>
                         </Grid>
                         <Grid item {...gridColumns}>
@@ -474,6 +476,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderHea
                                 onChange={() => { }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='modifiedDate'
                                         {...params}
@@ -486,7 +489,7 @@ export default function DeletePartial(props: ItemPartialViewProps<ISalesOrderHea
                     </Grid>
 				</Box>
             </CardContent>
-            {buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
+            {crudViewContainer !== CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
                 {renderButtonGroup_TextAndIconButtons()}
             </CardActions>}
         </Card >

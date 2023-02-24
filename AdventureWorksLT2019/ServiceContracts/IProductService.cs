@@ -29,6 +29,8 @@ namespace AdventureWorksLT2019.ServiceContracts
 
         Task<ListResponse<NameValuePair[]>> GetCodeList(
             ProductAdvancedQuery query);
+
+        Task<Response<ProductDataModel.DefaultView>> CreateComposite(ProductCompositeModel input);
     }
 }
 

@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Checkbox, FormControlLabel, IconButton, Pagination, Popover, Stack, Switch, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
+import { Checkbox, FormControlLabel, IconButton, Link, Pagination, Popover, Stack, Switch, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 
-import { Link } from 'react-router-dom';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -156,9 +155,9 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductMod
                                             scope="row"
                                             padding="none"
                                         >
-                                            <Link to={"/productModel/Details/" + row.productModelID}>{row.productModel_Name}</Link>
+                                            <Link href={"/productModel/Details/" + row.productModelID}>{row.productModel_Name}</Link>
                                         </TableCell>
-                                        <TableCell align='right'><Link to={"/productDescription/Details/" + row.productDescriptionID}>{row.productDescription_Name}</Link></TableCell>
+                                        <TableCell align='right'><Link href={"/productDescription/Details/" + row.productDescriptionID}>{row.productDescription_Name}</Link></TableCell>
                                         <TableCell align='right'>{row.culture}</TableCell>
                                         <TableCell align='right'>{row.rowguid}</TableCell>
                                         <TableCell align='right'>{t(i18nFormats.dateTime.format, { val: new Date(row.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}</TableCell>

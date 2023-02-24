@@ -99,6 +99,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
 
     const onParentIDChanged_LoadChildren = (parentID: number) => {
 
+		// \ProductCategoryID\ParentProductCategoryID
         const iProductCategoryAdvancedQuery_ProductCategoryID_Here = { ...iProductCategoryAdvancedQuery_ProductCategoryID, parentProductCategoryID: parentID };
         setIProductCategoryAdvancedQuery_ProductCategoryID(iProductCategoryAdvancedQuery_ProductCategoryID_Here);
         getProductCategory_ProductCategoryIDCodeList(iProductCategoryAdvancedQuery_ProductCategoryID, true, false);
@@ -265,7 +266,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
 
     return (
         <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
-            <CardHeader
+            {crudViewContainer !== CrudViewContainers.Wizard && <CardHeader
                 avatar={
                     <Avatar sx={avatarStyle} aria-label={item.name}>
                         {avatar}
@@ -277,11 +278,11 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                 </>}
                 title={item.name}
                 subheader={t(i18nFormats.dateTime.format, { val: new Date(item.sellStartDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-            />
-            {buttonContainer === ContainerOptions.ItemCardToolbar && <CardActions disableSpacing>
+            />}
+            {crudViewContainer !== CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardToolbar && <CardActions disableSpacing>
                 {renderButtonGroup_IconButtons()}
             </CardActions>}
-            {!!saveMessage && <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
+            {crudViewContainer !== CrudViewContainers.Wizard && !!saveMessage && <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
                 <Typography variant="body1" component="span">
                     {saveMessage + " "}
                     <Typography variant="h6" component="span">
@@ -291,7 +292,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
             </CardContent>}
             <CardContent>
                 <Box sx={{ ...scrollableCardContent }}>
-                    <Grid container spacing={2}>
+                    <Grid container spacing={1}>
                         <Grid item {...gridColumns}>
                             <TextField
                                 name='productID'
@@ -405,6 +406,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                         </Grid>
                         <Grid item {...gridColumns}>
                             <TextField
+                            	sx={{marginTop: 2}}
                                 label={t("ParentID")}
                                 id="parentIDSelect"
                                 select
@@ -567,7 +569,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                     </Grid>
 				</Box>
             </CardContent>
-            {buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
+            {crudViewContainer !== CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
                 {renderButtonGroup_TextAndIconButtons()}
             </CardActions>}
         </Card >

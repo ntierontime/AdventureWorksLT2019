@@ -26,6 +26,8 @@ export class AddressApi extends AxiosApiBaseGeneric<IAddressDataModel, IAddressI
 
         this.url_Delete = "api/AddressApi/Delete";
 
+        this.url_CreateComposite = "api/AddressApi/CreateComposite";
+
         // this middleware is been called right before the http request is made.
         this.interceptors.request.use((param: AxiosRequestConfig) => ({
             ...param,

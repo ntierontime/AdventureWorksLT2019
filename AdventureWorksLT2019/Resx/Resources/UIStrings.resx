@@ -160,6 +160,9 @@
   <data name="AutoSignIn" xml:space="preserve">
     <value>(en)Auto SignIn</value>
   </data>
+  <data name="Back" xml:space="preserve">
+    <value>(en)Back</value>
+  </data>
   <data name="Back_to_List" xml:space="preserve">
     <value>(en)Back to List</value>
   </data>
@@ -198,6 +201,9 @@
   </data>
   <data name="CompanyName" xml:space="preserve">
     <value>(en)Company Name</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>(en)Confirm</value>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>(en)Confirm Password</value>
@@ -352,6 +358,9 @@
   <data name="FailedToSave" xml:space="preserve">
     <value>(en)Failed To Save</value>
   </data>
+  <data name="Finish" xml:space="preserve">
+    <value>(en)Finish</value>
+  </data>
   <data name="First" xml:space="preserve">
     <value>(en)First</value>
   </data>
@@ -459,6 +468,9 @@
   </data>
   <data name="OnlineOrderFlag_is_required" xml:space="preserve">
     <value>(en)OnlineOrderFlag is required</value>
+  </data>
+  <data name="Optional" xml:space="preserve">
+    <value>(en)Optional</value>
   </data>
   <data name="OrderDate" xml:space="preserve">
     <value>(en)Order Date</value>
@@ -637,6 +649,9 @@
   <data name="RememberMe" xml:space="preserve">
     <value>(en)Remember Me</value>
   </data>
+  <data name="Reset" xml:space="preserve">
+    <value>(en)Reset</value>
+  </data>
   <data name="RevisionNumber" xml:space="preserve">
     <value>(en)Revision Number</value>
   </data>
@@ -750,6 +765,9 @@
   </data>
   <data name="Size" xml:space="preserve">
     <value>(en)Size</value>
+  </data>
+  <data name="Skip" xml:space="preserve">
+    <value>(en)Skip</value>
   </data>
   <data name="Sort" xml:space="preserve">
     <value>(en)Sort</value>
@@ -957,6 +975,9 @@
   </data>
   <data name="Weight" xml:space="preserve">
     <value>(en)Weight</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>(en)Welcome</value>
   </data>
 
 </root>

@@ -560,6 +560,109 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
+        public async Task<Response<AddressDataModel>> CreateComposite(AddressCompositeModel input)
+        {
+            if (input == null)
+                return await Task<Response<AddressDataModel>>.FromResult(new Response<AddressDataModel> { Status = HttpStatusCode.BadRequest });
+            try
+            {
+                // 1. Master: Address
+                var master = new Address
+                {
+                    // Properties.1. Value Type Properties
+                    AddressLine1 = input.__Master__!.AddressLine1,
+                    AddressLine2 = input.__Master__!.AddressLine2,
+                    City = input.__Master__!.City,
+                    StateProvince = input.__Master__!.StateProvince,
+                    CountryRegion = input.__Master__!.CountryRegion,
+                    PostalCode = input.__Master__!.PostalCode,
+                    rowguid = input.__Master__!.rowguid,
+                    ModifiedDate = input.__Master__!.ModifiedDate,
+                };
+                // 2.1.1. ListTable Address.CustomerAddress
+                if(input.CustomerAddresses_Via_AddressID != null)
+                {
+                    foreach(var item in input.CustomerAddresses_Via_AddressID)
+                    {
+                        master.CustomerAddress.Add(new CustomerAddress
+                        {
+                                AddressType = item.AddressType,
+                                rowguid = item.rowguid,
+                                ModifiedDate = item.ModifiedDate,
+                        });
+                    }
+                }
+                // 2.1.2. ListTable Address.SalesOrderHeader
+                if(input.SalesOrderHeaders_Via_BillToAddressID != null)
+                {
+                    foreach(var item in input.SalesOrderHeaders_Via_BillToAddressID)
+                    {
+                        master.SalesOrderHeader.Add(new SalesOrderHeader
+                        {
+                                RevisionNumber = item.RevisionNumber,
+                                OrderDate = item.OrderDate,
+                                DueDate = item.DueDate,
+                                ShipDate = item.ShipDate,
+                                Status = item.Status,
+                                OnlineOrderFlag = item.OnlineOrderFlag,
+                                PurchaseOrderNumber = item.PurchaseOrderNumber,
+                                AccountNumber = item.AccountNumber,
+                                CustomerID = item.CustomerID,
+                                ShipToAddressID = item.ShipToAddressID,
+                                BillToAddressID = item.BillToAddressID,
+                                ShipMethod = item.ShipMethod,
+                                CreditCardApprovalCode = item.CreditCardApprovalCode,
+                                SubTotal = item.SubTotal,
+                                TaxAmt = item.TaxAmt,
+                                Freight = item.Freight,
+                                Comment = item.Comment,
+                                rowguid = item.rowguid,
+                                ModifiedDate = item.ModifiedDate,
+                        });
+                    }
+                }
+                // 2.1.3. ListTable Address.SalesOrderHeader1
+                if(input.SalesOrderHeaders_Via_ShipToAddressID != null)
+                {
+                    foreach(var item in input.SalesOrderHeaders_Via_ShipToAddressID)
+                    {
+                        master.SalesOrderHeader1.Add(new SalesOrderHeader
+                        {
+                                RevisionNumber = item.RevisionNumber,
+                                OrderDate = item.OrderDate,
+                                DueDate = item.DueDate,
+                                ShipDate = item.ShipDate,
+                                Status = item.Status,
+                                OnlineOrderFlag = item.OnlineOrderFlag,
+                                PurchaseOrderNumber = item.PurchaseOrderNumber,
+                                AccountNumber = item.AccountNumber,
+                                CustomerID = item.CustomerID,
+                                ShipToAddressID = item.ShipToAddressID,
+                                BillToAddressID = item.BillToAddressID,
+                                ShipMethod = item.ShipMethod,
+                                CreditCardApprovalCode = item.CreditCardApprovalCode,
+                                SubTotal = item.SubTotal,
+                                TaxAmt = item.TaxAmt,
+                                Freight = item.Freight,
+                                Comment = item.Comment,
+                                rowguid = item.rowguid,
+                                ModifiedDate = item.ModifiedDate,
+                        });
+                    }
+                }
+
+                _dbcontext.Address.Add(master);
+
+                await _dbcontext.SaveChangesAsync();
+
+                return await Get(new AddressIdentifier { AddressID = master.AddressID, });
+            }
+            catch (Exception ex)
+            {
+                return await Task<Response<AddressDataModel>>.FromResult(new Response<AddressDataModel> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
     }
 }
 

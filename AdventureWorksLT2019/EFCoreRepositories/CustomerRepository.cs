@@ -737,6 +737,86 @@ private IQueryable<CustomerDataModel> GetIQueryableAsBulkUpdateResponse(
             }
         }
 
+        public async Task<Response<CustomerDataModel>> CreateComposite(CustomerCompositeModel input)
+        {
+            if (input == null)
+                return await Task<Response<CustomerDataModel>>.FromResult(new Response<CustomerDataModel> { Status = HttpStatusCode.BadRequest });
+            try
+            {
+                // 1. Master: Customer
+                var master = new Customer
+                {
+                    // Properties.1. Value Type Properties
+                    NameStyle = input.__Master__!.NameStyle,
+                    Title = input.__Master__!.Title,
+                    FirstName = input.__Master__!.FirstName,
+                    MiddleName = input.__Master__!.MiddleName,
+                    LastName = input.__Master__!.LastName,
+                    Suffix = input.__Master__!.Suffix,
+                    CompanyName = input.__Master__!.CompanyName,
+                    SalesPerson = input.__Master__!.SalesPerson,
+                    EmailAddress = input.__Master__!.EmailAddress,
+                    Phone = input.__Master__!.Phone,
+                    PasswordHash = input.__Master__!.PasswordHash,
+                    PasswordSalt = input.__Master__!.PasswordSalt,
+                    rowguid = input.__Master__!.rowguid,
+                    ModifiedDate = input.__Master__!.ModifiedDate,
+                };
+                // 2.1.1. ListTable Customer.CustomerAddress
+                if(input.CustomerAddresses_Via_CustomerID != null)
+                {
+                    foreach(var item in input.CustomerAddresses_Via_CustomerID)
+                    {
+                        master.CustomerAddress.Add(new CustomerAddress
+                        {
+                                AddressType = item.AddressType,
+                                rowguid = item.rowguid,
+                                ModifiedDate = item.ModifiedDate,
+                        });
+                    }
+                }
+                // 2.1.2. ListTable Customer.SalesOrderHeader
+                if(input.SalesOrderHeaders_Via_CustomerID != null)
+                {
+                    foreach(var item in input.SalesOrderHeaders_Via_CustomerID)
+                    {
+                        master.SalesOrderHeader.Add(new SalesOrderHeader
+                        {
+                                RevisionNumber = item.RevisionNumber,
+                                OrderDate = item.OrderDate,
+                                DueDate = item.DueDate,
+                                ShipDate = item.ShipDate,
+                                Status = item.Status,
+                                OnlineOrderFlag = item.OnlineOrderFlag,
+                                PurchaseOrderNumber = item.PurchaseOrderNumber,
+                                AccountNumber = item.AccountNumber,
+                                CustomerID = item.CustomerID,
+                                ShipToAddressID = item.ShipToAddressID,
+                                BillToAddressID = item.BillToAddressID,
+                                ShipMethod = item.ShipMethod,
+                                CreditCardApprovalCode = item.CreditCardApprovalCode,
+                                SubTotal = item.SubTotal,
+                                TaxAmt = item.TaxAmt,
+                                Freight = item.Freight,
+                                Comment = item.Comment,
+                                rowguid = item.rowguid,
+                                ModifiedDate = item.ModifiedDate,
+                        });
+                    }
+                }
+
+                _dbcontext.Customer.Add(master);
+
+                await _dbcontext.SaveChangesAsync();
+
+                return await Get(new CustomerIdentifier { CustomerID = master.CustomerID, });
+            }
+            catch (Exception ex)
+            {
+                return await Task<Response<CustomerDataModel>>.FromResult(new Response<CustomerDataModel> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
     }
 }
 

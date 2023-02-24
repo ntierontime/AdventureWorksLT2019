@@ -195,7 +195,7 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
 
     return (
         <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
-            <CardHeader
+            {crudViewContainer !== CrudViewContainers.Wizard && <CardHeader
                 avatar={
                     <Avatar sx={avatarStyle} aria-label={item.userName}>
                         {avatar}
@@ -207,11 +207,11 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
                 </>}
                 title={item.userName}
                 subheader={t(i18nFormats.dateTime.format, { val: new Date(item.errorTime), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-            />
-            {buttonContainer === ContainerOptions.ItemCardToolbar && <CardActions disableSpacing>
+            />}
+            {crudViewContainer !== CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardToolbar && <CardActions disableSpacing>
                 {renderButtonGroup_IconButtons()}
             </CardActions>}
-            {!!saveMessage && <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
+            {crudViewContainer !== CrudViewContainers.Wizard && !!saveMessage && <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
                 <Typography variant="body1" component="span">
                     {saveMessage + " "}
                     <Typography variant="h6" component="span">
@@ -221,7 +221,7 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
             </CardContent>}
             <CardContent>
                 <Box sx={{ ...scrollableCardContent }}>
-                    <Grid container spacing={2}>
+                    <Grid container spacing={1}>
                         <Grid item {...gridColumns}>
                             <TextField
                                 name='errorLogID'
@@ -353,7 +353,7 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
                     </Grid>
 				</Box>
             </CardContent>
-            {buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
+            {crudViewContainer !== CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
                 {renderButtonGroup_TextAndIconButtons()}
             </CardActions>}
         </Card >

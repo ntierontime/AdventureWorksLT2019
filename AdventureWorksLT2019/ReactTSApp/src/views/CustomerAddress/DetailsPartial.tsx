@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, Stack, TextField, Typography, useTheme } from '@mui/material';
+import { Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Grid, IconButton, Link, Stack, TextField, Typography, useTheme } from '@mui/material';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -12,7 +12,6 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 
-import { Link } from 'react-router-dom';
 import { DatePicker } from '@mui/x-date-pickers';
 
 
@@ -133,7 +132,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ICustomerAddr
 
     return (
         <Card sx={{ minHeight: '100%' }}>
-            <CardHeader
+            {crudViewContainer !== CrudViewContainers.Wizard && <CardHeader
                 avatar={
                     <Avatar sx={avatarStyle} aria-label={item.addressType}>
                         {avatar}
@@ -142,13 +141,13 @@ export default function DetailsPartial(props: ItemPartialViewProps<ICustomerAddr
                 action={buttonContainer === ContainerOptions.ItemCardHead && renderButtonGroup_IconButtons()}
                 title={item.addressType}
                 subheader={t(i18nFormats.dateTime.format, { val: new Date(item.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-            />
-            {buttonContainer === ContainerOptions.ItemCardToolbar && <CardActions disableSpacing>
+            />}
+            {crudViewContainer !== CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardToolbar && <CardActions disableSpacing>
                 {renderButtonGroup_IconButtons()}
             </CardActions>}
             <CardContent>
                 <Box sx={{ ...scrollableCardContent }}>
-                    <Grid container spacing={2}>
+                    <Grid container spacing={1}>
                         <Grid item {...gridColumns}>
                             <Stack sx={{ p: 2 }}
                                 direction="row"
@@ -157,7 +156,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ICustomerAddr
                                 spacing={2}
                             >
                                 <Typography>{t("CustomerID")}</Typography>
-                                <Link to={"/customer/Details/" + item.customerID}>{item.customer_Name}</Link>
+                                <Link href={"/customer/Details/" + item.customerID}>{item.customer_Name}</Link>
                             </Stack>
                         </Grid>
                         <Grid item {...gridColumns}>
@@ -168,7 +167,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ICustomerAddr
                                 spacing={2}
                             >
                                 <Typography>{t("AddressID")}</Typography>
-                                <Link to={"/address/Details/" + item.addressID}>{item.address_Name}</Link>
+                                <Link href={"/address/Details/" + item.addressID}>{item.address_Name}</Link>
                             </Stack>
                         </Grid>
                         <Grid item {...gridColumns}>
@@ -204,6 +203,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ICustomerAddr
                                 onChange={() => { }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='modifiedDate'
                                         {...params}
@@ -216,7 +216,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<ICustomerAddr
                     </Grid>
 				</Box>
             </CardContent>
-            {/* {buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
+            {/* {crudViewContainer !== CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
                 {renderButtonGroup_IconButtons()}
             </CardActions>} */}
         </Card >

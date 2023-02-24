@@ -26,6 +26,8 @@ export class BuildVersionApi extends AxiosApiBaseGeneric<IBuildVersionDataModel,
 
         this.url_Delete = "api/BuildVersionApi/Delete";
 
+        this.url_CreateComposite = "api/BuildVersionApi/CreateComposite";
+
         // this middleware is been called right before the http request is made.
         this.interceptors.request.use((param: AxiosRequestConfig) => ({
             ...param,

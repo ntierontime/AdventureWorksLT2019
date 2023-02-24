@@ -839,6 +839,65 @@ private IQueryable<SalesOrderHeaderDataModel.DefaultView> GetIQueryableAsBulkUpd
             }
         }
 
+        public async Task<Response<SalesOrderHeaderDataModel.DefaultView>> CreateComposite(SalesOrderHeaderCompositeModel input)
+        {
+            if (input == null)
+                return await Task<Response<SalesOrderHeaderDataModel.DefaultView>>.FromResult(new Response<SalesOrderHeaderDataModel.DefaultView> { Status = HttpStatusCode.BadRequest });
+            try
+            {
+                // 1. Master: SalesOrderHeader
+                var master = new SalesOrderHeader
+                {
+                    // Properties.1. Value Type Properties
+                    RevisionNumber = input.__Master__!.RevisionNumber,
+                    OrderDate = input.__Master__!.OrderDate,
+                    DueDate = input.__Master__!.DueDate,
+                    ShipDate = input.__Master__!.ShipDate,
+                    Status = input.__Master__!.Status,
+                    OnlineOrderFlag = input.__Master__!.OnlineOrderFlag,
+                    PurchaseOrderNumber = input.__Master__!.PurchaseOrderNumber,
+                    AccountNumber = input.__Master__!.AccountNumber,
+                    CustomerID = input.__Master__!.CustomerID,
+                    ShipToAddressID = input.__Master__!.ShipToAddressID,
+                    BillToAddressID = input.__Master__!.BillToAddressID,
+                    ShipMethod = input.__Master__!.ShipMethod,
+                    CreditCardApprovalCode = input.__Master__!.CreditCardApprovalCode,
+                    SubTotal = input.__Master__!.SubTotal,
+                    TaxAmt = input.__Master__!.TaxAmt,
+                    Freight = input.__Master__!.Freight,
+                    Comment = input.__Master__!.Comment,
+                    rowguid = input.__Master__!.rowguid,
+                    ModifiedDate = input.__Master__!.ModifiedDate,
+                };
+                // 2.1.1. ListTable SalesOrderHeader.SalesOrderDetail
+                if(input.SalesOrderDetails_Via_SalesOrderID != null)
+                {
+                    foreach(var item in input.SalesOrderDetails_Via_SalesOrderID)
+                    {
+                        master.SalesOrderDetail.Add(new SalesOrderDetail
+                        {
+                                OrderQty = item.OrderQty,
+                                ProductID = item.ProductID,
+                                UnitPrice = item.UnitPrice,
+                                UnitPriceDiscount = item.UnitPriceDiscount,
+                                rowguid = item.rowguid,
+                                ModifiedDate = item.ModifiedDate,
+                        });
+                    }
+                }
+
+                _dbcontext.SalesOrderHeader.Add(master);
+
+                await _dbcontext.SaveChangesAsync();
+
+                return await Get(new SalesOrderHeaderIdentifier { SalesOrderID = master.SalesOrderID, });
+            }
+            catch (Exception ex)
+            {
+                return await Task<Response<SalesOrderHeaderDataModel.DefaultView>>.FromResult(new Response<SalesOrderHeaderDataModel.DefaultView> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
     }
 }
 

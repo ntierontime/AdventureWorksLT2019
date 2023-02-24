@@ -20,6 +20,7 @@ export class AxiosApiBaseGeneric<TDataModel, TIdentifierQuery, TAdvancedQuery, T
     protected url_BulkDelete: string;
     protected url_BulkUpdate: string;
     protected url_MultiItemsCUD: string;
+    protected url_CreateComposite: string;
 
     public constructor(conf?: AxiosRequestConfig) {
         super(conf);
@@ -115,4 +116,14 @@ export class AxiosApiBaseGeneric<TDataModel, TIdentifierQuery, TAdvancedQuery, T
         return this.put<IResponse<IMultiItemsCUDRequest<TIdentifierQuery, TDataModel>>, IMultiItemsCUDRequest<TIdentifierQuery, TDataModel>, AxiosResponse<IResponse<IMultiItemsCUDRequest<TIdentifierQuery, TDataModel>>>>(this.url_MultiItemsCUD, requestBody)
             .then(this.success);
     }
+
+    public CreateComposite = (params: TCompositeModel): Promise<IResponse<TDataModel>> => {
+        if (!!!this.url_CreateComposite) {
+            throw new Error('CreateComposite Api is not available');
+        }
+
+        return this.post<IResponse<TDataModel>, TCompositeModel, AxiosResponse<IResponse<TDataModel>>>(this.url_CreateComposite, params)
+            .then(this.success);
+    }
+    
 }

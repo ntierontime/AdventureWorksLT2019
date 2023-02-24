@@ -28,6 +28,8 @@ export class SalesOrderHeaderApi extends AxiosApiBaseGeneric<ISalesOrderHeaderDa
 
         this.url_Delete = "api/SalesOrderHeaderApi/Delete";
 
+        this.url_CreateComposite = "api/SalesOrderHeaderApi/CreateComposite";
+
         // this middleware is been called right before the http request is made.
         this.interceptors.request.use((param: AxiosRequestConfig) => ({
             ...param,

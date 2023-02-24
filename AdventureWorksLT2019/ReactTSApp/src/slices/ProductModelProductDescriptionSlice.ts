@@ -8,6 +8,7 @@ import { PaginationOptions } from "src/shared/dataModels/PaginationOptions";
 import { RootState } from "src/store/CombinedReducers";
 
 import { IProductModelProductDescriptionDataModel } from 'src/dataModels/IProductModelProductDescriptionDataModel';
+import { IProductModelProductDescriptionCompositeModel } from "src/dataModels/IProductModelProductDescriptionCompositeModel";
 import { getRouteParamsOfIProductModelProductDescriptionIdentifier, IProductModelProductDescriptionAdvancedQuery, IProductModelProductDescriptionIdentifier } from 'src/dataModels/IProductModelProductDescriptionQueries';
 import { productModelProductDescriptionApi } from "src/apiClients/ProductModelProductDescriptionApi";
 
@@ -88,6 +89,14 @@ export const delete1 = createAsyncThunk(
     async (identifier: IProductModelProductDescriptionIdentifier, { dispatch }) => {
         const response = await productModelProductDescriptionApi.Delete(identifier);
         return { response, identifier };
+    }
+)
+
+export const createComposite = createAsyncThunk(
+    'createCompositeProductModelProductDescription',
+    async (params: IProductModelProductDescriptionCompositeModel, { dispatch }) => {
+        const response = await productModelProductDescriptionApi.CreateComposite(params);
+        return response;
     }
 )
 
@@ -265,6 +274,21 @@ const ProductModelProductDescriptionSlice = createSlice({
         builder.addCase(delete1.rejected, (state, action) => {
 
             // console.log("delete.rejected");
+        });
+
+        builder.addCase(createComposite.pending, (state) => {
+
+            // console.log("createComposite.pending");
+        });
+        builder.addCase(createComposite.fulfilled, (state, { payload }) => {
+            if (!!payload && payload.status === 'OK') {
+                entityAdapter.upsertOne(state, { ...payload.responseBody, itemUIStatus______: ItemUIStatus.New });
+            }
+            // console.log("createComposite.fulfilled");
+        });
+        builder.addCase(createComposite.rejected, (state, action) => {
+
+            // console.log("createComposite.rejected");
         });
     }
 });

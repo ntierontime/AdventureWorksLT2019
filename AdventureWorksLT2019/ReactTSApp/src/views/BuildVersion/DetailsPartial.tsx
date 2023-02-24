@@ -132,7 +132,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IBuildVersion
 
     return (
         <Card sx={{ minHeight: '100%' }}>
-            <CardHeader
+            {crudViewContainer !== CrudViewContainers.Wizard && <CardHeader
                 avatar={
                     <Avatar sx={avatarStyle} aria-label={item.database_Version}>
                         {avatar}
@@ -141,13 +141,13 @@ export default function DetailsPartial(props: ItemPartialViewProps<IBuildVersion
                 action={buttonContainer === ContainerOptions.ItemCardHead && renderButtonGroup_IconButtons()}
                 title={item.database_Version}
                 subheader={item.versionDate}
-            />
-            {buttonContainer === ContainerOptions.ItemCardToolbar && <CardActions disableSpacing>
+            />}
+            {crudViewContainer !== CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardToolbar && <CardActions disableSpacing>
                 {renderButtonGroup_IconButtons()}
             </CardActions>}
             <CardContent>
                 <Box sx={{ ...scrollableCardContent }}>
-                    <Grid container spacing={2}>
+                    <Grid container spacing={1}>
                         <Grid item {...gridColumns}>
                             <TextField
                                 name='systemInformationID'
@@ -181,6 +181,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IBuildVersion
                                 onChange={() => { }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='versionDate'
                                         {...params}
@@ -197,6 +198,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IBuildVersion
                                 onChange={() => { }}
                                 renderInput={(params) =>
                                     <TextField
+                            			sx={{marginTop: 2}}
                                         fullWidth
                                         autoComplete='modifiedDate'
                                         {...params}
@@ -209,7 +211,7 @@ export default function DetailsPartial(props: ItemPartialViewProps<IBuildVersion
                     </Grid>
 				</Box>
             </CardContent>
-            {/* {buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
+            {/* {crudViewContainer !== CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
                 {renderButtonGroup_IconButtons()}
             </CardActions>} */}
         </Card >

@@ -29,6 +29,8 @@ namespace AdventureWorksLT2019.ServiceContracts
 
         Task<ListResponse<NameValuePair[]>> GetCodeList(
             AddressAdvancedQuery query);
+
+        Task<Response<AddressDataModel>> CreateComposite(AddressCompositeModel input);
     }
 }
 

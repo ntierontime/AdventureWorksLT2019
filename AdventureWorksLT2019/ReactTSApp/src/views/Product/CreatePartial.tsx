@@ -24,34 +24,25 @@ import { AppDispatch } from 'src/store/Store';
 import { ContainerOptions } from 'src/shared/viewModels/ContainerOptions';
 import { CrudViewContainers } from 'src/shared/viewModels/CrudViewContainers';
 import { ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps';
-import { defaultProduct, IProductDataModel, productFormValidationWhenCreate } from 'src/dataModels/IProductDataModel';
+import { IProductDataModel, productFormValidationWhenCreate } from 'src/dataModels/IProductDataModel';
 import { post } from 'src/slices/ProductSlice';
 
 export default function CreatePartial(props: ItemPartialViewProps<IProductDataModel>): JSX.Element {
-    const { gridColumns, scrollableCardContent, crudViewContainer, buttonContainer } = props; // item
-    const { doneAction } = props; // dialog
-    const [item, setItem] = useState<IProductDataModel>(defaultProduct());
     const { t } = useTranslation();
-    const dispatch = useDispatch<AppDispatch>();
-
-	// 'control' is only used by boolean fields, you can remove it if this form doesn't have it
-	// 'setValue' is only used by Dropdown List fields and DatePicker fields, you can remove it if this form doesn't have it
+    // #region 1.start redux-hook-form related
+    const { item } = props;
+    const { gridColumns, scrollableCardContent, crudViewContainer, buttonContainer } = props;
+    // 'control' is only used by boolean fields, you can remove it if this form doesn't have it
+    // 'setValue' is only used by Dropdown List fields and DatePicker fields, you can remove it if this form doesn't have it
     const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
     });
+    // #endregion 1. redux-hook-form related
 
-    const [creating, setCreating] = useState(false);
-    const [created, setCreated] = useState(false);
-
-    const [createMessage, setCreateMessage] = useState<string>();
-    const [createAnother, setCreateAnother] = useState(true);
-    const handleChangeCreateAnother = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setCreateAnother(event.target.checked);
-    };
-
-
+    // #region 2. CodeLists if any
+	
 
     const [productCategory_ParentIDCodeList, setProductCategory_ParentIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.parent_Name, value: item.parentID, selected: false }]);
 
@@ -63,29 +54,6 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
     const [sellEndDate, setSellEndDate] = useState<string>();
     const [discontinuedDate, setDiscontinuedDate] = useState<string>();
     const [modifiedDate, setModifiedDate] = useState<string>();
-    useEffect(() => {
-
-
-        codeListsApi.getProductCategoryCodeList({ ...defaultIProductCategoryAdvancedQuery(), pageSize: 10000 }).then((res) => {
-            if (res.status === "OK") {
-                setProductCategory_ParentIDCodeList(res.responseBody);
-                setValue('parentID', res.responseBody[0].value);
-				onParentIDChanged_LoadChildren(res.responseBody[0].value);
-            }
-        });
-
-        codeListsApi.getProductModelCodeList({ ...defaultIProductModelAdvancedQuery(), pageSize: 10000 }).then((res) => {
-            if (res.status === "OK") {
-                setProductModel_ProductModelIDCodeList(res.responseBody);
-                setValue('productModelID', res.responseBody[0].value);
-				
-            }
-        });
-        setCreating(false);
-        setCreated(false);
-        setCreateMessage(null);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
 
 
@@ -100,6 +68,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
 
     const onParentIDChanged_LoadChildren = (parentID: number) => {
 
+		// \ProductCategoryID\ParentProductCategoryID
         const iProductCategoryAdvancedQuery_ProductCategoryID_Here = { ...iProductCategoryAdvancedQuery_ProductCategoryID, parentProductCategoryID: parentID };
         setIProductCategoryAdvancedQuery_ProductCategoryID(iProductCategoryAdvancedQuery_ProductCategoryID_Here);
         getProductCategory_ProductCategoryIDCodeList(iProductCategoryAdvancedQuery_ProductCategoryID, true, false);
@@ -132,17 +101,35 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
             setValue('productCategoryID', -1);
         }
     }
+    // #endregion 2. CodeLists if any
 
-    const onSubmit = () => {
+    // #region 3. crudViewContainer !== CrudViewContainers.Wizard
+    const { doneAction } = props; // dialog
+    const dispatch = useDispatch<AppDispatch>();
+
+    const [creating, setCreating] = useState(false);
+    const [created, setCreated] = useState(false);
+
+    const [createMessage, setCreateMessage] = useState<string>();
+    const [createAnother, setCreateAnother] = useState(true);
+    const handleChangeCreateAnother = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setCreateAnother(event.target.checked);
+    };
+
+    const onSubmit = (data: IProductDataModel) => {
+        if(crudViewContainer === CrudViewContainers.Wizard) {
+            onWizardStepSubmit(data);
+            return;
+        }
+
         setCreating(true);
-        dispatch(post({ ...item }))
+        dispatch(post({ ...data }))
             .then((result) => {
                 if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
                     if (createAnother) {
                         setCreating(false);
                         setCreated(false);
                         setCreateMessage(null);
-                        setItem(defaultProduct());
                         reset(item);
                     }
                     else {
@@ -205,25 +192,55 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
             </>
         );
     }
+	// #endregion 3. crudViewContainer !== CrudViewContainers.Wizard
+	
+    // #region 4. crudViewContainer === CrudViewContainers.Wizard
+    const { wizardOrientation, onWizardStepSubmit, renderWizardButtonGroup, isFirstStep, isLastStep, isStepOptional } = props;
+
+    // #endregion 4. crudViewContainer === CrudViewContainers.Wizard
+
+    useEffect(() => {
+
+
+        codeListsApi.getProductCategoryCodeList({ ...defaultIProductCategoryAdvancedQuery(), pageSize: 10000 }).then((res) => {
+            if (res.status === "OK") {
+                setProductCategory_ParentIDCodeList(res.responseBody);
+                setValue('parentID', res.responseBody[0].value);
+				onParentIDChanged_LoadChildren(res.responseBody[0].value);
+            }
+        });
+
+        codeListsApi.getProductModelCodeList({ ...defaultIProductModelAdvancedQuery(), pageSize: 10000 }).then((res) => {
+            if (res.status === "OK") {
+                setProductModel_ProductModelIDCodeList(res.responseBody);
+                setValue('productModelID', res.responseBody[0].value);
+				
+            }
+        });
+        setCreating(false);
+        setCreated(false);
+        setCreateMessage(null);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
-            <CardHeader
+            {crudViewContainer !== CrudViewContainers.Wizard && <CardHeader
                 action={buttonContainer === ContainerOptions.ItemCardHead && <>
                     {crudViewContainer !== CrudViewContainers.StandaloneView && renderButtonGroup_IconButtons()}
                     {crudViewContainer === CrudViewContainers.StandaloneView && renderButtonGroup_TextAndIconButtons()}
                 </>}
                 title={t("Create_New")}
                 subheader={t("Product")}
-            />
-            {!!createMessage && <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
+            />}
+            {crudViewContainer !== CrudViewContainers.Wizard && !!createMessage && <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
                 <Typography variant="body1" component="span">
                     {createMessage + " "}
                 </Typography>
             </CardContent>}
             <CardContent>
                 <Box sx={{ ...scrollableCardContent }}>
-                    <Grid container spacing={2}>
+                    <Grid container spacing={1}>
                         <Grid item {...gridColumns}>
                             <TextField
                                 name='name'
@@ -324,6 +341,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
                         </Grid>
                         <Grid item {...gridColumns}>
                             <TextField
+                            	sx={{marginTop: 2}}
                                 label={t("ParentID")}
                                 id="parentIDSelect"
                                 select
@@ -471,13 +489,15 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductDataMo
                             />
                         </Grid>
                     </Grid>
-				</Box>
+                </Box>
             </CardContent>
-            {buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
+            {crudViewContainer != CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
                 {renderButtonGroup_TextAndIconButtons()}
+            </CardActions>}
+            {crudViewContainer === CrudViewContainers.Wizard && <CardActions disableSpacing>
+                {renderWizardButtonGroup(isFirstStep, isLastStep, isStepOptional, ()=>!isValid || creating || created || !isDirty)}
             </CardActions>}
         </Card >
     );
 }
-
 

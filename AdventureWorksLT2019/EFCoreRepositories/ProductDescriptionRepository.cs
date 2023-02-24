@@ -465,6 +465,46 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
+        public async Task<Response<ProductDescriptionDataModel>> CreateComposite(ProductDescriptionCompositeModel input)
+        {
+            if (input == null)
+                return await Task<Response<ProductDescriptionDataModel>>.FromResult(new Response<ProductDescriptionDataModel> { Status = HttpStatusCode.BadRequest });
+            try
+            {
+                // 1. Master: ProductDescription
+                var master = new ProductDescription
+                {
+                    // Properties.1. Value Type Properties
+                    Description = input.__Master__!.Description,
+                    rowguid = input.__Master__!.rowguid,
+                    ModifiedDate = input.__Master__!.ModifiedDate,
+                };
+                // 2.1.1. ListTable ProductDescription.ProductModelProductDescription
+                if(input.ProductModelProductDescriptions_Via_ProductDescriptionID != null)
+                {
+                    foreach(var item in input.ProductModelProductDescriptions_Via_ProductDescriptionID)
+                    {
+                        master.ProductModelProductDescription.Add(new ProductModelProductDescription
+                        {
+                                Culture = item.Culture,
+                                rowguid = item.rowguid,
+                                ModifiedDate = item.ModifiedDate,
+                        });
+                    }
+                }
+
+                _dbcontext.ProductDescription.Add(master);
+
+                await _dbcontext.SaveChangesAsync();
+
+                return await Get(new ProductDescriptionIdentifier { ProductDescriptionID = master.ProductDescriptionID, });
+            }
+            catch (Exception ex)
+            {
+                return await Task<Response<ProductDescriptionDataModel>>.FromResult(new Response<ProductDescriptionDataModel> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
     }
 }
 

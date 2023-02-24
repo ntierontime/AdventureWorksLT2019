@@ -107,6 +107,13 @@ namespace AdventureWorksLT2019.WebApiControllers
             return ReturnWithoutBodyActionResult(serviceResponse);
         }
 
+        [HttpPost]
+        public async Task<ActionResult<Response<SalesOrderHeaderDataModel.DefaultView>>> CreateComposite(SalesOrderHeaderCompositeModel input)
+        {
+            var serviceResponse = await _thisService.CreateComposite(input);
+            return ReturnActionResult(serviceResponse);
+        }
+
         /*
         // [Authorize]
         [HttpGet, ActionName("HeartBeat")]

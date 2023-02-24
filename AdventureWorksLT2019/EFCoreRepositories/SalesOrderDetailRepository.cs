@@ -580,6 +580,37 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
+        public async Task<Response<SalesOrderDetailDataModel.DefaultView>> CreateComposite(SalesOrderDetailCompositeModel input)
+        {
+            if (input == null)
+                return await Task<Response<SalesOrderDetailDataModel.DefaultView>>.FromResult(new Response<SalesOrderDetailDataModel.DefaultView> { Status = HttpStatusCode.BadRequest });
+            try
+            {
+                // 1. Master: SalesOrderDetail
+                var master = new SalesOrderDetail
+                {
+                    // Properties.1. Value Type Properties
+                    SalesOrderID = input.__Master__!.SalesOrderID,
+                    OrderQty = input.__Master__!.OrderQty,
+                    ProductID = input.__Master__!.ProductID,
+                    UnitPrice = input.__Master__!.UnitPrice,
+                    UnitPriceDiscount = input.__Master__!.UnitPriceDiscount,
+                    rowguid = input.__Master__!.rowguid,
+                    ModifiedDate = input.__Master__!.ModifiedDate,
+                };
+
+                _dbcontext.SalesOrderDetail.Add(master);
+
+                await _dbcontext.SaveChangesAsync();
+
+                return await Get(new SalesOrderDetailIdentifier { SalesOrderID = master.SalesOrderID, SalesOrderDetailID = master.SalesOrderDetailID, });
+            }
+            catch (Exception ex)
+            {
+                return await Task<Response<SalesOrderDetailDataModel.DefaultView>>.FromResult(new Response<SalesOrderDetailDataModel.DefaultView> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
     }
 }
 

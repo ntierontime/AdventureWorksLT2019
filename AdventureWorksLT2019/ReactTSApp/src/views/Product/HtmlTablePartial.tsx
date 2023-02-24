@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Checkbox, FormControlLabel, IconButton, Pagination, Popover, Stack, Switch, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
+import { Checkbox, FormControlLabel, IconButton, Link, Pagination, Popover, Stack, Switch, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 
-import { Link } from 'react-router-dom';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -243,9 +242,9 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDat
                                         <TableCell align='right'>{t(i18nFormats.double.format, { val: row.listPrice })}</TableCell>
                                         <TableCell align='right'>{row.size}</TableCell>
                                         <TableCell align='right'>{t(i18nFormats.double.format, { val: row.weight })}</TableCell>
-                                        <TableCell align='right'><Link to={"/productCategory/Details/" + row.parentID}>{row.parent_Name}</Link></TableCell>
-                                        <TableCell align='right'><Link to={"/productCategory/Details/" + row.productCategoryID}>{row.productCategory_Name}</Link></TableCell>
-                                        <TableCell align='right'><Link to={"/productModel/Details/" + row.productModelID}>{row.productModel_Name}</Link></TableCell>
+                                        <TableCell align='right'><Link href={"/productCategory/Details/" + row.parentID}>{row.parent_Name}</Link></TableCell>
+                                        <TableCell align='right'><Link href={"/productCategory/Details/" + row.productCategoryID}>{row.productCategory_Name}</Link></TableCell>
+                                        <TableCell align='right'><Link href={"/productModel/Details/" + row.productModelID}>{row.productModel_Name}</Link></TableCell>
                                         <TableCell align='right'>{t(i18nFormats.dateTime.format, { val: new Date(row.sellStartDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}</TableCell>
                                         <TableCell align='right'>{t(i18nFormats.dateTime.format, { val: new Date(row.sellEndDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}</TableCell>
                                         <TableCell align='right'>{t(i18nFormats.dateTime.format, { val: new Date(row.discontinuedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}</TableCell>

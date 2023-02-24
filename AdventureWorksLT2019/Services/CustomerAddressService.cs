@@ -106,6 +106,11 @@ namespace AdventureWorksLT2019.Services
         {
             return await _thisRepository.GetCodeList(query);
         }
+
+        public async Task<Response<CustomerAddressDataModel.DefaultView>> CreateComposite(CustomerAddressCompositeModel input)
+        {
+            return await _thisRepository.CreateComposite(input);
+        }
     }
 }
 

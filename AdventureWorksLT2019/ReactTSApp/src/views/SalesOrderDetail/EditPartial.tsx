@@ -214,7 +214,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
 
     return (
         <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
-            <CardHeader
+            {crudViewContainer !== CrudViewContainers.Wizard && <CardHeader
                 avatar={
                     <Avatar sx={avatarStyle} aria-label={item.salesOrderID.toString()}>
                         {avatar}
@@ -226,11 +226,11 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
                 </>}
                 title={item.salesOrderID}
                 subheader={t(i18nFormats.dateTime.format, { val: new Date(item.modifiedDate), formatParams: { val: i18nFormats.dateTime.dateTimeShort, } })}
-            />
-            {buttonContainer === ContainerOptions.ItemCardToolbar && <CardActions disableSpacing>
+            />}
+            {crudViewContainer !== CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardToolbar && <CardActions disableSpacing>
                 {renderButtonGroup_IconButtons()}
             </CardActions>}
-            {!!saveMessage && <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
+            {crudViewContainer !== CrudViewContainers.Wizard && !!saveMessage && <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
                 <Typography variant="body1" component="span">
                     {saveMessage + " "}
                     <Typography variant="h6" component="span">
@@ -240,7 +240,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
             </CardContent>}
             <CardContent>
                 <Box sx={{ ...scrollableCardContent }}>
-                    <Grid container spacing={2}>
+                    <Grid container spacing={1}>
                         <Grid item {...gridColumns}>
                             <TextField
                                 label={t("SalesOrderID")}
@@ -376,7 +376,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderDetai
                     </Grid>
 				</Box>
             </CardContent>
-            {buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
+            {crudViewContainer !== CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
                 {renderButtonGroup_TextAndIconButtons()}
             </CardActions>}
         </Card >
