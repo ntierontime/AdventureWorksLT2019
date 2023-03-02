@@ -10,8 +10,9 @@ import SaveIcon from '@mui/icons-material/Save';
 
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-import { DatePicker } from '@mui/x-date-pickers';
+import { Controller } from 'react-hook-form';
 import { INameValuePair } from 'src/shared/dataModels/INameValuePair';
 import { codeListsApi } from 'src/apiClients/CodeListsApi';
 import { defaultIProductCategoryAdvancedQuery } from 'src/dataModels/IProductCategoryQueries';
@@ -40,11 +41,13 @@ export default function EditPartial(props: ItemPartialViewProps<IProductCategory
 
 	// 'control' is only used by boolean fields, you can remove it if this form doesn't have it
 	// 'setValue' is only used by Dropdown List fields and DatePicker fields, you can remove it if this form doesn't have it
-    const { register, control, setValue, handleSubmit, formState: { isValid, errors, isDirty } } = useForm({
+    const methods = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
-    },);
+        resolver: yupResolver(productCategoryFormValidationWhenEdit)
+    });
+    const { register, control, setValue, handleSubmit, reset, trigger, formState: { isValid, errors, isDirty } } = methods;
 
     const [saving, setSaving] = useState(false);
     const [saved, setSaved] = useState(false);
@@ -72,10 +75,12 @@ export default function EditPartial(props: ItemPartialViewProps<IProductCategory
 
 
 
+
+
     const onSubmit = (data: IProductCategoryDataModel) => {
         setSaving(true);
         dispatch(put({ identifier: getIProductCategoryIdentifier(data), data: { ...data } }))
-            .then((result) => {
+            .then((result: any) => {
                 if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
                     setSaveMessage(t('SuccessfullySaved'));
                     setSaved(true);
@@ -85,7 +90,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductCategory
                 }
                 //console.log(result);
             })
-            .catch((error) => { setSaveMessage(t('FailedToSave')); /*console.log(error);*/ })
+            .catch((error: any) => { setSaveMessage(t('FailedToSave')); /*console.log(error);*/ })
             .finally(() => { setSaving(false); console.log('finally'); });
     }
 
@@ -128,7 +133,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductCategory
                 <IconButton aria-label="Save"
                     color="primary"
                     type='submit'
-                    disabled={!isValid || saving || saved || !isDirty}
+                    disabled={!isValid || saving || saved}
                 >
                     <SaveIcon />
                 </IconButton>
@@ -174,7 +179,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductCategory
                         color="primary"
                         type='submit'
                         variant='contained'
-                        disabled={!isValid || saving || saved || !isDirty}
+                        disabled={!isValid || saving || saved}
                         startIcon={<SaveIcon color='action' />}>
                         {t('Save')}
                     </LoadingButton>
@@ -247,11 +252,12 @@ export default function EditPartial(props: ItemPartialViewProps<IProductCategory
                         </Grid>
                         <Grid item {...gridColumns}>
                             <TextField
+                            	sx={{marginTop: 2}}
                                 label={t("ParentProductCategoryID")}
                                 id="parentProductCategoryIDSelect"
                                 select
                                 name='parentProductCategoryID'
-                                {...register("parentProductCategoryID", productCategoryFormValidationWhenEdit.parentProductCategoryID)}
+                                {...register("parentProductCategoryID")}
                                 autoComplete='parentProductCategoryID'
                                 variant="outlined"
                                 fullWidth
@@ -269,7 +275,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductCategory
                                 defaultValue={item.name}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("name", productCategoryFormValidationWhenEdit.name)}
+                                {...register("name")}
                                 autoComplete='name'
                                 error={!!errors.name}
                                 fullWidth
@@ -290,20 +296,27 @@ export default function EditPartial(props: ItemPartialViewProps<IProductCategory
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <DatePicker
-                                value={modifiedDate}
-                                label={t('ModifiedDate')}
-                                onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
-                                renderInput={(params) =>
-                                    <TextField
-                            			sx={{marginTop: 2}}
-                                        fullWidth
-                                        autoComplete='modifiedDate'
-                            			{...register("modifiedDate", productCategoryFormValidationWhenEdit.modifiedDate)}
-                                        error={!!errors.modifiedDate}
-                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                        {...params}
-                                    />}
+                            <Controller
+                                name="modifiedDate"
+                                control={control}
+                                defaultValue={null}
+                                render={({ field, ...props }) => {
+                                    return (
+                            			<DatePicker
+                            				value={modifiedDate}
+                            				label={t('ModifiedDate')}
+                            				onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
+                            				renderInput={(params) =>
+                            					<TextField
+                            						sx={{marginTop: 2}}
+                            						fullWidth
+                            						error={!!errors.modifiedDate}
+                            						helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                            						{...params}
+                            					/>}
+                            			/>
+                                    );
+                                }}
                             />
                         </Grid>
                     </Grid>

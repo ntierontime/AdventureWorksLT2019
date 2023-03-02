@@ -69,40 +69,6 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ICustomerAd
         setDense(event.target.checked);
     };
 
-    const headCells: HeadCell[] = [
-
-        {
-            id: 'customerID',
-            numeric: true,
-            disablePadding: true,
-            label: t('CustomerID'),
-        },
-        {
-            id: 'addressID',
-            numeric: true,
-            disablePadding: true,
-            label: t('AddressID'),
-        },
-        {
-            id: 'addressType',
-            numeric: false,
-            disablePadding: true,
-            label: t('AddressType'),
-        },
-        {
-            id: 'rowguid',
-            numeric: false,
-            disablePadding: true,
-            label: t('rowguid'),
-        },
-        {
-            id: 'modifiedDate',
-            numeric: false,
-            disablePadding: true,
-            label: t('ModifiedDate'),
-        },
-    ];
-
     return (
         <>
             <TableContainer onMouseEnter={(event) => { handleItemActionsPopoverClose() }}>
@@ -228,4 +194,38 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ICustomerAd
         </>
     );
 }
+
+const headCells: HeadCell[] = [
+
+    {
+        id: 'customerID',
+        numeric: true,
+        disablePadding: true,
+        label: 'CustomerID',
+    },
+    {
+        id: 'addressID',
+        numeric: true,
+        disablePadding: true,
+        label: 'AddressID',
+    },
+    {
+        id: 'addressType',
+        numeric: false,
+        disablePadding: true,
+        label: 'AddressType',
+    },
+    {
+        id: 'rowguid',
+        numeric: false,
+        disablePadding: true,
+        label: 'rowguid',
+    },
+    {
+        id: 'modifiedDate',
+        numeric: false,
+        disablePadding: true,
+        label: 'ModifiedDate',
+    },
+];
 

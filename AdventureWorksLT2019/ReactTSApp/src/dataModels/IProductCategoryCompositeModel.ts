@@ -1,6 +1,6 @@
 import { ICompositeModel } from "src/shared/dataModels/ICompositeModel";
-import { defaultProductCategory, IProductCategoryDataModel } from "./IProductCategoryDataModel";
-import { IProductDataModel } from "./IProductDataModel";
+import { IProductCategoryDataModel, defaultProductCategory } from "./IProductCategoryDataModel";
+import { IProductDataModel, defaultProduct } from "./IProductDataModel";
 
 export interface IProductCategoryCompositeModel extends ICompositeModel<IProductCategoryDataModel, IProductCategoryCompositeModel_DataOptions__> {
     // 4. ListTable = 4
@@ -21,8 +21,8 @@ export function defaultIProductCategoryCompositeModel(): IProductCategoryComposi
         responses: null,
         __Master__: defaultProductCategory(),
         // 4. ListTable = 4
-        products_Via_ProductCategoryID: [] as IProductDataModel[],
-        productCategories_Via_ParentProductCategoryID: [] as IProductCategoryDataModel[],
+        products_Via_ProductCategoryID: [ defaultProduct() ],
+        productCategories_Via_ParentProductCategoryID: [ defaultProductCategory() ],
     };
 }
 

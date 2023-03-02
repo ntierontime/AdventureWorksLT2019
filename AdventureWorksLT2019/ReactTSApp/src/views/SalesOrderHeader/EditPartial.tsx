@@ -10,8 +10,8 @@ import SaveIcon from '@mui/icons-material/Save';
 
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-import { DatePicker } from '@mui/x-date-pickers';
 import { Controller } from 'react-hook-form';
 import { INameValuePair } from 'src/shared/dataModels/INameValuePair';
 import { codeListsApi } from 'src/apiClients/CodeListsApi';
@@ -42,11 +42,13 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
 
 	// 'control' is only used by boolean fields, you can remove it if this form doesn't have it
 	// 'setValue' is only used by Dropdown List fields and DatePicker fields, you can remove it if this form doesn't have it
-    const { register, control, setValue, handleSubmit, formState: { isValid, errors, isDirty } } = useForm({
+    const methods = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
-    },);
+        resolver: yupResolver(salesOrderHeaderFormValidationWhenEdit)
+    });
+    const { register, control, setValue, handleSubmit, reset, trigger, formState: { isValid, errors, isDirty } } = methods;
 
     const [saving, setSaving] = useState(false);
     const [saved, setSaved] = useState(false);
@@ -93,10 +95,12 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
 
 
 
+
+
     const onSubmit = (data: ISalesOrderHeaderDataModel) => {
         setSaving(true);
         dispatch(put({ identifier: getISalesOrderHeaderIdentifier(data), data: { ...data } }))
-            .then((result) => {
+            .then((result: any) => {
                 if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
                     setSaveMessage(t('SuccessfullySaved'));
                     setSaved(true);
@@ -106,7 +110,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                 }
                 //console.log(result);
             })
-            .catch((error) => { setSaveMessage(t('FailedToSave')); /*console.log(error);*/ })
+            .catch((error: any) => { setSaveMessage(t('FailedToSave')); /*console.log(error);*/ })
             .finally(() => { setSaving(false); console.log('finally'); });
     }
 
@@ -149,7 +153,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                 <IconButton aria-label="Save"
                     color="primary"
                     type='submit'
-                    disabled={!isValid || saving || saved || !isDirty}
+                    disabled={!isValid || saving || saved}
                 >
                     <SaveIcon />
                 </IconButton>
@@ -195,7 +199,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                         color="primary"
                         type='submit'
                         variant='contained'
-                        disabled={!isValid || saving || saved || !isDirty}
+                        disabled={!isValid || saving || saved}
                         startIcon={<SaveIcon color='action' />}>
                         {t('Save')}
                     </LoadingButton>
@@ -273,7 +277,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                                 defaultValue={item.revisionNumber}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("revisionNumber", salesOrderHeaderFormValidationWhenEdit.revisionNumber)}
+                                {...register("revisionNumber")}
                                 autoComplete='revisionNumber'
                                 error={!!errors.revisionNumber}
                                 fullWidth
@@ -281,54 +285,75 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <DatePicker
-                                value={orderDate}
-                                label={t('OrderDate')}
-                                onChange={(event: string) => { setOrderDate(event); setValue('orderDate', event, { shouldDirty: true }); }}
-                                renderInput={(params) =>
-                                    <TextField
-                            			sx={{marginTop: 2}}
-                                        fullWidth
-                                        autoComplete='orderDate'
-                            			{...register("orderDate", salesOrderHeaderFormValidationWhenEdit.orderDate)}
-                                        error={!!errors.orderDate}
-                                        helperText={!!errors.orderDate ? t(errors.orderDate.message) : ''}
-                                        {...params}
-                                    />}
+                            <Controller
+                                name="orderDate"
+                                control={control}
+                                defaultValue={null}
+                                render={({ field, ...props }) => {
+                                    return (
+                            			<DatePicker
+                            				value={orderDate}
+                            				label={t('OrderDate')}
+                            				onChange={(event: string) => { setOrderDate(event); setValue('orderDate', event, { shouldDirty: true }); }}
+                            				renderInput={(params) =>
+                            					<TextField
+                            						sx={{marginTop: 2}}
+                            						fullWidth
+                            						error={!!errors.orderDate}
+                            						helperText={!!errors.orderDate ? t(errors.orderDate.message) : ''}
+                            						{...params}
+                            					/>}
+                            			/>
+                                    );
+                                }}
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <DatePicker
-                                value={dueDate}
-                                label={t('DueDate')}
-                                onChange={(event: string) => { setDueDate(event); setValue('dueDate', event, { shouldDirty: true }); }}
-                                renderInput={(params) =>
-                                    <TextField
-                            			sx={{marginTop: 2}}
-                                        fullWidth
-                                        autoComplete='dueDate'
-                            			{...register("dueDate", salesOrderHeaderFormValidationWhenEdit.dueDate)}
-                                        error={!!errors.dueDate}
-                                        helperText={!!errors.dueDate ? t(errors.dueDate.message) : ''}
-                                        {...params}
-                                    />}
+                            <Controller
+                                name="dueDate"
+                                control={control}
+                                defaultValue={null}
+                                render={({ field, ...props }) => {
+                                    return (
+                            			<DatePicker
+                            				value={dueDate}
+                            				label={t('DueDate')}
+                            				onChange={(event: string) => { setDueDate(event); setValue('dueDate', event, { shouldDirty: true }); }}
+                            				renderInput={(params) =>
+                            					<TextField
+                            						sx={{marginTop: 2}}
+                            						fullWidth
+                            						error={!!errors.dueDate}
+                            						helperText={!!errors.dueDate ? t(errors.dueDate.message) : ''}
+                            						{...params}
+                            					/>}
+                            			/>
+                                    );
+                                }}
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <DatePicker
-                                value={shipDate}
-                                label={t('ShipDate')}
-                                onChange={(event: string) => { setShipDate(event); setValue('shipDate', event, { shouldDirty: true }); }}
-                                renderInput={(params) =>
-                                    <TextField
-                            			sx={{marginTop: 2}}
-                                        fullWidth
-                                        autoComplete='shipDate'
-                            			{...register("shipDate", salesOrderHeaderFormValidationWhenEdit.shipDate)}
-                                        error={!!errors.shipDate}
-                                        helperText={!!errors.shipDate ? t(errors.shipDate.message) : ''}
-                                        {...params}
-                                    />}
+                            <Controller
+                                name="shipDate"
+                                control={control}
+                                defaultValue={null}
+                                render={({ field, ...props }) => {
+                                    return (
+                            			<DatePicker
+                            				value={shipDate}
+                            				label={t('ShipDate')}
+                            				onChange={(event: string) => { setShipDate(event); setValue('shipDate', event, { shouldDirty: true }); }}
+                            				renderInput={(params) =>
+                            					<TextField
+                            						sx={{marginTop: 2}}
+                            						fullWidth
+                            						error={!!errors.shipDate}
+                            						helperText={!!errors.shipDate ? t(errors.shipDate.message) : ''}
+                            						{...params}
+                            					/>}
+                            			/>
+                                    );
+                                }}
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
@@ -338,7 +363,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                                 defaultValue={item.status}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("status", salesOrderHeaderFormValidationWhenEdit.status)}
+                                {...register("status")}
                                 autoComplete='status'
                                 error={!!errors.status}
                                 fullWidth
@@ -352,7 +377,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                                         control={control}
                                         name="onlineOrderFlag"
                                         defaultValue={item.onlineOrderFlag}
-                                        {...register("onlineOrderFlag", salesOrderHeaderFormValidationWhenEdit.onlineOrderFlag)}
+                            			{...register("onlineOrderFlag")}
                                         render={({ field: { onChange } }) => (
                                             <Checkbox
                                                 color="primary"
@@ -386,7 +411,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                                 defaultValue={item.purchaseOrderNumber}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("purchaseOrderNumber", salesOrderHeaderFormValidationWhenEdit.purchaseOrderNumber)}
+                                {...register("purchaseOrderNumber")}
                                 autoComplete='purchaseOrderNumber'
                                 error={!!errors.purchaseOrderNumber}
                                 fullWidth
@@ -400,7 +425,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                                 defaultValue={item.accountNumber}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("accountNumber", salesOrderHeaderFormValidationWhenEdit.accountNumber)}
+                                {...register("accountNumber")}
                                 autoComplete='accountNumber'
                                 error={!!errors.accountNumber}
                                 fullWidth
@@ -409,11 +434,12 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                         </Grid>
                         <Grid item {...gridColumns}>
                             <TextField
+                            	sx={{marginTop: 2}}
                                 label={t("CustomerID")}
                                 id="customerIDSelect"
                                 select
                                 name='customerID'
-                                {...register("customerID", salesOrderHeaderFormValidationWhenEdit.customerID)}
+                                {...register("customerID")}
                                 autoComplete='customerID'
                                 variant="outlined"
                                 fullWidth
@@ -426,11 +452,12 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                         </Grid>
                         <Grid item {...gridColumns}>
                             <TextField
+                            	sx={{marginTop: 2}}
                                 label={t("ShipToAddressID")}
                                 id="shipToAddressIDSelect"
                                 select
                                 name='shipToAddressID'
-                                {...register("shipToAddressID", salesOrderHeaderFormValidationWhenEdit.shipToAddressID)}
+                                {...register("shipToAddressID")}
                                 autoComplete='shipToAddressID'
                                 variant="outlined"
                                 fullWidth
@@ -443,11 +470,12 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                         </Grid>
                         <Grid item {...gridColumns}>
                             <TextField
+                            	sx={{marginTop: 2}}
                                 label={t("BillToAddressID")}
                                 id="billToAddressIDSelect"
                                 select
                                 name='billToAddressID'
-                                {...register("billToAddressID", salesOrderHeaderFormValidationWhenEdit.billToAddressID)}
+                                {...register("billToAddressID")}
                                 autoComplete='billToAddressID'
                                 variant="outlined"
                                 fullWidth
@@ -465,7 +493,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                                 defaultValue={item.shipMethod}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("shipMethod", salesOrderHeaderFormValidationWhenEdit.shipMethod)}
+                                {...register("shipMethod")}
                                 autoComplete='shipMethod'
                                 error={!!errors.shipMethod}
                                 fullWidth
@@ -479,7 +507,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                                 defaultValue={item.creditCardApprovalCode}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("creditCardApprovalCode", salesOrderHeaderFormValidationWhenEdit.creditCardApprovalCode)}
+                                {...register("creditCardApprovalCode")}
                                 autoComplete='creditCardApprovalCode'
                                 error={!!errors.creditCardApprovalCode}
                                 fullWidth
@@ -493,7 +521,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                                 defaultValue={item.subTotal}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("subTotal", salesOrderHeaderFormValidationWhenEdit.subTotal)}
+                                {...register("subTotal")}
                                 autoComplete='subTotal'
                                 error={!!errors.subTotal}
                                 fullWidth
@@ -507,7 +535,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                                 defaultValue={item.taxAmt}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("taxAmt", salesOrderHeaderFormValidationWhenEdit.taxAmt)}
+                                {...register("taxAmt")}
                                 autoComplete='taxAmt'
                                 error={!!errors.taxAmt}
                                 fullWidth
@@ -521,7 +549,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                                 defaultValue={item.freight}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("freight", salesOrderHeaderFormValidationWhenEdit.freight)}
+                                {...register("freight")}
                                 autoComplete='freight'
                                 error={!!errors.freight}
                                 fullWidth
@@ -548,7 +576,7 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                                 defaultValue={item.comment}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("comment", salesOrderHeaderFormValidationWhenEdit.comment)}
+                                {...register("comment")}
                                 autoComplete='comment'
                                 error={!!errors.comment}
                                 fullWidth
@@ -569,20 +597,27 @@ export default function EditPartial(props: ItemPartialViewProps<ISalesOrderHeade
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <DatePicker
-                                value={modifiedDate}
-                                label={t('ModifiedDate')}
-                                onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
-                                renderInput={(params) =>
-                                    <TextField
-                            			sx={{marginTop: 2}}
-                                        fullWidth
-                                        autoComplete='modifiedDate'
-                            			{...register("modifiedDate", salesOrderHeaderFormValidationWhenEdit.modifiedDate)}
-                                        error={!!errors.modifiedDate}
-                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                        {...params}
-                                    />}
+                            <Controller
+                                name="modifiedDate"
+                                control={control}
+                                defaultValue={null}
+                                render={({ field, ...props }) => {
+                                    return (
+                            			<DatePicker
+                            				value={modifiedDate}
+                            				label={t('ModifiedDate')}
+                            				onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
+                            				renderInput={(params) =>
+                            					<TextField
+                            						sx={{marginTop: 2}}
+                            						fullWidth
+                            						error={!!errors.modifiedDate}
+                            						helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                            						{...params}
+                            					/>}
+                            			/>
+                                    );
+                                }}
                             />
                         </Grid>
                     </Grid>

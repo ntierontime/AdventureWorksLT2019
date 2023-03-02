@@ -9,13 +9,13 @@ import { IProductModelProductDescriptionDataModel } from 'src/dataModels/IProduc
 export interface IProductModelProductDescriptionIdentifier {
 
     // PredicateType:Equals
-	productModelID: number | null;
+	productModelID: number | '';
 
     // PredicateType:Equals
-	productDescriptionID: number | null;
+	productDescriptionID: number | '';
 
     // PredicateType:Equals
-	culture: string | null;
+	culture: string | '';
 }
 
 export function getIProductModelProductDescriptionIdentifier(item: IProductModelProductDescriptionDataModel): IProductModelProductDescriptionIdentifier {
@@ -34,10 +34,10 @@ export interface IProductModelProductDescriptionAdvancedQuery extends IBaseQuery
     textSearchType: TextSearchTypes;
 
     // PredicateType:Equals
-	productDescriptionID: number | null;
+	productDescriptionID: number | '';
 
     // PredicateType:Equals
-	productModelID: number | null;
+	productModelID: number | '';
 
     // PredicateType:Range
     modifiedDateRange: PreDefinedDateTimeRanges | null;

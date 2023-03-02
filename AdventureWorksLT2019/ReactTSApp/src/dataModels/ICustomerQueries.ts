@@ -10,7 +10,7 @@ import { ICustomerDataModel } from 'src/dataModels/ICustomerDataModel';
 export interface ICustomerIdentifier {
 
     // PredicateType:Equals
-	customerID: number | null;
+	customerID: number | '';
 }
 
 export function getICustomerIdentifier(item: ICustomerDataModel): ICustomerIdentifier {

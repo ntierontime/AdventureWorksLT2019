@@ -10,8 +10,9 @@ import SaveIcon from '@mui/icons-material/Save';
 
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-import { DatePicker } from '@mui/x-date-pickers';
+import { Controller } from 'react-hook-form';
 
 
 
@@ -38,11 +39,13 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDescript
 
 	// 'control' is only used by boolean fields, you can remove it if this form doesn't have it
 	// 'setValue' is only used by Dropdown List fields and DatePicker fields, you can remove it if this form doesn't have it
-    const { register, control, setValue, handleSubmit, formState: { isValid, errors, isDirty } } = useForm({
+    const methods = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
-    },);
+        resolver: yupResolver(productDescriptionFormValidationWhenEdit)
+    });
+    const { register, control, setValue, handleSubmit, reset, trigger, formState: { isValid, errors, isDirty } } = methods;
 
     const [saving, setSaving] = useState(false);
     const [saved, setSaved] = useState(false);
@@ -62,10 +65,12 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDescript
 
 
 
+
+
     const onSubmit = (data: IProductDescriptionDataModel) => {
         setSaving(true);
         dispatch(put({ identifier: getIProductDescriptionIdentifier(data), data: { ...data } }))
-            .then((result) => {
+            .then((result: any) => {
                 if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
                     setSaveMessage(t('SuccessfullySaved'));
                     setSaved(true);
@@ -75,7 +80,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDescript
                 }
                 //console.log(result);
             })
-            .catch((error) => { setSaveMessage(t('FailedToSave')); /*console.log(error);*/ })
+            .catch((error: any) => { setSaveMessage(t('FailedToSave')); /*console.log(error);*/ })
             .finally(() => { setSaving(false); console.log('finally'); });
     }
 
@@ -118,7 +123,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDescript
                 <IconButton aria-label="Save"
                     color="primary"
                     type='submit'
-                    disabled={!isValid || saving || saved || !isDirty}
+                    disabled={!isValid || saving || saved}
                 >
                     <SaveIcon />
                 </IconButton>
@@ -164,7 +169,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDescript
                         color="primary"
                         type='submit'
                         variant='contained'
-                        disabled={!isValid || saving || saved || !isDirty}
+                        disabled={!isValid || saving || saved}
                         startIcon={<SaveIcon color='action' />}>
                         {t('Save')}
                     </LoadingButton>
@@ -242,7 +247,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDescript
                                 defaultValue={item.description}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("description", productDescriptionFormValidationWhenEdit.description)}
+                                {...register("description")}
                                 autoComplete='description'
                                 error={!!errors.description}
                                 fullWidth
@@ -263,20 +268,27 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDescript
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <DatePicker
-                                value={modifiedDate}
-                                label={t('ModifiedDate')}
-                                onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
-                                renderInput={(params) =>
-                                    <TextField
-                            			sx={{marginTop: 2}}
-                                        fullWidth
-                                        autoComplete='modifiedDate'
-                            			{...register("modifiedDate", productDescriptionFormValidationWhenEdit.modifiedDate)}
-                                        error={!!errors.modifiedDate}
-                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                        {...params}
-                                    />}
+                            <Controller
+                                name="modifiedDate"
+                                control={control}
+                                defaultValue={null}
+                                render={({ field, ...props }) => {
+                                    return (
+                            			<DatePicker
+                            				value={modifiedDate}
+                            				label={t('ModifiedDate')}
+                            				onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
+                            				renderInput={(params) =>
+                            					<TextField
+                            						sx={{marginTop: 2}}
+                            						fullWidth
+                            						error={!!errors.modifiedDate}
+                            						helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                            						{...params}
+                            					/>}
+                            			/>
+                                    );
+                                }}
                             />
                         </Grid>
                     </Grid>

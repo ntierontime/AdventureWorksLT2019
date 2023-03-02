@@ -10,9 +10,9 @@ import SaveIcon from '@mui/icons-material/Save';
 
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import { Controller } from 'react-hook-form';
-import { DatePicker } from '@mui/x-date-pickers';
 
 
 
@@ -39,11 +39,13 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
 
 	// 'control' is only used by boolean fields, you can remove it if this form doesn't have it
 	// 'setValue' is only used by Dropdown List fields and DatePicker fields, you can remove it if this form doesn't have it
-    const { register, control, setValue, handleSubmit, formState: { isValid, errors, isDirty } } = useForm({
+    const methods = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
-    },);
+        resolver: yupResolver(customerFormValidationWhenEdit)
+    });
+    const { register, control, setValue, handleSubmit, reset, trigger, formState: { isValid, errors, isDirty } } = methods;
 
     const [saving, setSaving] = useState(false);
     const [saved, setSaved] = useState(false);
@@ -63,10 +65,12 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
 
 
 
+
+
     const onSubmit = (data: ICustomerDataModel) => {
         setSaving(true);
         dispatch(put({ identifier: getICustomerIdentifier(data), data: { ...data } }))
-            .then((result) => {
+            .then((result: any) => {
                 if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
                     setSaveMessage(t('SuccessfullySaved'));
                     setSaved(true);
@@ -76,7 +80,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
                 }
                 //console.log(result);
             })
-            .catch((error) => { setSaveMessage(t('FailedToSave')); /*console.log(error);*/ })
+            .catch((error: any) => { setSaveMessage(t('FailedToSave')); /*console.log(error);*/ })
             .finally(() => { setSaving(false); console.log('finally'); });
     }
 
@@ -119,7 +123,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
                 <IconButton aria-label="Save"
                     color="primary"
                     type='submit'
-                    disabled={!isValid || saving || saved || !isDirty}
+                    disabled={!isValid || saving || saved}
                 >
                     <SaveIcon />
                 </IconButton>
@@ -165,7 +169,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
                         color="primary"
                         type='submit'
                         variant='contained'
-                        disabled={!isValid || saving || saved || !isDirty}
+                        disabled={!isValid || saving || saved}
                         startIcon={<SaveIcon color='action' />}>
                         {t('Save')}
                     </LoadingButton>
@@ -243,7 +247,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
                                         control={control}
                                         name="nameStyle"
                                         defaultValue={item.nameStyle}
-                                        {...register("nameStyle", customerFormValidationWhenEdit.nameStyle)}
+                            			{...register("nameStyle")}
                                         render={({ field: { onChange } }) => (
                                             <Checkbox
                                                 color="primary"
@@ -264,7 +268,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
                                 defaultValue={item.title}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("title", customerFormValidationWhenEdit.title)}
+                                {...register("title")}
                                 autoComplete='title'
                                 error={!!errors.title}
                                 fullWidth
@@ -278,7 +282,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
                                 defaultValue={item.firstName}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("firstName", customerFormValidationWhenEdit.firstName)}
+                                {...register("firstName")}
                                 autoComplete='firstName'
                                 error={!!errors.firstName}
                                 fullWidth
@@ -292,7 +296,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
                                 defaultValue={item.middleName}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("middleName", customerFormValidationWhenEdit.middleName)}
+                                {...register("middleName")}
                                 autoComplete='middleName'
                                 error={!!errors.middleName}
                                 fullWidth
@@ -306,7 +310,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
                                 defaultValue={item.lastName}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("lastName", customerFormValidationWhenEdit.lastName)}
+                                {...register("lastName")}
                                 autoComplete='lastName'
                                 error={!!errors.lastName}
                                 fullWidth
@@ -320,7 +324,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
                                 defaultValue={item.suffix}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("suffix", customerFormValidationWhenEdit.suffix)}
+                                {...register("suffix")}
                                 autoComplete='suffix'
                                 error={!!errors.suffix}
                                 fullWidth
@@ -334,7 +338,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
                                 defaultValue={item.companyName}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("companyName", customerFormValidationWhenEdit.companyName)}
+                                {...register("companyName")}
                                 autoComplete='companyName'
                                 error={!!errors.companyName}
                                 fullWidth
@@ -348,7 +352,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
                                 defaultValue={item.salesPerson}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("salesPerson", customerFormValidationWhenEdit.salesPerson)}
+                                {...register("salesPerson")}
                                 autoComplete='salesPerson'
                                 error={!!errors.salesPerson}
                                 fullWidth
@@ -362,7 +366,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
                                 defaultValue={item.emailAddress}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("emailAddress", customerFormValidationWhenEdit.emailAddress)}
+                                {...register("emailAddress")}
                                 autoComplete='emailAddress'
                                 error={!!errors.emailAddress}
                                 fullWidth
@@ -376,7 +380,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
                                 defaultValue={item.phone}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("phone", customerFormValidationWhenEdit.phone)}
+                                {...register("phone")}
                                 autoComplete='phone'
                                 error={!!errors.phone}
                                 fullWidth
@@ -390,7 +394,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
                                 defaultValue={item.passwordHash}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("passwordHash", customerFormValidationWhenEdit.passwordHash)}
+                                {...register("passwordHash")}
                                 autoComplete='passwordHash'
                                 error={!!errors.passwordHash}
                                 fullWidth
@@ -404,7 +408,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
                                 defaultValue={item.passwordSalt}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("passwordSalt", customerFormValidationWhenEdit.passwordSalt)}
+                                {...register("passwordSalt")}
                                 autoComplete='passwordSalt'
                                 error={!!errors.passwordSalt}
                                 fullWidth
@@ -425,20 +429,27 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerDataMod
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <DatePicker
-                                value={modifiedDate}
-                                label={t('ModifiedDate')}
-                                onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
-                                renderInput={(params) =>
-                                    <TextField
-                            			sx={{marginTop: 2}}
-                                        fullWidth
-                                        autoComplete='modifiedDate'
-                            			{...register("modifiedDate", customerFormValidationWhenEdit.modifiedDate)}
-                                        error={!!errors.modifiedDate}
-                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                        {...params}
-                                    />}
+                            <Controller
+                                name="modifiedDate"
+                                control={control}
+                                defaultValue={null}
+                                render={({ field, ...props }) => {
+                                    return (
+                            			<DatePicker
+                            				value={modifiedDate}
+                            				label={t('ModifiedDate')}
+                            				onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
+                            				renderInput={(params) =>
+                            					<TextField
+                            						sx={{marginTop: 2}}
+                            						fullWidth
+                            						error={!!errors.modifiedDate}
+                            						helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                            						{...params}
+                            					/>}
+                            			/>
+                                    );
+                                }}
                             />
                         </Grid>
                     </Grid>

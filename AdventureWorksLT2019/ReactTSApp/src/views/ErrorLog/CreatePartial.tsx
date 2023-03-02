@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, TextField, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -6,8 +6,9 @@ import SaveIcon from '@mui/icons-material/Save';
 
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-import { DatePicker } from '@mui/x-date-pickers';
+import { Controller } from 'react-hook-form';
 
 
 
@@ -31,16 +32,21 @@ export default function CreatePartial(props: ItemPartialViewProps<IErrorLogDataM
     const { gridColumns, scrollableCardContent, crudViewContainer, buttonContainer } = props;
     // 'control' is only used by boolean fields, you can remove it if this form doesn't have it
     // 'setValue' is only used by Dropdown List fields and DatePicker fields, you can remove it if this form doesn't have it
-    const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
+    const methods = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
+        resolver: yupResolver(errorLogFormValidationWhenCreate)
     });
+    const { register, control, setValue, handleSubmit, reset, trigger, formState: { isValid, errors, isDirty } } = methods;
     // #endregion 1. redux-hook-form related
 
     // #region 2. CodeLists if any
 	
     const [errorTime, setErrorTime] = useState<string>();
+
+
+
 
 
 
@@ -67,7 +73,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IErrorLogDataM
 
         setCreating(true);
         dispatch(post({ ...data }))
-            .then((result) => {
+            .then((result: any) => {
                 if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
                     if (createAnother) {
                         setCreating(false);
@@ -85,7 +91,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IErrorLogDataM
                 }
                 //console.log(result);
             })
-            .catch((error) => { setCreateMessage(t('FailedToSave')); /*console.log(error);*/ })
+            .catch((error: any) => { setCreateMessage(t('FailedToSave')); /*console.log(error);*/ })
             .finally(() => { setCreating(false); console.log('finally'); });
     }
 
@@ -94,7 +100,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IErrorLogDataM
         return (
             <>
                 <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
-                <IconButton aria-label="create" color="primary" type='submit' disabled={!isValid || creating || created || !isDirty}>
+                <IconButton aria-label="create" color="primary" type='submit' disabled={!isValid || creating || created}>
                     <SaveIcon />
                 </IconButton>
                 <IconButton aria-label="close" disabled={creating || created}>
@@ -117,7 +123,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IErrorLogDataM
                         type='submit'
                         fullWidth
                         variant='contained'
-                        disabled={!isValid || creating || created || !isDirty}
+                        disabled={!isValid || creating || created}
                         startIcon={<SaveIcon />}>
                         {t('Create')}
                     </Button>
@@ -139,7 +145,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IErrorLogDataM
 	
     // #region 4. crudViewContainer === CrudViewContainers.Wizard
     const { wizardOrientation, onWizardStepSubmit, renderWizardButtonGroup, isFirstStep, isLastStep, isStepOptional } = props;
-
+	const submitRef = useRef(); // used for external trigger submit event.
     // #endregion 4. crudViewContainer === CrudViewContainers.Wizard
 
     useEffect(() => {
@@ -148,10 +154,15 @@ export default function CreatePartial(props: ItemPartialViewProps<IErrorLogDataM
         setCreated(false);
         setCreateMessage(null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [item]);
+	
+	useEffect(() => {
+        // console.log("trigger validation");
+        trigger();
+    }, [trigger]);
 
     return (
-        <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
+        <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{height: '100%', display: "flex", flexDirection: "column",}}>
             {crudViewContainer !== CrudViewContainers.Wizard && <CardHeader
                 action={buttonContainer === ContainerOptions.ItemCardHead && <>
                     {crudViewContainer !== CrudViewContainers.StandaloneView && renderButtonGroup_IconButtons()}
@@ -169,20 +180,27 @@ export default function CreatePartial(props: ItemPartialViewProps<IErrorLogDataM
                 <Box sx={{ ...scrollableCardContent }}>
                     <Grid container spacing={1}>
                         <Grid item {...gridColumns}>
-                            <DatePicker
-                                value={errorTime}
-                                label={t('ErrorTime')}
-                                onChange={(event: string) => { setErrorTime(event); setValue('errorTime', event, { shouldDirty: true }); }}
-                                renderInput={(params) =>
-                                    <TextField
-                            			sx={{marginTop: 2}}
-                                        fullWidth
-                                        autoComplete='errorTime'
-                            			{...register("errorTime", errorLogFormValidationWhenCreate.errorTime)}
-                                        error={!!errors.errorTime}
-                                        helperText={!!errors.errorTime ? t(errors.errorTime.message) : ''}
-                                        {...params}
-                                    />}
+                            <Controller
+                                name="errorTime"
+                                control={control}
+                                defaultValue={null}
+                                render={({ field, ...props }) => {
+                                    return (
+                            			<DatePicker
+                            				value={errorTime}
+                            				label={t('ErrorTime')}
+                            				onChange={(event: string) => { setErrorTime(event); setValue('errorTime', event, { shouldDirty: true }); }}
+                            				renderInput={(params) =>
+                            					<TextField
+                            						sx={{marginTop: 2}}
+                            						fullWidth
+                            						error={!!errors.errorTime}
+                            						helperText={!!errors.errorTime ? t(errors.errorTime.message) : ''}
+                            						{...params}
+                            					/>}
+                            			/>
+                                    );
+                                }}
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
@@ -192,7 +210,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IErrorLogDataM
                                 defaultValue={item.userName}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("userName", errorLogFormValidationWhenCreate.userName)}
+                                {...register("userName")}
                                 autoComplete='userName'
                                 error={!!errors.userName}
                                 fullWidth
@@ -206,7 +224,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IErrorLogDataM
                                 defaultValue={item.errorNumber}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("errorNumber", errorLogFormValidationWhenCreate.errorNumber)}
+                                {...register("errorNumber")}
                                 autoComplete='errorNumber'
                                 error={!!errors.errorNumber}
                                 fullWidth
@@ -220,7 +238,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IErrorLogDataM
                                 defaultValue={item.errorSeverity}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("errorSeverity", errorLogFormValidationWhenCreate.errorSeverity)}
+                                {...register("errorSeverity")}
                                 autoComplete='errorSeverity'
                                 error={!!errors.errorSeverity}
                                 fullWidth
@@ -234,7 +252,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IErrorLogDataM
                                 defaultValue={item.errorState}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("errorState", errorLogFormValidationWhenCreate.errorState)}
+                                {...register("errorState")}
                                 autoComplete='errorState'
                                 error={!!errors.errorState}
                                 fullWidth
@@ -248,7 +266,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IErrorLogDataM
                                 defaultValue={item.errorProcedure}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("errorProcedure", errorLogFormValidationWhenCreate.errorProcedure)}
+                                {...register("errorProcedure")}
                                 autoComplete='errorProcedure'
                                 error={!!errors.errorProcedure}
                                 fullWidth
@@ -262,7 +280,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IErrorLogDataM
                                 defaultValue={item.errorLine}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("errorLine", errorLogFormValidationWhenCreate.errorLine)}
+                                {...register("errorLine")}
                                 autoComplete='errorLine'
                                 error={!!errors.errorLine}
                                 fullWidth
@@ -276,7 +294,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IErrorLogDataM
                                 defaultValue={item.errorMessage}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("errorMessage", errorLogFormValidationWhenCreate.errorMessage)}
+                                {...register("errorMessage")}
                                 autoComplete='errorMessage'
                                 error={!!errors.errorMessage}
                                 fullWidth
@@ -286,11 +304,11 @@ export default function CreatePartial(props: ItemPartialViewProps<IErrorLogDataM
                     </Grid>
                 </Box>
             </CardContent>
-            {crudViewContainer != CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
+            {crudViewContainer != CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing sx={{ mt: "auto" }}>
                 {renderButtonGroup_TextAndIconButtons()}
             </CardActions>}
-            {crudViewContainer === CrudViewContainers.Wizard && <CardActions disableSpacing>
-                {renderWizardButtonGroup(isFirstStep, isLastStep, isStepOptional, ()=>!isValid || creating || created || !isDirty)}
+            {crudViewContainer === CrudViewContainers.Wizard && <CardActions disableSpacing sx={{ mt: "auto" }}>
+                <button ref={submitRef} type="submit" style={{ display: 'none' }} />{renderWizardButtonGroup(isFirstStep, isLastStep, isStepOptional, ()=>!isValid || creating || created, submitRef)}
             </CardActions>}
         </Card >
     );

@@ -1,4 +1,6 @@
 import { ItemUIStatus } from "src/shared/dataModels/ItemUIStatus";
+import { AutocompleteSetting } from "src/shared/views/AutocompleteSetting";
+import * as Yup from 'yup';
 
 export interface IErrorLogDataModel {
     itemUIStatus______: ItemUIStatus;
@@ -19,7 +21,7 @@ export function defaultErrorLog(): IErrorLogDataModel {
         itemUIStatus______: ItemUIStatus.New,
         isDeleted______: false,
         errorLogID: 0,
-        errorTime: '',
+        errorTime: new Date(),
         userName: '',
         errorNumber: 0,
         errorSeverity: 0,
@@ -35,85 +37,44 @@ export function getErrorLogAvatar(item: IErrorLogDataModel): string {
 }
 
 
-export const errorLogFormValidationWhenCreate = {
-    errorTime: {
-        required: 'ErrorTime_is_required',
-    },
-    userName: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_UserName_should_be_1_to_128',
-        },
-        maxLength: {
-            value: 128,
-            message: 'The_length_of_UserName_should_be_1_to_128',
-        },
-    },
-    errorNumber: {
-        required: 'ErrorNumber_is_required',
-    },
-    errorSeverity: {
-    },
-    errorState: {
-    },
-    errorProcedure: {
-        maxLength: {
-            value: 126,
-            message: 'The_length_of_ErrorProcedure_should_be_0_to_126',
-        },
-    },
-    errorLine: {
-    },
-    errorMessage: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_ErrorMessage_should_be_1_to_4000',
-        },
-        maxLength: {
-            value: 4000,
-            message: 'The_length_of_ErrorMessage_should_be_1_to_4000',
-        },
-    },
-};
+export const errorLogFormValidationWhenCreate = Yup.object().shape({
+    errorTime: Yup.string()
+        .required('ErrorTime_is_required'),
+    userName: Yup.string()
+        .min(1, 'The_length_of_UserName_should_be_1_to_128')
+        .max(128, 'The_length_of_UserName_should_be_1_to_128'),
+    errorNumber: Yup.number()
+        .required('ErrorNumber_is_required'),
+    errorSeverity: Yup.number(),
+    errorState: Yup.number(),
+    errorProcedure: Yup.string()
+        .max(126, 'The_length_of_ErrorProcedure_should_be_0_to_126'),
+    errorLine: Yup.number(),
+    errorMessage: Yup.string()
+        .min(1, 'The_length_of_ErrorMessage_should_be_1_to_4000')
+        .max(4000, 'The_length_of_ErrorMessage_should_be_1_to_4000'),
+});
 
-export const errorLogFormValidationWhenEdit = {
-    errorTime: {
-        required: 'ErrorTime_is_required',
-    },
-    userName: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_UserName_should_be_1_to_128',
-        },
-        maxLength: {
-            value: 128,
-            message: 'The_length_of_UserName_should_be_1_to_128',
-        },
-    },
-    errorNumber: {
-        required: 'ErrorNumber_is_required',
-    },
-    errorSeverity: {
-    },
-    errorState: {
-    },
-    errorProcedure: {
-        maxLength: {
-            value: 126,
-            message: 'The_length_of_ErrorProcedure_should_be_0_to_126',
-        },
-    },
-    errorLine: {
-    },
-    errorMessage: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_ErrorMessage_should_be_1_to_4000',
-        },
-        maxLength: {
-            value: 4000,
-            message: 'The_length_of_ErrorMessage_should_be_1_to_4000',
-        },
-    },
-};
+export const errorLogFormValidationWhenEdit = Yup.object().shape({
+    errorTime: Yup.string()
+        .required('ErrorTime_is_required'),
+    userName: Yup.string()
+        .min(1, 'The_length_of_UserName_should_be_1_to_128')
+        .max(128, 'The_length_of_UserName_should_be_1_to_128'),
+    errorNumber: Yup.number()
+        .required('ErrorNumber_is_required'),
+    errorSeverity: Yup.number(),
+    errorState: Yup.number(),
+    errorProcedure: Yup.string()
+        .max(126, 'The_length_of_ErrorProcedure_should_be_0_to_126'),
+    errorLine: Yup.number(),
+    errorMessage: Yup.string()
+        .min(1, 'The_length_of_ErrorMessage_should_be_1_to_4000')
+        .max(4000, 'The_length_of_ErrorMessage_should_be_1_to_4000'),
+});
+
+export const errorLogAutocompleteSetting = {
+    minCharacters: 2,
+    stopCount: 20
+} as unknown as AutocompleteSetting;
 

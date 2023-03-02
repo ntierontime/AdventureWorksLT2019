@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 namespace AdventureWorksLT2019.WebApiControllers
 {
     [Route("/api/[controller]/[action]")]
+    [ApiController]
     public class AuthenticationApiController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

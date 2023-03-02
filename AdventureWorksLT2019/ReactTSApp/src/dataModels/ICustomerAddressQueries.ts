@@ -9,10 +9,10 @@ import { ICustomerAddressDataModel } from 'src/dataModels/ICustomerAddressDataMo
 export interface ICustomerAddressIdentifier {
 
     // PredicateType:Equals
-	customerID: number | null;
+	customerID: number | '';
 
     // PredicateType:Equals
-	addressID: number | null;
+	addressID: number | '';
 }
 
 export function getICustomerAddressIdentifier(item: ICustomerAddressDataModel): ICustomerAddressIdentifier {
@@ -31,10 +31,10 @@ export interface ICustomerAddressAdvancedQuery extends IBaseQuery {
     textSearchType: TextSearchTypes;
 
     // PredicateType:Equals
-	addressID: number | null;
+	addressID: number | '';
 
     // PredicateType:Equals
-	customerID: number | null;
+	customerID: number | '';
 
     // PredicateType:Range
     modifiedDateRange: PreDefinedDateTimeRanges | null;

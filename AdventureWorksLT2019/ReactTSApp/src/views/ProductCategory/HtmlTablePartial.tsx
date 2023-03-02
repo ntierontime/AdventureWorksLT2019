@@ -69,40 +69,6 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductCat
         setDense(event.target.checked);
     };
 
-    const headCells: HeadCell[] = [
-
-        {
-            id: 'productCategoryID',
-            numeric: true,
-            disablePadding: true,
-            label: t('ProductCategoryID'),
-        },
-        {
-            id: 'parentProductCategoryID',
-            numeric: true,
-            disablePadding: true,
-            label: t('ParentProductCategoryID'),
-        },
-        {
-            id: 'name',
-            numeric: false,
-            disablePadding: true,
-            label: t('Name'),
-        },
-        {
-            id: 'rowguid',
-            numeric: false,
-            disablePadding: true,
-            label: t('rowguid'),
-        },
-        {
-            id: 'modifiedDate',
-            numeric: false,
-            disablePadding: true,
-            label: t('ModifiedDate'),
-        },
-    ];
-
     return (
         <>
             <TableContainer onMouseEnter={(event) => { handleItemActionsPopoverClose() }}>
@@ -228,4 +194,38 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductCat
         </>
     );
 }
+
+const headCells: HeadCell[] = [
+
+    {
+        id: 'productCategoryID',
+        numeric: true,
+        disablePadding: true,
+        label: 'ProductCategoryID',
+    },
+    {
+        id: 'parentProductCategoryID',
+        numeric: true,
+        disablePadding: true,
+        label: 'ParentProductCategoryID',
+    },
+    {
+        id: 'name',
+        numeric: false,
+        disablePadding: true,
+        label: 'Name',
+    },
+    {
+        id: 'rowguid',
+        numeric: false,
+        disablePadding: true,
+        label: 'rowguid',
+    },
+    {
+        id: 'modifiedDate',
+        numeric: false,
+        disablePadding: true,
+        label: 'ModifiedDate',
+    },
+];
 

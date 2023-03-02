@@ -1,3 +1,3 @@
 ﻿TABLE_SCHEMA,TABLE_NAME,Enabled,DeepFKType,Order,PropertyNameInDashboardVM,BaseTableName,MasterTableName,ForeignKeyTableName,EntityReferenceSimpleFullPath,EntityReferenceName,CachingOption,IsRequired,IsATab,InXamarinFormsVM,FuntionDashboardName,InBaseTableFuntionDashboard,InWizard,WizardOrder
-SalesLT,Customer,True,ListTable,20100,CustomerAddresses_Via_CustomerID,,,CustomerAddress,,FK_CustomerAddress_Customer_CustomerID,UpdateCacheWhenMasterLoaded,False,False,False,Lists,False,False,0
-SalesLT,Customer,True,ListTable,20200,SalesOrderHeaders_Via_CustomerID,,,SalesOrderHeader,,FK_SalesOrderHeader_Customer_CustomerID,UpdateCacheWhenMasterLoaded,False,False,False,Lists,False,False,0
+SalesLT,Customer,True,ListTable,20100,CustomerAddresses_Via_CustomerID,,,CustomerAddress,,FK_CustomerAddress_Customer_CustomerID,UpdateCacheWhenMasterLoaded,False,False,False,Lists,False,FirstInList,2
+SalesLT,Customer,True,ListTable,20200,SalesOrderHeaders_Via_CustomerID,,,SalesOrderHeader,,FK_SalesOrderHeader_Customer_CustomerID,UpdateCacheWhenMasterLoaded,False,False,False,Lists,False,FirstInList,3

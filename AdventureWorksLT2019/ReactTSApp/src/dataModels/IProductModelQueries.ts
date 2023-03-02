@@ -9,7 +9,7 @@ import { IProductModelDataModel } from 'src/dataModels/IProductModelDataModel';
 export interface IProductModelIdentifier {
 
     // PredicateType:Equals
-	productModelID: number | null;
+	productModelID: number | '';
 }
 
 export function getIProductModelIdentifier(item: IProductModelDataModel): IProductModelIdentifier {

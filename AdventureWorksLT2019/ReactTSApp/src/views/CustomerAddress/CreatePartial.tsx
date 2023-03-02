@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, MenuItem, TextField, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -6,8 +6,9 @@ import SaveIcon from '@mui/icons-material/Save';
 
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-import { DatePicker } from '@mui/x-date-pickers';
+import { Controller } from 'react-hook-form';
 import { INameValuePair } from 'src/shared/dataModels/INameValuePair';
 import { codeListsApi } from 'src/apiClients/CodeListsApi';
 import { defaultICustomerAdvancedQuery } from 'src/dataModels/ICustomerQueries';
@@ -34,11 +35,13 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerAddre
     const { gridColumns, scrollableCardContent, crudViewContainer, buttonContainer } = props;
     // 'control' is only used by boolean fields, you can remove it if this form doesn't have it
     // 'setValue' is only used by Dropdown List fields and DatePicker fields, you can remove it if this form doesn't have it
-    const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
+    const methods = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
+        resolver: yupResolver(customerAddressFormValidationWhenCreate)
     });
+    const { register, control, setValue, handleSubmit, reset, trigger, formState: { isValid, errors, isDirty } } = methods;
     // #endregion 1. redux-hook-form related
 
     // #region 2. CodeLists if any
@@ -48,6 +51,9 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerAddre
 
     const [address_AddressIDCodeList, setAddress_AddressIDCodeList] = useState<readonly INameValuePair[]>([{ name: item.address_Name, value: item.addressID, selected: false }]);
     const [modifiedDate, setModifiedDate] = useState<string>();
+
+
+
 
 
 
@@ -74,7 +80,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerAddre
 
         setCreating(true);
         dispatch(post({ ...data }))
-            .then((result) => {
+            .then((result: any) => {
                 if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
                     if (createAnother) {
                         setCreating(false);
@@ -92,7 +98,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerAddre
                 }
                 //console.log(result);
             })
-            .catch((error) => { setCreateMessage(t('FailedToSave')); /*console.log(error);*/ })
+            .catch((error: any) => { setCreateMessage(t('FailedToSave')); /*console.log(error);*/ })
             .finally(() => { setCreating(false); console.log('finally'); });
     }
 
@@ -101,7 +107,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerAddre
         return (
             <>
                 <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
-                <IconButton aria-label="create" color="primary" type='submit' disabled={!isValid || creating || created || !isDirty}>
+                <IconButton aria-label="create" color="primary" type='submit' disabled={!isValid || creating || created}>
                     <SaveIcon />
                 </IconButton>
                 <IconButton aria-label="close" disabled={creating || created}>
@@ -124,7 +130,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerAddre
                         type='submit'
                         fullWidth
                         variant='contained'
-                        disabled={!isValid || creating || created || !isDirty}
+                        disabled={!isValid || creating || created}
                         startIcon={<SaveIcon />}>
                         {t('Create')}
                     </Button>
@@ -146,7 +152,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerAddre
 	
     // #region 4. crudViewContainer === CrudViewContainers.Wizard
     const { wizardOrientation, onWizardStepSubmit, renderWizardButtonGroup, isFirstStep, isLastStep, isStepOptional } = props;
-
+	const submitRef = useRef(); // used for external trigger submit event.
     // #endregion 4. crudViewContainer === CrudViewContainers.Wizard
 
     useEffect(() => {
@@ -171,10 +177,15 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerAddre
         setCreated(false);
         setCreateMessage(null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [item]);
+	
+	useEffect(() => {
+        // console.log("trigger validation");
+        trigger();
+    }, [trigger]);
 
     return (
-        <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
+        <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{height: '100%', display: "flex", flexDirection: "column",}}>
             {crudViewContainer !== CrudViewContainers.Wizard && <CardHeader
                 action={buttonContainer === ContainerOptions.ItemCardHead && <>
                     {crudViewContainer !== CrudViewContainers.StandaloneView && renderButtonGroup_IconButtons()}
@@ -193,11 +204,12 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerAddre
                     <Grid container spacing={1}>
                         <Grid item {...gridColumns}>
                             <TextField
+                            	sx={{marginTop: 2}}
                                 label={t("CustomerID")}
                                 id="customerIDSelect"
                                 select
                                 name='customerID'
-                                {...register("customerID", customerAddressFormValidationWhenCreate.customerID)}
+                                {...register("customerID")}
                                 autoComplete='customerID'
                                 variant="outlined"
                                 fullWidth
@@ -210,11 +222,12 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerAddre
                         </Grid>
                         <Grid item {...gridColumns}>
                             <TextField
+                            	sx={{marginTop: 2}}
                                 label={t("AddressID")}
                                 id="addressIDSelect"
                                 select
                                 name='addressID'
-                                {...register("addressID", customerAddressFormValidationWhenCreate.addressID)}
+                                {...register("addressID")}
                                 autoComplete='addressID'
                                 variant="outlined"
                                 fullWidth
@@ -232,7 +245,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerAddre
                                 defaultValue={item.addressType}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("addressType", customerAddressFormValidationWhenCreate.addressType)}
+                                {...register("addressType")}
                                 autoComplete='addressType'
                                 error={!!errors.addressType}
                                 fullWidth
@@ -240,30 +253,37 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerAddre
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <DatePicker
-                                value={modifiedDate}
-                                label={t('ModifiedDate')}
-                                onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
-                                renderInput={(params) =>
-                                    <TextField
-                            			sx={{marginTop: 2}}
-                                        fullWidth
-                                        autoComplete='modifiedDate'
-                            			{...register("modifiedDate", customerAddressFormValidationWhenCreate.modifiedDate)}
-                                        error={!!errors.modifiedDate}
-                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                        {...params}
-                                    />}
+                            <Controller
+                                name="modifiedDate"
+                                control={control}
+                                defaultValue={null}
+                                render={({ field, ...props }) => {
+                                    return (
+                            			<DatePicker
+                            				value={modifiedDate}
+                            				label={t('ModifiedDate')}
+                            				onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
+                            				renderInput={(params) =>
+                            					<TextField
+                            						sx={{marginTop: 2}}
+                            						fullWidth
+                            						error={!!errors.modifiedDate}
+                            						helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                            						{...params}
+                            					/>}
+                            			/>
+                                    );
+                                }}
                             />
                         </Grid>
                     </Grid>
                 </Box>
             </CardContent>
-            {crudViewContainer != CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
+            {crudViewContainer != CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing sx={{ mt: "auto" }}>
                 {renderButtonGroup_TextAndIconButtons()}
             </CardActions>}
-            {crudViewContainer === CrudViewContainers.Wizard && <CardActions disableSpacing>
-                {renderWizardButtonGroup(isFirstStep, isLastStep, isStepOptional, ()=>!isValid || creating || created || !isDirty)}
+            {crudViewContainer === CrudViewContainers.Wizard && <CardActions disableSpacing sx={{ mt: "auto" }}>
+                <button ref={submitRef} type="submit" style={{ display: 'none' }} />{renderWizardButtonGroup(isFirstStep, isLastStep, isStepOptional, ()=>!isValid || creating || created, submitRef)}
             </CardActions>}
         </Card >
     );

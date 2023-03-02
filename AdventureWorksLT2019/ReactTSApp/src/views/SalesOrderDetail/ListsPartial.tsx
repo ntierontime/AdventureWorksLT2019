@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useDispatch, } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { Box, Paper, Dialog, DialogContent, Collapse, Snackbar, ButtonGroup, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -27,7 +26,6 @@ export default function ListsPartial(props: ListsPartialViewProps<ISalesOrderDet
     const { advancedQuery, setAdvancedQuery, defaultAdvancedQuery, listItems, initialLoadFromServer, hasListToolBar, listToolBarSetting, hasAdvancedSearch, addNewButtonContainer } = props;
     const rowCount = listItems.length;
 
-    const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
 
     const [listViewOption, setListViewOption] = useState<ListViewOptions>(ListViewOptions.Table);
@@ -193,7 +191,7 @@ export default function ListsPartial(props: ListsPartialViewProps<ISalesOrderDet
             handleAdvancedSearchDialogOpen,
 
             hasAddNewButton: addNewButtonContainer === ContainerOptions.ListToolBar,
-            handleAddNewClick: () => { navigate('/salesOrderDetail/create'); },
+            handleAddNewClick: () => { handleItemDialogOpen(ViewItemTemplates.Create, -1); },
         } as ListToolBarProps<ISalesOrderDetailAdvancedQuery, ISalesOrderDetailIdentifier>;
 
         return <ListToolBar {...topToolbarProps} />
@@ -276,7 +274,7 @@ export default function ListsPartial(props: ListsPartialViewProps<ISalesOrderDet
                 open={true}
             >
                 <ButtonGroup orientation='horizontal'>
-                    <IconButton onClick={() => { navigate('/salesOrderDetail/create'); }} aria-label="create" component="label" size="large" color='primary' sx={{ backgroundColor: 'gray' }}>
+                    <IconButton onClick={() => { handleItemDialogOpen(ViewItemTemplates.Create, -1); }} aria-label="create" component="label" size="large" color='primary' sx={{ backgroundColor: 'gray' }}>
                         <AddIcon />
                     </IconButton>
                 </ButtonGroup>

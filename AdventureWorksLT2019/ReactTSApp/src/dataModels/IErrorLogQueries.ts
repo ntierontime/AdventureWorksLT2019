@@ -9,7 +9,7 @@ import { IErrorLogDataModel } from 'src/dataModels/IErrorLogDataModel';
 export interface IErrorLogIdentifier {
 
     // PredicateType:Equals
-	errorLogID: number | null;
+	errorLogID: number | '';
 }
 
 export function getIErrorLogIdentifier(item: IErrorLogDataModel): IErrorLogIdentifier {

@@ -1,5 +1,5 @@
 import { ICompositeModel } from "src/shared/dataModels/ICompositeModel";
-import { defaultBuildVersion, IBuildVersionDataModel } from "./IBuildVersionDataModel";
+import { IBuildVersionDataModel, defaultBuildVersion } from "./IBuildVersionDataModel";
 
 export interface IBuildVersionCompositeModel extends ICompositeModel<IBuildVersionDataModel, IBuildVersionCompositeModel_DataOptions__> {
 

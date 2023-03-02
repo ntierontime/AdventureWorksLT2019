@@ -9,13 +9,13 @@ import { IBuildVersionDataModel } from 'src/dataModels/IBuildVersionDataModel';
 export interface IBuildVersionIdentifier {
 
     // PredicateType:Equals
-	systemInformationID: number | null;
+	systemInformationID: number | '';
 
     // PredicateType:Equals
-	versionDate: string | null;
+	versionDate: string | '';
 
     // PredicateType:Equals
-	modifiedDate: string | null;
+	modifiedDate: string | '';
 }
 
 export function getIBuildVersionIdentifier(item: IBuildVersionDataModel): IBuildVersionIdentifier {

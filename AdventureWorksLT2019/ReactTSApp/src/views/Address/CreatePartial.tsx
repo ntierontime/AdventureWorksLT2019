@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, TextField, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -6,8 +6,9 @@ import SaveIcon from '@mui/icons-material/Save';
 
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-import { DatePicker } from '@mui/x-date-pickers';
+import { Controller } from 'react-hook-form';
 
 
 
@@ -31,16 +32,21 @@ export default function CreatePartial(props: ItemPartialViewProps<IAddressDataMo
     const { gridColumns, scrollableCardContent, crudViewContainer, buttonContainer } = props;
     // 'control' is only used by boolean fields, you can remove it if this form doesn't have it
     // 'setValue' is only used by Dropdown List fields and DatePicker fields, you can remove it if this form doesn't have it
-    const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
+    const methods = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
+        resolver: yupResolver(addressFormValidationWhenCreate)
     });
+    const { register, control, setValue, handleSubmit, reset, trigger, formState: { isValid, errors, isDirty } } = methods;
     // #endregion 1. redux-hook-form related
 
     // #region 2. CodeLists if any
 	
     const [modifiedDate, setModifiedDate] = useState<string>();
+
+
+
 
 
 
@@ -67,7 +73,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IAddressDataMo
 
         setCreating(true);
         dispatch(post({ ...data }))
-            .then((result) => {
+            .then((result: any) => {
                 if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
                     if (createAnother) {
                         setCreating(false);
@@ -85,7 +91,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IAddressDataMo
                 }
                 //console.log(result);
             })
-            .catch((error) => { setCreateMessage(t('FailedToSave')); /*console.log(error);*/ })
+            .catch((error: any) => { setCreateMessage(t('FailedToSave')); /*console.log(error);*/ })
             .finally(() => { setCreating(false); console.log('finally'); });
     }
 
@@ -94,7 +100,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IAddressDataMo
         return (
             <>
                 <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
-                <IconButton aria-label="create" color="primary" type='submit' disabled={!isValid || creating || created || !isDirty}>
+                <IconButton aria-label="create" color="primary" type='submit' disabled={!isValid || creating || created}>
                     <SaveIcon />
                 </IconButton>
                 <IconButton aria-label="close" disabled={creating || created}>
@@ -117,7 +123,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IAddressDataMo
                         type='submit'
                         fullWidth
                         variant='contained'
-                        disabled={!isValid || creating || created || !isDirty}
+                        disabled={!isValid || creating || created}
                         startIcon={<SaveIcon />}>
                         {t('Create')}
                     </Button>
@@ -139,7 +145,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IAddressDataMo
 	
     // #region 4. crudViewContainer === CrudViewContainers.Wizard
     const { wizardOrientation, onWizardStepSubmit, renderWizardButtonGroup, isFirstStep, isLastStep, isStepOptional } = props;
-
+	const submitRef = useRef(); // used for external trigger submit event.
     // #endregion 4. crudViewContainer === CrudViewContainers.Wizard
 
     useEffect(() => {
@@ -148,10 +154,15 @@ export default function CreatePartial(props: ItemPartialViewProps<IAddressDataMo
         setCreated(false);
         setCreateMessage(null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [item]);
+	
+	useEffect(() => {
+        // console.log("trigger validation");
+        trigger();
+    }, [trigger]);
 
     return (
-        <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
+        <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{height: '100%', display: "flex", flexDirection: "column",}}>
             {crudViewContainer !== CrudViewContainers.Wizard && <CardHeader
                 action={buttonContainer === ContainerOptions.ItemCardHead && <>
                     {crudViewContainer !== CrudViewContainers.StandaloneView && renderButtonGroup_IconButtons()}
@@ -175,7 +186,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IAddressDataMo
                                 defaultValue={item.addressLine1}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("addressLine1", addressFormValidationWhenCreate.addressLine1)}
+                                {...register("addressLine1")}
                                 autoComplete='addressLine1'
                                 error={!!errors.addressLine1}
                                 fullWidth
@@ -189,7 +200,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IAddressDataMo
                                 defaultValue={item.addressLine2}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("addressLine2", addressFormValidationWhenCreate.addressLine2)}
+                                {...register("addressLine2")}
                                 autoComplete='addressLine2'
                                 error={!!errors.addressLine2}
                                 fullWidth
@@ -203,7 +214,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IAddressDataMo
                                 defaultValue={item.city}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("city", addressFormValidationWhenCreate.city)}
+                                {...register("city")}
                                 autoComplete='city'
                                 error={!!errors.city}
                                 fullWidth
@@ -217,7 +228,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IAddressDataMo
                                 defaultValue={item.stateProvince}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("stateProvince", addressFormValidationWhenCreate.stateProvince)}
+                                {...register("stateProvince")}
                                 autoComplete='stateProvince'
                                 error={!!errors.stateProvince}
                                 fullWidth
@@ -231,7 +242,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IAddressDataMo
                                 defaultValue={item.countryRegion}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("countryRegion", addressFormValidationWhenCreate.countryRegion)}
+                                {...register("countryRegion")}
                                 autoComplete='countryRegion'
                                 error={!!errors.countryRegion}
                                 fullWidth
@@ -245,7 +256,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IAddressDataMo
                                 defaultValue={item.postalCode}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("postalCode", addressFormValidationWhenCreate.postalCode)}
+                                {...register("postalCode")}
                                 autoComplete='postalCode'
                                 error={!!errors.postalCode}
                                 fullWidth
@@ -253,30 +264,37 @@ export default function CreatePartial(props: ItemPartialViewProps<IAddressDataMo
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <DatePicker
-                                value={modifiedDate}
-                                label={t('ModifiedDate')}
-                                onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
-                                renderInput={(params) =>
-                                    <TextField
-                            			sx={{marginTop: 2}}
-                                        fullWidth
-                                        autoComplete='modifiedDate'
-                            			{...register("modifiedDate", addressFormValidationWhenCreate.modifiedDate)}
-                                        error={!!errors.modifiedDate}
-                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                        {...params}
-                                    />}
+                            <Controller
+                                name="modifiedDate"
+                                control={control}
+                                defaultValue={null}
+                                render={({ field, ...props }) => {
+                                    return (
+                            			<DatePicker
+                            				value={modifiedDate}
+                            				label={t('ModifiedDate')}
+                            				onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
+                            				renderInput={(params) =>
+                            					<TextField
+                            						sx={{marginTop: 2}}
+                            						fullWidth
+                            						error={!!errors.modifiedDate}
+                            						helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                            						{...params}
+                            					/>}
+                            			/>
+                                    );
+                                }}
                             />
                         </Grid>
                     </Grid>
                 </Box>
             </CardContent>
-            {crudViewContainer != CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
+            {crudViewContainer != CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing sx={{ mt: "auto" }}>
                 {renderButtonGroup_TextAndIconButtons()}
             </CardActions>}
-            {crudViewContainer === CrudViewContainers.Wizard && <CardActions disableSpacing>
-                {renderWizardButtonGroup(isFirstStep, isLastStep, isStepOptional, ()=>!isValid || creating || created || !isDirty)}
+            {crudViewContainer === CrudViewContainers.Wizard && <CardActions disableSpacing sx={{ mt: "auto" }}>
+                <button ref={submitRef} type="submit" style={{ display: 'none' }} />{renderWizardButtonGroup(isFirstStep, isLastStep, isStepOptional, ()=>!isValid || creating || created, submitRef)}
             </CardActions>}
         </Card >
     );

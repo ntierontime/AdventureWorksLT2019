@@ -69,64 +69,6 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IAddressDat
         setDense(event.target.checked);
     };
 
-    const headCells: HeadCell[] = [
-
-        {
-            id: 'addressID',
-            numeric: true,
-            disablePadding: true,
-            label: t('AddressID'),
-        },
-        {
-            id: 'addressLine1',
-            numeric: false,
-            disablePadding: true,
-            label: t('AddressLine1'),
-        },
-        {
-            id: 'addressLine2',
-            numeric: false,
-            disablePadding: true,
-            label: t('AddressLine2'),
-        },
-        {
-            id: 'city',
-            numeric: false,
-            disablePadding: true,
-            label: t('City'),
-        },
-        {
-            id: 'stateProvince',
-            numeric: false,
-            disablePadding: true,
-            label: t('StateProvince'),
-        },
-        {
-            id: 'countryRegion',
-            numeric: false,
-            disablePadding: true,
-            label: t('CountryRegion'),
-        },
-        {
-            id: 'postalCode',
-            numeric: false,
-            disablePadding: true,
-            label: t('PostalCode'),
-        },
-        {
-            id: 'rowguid',
-            numeric: false,
-            disablePadding: true,
-            label: t('rowguid'),
-        },
-        {
-            id: 'modifiedDate',
-            numeric: false,
-            disablePadding: true,
-            label: t('ModifiedDate'),
-        },
-    ];
-
     return (
         <>
             <TableContainer onMouseEnter={(event) => { handleItemActionsPopoverClose() }}>
@@ -256,4 +198,62 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IAddressDat
         </>
     );
 }
+
+const headCells: HeadCell[] = [
+
+    {
+        id: 'addressID',
+        numeric: true,
+        disablePadding: true,
+        label: 'AddressID',
+    },
+    {
+        id: 'addressLine1',
+        numeric: false,
+        disablePadding: true,
+        label: 'AddressLine1',
+    },
+    {
+        id: 'addressLine2',
+        numeric: false,
+        disablePadding: true,
+        label: 'AddressLine2',
+    },
+    {
+        id: 'city',
+        numeric: false,
+        disablePadding: true,
+        label: 'City',
+    },
+    {
+        id: 'stateProvince',
+        numeric: false,
+        disablePadding: true,
+        label: 'StateProvince',
+    },
+    {
+        id: 'countryRegion',
+        numeric: false,
+        disablePadding: true,
+        label: 'CountryRegion',
+    },
+    {
+        id: 'postalCode',
+        numeric: false,
+        disablePadding: true,
+        label: 'PostalCode',
+    },
+    {
+        id: 'rowguid',
+        numeric: false,
+        disablePadding: true,
+        label: 'rowguid',
+    },
+    {
+        id: 'modifiedDate',
+        numeric: false,
+        disablePadding: true,
+        label: 'ModifiedDate',
+    },
+];
 

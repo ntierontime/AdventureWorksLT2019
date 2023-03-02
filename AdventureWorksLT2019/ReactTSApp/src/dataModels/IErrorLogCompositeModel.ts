@@ -1,5 +1,5 @@
 import { ICompositeModel } from "src/shared/dataModels/ICompositeModel";
-import { defaultErrorLog, IErrorLogDataModel } from "./IErrorLogDataModel";
+import { IErrorLogDataModel, defaultErrorLog } from "./IErrorLogDataModel";
 
 export interface IErrorLogCompositeModel extends ICompositeModel<IErrorLogDataModel, IErrorLogCompositeModel_DataOptions__> {
 

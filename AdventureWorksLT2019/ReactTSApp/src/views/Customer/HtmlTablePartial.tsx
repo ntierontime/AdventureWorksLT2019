@@ -69,100 +69,6 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ICustomerDa
         setDense(event.target.checked);
     };
 
-    const headCells: HeadCell[] = [
-
-        {
-            id: 'customerID',
-            numeric: true,
-            disablePadding: true,
-            label: t('CustomerID'),
-        },
-        {
-            id: 'nameStyle',
-            numeric: false,
-            disablePadding: true,
-            label: t('NameStyle'),
-        },
-        {
-            id: 'title',
-            numeric: false,
-            disablePadding: true,
-            label: t('Title'),
-        },
-        {
-            id: 'firstName',
-            numeric: false,
-            disablePadding: true,
-            label: t('FirstName'),
-        },
-        {
-            id: 'middleName',
-            numeric: false,
-            disablePadding: true,
-            label: t('MiddleName'),
-        },
-        {
-            id: 'lastName',
-            numeric: false,
-            disablePadding: true,
-            label: t('LastName'),
-        },
-        {
-            id: 'suffix',
-            numeric: false,
-            disablePadding: true,
-            label: t('Suffix'),
-        },
-        {
-            id: 'companyName',
-            numeric: false,
-            disablePadding: true,
-            label: t('CompanyName'),
-        },
-        {
-            id: 'salesPerson',
-            numeric: false,
-            disablePadding: true,
-            label: t('SalesPerson'),
-        },
-        {
-            id: 'emailAddress',
-            numeric: false,
-            disablePadding: true,
-            label: t('EmailAddress'),
-        },
-        {
-            id: 'phone',
-            numeric: false,
-            disablePadding: true,
-            label: t('Phone'),
-        },
-        {
-            id: 'passwordHash',
-            numeric: false,
-            disablePadding: true,
-            label: t('PasswordHash'),
-        },
-        {
-            id: 'passwordSalt',
-            numeric: false,
-            disablePadding: true,
-            label: t('PasswordSalt'),
-        },
-        {
-            id: 'rowguid',
-            numeric: false,
-            disablePadding: true,
-            label: t('rowguid'),
-        },
-        {
-            id: 'modifiedDate',
-            numeric: false,
-            disablePadding: true,
-            label: t('ModifiedDate'),
-        },
-    ];
-
     return (
         <>
             <TableContainer onMouseEnter={(event) => { handleItemActionsPopoverClose() }}>
@@ -298,4 +204,98 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ICustomerDa
         </>
     );
 }
+
+const headCells: HeadCell[] = [
+
+    {
+        id: 'customerID',
+        numeric: true,
+        disablePadding: true,
+        label: 'CustomerID',
+    },
+    {
+        id: 'nameStyle',
+        numeric: false,
+        disablePadding: true,
+        label: 'NameStyle',
+    },
+    {
+        id: 'title',
+        numeric: false,
+        disablePadding: true,
+        label: 'Title',
+    },
+    {
+        id: 'firstName',
+        numeric: false,
+        disablePadding: true,
+        label: 'FirstName',
+    },
+    {
+        id: 'middleName',
+        numeric: false,
+        disablePadding: true,
+        label: 'MiddleName',
+    },
+    {
+        id: 'lastName',
+        numeric: false,
+        disablePadding: true,
+        label: 'LastName',
+    },
+    {
+        id: 'suffix',
+        numeric: false,
+        disablePadding: true,
+        label: 'Suffix',
+    },
+    {
+        id: 'companyName',
+        numeric: false,
+        disablePadding: true,
+        label: 'CompanyName',
+    },
+    {
+        id: 'salesPerson',
+        numeric: false,
+        disablePadding: true,
+        label: 'SalesPerson',
+    },
+    {
+        id: 'emailAddress',
+        numeric: false,
+        disablePadding: true,
+        label: 'EmailAddress',
+    },
+    {
+        id: 'phone',
+        numeric: false,
+        disablePadding: true,
+        label: 'Phone',
+    },
+    {
+        id: 'passwordHash',
+        numeric: false,
+        disablePadding: true,
+        label: 'PasswordHash',
+    },
+    {
+        id: 'passwordSalt',
+        numeric: false,
+        disablePadding: true,
+        label: 'PasswordSalt',
+    },
+    {
+        id: 'rowguid',
+        numeric: false,
+        disablePadding: true,
+        label: 'rowguid',
+    },
+    {
+        id: 'modifiedDate',
+        numeric: false,
+        disablePadding: true,
+        label: 'ModifiedDate',
+    },
+];
 

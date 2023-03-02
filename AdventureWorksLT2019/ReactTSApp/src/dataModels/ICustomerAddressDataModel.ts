@@ -1,12 +1,14 @@
 import { ItemUIStatus } from "src/shared/dataModels/ItemUIStatus";
+import { AutocompleteSetting } from "src/shared/views/AutocompleteSetting";
+import * as Yup from 'yup';
 
 export interface ICustomerAddressDataModel {
     itemUIStatus______: ItemUIStatus;
     isDeleted______: boolean;
     customer_Name: string;
-    customerID: number | null;
+    customerID: number | '';
     address_Name: string;
-    addressID: number | null;
+    addressID: number | '';
     addressType: string;
     rowguid: any;
     modifiedDate: string;
@@ -17,12 +19,12 @@ export function defaultCustomerAddress(): ICustomerAddressDataModel {
         itemUIStatus______: ItemUIStatus.New,
         isDeleted______: false,
         customer_Name: '',
-        customerID: null,
+        customerID: '',
         address_Name: '',
-        addressID: null,
+        addressID: '',
         addressType: '',
         rowguid: null,
-        modifiedDate: '',
+        modifiedDate: new Date(),
     } as unknown as ICustomerAddressDataModel;
 }
 
@@ -31,43 +33,28 @@ export function getCustomerAddressAvatar(item: ICustomerAddressDataModel): strin
 }
 
 
-export const customerAddressFormValidationWhenCreate = {
-    customerID: {
-    },
-    addressID: {
-    },
-    addressType: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_AddressType_should_be_1_to_50',
-        },
-        maxLength: {
-            value: 50,
-            message: 'The_length_of_AddressType_should_be_1_to_50',
-        },
-    },
-    modifiedDate: {
-        required: 'ModifiedDate_is_required',
-    },
-};
+export const customerAddressFormValidationWhenCreate = Yup.object().shape({
+    customerID: Yup.number(),
+    addressID: Yup.number(),
+    addressType: Yup.string()
+        .min(1, 'The_length_of_AddressType_should_be_1_to_50')
+        .max(50, 'The_length_of_AddressType_should_be_1_to_50'),
+    modifiedDate: Yup.string()
+        .required('ModifiedDate_is_required'),
+});
 
-export const customerAddressFormValidationWhenEdit = {
-    customerID: {
-    },
-    addressID: {
-    },
-    addressType: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_AddressType_should_be_1_to_50',
-        },
-        maxLength: {
-            value: 50,
-            message: 'The_length_of_AddressType_should_be_1_to_50',
-        },
-    },
-    modifiedDate: {
-        required: 'ModifiedDate_is_required',
-    },
-};
+export const customerAddressFormValidationWhenEdit = Yup.object().shape({
+    customerID: Yup.number(),
+    addressID: Yup.number(),
+    addressType: Yup.string()
+        .min(1, 'The_length_of_AddressType_should_be_1_to_50')
+        .max(50, 'The_length_of_AddressType_should_be_1_to_50'),
+    modifiedDate: Yup.string()
+        .required('ModifiedDate_is_required'),
+});
+
+export const customerAddressAutocompleteSetting = {
+    minCharacters: 2,
+    stopCount: 20
+} as unknown as AutocompleteSetting;
 

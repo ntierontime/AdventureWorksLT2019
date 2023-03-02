@@ -1,12 +1,14 @@
 import { ItemUIStatus } from "src/shared/dataModels/ItemUIStatus";
+import { AutocompleteSetting } from "src/shared/views/AutocompleteSetting";
+import * as Yup from 'yup';
 
 export interface IProductModelProductDescriptionDataModel {
     itemUIStatus______: ItemUIStatus;
     isDeleted______: boolean;
     productModel_Name: string;
-    productModelID: number | null;
+    productModelID: number | '';
     productDescription_Name: string;
-    productDescriptionID: number | null;
+    productDescriptionID: number | '';
     culture: string;
     rowguid: any;
     modifiedDate: string;
@@ -17,12 +19,12 @@ export function defaultProductModelProductDescription(): IProductModelProductDes
         itemUIStatus______: ItemUIStatus.New,
         isDeleted______: false,
         productModel_Name: '',
-        productModelID: null,
+        productModelID: '',
         productDescription_Name: '',
-        productDescriptionID: null,
+        productDescriptionID: '',
         culture: '',
         rowguid: null,
-        modifiedDate: '',
+        modifiedDate: new Date(),
     } as unknown as IProductModelProductDescriptionDataModel;
 }
 
@@ -31,43 +33,28 @@ export function getProductModelProductDescriptionAvatar(item: IProductModelProdu
 }
 
 
-export const productModelProductDescriptionFormValidationWhenCreate = {
-    productModelID: {
-    },
-    productDescriptionID: {
-    },
-    culture: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_Culture_should_be_1_to_6',
-        },
-        maxLength: {
-            value: 6,
-            message: 'The_length_of_Culture_should_be_1_to_6',
-        },
-    },
-    modifiedDate: {
-        required: 'ModifiedDate_is_required',
-    },
-};
+export const productModelProductDescriptionFormValidationWhenCreate = Yup.object().shape({
+    productModelID: Yup.number(),
+    productDescriptionID: Yup.number(),
+    culture: Yup.string()
+        .min(1, 'The_length_of_Culture_should_be_1_to_6')
+        .max(6, 'The_length_of_Culture_should_be_1_to_6'),
+    modifiedDate: Yup.string()
+        .required('ModifiedDate_is_required'),
+});
 
-export const productModelProductDescriptionFormValidationWhenEdit = {
-    productModelID: {
-    },
-    productDescriptionID: {
-    },
-    culture: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_Culture_should_be_1_to_6',
-        },
-        maxLength: {
-            value: 6,
-            message: 'The_length_of_Culture_should_be_1_to_6',
-        },
-    },
-    modifiedDate: {
-        required: 'ModifiedDate_is_required',
-    },
-};
+export const productModelProductDescriptionFormValidationWhenEdit = Yup.object().shape({
+    productModelID: Yup.number(),
+    productDescriptionID: Yup.number(),
+    culture: Yup.string()
+        .min(1, 'The_length_of_Culture_should_be_1_to_6')
+        .max(6, 'The_length_of_Culture_should_be_1_to_6'),
+    modifiedDate: Yup.string()
+        .required('ModifiedDate_is_required'),
+});
+
+export const productModelProductDescriptionAutocompleteSetting = {
+    minCharacters: 2,
+    stopCount: 20
+} as unknown as AutocompleteSetting;
 

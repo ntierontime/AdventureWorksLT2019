@@ -69,118 +69,6 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDat
         setDense(event.target.checked);
     };
 
-    const headCells: HeadCell[] = [
-
-        {
-            id: 'productID',
-            numeric: true,
-            disablePadding: true,
-            label: t('ProductID'),
-        },
-        {
-            id: 'name',
-            numeric: false,
-            disablePadding: true,
-            label: t('Name'),
-        },
-        {
-            id: 'productNumber',
-            numeric: false,
-            disablePadding: true,
-            label: t('ProductNumber'),
-        },
-        {
-            id: 'color',
-            numeric: false,
-            disablePadding: true,
-            label: t('Color'),
-        },
-        {
-            id: 'standardCost',
-            numeric: true,
-            disablePadding: true,
-            label: t('StandardCost'),
-        },
-        {
-            id: 'listPrice',
-            numeric: true,
-            disablePadding: true,
-            label: t('ListPrice'),
-        },
-        {
-            id: 'size',
-            numeric: false,
-            disablePadding: true,
-            label: t('Size'),
-        },
-        {
-            id: 'weight',
-            numeric: true,
-            disablePadding: true,
-            label: t('Weight'),
-        },
-        {
-            id: 'parentID',
-            numeric: true,
-            disablePadding: true,
-            label: t('ParentID'),
-        },
-        {
-            id: 'productCategoryID',
-            numeric: true,
-            disablePadding: true,
-            label: t('ProductCategoryID'),
-        },
-        {
-            id: 'productModelID',
-            numeric: true,
-            disablePadding: true,
-            label: t('ProductModelID'),
-        },
-        {
-            id: 'sellStartDate',
-            numeric: false,
-            disablePadding: true,
-            label: t('SellStartDate'),
-        },
-        {
-            id: 'sellEndDate',
-            numeric: false,
-            disablePadding: true,
-            label: t('SellEndDate'),
-        },
-        {
-            id: 'discontinuedDate',
-            numeric: false,
-            disablePadding: true,
-            label: t('DiscontinuedDate'),
-        },
-        {
-            id: 'thumbNailPhoto',
-            numeric: false,
-            disablePadding: true,
-            label: t('ThumbNailPhoto'),
-        },
-        {
-            id: 'thumbnailPhotoFileName',
-            numeric: false,
-            disablePadding: true,
-            label: t('ThumbnailPhotoFileName'),
-        },
-        {
-            id: 'rowguid',
-            numeric: false,
-            disablePadding: true,
-            label: t('rowguid'),
-        },
-        {
-            id: 'modifiedDate',
-            numeric: false,
-            disablePadding: true,
-            label: t('ModifiedDate'),
-        },
-    ];
-
     return (
         <>
             <TableContainer onMouseEnter={(event) => { handleItemActionsPopoverClose() }}>
@@ -319,4 +207,116 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IProductDat
         </>
     );
 }
+
+const headCells: HeadCell[] = [
+
+    {
+        id: 'productID',
+        numeric: true,
+        disablePadding: true,
+        label: 'ProductID',
+    },
+    {
+        id: 'name',
+        numeric: false,
+        disablePadding: true,
+        label: 'Name',
+    },
+    {
+        id: 'productNumber',
+        numeric: false,
+        disablePadding: true,
+        label: 'ProductNumber',
+    },
+    {
+        id: 'color',
+        numeric: false,
+        disablePadding: true,
+        label: 'Color',
+    },
+    {
+        id: 'standardCost',
+        numeric: true,
+        disablePadding: true,
+        label: 'StandardCost',
+    },
+    {
+        id: 'listPrice',
+        numeric: true,
+        disablePadding: true,
+        label: 'ListPrice',
+    },
+    {
+        id: 'size',
+        numeric: false,
+        disablePadding: true,
+        label: 'Size',
+    },
+    {
+        id: 'weight',
+        numeric: true,
+        disablePadding: true,
+        label: 'Weight',
+    },
+    {
+        id: 'parentID',
+        numeric: true,
+        disablePadding: true,
+        label: 'ParentID',
+    },
+    {
+        id: 'productCategoryID',
+        numeric: true,
+        disablePadding: true,
+        label: 'ProductCategoryID',
+    },
+    {
+        id: 'productModelID',
+        numeric: true,
+        disablePadding: true,
+        label: 'ProductModelID',
+    },
+    {
+        id: 'sellStartDate',
+        numeric: false,
+        disablePadding: true,
+        label: 'SellStartDate',
+    },
+    {
+        id: 'sellEndDate',
+        numeric: false,
+        disablePadding: true,
+        label: 'SellEndDate',
+    },
+    {
+        id: 'discontinuedDate',
+        numeric: false,
+        disablePadding: true,
+        label: 'DiscontinuedDate',
+    },
+    {
+        id: 'thumbNailPhoto',
+        numeric: false,
+        disablePadding: true,
+        label: 'ThumbNailPhoto',
+    },
+    {
+        id: 'thumbnailPhotoFileName',
+        numeric: false,
+        disablePadding: true,
+        label: 'ThumbnailPhotoFileName',
+    },
+    {
+        id: 'rowguid',
+        numeric: false,
+        disablePadding: true,
+        label: 'rowguid',
+    },
+    {
+        id: 'modifiedDate',
+        numeric: false,
+        disablePadding: true,
+        label: 'ModifiedDate',
+    },
+];
 

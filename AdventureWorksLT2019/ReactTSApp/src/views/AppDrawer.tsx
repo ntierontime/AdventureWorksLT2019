@@ -135,7 +135,7 @@ export default function AppDrawer(props: AppDrawerProps) {
             icon: <HelpOutlineIcon />,
             url: '/SalesOrderHeader',
         },
-    ];
+    ] as {label: string, icon: any, url: string}[];;
 
 
     // TODO: For testing purpose, developer can remove this list and related code
@@ -200,7 +200,7 @@ export default function AppDrawer(props: AppDrawerProps) {
             icon: <HelpOutlineIcon />,
             url: '/SalesOrderHeader/Create',
         },
-    ];
+    ] as {label: string, icon: any, url: string}[];;
 	
     // TODO: For testing purpose, developer can remove this list and related code
     const appDrawerItems_CreateWizardPages = [
@@ -264,7 +264,7 @@ export default function AppDrawer(props: AppDrawerProps) {
             icon: <HelpOutlineIcon />,
             url: '/SalesOrderHeader/CreateWizard',
         },
-    ];
+    ] as {label: string, icon: any, url: string}[];;
 
     return (
         <Drawer variant="permanent" open={props.open}>

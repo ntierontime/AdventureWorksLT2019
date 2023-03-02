@@ -1,4 +1,6 @@
 import { ItemUIStatus } from "src/shared/dataModels/ItemUIStatus";
+import { AutocompleteSetting } from "src/shared/views/AutocompleteSetting";
+import * as Yup from 'yup';
 
 export interface IProductDescriptionDataModel {
     itemUIStatus______: ItemUIStatus;
@@ -16,7 +18,7 @@ export function defaultProductDescription(): IProductDescriptionDataModel {
         productDescriptionID: 0,
         description: '',
         rowguid: null,
-        modifiedDate: '',
+        modifiedDate: new Date(),
     } as unknown as IProductDescriptionDataModel;
 }
 
@@ -25,35 +27,24 @@ export function getProductDescriptionAvatar(item: IProductDescriptionDataModel):
 }
 
 
-export const productDescriptionFormValidationWhenCreate = {
-    description: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_Description_should_be_1_to_400',
-        },
-        maxLength: {
-            value: 400,
-            message: 'The_length_of_Description_should_be_1_to_400',
-        },
-    },
-    modifiedDate: {
-        required: 'ModifiedDate_is_required',
-    },
-};
+export const productDescriptionFormValidationWhenCreate = Yup.object().shape({
+    description: Yup.string()
+        .min(1, 'The_length_of_Description_should_be_1_to_400')
+        .max(400, 'The_length_of_Description_should_be_1_to_400'),
+    modifiedDate: Yup.string()
+        .required('ModifiedDate_is_required'),
+});
 
-export const productDescriptionFormValidationWhenEdit = {
-    description: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_Description_should_be_1_to_400',
-        },
-        maxLength: {
-            value: 400,
-            message: 'The_length_of_Description_should_be_1_to_400',
-        },
-    },
-    modifiedDate: {
-        required: 'ModifiedDate_is_required',
-    },
-};
+export const productDescriptionFormValidationWhenEdit = Yup.object().shape({
+    description: Yup.string()
+        .min(1, 'The_length_of_Description_should_be_1_to_400')
+        .max(400, 'The_length_of_Description_should_be_1_to_400'),
+    modifiedDate: Yup.string()
+        .required('ModifiedDate_is_required'),
+});
+
+export const productDescriptionAutocompleteSetting = {
+    minCharacters: 2,
+    stopCount: 20
+} as unknown as AutocompleteSetting;
 

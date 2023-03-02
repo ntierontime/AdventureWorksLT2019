@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, FormControlLabel, Grid, IconButton, TextField, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -6,9 +6,9 @@ import SaveIcon from '@mui/icons-material/Save';
 
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import { Controller } from 'react-hook-form';
-import { DatePicker } from '@mui/x-date-pickers';
 
 
 
@@ -32,16 +32,21 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
     const { gridColumns, scrollableCardContent, crudViewContainer, buttonContainer } = props;
     // 'control' is only used by boolean fields, you can remove it if this form doesn't have it
     // 'setValue' is only used by Dropdown List fields and DatePicker fields, you can remove it if this form doesn't have it
-    const { register, control, setValue, handleSubmit, reset, formState: { isValid, errors, isDirty } } = useForm({
+    const methods = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
+        resolver: yupResolver(customerFormValidationWhenCreate)
     });
+    const { register, control, setValue, handleSubmit, reset, trigger, formState: { isValid, errors, isDirty } } = methods;
     // #endregion 1. redux-hook-form related
 
     // #region 2. CodeLists if any
 	
     const [modifiedDate, setModifiedDate] = useState<string>();
+
+
+
 
 
 
@@ -68,7 +73,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
 
         setCreating(true);
         dispatch(post({ ...data }))
-            .then((result) => {
+            .then((result: any) => {
                 if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
                     if (createAnother) {
                         setCreating(false);
@@ -86,7 +91,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
                 }
                 //console.log(result);
             })
-            .catch((error) => { setCreateMessage(t('FailedToSave')); /*console.log(error);*/ })
+            .catch((error: any) => { setCreateMessage(t('FailedToSave')); /*console.log(error);*/ })
             .finally(() => { setCreating(false); console.log('finally'); });
     }
 
@@ -95,7 +100,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
         return (
             <>
                 <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeCreateAnother} />} label={t("CreateAnotherOne")} />
-                <IconButton aria-label="create" color="primary" type='submit' disabled={!isValid || creating || created || !isDirty}>
+                <IconButton aria-label="create" color="primary" type='submit' disabled={!isValid || creating || created}>
                     <SaveIcon />
                 </IconButton>
                 <IconButton aria-label="close" disabled={creating || created}>
@@ -118,7 +123,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
                         type='submit'
                         fullWidth
                         variant='contained'
-                        disabled={!isValid || creating || created || !isDirty}
+                        disabled={!isValid || creating || created}
                         startIcon={<SaveIcon />}>
                         {t('Create')}
                     </Button>
@@ -140,7 +145,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
 	
     // #region 4. crudViewContainer === CrudViewContainers.Wizard
     const { wizardOrientation, onWizardStepSubmit, renderWizardButtonGroup, isFirstStep, isLastStep, isStepOptional } = props;
-
+	const submitRef = useRef(); // used for external trigger submit event.
     // #endregion 4. crudViewContainer === CrudViewContainers.Wizard
 
     useEffect(() => {
@@ -149,10 +154,15 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
         setCreated(false);
         setCreateMessage(null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [item]);
+	
+	useEffect(() => {
+        // console.log("trigger validation");
+        trigger();
+    }, [trigger]);
 
     return (
-        <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
+        <Card component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{height: '100%', display: "flex", flexDirection: "column",}}>
             {crudViewContainer !== CrudViewContainers.Wizard && <CardHeader
                 action={buttonContainer === ContainerOptions.ItemCardHead && <>
                     {crudViewContainer !== CrudViewContainers.StandaloneView && renderButtonGroup_IconButtons()}
@@ -176,7 +186,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
                                         control={control}
                                         name="nameStyle"
                                         defaultValue={item.nameStyle}
-                                        {...register("nameStyle", customerFormValidationWhenCreate.nameStyle)}
+                            			{...register("nameStyle")}
                                         render={({ field: { onChange } }) => (
                                             <Checkbox
                                                 color="primary"
@@ -197,7 +207,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
                                 defaultValue={item.title}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("title", customerFormValidationWhenCreate.title)}
+                                {...register("title")}
                                 autoComplete='title'
                                 error={!!errors.title}
                                 fullWidth
@@ -211,7 +221,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
                                 defaultValue={item.firstName}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("firstName", customerFormValidationWhenCreate.firstName)}
+                                {...register("firstName")}
                                 autoComplete='firstName'
                                 error={!!errors.firstName}
                                 fullWidth
@@ -225,7 +235,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
                                 defaultValue={item.middleName}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("middleName", customerFormValidationWhenCreate.middleName)}
+                                {...register("middleName")}
                                 autoComplete='middleName'
                                 error={!!errors.middleName}
                                 fullWidth
@@ -239,7 +249,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
                                 defaultValue={item.lastName}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("lastName", customerFormValidationWhenCreate.lastName)}
+                                {...register("lastName")}
                                 autoComplete='lastName'
                                 error={!!errors.lastName}
                                 fullWidth
@@ -253,7 +263,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
                                 defaultValue={item.suffix}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("suffix", customerFormValidationWhenCreate.suffix)}
+                                {...register("suffix")}
                                 autoComplete='suffix'
                                 error={!!errors.suffix}
                                 fullWidth
@@ -267,7 +277,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
                                 defaultValue={item.companyName}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("companyName", customerFormValidationWhenCreate.companyName)}
+                                {...register("companyName")}
                                 autoComplete='companyName'
                                 error={!!errors.companyName}
                                 fullWidth
@@ -281,7 +291,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
                                 defaultValue={item.salesPerson}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("salesPerson", customerFormValidationWhenCreate.salesPerson)}
+                                {...register("salesPerson")}
                                 autoComplete='salesPerson'
                                 error={!!errors.salesPerson}
                                 fullWidth
@@ -295,7 +305,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
                                 defaultValue={item.emailAddress}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("emailAddress", customerFormValidationWhenCreate.emailAddress)}
+                                {...register("emailAddress")}
                                 autoComplete='emailAddress'
                                 error={!!errors.emailAddress}
                                 fullWidth
@@ -309,7 +319,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
                                 defaultValue={item.phone}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("phone", customerFormValidationWhenCreate.phone)}
+                                {...register("phone")}
                                 autoComplete='phone'
                                 error={!!errors.phone}
                                 fullWidth
@@ -323,7 +333,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
                                 defaultValue={item.passwordHash}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("passwordHash", customerFormValidationWhenCreate.passwordHash)}
+                                {...register("passwordHash")}
                                 autoComplete='passwordHash'
                                 error={!!errors.passwordHash}
                                 fullWidth
@@ -337,7 +347,7 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
                                 defaultValue={item.passwordSalt}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("passwordSalt", customerFormValidationWhenCreate.passwordSalt)}
+                                {...register("passwordSalt")}
                                 autoComplete='passwordSalt'
                                 error={!!errors.passwordSalt}
                                 fullWidth
@@ -345,30 +355,37 @@ export default function CreatePartial(props: ItemPartialViewProps<ICustomerDataM
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <DatePicker
-                                value={modifiedDate}
-                                label={t('ModifiedDate')}
-                                onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
-                                renderInput={(params) =>
-                                    <TextField
-                            			sx={{marginTop: 2}}
-                                        fullWidth
-                                        autoComplete='modifiedDate'
-                            			{...register("modifiedDate", customerFormValidationWhenCreate.modifiedDate)}
-                                        error={!!errors.modifiedDate}
-                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                        {...params}
-                                    />}
+                            <Controller
+                                name="modifiedDate"
+                                control={control}
+                                defaultValue={null}
+                                render={({ field, ...props }) => {
+                                    return (
+                            			<DatePicker
+                            				value={modifiedDate}
+                            				label={t('ModifiedDate')}
+                            				onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
+                            				renderInput={(params) =>
+                            					<TextField
+                            						sx={{marginTop: 2}}
+                            						fullWidth
+                            						error={!!errors.modifiedDate}
+                            						helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                            						{...params}
+                            					/>}
+                            			/>
+                                    );
+                                }}
                             />
                         </Grid>
                     </Grid>
                 </Box>
             </CardContent>
-            {crudViewContainer != CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing>
+            {crudViewContainer != CrudViewContainers.Wizard && buttonContainer === ContainerOptions.ItemCardBottom && <CardActions disableSpacing sx={{ mt: "auto" }}>
                 {renderButtonGroup_TextAndIconButtons()}
             </CardActions>}
-            {crudViewContainer === CrudViewContainers.Wizard && <CardActions disableSpacing>
-                {renderWizardButtonGroup(isFirstStep, isLastStep, isStepOptional, ()=>!isValid || creating || created || !isDirty)}
+            {crudViewContainer === CrudViewContainers.Wizard && <CardActions disableSpacing sx={{ mt: "auto" }}>
+                <button ref={submitRef} type="submit" style={{ display: 'none' }} />{renderWizardButtonGroup(isFirstStep, isLastStep, isStepOptional, ()=>!isValid || creating || created, submitRef)}
             </CardActions>}
         </Card >
     );

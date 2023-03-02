@@ -69,64 +69,6 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ISalesOrder
         setDense(event.target.checked);
     };
 
-    const headCells: HeadCell[] = [
-
-        {
-            id: 'salesOrderID',
-            numeric: true,
-            disablePadding: true,
-            label: t('SalesOrderID'),
-        },
-        {
-            id: 'salesOrderDetailID',
-            numeric: true,
-            disablePadding: true,
-            label: t('SalesOrderDetailID'),
-        },
-        {
-            id: 'orderQty',
-            numeric: true,
-            disablePadding: true,
-            label: t('OrderQty'),
-        },
-        {
-            id: 'productID',
-            numeric: true,
-            disablePadding: true,
-            label: t('ProductID'),
-        },
-        {
-            id: 'unitPrice',
-            numeric: true,
-            disablePadding: true,
-            label: t('UnitPrice'),
-        },
-        {
-            id: 'unitPriceDiscount',
-            numeric: true,
-            disablePadding: true,
-            label: t('UnitPriceDiscount'),
-        },
-        {
-            id: 'lineTotal',
-            numeric: true,
-            disablePadding: true,
-            label: t('LineTotal'),
-        },
-        {
-            id: 'rowguid',
-            numeric: false,
-            disablePadding: true,
-            label: t('rowguid'),
-        },
-        {
-            id: 'modifiedDate',
-            numeric: false,
-            disablePadding: true,
-            label: t('ModifiedDate'),
-        },
-    ];
-
     return (
         <>
             <TableContainer onMouseEnter={(event) => { handleItemActionsPopoverClose() }}>
@@ -256,4 +198,62 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ISalesOrder
         </>
     );
 }
+
+const headCells: HeadCell[] = [
+
+    {
+        id: 'salesOrderID',
+        numeric: true,
+        disablePadding: true,
+        label: 'SalesOrderID',
+    },
+    {
+        id: 'salesOrderDetailID',
+        numeric: true,
+        disablePadding: true,
+        label: 'SalesOrderDetailID',
+    },
+    {
+        id: 'orderQty',
+        numeric: true,
+        disablePadding: true,
+        label: 'OrderQty',
+    },
+    {
+        id: 'productID',
+        numeric: true,
+        disablePadding: true,
+        label: 'ProductID',
+    },
+    {
+        id: 'unitPrice',
+        numeric: true,
+        disablePadding: true,
+        label: 'UnitPrice',
+    },
+    {
+        id: 'unitPriceDiscount',
+        numeric: true,
+        disablePadding: true,
+        label: 'UnitPriceDiscount',
+    },
+    {
+        id: 'lineTotal',
+        numeric: true,
+        disablePadding: true,
+        label: 'LineTotal',
+    },
+    {
+        id: 'rowguid',
+        numeric: false,
+        disablePadding: true,
+        label: 'rowguid',
+    },
+    {
+        id: 'modifiedDate',
+        numeric: false,
+        disablePadding: true,
+        label: 'ModifiedDate',
+    },
+];
 

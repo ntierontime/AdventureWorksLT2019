@@ -10,8 +10,9 @@ import SaveIcon from '@mui/icons-material/Save';
 
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-import { DatePicker } from '@mui/x-date-pickers';
+import { Controller } from 'react-hook-form';
 
 
 
@@ -38,11 +39,13 @@ export default function EditPartial(props: ItemPartialViewProps<IAddressDataMode
 
 	// 'control' is only used by boolean fields, you can remove it if this form doesn't have it
 	// 'setValue' is only used by Dropdown List fields and DatePicker fields, you can remove it if this form doesn't have it
-    const { register, control, setValue, handleSubmit, formState: { isValid, errors, isDirty } } = useForm({
+    const methods = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
-    },);
+        resolver: yupResolver(addressFormValidationWhenEdit)
+    });
+    const { register, control, setValue, handleSubmit, reset, trigger, formState: { isValid, errors, isDirty } } = methods;
 
     const [saving, setSaving] = useState(false);
     const [saved, setSaved] = useState(false);
@@ -62,10 +65,12 @@ export default function EditPartial(props: ItemPartialViewProps<IAddressDataMode
 
 
 
+
+
     const onSubmit = (data: IAddressDataModel) => {
         setSaving(true);
         dispatch(put({ identifier: getIAddressIdentifier(data), data: { ...data } }))
-            .then((result) => {
+            .then((result: any) => {
                 if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
                     setSaveMessage(t('SuccessfullySaved'));
                     setSaved(true);
@@ -75,7 +80,7 @@ export default function EditPartial(props: ItemPartialViewProps<IAddressDataMode
                 }
                 //console.log(result);
             })
-            .catch((error) => { setSaveMessage(t('FailedToSave')); /*console.log(error);*/ })
+            .catch((error: any) => { setSaveMessage(t('FailedToSave')); /*console.log(error);*/ })
             .finally(() => { setSaving(false); console.log('finally'); });
     }
 
@@ -118,7 +123,7 @@ export default function EditPartial(props: ItemPartialViewProps<IAddressDataMode
                 <IconButton aria-label="Save"
                     color="primary"
                     type='submit'
-                    disabled={!isValid || saving || saved || !isDirty}
+                    disabled={!isValid || saving || saved}
                 >
                     <SaveIcon />
                 </IconButton>
@@ -164,7 +169,7 @@ export default function EditPartial(props: ItemPartialViewProps<IAddressDataMode
                         color="primary"
                         type='submit'
                         variant='contained'
-                        disabled={!isValid || saving || saved || !isDirty}
+                        disabled={!isValid || saving || saved}
                         startIcon={<SaveIcon color='action' />}>
                         {t('Save')}
                     </LoadingButton>
@@ -242,7 +247,7 @@ export default function EditPartial(props: ItemPartialViewProps<IAddressDataMode
                                 defaultValue={item.addressLine1}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("addressLine1", addressFormValidationWhenEdit.addressLine1)}
+                                {...register("addressLine1")}
                                 autoComplete='addressLine1'
                                 error={!!errors.addressLine1}
                                 fullWidth
@@ -256,7 +261,7 @@ export default function EditPartial(props: ItemPartialViewProps<IAddressDataMode
                                 defaultValue={item.addressLine2}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("addressLine2", addressFormValidationWhenEdit.addressLine2)}
+                                {...register("addressLine2")}
                                 autoComplete='addressLine2'
                                 error={!!errors.addressLine2}
                                 fullWidth
@@ -270,7 +275,7 @@ export default function EditPartial(props: ItemPartialViewProps<IAddressDataMode
                                 defaultValue={item.city}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("city", addressFormValidationWhenEdit.city)}
+                                {...register("city")}
                                 autoComplete='city'
                                 error={!!errors.city}
                                 fullWidth
@@ -284,7 +289,7 @@ export default function EditPartial(props: ItemPartialViewProps<IAddressDataMode
                                 defaultValue={item.stateProvince}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("stateProvince", addressFormValidationWhenEdit.stateProvince)}
+                                {...register("stateProvince")}
                                 autoComplete='stateProvince'
                                 error={!!errors.stateProvince}
                                 fullWidth
@@ -298,7 +303,7 @@ export default function EditPartial(props: ItemPartialViewProps<IAddressDataMode
                                 defaultValue={item.countryRegion}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("countryRegion", addressFormValidationWhenEdit.countryRegion)}
+                                {...register("countryRegion")}
                                 autoComplete='countryRegion'
                                 error={!!errors.countryRegion}
                                 fullWidth
@@ -312,7 +317,7 @@ export default function EditPartial(props: ItemPartialViewProps<IAddressDataMode
                                 defaultValue={item.postalCode}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("postalCode", addressFormValidationWhenEdit.postalCode)}
+                                {...register("postalCode")}
                                 autoComplete='postalCode'
                                 error={!!errors.postalCode}
                                 fullWidth
@@ -333,20 +338,27 @@ export default function EditPartial(props: ItemPartialViewProps<IAddressDataMode
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <DatePicker
-                                value={modifiedDate}
-                                label={t('ModifiedDate')}
-                                onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
-                                renderInput={(params) =>
-                                    <TextField
-                            			sx={{marginTop: 2}}
-                                        fullWidth
-                                        autoComplete='modifiedDate'
-                            			{...register("modifiedDate", addressFormValidationWhenEdit.modifiedDate)}
-                                        error={!!errors.modifiedDate}
-                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                        {...params}
-                                    />}
+                            <Controller
+                                name="modifiedDate"
+                                control={control}
+                                defaultValue={null}
+                                render={({ field, ...props }) => {
+                                    return (
+                            			<DatePicker
+                            				value={modifiedDate}
+                            				label={t('ModifiedDate')}
+                            				onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
+                            				renderInput={(params) =>
+                            					<TextField
+                            						sx={{marginTop: 2}}
+                            						fullWidth
+                            						error={!!errors.modifiedDate}
+                            						helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                            						{...params}
+                            					/>}
+                            			/>
+                                    );
+                                }}
                             />
                         </Grid>
                     </Grid>

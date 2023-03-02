@@ -1,4 +1,6 @@
 import { ItemUIStatus } from "src/shared/dataModels/ItemUIStatus";
+import { AutocompleteSetting } from "src/shared/views/AutocompleteSetting";
+import * as Yup from 'yup';
 
 export interface IProductModelDataModel {
     itemUIStatus______: ItemUIStatus;
@@ -18,7 +20,7 @@ export function defaultProductModel(): IProductModelDataModel {
         name: '',
         catalogDescription: null,
         rowguid: null,
-        modifiedDate: '',
+        modifiedDate: new Date(),
     } as unknown as IProductModelDataModel;
 }
 
@@ -27,39 +29,24 @@ export function getProductModelAvatar(item: IProductModelDataModel): string {
 }
 
 
-export const productModelFormValidationWhenCreate = {
-    name: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_Name_should_be_1_to_50',
-        },
-        maxLength: {
-            value: 50,
-            message: 'The_length_of_Name_should_be_1_to_50',
-        },
-    },
-    catalogDescription: {
-    },
-    modifiedDate: {
-        required: 'ModifiedDate_is_required',
-    },
-};
+export const productModelFormValidationWhenCreate = Yup.object().shape({
+    name: Yup.string()
+        .min(1, 'The_length_of_Name_should_be_1_to_50')
+        .max(50, 'The_length_of_Name_should_be_1_to_50'),
+    modifiedDate: Yup.string()
+        .required('ModifiedDate_is_required'),
+});
 
-export const productModelFormValidationWhenEdit = {
-    name: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_Name_should_be_1_to_50',
-        },
-        maxLength: {
-            value: 50,
-            message: 'The_length_of_Name_should_be_1_to_50',
-        },
-    },
-    catalogDescription: {
-    },
-    modifiedDate: {
-        required: 'ModifiedDate_is_required',
-    },
-};
+export const productModelFormValidationWhenEdit = Yup.object().shape({
+    name: Yup.string()
+        .min(1, 'The_length_of_Name_should_be_1_to_50')
+        .max(50, 'The_length_of_Name_should_be_1_to_50'),
+    modifiedDate: Yup.string()
+        .required('ModifiedDate_is_required'),
+});
+
+export const productModelAutocompleteSetting = {
+    minCharacters: 2,
+    stopCount: 20
+} as unknown as AutocompleteSetting;
 

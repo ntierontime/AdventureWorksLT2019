@@ -10,8 +10,9 @@ import SaveIcon from '@mui/icons-material/Save';
 
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-import { DatePicker } from '@mui/x-date-pickers';
+import { Controller } from 'react-hook-form';
 
 
 
@@ -38,11 +39,13 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
 
 	// 'control' is only used by boolean fields, you can remove it if this form doesn't have it
 	// 'setValue' is only used by Dropdown List fields and DatePicker fields, you can remove it if this form doesn't have it
-    const { register, control, setValue, handleSubmit, formState: { isValid, errors, isDirty } } = useForm({
+    const methods = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
-    },);
+        resolver: yupResolver(errorLogFormValidationWhenEdit)
+    });
+    const { register, control, setValue, handleSubmit, reset, trigger, formState: { isValid, errors, isDirty } } = methods;
 
     const [saving, setSaving] = useState(false);
     const [saved, setSaved] = useState(false);
@@ -62,10 +65,12 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
 
 
 
+
+
     const onSubmit = (data: IErrorLogDataModel) => {
         setSaving(true);
         dispatch(put({ identifier: getIErrorLogIdentifier(data), data: { ...data } }))
-            .then((result) => {
+            .then((result: any) => {
                 if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
                     setSaveMessage(t('SuccessfullySaved'));
                     setSaved(true);
@@ -75,7 +80,7 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
                 }
                 //console.log(result);
             })
-            .catch((error) => { setSaveMessage(t('FailedToSave')); /*console.log(error);*/ })
+            .catch((error: any) => { setSaveMessage(t('FailedToSave')); /*console.log(error);*/ })
             .finally(() => { setSaving(false); console.log('finally'); });
     }
 
@@ -118,7 +123,7 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
                 <IconButton aria-label="Save"
                     color="primary"
                     type='submit'
-                    disabled={!isValid || saving || saved || !isDirty}
+                    disabled={!isValid || saving || saved}
                 >
                     <SaveIcon />
                 </IconButton>
@@ -164,7 +169,7 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
                         color="primary"
                         type='submit'
                         variant='contained'
-                        disabled={!isValid || saving || saved || !isDirty}
+                        disabled={!isValid || saving || saved}
                         startIcon={<SaveIcon color='action' />}>
                         {t('Save')}
                     </LoadingButton>
@@ -236,20 +241,27 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <DatePicker
-                                value={errorTime}
-                                label={t('ErrorTime')}
-                                onChange={(event: string) => { setErrorTime(event); setValue('errorTime', event, { shouldDirty: true }); }}
-                                renderInput={(params) =>
-                                    <TextField
-                            			sx={{marginTop: 2}}
-                                        fullWidth
-                                        autoComplete='errorTime'
-                            			{...register("errorTime", errorLogFormValidationWhenEdit.errorTime)}
-                                        error={!!errors.errorTime}
-                                        helperText={!!errors.errorTime ? t(errors.errorTime.message) : ''}
-                                        {...params}
-                                    />}
+                            <Controller
+                                name="errorTime"
+                                control={control}
+                                defaultValue={null}
+                                render={({ field, ...props }) => {
+                                    return (
+                            			<DatePicker
+                            				value={errorTime}
+                            				label={t('ErrorTime')}
+                            				onChange={(event: string) => { setErrorTime(event); setValue('errorTime', event, { shouldDirty: true }); }}
+                            				renderInput={(params) =>
+                            					<TextField
+                            						sx={{marginTop: 2}}
+                            						fullWidth
+                            						error={!!errors.errorTime}
+                            						helperText={!!errors.errorTime ? t(errors.errorTime.message) : ''}
+                            						{...params}
+                            					/>}
+                            			/>
+                                    );
+                                }}
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
@@ -259,7 +271,7 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
                                 defaultValue={item.userName}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("userName", errorLogFormValidationWhenEdit.userName)}
+                                {...register("userName")}
                                 autoComplete='userName'
                                 error={!!errors.userName}
                                 fullWidth
@@ -273,7 +285,7 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
                                 defaultValue={item.errorNumber}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("errorNumber", errorLogFormValidationWhenEdit.errorNumber)}
+                                {...register("errorNumber")}
                                 autoComplete='errorNumber'
                                 error={!!errors.errorNumber}
                                 fullWidth
@@ -287,7 +299,7 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
                                 defaultValue={item.errorSeverity}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("errorSeverity", errorLogFormValidationWhenEdit.errorSeverity)}
+                                {...register("errorSeverity")}
                                 autoComplete='errorSeverity'
                                 error={!!errors.errorSeverity}
                                 fullWidth
@@ -301,7 +313,7 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
                                 defaultValue={item.errorState}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("errorState", errorLogFormValidationWhenEdit.errorState)}
+                                {...register("errorState")}
                                 autoComplete='errorState'
                                 error={!!errors.errorState}
                                 fullWidth
@@ -315,7 +327,7 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
                                 defaultValue={item.errorProcedure}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("errorProcedure", errorLogFormValidationWhenEdit.errorProcedure)}
+                                {...register("errorProcedure")}
                                 autoComplete='errorProcedure'
                                 error={!!errors.errorProcedure}
                                 fullWidth
@@ -329,7 +341,7 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
                                 defaultValue={item.errorLine}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("errorLine", errorLogFormValidationWhenEdit.errorLine)}
+                                {...register("errorLine")}
                                 autoComplete='errorLine'
                                 error={!!errors.errorLine}
                                 fullWidth
@@ -343,7 +355,7 @@ export default function EditPartial(props: ItemPartialViewProps<IErrorLogDataMod
                                 defaultValue={item.errorMessage}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("errorMessage", errorLogFormValidationWhenEdit.errorMessage)}
+                                {...register("errorMessage")}
                                 autoComplete='errorMessage'
                                 error={!!errors.errorMessage}
                                 fullWidth

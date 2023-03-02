@@ -10,7 +10,7 @@ import { ISalesOrderHeaderDataModel } from 'src/dataModels/ISalesOrderHeaderData
 export interface ISalesOrderHeaderIdentifier {
 
     // PredicateType:Equals
-	salesOrderID: number | null;
+	salesOrderID: number | '';
 }
 
 export function getISalesOrderHeaderIdentifier(item: ISalesOrderHeaderDataModel): ISalesOrderHeaderIdentifier {
@@ -29,13 +29,13 @@ export interface ISalesOrderHeaderAdvancedQuery extends IBaseQuery {
     textSearchType: TextSearchTypes;
 
     // PredicateType:Equals
-	billToAddressID: number | null;
+	billToAddressID: number | '';
 
     // PredicateType:Equals
-	shipToAddressID: number | null;
+	shipToAddressID: number | '';
 
     // PredicateType:Equals
-	customerID: number | null;
+	customerID: number | '';
 
     // PredicateType:Equals
 	onlineOrderFlag: BooleanSearchOptions;

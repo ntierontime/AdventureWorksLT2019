@@ -9,10 +9,10 @@ import { ISalesOrderDetailDataModel } from 'src/dataModels/ISalesOrderDetailData
 export interface ISalesOrderDetailIdentifier {
 
     // PredicateType:Equals
-	salesOrderID: number | null;
+	salesOrderID: number | '';
 
     // PredicateType:Equals
-	salesOrderDetailID: number | null;
+	salesOrderDetailID: number | '';
 }
 
 export function getISalesOrderDetailIdentifier(item: ISalesOrderDetailDataModel): ISalesOrderDetailIdentifier {
@@ -31,28 +31,28 @@ export interface ISalesOrderDetailAdvancedQuery extends IBaseQuery {
     textSearchType: TextSearchTypes;
 
     // PredicateType:Equals
-	productID: number | null;
+	productID: number | '';
 
     // PredicateType:Equals
-	productCategoryID: number | null;
+	productCategoryID: number | '';
 
     // PredicateType:Equals
-	productCategory_ParentID: number | null;
+	productCategory_ParentID: number | '';
 
     // PredicateType:Equals
-	productModelID: number | null;
+	productModelID: number | '';
 
     // PredicateType:Equals
-	salesOrderID: number | null;
+	salesOrderID: number | '';
 
     // PredicateType:Equals
-	billToID: number | null;
+	billToID: number | '';
 
     // PredicateType:Equals
-	shipToID: number | null;
+	shipToID: number | '';
 
     // PredicateType:Equals
-	customerID: number | null;
+	customerID: number | '';
 
     // PredicateType:Range
     modifiedDateRange: PreDefinedDateTimeRanges | null;

@@ -10,8 +10,9 @@ import SaveIcon from '@mui/icons-material/Save';
 
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-import { DatePicker } from '@mui/x-date-pickers';
+import { Controller } from 'react-hook-form';
 import { INameValuePair } from 'src/shared/dataModels/INameValuePair';
 import { codeListsApi } from 'src/apiClients/CodeListsApi';
 import { defaultIProductModelAdvancedQuery } from 'src/dataModels/IProductModelQueries';
@@ -41,11 +42,13 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelPro
 
 	// 'control' is only used by boolean fields, you can remove it if this form doesn't have it
 	// 'setValue' is only used by Dropdown List fields and DatePicker fields, you can remove it if this form doesn't have it
-    const { register, control, setValue, handleSubmit, formState: { isValid, errors, isDirty } } = useForm({
+    const methods = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
-    },);
+        resolver: yupResolver(productModelProductDescriptionFormValidationWhenEdit)
+    });
+    const { register, control, setValue, handleSubmit, reset, trigger, formState: { isValid, errors, isDirty } } = methods;
 
     const [saving, setSaving] = useState(false);
     const [saved, setSaved] = useState(false);
@@ -81,10 +84,12 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelPro
 
 
 
+
+
     const onSubmit = (data: IProductModelProductDescriptionDataModel) => {
         setSaving(true);
         dispatch(put({ identifier: getIProductModelProductDescriptionIdentifier(data), data: { ...data } }))
-            .then((result) => {
+            .then((result: any) => {
                 if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
                     setSaveMessage(t('SuccessfullySaved'));
                     setSaved(true);
@@ -94,7 +99,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelPro
                 }
                 //console.log(result);
             })
-            .catch((error) => { setSaveMessage(t('FailedToSave')); /*console.log(error);*/ })
+            .catch((error: any) => { setSaveMessage(t('FailedToSave')); /*console.log(error);*/ })
             .finally(() => { setSaving(false); console.log('finally'); });
     }
 
@@ -137,7 +142,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelPro
                 <IconButton aria-label="Save"
                     color="primary"
                     type='submit'
-                    disabled={!isValid || saving || saved || !isDirty}
+                    disabled={!isValid || saving || saved}
                 >
                     <SaveIcon />
                 </IconButton>
@@ -183,7 +188,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelPro
                         color="primary"
                         type='submit'
                         variant='contained'
-                        disabled={!isValid || saving || saved || !isDirty}
+                        disabled={!isValid || saving || saved}
                         startIcon={<SaveIcon color='action' />}>
                         {t('Save')}
                     </LoadingButton>
@@ -243,11 +248,12 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelPro
                     <Grid container spacing={1}>
                         <Grid item {...gridColumns}>
                             <TextField
+                            	sx={{marginTop: 2}}
                                 label={t("ProductModelID")}
                                 id="productModelIDSelect"
                                 select
                                 name='productModelID'
-                                {...register("productModelID", productModelProductDescriptionFormValidationWhenEdit.productModelID)}
+                                {...register("productModelID")}
                                 autoComplete='productModelID'
                                 variant="outlined"
                                 fullWidth
@@ -260,11 +266,12 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelPro
                         </Grid>
                         <Grid item {...gridColumns}>
                             <TextField
+                            	sx={{marginTop: 2}}
                                 label={t("ProductDescriptionID")}
                                 id="productDescriptionIDSelect"
                                 select
                                 name='productDescriptionID'
-                                {...register("productDescriptionID", productModelProductDescriptionFormValidationWhenEdit.productDescriptionID)}
+                                {...register("productDescriptionID")}
                                 autoComplete='productDescriptionID'
                                 variant="outlined"
                                 fullWidth
@@ -282,7 +289,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelPro
                                 defaultValue={item.culture}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("culture", productModelProductDescriptionFormValidationWhenEdit.culture)}
+                                {...register("culture")}
                                 autoComplete='culture'
                                 error={!!errors.culture}
                                 fullWidth
@@ -303,20 +310,27 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelPro
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <DatePicker
-                                value={modifiedDate}
-                                label={t('ModifiedDate')}
-                                onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
-                                renderInput={(params) =>
-                                    <TextField
-                            			sx={{marginTop: 2}}
-                                        fullWidth
-                                        autoComplete='modifiedDate'
-                            			{...register("modifiedDate", productModelProductDescriptionFormValidationWhenEdit.modifiedDate)}
-                                        error={!!errors.modifiedDate}
-                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                        {...params}
-                                    />}
+                            <Controller
+                                name="modifiedDate"
+                                control={control}
+                                defaultValue={null}
+                                render={({ field, ...props }) => {
+                                    return (
+                            			<DatePicker
+                            				value={modifiedDate}
+                            				label={t('ModifiedDate')}
+                            				onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
+                            				renderInput={(params) =>
+                            					<TextField
+                            						sx={{marginTop: 2}}
+                            						fullWidth
+                            						error={!!errors.modifiedDate}
+                            						helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                            						{...params}
+                            					/>}
+                            			/>
+                                    );
+                                }}
                             />
                         </Grid>
                     </Grid>

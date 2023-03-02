@@ -10,8 +10,9 @@ import SaveIcon from '@mui/icons-material/Save';
 
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-import { DatePicker } from '@mui/x-date-pickers';
+import { Controller } from 'react-hook-form';
 import { INameValuePair } from 'src/shared/dataModels/INameValuePair';
 import { codeListsApi } from 'src/apiClients/CodeListsApi';
 import { defaultICustomerAdvancedQuery } from 'src/dataModels/ICustomerQueries';
@@ -41,11 +42,13 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerAddress
 
 	// 'control' is only used by boolean fields, you can remove it if this form doesn't have it
 	// 'setValue' is only used by Dropdown List fields and DatePicker fields, you can remove it if this form doesn't have it
-    const { register, control, setValue, handleSubmit, formState: { isValid, errors, isDirty } } = useForm({
+    const methods = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
-    },);
+        resolver: yupResolver(customerAddressFormValidationWhenEdit)
+    });
+    const { register, control, setValue, handleSubmit, reset, trigger, formState: { isValid, errors, isDirty } } = methods;
 
     const [saving, setSaving] = useState(false);
     const [saved, setSaved] = useState(false);
@@ -81,10 +84,12 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerAddress
 
 
 
+
+
     const onSubmit = (data: ICustomerAddressDataModel) => {
         setSaving(true);
         dispatch(put({ identifier: getICustomerAddressIdentifier(data), data: { ...data } }))
-            .then((result) => {
+            .then((result: any) => {
                 if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
                     setSaveMessage(t('SuccessfullySaved'));
                     setSaved(true);
@@ -94,7 +99,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerAddress
                 }
                 //console.log(result);
             })
-            .catch((error) => { setSaveMessage(t('FailedToSave')); /*console.log(error);*/ })
+            .catch((error: any) => { setSaveMessage(t('FailedToSave')); /*console.log(error);*/ })
             .finally(() => { setSaving(false); console.log('finally'); });
     }
 
@@ -137,7 +142,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerAddress
                 <IconButton aria-label="Save"
                     color="primary"
                     type='submit'
-                    disabled={!isValid || saving || saved || !isDirty}
+                    disabled={!isValid || saving || saved}
                 >
                     <SaveIcon />
                 </IconButton>
@@ -183,7 +188,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerAddress
                         color="primary"
                         type='submit'
                         variant='contained'
-                        disabled={!isValid || saving || saved || !isDirty}
+                        disabled={!isValid || saving || saved}
                         startIcon={<SaveIcon color='action' />}>
                         {t('Save')}
                     </LoadingButton>
@@ -243,11 +248,12 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerAddress
                     <Grid container spacing={1}>
                         <Grid item {...gridColumns}>
                             <TextField
+                            	sx={{marginTop: 2}}
                                 label={t("CustomerID")}
                                 id="customerIDSelect"
                                 select
                                 name='customerID'
-                                {...register("customerID", customerAddressFormValidationWhenEdit.customerID)}
+                                {...register("customerID")}
                                 autoComplete='customerID'
                                 variant="outlined"
                                 fullWidth
@@ -260,11 +266,12 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerAddress
                         </Grid>
                         <Grid item {...gridColumns}>
                             <TextField
+                            	sx={{marginTop: 2}}
                                 label={t("AddressID")}
                                 id="addressIDSelect"
                                 select
                                 name='addressID'
-                                {...register("addressID", customerAddressFormValidationWhenEdit.addressID)}
+                                {...register("addressID")}
                                 autoComplete='addressID'
                                 variant="outlined"
                                 fullWidth
@@ -282,7 +289,7 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerAddress
                                 defaultValue={item.addressType}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("addressType", customerAddressFormValidationWhenEdit.addressType)}
+                                {...register("addressType")}
                                 autoComplete='addressType'
                                 error={!!errors.addressType}
                                 fullWidth
@@ -303,20 +310,27 @@ export default function EditPartial(props: ItemPartialViewProps<ICustomerAddress
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <DatePicker
-                                value={modifiedDate}
-                                label={t('ModifiedDate')}
-                                onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
-                                renderInput={(params) =>
-                                    <TextField
-                            			sx={{marginTop: 2}}
-                                        fullWidth
-                                        autoComplete='modifiedDate'
-                            			{...register("modifiedDate", customerAddressFormValidationWhenEdit.modifiedDate)}
-                                        error={!!errors.modifiedDate}
-                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                        {...params}
-                                    />}
+                            <Controller
+                                name="modifiedDate"
+                                control={control}
+                                defaultValue={null}
+                                render={({ field, ...props }) => {
+                                    return (
+                            			<DatePicker
+                            				value={modifiedDate}
+                            				label={t('ModifiedDate')}
+                            				onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
+                            				renderInput={(params) =>
+                            					<TextField
+                            						sx={{marginTop: 2}}
+                            						fullWidth
+                            						error={!!errors.modifiedDate}
+                            						helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                            						{...params}
+                            					/>}
+                            			/>
+                                    );
+                                }}
                             />
                         </Grid>
                     </Grid>

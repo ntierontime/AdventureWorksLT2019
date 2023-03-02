@@ -27,7 +27,7 @@ function App() {
 
     useEffect(() => {
         //passing getData method to the lifecycle method
-        geGeoLocation()
+        //geGeoLocation()
 
     }, [])
 

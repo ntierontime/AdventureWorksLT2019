@@ -1,4 +1,6 @@
 import { ItemUIStatus } from "src/shared/dataModels/ItemUIStatus";
+import { AutocompleteSetting } from "src/shared/views/AutocompleteSetting";
+import * as Yup from 'yup';
 
 export interface ICustomerDataModel {
     itemUIStatus______: ItemUIStatus;
@@ -38,7 +40,7 @@ export function defaultCustomer(): ICustomerDataModel {
         passwordHash: '',
         passwordSalt: '',
         rowguid: null,
-        modifiedDate: '',
+        modifiedDate: new Date(),
     } as unknown as ICustomerDataModel;
 }
 
@@ -47,185 +49,74 @@ export function getCustomerAvatar(item: ICustomerDataModel): string {
 }
 
 
-export const customerFormValidationWhenCreate = {
-    nameStyle: {
-        required: 'NameStyle_is_required',
-    },
-    title: {
-        maxLength: {
-            value: 8,
-            message: 'The_length_of_Title_should_be_0_to_8',
-        },
-    },
-    firstName: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_FirstName_should_be_1_to_50',
-        },
-        maxLength: {
-            value: 50,
-            message: 'The_length_of_FirstName_should_be_1_to_50',
-        },
-    },
-    middleName: {
-        maxLength: {
-            value: 50,
-            message: 'The_length_of_MiddleName_should_be_0_to_50',
-        },
-    },
-    lastName: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_LastName_should_be_1_to_50',
-        },
-        maxLength: {
-            value: 50,
-            message: 'The_length_of_LastName_should_be_1_to_50',
-        },
-    },
-    suffix: {
-        maxLength: {
-            value: 10,
-            message: 'The_length_of_Suffix_should_be_0_to_10',
-        },
-    },
-    companyName: {
-        maxLength: {
-            value: 128,
-            message: 'The_length_of_CompanyName_should_be_0_to_128',
-        },
-    },
-    salesPerson: {
-        maxLength: {
-            value: 256,
-            message: 'The_length_of_SalesPerson_should_be_0_to_256',
-        },
-    },
-    emailAddress: {
-        maxLength: {
-            value: 50,
-            message: 'The_length_of_EmailAddress_should_be_0_to_50',
-        },
-    },
-    phone: {
-        maxLength: {
-            value: 25,
-            message: 'The_length_of_Phone_should_be_0_to_25',
-        },
-    },
-    passwordHash: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_PasswordHash_should_be_1_to_128',
-        },
-        maxLength: {
-            value: 128,
-            message: 'The_length_of_PasswordHash_should_be_1_to_128',
-        },
-    },
-    passwordSalt: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_PasswordSalt_should_be_1_to_10',
-        },
-        maxLength: {
-            value: 10,
-            message: 'The_length_of_PasswordSalt_should_be_1_to_10',
-        },
-    },
-    modifiedDate: {
-        required: 'ModifiedDate_is_required',
-    },
-};
+export const customerFormValidationWhenCreate = Yup.object().shape({
+    nameStyle: Yup.boolean()
+        .required('NameStyle_is_required'),
+    title: Yup.string()
+        .max(8, 'The_length_of_Title_should_be_0_to_8'),
+    firstName: Yup.string()
+        .min(1, 'The_length_of_FirstName_should_be_1_to_50')
+        .max(50, 'The_length_of_FirstName_should_be_1_to_50'),
+    middleName: Yup.string()
+        .max(50, 'The_length_of_MiddleName_should_be_0_to_50'),
+    lastName: Yup.string()
+        .min(1, 'The_length_of_LastName_should_be_1_to_50')
+        .max(50, 'The_length_of_LastName_should_be_1_to_50'),
+    suffix: Yup.string()
+        .max(10, 'The_length_of_Suffix_should_be_0_to_10'),
+    companyName: Yup.string()
+        .max(128, 'The_length_of_CompanyName_should_be_0_to_128'),
+    salesPerson: Yup.string()
+        .max(256, 'The_length_of_SalesPerson_should_be_0_to_256'),
+    emailAddress: Yup.string()
+        .max(50, 'The_length_of_EmailAddress_should_be_0_to_50'),
+    phone: Yup.string()
+        .max(25, 'The_length_of_Phone_should_be_0_to_25'),
+    passwordHash: Yup.string()
+        .min(1, 'The_length_of_PasswordHash_should_be_1_to_128')
+        .max(128, 'The_length_of_PasswordHash_should_be_1_to_128'),
+    passwordSalt: Yup.string()
+        .min(1, 'The_length_of_PasswordSalt_should_be_1_to_10')
+        .max(10, 'The_length_of_PasswordSalt_should_be_1_to_10'),
+    modifiedDate: Yup.string()
+        .required('ModifiedDate_is_required'),
+});
 
-export const customerFormValidationWhenEdit = {
-    nameStyle: {
-        required: 'NameStyle_is_required',
-    },
-    title: {
-        maxLength: {
-            value: 8,
-            message: 'The_length_of_Title_should_be_0_to_8',
-        },
-    },
-    firstName: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_FirstName_should_be_1_to_50',
-        },
-        maxLength: {
-            value: 50,
-            message: 'The_length_of_FirstName_should_be_1_to_50',
-        },
-    },
-    middleName: {
-        maxLength: {
-            value: 50,
-            message: 'The_length_of_MiddleName_should_be_0_to_50',
-        },
-    },
-    lastName: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_LastName_should_be_1_to_50',
-        },
-        maxLength: {
-            value: 50,
-            message: 'The_length_of_LastName_should_be_1_to_50',
-        },
-    },
-    suffix: {
-        maxLength: {
-            value: 10,
-            message: 'The_length_of_Suffix_should_be_0_to_10',
-        },
-    },
-    companyName: {
-        maxLength: {
-            value: 128,
-            message: 'The_length_of_CompanyName_should_be_0_to_128',
-        },
-    },
-    salesPerson: {
-        maxLength: {
-            value: 256,
-            message: 'The_length_of_SalesPerson_should_be_0_to_256',
-        },
-    },
-    emailAddress: {
-        maxLength: {
-            value: 50,
-            message: 'The_length_of_EmailAddress_should_be_0_to_50',
-        },
-    },
-    phone: {
-        maxLength: {
-            value: 25,
-            message: 'The_length_of_Phone_should_be_0_to_25',
-        },
-    },
-    passwordHash: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_PasswordHash_should_be_1_to_128',
-        },
-        maxLength: {
-            value: 128,
-            message: 'The_length_of_PasswordHash_should_be_1_to_128',
-        },
-    },
-    passwordSalt: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_PasswordSalt_should_be_1_to_10',
-        },
-        maxLength: {
-            value: 10,
-            message: 'The_length_of_PasswordSalt_should_be_1_to_10',
-        },
-    },
-    modifiedDate: {
-        required: 'ModifiedDate_is_required',
-    },
-};
+export const customerFormValidationWhenEdit = Yup.object().shape({
+    nameStyle: Yup.boolean()
+        .required('NameStyle_is_required'),
+    title: Yup.string()
+        .max(8, 'The_length_of_Title_should_be_0_to_8'),
+    firstName: Yup.string()
+        .min(1, 'The_length_of_FirstName_should_be_1_to_50')
+        .max(50, 'The_length_of_FirstName_should_be_1_to_50'),
+    middleName: Yup.string()
+        .max(50, 'The_length_of_MiddleName_should_be_0_to_50'),
+    lastName: Yup.string()
+        .min(1, 'The_length_of_LastName_should_be_1_to_50')
+        .max(50, 'The_length_of_LastName_should_be_1_to_50'),
+    suffix: Yup.string()
+        .max(10, 'The_length_of_Suffix_should_be_0_to_10'),
+    companyName: Yup.string()
+        .max(128, 'The_length_of_CompanyName_should_be_0_to_128'),
+    salesPerson: Yup.string()
+        .max(256, 'The_length_of_SalesPerson_should_be_0_to_256'),
+    emailAddress: Yup.string()
+        .max(50, 'The_length_of_EmailAddress_should_be_0_to_50'),
+    phone: Yup.string()
+        .max(25, 'The_length_of_Phone_should_be_0_to_25'),
+    passwordHash: Yup.string()
+        .min(1, 'The_length_of_PasswordHash_should_be_1_to_128')
+        .max(128, 'The_length_of_PasswordHash_should_be_1_to_128'),
+    passwordSalt: Yup.string()
+        .min(1, 'The_length_of_PasswordSalt_should_be_1_to_10')
+        .max(10, 'The_length_of_PasswordSalt_should_be_1_to_10'),
+    modifiedDate: Yup.string()
+        .required('ModifiedDate_is_required'),
+});
+
+export const customerAutocompleteSetting = {
+    minCharacters: 2,
+    stopCount: 20
+} as unknown as AutocompleteSetting;
 

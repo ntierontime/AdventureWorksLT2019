@@ -12,13 +12,18 @@ import { AppDispatch } from 'src/store/Store';
 import { WizardPartialProps } from 'src/shared/viewModels/WizardPartialProps';
 import { WizardStepOptions, WizardStepProps } from 'src/shared/viewModels/WizardStepProps';
 import { getCRUDItemPartialViewPropsWizard } from 'src/shared/viewModels/ItemPartialViewProps';
+import { ContainerOptions } from 'src/shared/viewModels/ContainerOptions';
+import { ListViewOptions } from 'src/shared/views/ListViewOptions';
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 
 import { IProductCategoryCompositeModel } from 'src/dataModels/IProductCategoryCompositeModel';
 import { createComposite } from 'src/slices/ProductCategorySlice';
 
 import { IProductCategoryDataModel } from "src/dataModels/IProductCategoryDataModel";
+import { IProductDataModel } from "src/dataModels/IProductDataModel";
+
 import { default as ProductCategoryCreatePartial } from '../ProductCategory/CreatePartial';
+import { default as ProductCreatePartial } from '../Product/CreatePartial';
 
 const wizardSteps = [
     {
@@ -35,7 +40,15 @@ const wizardSteps = [
         label: 'ProductCategory',
         description: 'ProductCategory',
         icon: <Map fontSize='small' />,
-        optional: false,
+        optional: true,
+    },
+    {
+        id: 'Products_Via_ProductCategoryID',
+        wizardStepOptions: WizardStepOptions.Editor,
+        label: 'Products_Via_ProductCategoryID',
+        description: 'Products_Via_ProductCategoryID',
+        icon: <Map fontSize='small' />,
+        optional: true,
     },
     {
         id: 'ReviewAndSubmit',
@@ -98,7 +111,8 @@ export default function CreateWizardPartial(props: WizardPartialProps<IProductCa
         setSkipped(skipped);
 
 		set__Master__(props.data.__Master__);
-
+        setProducts_Via_ProductCategoryID(props.data.products_Via_ProductCategoryID);
+        setProductCategories_Via_ParentProductCategoryID(props.data.productCategories_Via_ParentProductCategoryID);
     };
     const handleSkip = () => {
         if (!isStepOptional(activeStep)) {
@@ -125,7 +139,8 @@ export default function CreateWizardPartial(props: WizardPartialProps<IProductCa
     const onSubmit = () => {
         const toSubmitData = {
             __Master__,
-
+            products_Via_ProductCategoryID,
+            productCategories_Via_ParentProductCategoryID
         } as IProductCategoryCompositeModel;
 
         dispatch(createComposite(toSubmitData))
@@ -147,43 +162,44 @@ export default function CreateWizardPartial(props: WizardPartialProps<IProductCa
 
     // #region 2. Composite Data for Wizard Steps
     const [__Master__, set__Master__] = React.useState(props.data.__Master__);
-
+    const [products_Via_ProductCategoryID, setProducts_Via_ProductCategoryID] = React.useState(props.data.products_Via_ProductCategoryID);
+    const [productCategories_Via_ParentProductCategoryID, setProductCategories_Via_ParentProductCategoryID] = React.useState(props.data.productCategories_Via_ParentProductCategoryID);
     // #endregion 2. Composite Data Wizard Steps
 
     // #region 3. Common steps 
 
     const renderWelcomeStep = (step: WizardStepProps, index: number) => {
         return (
-            <Card>
+            <Card sx={{height: '100%', display: "flex", flexDirection: "column",}}>
                 <CardContent>
                     <Typography>Welcome</Typography>
                 </CardContent>
-                <CardActions>{renderWizardButtonGroupHere(step, index)}</CardActions>
+                <CardActions disableSpacing sx={{ mt: "auto" }}>{renderWizardButtonGroupHere(step, index)}</CardActions>
             </Card>
         )
     }
 
     const renderReviewStep = (step: WizardStepProps, index: number) => {
         return (
-            <Card>
+            <Card sx={{height: '100%', display: "flex", flexDirection: "column",}}>
                 {!created && <CardContent>
                     <Typography>Review and Submit</Typography>
                 </CardContent>}
                 {created && !!!createMessage && <CardContent>
                     <Typography>{createMessage}</Typography>
                 </CardContent>}
-                <CardActions>{renderWizardButtonGroupHere(step, index)}</CardActions>
+                <CardActions disableSpacing sx={{ mt: "auto" }}>{renderWizardButtonGroupHere(step, index)}</CardActions>
             </Card>
         )
     }
 
     const renderDoneStep = (step: WizardStepProps, index: number) => {
         return (
-            <Card>
+            <Card sx={{height: '100%', display: "flex", flexDirection: "column",}}>
                 <CardContent>
                     <Typography>Done</Typography>
                 </CardContent>
-                <CardActions>{renderWizardButtonGroupHere(step, index)}</CardActions>
+                <CardActions disableSpacing sx={{ mt: "auto" }}>{renderWizardButtonGroupHere(step, index)}</CardActions>
             </Card>
         )
     }
@@ -191,14 +207,56 @@ export default function CreateWizardPartial(props: WizardPartialProps<IProductCa
     // #endregion 3. Common steps
 
     // 4. renderWizardStep, used by Horizontal and Vertical
-    const renderWizardStep = (step: WizardStepProps, index: number, renderWizardButtonGroup: (isFirstStep: boolean, isLastStep: boolean, isStepOptional: boolean, disableNextButton: () => boolean) => JSX.Element,) => {
+    const renderWizardStep = (step: WizardStepProps, index: number, renderWizardButtonGroup: (isFirstStep: boolean, isLastStep: boolean, isStepOptional: boolean, disableNextButton: () => boolean, submitRef: React.MutableRefObject<any>) => JSX.Element,) => {
         return (
-            <>
+            <Box sx={{height: '70vh'}}>
                 {step.id === "Welcome" && renderWelcomeStep(step, index)}
-                {step.id === "__Master__" && <ProductCategoryCreatePartial {...getCRUDItemPartialViewPropsWizard<IProductCategoryDataModel>(ViewItemTemplates.Create, orientation, (data: IProductCategoryDataModel) => { set__Master__(data); })} item={__Master__} isFirstStep={isFirstStep(index)} isLastStep={isLastStep(index)} isStepOptional={step.optional} renderWizardButtonGroup={renderWizardButtonGroup} />}
+                {step.id === "__Master__" && (render__Master___Single(step, index, renderWizardButtonGroup))}
+                {step.id === "Products_Via_ProductCategoryID" && (renderProducts_Via_ProductCategoryID_FirstInList(step, index, renderWizardButtonGroup))}
+                {step.id === "ProductCategories_Via_ParentProductCategoryID" && (renderProductCategories_Via_ParentProductCategoryID_FirstInList(step, index, renderWizardButtonGroup))}
                 {step.id === "ReviewAndSubmit" && renderReviewStep(step, index)}
                 {step.id === "Done" && renderDoneStep(step, index)}
-            </>
+            </Box>
+        )
+    }
+
+
+
+    const render__Master___Single = (step: WizardStepProps, index: number, renderWizardButtonGroup: (isFirstStep: boolean, isLastStep: boolean, isStepOptional: boolean, disableNextButton: () => boolean, submitRef: React.MutableRefObject<any>) => JSX.Element) => {
+        return (
+            <ProductCategoryCreatePartial
+                {...getCRUDItemPartialViewPropsWizard<IProductCategoryDataModel>(
+                    ViewItemTemplates.Create, orientation, (data: IProductCategoryDataModel) => { set__Master__(data); })} item={__Master__}
+                isFirstStep={isFirstStep(index)}
+                isLastStep={isLastStep(index)}
+                isStepOptional={step.optional}
+                renderWizardButtonGroup={renderWizardButtonGroup} />
+        )
+    }
+
+
+    const renderProducts_Via_ProductCategoryID_FirstInList = (step: WizardStepProps, index: number, renderWizardButtonGroup: (isFirstStep: boolean, isLastStep: boolean, isStepOptional: boolean, disableNextButton: () => boolean, submitRef: React.MutableRefObject<any>) => JSX.Element) => {
+        return (
+            <ProductCreatePartial
+                {...getCRUDItemPartialViewPropsWizard<IProductDataModel>(
+                    ViewItemTemplates.Create, orientation, (data: IProductDataModel) => { setProducts_Via_ProductCategoryID([data]); })} item={products_Via_ProductCategoryID[0]}
+                isFirstStep={isFirstStep(index)}
+                isLastStep={isLastStep(index)}
+                isStepOptional={step.optional}
+                renderWizardButtonGroup={renderWizardButtonGroup} />
+        )
+    }
+
+
+    const renderProductCategories_Via_ParentProductCategoryID_FirstInList = (step: WizardStepProps, index: number, renderWizardButtonGroup: (isFirstStep: boolean, isLastStep: boolean, isStepOptional: boolean, disableNextButton: () => boolean, submitRef: React.MutableRefObject<any>) => JSX.Element) => {
+        return (
+            <ProductCategoryCreatePartial
+                {...getCRUDItemPartialViewPropsWizard<IProductCategoryDataModel>(
+                    ViewItemTemplates.Create, orientation, (data: IProductCategoryDataModel) => { setProductCategories_Via_ParentProductCategoryID([data]); })} item={productCategories_Via_ParentProductCategoryID[0]}
+                isFirstStep={isFirstStep(index)}
+                isLastStep={isLastStep(index)}
+                isStepOptional={step.optional}
+                renderWizardButtonGroup={renderWizardButtonGroup} />
         )
     }
 
@@ -206,21 +264,20 @@ export default function CreateWizardPartial(props: WizardPartialProps<IProductCa
         return (
             <>
                 {(orientation as string) === 'horizontal'
-                    ? renderHorizontalWizardButtonGroup(isFirstStep(index), isLastStep(index), step.optional, () => false)
-                    : renderVerticalWizardButtonGroup(isFirstStep(index), isLastStep(index), step.optional, () => false)
+                    ? renderHorizontalWizardButtonGroup(isFirstStep(index), isLastStep(index), step.optional, () => false, null) // the last parameter submitRef is set to null here, you may need it 
+                    : renderVerticalWizardButtonGroup(isFirstStep(index), isLastStep(index), step.optional, () => false, null) // the last parameter submitRef is set to null here, you may need it 
                 }
             </>)
     }
 
     // #region 4.1. Render Horizontal Wizard
-
-    const renderHorizontalWizardButtonGroup = (isFirstStep: boolean, isLastStep: boolean, isStepOptional: boolean, disableNextButton: () => boolean) => {
+    const renderHorizontalWizardButtonGroup = (isFirstStep: boolean, isLastStep: boolean, isStepOptional: boolean, disableNextButton: () => boolean, submitRef: React.MutableRefObject<any>) => {
         return (
             <>
                 <Button
                     color="inherit"
                     disabled={isFirstStep || created || creating}
-                    onClick={handleBack}
+                    onClick={() => { handleBack();  if(!!submitRef && !!submitRef.current) {submitRef.current?.click()} }}
                     sx={{ mr: 1 }}
                 >
                     {t('Back')}
@@ -236,7 +293,7 @@ export default function CreateWizardPartial(props: WizardPartialProps<IProductCa
                         {t('Reset')}
                     </Button>
                 )}
-                <Button onClick={() => { handleNext(); }} disabled={disableNextButton() || creating} type="submit">
+                <Button onClick={() => { handleNext(); if(!!submitRef && !!submitRef.current) {submitRef.current?.click()} }} disabled={disableNextButton() || creating}>
                     {wizardSteps[activeStep].wizardStepOptions === WizardStepOptions.ReviewAndSubmit
                         ? t('Comfirm')
                         : isLastStep ? t('Finish') : t('Next')}
@@ -244,11 +301,11 @@ export default function CreateWizardPartial(props: WizardPartialProps<IProductCa
             </>
         );
     }
-
+	
     const renderHorizontalWizard = () => {
         return (
             <Box sx={{ width: '100%' }}>
-                <Stepper activeStep={activeStep}>
+                <Stepper activeStep={activeStep} sx={{height: 100}} alternativeLabel>
                     {wizardSteps.map((step, index) => {
                         const stepProps: { completed?: boolean } = {};
                         const labelProps: {
@@ -264,7 +321,11 @@ export default function CreateWizardPartial(props: WizardPartialProps<IProductCa
                         }
                         return (
                             <Step key={step.label} {...stepProps}>
-                                <StepLabel {...labelProps}>{t(step.label)}</StepLabel>
+                                <StepLabel {...labelProps}>
+                                    <Typography variant={index === activeStep ? "h6" : "subtitle1"}>
+                                        {t(step.label)}
+                                    </Typography>
+                                </StepLabel>
                             </Step>
                         );
                     })}
@@ -277,7 +338,7 @@ export default function CreateWizardPartial(props: WizardPartialProps<IProductCa
     // #endregion 4.1. Render Horizontal Wizard
 
     // #region 4.2. Render Vertical Wizard
-    const renderVerticalWizardButtonGroup = (isFirstStep: boolean, isLastStep: boolean, isStepOptional: boolean, disableNextButton: () => boolean) => {
+    const renderVerticalWizardButtonGroup = (isFirstStep: boolean, isLastStep: boolean, isStepOptional: boolean, disableNextButton: () => boolean, submitRef: React.MutableRefObject<any>) => {
         return (
             <ButtonGroup sx={{ marginLeft: 'auto', }}
                 disableElevation
@@ -285,10 +346,9 @@ export default function CreateWizardPartial(props: WizardPartialProps<IProductCa
                 aria-label="navigation buttons"
             >
                 <Button
-                    type='submit'
                     variant="contained"
                     disabled={disableNextButton() || creating}
-                    onClick={handleNext}
+                    onClick={() => { handleNext(); if(!!submitRef && !!submitRef.current) {submitRef.current?.click()} }} 
                     sx={{ mt: 1, mr: 1 }}
                 >
                     {wizardSteps[activeStep].wizardStepOptions === WizardStepOptions.ReviewAndSubmit
@@ -302,7 +362,7 @@ export default function CreateWizardPartial(props: WizardPartialProps<IProductCa
                 )}
                 <Button
                     disabled={isFirstStep || created || creating}
-                    onClick={handleBack}
+                    onClick={() => { handleBack(); if(!!submitRef && !!submitRef.current) {submitRef.current?.click()} }}
                     sx={{ mt: 1, mr: 1 }}
                 >
                     {t('Back')}
@@ -339,6 +399,4 @@ export default function CreateWizardPartial(props: WizardPartialProps<IProductCa
         </>
     );
 }
-
-
 

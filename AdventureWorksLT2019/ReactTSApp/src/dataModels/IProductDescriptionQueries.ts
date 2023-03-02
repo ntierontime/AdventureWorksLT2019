@@ -9,7 +9,7 @@ import { IProductDescriptionDataModel } from 'src/dataModels/IProductDescription
 export interface IProductDescriptionIdentifier {
 
     // PredicateType:Equals
-	productDescriptionID: number | null;
+	productDescriptionID: number | '';
 }
 
 export function getIProductDescriptionIdentifier(item: IProductDescriptionDataModel): IProductDescriptionIdentifier {

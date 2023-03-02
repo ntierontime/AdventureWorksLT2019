@@ -69,142 +69,6 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ISalesOrder
         setDense(event.target.checked);
     };
 
-    const headCells: HeadCell[] = [
-
-        {
-            id: 'salesOrderID',
-            numeric: true,
-            disablePadding: true,
-            label: t('SalesOrderID'),
-        },
-        {
-            id: 'revisionNumber',
-            numeric: true,
-            disablePadding: true,
-            label: t('RevisionNumber'),
-        },
-        {
-            id: 'orderDate',
-            numeric: false,
-            disablePadding: true,
-            label: t('OrderDate'),
-        },
-        {
-            id: 'dueDate',
-            numeric: false,
-            disablePadding: true,
-            label: t('DueDate'),
-        },
-        {
-            id: 'shipDate',
-            numeric: false,
-            disablePadding: true,
-            label: t('ShipDate'),
-        },
-        {
-            id: 'status',
-            numeric: true,
-            disablePadding: true,
-            label: t('Status'),
-        },
-        {
-            id: 'onlineOrderFlag',
-            numeric: false,
-            disablePadding: true,
-            label: t('OnlineOrderFlag'),
-        },
-        {
-            id: 'salesOrderNumber',
-            numeric: false,
-            disablePadding: true,
-            label: t('SalesOrderNumber'),
-        },
-        {
-            id: 'purchaseOrderNumber',
-            numeric: false,
-            disablePadding: true,
-            label: t('PurchaseOrderNumber'),
-        },
-        {
-            id: 'accountNumber',
-            numeric: false,
-            disablePadding: true,
-            label: t('AccountNumber'),
-        },
-        {
-            id: 'customerID',
-            numeric: true,
-            disablePadding: true,
-            label: t('CustomerID'),
-        },
-        {
-            id: 'shipToAddressID',
-            numeric: true,
-            disablePadding: true,
-            label: t('ShipToAddressID'),
-        },
-        {
-            id: 'billToAddressID',
-            numeric: true,
-            disablePadding: true,
-            label: t('BillToAddressID'),
-        },
-        {
-            id: 'shipMethod',
-            numeric: false,
-            disablePadding: true,
-            label: t('ShipMethod'),
-        },
-        {
-            id: 'creditCardApprovalCode',
-            numeric: false,
-            disablePadding: true,
-            label: t('CreditCardApprovalCode'),
-        },
-        {
-            id: 'subTotal',
-            numeric: true,
-            disablePadding: true,
-            label: t('SubTotal'),
-        },
-        {
-            id: 'taxAmt',
-            numeric: true,
-            disablePadding: true,
-            label: t('TaxAmt'),
-        },
-        {
-            id: 'freight',
-            numeric: true,
-            disablePadding: true,
-            label: t('Freight'),
-        },
-        {
-            id: 'totalDue',
-            numeric: true,
-            disablePadding: true,
-            label: t('TotalDue'),
-        },
-        {
-            id: 'comment',
-            numeric: false,
-            disablePadding: true,
-            label: t('Comment'),
-        },
-        {
-            id: 'rowguid',
-            numeric: false,
-            disablePadding: true,
-            label: t('rowguid'),
-        },
-        {
-            id: 'modifiedDate',
-            numeric: false,
-            disablePadding: true,
-            label: t('ModifiedDate'),
-        },
-    ];
-
     return (
         <>
             <TableContainer onMouseEnter={(event) => { handleItemActionsPopoverClose() }}>
@@ -347,4 +211,140 @@ export default function HtmlTablePartial(props: ListPartialViewProps<ISalesOrder
         </>
     );
 }
+
+const headCells: HeadCell[] = [
+
+    {
+        id: 'salesOrderID',
+        numeric: true,
+        disablePadding: true,
+        label: 'SalesOrderID',
+    },
+    {
+        id: 'revisionNumber',
+        numeric: true,
+        disablePadding: true,
+        label: 'RevisionNumber',
+    },
+    {
+        id: 'orderDate',
+        numeric: false,
+        disablePadding: true,
+        label: 'OrderDate',
+    },
+    {
+        id: 'dueDate',
+        numeric: false,
+        disablePadding: true,
+        label: 'DueDate',
+    },
+    {
+        id: 'shipDate',
+        numeric: false,
+        disablePadding: true,
+        label: 'ShipDate',
+    },
+    {
+        id: 'status',
+        numeric: true,
+        disablePadding: true,
+        label: 'Status',
+    },
+    {
+        id: 'onlineOrderFlag',
+        numeric: false,
+        disablePadding: true,
+        label: 'OnlineOrderFlag',
+    },
+    {
+        id: 'salesOrderNumber',
+        numeric: false,
+        disablePadding: true,
+        label: 'SalesOrderNumber',
+    },
+    {
+        id: 'purchaseOrderNumber',
+        numeric: false,
+        disablePadding: true,
+        label: 'PurchaseOrderNumber',
+    },
+    {
+        id: 'accountNumber',
+        numeric: false,
+        disablePadding: true,
+        label: 'AccountNumber',
+    },
+    {
+        id: 'customerID',
+        numeric: true,
+        disablePadding: true,
+        label: 'CustomerID',
+    },
+    {
+        id: 'shipToAddressID',
+        numeric: true,
+        disablePadding: true,
+        label: 'ShipToAddressID',
+    },
+    {
+        id: 'billToAddressID',
+        numeric: true,
+        disablePadding: true,
+        label: 'BillToAddressID',
+    },
+    {
+        id: 'shipMethod',
+        numeric: false,
+        disablePadding: true,
+        label: 'ShipMethod',
+    },
+    {
+        id: 'creditCardApprovalCode',
+        numeric: false,
+        disablePadding: true,
+        label: 'CreditCardApprovalCode',
+    },
+    {
+        id: 'subTotal',
+        numeric: true,
+        disablePadding: true,
+        label: 'SubTotal',
+    },
+    {
+        id: 'taxAmt',
+        numeric: true,
+        disablePadding: true,
+        label: 'TaxAmt',
+    },
+    {
+        id: 'freight',
+        numeric: true,
+        disablePadding: true,
+        label: 'Freight',
+    },
+    {
+        id: 'totalDue',
+        numeric: true,
+        disablePadding: true,
+        label: 'TotalDue',
+    },
+    {
+        id: 'comment',
+        numeric: false,
+        disablePadding: true,
+        label: 'Comment',
+    },
+    {
+        id: 'rowguid',
+        numeric: false,
+        disablePadding: true,
+        label: 'rowguid',
+    },
+    {
+        id: 'modifiedDate',
+        numeric: false,
+        disablePadding: true,
+        label: 'ModifiedDate',
+    },
+];
 

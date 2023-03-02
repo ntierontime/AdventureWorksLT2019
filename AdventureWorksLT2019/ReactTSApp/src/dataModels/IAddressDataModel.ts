@@ -1,4 +1,6 @@
 import { ItemUIStatus } from "src/shared/dataModels/ItemUIStatus";
+import { AutocompleteSetting } from "src/shared/views/AutocompleteSetting";
+import * as Yup from 'yup';
 
 export interface IAddressDataModel {
     itemUIStatus______: ItemUIStatus;
@@ -26,7 +28,7 @@ export function defaultAddress(): IAddressDataModel {
         countryRegion: '',
         postalCode: '',
         rowguid: null,
-        modifiedDate: '',
+        modifiedDate: new Date(),
     } as unknown as IAddressDataModel;
 }
 
@@ -35,127 +37,52 @@ export function getAddressAvatar(item: IAddressDataModel): string {
 }
 
 
-export const addressFormValidationWhenCreate = {
-    addressLine1: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_AddressLine1_should_be_1_to_60',
-        },
-        maxLength: {
-            value: 60,
-            message: 'The_length_of_AddressLine1_should_be_1_to_60',
-        },
-    },
-    addressLine2: {
-        maxLength: {
-            value: 60,
-            message: 'The_length_of_AddressLine2_should_be_0_to_60',
-        },
-    },
-    city: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_City_should_be_1_to_30',
-        },
-        maxLength: {
-            value: 30,
-            message: 'The_length_of_City_should_be_1_to_30',
-        },
-    },
-    stateProvince: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_StateProvince_should_be_1_to_50',
-        },
-        maxLength: {
-            value: 50,
-            message: 'The_length_of_StateProvince_should_be_1_to_50',
-        },
-    },
-    countryRegion: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_CountryRegion_should_be_1_to_50',
-        },
-        maxLength: {
-            value: 50,
-            message: 'The_length_of_CountryRegion_should_be_1_to_50',
-        },
-    },
-    postalCode: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_PostalCode_should_be_1_to_15',
-        },
-        maxLength: {
-            value: 15,
-            message: 'The_length_of_PostalCode_should_be_1_to_15',
-        },
-    },
-    modifiedDate: {
-        required: 'ModifiedDate_is_required',
-    },
-};
+export const addressFormValidationWhenCreate = Yup.object().shape({
+    addressLine1: Yup.string()
+        .min(1, 'The_length_of_AddressLine1_should_be_1_to_60')
+        .max(60, 'The_length_of_AddressLine1_should_be_1_to_60'),
+    addressLine2: Yup.string()
+        .max(60, 'The_length_of_AddressLine2_should_be_0_to_60'),
+    city: Yup.string()
+        .min(1, 'The_length_of_City_should_be_1_to_30')
+        .max(30, 'The_length_of_City_should_be_1_to_30'),
+    stateProvince: Yup.string()
+        .min(1, 'The_length_of_StateProvince_should_be_1_to_50')
+        .max(50, 'The_length_of_StateProvince_should_be_1_to_50'),
+    countryRegion: Yup.string()
+        .min(1, 'The_length_of_CountryRegion_should_be_1_to_50')
+        .max(50, 'The_length_of_CountryRegion_should_be_1_to_50'),
+    postalCode: Yup.string()
+        .min(1, 'The_length_of_PostalCode_should_be_1_to_15')
+        .max(15, 'The_length_of_PostalCode_should_be_1_to_15'),
+    modifiedDate: Yup.string()
+        .required('ModifiedDate_is_required'),
+});
 
-export const addressFormValidationWhenEdit = {
-    addressLine1: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_AddressLine1_should_be_1_to_60',
-        },
-        maxLength: {
-            value: 60,
-            message: 'The_length_of_AddressLine1_should_be_1_to_60',
-        },
-    },
-    addressLine2: {
-        maxLength: {
-            value: 60,
-            message: 'The_length_of_AddressLine2_should_be_0_to_60',
-        },
-    },
-    city: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_City_should_be_1_to_30',
-        },
-        maxLength: {
-            value: 30,
-            message: 'The_length_of_City_should_be_1_to_30',
-        },
-    },
-    stateProvince: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_StateProvince_should_be_1_to_50',
-        },
-        maxLength: {
-            value: 50,
-            message: 'The_length_of_StateProvince_should_be_1_to_50',
-        },
-    },
-    countryRegion: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_CountryRegion_should_be_1_to_50',
-        },
-        maxLength: {
-            value: 50,
-            message: 'The_length_of_CountryRegion_should_be_1_to_50',
-        },
-    },
-    postalCode: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_PostalCode_should_be_1_to_15',
-        },
-        maxLength: {
-            value: 15,
-            message: 'The_length_of_PostalCode_should_be_1_to_15',
-        },
-    },
-    modifiedDate: {
-        required: 'ModifiedDate_is_required',
-    },
-};
+export const addressFormValidationWhenEdit = Yup.object().shape({
+    addressLine1: Yup.string()
+        .min(1, 'The_length_of_AddressLine1_should_be_1_to_60')
+        .max(60, 'The_length_of_AddressLine1_should_be_1_to_60'),
+    addressLine2: Yup.string()
+        .max(60, 'The_length_of_AddressLine2_should_be_0_to_60'),
+    city: Yup.string()
+        .min(1, 'The_length_of_City_should_be_1_to_30')
+        .max(30, 'The_length_of_City_should_be_1_to_30'),
+    stateProvince: Yup.string()
+        .min(1, 'The_length_of_StateProvince_should_be_1_to_50')
+        .max(50, 'The_length_of_StateProvince_should_be_1_to_50'),
+    countryRegion: Yup.string()
+        .min(1, 'The_length_of_CountryRegion_should_be_1_to_50')
+        .max(50, 'The_length_of_CountryRegion_should_be_1_to_50'),
+    postalCode: Yup.string()
+        .min(1, 'The_length_of_PostalCode_should_be_1_to_15')
+        .max(15, 'The_length_of_PostalCode_should_be_1_to_15'),
+    modifiedDate: Yup.string()
+        .required('ModifiedDate_is_required'),
+});
+
+export const addressAutocompleteSetting = {
+    minCharacters: 2,
+    stopCount: 20
+} as unknown as AutocompleteSetting;
 

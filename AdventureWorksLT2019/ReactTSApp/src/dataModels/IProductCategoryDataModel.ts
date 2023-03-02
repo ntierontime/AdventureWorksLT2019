@@ -1,11 +1,13 @@
 import { ItemUIStatus } from "src/shared/dataModels/ItemUIStatus";
+import { AutocompleteSetting } from "src/shared/views/AutocompleteSetting";
+import * as Yup from 'yup';
 
 export interface IProductCategoryDataModel {
     itemUIStatus______: ItemUIStatus;
     isDeleted______: boolean;
     productCategoryID: number;
     parent_Name: string;
-    parentProductCategoryID: number | null;
+    parentProductCategoryID: number | '';
     name: string;
     rowguid: any;
     modifiedDate: string;
@@ -17,10 +19,10 @@ export function defaultProductCategory(): IProductCategoryDataModel {
         isDeleted______: false,
         productCategoryID: 0,
         parent_Name: '',
-        parentProductCategoryID: null,
+        parentProductCategoryID: '',
         name: '',
         rowguid: null,
-        modifiedDate: '',
+        modifiedDate: new Date(),
     } as unknown as IProductCategoryDataModel;
 }
 
@@ -29,39 +31,26 @@ export function getProductCategoryAvatar(item: IProductCategoryDataModel): strin
 }
 
 
-export const productCategoryFormValidationWhenCreate = {
-    parentProductCategoryID: {
-    },
-    name: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_Name_should_be_1_to_50',
-        },
-        maxLength: {
-            value: 50,
-            message: 'The_length_of_Name_should_be_1_to_50',
-        },
-    },
-    modifiedDate: {
-        required: 'ModifiedDate_is_required',
-    },
-};
+export const productCategoryFormValidationWhenCreate = Yup.object().shape({
+    parentProductCategoryID: Yup.number(),
+    name: Yup.string()
+        .min(1, 'The_length_of_Name_should_be_1_to_50')
+        .max(50, 'The_length_of_Name_should_be_1_to_50'),
+    modifiedDate: Yup.string()
+        .required('ModifiedDate_is_required'),
+});
 
-export const productCategoryFormValidationWhenEdit = {
-    parentProductCategoryID: {
-    },
-    name: {
-        minlength: {
-            value: 1,
-            message: 'The_length_of_Name_should_be_1_to_50',
-        },
-        maxLength: {
-            value: 50,
-            message: 'The_length_of_Name_should_be_1_to_50',
-        },
-    },
-    modifiedDate: {
-        required: 'ModifiedDate_is_required',
-    },
-};
+export const productCategoryFormValidationWhenEdit = Yup.object().shape({
+    parentProductCategoryID: Yup.number(),
+    name: Yup.string()
+        .min(1, 'The_length_of_Name_should_be_1_to_50')
+        .max(50, 'The_length_of_Name_should_be_1_to_50'),
+    modifiedDate: Yup.string()
+        .required('ModifiedDate_is_required'),
+});
+
+export const productCategoryAutocompleteSetting = {
+    minCharacters: 2,
+    stopCount: 20
+} as unknown as AutocompleteSetting;
 

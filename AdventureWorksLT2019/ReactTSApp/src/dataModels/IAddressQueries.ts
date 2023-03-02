@@ -9,7 +9,7 @@ import { IAddressDataModel } from 'src/dataModels/IAddressDataModel';
 export interface IAddressIdentifier {
 
     // PredicateType:Equals
-	addressID: number | null;
+	addressID: number | '';
 }
 
 export function getIAddressIdentifier(item: IAddressDataModel): IAddressIdentifier {

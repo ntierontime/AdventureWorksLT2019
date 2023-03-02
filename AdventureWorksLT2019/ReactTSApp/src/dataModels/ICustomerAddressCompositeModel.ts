@@ -1,5 +1,5 @@
 import { ICompositeModel } from "src/shared/dataModels/ICompositeModel";
-import { defaultCustomerAddress, ICustomerAddressDataModel } from "./ICustomerAddressDataModel";
+import { ICustomerAddressDataModel, defaultCustomerAddress } from "./ICustomerAddressDataModel";
 
 export interface ICustomerAddressCompositeModel extends ICompositeModel<ICustomerAddressDataModel, ICustomerAddressCompositeModel_DataOptions__> {
 

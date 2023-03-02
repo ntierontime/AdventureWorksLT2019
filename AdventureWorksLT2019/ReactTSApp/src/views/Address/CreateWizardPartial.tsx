@@ -12,13 +12,20 @@ import { AppDispatch } from 'src/store/Store';
 import { WizardPartialProps } from 'src/shared/viewModels/WizardPartialProps';
 import { WizardStepOptions, WizardStepProps } from 'src/shared/viewModels/WizardStepProps';
 import { getCRUDItemPartialViewPropsWizard } from 'src/shared/viewModels/ItemPartialViewProps';
+import { ContainerOptions } from 'src/shared/viewModels/ContainerOptions';
+import { ListViewOptions } from 'src/shared/views/ListViewOptions';
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 
 import { IAddressCompositeModel } from 'src/dataModels/IAddressCompositeModel';
 import { createComposite } from 'src/slices/AddressSlice';
 
 import { IAddressDataModel } from "src/dataModels/IAddressDataModel";
+import { ICustomerAddressDataModel } from "src/dataModels/ICustomerAddressDataModel";
+import { ISalesOrderHeaderDataModel } from "src/dataModels/ISalesOrderHeaderDataModel";
+
 import { default as AddressCreatePartial } from '../Address/CreatePartial';
+import { default as CustomerAddressCreatePartial } from '../CustomerAddress/CreatePartial';
+import { default as SalesOrderHeaderCreatePartial } from '../SalesOrderHeader/CreatePartial';
 
 const wizardSteps = [
     {
@@ -35,7 +42,31 @@ const wizardSteps = [
         label: 'Address',
         description: 'Address',
         icon: <Map fontSize='small' />,
-        optional: false,
+        optional: true,
+    },
+    {
+        id: 'CustomerAddresses_Via_AddressID',
+        wizardStepOptions: WizardStepOptions.Editor,
+        label: 'CustomerAddresses_Via_AddressID',
+        description: 'CustomerAddresses_Via_AddressID',
+        icon: <Map fontSize='small' />,
+        optional: true,
+    },
+    {
+        id: 'SalesOrderHeaders_Via_BillToAddressID',
+        wizardStepOptions: WizardStepOptions.Editor,
+        label: 'SalesOrderHeaders_Via_BillToAddressID',
+        description: 'SalesOrderHeaders_Via_BillToAddressID',
+        icon: <Map fontSize='small' />,
+        optional: true,
+    },
+    {
+        id: 'SalesOrderHeaders_Via_ShipToAddressID',
+        wizardStepOptions: WizardStepOptions.Editor,
+        label: 'SalesOrderHeaders_Via_ShipToAddressID',
+        description: 'SalesOrderHeaders_Via_ShipToAddressID',
+        icon: <Map fontSize='small' />,
+        optional: true,
     },
     {
         id: 'ReviewAndSubmit',
@@ -98,7 +129,9 @@ export default function CreateWizardPartial(props: WizardPartialProps<IAddressCo
         setSkipped(skipped);
 
 		set__Master__(props.data.__Master__);
-
+        setCustomerAddresses_Via_AddressID(props.data.customerAddresses_Via_AddressID);
+        setSalesOrderHeaders_Via_BillToAddressID(props.data.salesOrderHeaders_Via_BillToAddressID);
+        setSalesOrderHeaders_Via_ShipToAddressID(props.data.salesOrderHeaders_Via_ShipToAddressID);
     };
     const handleSkip = () => {
         if (!isStepOptional(activeStep)) {
@@ -125,7 +158,9 @@ export default function CreateWizardPartial(props: WizardPartialProps<IAddressCo
     const onSubmit = () => {
         const toSubmitData = {
             __Master__,
-
+            customerAddresses_Via_AddressID,
+            salesOrderHeaders_Via_BillToAddressID,
+            salesOrderHeaders_Via_ShipToAddressID
         } as IAddressCompositeModel;
 
         dispatch(createComposite(toSubmitData))
@@ -147,43 +182,45 @@ export default function CreateWizardPartial(props: WizardPartialProps<IAddressCo
 
     // #region 2. Composite Data for Wizard Steps
     const [__Master__, set__Master__] = React.useState(props.data.__Master__);
-
+    const [customerAddresses_Via_AddressID, setCustomerAddresses_Via_AddressID] = React.useState(props.data.customerAddresses_Via_AddressID);
+    const [salesOrderHeaders_Via_BillToAddressID, setSalesOrderHeaders_Via_BillToAddressID] = React.useState(props.data.salesOrderHeaders_Via_BillToAddressID);
+    const [salesOrderHeaders_Via_ShipToAddressID, setSalesOrderHeaders_Via_ShipToAddressID] = React.useState(props.data.salesOrderHeaders_Via_ShipToAddressID);
     // #endregion 2. Composite Data Wizard Steps
 
     // #region 3. Common steps 
 
     const renderWelcomeStep = (step: WizardStepProps, index: number) => {
         return (
-            <Card>
+            <Card sx={{height: '100%', display: "flex", flexDirection: "column",}}>
                 <CardContent>
                     <Typography>Welcome</Typography>
                 </CardContent>
-                <CardActions>{renderWizardButtonGroupHere(step, index)}</CardActions>
+                <CardActions disableSpacing sx={{ mt: "auto" }}>{renderWizardButtonGroupHere(step, index)}</CardActions>
             </Card>
         )
     }
 
     const renderReviewStep = (step: WizardStepProps, index: number) => {
         return (
-            <Card>
+            <Card sx={{height: '100%', display: "flex", flexDirection: "column",}}>
                 {!created && <CardContent>
                     <Typography>Review and Submit</Typography>
                 </CardContent>}
                 {created && !!!createMessage && <CardContent>
                     <Typography>{createMessage}</Typography>
                 </CardContent>}
-                <CardActions>{renderWizardButtonGroupHere(step, index)}</CardActions>
+                <CardActions disableSpacing sx={{ mt: "auto" }}>{renderWizardButtonGroupHere(step, index)}</CardActions>
             </Card>
         )
     }
 
     const renderDoneStep = (step: WizardStepProps, index: number) => {
         return (
-            <Card>
+            <Card sx={{height: '100%', display: "flex", flexDirection: "column",}}>
                 <CardContent>
                     <Typography>Done</Typography>
                 </CardContent>
-                <CardActions>{renderWizardButtonGroupHere(step, index)}</CardActions>
+                <CardActions disableSpacing sx={{ mt: "auto" }}>{renderWizardButtonGroupHere(step, index)}</CardActions>
             </Card>
         )
     }
@@ -191,14 +228,70 @@ export default function CreateWizardPartial(props: WizardPartialProps<IAddressCo
     // #endregion 3. Common steps
 
     // 4. renderWizardStep, used by Horizontal and Vertical
-    const renderWizardStep = (step: WizardStepProps, index: number, renderWizardButtonGroup: (isFirstStep: boolean, isLastStep: boolean, isStepOptional: boolean, disableNextButton: () => boolean) => JSX.Element,) => {
+    const renderWizardStep = (step: WizardStepProps, index: number, renderWizardButtonGroup: (isFirstStep: boolean, isLastStep: boolean, isStepOptional: boolean, disableNextButton: () => boolean, submitRef: React.MutableRefObject<any>) => JSX.Element,) => {
         return (
-            <>
+            <Box sx={{height: '70vh'}}>
                 {step.id === "Welcome" && renderWelcomeStep(step, index)}
-                {step.id === "__Master__" && <AddressCreatePartial {...getCRUDItemPartialViewPropsWizard<IAddressDataModel>(ViewItemTemplates.Create, orientation, (data: IAddressDataModel) => { set__Master__(data); })} item={__Master__} isFirstStep={isFirstStep(index)} isLastStep={isLastStep(index)} isStepOptional={step.optional} renderWizardButtonGroup={renderWizardButtonGroup} />}
+                {step.id === "__Master__" && (render__Master___Single(step, index, renderWizardButtonGroup))}
+                {step.id === "CustomerAddresses_Via_AddressID" && (renderCustomerAddresses_Via_AddressID_FirstInList(step, index, renderWizardButtonGroup))}
+                {step.id === "SalesOrderHeaders_Via_BillToAddressID" && (renderSalesOrderHeaders_Via_BillToAddressID_FirstInList(step, index, renderWizardButtonGroup))}
+                {step.id === "SalesOrderHeaders_Via_ShipToAddressID" && (renderSalesOrderHeaders_Via_ShipToAddressID_FirstInList(step, index, renderWizardButtonGroup))}
                 {step.id === "ReviewAndSubmit" && renderReviewStep(step, index)}
                 {step.id === "Done" && renderDoneStep(step, index)}
-            </>
+            </Box>
+        )
+    }
+
+
+
+    const render__Master___Single = (step: WizardStepProps, index: number, renderWizardButtonGroup: (isFirstStep: boolean, isLastStep: boolean, isStepOptional: boolean, disableNextButton: () => boolean, submitRef: React.MutableRefObject<any>) => JSX.Element) => {
+        return (
+            <AddressCreatePartial
+                {...getCRUDItemPartialViewPropsWizard<IAddressDataModel>(
+                    ViewItemTemplates.Create, orientation, (data: IAddressDataModel) => { set__Master__(data); })} item={__Master__}
+                isFirstStep={isFirstStep(index)}
+                isLastStep={isLastStep(index)}
+                isStepOptional={step.optional}
+                renderWizardButtonGroup={renderWizardButtonGroup} />
+        )
+    }
+
+
+    const renderCustomerAddresses_Via_AddressID_FirstInList = (step: WizardStepProps, index: number, renderWizardButtonGroup: (isFirstStep: boolean, isLastStep: boolean, isStepOptional: boolean, disableNextButton: () => boolean, submitRef: React.MutableRefObject<any>) => JSX.Element) => {
+        return (
+            <CustomerAddressCreatePartial
+                {...getCRUDItemPartialViewPropsWizard<ICustomerAddressDataModel>(
+                    ViewItemTemplates.Create, orientation, (data: ICustomerAddressDataModel) => { setCustomerAddresses_Via_AddressID([data]); })} item={customerAddresses_Via_AddressID[0]}
+                isFirstStep={isFirstStep(index)}
+                isLastStep={isLastStep(index)}
+                isStepOptional={step.optional}
+                renderWizardButtonGroup={renderWizardButtonGroup} />
+        )
+    }
+
+
+    const renderSalesOrderHeaders_Via_BillToAddressID_FirstInList = (step: WizardStepProps, index: number, renderWizardButtonGroup: (isFirstStep: boolean, isLastStep: boolean, isStepOptional: boolean, disableNextButton: () => boolean, submitRef: React.MutableRefObject<any>) => JSX.Element) => {
+        return (
+            <SalesOrderHeaderCreatePartial
+                {...getCRUDItemPartialViewPropsWizard<ISalesOrderHeaderDataModel>(
+                    ViewItemTemplates.Create, orientation, (data: ISalesOrderHeaderDataModel) => { setSalesOrderHeaders_Via_BillToAddressID([data]); })} item={salesOrderHeaders_Via_BillToAddressID[0]}
+                isFirstStep={isFirstStep(index)}
+                isLastStep={isLastStep(index)}
+                isStepOptional={step.optional}
+                renderWizardButtonGroup={renderWizardButtonGroup} />
+        )
+    }
+
+
+    const renderSalesOrderHeaders_Via_ShipToAddressID_FirstInList = (step: WizardStepProps, index: number, renderWizardButtonGroup: (isFirstStep: boolean, isLastStep: boolean, isStepOptional: boolean, disableNextButton: () => boolean, submitRef: React.MutableRefObject<any>) => JSX.Element) => {
+        return (
+            <SalesOrderHeaderCreatePartial
+                {...getCRUDItemPartialViewPropsWizard<ISalesOrderHeaderDataModel>(
+                    ViewItemTemplates.Create, orientation, (data: ISalesOrderHeaderDataModel) => { setSalesOrderHeaders_Via_ShipToAddressID([data]); })} item={salesOrderHeaders_Via_ShipToAddressID[0]}
+                isFirstStep={isFirstStep(index)}
+                isLastStep={isLastStep(index)}
+                isStepOptional={step.optional}
+                renderWizardButtonGroup={renderWizardButtonGroup} />
         )
     }
 
@@ -206,21 +299,20 @@ export default function CreateWizardPartial(props: WizardPartialProps<IAddressCo
         return (
             <>
                 {(orientation as string) === 'horizontal'
-                    ? renderHorizontalWizardButtonGroup(isFirstStep(index), isLastStep(index), step.optional, () => false)
-                    : renderVerticalWizardButtonGroup(isFirstStep(index), isLastStep(index), step.optional, () => false)
+                    ? renderHorizontalWizardButtonGroup(isFirstStep(index), isLastStep(index), step.optional, () => false, null) // the last parameter submitRef is set to null here, you may need it 
+                    : renderVerticalWizardButtonGroup(isFirstStep(index), isLastStep(index), step.optional, () => false, null) // the last parameter submitRef is set to null here, you may need it 
                 }
             </>)
     }
 
     // #region 4.1. Render Horizontal Wizard
-
-    const renderHorizontalWizardButtonGroup = (isFirstStep: boolean, isLastStep: boolean, isStepOptional: boolean, disableNextButton: () => boolean) => {
+    const renderHorizontalWizardButtonGroup = (isFirstStep: boolean, isLastStep: boolean, isStepOptional: boolean, disableNextButton: () => boolean, submitRef: React.MutableRefObject<any>) => {
         return (
             <>
                 <Button
                     color="inherit"
                     disabled={isFirstStep || created || creating}
-                    onClick={handleBack}
+                    onClick={() => { handleBack();  if(!!submitRef && !!submitRef.current) {submitRef.current?.click()} }}
                     sx={{ mr: 1 }}
                 >
                     {t('Back')}
@@ -236,7 +328,7 @@ export default function CreateWizardPartial(props: WizardPartialProps<IAddressCo
                         {t('Reset')}
                     </Button>
                 )}
-                <Button onClick={() => { handleNext(); }} disabled={disableNextButton() || creating} type="submit">
+                <Button onClick={() => { handleNext(); if(!!submitRef && !!submitRef.current) {submitRef.current?.click()} }} disabled={disableNextButton() || creating}>
                     {wizardSteps[activeStep].wizardStepOptions === WizardStepOptions.ReviewAndSubmit
                         ? t('Comfirm')
                         : isLastStep ? t('Finish') : t('Next')}
@@ -244,11 +336,11 @@ export default function CreateWizardPartial(props: WizardPartialProps<IAddressCo
             </>
         );
     }
-
+	
     const renderHorizontalWizard = () => {
         return (
             <Box sx={{ width: '100%' }}>
-                <Stepper activeStep={activeStep}>
+                <Stepper activeStep={activeStep} sx={{height: 100}} alternativeLabel>
                     {wizardSteps.map((step, index) => {
                         const stepProps: { completed?: boolean } = {};
                         const labelProps: {
@@ -264,7 +356,11 @@ export default function CreateWizardPartial(props: WizardPartialProps<IAddressCo
                         }
                         return (
                             <Step key={step.label} {...stepProps}>
-                                <StepLabel {...labelProps}>{t(step.label)}</StepLabel>
+                                <StepLabel {...labelProps}>
+                                    <Typography variant={index === activeStep ? "h6" : "subtitle1"}>
+                                        {t(step.label)}
+                                    </Typography>
+                                </StepLabel>
                             </Step>
                         );
                     })}
@@ -277,7 +373,7 @@ export default function CreateWizardPartial(props: WizardPartialProps<IAddressCo
     // #endregion 4.1. Render Horizontal Wizard
 
     // #region 4.2. Render Vertical Wizard
-    const renderVerticalWizardButtonGroup = (isFirstStep: boolean, isLastStep: boolean, isStepOptional: boolean, disableNextButton: () => boolean) => {
+    const renderVerticalWizardButtonGroup = (isFirstStep: boolean, isLastStep: boolean, isStepOptional: boolean, disableNextButton: () => boolean, submitRef: React.MutableRefObject<any>) => {
         return (
             <ButtonGroup sx={{ marginLeft: 'auto', }}
                 disableElevation
@@ -285,10 +381,9 @@ export default function CreateWizardPartial(props: WizardPartialProps<IAddressCo
                 aria-label="navigation buttons"
             >
                 <Button
-                    type='submit'
                     variant="contained"
                     disabled={disableNextButton() || creating}
-                    onClick={handleNext}
+                    onClick={() => { handleNext(); if(!!submitRef && !!submitRef.current) {submitRef.current?.click()} }} 
                     sx={{ mt: 1, mr: 1 }}
                 >
                     {wizardSteps[activeStep].wizardStepOptions === WizardStepOptions.ReviewAndSubmit
@@ -302,7 +397,7 @@ export default function CreateWizardPartial(props: WizardPartialProps<IAddressCo
                 )}
                 <Button
                     disabled={isFirstStep || created || creating}
-                    onClick={handleBack}
+                    onClick={() => { handleBack(); if(!!submitRef && !!submitRef.current) {submitRef.current?.click()} }}
                     sx={{ mt: 1, mr: 1 }}
                 >
                     {t('Back')}
@@ -339,6 +434,4 @@ export default function CreateWizardPartial(props: WizardPartialProps<IAddressCo
         </>
     );
 }
-
-
 

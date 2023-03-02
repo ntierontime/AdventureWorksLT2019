@@ -69,64 +69,6 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IErrorLogDa
         setDense(event.target.checked);
     };
 
-    const headCells: HeadCell[] = [
-
-        {
-            id: 'errorLogID',
-            numeric: true,
-            disablePadding: true,
-            label: t('ErrorLogID'),
-        },
-        {
-            id: 'errorTime',
-            numeric: false,
-            disablePadding: true,
-            label: t('ErrorTime'),
-        },
-        {
-            id: 'userName',
-            numeric: false,
-            disablePadding: true,
-            label: t('UserName'),
-        },
-        {
-            id: 'errorNumber',
-            numeric: true,
-            disablePadding: true,
-            label: t('ErrorNumber'),
-        },
-        {
-            id: 'errorSeverity',
-            numeric: true,
-            disablePadding: true,
-            label: t('ErrorSeverity'),
-        },
-        {
-            id: 'errorState',
-            numeric: true,
-            disablePadding: true,
-            label: t('ErrorState'),
-        },
-        {
-            id: 'errorProcedure',
-            numeric: false,
-            disablePadding: true,
-            label: t('ErrorProcedure'),
-        },
-        {
-            id: 'errorLine',
-            numeric: true,
-            disablePadding: true,
-            label: t('ErrorLine'),
-        },
-        {
-            id: 'errorMessage',
-            numeric: false,
-            disablePadding: true,
-            label: t('ErrorMessage'),
-        },
-    ];
-
     return (
         <>
             <TableContainer onMouseEnter={(event) => { handleItemActionsPopoverClose() }}>
@@ -256,4 +198,62 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IErrorLogDa
         </>
     );
 }
+
+const headCells: HeadCell[] = [
+
+    {
+        id: 'errorLogID',
+        numeric: true,
+        disablePadding: true,
+        label: 'ErrorLogID',
+    },
+    {
+        id: 'errorTime',
+        numeric: false,
+        disablePadding: true,
+        label: 'ErrorTime',
+    },
+    {
+        id: 'userName',
+        numeric: false,
+        disablePadding: true,
+        label: 'UserName',
+    },
+    {
+        id: 'errorNumber',
+        numeric: true,
+        disablePadding: true,
+        label: 'ErrorNumber',
+    },
+    {
+        id: 'errorSeverity',
+        numeric: true,
+        disablePadding: true,
+        label: 'ErrorSeverity',
+    },
+    {
+        id: 'errorState',
+        numeric: true,
+        disablePadding: true,
+        label: 'ErrorState',
+    },
+    {
+        id: 'errorProcedure',
+        numeric: false,
+        disablePadding: true,
+        label: 'ErrorProcedure',
+    },
+    {
+        id: 'errorLine',
+        numeric: true,
+        disablePadding: true,
+        label: 'ErrorLine',
+    },
+    {
+        id: 'errorMessage',
+        numeric: false,
+        disablePadding: true,
+        label: 'ErrorMessage',
+    },
+];
 

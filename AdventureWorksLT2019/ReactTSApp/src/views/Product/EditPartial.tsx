@@ -10,8 +10,9 @@ import SaveIcon from '@mui/icons-material/Save';
 
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-import { DatePicker } from '@mui/x-date-pickers';
+import { Controller } from 'react-hook-form';
 import { INameValuePair } from 'src/shared/dataModels/INameValuePair';
 import { codeListsApi } from 'src/apiClients/CodeListsApi';
 import { IProductCategoryAdvancedQuery, defaultIProductCategoryAdvancedQuery } from 'src/dataModels/IProductCategoryQueries';
@@ -41,11 +42,13 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
 
 	// 'control' is only used by boolean fields, you can remove it if this form doesn't have it
 	// 'setValue' is only used by Dropdown List fields and DatePicker fields, you can remove it if this form doesn't have it
-    const { register, control, setValue, handleSubmit, formState: { isValid, errors, isDirty } } = useForm({
+    const methods = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: item,
-    },);
+        resolver: yupResolver(productFormValidationWhenEdit)
+    });
+    const { register, control, setValue, handleSubmit, reset, trigger, formState: { isValid, errors, isDirty } } = methods;
 
     const [saving, setSaving] = useState(false);
     const [saved, setSaved] = useState(false);
@@ -97,14 +100,6 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
         onParentIDChanged_LoadChildren(parentID);
     }
 
-    const onParentIDChanged_LoadChildren = (parentID: number) => {
-
-		// \ProductCategoryID\ParentProductCategoryID
-        const iProductCategoryAdvancedQuery_ProductCategoryID_Here = { ...iProductCategoryAdvancedQuery_ProductCategoryID, parentProductCategoryID: parentID };
-        setIProductCategoryAdvancedQuery_ProductCategoryID(iProductCategoryAdvancedQuery_ProductCategoryID_Here);
-        getProductCategory_ProductCategoryIDCodeList(iProductCategoryAdvancedQuery_ProductCategoryID, true, false);
-    }
-
 
     const getProductCategory_ProductCategoryIDCodeList = (query: IProductCategoryAdvancedQuery, toSetSelectedValue: boolean, setCodeListToEmpty: boolean) => {
         if (!setCodeListToEmpty) {
@@ -133,10 +128,19 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
         }
     }
 
+
+
+
+    const onParentIDChanged_LoadChildren = (parentID: number) => {
+
+        const iProductCategoryAdvancedQuery_ProductCategoryID_Here = { ...iProductCategoryAdvancedQuery_ProductCategoryID, parentProductCategoryID: parentID };
+        setIProductCategoryAdvancedQuery_ProductCategoryID(iProductCategoryAdvancedQuery_ProductCategoryID_Here);
+        getProductCategory_ProductCategoryIDCodeList(iProductCategoryAdvancedQuery_ProductCategoryID, true, false);
+    }
     const onSubmit = (data: IProductDataModel) => {
         setSaving(true);
         dispatch(put({ identifier: getIProductIdentifier(data), data: { ...data } }))
-            .then((result) => {
+            .then((result: any) => {
                 if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
                     setSaveMessage(t('SuccessfullySaved'));
                     setSaved(true);
@@ -146,7 +150,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                 }
                 //console.log(result);
             })
-            .catch((error) => { setSaveMessage(t('FailedToSave')); /*console.log(error);*/ })
+            .catch((error: any) => { setSaveMessage(t('FailedToSave')); /*console.log(error);*/ })
             .finally(() => { setSaving(false); console.log('finally'); });
     }
 
@@ -189,7 +193,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                 <IconButton aria-label="Save"
                     color="primary"
                     type='submit'
-                    disabled={!isValid || saving || saved || !isDirty}
+                    disabled={!isValid || saving || saved}
                 >
                     <SaveIcon />
                 </IconButton>
@@ -235,7 +239,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                         color="primary"
                         type='submit'
                         variant='contained'
-                        disabled={!isValid || saving || saved || !isDirty}
+                        disabled={!isValid || saving || saved}
                         startIcon={<SaveIcon color='action' />}>
                         {t('Save')}
                     </LoadingButton>
@@ -313,7 +317,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                                 defaultValue={item.name}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("name", productFormValidationWhenEdit.name)}
+                                {...register("name")}
                                 autoComplete='name'
                                 error={!!errors.name}
                                 fullWidth
@@ -327,7 +331,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                                 defaultValue={item.productNumber}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("productNumber", productFormValidationWhenEdit.productNumber)}
+                                {...register("productNumber")}
                                 autoComplete='productNumber'
                                 error={!!errors.productNumber}
                                 fullWidth
@@ -341,7 +345,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                                 defaultValue={item.color}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("color", productFormValidationWhenEdit.color)}
+                                {...register("color")}
                                 autoComplete='color'
                                 error={!!errors.color}
                                 fullWidth
@@ -355,7 +359,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                                 defaultValue={item.standardCost}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("standardCost", productFormValidationWhenEdit.standardCost)}
+                                {...register("standardCost")}
                                 autoComplete='standardCost'
                                 error={!!errors.standardCost}
                                 fullWidth
@@ -369,7 +373,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                                 defaultValue={item.listPrice}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("listPrice", productFormValidationWhenEdit.listPrice)}
+                                {...register("listPrice")}
                                 autoComplete='listPrice'
                                 error={!!errors.listPrice}
                                 fullWidth
@@ -383,7 +387,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                                 defaultValue={item.size}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("size", productFormValidationWhenEdit.size)}
+                                {...register("size")}
                                 autoComplete='size'
                                 error={!!errors.size}
                                 fullWidth
@@ -397,7 +401,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                                 defaultValue={item.weight}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("weight", productFormValidationWhenEdit.weight)}
+                                {...register("weight")}
                                 autoComplete='weight'
                                 error={!!errors.weight}
                                 fullWidth
@@ -411,7 +415,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                                 id="parentIDSelect"
                                 select
                                 name='parentID'
-                                {...register("parentID", productFormValidationWhenEdit.parentID)}
+                                {...register("parentID")}
                                 autoComplete='parentID'
                                 variant="outlined"
                                 fullWidth
@@ -425,11 +429,12 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                         </Grid>
                         <Grid item {...gridColumns}>
                             <TextField
+                            	sx={{marginTop: 2}}
                                 label={t("ProductCategoryID")}
                                 id="productCategoryIDSelect"
                                 select
                                 name='productCategoryID'
-                                {...register("productCategoryID", productFormValidationWhenEdit.productCategoryID)}
+                                {...register("productCategoryID")}
                                 autoComplete='productCategoryID'
                                 variant="outlined"
                                 fullWidth
@@ -442,11 +447,12 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                         </Grid>
                         <Grid item {...gridColumns}>
                             <TextField
+                            	sx={{marginTop: 2}}
                                 label={t("ProductModelID")}
                                 id="productModelIDSelect"
                                 select
                                 name='productModelID'
-                                {...register("productModelID", productFormValidationWhenEdit.productModelID)}
+                                {...register("productModelID")}
                                 autoComplete='productModelID'
                                 variant="outlined"
                                 fullWidth
@@ -458,54 +464,75 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                             </TextField>
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <DatePicker
-                                value={sellStartDate}
-                                label={t('SellStartDate')}
-                                onChange={(event: string) => { setSellStartDate(event); setValue('sellStartDate', event, { shouldDirty: true }); }}
-                                renderInput={(params) =>
-                                    <TextField
-                            			sx={{marginTop: 2}}
-                                        fullWidth
-                                        autoComplete='sellStartDate'
-                            			{...register("sellStartDate", productFormValidationWhenEdit.sellStartDate)}
-                                        error={!!errors.sellStartDate}
-                                        helperText={!!errors.sellStartDate ? t(errors.sellStartDate.message) : ''}
-                                        {...params}
-                                    />}
+                            <Controller
+                                name="sellStartDate"
+                                control={control}
+                                defaultValue={null}
+                                render={({ field, ...props }) => {
+                                    return (
+                            			<DatePicker
+                            				value={sellStartDate}
+                            				label={t('SellStartDate')}
+                            				onChange={(event: string) => { setSellStartDate(event); setValue('sellStartDate', event, { shouldDirty: true }); }}
+                            				renderInput={(params) =>
+                            					<TextField
+                            						sx={{marginTop: 2}}
+                            						fullWidth
+                            						error={!!errors.sellStartDate}
+                            						helperText={!!errors.sellStartDate ? t(errors.sellStartDate.message) : ''}
+                            						{...params}
+                            					/>}
+                            			/>
+                                    );
+                                }}
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <DatePicker
-                                value={sellEndDate}
-                                label={t('SellEndDate')}
-                                onChange={(event: string) => { setSellEndDate(event); setValue('sellEndDate', event, { shouldDirty: true }); }}
-                                renderInput={(params) =>
-                                    <TextField
-                            			sx={{marginTop: 2}}
-                                        fullWidth
-                                        autoComplete='sellEndDate'
-                            			{...register("sellEndDate", productFormValidationWhenEdit.sellEndDate)}
-                                        error={!!errors.sellEndDate}
-                                        helperText={!!errors.sellEndDate ? t(errors.sellEndDate.message) : ''}
-                                        {...params}
-                                    />}
+                            <Controller
+                                name="sellEndDate"
+                                control={control}
+                                defaultValue={null}
+                                render={({ field, ...props }) => {
+                                    return (
+                            			<DatePicker
+                            				value={sellEndDate}
+                            				label={t('SellEndDate')}
+                            				onChange={(event: string) => { setSellEndDate(event); setValue('sellEndDate', event, { shouldDirty: true }); }}
+                            				renderInput={(params) =>
+                            					<TextField
+                            						sx={{marginTop: 2}}
+                            						fullWidth
+                            						error={!!errors.sellEndDate}
+                            						helperText={!!errors.sellEndDate ? t(errors.sellEndDate.message) : ''}
+                            						{...params}
+                            					/>}
+                            			/>
+                                    );
+                                }}
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <DatePicker
-                                value={discontinuedDate}
-                                label={t('DiscontinuedDate')}
-                                onChange={(event: string) => { setDiscontinuedDate(event); setValue('discontinuedDate', event, { shouldDirty: true }); }}
-                                renderInput={(params) =>
-                                    <TextField
-                            			sx={{marginTop: 2}}
-                                        fullWidth
-                                        autoComplete='discontinuedDate'
-                            			{...register("discontinuedDate", productFormValidationWhenEdit.discontinuedDate)}
-                                        error={!!errors.discontinuedDate}
-                                        helperText={!!errors.discontinuedDate ? t(errors.discontinuedDate.message) : ''}
-                                        {...params}
-                                    />}
+                            <Controller
+                                name="discontinuedDate"
+                                control={control}
+                                defaultValue={null}
+                                render={({ field, ...props }) => {
+                                    return (
+                            			<DatePicker
+                            				value={discontinuedDate}
+                            				label={t('DiscontinuedDate')}
+                            				onChange={(event: string) => { setDiscontinuedDate(event); setValue('discontinuedDate', event, { shouldDirty: true }); }}
+                            				renderInput={(params) =>
+                            					<TextField
+                            						sx={{marginTop: 2}}
+                            						fullWidth
+                            						error={!!errors.discontinuedDate}
+                            						helperText={!!errors.discontinuedDate ? t(errors.discontinuedDate.message) : ''}
+                            						{...params}
+                            					/>}
+                            			/>
+                                    );
+                                }}
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
@@ -515,7 +542,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                                 defaultValue={item.thumbNailPhoto}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("thumbNailPhoto", productFormValidationWhenEdit.thumbNailPhoto)}
+                                {...register("thumbNailPhoto")}
                                 autoComplete='thumbNailPhoto'
                                 error={!!errors.thumbNailPhoto}
                                 fullWidth
@@ -529,7 +556,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                                 defaultValue={item.thumbnailPhotoFileName}
                                 variant='outlined'
                                 margin='normal'
-                                {...register("thumbnailPhotoFileName", productFormValidationWhenEdit.thumbnailPhotoFileName)}
+                                {...register("thumbnailPhotoFileName")}
                                 autoComplete='thumbnailPhotoFileName'
                                 error={!!errors.thumbnailPhotoFileName}
                                 fullWidth
@@ -550,20 +577,27 @@ export default function EditPartial(props: ItemPartialViewProps<IProductDataMode
                             />
                         </Grid>
                         <Grid item {...gridColumns}>
-                            <DatePicker
-                                value={modifiedDate}
-                                label={t('ModifiedDate')}
-                                onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
-                                renderInput={(params) =>
-                                    <TextField
-                            			sx={{marginTop: 2}}
-                                        fullWidth
-                                        autoComplete='modifiedDate'
-                            			{...register("modifiedDate", productFormValidationWhenEdit.modifiedDate)}
-                                        error={!!errors.modifiedDate}
-                                        helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
-                                        {...params}
-                                    />}
+                            <Controller
+                                name="modifiedDate"
+                                control={control}
+                                defaultValue={null}
+                                render={({ field, ...props }) => {
+                                    return (
+                            			<DatePicker
+                            				value={modifiedDate}
+                            				label={t('ModifiedDate')}
+                            				onChange={(event: string) => { setModifiedDate(event); setValue('modifiedDate', event, { shouldDirty: true }); }}
+                            				renderInput={(params) =>
+                            					<TextField
+                            						sx={{marginTop: 2}}
+                            						fullWidth
+                            						error={!!errors.modifiedDate}
+                            						helperText={!!errors.modifiedDate ? t(errors.modifiedDate.message) : ''}
+                            						{...params}
+                            					/>}
+                            			/>
+                                    );
+                                }}
                             />
                         </Grid>
                     </Grid>

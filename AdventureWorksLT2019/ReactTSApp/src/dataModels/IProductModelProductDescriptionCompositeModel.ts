@@ -1,5 +1,5 @@
 import { ICompositeModel } from "src/shared/dataModels/ICompositeModel";
-import { defaultProductModelProductDescription, IProductModelProductDescriptionDataModel } from "./IProductModelProductDescriptionDataModel";
+import { IProductModelProductDescriptionDataModel, defaultProductModelProductDescription } from "./IProductModelProductDescriptionDataModel";
 
 export interface IProductModelProductDescriptionCompositeModel extends ICompositeModel<IProductModelProductDescriptionDataModel, IProductModelProductDescriptionCompositeModel_DataOptions__> {
 

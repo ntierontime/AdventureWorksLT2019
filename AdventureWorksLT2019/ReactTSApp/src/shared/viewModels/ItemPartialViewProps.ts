@@ -52,7 +52,7 @@ export interface ItemPartialViewProps<TDataModel> extends ItemPartialViewPropsBa
     // buttonContainerRef is not null when Orientation === horizontal, Buttons will wrapped in <Portal /> in the card, then display in the wizard bottom action bard
     // buttonContainerRef is null when Orientation === vertical, Buttons will be in the card
     onWizardStepSubmit: (data: TDataModel) => void,
-    renderWizardButtonGroup: (isFirstStep: boolean, isLastStep: boolean, isStepOptional:boolean, disableNextButton: ()=>boolean) => JSX.Element,
+    renderWizardButtonGroup: (isFirstStep: boolean, isLastStep: boolean, isStepOptional:boolean, disableNextButton: ()=>boolean, submitRef: React.MutableRefObject<any>) => JSX.Element,
     isFirstStep: boolean,
     isLastStep: boolean,
     isStepOptional:boolean,

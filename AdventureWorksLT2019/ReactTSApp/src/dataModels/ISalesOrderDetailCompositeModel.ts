@@ -1,6 +1,6 @@
 import { ICompositeModel } from "src/shared/dataModels/ICompositeModel";
-import { defaultSalesOrderDetail, ISalesOrderDetailDataModel } from "./ISalesOrderDetailDataModel";
 import { IProductDataModel } from "./IProductDataModel";
+import { ISalesOrderDetailDataModel, defaultSalesOrderDetail } from "./ISalesOrderDetailDataModel";
 import { ISalesOrderHeaderDataModel } from "./ISalesOrderHeaderDataModel";
 
 export interface ISalesOrderDetailCompositeModel extends ICompositeModel<ISalesOrderDetailDataModel, ISalesOrderDetailCompositeModel_DataOptions__> {

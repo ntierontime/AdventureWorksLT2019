@@ -9,7 +9,7 @@ import { IProductCategoryDataModel } from 'src/dataModels/IProductCategoryDataMo
 export interface IProductCategoryIdentifier {
 
     // PredicateType:Equals
-	productCategoryID: number | null;
+	productCategoryID: number | '';
 }
 
 export function getIProductCategoryIdentifier(item: IProductCategoryDataModel): IProductCategoryIdentifier {
@@ -28,7 +28,7 @@ export interface IProductCategoryAdvancedQuery extends IBaseQuery {
     textSearchType: TextSearchTypes;
 
     // PredicateType:Equals
-	parentProductCategoryID: number | null;
+	parentProductCategoryID: number | '';
 
     // PredicateType:Range
     modifiedDateRange: PreDefinedDateTimeRanges | null;

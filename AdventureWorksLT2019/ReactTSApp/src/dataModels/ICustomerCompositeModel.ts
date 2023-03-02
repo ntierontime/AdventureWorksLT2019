@@ -1,7 +1,7 @@
 import { ICompositeModel } from "src/shared/dataModels/ICompositeModel";
-import { defaultCustomer, ICustomerDataModel } from "./ICustomerDataModel";
-import { ICustomerAddressDataModel } from "./ICustomerAddressDataModel";
-import { ISalesOrderHeaderDataModel } from "./ISalesOrderHeaderDataModel";
+import { ICustomerAddressDataModel, defaultCustomerAddress } from "./ICustomerAddressDataModel";
+import { ICustomerDataModel, defaultCustomer } from "./ICustomerDataModel";
+import { ISalesOrderHeaderDataModel, defaultSalesOrderHeader } from "./ISalesOrderHeaderDataModel";
 
 export interface ICustomerCompositeModel extends ICompositeModel<ICustomerDataModel, ICustomerCompositeModel_DataOptions__> {
     // 4. ListTable = 4
@@ -22,8 +22,8 @@ export function defaultICustomerCompositeModel(): ICustomerCompositeModel {
         responses: null,
         __Master__: defaultCustomer(),
         // 4. ListTable = 4
-        customerAddresses_Via_CustomerID: [] as ICustomerAddressDataModel[],
-        salesOrderHeaders_Via_CustomerID: [] as ISalesOrderHeaderDataModel[],
+        customerAddresses_Via_CustomerID: [ defaultCustomerAddress() ],
+        salesOrderHeaders_Via_CustomerID: [ defaultSalesOrderHeader() ],
     };
 }
 

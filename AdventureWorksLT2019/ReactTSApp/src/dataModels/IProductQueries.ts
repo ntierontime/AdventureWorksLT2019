@@ -9,7 +9,7 @@ import { IProductDataModel } from 'src/dataModels/IProductDataModel';
 export interface IProductIdentifier {
 
     // PredicateType:Equals
-	productID: number | null;
+	productID: number | '';
 }
 
 export function getIProductIdentifier(item: IProductDataModel): IProductIdentifier {
@@ -28,13 +28,13 @@ export interface IProductAdvancedQuery extends IBaseQuery {
     textSearchType: TextSearchTypes;
 
     // PredicateType:Equals
-	productCategoryID: number | null;
+	productCategoryID: number | '';
 
     // PredicateType:Equals
-	parentID: number | null;
+	parentID: number | '';
 
     // PredicateType:Equals
-	productModelID: number | null;
+	productModelID: number | '';
 
     // PredicateType:Range
     sellStartDateRange: PreDefinedDateTimeRanges | null;

@@ -1,6 +1,6 @@
 import { ICompositeModel } from "src/shared/dataModels/ICompositeModel";
-import { defaultSalesOrderHeader, ISalesOrderHeaderDataModel } from "./ISalesOrderHeaderDataModel";
-import { ISalesOrderDetailDataModel } from "./ISalesOrderDetailDataModel";
+import { ISalesOrderDetailDataModel, defaultSalesOrderDetail } from "./ISalesOrderDetailDataModel";
+import { ISalesOrderHeaderDataModel, defaultSalesOrderHeader } from "./ISalesOrderHeaderDataModel";
 
 export interface ISalesOrderHeaderCompositeModel extends ICompositeModel<ISalesOrderHeaderDataModel, ISalesOrderHeaderCompositeModel_DataOptions__> {
     // 4. ListTable = 4
@@ -19,7 +19,7 @@ export function defaultISalesOrderHeaderCompositeModel(): ISalesOrderHeaderCompo
         responses: null,
         __Master__: defaultSalesOrderHeader(),
         // 4. ListTable = 4
-        salesOrderDetails_Via_SalesOrderID: [] as ISalesOrderDetailDataModel[],
+        salesOrderDetails_Via_SalesOrderID: [ defaultSalesOrderDetail() ],
     };
 }
 

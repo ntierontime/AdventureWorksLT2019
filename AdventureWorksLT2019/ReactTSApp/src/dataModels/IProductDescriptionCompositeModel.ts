@@ -1,6 +1,6 @@
 import { ICompositeModel } from "src/shared/dataModels/ICompositeModel";
-import { defaultProductDescription, IProductDescriptionDataModel } from "./IProductDescriptionDataModel";
-import { IProductModelProductDescriptionDataModel } from "./IProductModelProductDescriptionDataModel";
+import { IProductDescriptionDataModel, defaultProductDescription } from "./IProductDescriptionDataModel";
+import { IProductModelProductDescriptionDataModel, defaultProductModelProductDescription } from "./IProductModelProductDescriptionDataModel";
 
 export interface IProductDescriptionCompositeModel extends ICompositeModel<IProductDescriptionDataModel, IProductDescriptionCompositeModel_DataOptions__> {
     // 4. ListTable = 4
@@ -19,7 +19,7 @@ export function defaultIProductDescriptionCompositeModel(): IProductDescriptionC
         responses: null,
         __Master__: defaultProductDescription(),
         // 4. ListTable = 4
-        productModelProductDescriptions_Via_ProductDescriptionID: [] as IProductModelProductDescriptionDataModel[],
+        productModelProductDescriptions_Via_ProductDescriptionID: [ defaultProductModelProductDescription() ],
     };
 }
 

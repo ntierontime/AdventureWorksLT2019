@@ -69,34 +69,6 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IBuildVersi
         setDense(event.target.checked);
     };
 
-    const headCells: HeadCell[] = [
-
-        {
-            id: 'systemInformationID',
-            numeric: true,
-            disablePadding: true,
-            label: t('SystemInformationID'),
-        },
-        {
-            id: 'database_Version',
-            numeric: false,
-            disablePadding: true,
-            label: t('Database_Version'),
-        },
-        {
-            id: 'versionDate',
-            numeric: false,
-            disablePadding: true,
-            label: t('VersionDate'),
-        },
-        {
-            id: 'modifiedDate',
-            numeric: false,
-            disablePadding: true,
-            label: t('ModifiedDate'),
-        },
-    ];
-
     return (
         <>
             <TableContainer onMouseEnter={(event) => { handleItemActionsPopoverClose() }}>
@@ -221,4 +193,32 @@ export default function HtmlTablePartial(props: ListPartialViewProps<IBuildVersi
         </>
     );
 }
+
+const headCells: HeadCell[] = [
+
+    {
+        id: 'systemInformationID',
+        numeric: true,
+        disablePadding: true,
+        label: 'SystemInformationID',
+    },
+    {
+        id: 'database_Version',
+        numeric: false,
+        disablePadding: true,
+        label: 'Database_Version',
+    },
+    {
+        id: 'versionDate',
+        numeric: false,
+        disablePadding: true,
+        label: 'VersionDate',
+    },
+    {
+        id: 'modifiedDate',
+        numeric: false,
+        disablePadding: true,
+        label: 'ModifiedDate',
+    },
+];
 
