@@ -24,6 +24,7 @@ import ProductModelRoutesPartial from 'src/routePartials/ProductModelRoutesParti
 import ProductModelProductDescriptionRoutesPartial from 'src/routePartials/ProductModelProductDescriptionRoutesPartial'
 import SalesOrderDetailRoutesPartial from 'src/routePartials/SalesOrderDetailRoutesPartial'
 import SalesOrderHeaderRoutesPartial from 'src/routePartials/SalesOrderHeaderRoutesPartial'
+import CompareHtmlTablePage from "./ProductModel/CompareHtmlTablePage";
 
 export default function MasterRoutes(): JSX.Element {
     return (
@@ -36,7 +37,6 @@ export default function MasterRoutes(): JSX.Element {
             <Route path="contactus" element={<ContactUs />} />
             <Route path="privacypolicy" element={<PrivacyPolicy />} />
             <Route path="useragreement" element={<UserAgreement />} />
-            
             <Route path="PrivateRouteTestPage" element={
                 <PrivateRoute>
                     <PrivateRouteTestPage />

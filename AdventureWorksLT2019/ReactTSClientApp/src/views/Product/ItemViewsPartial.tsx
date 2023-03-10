@@ -9,7 +9,7 @@ import DetailsPartial from './DetailsPartial';
 import EditPartial from './EditPartial';
 
 export default function ItemViewsPartial(props: ItemPartialViewProps<IProductDataModel>): JSX.Element {
-    const { crudViewContainer, totalCountInList, itemIndex, setItemIndex } = props;
+    const { item, crudViewContainer, totalCountInList, itemIndex, setItemIndex } = props;
     const [viewItemTemplate, setViewItemTemplate] = useState<ViewItemTemplates>(props.viewItemTemplate);
 
     const gotoPreviousItemOnDialog = crudViewContainer === CrudViewContainers.Dialog && itemIndex >= 0
@@ -67,16 +67,16 @@ export default function ItemViewsPartial(props: ItemPartialViewProps<IProductDat
 
     return (
         <>
-            {viewItemTemplate === ViewItemTemplates.Create &&
+            {!!item && viewItemTemplate === ViewItemTemplates.Create &&
                 <CreatePartial {...props}  item = {defaultProduct()}/>
             }
-            {viewItemTemplate === ViewItemTemplates.Delete &&
+            {!!item && viewItemTemplate === ViewItemTemplates.Delete &&
                 <DeletePartial {...props} previousAction={gotoPreviousItemOnDialog} nextAction={gotoNextItemOnDialog} changeViewItemTemplate={changeViewItemTemplate} doneAction={doneAction} />
             }
-            {viewItemTemplate === ViewItemTemplates.Details &&
+            {!!item && viewItemTemplate === ViewItemTemplates.Details &&
                 <DetailsPartial {...props} previousAction={gotoPreviousItemOnDialog} nextAction={gotoNextItemOnDialog} changeViewItemTemplate={changeViewItemTemplate} doneAction={doneAction} />
             }
-            {viewItemTemplate === ViewItemTemplates.Edit &&
+            {!!item && viewItemTemplate === ViewItemTemplates.Edit &&
                 <EditPartial {...props} previousAction={gotoPreviousItemOnDialog} nextAction={gotoNextItemOnDialog} changeViewItemTemplate={changeViewItemTemplate} doneAction={doneAction} />
             }
         </>

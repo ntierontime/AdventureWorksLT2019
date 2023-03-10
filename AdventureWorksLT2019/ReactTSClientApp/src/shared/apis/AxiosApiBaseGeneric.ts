@@ -2,6 +2,7 @@
 // https://medium.com/@enetoOlveda/how-to-use-axios-typescript-like-a-pro-7c882f71e34a
 
 import { AxiosResponse, AxiosRequestConfig } from 'axios';
+import { IProductModelCompareModel } from 'src/dataModels/IProductModelCompareModel';
 import { AxiosApiBase } from './AxiosApiBase';
 import { IBulkUpdateRequest } from './IBulkUpdateRequest';
 import { IListResponse } from './IListResponse';
@@ -17,6 +18,7 @@ export class AxiosApiBaseGeneric<TDataModel, TIdentifierQuery, TAdvancedQuery, T
     protected url_Post: string;
     protected url_Delete: string;
     protected url_GetCompositeModel: string;
+    protected url_Compare: string;
     protected url_BulkDelete: string;
     protected url_BulkUpdate: string;
     protected url_MultiItemsCUD: string;
@@ -87,6 +89,15 @@ export class AxiosApiBaseGeneric<TDataModel, TIdentifierQuery, TAdvancedQuery, T
         }
 
         return this.get<TCompositeModel, AxiosResponse<TCompositeModel>>(this.url_GetCompositeModel + '/' + this.convertParametersToWebApiRoute(identifier))
+            .then(this.success);
+    }
+
+    public Compare = (params: TAdvancedQuery): Promise<IProductModelCompareModel> => {
+        if (!!!this.url_Compare) {
+            throw new Error('Search Api is not available');
+        }
+
+        return this.post<IProductModelCompareModel, TAdvancedQuery, AxiosResponse<IProductModelCompareModel>>(this.url_Compare, params)
             .then(this.success);
     }
 

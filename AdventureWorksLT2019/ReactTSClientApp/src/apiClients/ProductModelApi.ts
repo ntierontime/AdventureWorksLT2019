@@ -4,6 +4,7 @@ import { AxiosApiBaseGeneric } from 'src/shared/apis/AxiosApiBaseGeneric';
 import { IProductModelDataModel } from 'src/dataModels/IProductModelDataModel';
 import { IProductModelAdvancedQuery, IProductModelIdentifier } from 'src/dataModels/IProductModelQueries';
 import { IProductModelCompositeModel } from 'src/dataModels/IProductModelCompositeModel';
+import { IProductModelCompareModel } from 'src/dataModels/IProductModelCompareModel';
 
 export class ProductModelApi extends AxiosApiBaseGeneric<IProductModelDataModel, IProductModelIdentifier , IProductModelAdvancedQuery, IProductModelCompositeModel> {
     public constructor(conf?: AxiosRequestConfig) {
@@ -13,6 +14,7 @@ export class ProductModelApi extends AxiosApiBaseGeneric<IProductModelDataModel,
         this.url_Search = "api/ProductModelApi/Search";
 
         this.url_GetCompositeModel = "api/ProductModelApi/GetCompositeModel";
+        this.url_Compare = "api/ProductModelApi/Compare";
 
         this.url_BulkDelete = "api/ProductModelApi/BulkDelete";
 

@@ -8,6 +8,11 @@ namespace AdventureWorksLT2019.ServiceContracts
         Task<ListResponse<ProductModelDataModel[]>> Search(
             ProductModelAdvancedQuery query);
 
+        Task<ProductModelCompareModel> Compare(
+            ProductModelAdvancedQuery query,
+            Dictionary<ProductModelCompositeModel.__DataOptions__, CompositeListItemRequest> listItemRequest,
+            ProductModelCompositeModel.__DataOptions__[]? dataOptions = null);
+
         Task<ProductModelCompositeModel> GetCompositeModel(
             ProductModelIdentifier id,
             Dictionary<ProductModelCompositeModel.__DataOptions__, CompositeListItemRequest> listItemRequest,

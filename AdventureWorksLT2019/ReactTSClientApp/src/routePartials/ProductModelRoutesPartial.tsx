@@ -7,6 +7,7 @@ import CreateWizardPage from 'src/views/ProductModel/CreateWizardPage'
 import DashboardPage from 'src/views/ProductModel/DashboardPage'
 import IndexPage from 'src/views/ProductModel/IndexPage'
 import ItemPage from 'src/views/ProductModel/ItemPage'
+import CompareHtmlTablePage from "src/views/ProductModel/CompareHtmlTablePage";
 
 export default function ProductModelRoutesPartial(): JSX.Element {
     return (
@@ -18,6 +19,7 @@ export default function ProductModelRoutesPartial(): JSX.Element {
 			<Route path="Edit/:productModelID" element={<PrivateRoute> <ItemPage viewItemTemplate={ViewItemTemplates.Edit} /> </PrivateRoute>} />
 			<Route path="Dashboard/:productModelID" element={<PrivateRoute> <DashboardPage /> </PrivateRoute>} />
 			<Route path="CreateWizard" element={<PrivateRoute> <CreateWizardPage /> </PrivateRoute>} />
+            <Route path="CompareHtmlTablePage" element={<CompareHtmlTablePage />} />
         </Routes>);
 }
 

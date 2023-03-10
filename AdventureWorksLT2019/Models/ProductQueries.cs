@@ -26,6 +26,9 @@ namespace AdventureWorksLT2019.Models
         // PredicateType:Equals
         public int? ProductModelID { get; set; }
 
+        // PredicateType:InList
+        public List<int>? ProductModelIDIList { get; set; }
+        
         public string? SellStartDateRange { get; set; }
         // PredicateType:Range - Lower Bound
         [DataType(DataType.DateTime)]

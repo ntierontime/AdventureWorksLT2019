@@ -205,6 +205,11 @@ export default function AppDrawer(props: AppDrawerProps) {
     // TODO: For testing purpose, developer can remove this list and related code
     const appDrawerItems_CreateWizardPages = [
         {
+            label: 'CompareHtmlTablePage',
+            icon: <HelpOutlineIcon />,
+            url: '/ProductModel/CompareHtmlTablePage',
+        },
+        {
             label: 'BuildVersion Wizard',
             icon: <HelpOutlineIcon />,
             url: '/BuildVersion/CreateWizard',

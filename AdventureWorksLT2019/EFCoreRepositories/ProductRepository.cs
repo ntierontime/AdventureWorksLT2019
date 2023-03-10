@@ -46,6 +46,8 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     &&
                     (!query.ProductModelID.HasValue || ProductModel.ProductModelID == query.ProductModelID)
                     &&
+                    (query.ProductModelIDIList == null || query.ProductModelIDIList.Count == 0 || query.ProductModelIDIList.Contains(ProductModel.ProductModelID))
+                    &&
 
                     (!query.SellStartDateRangeLower.HasValue && !query.SellStartDateRangeUpper.HasValue || (!query.SellStartDateRangeLower.HasValue || t.SellStartDate >= query.SellStartDateRangeLower) && (!query.SellStartDateRangeLower.HasValue || t.SellStartDate <= query.SellStartDateRangeUpper))
                     &&

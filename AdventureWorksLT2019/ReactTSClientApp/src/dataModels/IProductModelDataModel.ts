@@ -24,6 +24,7 @@ export function defaultProductModel(): IProductModelDataModel {
     } as unknown as IProductModelDataModel;
 }
 
+
 export function getProductModelAvatar(item: IProductModelDataModel): string {
     return !!item.name && item.name.length > 0 ? item.name.substring(0, 1) : "?";
 }

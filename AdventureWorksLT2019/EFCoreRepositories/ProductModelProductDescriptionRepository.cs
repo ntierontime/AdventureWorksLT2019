@@ -43,6 +43,8 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     &&
                     (!query.ProductModelID.HasValue || ProductModel.ProductModelID == query.ProductModelID)
                     &&
+                    (query.ProductModelIdentifierIList == null || query.ProductModelIdentifierIList.Count == 0 || query.ProductModelIdentifierIList.Contains(ProductModel.ProductModelID))
+                    &&
 
                     (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))
                     &&

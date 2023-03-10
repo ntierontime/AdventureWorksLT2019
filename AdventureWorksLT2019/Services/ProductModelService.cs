@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace AdventureWorksLT2019.Services
 {
@@ -113,6 +115,123 @@ namespace AdventureWorksLT2019.Services
                 catch { }
             }
             successResponse.Responses = new Dictionary<ProductModelCompositeModel.__DataOptions__, Response<PaginationResponse>>(responses);
+            return successResponse;
+        }
+
+        /// <summary>
+        /// This is an database/server memory/cpu expensive task, use it carefully.
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="listItemRequest"></param>
+        /// <param name="dataOptions"></param>
+        /// <returns></returns>
+        public async Task<ProductModelCompareModel> Compare(
+            ProductModelAdvancedQuery query,
+            Dictionary<ProductModelCompositeModel.__DataOptions__, CompositeListItemRequest> listItemRequest,
+            ProductModelCompositeModel.__DataOptions__[]? dataOptions = null)
+        {
+            var masterResponse = await _thisRepository.Search(query);
+            if (masterResponse.Status != HttpStatusCode.OK || masterResponse.ResponseBody == null)
+            {
+                return new ProductModelCompareModel();
+            }
+
+            int count = masterResponse.ResponseBody.Length;
+
+            var idList =
+                from t in masterResponse.ResponseBody
+                select t.ProductModelID;
+
+            var successDataResponse = new ProductModelCompositeModel();
+            var responses = new ConcurrentDictionary<ProductModelCompositeModel.__DataOptions__, Response<PaginationResponse>>();
+            responses.TryAdd(ProductModelCompositeModel.__DataOptions__.__Master__, new Response<PaginationResponse> { Status = HttpStatusCode.OK });
+
+            var tasks = new List<Task>();
+
+            // 4. ListTable = 4,
+
+            if (dataOptions == null || dataOptions.Contains(ProductModelCompositeModel.__DataOptions__.Products_Via_ProductModelID))
+            {
+                tasks.Add(Task.Run(async () =>
+                {
+                    using (var scope = _serviceScopeFactor.CreateScope())
+                    {
+                        var _productRepository = scope.ServiceProvider.GetRequiredService<IProductRepository>();
+                        var query = new ProductAdvancedQuery
+                        {
+                            ProductModelIDIList = idList.ToList(),
+                            PageIndex = 1,
+                            PageSize = listItemRequest[ProductModelCompositeModel.__DataOptions__.Products_Via_ProductModelID].PageSize * count,
+                            OrderBys = listItemRequest[ProductModelCompositeModel.__DataOptions__.Products_Via_ProductModelID].OrderBys,
+                            PaginationOption = listItemRequest[ProductModelCompositeModel.__DataOptions__.Products_Via_ProductModelID].PaginationOption,
+                        };
+                        var response = await _productRepository.Search(query);
+                        responses.TryAdd(ProductModelCompositeModel.__DataOptions__.Products_Via_ProductModelID, new Response<PaginationResponse> { Status = response.Status, StatusMessage = response.StatusMessage, ResponseBody = response.Pagination });
+                        if (response.Status == HttpStatusCode.OK)
+                        {
+                            successDataResponse.Products_Via_ProductModelID = response.ResponseBody;
+                        }
+                    }
+                }));
+            }
+
+            if (dataOptions == null || dataOptions.Contains(ProductModelCompositeModel.__DataOptions__.ProductModelProductDescriptions_Via_ProductModelID))
+            {
+                tasks.Add(Task.Run(async () =>
+                {
+                    using (var scope = _serviceScopeFactor.CreateScope())
+                    {
+                        var _productModelProductDescriptionRepository = scope.ServiceProvider.GetRequiredService<IProductModelProductDescriptionRepository>();
+                        var query = new ProductModelProductDescriptionAdvancedQuery
+                        {
+                            ProductModelIdentifierIList = idList.ToList(),
+                            PageIndex = 1,
+                            PageSize = listItemRequest[ProductModelCompositeModel.__DataOptions__.ProductModelProductDescriptions_Via_ProductModelID].PageSize * count,
+                            OrderBys = listItemRequest[ProductModelCompositeModel.__DataOptions__.ProductModelProductDescriptions_Via_ProductModelID].OrderBys,
+                            PaginationOption = listItemRequest[ProductModelCompositeModel.__DataOptions__.ProductModelProductDescriptions_Via_ProductModelID].PaginationOption,
+                        };
+                        var response = await _productModelProductDescriptionRepository.Search(query);
+                        responses.TryAdd(ProductModelCompositeModel.__DataOptions__.ProductModelProductDescriptions_Via_ProductModelID, new Response<PaginationResponse> { Status = response.Status, StatusMessage = response.StatusMessage, ResponseBody = response.Pagination });
+                        if (response.Status == HttpStatusCode.OK)
+                        {
+                            successDataResponse.ProductModelProductDescriptions_Via_ProductModelID = response.ResponseBody;
+                        }
+                    }
+                }));
+            }
+
+            if (tasks.Count > 0)
+            {
+                Task t = Task.WhenAll(tasks.ToArray());
+                try
+                {
+                    await t;
+                }
+                catch { }
+            }
+            successDataResponse.Responses = new Dictionary<ProductModelCompositeModel.__DataOptions__, Response<PaginationResponse>>(responses);
+
+
+            ProductModelCompareModel successResponse = new ProductModelCompareModel
+            {
+                ProductModelCompositeModelList =
+                (from t in masterResponse.ResponseBody
+                 select new ProductModelCompositeModel
+                 {
+                     __Master__ = t,
+                     Products_Via_ProductModelID = successDataResponse.Products_Via_ProductModelID?.Where(t1 => t1.ProductModelID == t.ProductModelID).ToArray(),
+                     ProductModelProductDescriptions_Via_ProductModelID = successDataResponse.ProductModelProductDescriptions_Via_ProductModelID?.Where(t1 => t1.ProductModelID == t.ProductModelID).ToArray(),
+                     Responses = new Dictionary<ProductModelCompositeModel.__DataOptions__, Response<PaginationResponse>>(responses)
+
+                 }).ToArray(),
+                // Products_Via_ProductModelID Compare Size Property
+                CompareResult_Products_Via_ProductModelID =
+                    (from tc in successDataResponse.Products_Via_ProductModelID?.Select(t => t.Size).Distinct().ToList()
+                    select new { Key = tc, Value = idList.Select(id => successDataResponse.Products_Via_ProductModelID?.Any(td => td.ProductModelID == id && td.Size == tc) ?? false) } )
+                        .ToDictionary(td => td.Key ?? "NULL", td => td.Value.ToArray()),
+
+            };
+
             return successResponse;
         }
 
