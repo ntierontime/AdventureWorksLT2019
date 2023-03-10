@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Checkbox, FormControlLabel, IconButton, Link, Pagination, Paper, Popover, Stack, Switch, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 
 
 import { useNavigate } from 'react-router-dom';
@@ -8,11 +7,8 @@ import { TFunction, useTranslation, UseTranslationResponse } from 'react-i18next
 
 // un-comment /*getCurrency,*/ if you display money
 import { /*getCurrency,*/ i18nFormats } from 'src/i18n';
-import { QueryOrderDirections } from 'src/shared/dataModels/QueryOrderDirections';
 import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
 import CompareAvailabilityTableRow from 'src/shared/views/CompareAvailabilityTableRow';
-import { EnhancedTableHead } from 'src/shared/views/EnhancedTableHead';
-import { getComparator, HeadCell, stableSort } from 'src/shared/views/TableFeatures';
 
 import { IProductModelAdvancedQuery } from 'src/dataModels/IProductModelQueries';
 
@@ -25,10 +21,6 @@ import { IProductDataModel } from 'src/dataModels/IProductDataModel';
 import { default as ProductItemViewsPartial } from 'src/views/Product/ItemViewsPartial';
 
 const __Master__Categories = ["name", "catalogDescription", "modifiedDate"];
-// // 4.List: will display checked if one record avalable, display details when hover on a checked TableCell.
-// const productGroupByFieldNames = "size"; // must be unique across the same __Master__ 
-// const productExpectingValues = ["S", "M", "L", ""]
-// const productDisplayFieldNames = ['productNumber', 'color', 'standardCost', 'listPrice'];
 
 const crudItemPartialViewPropsInline = getCRUDItemPartialViewPropsInline<IProductDataModel>(
     ViewItemTemplates.Details,
@@ -40,7 +32,7 @@ export default function CompareHtmlTablePartial(): JSX.Element {
     const navigate = useNavigate();
 
     const [compareModel, setCompareModel] = useState<IProductModelCompareModel>();
-    const [headCells, setHeadCells] = useState<HeadCell[]>([]);
+    const [headCells, setHeadCells] = useState<any[]>([]);
     const [__Master__, set__Master__] = useState<any[][]>([]);
 
     useEffect(() => {
@@ -53,23 +45,12 @@ export default function CompareHtmlTablePartial(): JSX.Element {
                 setCompareModel(res);
 
                 if (!!res) {
-                    let newHeadCells = [] as unknown as { id: string, numeric: boolean, disablePadding: boolean, label: string }[];
-                    newHeadCells.push(
-                        {
-                            id: 'productModelID',
-                            numeric: false,
-                            disablePadding: false,
-                            label: 'Category',
-                        },
-                    );
-
-                    res.productModelCompositeModelList.forEach((item, index) => {
-                        newHeadCells.push({
+                    const newHeadCells = res.productModelCompositeModelList.map((item, index) => {
+                        return {
                             id: item.__Master__.productModelID.toString(),
-                            numeric: false,
-                            disablePadding: false,
                             label: item.__Master__.name,
-                        });
+                            width: (100 / res.productModelCompositeModelList.length).toString() + "%",
+                        };
                     });
 
                     setHeadCells(newHeadCells);
@@ -96,14 +77,21 @@ export default function CompareHtmlTablePartial(): JSX.Element {
                     size='small'
                     stickyHeader
                 >
-                    <EnhancedTableHead
-                        hasItemsSelect={false}
-                        order={null}
-                        orderBy={null}
-                        onRequestSort={null}
-                        headCells={headCells}
-                        onMouseOver={null}
-                    />
+                     <TableHead>
+                        <TableRow sx={{
+                            "& th": {
+                                color: "rgba(96, 96, 96)",
+                                backgroundColor: "lightblue"
+                            }
+                        }}>
+                            <TableCell></TableCell>
+                            {!!headCells && headCells.map((cell, index) => (
+                                <TableCell key={cell.id} align="center" sx={{width: cell.width}}>
+                                    <Typography sx={{ textTransform: 'capitalize', fontWeight: 'bold', m: 1 }}>{cell.label}</Typography>
+                                </TableCell>
+                            ))}
+                        </TableRow>
+                    </TableHead>
                     <TableBody>
                         {!!__Master__ && __Master__.map((row, index) => {
                                 return (
@@ -118,35 +106,41 @@ export default function CompareHtmlTablePartial(): JSX.Element {
                                                 </React.Fragment>
                                             )
                                         })}
-                                        <TableCell></TableCell> {/* placeholder */}
                                     </TableRow>}
                                     </React.Fragment>
                                 )
                         })}
-                        <TableRow>
-                            <TableCell colSpan={headCells.length}><Typography component='h6' variant="h6">{t("Product")}</Typography></TableCell>
+                        <TableRow sx={{backgroundColor: 'lightgray'}}>
+                            <TableCell colSpan={headCells.length + 1} align='center'>
+                                <Typography component='h6' variant="subtitle1">{t("Product")}</Typography>
+                            </TableCell>
                         </TableRow>
                         {!!compareModel && !!compareModel.compareResult_Products_Via_ProductModelID &&
                             ConvertObjectToList(compareModel.compareResult_Products_Via_ProductModelID).map((availabilityResult, index) => {
                                 return (<CompareAvailabilityTableRow  key={availabilityResult.key}
-                                    Availabilitykey={availabilityResult.key} Availabilities={availabilityResult.value} />)
+                                    Availabilitykey={availabilityResult.key} Availabilities={availabilityResult.value}
+                                    detailsTableRow={renderProductTableRow(availabilityResult.key)} />)
 
                             })}
-                        <TableRow>
-                            <TableCell></TableCell>
-                            {!!compareModel && compareModel.productModelCompositeModelList.map((row, index) => {
-                                const item = row.products_Via_ProductModelID.find(t=>t.size === "S");
-                                return (
-                                    <TableCell key={index} align="center"> 
-                                        <ProductItemViewsPartial {...crudItemPartialViewPropsInline} item={item} />
-                                    </TableCell>
-                                )})}
-                        </TableRow>
+                        {/* {renderProductTableRow()} */}
                     </TableBody>
                 </Table>
             </TableContainer>
         </>
     );
 
+    function renderProductTableRow(availabilityKey: string) {
+        return <TableRow>
+            <TableCell></TableCell>
+            {!!compareModel && compareModel.productModelCompositeModelList.map((row, index) => {
+                const item = row.products_Via_ProductModelID.find(t => t.size === availabilityKey || !!!t.size && availabilityKey==="NULL");
+                return (
+                    <TableCell key={index} align="center">
+                        <ProductItemViewsPartial {...crudItemPartialViewPropsInline} item={item} />
+                    </TableCell>
+                );
+            })}
+        </TableRow>;
+    }
 }
 

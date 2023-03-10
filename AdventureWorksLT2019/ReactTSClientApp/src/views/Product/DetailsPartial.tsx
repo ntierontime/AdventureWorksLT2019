@@ -148,8 +148,8 @@ export default function DetailsPartial(props: ItemPartialViewProps<IProductDataM
             <CardContent>
                 <Box sx={{ ...scrollableCardContent }}>
                     <Grid container spacing={1}>
-                        <Grid item {...gridColumns}>
-                            <TextField
+                        <Grid item {...gridColumns} sx={{width: '100%'}}>
+                            <TextField 
                                 name='productID'
                                 label={t('ProductID')}
                                 value={item.productID}
