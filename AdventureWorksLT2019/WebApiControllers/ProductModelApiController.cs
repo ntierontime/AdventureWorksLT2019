@@ -37,7 +37,32 @@ namespace AdventureWorksLT2019.WebApiControllers
             var serviceResponse = await _thisService.Search(query);
             return ReturnActionResult(serviceResponse);
         }
+        [HttpGet]
+        public async Task<ActionResult<ProductModelCompositeModel>> Compare1([FromQuery]string[] ids)
+        {
+            ProductModelAdvancedQuery query = new ProductModelAdvancedQuery { PageIndex = 1, PageSize = 3, OrderBys = "ProductModelID~ASC" };
 
+            var listItemRequests = new Dictionary<ProductModelCompositeModel.__DataOptions__, CompositeListItemRequest>();
+
+            listItemRequests.Add(ProductModelCompositeModel.__DataOptions__.Products_Via_ProductModelID,
+                new CompositeListItemRequest()
+                {
+                    PageSize = 100,
+                    OrderBys = "SellStartDate",
+                    PaginationOption = PaginationOptions.NoPagination,
+                });
+
+            listItemRequests.Add(ProductModelCompositeModel.__DataOptions__.ProductModelProductDescriptions_Via_ProductModelID,
+                new CompositeListItemRequest()
+                {
+                    PageSize = 100,
+                    OrderBys = "ModifiedDate",
+                    PaginationOption = PaginationOptions.NoPagination,
+                });
+
+            var serviceResponse = await _thisService.Compare(query, listItemRequests);
+            return Ok(serviceResponse);
+        }
         [HttpGet]
         [HttpPost]
         public async Task<ActionResult<ProductModelCompositeModel>> Compare()

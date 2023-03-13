@@ -26,6 +26,7 @@ import { IProductModelProductDescriptionDataModel } from "src/dataModels/IProduc
 import { default as ProductCreatePartial } from '../Product/CreatePartial';
 import { default as ProductModelCreatePartial } from '../ProductModel/CreatePartial';
 import { default as ProductModelProductDescriptionCreatePartial } from '../ProductModelProductDescription/CreatePartial';
+import { setLoading } from 'src/shared/slices/appSlice';
 
 const wizardSteps = [
     {
@@ -147,6 +148,7 @@ export default function CreateWizardPartial(props: WizardPartialProps<IProductMo
     const [createMessage, setCreateMessage] = useState<string>();
 
     const onSubmit = () => {
+        dispatch(setLoading(true));
         const toSubmitData = {
             __Master__,
             products_Via_ProductModelID,
@@ -165,7 +167,7 @@ export default function CreateWizardPartial(props: WizardPartialProps<IProductMo
                 //console.log(result);
             })
             .catch((error) => { setCreateMessage(t('FailedToSave')); /*console.log(error);*/ })
-            .finally(() => { setCreating(false); console.log('finally'); });
+            .finally(() => { dispatch(setLoading(false)); setCreating(false); console.log('finally'); });
     }
 
     // #endregion 1. Wizard related

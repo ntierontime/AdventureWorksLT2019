@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { styled } from '@mui/material/styles';
-import { Button, Grid, Menu, MenuItem, PaletteMode, Popover } from '@mui/material';
+import { Avatar, Box, Button, Container, Grid, Menu, MenuItem, PaletteMode, Popover, Tooltip } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -50,9 +50,10 @@ const StyledAppBar = styled(MuiAppBar, {
 
 export default function AppBar(props: AppBarProps) {
     const auth = useSelector((state: RootState) => state.auth);
+    const app = useSelector((state: RootState) => state.app);
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
-
+    
     // 1.start Open Profile
     const [anchorProfileEl, setProfileAnchorEl] = useState<HTMLButtonElement | null>(null);
 
@@ -143,7 +144,7 @@ export default function AppBar(props: AppBarProps) {
 
     return (
         <StyledAppBar position="fixed" open={props.open}>
-            <Toolbar >
+            <Toolbar>
                 {(auth && auth.isAuthenticated) && <IconButton
                     color="inherit"
                     aria-label="open drawer"
@@ -156,9 +157,40 @@ export default function AppBar(props: AppBarProps) {
                 >
                     <MenuIcon />
                 </IconButton>}
-                <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+                <Box
+                    component="img"
+                    sx={{
+                        display: { xs: 'none', md: 'flex' },
+                        mr: 1,
+                        height: 30,
+                        width: 30,
+                        maxHeight: { xs: 30, md: 30 },
+                        maxWidth: { xs: 30, md: 30 },
+                    }}
+                    alt="The house from the offer."
+                    src="/logo192.png"
+                />
+                {/* <AccountCircle sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
+                <Typography
+                    variant="h6"
+                    noWrap
+                    component="a"
+                    href="/"
+                    sx={{
+                        mr: 2,
+                        display: { xs: 'none', md: 'flex' },
+                        fontFamily: 'monospace',
+                        fontWeight: 700,
+                        letterSpacing: '.0rem',
+                        color: 'inherit',
+                        textDecoration: 'none',
+                    }}
+                >
                     {props.title}
                 </Typography>
+                <Box sx={{ flexGrow: 1 }}>
+
+                </Box>
 
                 {(!!!auth || !auth.isAuthenticated) &&
                     <>

@@ -26,6 +26,7 @@ import { getAvatarStyle } from 'src/shared/views/ThemeRelated';
 
 import { getProductModelAvatar, IProductModelDataModel } from 'src/dataModels/IProductModelDataModel';
 import { delete1 } from 'src/slices/ProductModelSlice';
+import { setLoading } from 'src/shared/slices/appSlice';
 
 export default function DeletePartial(props: ItemPartialViewProps<IProductModelDataModel>): JSX.Element {
     const { gridColumns, scrollableCardContent, crudViewContainer, buttonContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
@@ -46,6 +47,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IProductModelD
     }, [item]);
 
     const onDelete = () => {
+        dispatch(setLoading(true));
         setDeleting(true)
         setDeleteMessage(t('Deleting'));
         dispatch(delete1({ productModelID: item.productModelID }))
@@ -60,7 +62,7 @@ export default function DeletePartial(props: ItemPartialViewProps<IProductModelD
                 //console.log(result);
             })
             .catch((error) => { setDeleteMessage(t('DeletionFailed')); /*console.log(error);*/ })
-            .finally(() => { setDeleting(true); });
+            .finally(() => { dispatch(setLoading(false)); setDeleting(true); });
     }
 
     const theme = useTheme();

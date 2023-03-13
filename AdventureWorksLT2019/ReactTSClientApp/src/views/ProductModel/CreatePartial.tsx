@@ -25,6 +25,7 @@ import { CrudViewContainers } from 'src/shared/viewModels/CrudViewContainers';
 import { ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps';
 import { IProductModelDataModel, productModelFormValidationWhenCreate } from 'src/dataModels/IProductModelDataModel';
 import { post } from 'src/slices/ProductModelSlice';
+import { setLoading } from 'src/shared/slices/appSlice';
 
 export default function CreatePartial(props: ItemPartialViewProps<IProductModelDataModel>): JSX.Element {
     const { t } = useTranslation();
@@ -72,6 +73,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductModelD
             return;
         }
 
+        dispatch(setLoading(true));
         setCreating(true);
         dispatch(post({ ...data }))
             .then((result: any) => {
@@ -93,7 +95,7 @@ export default function CreatePartial(props: ItemPartialViewProps<IProductModelD
                 //console.log(result);
             })
             .catch((error: any) => { setCreateMessage(t('FailedToSave')); /*console.log(error);*/ })
-            .finally(() => { setCreating(false); console.log('finally'); });
+            .finally(() => { dispatch(setLoading(false)); setCreating(false); console.log('finally'); });
     }
 
 

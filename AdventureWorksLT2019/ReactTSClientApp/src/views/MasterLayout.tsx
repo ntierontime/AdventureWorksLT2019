@@ -10,6 +10,7 @@ import AppDrawer from 'src/views/AppDrawer';
 import { RootState } from 'src/store/CombinedReducers';
 import MasterRoutes from './MasterRoutes';
 import AppFooter from 'src/shared/views/AppFooter';
+import { Backdrop, CircularProgress } from '@mui/material';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -23,6 +24,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function MasterLayout() {
     const { t } = useTranslation();
     const auth = useSelector((state: RootState) => state.auth);
+    const app = useSelector((state: RootState) => state.app);
     const dispatch = useDispatch();
 
     const [drawerOpen, setDrawerOpen] = useState(true);
@@ -54,6 +56,12 @@ export default function MasterLayout() {
                 <DrawerHeader />
                 <MasterRoutes />
                 <AppFooter />
+                <Backdrop
+                    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                    open={app.loading}
+                >
+                    <CircularProgress color="inherit" />
+                </Backdrop>
             </Box>
         </Box>
     );

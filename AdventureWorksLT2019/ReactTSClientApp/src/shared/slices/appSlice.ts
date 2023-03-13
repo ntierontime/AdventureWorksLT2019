@@ -1,9 +1,12 @@
+import * as React from 'react';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IGeoLocation } from "../dataModels/IGeoLocation";
 
 const appSlice = createSlice({
     name: "appSlice",
     initialState: {
+        loading: false,
+        appBarPageTitle: null, // this is a string to display special text or other content.
         geoLocation: {
             IPv4: "",
             city: "",
@@ -26,13 +29,16 @@ const appSlice = createSlice({
             state.geoLocation.longitude = action.payload.longitude;
             state.geoLocation.postal = action.payload.postal;
             state.geoLocation.state =action.payload.state;
-        }
+        },
+        setLoading: (state, action: PayloadAction<boolean>) =>{
+            state.loading = action.payload;
+        },
     },
     extraReducers: builder => {
         
     }
 });
 
-export const { setGeoLocation } = appSlice.actions;
+export const { setGeoLocation, setLoading, } = appSlice.actions;
 
 export default appSlice.reducer;

@@ -1,38 +1,46 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Checkbox, FormControlLabel, IconButton, Link, Pagination, Popover, Stack, Switch, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
-
-import AccountTreeIcon from '@mui/icons-material/AccountTree';
-import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-// un-comment /*getCurrency,*/ if you display money
-import { /*getCurrency,*/ i18nFormats } from 'src/i18n';
-import { ListPartialViewProps } from 'src/shared/viewModels/ListPartialViewProps';
-import { QueryOrderDirections } from 'src/shared/dataModels/QueryOrderDirections';
-import { ViewItemTemplates } from 'src/shared/viewModels/ViewItemTemplates';
-import { EnhancedTableHead } from 'src/shared/views/EnhancedTableHead';
-import { Item } from 'src/shared/views/Item';
-import { getComparator, HeadCell, stableSort } from 'src/shared/views/TableFeatures';
-
-import { RootState } from 'src/store/CombinedReducers';
-
-import { IProductModelDataModel } from 'src/dataModels/IProductModelDataModel';
-import { IProductModelIdentifier, getIProductModelIdentifier, getRouteParamsOfIProductModelIdentifier } from 'src/dataModels/IProductModelQueries';
-import CompareHtmlTablePartial from './CompareHtmlTablePartial';
+import { setLoading } from 'src/shared/slices/appSlice';
+import { productModelApi } from 'src/apiClients/ProductModelApi';
+import { IProductModelAdvancedQuery } from 'src/dataModels/IProductModelQueries';
+import { IProductModelCompareModel } from 'src/dataModels/IProductModelCompareModel';
+import CompareHtmlTablePartial from 'src/views/ProductModel/CompareHtmlTablePartial';
+import { localStorageKeys } from 'src/dataModels/localStorageKeys';
+import { getLocalStorage, setLocalStorage } from 'src/shared/utility';
 
 export default function CompareHtmlTablePage(): JSX.Element {
+    const dispatch = useDispatch();
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const [compareModel, setCompareModel] = useState<IProductModelCompareModel>();
+
+    useEffect(() => {
+        dispatch(setLoading(true));
+        const localStorageData = getLocalStorage<IProductModelCompareModel>(localStorageKeys.ProductModelCompareData);
+        if(!!localStorageData) {
+            setCompareModel(localStorageData);
+            dispatch(setLoading(false));
+            return;
+        }
+        // // if you want to change page title <html><head><title>...</title></head></html>
+        // document.title = 
+        productModelApi.Compare({ pageIndex: 1, pageSize: 4 } as unknown as IProductModelAdvancedQuery)
+            .then((res) => {
+                // console.log(res);
+                setCompareModel(res);
+                setLocalStorage(localStorageKeys.ProductModelCompareData, res);
+            })
+            .finally(() => {dispatch(setLoading(false)); });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <>
-            <CompareHtmlTablePartial />
+            <CompareHtmlTablePartial data={compareModel}/>
         </>
     );
 }

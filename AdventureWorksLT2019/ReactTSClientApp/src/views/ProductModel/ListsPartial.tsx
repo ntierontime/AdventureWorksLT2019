@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { useDispatch, } from 'react-redux';
+import { useDispatch, useSelector, } from 'react-redux';
 import { Box, Paper, Dialog, DialogContent, Collapse, Snackbar, ButtonGroup, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -21,15 +21,17 @@ import CarouselPartial from './CarouselPartial';
 import HtmlTablePartial from './HtmlTablePartial';
 import TilesPartial from './TilesPartial';
 import ItemViewsPartial from './ItemViewsPartial';
+import { RootState } from 'src/store/CombinedReducers';
+import { setLoading } from 'src/shared/slices/appSlice';
 
 export default function ListsPartial(props: ListsPartialViewProps<IProductModelAdvancedQuery, IProductModelDataModel>): JSX.Element {
     const { advancedQuery, setAdvancedQuery, defaultAdvancedQuery, listItems, initialLoadFromServer, hasListToolBar, listToolBarSetting, hasAdvancedSearch, addNewButtonContainer } = props;
     const rowCount = listItems.length;
-
+    const app = useSelector((state: RootState) => state.app);
+    
     const dispatch = useDispatch<AppDispatch>();
 
     const [listViewOption, setListViewOption] = useState<ListViewOptions>(ListViewOptions.Table);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
     const serverOrderBys = getProductModelQueryOrderBySettings();
     const [itemsPerRow, setItemsPerRow] = useState<number>(3); // only for ListViewOptions.Tiles, should use MediaQuery(windows size)
 
@@ -124,18 +126,18 @@ export default function ListsPartial(props: ListsPartialViewProps<IProductModelA
     // 4.1. Bottom Toolbar - Pagination - Change Page
     const handlePaginationChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
         advancedQuery.pageIndex = value;
-        if (!isLoading) {
-            setIsLoading(true);
-            dispatch(search(advancedQuery)).finally(() => { setIsLoading(false); });
+        if (!app.loading) {
+            setLoading(true);
+            dispatch(search(advancedQuery)).finally(() => { setLoading(false); });
         }
     };
 
     // 4.2. Bottom Toolbar - Pagination - Load More
     const handlePaginationLoadMore = (event: React.ChangeEvent<unknown>, value: number) => {
         advancedQuery.pageIndex++;
-        if (!isLoading) {
-            setIsLoading(true);
-            dispatch(search(advancedQuery)).finally(() => { setIsLoading(false); });
+        if (!app.loading) {
+            setLoading(true);
+            dispatch(search(advancedQuery)).finally(() => { setLoading(false); });
         }
     };
 
@@ -147,8 +149,9 @@ export default function ListsPartial(props: ListsPartialViewProps<IProductModelA
     }, []);
 
     const submitAdvancedSearch = (query: IProductModelAdvancedQuery) => {
-        if (!isLoading) {
-            setIsLoading(true);
+        dispatch(setLoading(true));
+        if (!app.loading) {
+            setLoading(true);
             dispatch(search({ ...query }))
                 .then((result) => {
                     if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
@@ -158,7 +161,7 @@ export default function ListsPartial(props: ListsPartialViewProps<IProductModelA
                     //console.log(result);
                 })
                 .catch((error) => {  /*console.log(error);*/ })
-                .finally(() => { setIsLoading(false); setAdvancedQuery(query); /*console.log('finally'); console.log(query);*/ });
+                .finally(() => { setLoading(false); setAdvancedQuery(query); /*console.log('finally'); console.log(query);*/ });
         }
     };
 

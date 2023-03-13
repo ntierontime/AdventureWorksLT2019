@@ -31,6 +31,7 @@ import { getAvatarStyle } from 'src/shared/views/ThemeRelated';
 import { getProductModelAvatar, IProductModelDataModel, productModelFormValidationWhenEdit } from 'src/dataModels/IProductModelDataModel';
 import { getIProductModelIdentifier } from 'src/dataModels/IProductModelQueries';
 import { put } from 'src/slices/ProductModelSlice';
+import { setLoading } from 'src/shared/slices/appSlice';
 
 export default function EditPartial(props: ItemPartialViewProps<IProductModelDataModel>): JSX.Element {
     const { gridColumns, scrollableCardContent, crudViewContainer, buttonContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item
@@ -69,6 +70,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelDat
 
 
     const onSubmit = (data: IProductModelDataModel) => {
+        dispatch(setLoading(true));
         setSaving(true);
         dispatch(put({ identifier: getIProductModelIdentifier(data), data: { ...data } }))
             .then((result: any) => {
@@ -82,7 +84,7 @@ export default function EditPartial(props: ItemPartialViewProps<IProductModelDat
                 //console.log(result);
             })
             .catch((error: any) => { setSaveMessage(t('FailedToSave')); /*console.log(error);*/ })
-            .finally(() => { setSaving(false); console.log('finally'); });
+            .finally(() => { dispatch(setLoading(true)); setSaving(false); console.log('finally'); });
     }
 
     const theme = useTheme();
