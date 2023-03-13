@@ -30,7 +30,7 @@ function App() {
         //geGeoLocation()
 
     }, [])
-
+    
     return (
         <div className="App">
             <BrowserRouter>

@@ -28,51 +28,6 @@ const crudItemPartialViewPropsInline = getCRUDItemPartialViewPropsInline<IProduc
     null
 );
 
-
-function ProductTableRows(data: IProductModelCompareModel, headCellsLength: number): JSX.Element {
-    const { t } = useTranslation();
-    const [open, setOpen] = React.useState(true);
-
-    return (
-        <>
-            <TableRow sx={{ backgroundColor: 'lightgray' }}>
-                <TableCell colSpan={headCellsLength + 1} align='center'>
-                    <Typography component='h6' variant="subtitle1">{t("Product")}
-                        <IconButton
-                            aria-label="expand row"
-                            size="small"
-                            onClick={() => setOpen(!open)}
-                        >
-                            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                        </IconButton>
-                    </Typography>
-                </TableCell>
-            </TableRow>
-            {open && !!data && !!data.compareResult_Products_Via_ProductModelID &&
-                ConvertObjectToList(data.compareResult_Products_Via_ProductModelID).map((availabilityResult, index) => {
-                    return (<CompareAvailabilityTableRow key={availabilityResult.key}
-                        Availabilitykey={availabilityResult.key} Availabilities={availabilityResult.value}
-                        detailsTableRow={ProductTableRow(availabilityResult.key, data)} />)
-
-                })}
-        </>
-    );
-}
-
-function ProductTableRow(availabilityKey: string, data: IProductModelCompareModel): JSX.Element {
-    return <TableRow>
-        <TableCell></TableCell>
-        {!!data && data.productModelCompositeModelList.map((row, index) => {
-            const item = row.products_Via_ProductModelID.find(t => t.size === availabilityKey || !!!t.size && availabilityKey === "NULL");
-            return (
-                <TableCell key={index} align="center">
-                    <ProductItemViewsPartial {...crudItemPartialViewPropsInline} item={item} />
-                </TableCell>
-            );
-        })}
-    </TableRow>;
-}
-
 export default function CompareHtmlTablePartial(props: CompareHtmlTableProps<IProductModelCompareModel>): JSX.Element {
     const { data } = props;
     const app = useSelector((state: RootState) => state.app);
@@ -145,9 +100,53 @@ export default function CompareHtmlTablePartial(props: CompareHtmlTableProps<IPr
                             </React.Fragment>
                         )
                     })}
-                    {ProductTableRows(data, headCells.length + 1)}
+                    {Products_Via_ProductModelIDTableRows(data, headCells.length + 1)}
                 </TableBody>
             </Table>
         </TableContainer>
     );
+}
+
+function Products_Via_ProductModelIDTableRows(data: IProductModelCompareModel, headCellsLength: number): JSX.Element {
+    const { t } = useTranslation();
+    const [open, setOpen] = React.useState(true);
+
+    return (
+        <>
+            <TableRow sx={{ backgroundColor: 'lightgray' }}>
+                <TableCell colSpan={headCellsLength + 1} align='center'>
+                    <Typography component='h6' variant="subtitle1">{t("Product")}
+                        <IconButton
+                            aria-label="expand row"
+                            size="small"
+                            onClick={() => setOpen(!open)}
+                        >
+                            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                        </IconButton>
+                    </Typography>
+                </TableCell>
+            </TableRow>
+            {open && !!data && !!data.compareResult_Products_Via_ProductModelID &&
+                ConvertObjectToList(data.compareResult_Products_Via_ProductModelID).map((availabilityResult, index) => {
+                    return (<CompareAvailabilityTableRow key={availabilityResult.key}
+                        Availabilitykey={availabilityResult.key} Availabilities={availabilityResult.value}
+                        detailsTableRow={Products_Via_ProductModelIDTableRow(availabilityResult.key, data)} />)
+
+                })}
+        </>
+    );
+}
+
+function Products_Via_ProductModelIDTableRow(availabilityKey: string, data: IProductModelCompareModel): JSX.Element {
+    return <TableRow>
+        <TableCell></TableCell>
+        {!!data && data.productModelCompositeModelList.map((row, index) => {
+            const item = row.products_Via_ProductModelID.find(t => t.size === availabilityKey || !!!t.size && availabilityKey === "NULL");
+            return (
+                <TableCell key={index} align="center">
+                    <ProductItemViewsPartial {...crudItemPartialViewPropsInline} item={item} />
+                </TableCell>
+            );
+        })}
+    </TableRow>;
 }

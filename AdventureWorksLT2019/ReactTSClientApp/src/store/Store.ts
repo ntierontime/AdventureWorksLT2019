@@ -1,5 +1,5 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
-import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'reduxjs-toolkit-persist'
+import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, persistStore } from 'reduxjs-toolkit-persist'
 import storage from 'reduxjs-toolkit-persist/lib/storage' // defaults to localStorage for web
 
 import { reducers } from './CombinedReducers'
@@ -29,5 +29,5 @@ const store = configureStore({
 })
 
 export type AppDispatch = typeof store.dispatch
-
+export const persistor = persistStore(store);
 export default store
