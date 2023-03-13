@@ -127,8 +127,8 @@ export default function ListsPartial(props: ListsPartialViewProps<IProductModelA
     const handlePaginationChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
         advancedQuery.pageIndex = value;
         if (!app.loading) {
-            setLoading(true);
-            dispatch(search(advancedQuery)).finally(() => { setLoading(false); });
+            dispatch(setLoading(true));
+            dispatch(search(advancedQuery)).finally(() => { dispatch(setLoading(false)); });
         }
     };
 
@@ -136,8 +136,8 @@ export default function ListsPartial(props: ListsPartialViewProps<IProductModelA
     const handlePaginationLoadMore = (event: React.ChangeEvent<unknown>, value: number) => {
         advancedQuery.pageIndex++;
         if (!app.loading) {
-            setLoading(true);
-            dispatch(search(advancedQuery)).finally(() => { setLoading(false); });
+            dispatch(setLoading(true));
+            dispatch(search(advancedQuery)).finally(() => { dispatch(setLoading(false)); });
         }
     };
 
@@ -151,7 +151,6 @@ export default function ListsPartial(props: ListsPartialViewProps<IProductModelA
     const submitAdvancedSearch = (query: IProductModelAdvancedQuery) => {
         dispatch(setLoading(true));
         if (!app.loading) {
-            setLoading(true);
             dispatch(search({ ...query }))
                 .then((result) => {
                     if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
@@ -161,7 +160,7 @@ export default function ListsPartial(props: ListsPartialViewProps<IProductModelA
                     //console.log(result);
                 })
                 .catch((error) => {  /*console.log(error);*/ })
-                .finally(() => { setLoading(false); setAdvancedQuery(query); /*console.log('finally'); console.log(query);*/ });
+                .finally(() => { dispatch(setLoading(false)); setAdvancedQuery(query); /*console.log('finally'); console.log(query);*/ });
         }
     };
 

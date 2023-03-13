@@ -7,6 +7,7 @@ import { reducers } from './CombinedReducers'
 const persistConfig = {
     key: 'root',
     storage,
+    blacklist: ['app.loading']
 }
 
 const persistedReducer = persistReducer(persistConfig, reducers)

@@ -8,7 +8,7 @@ import { CookieKeys } from './shared/CookieKeys';
 import { getThemeDesignTokens } from './shared/views/ThemeRelated';
 import MasterLayout from './views/MasterLayout';
 import { useEffect } from 'react';
-import { setGeoLocation } from './shared/slices/appSlice';
+import { setGeoLocation, setLoading } from './shared/slices/appSlice';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 
@@ -28,7 +28,6 @@ function App() {
     useEffect(() => {
         //passing getData method to the lifecycle method
         //geGeoLocation()
-
     }, [])
     
     return (
