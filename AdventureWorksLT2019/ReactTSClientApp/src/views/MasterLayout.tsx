@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import { setIsAuthenticated } from 'src/shared/slices/authenticationSlice';
+import { setIsAuthenticated } from 'src/slices/authenticationSlice';
 import AppBar from 'src/shared/views/AppBar';
 import AppDrawer from 'src/views/AppDrawer';
 import { RootState } from 'src/store/CombinedReducers';
@@ -55,7 +55,7 @@ export default function MasterLayout() {
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <DrawerHeader />
                 <MasterRoutes />
-                <AppFooter />
+                {/* <AppFooter /> */}
                 <Backdrop
                     sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                     open={app.loading}

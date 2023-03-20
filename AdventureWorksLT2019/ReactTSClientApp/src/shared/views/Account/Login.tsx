@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import "src/i18n"
 
 import { RootState } from 'src/store/CombinedReducers';
-import { login } from 'src/shared/slices/authenticationSlice';
+import { login } from 'src/slices/authenticationSlice';
 import { LoginViewModel } from 'src/shared/viewModels/LoginViewModel';
 import { AppDispatch } from 'src/store/Store';
 import { Stack } from '@mui/system';

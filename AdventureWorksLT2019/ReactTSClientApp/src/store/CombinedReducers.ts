@@ -1,7 +1,9 @@
 import { combineReducers } from "@reduxjs/toolkit";
 
-import app from "src/shared/slices/appSlice"
-import auth from "src/shared/slices/authenticationSlice"
+import app from "src/slices/appSlice"
+import auth from "src/slices/authenticationSlice"
+import siteData from 'src/slices/siteDataSlice'
+import userPreference from "src/slices/userPreferenceDataSlice"
 
 import buildVersionList from 'src/slices/BuildVersionSlice'
 import errorLogList from 'src/slices/ErrorLogSlice'
@@ -19,6 +21,8 @@ import salesOrderHeaderList from 'src/slices/SalesOrderHeaderSlice'
 export const reducers = combineReducers({
     app: app,
     auth: auth,
+    siteData: siteData,
+    userPreference: userPreference,
 
     buildVersionList,
     errorLogList,
@@ -35,4 +39,3 @@ export const reducers = combineReducers({
 });
 
 export type RootState = ReturnType<typeof reducers>
-

@@ -22,7 +22,7 @@ import HtmlTablePartial from './HtmlTablePartial';
 import TilesPartial from './TilesPartial';
 import ItemViewsPartial from './ItemViewsPartial';
 import { RootState } from 'src/store/CombinedReducers';
-import { setLoading } from 'src/shared/slices/appSlice';
+import { setLoading } from 'src/slices/appSlice';
 
 export default function ListsPartial(props: ListsPartialViewProps<IProductModelAdvancedQuery, IProductModelDataModel>): JSX.Element {
     const { advancedQuery, setAdvancedQuery, defaultAdvancedQuery, listItems, initialLoadFromServer, hasListToolBar, listToolBarSetting, hasAdvancedSearch, addNewButtonContainer } = props;

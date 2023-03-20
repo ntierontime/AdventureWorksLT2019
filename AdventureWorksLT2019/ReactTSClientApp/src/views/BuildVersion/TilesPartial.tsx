@@ -35,6 +35,7 @@ export default function TilesPartial(props: ListPartialViewProps<IBuildVersionDa
         setCurrentItemOnDialog(!!listItems && listItems.length > 0 && currentItemIndex >= 0 && currentItemIndex < listItems.length ? listItems[currentItemIndex] : null);
     }, [currentItemIndex, listItems, setCurrentItemOnDialog]);
 
+    
     return (
         <>
             <InfiniteScroll

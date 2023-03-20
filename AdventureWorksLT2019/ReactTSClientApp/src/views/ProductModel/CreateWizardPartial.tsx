@@ -26,7 +26,7 @@ import { IProductModelProductDescriptionDataModel } from "src/dataModels/IProduc
 import { default as ProductCreatePartial } from '../Product/CreatePartial';
 import { default as ProductModelCreatePartial } from '../ProductModel/CreatePartial';
 import { default as ProductModelProductDescriptionCreatePartial } from '../ProductModelProductDescription/CreatePartial';
-import { setLoading } from 'src/shared/slices/appSlice';
+import { setLoading } from 'src/slices/appSlice';
 
 const wizardSteps = [
     {

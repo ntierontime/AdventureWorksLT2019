@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IGeoLocation } from "../dataModels/IGeoLocation";
+import { IGeoLocation } from "../shared/dataModels/IGeoLocation";
 
 const appSlice = createSlice({
     name: "appSlice",

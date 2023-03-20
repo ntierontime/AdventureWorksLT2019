@@ -31,7 +31,7 @@ import { getAvatarStyle } from 'src/shared/views/ThemeRelated';
 import { getProductModelAvatar, IProductModelDataModel, productModelFormValidationWhenEdit } from 'src/dataModels/IProductModelDataModel';
 import { getIProductModelIdentifier } from 'src/dataModels/IProductModelQueries';
 import { put } from 'src/slices/ProductModelSlice';
-import { setLoading } from 'src/shared/slices/appSlice';
+import { setLoading } from 'src/slices/appSlice';
 
 export default function EditPartial(props: ItemPartialViewProps<IProductModelDataModel>): JSX.Element {
     const { gridColumns, scrollableCardContent, crudViewContainer, buttonContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item

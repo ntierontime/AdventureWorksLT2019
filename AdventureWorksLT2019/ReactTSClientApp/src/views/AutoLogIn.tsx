@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { LinearProgress } from "@mui/material";
 import { AppDispatch } from "src/store/Store";
-import { setIsAuthenticated } from "src/shared/slices/authenticationSlice";
+import { setIsAuthenticated } from "src/slices/authenticationSlice";
 import { useNavigate } from "react-router-dom";
 
 export default function AutoLogIn() {

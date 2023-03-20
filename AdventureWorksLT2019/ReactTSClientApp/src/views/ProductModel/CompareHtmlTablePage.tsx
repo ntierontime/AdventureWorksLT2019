@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import { setLoading } from 'src/shared/slices/appSlice';
+import { setLoading } from 'src/slices/appSlice';
 import { productModelApi } from 'src/apiClients/ProductModelApi';
 import { IProductModelAdvancedQuery } from 'src/dataModels/IProductModelQueries';
 import { IProductModelCompareModel } from 'src/dataModels/IProductModelCompareModel';

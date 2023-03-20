@@ -26,7 +26,7 @@ import { getAvatarStyle } from 'src/shared/views/ThemeRelated';
 
 import { getProductModelAvatar, IProductModelDataModel } from 'src/dataModels/IProductModelDataModel';
 import { delete1 } from 'src/slices/ProductModelSlice';
-import { setLoading } from 'src/shared/slices/appSlice';
+import { setLoading } from 'src/slices/appSlice';
 
 export default function DeletePartial(props: ItemPartialViewProps<IProductModelDataModel>): JSX.Element {
     const { gridColumns, scrollableCardContent, crudViewContainer, buttonContainer, item, isItemSelected, handleSelectItemClick, changeViewItemTemplate } = props; // item

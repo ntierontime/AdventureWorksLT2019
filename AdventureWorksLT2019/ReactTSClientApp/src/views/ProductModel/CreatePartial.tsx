@@ -25,7 +25,7 @@ import { CrudViewContainers } from 'src/shared/viewModels/CrudViewContainers';
 import { ItemPartialViewProps } from 'src/shared/viewModels/ItemPartialViewProps';
 import { IProductModelDataModel, productModelFormValidationWhenCreate } from 'src/dataModels/IProductModelDataModel';
 import { post } from 'src/slices/ProductModelSlice';
-import { setLoading } from 'src/shared/slices/appSlice';
+import { setLoading } from 'src/slices/appSlice';
 
 export default function CreatePartial(props: ItemPartialViewProps<IProductModelDataModel>): JSX.Element {
     const { t } = useTranslation();

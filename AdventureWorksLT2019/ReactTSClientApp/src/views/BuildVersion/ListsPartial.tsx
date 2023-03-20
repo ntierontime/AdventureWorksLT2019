@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { useDispatch, } from 'react-redux';
+import { useDispatch, useSelector, } from 'react-redux';
 import { Box, Paper, Dialog, DialogContent, Collapse, Snackbar, ButtonGroup, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
+import { IListResponse } from "src/shared/apis/IListResponse";
 import { AppDispatch } from 'src/store/Store';
 import { ListsPartialViewProps } from 'src/shared/viewModels/ListsPartialViewProps';
 import ListToolBar, { ListToolBarProps } from 'src/shared/views/ListToolBar';
@@ -21,9 +22,14 @@ import CarouselPartial from './CarouselPartial';
 import HtmlTablePartial from './HtmlTablePartial';
 import TilesPartial from './TilesPartial';
 import ItemViewsPartial from './ItemViewsPartial';
+import { RootState } from 'src/store/CombinedReducers';
+import { setBuildVersionsSiteData } from 'src/slices/siteDataSlice';
+import moment from 'moment';
 
 export default function ListsPartial(props: ListsPartialViewProps<IBuildVersionAdvancedQuery, IBuildVersionDataModel>): JSX.Element {
-    const { advancedQuery, setAdvancedQuery, defaultAdvancedQuery, listItems, initialLoadFromServer, hasListToolBar, listToolBarSetting, hasAdvancedSearch, addNewButtonContainer } = props;
+    const siteData = useSelector((state: RootState) => state.siteData.buildVersions);
+    const { advancedQuery, setAdvancedQuery, defaultAdvancedQuery, initialLoadFromServer, hasListToolBar, listToolBarSetting, hasAdvancedSearch, addNewButtonContainer } = props;
+    const listItems = siteData?.data ?? [];
     const rowCount = listItems.length;
 
     const dispatch = useDispatch<AppDispatch>();
@@ -140,9 +146,13 @@ export default function ListsPartial(props: ListsPartialViewProps<IBuildVersionA
     };
 
     useEffect(() => {
-        if (initialLoadFromServer) {
+        // if (initialLoadFromServer) {
+        //     submitAdvancedSearch(advancedQuery);
+        // }
+        if(!!!siteData || !!!siteData.refreshDataTime || moment(siteData.refreshDataTime) <= moment()) {
             submitAdvancedSearch(advancedQuery);
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -152,6 +162,10 @@ export default function ListsPartial(props: ListsPartialViewProps<IBuildVersionA
             dispatch(search({ ...query }))
                 .then((result) => {
                     if (!!result && !!result.meta && result.meta.requestStatus === 'fulfilled') { // success
+                        const typedResult = result.payload as unknown as IListResponse<IBuildVersionDataModel[]>; 
+                        if(!!result.payload && typedResult.status) {
+                            dispatch(setBuildVersionsSiteData(typedResult.responseBody));
+                        }
                     }
                     else { // failed
                     }

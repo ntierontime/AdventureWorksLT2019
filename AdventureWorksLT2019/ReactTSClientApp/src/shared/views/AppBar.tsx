@@ -18,11 +18,12 @@ import i18next from 'i18next';
 import { drawerWidth } from "../constants";
 import { Item } from './Item';
 import { supportedLngs } from 'src/i18n';
-import { logout } from 'src/shared/slices/authenticationSlice';
+import { logout } from 'src/slices/authenticationSlice';
 import { AppDispatch } from 'src/store/Store';
 import { useNavigate } from 'react-router-dom';
 import { Stack } from '@mui/system';
 import { RootState } from 'src/store/CombinedReducers';
+import { setLanguage, setTheme } from 'src/slices/userPreferenceDataSlice';
 
 interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
@@ -49,8 +50,9 @@ const StyledAppBar = styled(MuiAppBar, {
 }));
 
 export default function AppBar(props: AppBarProps) {
-    const auth = useSelector((state: RootState) => state.auth);
     const app = useSelector((state: RootState) => state.app);
+    const auth = useSelector((state: RootState) => state.auth);
+    const userPreference = useSelector((state: RootState) => state.userPreference);
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     
@@ -73,14 +75,11 @@ export default function AppBar(props: AppBarProps) {
     const [anchorElLanguage, setAnchorLanguage] = useState()
     const { t, i18n } = useTranslation();
     const openLanguage = Boolean(anchorElLanguage);
-    const [language, setLanguage] = useState('')
     const [languages, setLanguages] = useState([])
     const changeLanguage = (language: string) => {
         i18n.changeLanguage(language);
-        setLanguage(i18next.language);
+        dispatch(setLanguage(i18next.language));
         setAnchorLanguage(null);
-        const cookies = new Cookies();
-        cookies.set(CookieKeys.Language, i18next.language);
     }
     const handleLanguageOpen = (event: any) => {
         setAnchorLanguage(event.currentTarget);
@@ -94,13 +93,11 @@ export default function AppBar(props: AppBarProps) {
     // 1.2.Start Change Language
     const [anchorElTheme, setAnchorTheme] = useState()
     const openTheme = Boolean(anchorElTheme);
-    const [theme, setTheme] = useState('')
     const [themes, setThemes] = useState([])
     const handleChangeTheme = (theme1: PaletteMode) => {
-        setTheme(theme1);
+        dispatch(setTheme(theme1));
         setAnchorTheme(null);
-        localStorage.setItem(CookieKeys.Theme, theme1);
-        window.location.reload();
+        //window.location.reload();
     }
     const handleThemeOpen = (event: any) => {
         setAnchorTheme(event.currentTarget);
@@ -121,25 +118,9 @@ export default function AppBar(props: AppBarProps) {
         // you can do async server request and fill up form
         // 1.1. Language
         setLanguages(supportedLngs);
-        const cookies = new Cookies();
-        const language = cookies.get(CookieKeys.Language);
-        if (language) {
-            setLanguage(language);
-            i18n.changeLanguage(language);
-        }
-        else {
-            setLanguage(i18n.language);
-        }
 
         // 1.2. Theme
         setThemes(['light', 'dark']);
-        const theme1 = localStorage.getItem(CookieKeys.Theme);
-        if (theme1) {
-            setTheme(theme1);
-        }
-        else {
-            setTheme('dark');
-        }
     }, [i18n]);
 
     return (
@@ -229,7 +210,7 @@ export default function AppBar(props: AppBarProps) {
                                                 onClick={handleLanguageOpen}
                                                 size="small"
                                                 color="inherit">
-                                                {language}
+                                                {userPreference.language}
                                             </Button>
                                             <Menu
                                                 id="language-appbar"
@@ -270,7 +251,7 @@ export default function AppBar(props: AppBarProps) {
                                                 color="inherit"
                                                 size="small"
                                             >
-                                                {theme}
+                                                {userPreference.theme}
                                             </Button>
                                             <Menu
                                                 id="language-appbar"
