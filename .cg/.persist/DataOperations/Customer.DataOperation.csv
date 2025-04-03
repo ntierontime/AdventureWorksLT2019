@@ -1,2 +1,0 @@
-﻿TypeDeclarationContextName,Name,Enabled,DataOperationType,DataOperationUIOption,DataOperationTarget,ExposedLayer,TargetPropertyList,DefaultOrder
-Customer,NameStyle,True,Update,ImmediateServerSideUpdate,BooleanProperty,All,NameStyle,0

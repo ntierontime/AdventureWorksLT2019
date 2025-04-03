@@ -1,0 +1,370 @@
+import {
+    Box, Checkbox, Divider, FormControl, IconButton, InputAdornment, InputLabel, MenuItem,
+    Select, SelectChangeEvent, OutlinedInput, ToggleButton, ToggleButtonGroup, Toolbar, Tooltip, Typography, ButtonGroup
+} from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import DeleteIcon from '@mui/icons-material/Delete';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import PlayCircleOutlinedIcon from '@mui/icons-material/PlayCircleOutlined';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import SearchIcon from '@mui/icons-material/Search';
+import ViewModuleIcon from '@mui/icons-material/ViewModule';
+
+import { useTranslation } from 'react-i18next';
+
+import { ExpandMoreIconButton } from 'src/shared/views/ExpandMoreIconButton';
+import { ListViewOptions } from 'src/shared/views/ListViewOptions';
+import { IBaseQuery } from '../dataModels/IBaseQuery';
+import { IQueryOrderBySetting } from '../viewModels/IQueryOrderBySetting';
+import { PaginationOptions } from '../dataModels/PaginationOptions';
+import { INameValuePair } from '../dataModels/INameValuePair';
+
+export interface ListToolBarSetting {
+    textSearchPlaceHolder: string;
+    hasListViewOptionsSelect: boolean;
+    availableListViewOptions: ListViewOptions[];
+    hasItemsSelect: boolean;
+    hasBulkDelete: boolean;
+    hasBulkUpdate: boolean;
+    hasItemsPerRowSelect: boolean;
+    hasPageSizeSelect: boolean;
+    hasOrderBySelect: boolean;
+    hasSearch: boolean;
+    hasAdvancedSearchAccordion: boolean;
+    hasAdvancedSearchDialog: boolean;
+}
+
+export interface ListToolBarProps<TAdvancedQuery, TIdentifier> extends ListToolBarSetting {
+    advancedQuery: TAdvancedQuery;
+    defaultAdvancedQuery: TAdvancedQuery
+    setAdvancedQuery: React.Dispatch<React.SetStateAction<TAdvancedQuery>>;
+    setAdvancedQueryInSlice?: (advancedQuery: TAdvancedQuery) => void;
+    rowCount: number;
+    submitAdvancedSearch: (query: TAdvancedQuery) => void;
+
+    listViewOption: ListViewOptions;
+    setListViewOption: React.Dispatch<React.SetStateAction<ListViewOptions>>;
+
+    setSelected: React.Dispatch<React.SetStateAction<TIdentifier[]>>;
+    numSelected: number;
+    handleSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
+
+    handleDeleteSelected: () => void;
+
+    itemsPerRow: number;
+    setItemsPerRow: React.Dispatch<React.SetStateAction<number>>;
+
+    availablePageSizes: INameValuePair[];
+
+    serverOrderBys: IQueryOrderBySetting[];
+
+    advancedSearchExpanded: boolean;
+    handleAdvancedSearchExpandClick: () => void;
+    handleAdvancedSearchDialogOpen: () => void;
+
+    hasAddNewButton: boolean; // this is a calculated value based on ListsPartialViewProps.addNewButtonContainer
+    handleAddNewClick: () => void;
+}
+
+export default function ListToolBar<TAdvancedQuery extends IBaseQuery, TIdentifier>(props: ListToolBarProps<TAdvancedQuery, TIdentifier>): JSX.Element {
+    const {
+        textSearchPlaceHolder,
+        advancedQuery, defaultAdvancedQuery, setAdvancedQuery, setAdvancedQueryInSlice,
+        rowCount,
+        submitAdvancedSearch,
+
+        hasItemsSelect, setSelected, numSelected,
+        handleSelectAllClick,
+
+        hasBulkDelete,
+        handleDeleteSelected,
+        hasBulkUpdate,
+
+        hasListViewOptionsSelect, availableListViewOptions, listViewOption, setListViewOption,
+
+        hasPageSizeSelect, availablePageSizes,
+
+        hasItemsPerRowSelect, itemsPerRow, setItemsPerRow,
+
+        hasOrderBySelect, serverOrderBys,
+
+        hasSearch,
+        hasAdvancedSearchAccordion,
+        advancedSearchExpanded,
+        handleAdvancedSearchExpandClick,
+        hasAdvancedSearchDialog,
+        handleAdvancedSearchDialogOpen,
+
+        hasAddNewButton,
+        handleAddNewClick,
+    } = props;
+    const { t } = useTranslation();
+
+    // 1.2. Top Toolbar - Refresh
+    const handleRefresh = () => {
+        if(!!setAdvancedQuery) { setAdvancedQuery(defaultAdvancedQuery); }
+        if(!!setAdvancedQueryInSlice) { setAdvancedQueryInSlice(defaultAdvancedQuery); }
+        setSelected([]);
+        submitAdvancedSearch(defaultAdvancedQuery);
+    };
+
+    // 1.3. Top Toolbar - Change ListViewOptions, MOVED
+    const handleChangeListViewOptions = (
+        event: React.MouseEvent<HTMLElement>,
+        newSetListViewOption: ListViewOptions,
+    ) => {
+        if (!!!newSetListViewOption) {
+            return;
+        }
+        let newAdvancedQuery = { ...advancedQuery };
+        if (newSetListViewOption === ListViewOptions.Table) {
+            newAdvancedQuery = { ...advancedQuery, pageSize: 10, pageIndex: 1, paginationOption: PaginationOptions.Paged};
+            if(!!setAdvancedQuery) { setAdvancedQuery(newAdvancedQuery); }
+            if(!!setAdvancedQueryInSlice) { setAdvancedQueryInSlice(newAdvancedQuery); }
+        }
+        else {
+            newAdvancedQuery = { ...advancedQuery, pageSize: 12 * Math.floor(Math.sqrt(itemsPerRow)), pageIndex: 1, paginationOption: PaginationOptions.LoadMore};
+            if(!!setAdvancedQuery) { setAdvancedQuery(newAdvancedQuery); }
+            if(!!setAdvancedQueryInSlice) { setAdvancedQueryInSlice(newAdvancedQuery); }
+        }
+        setListViewOption(newSetListViewOption);
+
+        submitAdvancedSearch(newAdvancedQuery);
+    };
+
+    // 1.4.1. Top Toolbar only when ListViewOptions.Table - Change PageSize
+    const handleChangePageSize = (event: SelectChangeEvent<number>) => {
+        const newAdvancedQuery = { ...advancedQuery, pageSize: event.target.value as number, pageIndex: 1 };
+        if(!!setAdvancedQuery) { setAdvancedQuery(newAdvancedQuery); }
+        if(!!setAdvancedQueryInSlice) { setAdvancedQueryInSlice(newAdvancedQuery); }
+
+        submitAdvancedSearch(newAdvancedQuery);
+    };
+
+    // 1.4.2. Top Toolbar only when ListViewOptions.Tile - Change ItemsPerRow
+    const handleChangeItemsPerRow = (event: SelectChangeEvent<number>) => {
+        const newItemsPerRow = event.target.value as number;
+        setItemsPerRow(newItemsPerRow);
+        const newAdvancedQuery = { ...advancedQuery, pageSize: 12 * Math.floor(Math.sqrt(newItemsPerRow)), pageIndex: 1 };
+        if(!!setAdvancedQuery) { setAdvancedQuery(newAdvancedQuery); }
+        if(!!setAdvancedQueryInSlice) { setAdvancedQueryInSlice(newAdvancedQuery); }
+        submitAdvancedSearch(newAdvancedQuery);
+    };
+
+    // 1.5. Top Toolbar - Change Sort/Order by
+    const handleChangeSort = (event: SelectChangeEvent) => {
+        const newAdvancedQuery = { ...advancedQuery, orderBys: event.target.value, pageIndex: 1 };
+        if(!!setAdvancedQuery) { setAdvancedQuery(newAdvancedQuery); }
+        if(!!setAdvancedQueryInSlice) { setAdvancedQueryInSlice(newAdvancedQuery); }
+        submitAdvancedSearch(newAdvancedQuery);
+    };
+
+    // 1.6.1. Top Toolbar - Text Search
+    const handleTextSearchClicked = () => {
+        const newAdvancedQuery = { ...advancedQuery, pageIndex: 1 };
+        if(!!setAdvancedQuery) { setAdvancedQuery(newAdvancedQuery); }
+        if(!!setAdvancedQueryInSlice) { setAdvancedQueryInSlice(newAdvancedQuery); }
+        submitAdvancedSearch(newAdvancedQuery);
+        advancedQuery.pageIndex = 1;
+        submitAdvancedSearch(advancedQuery);
+    }
+
+    // 1.6.2. Top Toolbar - Text to Search Changed
+    const handleChangedTextToSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if(!!setAdvancedQuery) { setAdvancedQuery({ ...advancedQuery, textSearch: event.target.value }); }
+        if(!!setAdvancedQueryInSlice) { setAdvancedQueryInSlice({ ...advancedQuery, textSearch: event.target.value }); }
+    }
+
+    return (
+        <Toolbar
+            sx={{
+                m: { sm: 0 },
+                pt: { sm: 0 },
+                pb: { sm: 0 },
+                pl: { sm: 0.5 },
+                pr: { sm: 0.5 },
+                ...(numSelected > 0 && {
+                    bgcolor: 'transparent',
+                }),
+                width: '100%',
+            }}
+        >
+            <Box
+                sx={{
+                    m: { sm: 0 },
+                    p: { sm: 0 },
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    bgcolor: 'transparent',
+                    borderRadius: 1,
+                    width: '100%',
+                }}
+            >
+                <Box sx={{ m: { sm: 0 }, p: 0, }}>
+                    {hasItemsSelect && <Checkbox
+                        color="primary"
+                        indeterminate={numSelected > 0 && numSelected < rowCount}
+                        checked={rowCount > 0 && numSelected === rowCount}
+                        onChange={handleSelectAllClick}
+                        inputProps={{
+                            'aria-label': textSearchPlaceHolder,
+                        }} />}
+                    <Tooltip title="Refresh">
+                        <IconButton onClick={() => handleRefresh()}>
+                            <RefreshIcon />
+                        </IconButton>
+                    </Tooltip>
+                    {hasItemsSelect && hasBulkDelete && numSelected > 0 && (
+                        <Tooltip title="Delete">
+                            <IconButton onClick={() => handleDeleteSelected()}>
+                                <DeleteIcon />
+                            </IconButton>
+                        </Tooltip>
+                    )}
+                </Box>
+
+                {hasItemsSelect && numSelected > 0 ? (
+                    <Typography
+                        color="inherit"
+                        variant="subtitle1"
+                    >
+                        {numSelected} selected
+                    </Typography>
+                ) : (
+                    <Box sx={{ p: 0, display: 'flex', alignItems: 'center' }}>
+                        <FormControl variant="outlined"
+                            sx={{
+                                pr: 0,
+                                width: { sm: 100, md: 150, lg: 400, xl: 600 },
+                                "& .MuiOutlinedInput-root.Mui-focused": {
+                                    "& > fieldset": {
+                                        borderColor: "orange",
+                                    }
+                                },
+                            }}
+                        >
+                            {hasSearch && <OutlinedInput
+                                sx={{ pr: 0.5, }}
+                                defaultValue={advancedQuery.textSearch}
+                                onChange={handleChangedTextToSearch}
+                                placeholder={textSearchPlaceHolder}
+                                fullWidth margin='none'
+                                id="text-search-field"
+                                size="small"
+                                endAdornment={<InputAdornment position="end">
+                                    <IconButton type="button" size='small' saria-label="text search" onClick={() => handleTextSearchClicked()}>
+                                        <SearchIcon />
+                                    </IconButton>
+                                    {(hasAdvancedSearchAccordion || hasAdvancedSearchAccordion) && <Divider sx={{ height: 38, p: 0, m: 0 }} orientation="vertical" />}
+                                    {hasAdvancedSearchDialog && <IconButton color="primary" size='small' aria-label="advanced search" onClick={() => handleAdvancedSearchDialogOpen()}>
+                                        <FilterAltIcon />
+                                    </IconButton>}
+                                    {hasAdvancedSearchAccordion && <ExpandMoreIconButton
+                                        size='small'
+                                        expand={advancedSearchExpanded}
+                                        onClick={handleAdvancedSearchExpandClick}
+                                        aria-expanded={advancedSearchExpanded}
+                                        aria-label="show more"
+                                    >
+                                        <FilterAltIcon />
+                                    </ExpandMoreIconButton>}
+                                </InputAdornment>}
+                            />}
+                        </FormControl>
+                    </Box>
+                )}
+                <Box sx={{ p: 0, alignItems: 'center' }}>
+                    {numSelected === 0 && (
+                        <>
+                            {hasAddNewButton && <ButtonGroup orientation='horizontal' size="small" sx={{ pr: 1, pl: 1 }}>
+                                <IconButton onClick={() => { handleAddNewClick() }} aria-label="create" component="label" color='primary' sx={{ backgroundColor: 'gray' }}>
+                                    <AddIcon />
+                                </IconButton>
+                            </ButtonGroup >}
+                            {hasListViewOptionsSelect && !!availableListViewOptions && availableListViewOptions.length > 1 && <ToggleButtonGroup
+                                size="small"
+                                value={listViewOption}
+                                exclusive
+                                onChange={handleChangeListViewOptions}
+                                aria-label="list options"
+                            >
+                                {availableListViewOptions.indexOf(ListViewOptions.Table) !== -1 &&
+                                    <ToggleButton value={ListViewOptions.Table} aria-label="htmltable">
+                                        <FormatListBulletedIcon />
+                                    </ToggleButton>}
+                                {availableListViewOptions.indexOf(ListViewOptions.Tiles) !== -1 && <ToggleButton value={ListViewOptions.Tiles} aria-label="tiles">
+                                    <ViewModuleIcon />
+                                </ToggleButton>}
+                                {availableListViewOptions.indexOf(ListViewOptions.SlideShow) !== -1 && <ToggleButton value={ListViewOptions.SlideShow} aria-label="slideshow">
+                                    <PlayCircleOutlinedIcon />
+                                </ToggleButton>}
+                            </ToggleButtonGroup>}
+                            {hasPageSizeSelect && listViewOption === ListViewOptions.Table && <FormControl size="small" sx={{ minWidth: 120 }}>
+                                <InputLabel id="page-size-select">{t("PageSize")}</InputLabel>
+                                {(!!!availablePageSizes || availablePageSizes.length === 0) && <Select
+                                    labelId="page-size-select"
+                                    id="page-size-select"
+                                    value={advancedQuery.pageSize}
+                                    label={t("PageSize")}
+                                    onChange={handleChangePageSize}
+                                >
+                                    <MenuItem value={10}>10</MenuItem>
+                                    <MenuItem value={25}>25</MenuItem>
+                                    <MenuItem value={100}>100</MenuItem>
+                                </Select>}
+                                {(!!availablePageSizes && availablePageSizes.length > 0) && <Select
+                                    labelId="page-size-select"
+                                    id="page-size-select"
+                                    value={advancedQuery.pageSize}
+                                    label={t("PageSize")}
+                                    onChange={handleChangePageSize}
+                                >
+                                    {availablePageSizes.map((availablePageSize) => {
+                                        return (
+                                            <MenuItem key={availablePageSize.value} value={availablePageSize.value}>{availablePageSize.name}</MenuItem>)
+                                    })}
+                                </Select>}
+                            </FormControl>}
+                            {hasItemsPerRowSelect && listViewOption === ListViewOptions.Tiles && <FormControl size="small" sx={{ minWidth: 120 }}>
+                                <InputLabel id="tile-size-select">{t("ItemsPerRow")}</InputLabel>
+                                <Select
+                                    labelId="tile-tile-select"
+                                    id="tile-tile-select"
+                                    value={itemsPerRow}
+                                    label={t("ItemsPerRow")}
+                                    onChange={handleChangeItemsPerRow}
+                                >
+                                    <MenuItem value={1}>1</MenuItem>
+                                    <MenuItem value={3}>3</MenuItem>
+                                    <MenuItem value={4}>4</MenuItem>
+                                    <MenuItem value={6}>6</MenuItem>
+                                    <MenuItem value={12}>12</MenuItem>
+                                </Select>
+                            </FormControl>}
+                            {hasOrderBySelect && <FormControl size="small" sx={{ minWidth: 120 }}>
+                                <InputLabel id="orderby-select">{t("Sort")}</InputLabel>
+                                <Select
+                                    labelId="orderby-select"
+                                    id="orderby-select"
+                                    value={advancedQuery?.orderBys}
+                                    label={t("Sort")}
+                                    onChange={handleChangeSort}
+                                >
+                                    {serverOrderBys.map((serverOrderBy) => {
+                                        return (<MenuItem key={serverOrderBy.expression} value={serverOrderBy.expression}>
+                                            {serverOrderBy.direction === 'asc' ? <ArrowDownwardIcon fontSize="inherit" /> : <ArrowUpwardIcon fontSize="inherit" />}
+                                            {serverOrderBy.displayName}
+                                        </MenuItem>);
+                                    })}
+                                </Select>
+                            </FormControl>}
+                        </>
+                    )}
+                </Box>
+            </Box>
+        </Toolbar>);
+}

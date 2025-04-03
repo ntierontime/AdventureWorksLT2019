@@ -4,6 +4,7 @@ namespace Framework.Models
     {
         public string PropertyName { get; set; } = null!;
         public string DisplayName { get; set; } = null!;
+        public bool SpecialQuery { get; set; } = false;
 
         public QueryOrderDirections Direction { get; set; } = QueryOrderDirections.Ascending;
 
@@ -36,7 +37,7 @@ namespace Framework.Models
                         {
                             _ListSortDirection = QueryOrderDirections.Ascending;
                         }
-                        result.Add(new QueryOrderBySetting { PropertyName = _Splitted2[0], DisplayName = _Splitted2[0], Direction = _ListSortDirection });
+                        result.Add(new QueryOrderBySetting { SpecialQuery = _Splitted2[0].StartsWith("#"), PropertyName = _Splitted2[0], DisplayName = _Splitted2[0], Direction = _ListSortDirection });
                     }
                 }
             }

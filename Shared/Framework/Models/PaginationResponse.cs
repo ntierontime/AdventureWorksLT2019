@@ -2,7 +2,7 @@ namespace Framework.Models
 {
     public class PaginationResponse
     {
-        public PaginationResponse(int totalCount, int count, int pageIndex, int pageSize, PaginationOptions paginationOption = PaginationOptions.PageIndexesAndAllButtons)
+        public PaginationResponse(int totalCount, int count, int pageIndex, int pageSize, PaginationOptions paginationOption = PaginationOptions.Paged)
         {
             TotalCount = totalCount;
             Count = count;

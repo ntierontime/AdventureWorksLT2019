@@ -1,0 +1,23 @@
+CALL _VariableDefinition.bat
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\apiClients\ProductDescriptionApi.ts %destRootFolder%ReactTSClientApp\src\generated\apiClients\ProductDescriptionApi.ts
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\dataModels\IProductDescriptionDataModel.ts %destRootFolder%ReactTSClientApp\src\dataModels\IProductDescriptionDataModel.ts
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\dataModels\IProductDescriptionQueries.ts %destRootFolder%ReactTSClientApp\src\dataModels\IProductDescriptionQueries.ts
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\routePartials\ProductDescriptionRoutesPartial.tsx %destRootFolder%ReactTSClientApp\src\generated\routePartials\ProductDescriptionRoutesPartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\slices\ProductDescriptionSlice.ts %destRootFolder%ReactTSClientApp\src\generated\slices\ProductDescriptionSlice.ts
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\ProductDescription\AdvancedSearchPartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\ProductDescription\AdvancedSearchPartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\ProductDescription\CreatePartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\ProductDescription\CreatePartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\ProductDescription\DetailsPartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\ProductDescription\DetailsPartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\ProductDescription\EditPartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\ProductDescription\EditPartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\ProductDescription\HtmlTablePartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\ProductDescription\HtmlTablePartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\ProductDescription\IndexPage.tsx %destRootFolder%ReactTSClientApp\src\generated\views\ProductDescription\IndexPage.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\ProductDescription\ItemViewsPartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\ProductDescription\ItemViewsPartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\ProductDescription\ListsPartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\ProductDescription\ListsPartial.tsx
+copy /y /v %sourceRootFolder%EFCoreContext\ProductDescription.cs %destRootFolder%EFCoreContext\ProductDescription.cs
+copy /y /v %sourceRootFolder%EFCoreRepositories\ProductDescriptionRepository.cs %destRootFolder%EFCoreRepositories\ProductDescriptionRepository.cs
+copy /y /v %sourceRootFolder%Models\ProductDescriptionDataModel.cs %destRootFolder%Models\ProductDescriptionDataModel.cs
+copy /y /v %sourceRootFolder%Models\ProductDescriptionQueries.cs %destRootFolder%Models\ProductDescriptionQueries.cs
+copy /y /v %sourceRootFolder%RepositoryContracts\IProductDescriptionRepository.cs %destRootFolder%RepositoryContracts\IProductDescriptionRepository.cs
+copy /y /v %sourceRootFolder%ServiceContracts\IProductDescriptionService.cs %destRootFolder%ServiceContracts\IProductDescriptionService.cs
+copy /y /v %sourceRootFolder%Services\ProductDescriptionService.cs %destRootFolder%Services\ProductDescriptionService.cs
+copy /y /v %sourceRootFolder%WebApiAdminControllers\ProductDescriptionApiController.cs %destRootFolder%WebApiAdminControllers\ProductDescriptionApiController.cs
+copy /y /v %sourceRootFolder%WebApiClientControllers\ProductDescriptionApiController.cs %destRootFolder%WebApiClientControllers\ProductDescriptionApiController.cs

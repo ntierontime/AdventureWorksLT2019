@@ -6,29 +6,6 @@ namespace AdventureWorksLT2019.Models
 {
     public partial class CustomerAddressDataModel
     {
-        public ItemUIStatus ItemUIStatus______ { get; set; } = ItemUIStatus.NoChange;
-        public bool IsDeleted______ { get; set; } = false;
-
-        [Display(Name = "Customer", ResourceType = typeof(UIStrings))]
-        [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="CustomerID_is_required")]
-        public int CustomerID { get; set; }
-
-        [Display(Name = "Address", ResourceType = typeof(UIStrings))]
-        [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="AddressID_is_required")]
-        public int AddressID { get; set; }
-
-        [Display(Name = "AddressType", ResourceType = typeof(UIStrings))]
-        [StringLength(50, ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="The_length_of_AddressType_should_be_1_to_50", MinimumLength = 1)]
-        public string AddressType { get; set; } = null!;
-
-        [Display(Name = "rowguid", ResourceType = typeof(UIStrings))]
-        [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="rowguid_is_required")]
-        public System.Guid rowguid { get; set; }
-
-        [Display(Name = "ModifiedDate", ResourceType = typeof(UIStrings))]
-        [DataType(DataType.DateTime)]
-        [Required(ErrorMessageResourceType = typeof(UIStrings), ErrorMessageResourceName="ModifiedDate_is_required")]
-        public System.DateTime ModifiedDate { get; set; } = DateTime.Now;
 
         public partial class DefaultView: CustomerAddressDataModel
         {
@@ -39,6 +16,24 @@ namespace AdventureWorksLT2019.Models
             public string? Customer_Name { get; set; }
         }
 
+        public ItemUIStatus ItemUIStatus______ { get; set; } = ItemUIStatus.NoChange;
+        public bool IsDeleted______ { get; set; } = false;
+
+        [Display(Name = "Customer", ResourceType = typeof(UIStrings))]
+        public int CustomerID { get; set; }
+
+        [Display(Name = "Address", ResourceType = typeof(UIStrings))]
+        public int AddressID { get; set; }
+
+        [Display(Name = "AddressType", ResourceType = typeof(UIStrings))]
+        public string AddressType { get; set; } = null!;
+
+        [Display(Name = "rowguid", ResourceType = typeof(UIStrings))]
+        public System.Guid rowguid { get; set; }
+
+        [Display(Name = "ModifiedDate", ResourceType = typeof(UIStrings))]
+        [DataType(DataType.DateTime)]
+        public System.DateTime ModifiedDate { get; set; } = DateTime.Now;
     }
 }
 

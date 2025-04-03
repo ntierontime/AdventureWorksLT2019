@@ -8,9 +8,9 @@ namespace AdventureWorksLT2019.EFCoreContext
     {
         public Address()
         {
-            this.CustomerAddress = new HashSet<CustomerAddress>();
-            this.SalesOrderHeader = new HashSet<SalesOrderHeader>();
-            this.SalesOrderHeader1 = new HashSet<SalesOrderHeader>();
+            CustomerAddress = new HashSet<CustomerAddress>();
+            SalesOrderHeader = new HashSet<SalesOrderHeader>();
+            SalesOrderHeader1 = new HashSet<SalesOrderHeader>();
 
         }
         public int AddressID { get; set; }

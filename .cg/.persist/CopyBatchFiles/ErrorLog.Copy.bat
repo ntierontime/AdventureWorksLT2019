@@ -1,0 +1,23 @@
+CALL _VariableDefinition.bat
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\apiClients\ErrorLogApi.ts %destRootFolder%ReactTSClientApp\src\generated\apiClients\ErrorLogApi.ts
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\dataModels\IErrorLogDataModel.ts %destRootFolder%ReactTSClientApp\src\dataModels\IErrorLogDataModel.ts
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\dataModels\IErrorLogQueries.ts %destRootFolder%ReactTSClientApp\src\dataModels\IErrorLogQueries.ts
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\routePartials\ErrorLogRoutesPartial.tsx %destRootFolder%ReactTSClientApp\src\generated\routePartials\ErrorLogRoutesPartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\slices\ErrorLogSlice.ts %destRootFolder%ReactTSClientApp\src\generated\slices\ErrorLogSlice.ts
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\ErrorLog\AdvancedSearchPartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\ErrorLog\AdvancedSearchPartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\ErrorLog\CreatePartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\ErrorLog\CreatePartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\ErrorLog\DetailsPartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\ErrorLog\DetailsPartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\ErrorLog\EditPartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\ErrorLog\EditPartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\ErrorLog\HtmlTablePartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\ErrorLog\HtmlTablePartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\ErrorLog\IndexPage.tsx %destRootFolder%ReactTSClientApp\src\generated\views\ErrorLog\IndexPage.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\ErrorLog\ItemViewsPartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\ErrorLog\ItemViewsPartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\ErrorLog\ListsPartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\ErrorLog\ListsPartial.tsx
+copy /y /v %sourceRootFolder%EFCoreContext\ErrorLog.cs %destRootFolder%EFCoreContext\ErrorLog.cs
+copy /y /v %sourceRootFolder%EFCoreRepositories\ErrorLogRepository.cs %destRootFolder%EFCoreRepositories\ErrorLogRepository.cs
+copy /y /v %sourceRootFolder%Models\ErrorLogDataModel.cs %destRootFolder%Models\ErrorLogDataModel.cs
+copy /y /v %sourceRootFolder%Models\ErrorLogQueries.cs %destRootFolder%Models\ErrorLogQueries.cs
+copy /y /v %sourceRootFolder%RepositoryContracts\IErrorLogRepository.cs %destRootFolder%RepositoryContracts\IErrorLogRepository.cs
+copy /y /v %sourceRootFolder%ServiceContracts\IErrorLogService.cs %destRootFolder%ServiceContracts\IErrorLogService.cs
+copy /y /v %sourceRootFolder%Services\ErrorLogService.cs %destRootFolder%Services\ErrorLogService.cs
+copy /y /v %sourceRootFolder%WebApiAdminControllers\ErrorLogApiController.cs %destRootFolder%WebApiAdminControllers\ErrorLogApiController.cs
+copy /y /v %sourceRootFolder%WebApiClientControllers\ErrorLogApiController.cs %destRootFolder%WebApiClientControllers\ErrorLogApiController.cs

@@ -108,23 +108,10 @@
   ],
   "entityReferenceResultForPersistAliasCollection": [
     {
-      "foreignKeySetting": {
-        "tablE_SCHEMA": "SalesLT",
-        "tablE_NAME": "ProductCategory",
-        "entityReferenceSimpleFullPath": "\\ParentProductCategoryID",
-        "pkTypeDeclarationContextName": "ProductCategory",
-        "duplicateIDPropertyFullPath": null,
-        "isLeftJoin": false,
-        "inLinqJoin": true,
-        "idInCriteria": true,
-        "idInDefaultDataView": true,
-        "uniqueConstraintInDefaultDataView": true,
-        "propertiesInDefaultDataView": null,
-        "createdDate": "2023-03-01T00:00:00"
-      },
       "tablE_SCHEMA": "SalesLT",
       "tablE_NAME": "ProductCategory",
       "entityReferenceSimpleFullPath": "\\ParentProductCategoryID",
+      "linqQueryPath": "ProductCategory2",
       "result": "Parent",
       "isTop": true,
       "pkTypeFullName": "AdventureWorksLT2019Model.ProductCategory",
@@ -137,13 +124,8 @@
       "childEntityReferenceSimpleFullPath": null,
       "bottomChildTypeName": "ProductCategory",
       "bottomChildEntityReferenceSimpleFullPath": "\\ParentProductCategoryID",
-      "entityReferenceFullPath": "\\AdventureWorksLT2019Model.ProductCategory.ParentProductCategoryID",
-      "entityReferenceForeignKeyPath": "\\FK_ProductCategory_ProductCategory_ParentProductCategoryID_ProductCategoryID",
-      "entityReferenceResultType": "DownTree",
-      "isJoinFromPKToFK": false,
       "defaultOrder": 1,
-      "fkTypeFullNameOnTheOtherSide": null,
-      "createdDate": "0001-01-01T00:00:00"
+      "fkTypeFullNameOnTheOtherSide": null
     }
   ],
   "entityReferenceResultForPersistAliasCollectionOfBridged": null,

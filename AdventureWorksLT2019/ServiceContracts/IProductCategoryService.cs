@@ -6,31 +6,17 @@ namespace AdventureWorksLT2019.ServiceContracts
     {
 
         Task<ListResponse<ProductCategoryDataModel.DefaultView[]>> Search(
-            ProductCategoryAdvancedQuery query);
+            ProductCategoryAdvancedQuery query, ClaimsModel? claimsModel);
 
-        Task<ProductCategoryCompositeModel> GetCompositeModel(
-            ProductCategoryIdentifier id,
-            Dictionary<ProductCategoryCompositeModel.__DataOptions__, CompositeListItemRequest> listItemRequest,
-            ProductCategoryCompositeModel.__DataOptions__[]? dataOptions = null);
+        Task<Response<ProductCategoryDataModel.DefaultView>> Update(ProductCategoryIdentifier id, ProductCategoryDataModel.DefaultView input, ClaimsModel? claimsModel, string[]? toUpdatePropertyList = null);
 
-        Task<Response> BulkDelete(List<ProductCategoryIdentifier> ids);
+        Task<Response<ProductCategoryDataModel.DefaultView>> Get(ProductCategoryIdentifier id, ClaimsModel? claimsModel);
 
-        Task<Response<MultiItemsCUDRequest<ProductCategoryIdentifier, ProductCategoryDataModel.DefaultView>>> MultiItemsCUD(
-            MultiItemsCUDRequest<ProductCategoryIdentifier, ProductCategoryDataModel.DefaultView> input);
-
-        Task<Response<ProductCategoryDataModel.DefaultView>> Update(ProductCategoryIdentifier id, ProductCategoryDataModel input);
-
-        Task<Response<ProductCategoryDataModel.DefaultView>> Get(ProductCategoryIdentifier id);
-
-        Task<Response<ProductCategoryDataModel.DefaultView>> Create(ProductCategoryDataModel input);
+        Task<Response<ProductCategoryDataModel.DefaultView>> Create(ProductCategoryDataModel.DefaultView input, ClaimsModel? claimsModel);
         ProductCategoryDataModel.DefaultView GetDefault();
 
-        Task<Response> Delete(ProductCategoryIdentifier id);
-
         Task<ListResponse<NameValuePair[]>> GetCodeList(
-            ProductCategoryAdvancedQuery query);
-
-        Task<Response<ProductCategoryDataModel.DefaultView>> CreateComposite(ProductCategoryCompositeModel input);
+            ProductCategoryAdvancedQuery query, ClaimsModel? claimsModel);
     }
 }
 

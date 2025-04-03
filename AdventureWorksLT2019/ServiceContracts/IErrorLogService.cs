@@ -6,31 +6,17 @@ namespace AdventureWorksLT2019.ServiceContracts
     {
 
         Task<ListResponse<ErrorLogDataModel[]>> Search(
-            ErrorLogAdvancedQuery query);
+            ErrorLogAdvancedQuery query, ClaimsModel? claimsModel);
 
-        Task<ErrorLogCompositeModel> GetCompositeModel(
-            ErrorLogIdentifier id,
-            Dictionary<ErrorLogCompositeModel.__DataOptions__, CompositeListItemRequest> listItemRequest,
-            ErrorLogCompositeModel.__DataOptions__[]? dataOptions = null);
+        Task<Response<ErrorLogDataModel>> Update(ErrorLogIdentifier id, ErrorLogDataModel input, ClaimsModel? claimsModel, string[]? toUpdatePropertyList = null);
 
-        Task<Response> BulkDelete(List<ErrorLogIdentifier> ids);
+        Task<Response<ErrorLogDataModel>> Get(ErrorLogIdentifier id, ClaimsModel? claimsModel);
 
-        Task<Response<MultiItemsCUDRequest<ErrorLogIdentifier, ErrorLogDataModel>>> MultiItemsCUD(
-            MultiItemsCUDRequest<ErrorLogIdentifier, ErrorLogDataModel> input);
-
-        Task<Response<ErrorLogDataModel>> Update(ErrorLogIdentifier id, ErrorLogDataModel input);
-
-        Task<Response<ErrorLogDataModel>> Get(ErrorLogIdentifier id);
-
-        Task<Response<ErrorLogDataModel>> Create(ErrorLogDataModel input);
+        Task<Response<ErrorLogDataModel>> Create(ErrorLogDataModel input, ClaimsModel? claimsModel);
         ErrorLogDataModel GetDefault();
 
-        Task<Response> Delete(ErrorLogIdentifier id);
-
         Task<ListResponse<NameValuePair[]>> GetCodeList(
-            ErrorLogAdvancedQuery query);
-
-        Task<Response<ErrorLogDataModel>> CreateComposite(ErrorLogCompositeModel input);
+            ErrorLogAdvancedQuery query, ClaimsModel? claimsModel);
     }
 }
 

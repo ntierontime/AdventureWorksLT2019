@@ -13,6 +13,10 @@ namespace AdventureWorksLT2019.EFCoreRepositories
     public class ProductDescriptionRepository
         : IProductDescriptionRepository
     {
+        private readonly Dictionary<string, string> _queryOrderBys = new()
+        {
+        };
+
         private readonly ILogger<ProductDescriptionRepository> _logger;
         private readonly EFDbContext _dbcontext;
 
@@ -25,45 +29,38 @@ namespace AdventureWorksLT2019.EFCoreRepositories
         private IQueryable<ProductDescriptionDataModel> SearchQuery(
             ProductDescriptionAdvancedQuery query, bool withPagingAndOrderBy)
         {
-
             var queryable =
                 from t in _dbcontext.ProductDescription
 
                 where
-
                     (string.IsNullOrEmpty(query.TextSearch) ||
-                        query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.Description!, "%" + query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.Description!, query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.Description!, "%" + query.TextSearch)))
-                    &&
-
-                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))
-                    &&
-
+                    query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.Description!, "%" + query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.Description!, query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.Description!, "%" + query.TextSearch)))&&
+                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))&&
                     (string.IsNullOrEmpty(query.Description) ||
-                            query.DescriptionSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Description!, "%" + query.Description + "%") ||
-                            query.DescriptionSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Description!, query.Description + "%") ||
-                            query.DescriptionSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Description!, "%" + query.Description))
+                        query.DescriptionSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Description!, "%" + query.Description + "%") ||
+                        query.DescriptionSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Description!, query.Description + "%") ||
+                        query.DescriptionSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Description!, "%" + query.Description))
 
                 select new ProductDescriptionDataModel
                 {
-
-                        ProductDescriptionID = t.ProductDescriptionID,
-                        Description = t.Description,
-                        rowguid = t.rowguid,
-                        ModifiedDate = t.ModifiedDate,
+                    ProductDescriptionID = t.ProductDescriptionID,
+                    Description = t.Description,
+                    rowguid = t.rowguid,
+                    ModifiedDate = t.ModifiedDate,
                 };
 
             // 1. Without Paging And OrderBy
             if (!withPagingAndOrderBy)
                 return queryable;
 
-            // 2. With Paging And OrderBy
-            var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
-            if (orderBys.Any())
-            {
-                queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
-            }
+            // // 2. With Paging And OrderBy
+            // var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
+            // if (orderBys.Any())
+            // {
+            //     queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
+            // }
 
             queryable = queryable.Skip((query.PageIndex - 1) * query.PageSize).Take(query.PageSize);
 
@@ -97,157 +94,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
-        private IQueryable<ProductDescription> GetIQueryableByPrimaryIdentifierList(
-            List<ProductDescriptionIdentifier> ids)
-        {
-            var idList = ids.Select(t => t.ProductDescriptionID).ToList();
-            var queryable =
-                from t in _dbcontext.ProductDescription
-                where idList.Contains(t.ProductDescriptionID)
-                select t;
-
-            return queryable;
-        }
-
-        public async Task<Response> BulkDelete(List<ProductDescriptionIdentifier> ids)
-        {
-            try
-            {
-                var queryable = GetIQueryableByPrimaryIdentifierList(ids);
-                var result = await queryable.BatchDeleteAsync();
-
-                return await Task<Response>.FromResult(
-                    new Response
-                    {
-                        Status = HttpStatusCode.OK,
-                    });
-            }
-            catch (Exception ex)
-            {
-                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
-            }
-        }
-
-        public async Task<Response<MultiItemsCUDRequest<ProductDescriptionIdentifier, ProductDescriptionDataModel>>> MultiItemsCUD(
-            MultiItemsCUDRequest<ProductDescriptionIdentifier, ProductDescriptionDataModel> input)
-        {
-            // 1. DeleteItems, return if Failed
-            if (input.DeleteItems != null)
-            {
-                var responseOfDeleteItems = await this.BulkDelete(input.DeleteItems);
-                if (responseOfDeleteItems != null && responseOfDeleteItems.Status != HttpStatusCode.OK)
-                {
-                    return new Response<MultiItemsCUDRequest<ProductDescriptionIdentifier, ProductDescriptionDataModel>> { Status = responseOfDeleteItems.Status, StatusMessage = "Deletion Failed. " + responseOfDeleteItems.StatusMessage };
-                }
-            }
-
-            // 2. return OK, if no more NewItems and UpdateItems
-            if (!(input.NewItems != null && input.NewItems.Count > 0 ||
-                input.UpdateItems != null && input.UpdateItems.Count > 0))
-            {
-                return new Response<MultiItemsCUDRequest<ProductDescriptionIdentifier, ProductDescriptionDataModel>> { Status = HttpStatusCode.OK };
-            }
-
-            // 3. NewItems and UpdateItems
-            try
-            {
-                // 3.1.1. NewItems if any
-                List<ProductDescription> newEFItems = new();
-                if (input.NewItems != null && input.NewItems.Count > 0)
-                {
-                    foreach (var item in input.NewItems)
-                    {
-                        var toInsert = new ProductDescription
-                        {
-                            Description = item.Description,
-                            ModifiedDate = item.ModifiedDate,
-                        };
-                        _dbcontext.ProductDescription.Add(toInsert);
-                        newEFItems.Add(toInsert);
-                    }
-                }
-
-                // 3.1.2. UpdateItems if any
-                if (input.UpdateItems != null && input.UpdateItems.Count > 0)
-                {
-                    foreach (var item in input.UpdateItems)
-                    {
-                        var existing =
-                            (from t in _dbcontext.ProductDescription
-                             where
-
-                             t.ProductDescriptionID == item.ProductDescriptionID
-                             select t).SingleOrDefault();
-
-                        if (existing != null)
-                        {
-                            // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
-                            existing.Description = item.Description;
-                            existing.ModifiedDate = item.ModifiedDate;
-                        }
-                    }
-                }
-                await _dbcontext.SaveChangesAsync();
-
-                // 3.2 Load Response
-                var identifierListToloadResponseItems = new List<int>();
-
-                if (input.NewItems != null && input.NewItems.Count > 0)
-                {
-                    identifierListToloadResponseItems.AddRange(
-                        from t in newEFItems
-                        select t.ProductDescriptionID);
-                }
-                if (input.UpdateItems != null && input.UpdateItems.Count > 0)
-                {
-                    identifierListToloadResponseItems.AddRange(
-                        from t in input.UpdateItems
-                        select t.ProductDescriptionID);
-                }
-
-                var responseBodyWithNewAndUpdatedItems =
-                    (from t in _dbcontext.ProductDescription
-                    where identifierListToloadResponseItems.Contains(t.ProductDescriptionID)
-
-                    select new ProductDescriptionDataModel
-                    {
-
-                        ProductDescriptionID = t.ProductDescriptionID,
-                        Description = t.Description,
-                        rowguid = t.rowguid,
-                        ModifiedDate = t.ModifiedDate,
-
-                    }).ToList();
-
-                // 3.3. Final Response
-                var response = new Response<MultiItemsCUDRequest<ProductDescriptionIdentifier, ProductDescriptionDataModel>>
-                {
-                    Status = HttpStatusCode.OK,
-                    ResponseBody = new MultiItemsCUDRequest<ProductDescriptionIdentifier, ProductDescriptionDataModel>
-                    {
-                        NewItems =
-                            input.NewItems != null && input.NewItems.Count > 0
-                                ? responseBodyWithNewAndUpdatedItems.Where(t => newEFItems.Any(t1 => t1.ProductDescriptionID == t.ProductDescriptionID)).ToList()
-                                : null,
-                        UpdateItems =
-                            input.UpdateItems != null && input.UpdateItems.Count > 0
-                                ? responseBodyWithNewAndUpdatedItems.Where(t => input.UpdateItems.Any(t1 => t1.ProductDescriptionID == t.ProductDescriptionID)).ToList()
-                                : null,
-                    }
-                };
-                return response;
-            }
-            catch (Exception ex)
-            {
-                return await Task.FromResult(new Response<MultiItemsCUDRequest<ProductDescriptionIdentifier, ProductDescriptionDataModel>>
-                {
-                    Status = HttpStatusCode.InternalServerError,
-                    StatusMessage = "Create And/Or Update Failed. " + ex.Message
-                });
-            }
-        }
-
-        public async Task<Response<ProductDescriptionDataModel>> Update(ProductDescriptionIdentifier id, ProductDescriptionDataModel input)
+        public async Task<Response<ProductDescriptionDataModel>> Update(ProductDescriptionIdentifier id, ProductDescriptionDataModel input, string[]? toUpdatePropertyList = null)
         {
             if (input == null)
                 return await Task<Response<ProductDescriptionDataModel>>.FromResult(new Response<ProductDescriptionDataModel> { Status = HttpStatusCode.BadRequest });
@@ -255,10 +102,10 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             try
             {
                 var existing =
-                    (from t in _dbcontext.ProductDescription
+                    (
+                    from t in _dbcontext.ProductDescription
                      where
-
-                    t.ProductDescriptionID == id.ProductDescriptionID
+                         id.ProductDescriptionID.HasValue && t.ProductDescriptionID == id.ProductDescriptionID
                      select t).SingleOrDefault();
 
                 // TODO: can create a new record here.
@@ -266,27 +113,36 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     return await Task<Response<ProductDescriptionDataModel>>.FromResult(new Response<ProductDescriptionDataModel> { Status = HttpStatusCode.NotFound });
 
                 // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
-                existing.Description = input.Description;
-                existing.ModifiedDate = input.ModifiedDate;
-                await _dbcontext.SaveChangesAsync();
+                CopyUpdateValues(input, toUpdatePropertyList, existing);
 
-                return await Task<Response<ProductDescriptionDataModel>>.FromResult(
-                    new Response<ProductDescriptionDataModel>
-                    {
-                        Status = HttpStatusCode.OK,
-                        ResponseBody = new ProductDescriptionDataModel
-                        {
-                    ProductDescriptionID = existing.ProductDescriptionID,
-                    Description = existing.Description,
-                    rowguid = existing.rowguid,
-                    ModifiedDate = existing.ModifiedDate,
-                        }
-                    });
+                await _dbcontext.SaveChangesAsync();
+                return await Get(id);
 
             }
             catch (Exception ex)
             {
                 return await Task<Response<ProductDescriptionDataModel>>.FromResult(new Response<ProductDescriptionDataModel> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
+        private static void CopyUpdateValues(ProductDescriptionDataModel? input, string[]? toUpdatePropertyList, ProductDescription existing)
+        {
+            if (input == null)
+                return;
+
+            // 1. This Table - ProductDescription
+            if (toUpdatePropertyList == null || toUpdatePropertyList.Length == 0)
+            {
+                existing.Description = input.Description;
+                existing.ModifiedDate = input.ModifiedDate;
+            }
+            else
+            //update Specific Properties if in toUpdatePropertyList
+            {
+                if(toUpdatePropertyList.Contains(nameof(ProductDescriptionDataModel.Description)))
+                    existing.Description = input.Description;
+                if(toUpdatePropertyList.Contains(nameof(ProductDescriptionDataModel.ModifiedDate)))
+                    existing.ModifiedDate = input.ModifiedDate;
             }
         }
 
@@ -297,10 +153,9 @@ namespace AdventureWorksLT2019.EFCoreRepositories
 
             try
             {
-                var existing = _dbcontext.ProductDescription.SingleOrDefault(
-                    t =>
-
-                    t.ProductDescriptionID == id.ProductDescriptionID
+                var existing = _dbcontext.ProductDescription
+                    .SingleOrDefault(t =>
+                        id.ProductDescriptionID.HasValue && t.ProductDescriptionID == id.ProductDescriptionID
                 );
 
                 if (existing == null)
@@ -312,10 +167,10 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         Status = HttpStatusCode.OK,
                         ResponseBody = new ProductDescriptionDataModel
                         {
-                    ProductDescriptionID = existing.ProductDescriptionID,
-                    Description = existing.Description,
-                    rowguid = existing.rowguid,
-                    ModifiedDate = existing.ModifiedDate,
+                            ProductDescriptionID = existing.ProductDescriptionID,
+                            Description = existing.Description,
+                            rowguid = existing.rowguid,
+                            ModifiedDate = existing.ModifiedDate,
                         }
                     });
 
@@ -334,25 +189,13 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             {
                 var toInsert = new ProductDescription
                 {
-                            Description = input.Description,
-                            ModifiedDate = input.ModifiedDate,
+                    Description = input.Description,
+                    ModifiedDate = input.ModifiedDate,
                 };
+
                 await _dbcontext.ProductDescription.AddAsync(toInsert);
                 await _dbcontext.SaveChangesAsync();
-
-                return await Task<Response<ProductDescriptionDataModel>>.FromResult(
-                    new Response<ProductDescriptionDataModel>
-                    {
-                        Status = HttpStatusCode.OK,
-                        ResponseBody = new ProductDescriptionDataModel
-                        {
-                    ProductDescriptionID = toInsert.ProductDescriptionID,
-                    Description = toInsert.Description,
-                    rowguid = toInsert.rowguid,
-                    ModifiedDate = toInsert.ModifiedDate,
-                        }
-                    });
-
+                return await Get(new ProductDescriptionIdentifier { ProductDescriptionID = toInsert.ProductDescriptionID });
             }
             catch (Exception ex)
             {
@@ -360,78 +203,39 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
-        public async Task<Response> Delete(ProductDescriptionIdentifier id)
-        {
-            if (id == null)
-                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.BadRequest });
-
-            try
-            {
-                var existing =
-                    (from t in _dbcontext.ProductDescription
-                     where
-
-                    t.ProductDescriptionID == id.ProductDescriptionID
-                     select t).SingleOrDefault();
-
-                if (existing == null)
-                    return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.NotFound });
-
-                _dbcontext.ProductDescription.Remove(existing);
-                await _dbcontext.SaveChangesAsync();
-
-                return await Task<Response>.FromResult(
-                    new Response
-                    {
-                        Status = HttpStatusCode.OK,
-                    });
-            }
-            catch (Exception ex)
-            {
-                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
-            }
-        }
-
         private IQueryable<NameValuePair> GetCodeListQuery(
             ProductDescriptionAdvancedQuery query, bool withPagingAndOrderBy)
         {
-
             var queryable =
                 from t in _dbcontext.ProductDescription
 
                 where
-
                     (string.IsNullOrEmpty(query.TextSearch) ||
-                        query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.Description!, "%" + query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.Description!, query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.Description!, "%" + query.TextSearch)))
-                    &&
-
-                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))
-                    &&
-
+                    query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.Description!, "%" + query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.Description!, query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.Description!, "%" + query.TextSearch)))&&
+                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))&&
                     (string.IsNullOrEmpty(query.Description) ||
-                            query.DescriptionSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Description!, "%" + query.Description + "%") ||
-                            query.DescriptionSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Description!, query.Description + "%") ||
-                            query.DescriptionSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Description!, "%" + query.Description))
+                        query.DescriptionSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Description!, "%" + query.Description + "%") ||
+                        query.DescriptionSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Description!, query.Description + "%") ||
+                        query.DescriptionSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Description!, "%" + query.Description))
 
                 select new NameValuePair
                 {
-
-                        Value = t.ProductDescriptionID.ToString(),
-                        Name = t.Description,
+                    Value = t.ProductDescriptionID.ToString(),
+                    Name = t.Description,
                 };
 
             // 1. Without Paging And OrderBy
             if (!withPagingAndOrderBy)
                 return queryable;
 
-            // 2. With Paging And OrderBy
-            var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
-            if (orderBys.Any())
-            {
-                queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
-            }
+            // // 2. With Paging And OrderBy
+            // var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
+            // if (orderBys.Any())
+            // {
+            //     queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
+            // }
 
             queryable = queryable.Skip((query.PageIndex - 1) * query.PageSize).Take(query.PageSize);
 
@@ -462,46 +266,6 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     Status = HttpStatusCode.InternalServerError,
                     StatusMessage = ex.Message
                 });
-            }
-        }
-
-        public async Task<Response<ProductDescriptionDataModel>> CreateComposite(ProductDescriptionCompositeModel input)
-        {
-            if (input == null)
-                return await Task<Response<ProductDescriptionDataModel>>.FromResult(new Response<ProductDescriptionDataModel> { Status = HttpStatusCode.BadRequest });
-            try
-            {
-                // 1. Master: ProductDescription
-                var master = new ProductDescription
-                {
-                    // Properties.1. Value Type Properties
-                    Description = input.__Master__!.Description,
-                    rowguid = input.__Master__!.rowguid,
-                    ModifiedDate = input.__Master__!.ModifiedDate,
-                };
-                // 2.1.1. ListTable ProductDescription.ProductModelProductDescription
-                if(input.ProductModelProductDescriptions_Via_ProductDescriptionID != null)
-                {
-                    foreach(var item in input.ProductModelProductDescriptions_Via_ProductDescriptionID)
-                    {
-                        master.ProductModelProductDescription.Add(new ProductModelProductDescription
-                        {
-                                Culture = item.Culture,
-                                rowguid = item.rowguid,
-                                ModifiedDate = item.ModifiedDate,
-                        });
-                    }
-                }
-
-                _dbcontext.ProductDescription.Add(master);
-
-                await _dbcontext.SaveChangesAsync();
-
-                return await Get(new ProductDescriptionIdentifier { ProductDescriptionID = master.ProductDescriptionID, });
-            }
-            catch (Exception ex)
-            {
-                return await Task<Response<ProductDescriptionDataModel>>.FromResult(new Response<ProductDescriptionDataModel> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
             }
         }
 

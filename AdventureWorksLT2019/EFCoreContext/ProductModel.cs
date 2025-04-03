@@ -8,8 +8,8 @@ namespace AdventureWorksLT2019.EFCoreContext
     {
         public ProductModel()
         {
-            this.Product = new HashSet<Product>();
-            this.ProductModelProductDescription = new HashSet<ProductModelProductDescription>();
+            Product = new HashSet<Product>();
+            ProductModelProductDescription = new HashSet<ProductModelProductDescription>();
 
         }
         public int ProductModelID { get; set; }

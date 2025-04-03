@@ -13,81 +13,54 @@ namespace AdventureWorksLT2019.Services
         : IProductModelProductDescriptionService
     {
         private readonly IProductModelProductDescriptionRepository _thisRepository;
-        private readonly IServiceScopeFactory _serviceScopeFactor;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly ILogger<ProductModelProductDescriptionService> _logger;
 
         public ProductModelProductDescriptionService(
             IProductModelProductDescriptionRepository thisRepository,
-            IServiceScopeFactory serviceScopeFactor,
+            IServiceScopeFactory serviceScopeFactory,
             ILogger<ProductModelProductDescriptionService> logger)
         {
             _thisRepository = thisRepository;
-            _serviceScopeFactor = serviceScopeFactor;
+            _serviceScopeFactory = serviceScopeFactory;
             _logger = logger;
         }
 
         public async Task<ListResponse<ProductModelProductDescriptionDataModel.DefaultView[]>> Search(
-            ProductModelProductDescriptionAdvancedQuery query)
+            ProductModelProductDescriptionAdvancedQuery query, ClaimsModel? claimsModel)
         {
             return await _thisRepository.Search(query);
         }
 
-        public async Task<ProductModelProductDescriptionCompositeModel> GetCompositeModel(
-            ProductModelProductDescriptionIdentifier id,
-            Dictionary<ProductModelProductDescriptionCompositeModel.__DataOptions__, CompositeListItemRequest> listItemRequest,
-            ProductModelProductDescriptionCompositeModel.__DataOptions__[]? dataOptions = null)
+        public async Task<ListResponse<ProductModelProductDescriptionDataModel.DefaultView[]>> BulkUpdate(BatchActionRequest<ProductModelProductDescriptionIdentifier, ProductModelProductDescriptionDataModel.DefaultView> data, ClaimsModel? claimsModel)
         {
-            var masterResponse = await this._thisRepository.Get(id);
-            if (masterResponse.Status != HttpStatusCode.OK || masterResponse.ResponseBody == null)
-            {
-                var failedResponse = new ProductModelProductDescriptionCompositeModel();
-                failedResponse.Responses.Add(ProductModelProductDescriptionCompositeModel.__DataOptions__.__Master__, new Response<PaginationResponse> { Status = masterResponse.Status, StatusMessage = masterResponse.StatusMessage });
-                return failedResponse;
-            }
-
-            var successResponse = new ProductModelProductDescriptionCompositeModel { __Master__ = masterResponse.ResponseBody };
-            var responses = new ConcurrentDictionary<ProductModelProductDescriptionCompositeModel.__DataOptions__, Response<PaginationResponse>>();
-            responses.TryAdd(ProductModelProductDescriptionCompositeModel.__DataOptions__.__Master__, new Response<PaginationResponse> { Status = HttpStatusCode.OK });
-
-            var tasks = new List<Task>();
-
-            if (tasks.Count > 0)
-            {
-                Task t = Task.WhenAll(tasks.ToArray());
-                try
-                {
-                    await t;
-                }
-                catch { }
-            }
-            successResponse.Responses = new Dictionary<ProductModelProductDescriptionCompositeModel.__DataOptions__, Response<PaginationResponse>>(responses);
-            return successResponse;
-        }
-
-        public async Task<Response> BulkDelete(List<ProductModelProductDescriptionIdentifier> ids)
-        {
-            return await _thisRepository.BulkDelete(ids);
+            var response = await _thisRepository.BulkUpdate(data);
+            return response;
         }
 
         public async Task<Response<MultiItemsCUDRequest<ProductModelProductDescriptionIdentifier, ProductModelProductDescriptionDataModel.DefaultView>>> MultiItemsCUD(
-            MultiItemsCUDRequest<ProductModelProductDescriptionIdentifier, ProductModelProductDescriptionDataModel.DefaultView> input)
+            MultiItemsCUDRequest<ProductModelProductDescriptionIdentifier, ProductModelProductDescriptionDataModel.DefaultView> input, ClaimsModel? claimsModel)
         {
-            return await _thisRepository.MultiItemsCUD(input);
+            var response = await _thisRepository.MultiItemsCUD(input);
+            return response;
         }
 
-        public async Task<Response<ProductModelProductDescriptionDataModel.DefaultView>> Update(ProductModelProductDescriptionIdentifier id, ProductModelProductDescriptionDataModel input)
+        public async Task<Response<ProductModelProductDescriptionDataModel.DefaultView>> Update(ProductModelProductDescriptionIdentifier id, ProductModelProductDescriptionDataModel.DefaultView input, ClaimsModel? claimsModel, string[]? toUpdatePropertyList = null)
         {
-            return await _thisRepository.Update(id, input);
+            var response = await _thisRepository.Update(id, input, toUpdatePropertyList);
+            return response;
         }
 
-        public async Task<Response<ProductModelProductDescriptionDataModel.DefaultView>> Get(ProductModelProductDescriptionIdentifier id)
+        public async Task<Response<ProductModelProductDescriptionDataModel.DefaultView>> Get(ProductModelProductDescriptionIdentifier id, ClaimsModel? claimsModel)
         {
-            return await _thisRepository.Get(id);
+            var response = await _thisRepository.Get(id);
+            return response;
         }
 
-        public async Task<Response<ProductModelProductDescriptionDataModel.DefaultView>> Create(ProductModelProductDescriptionDataModel input)
+        public async Task<Response<ProductModelProductDescriptionDataModel.DefaultView>> Create(ProductModelProductDescriptionDataModel.DefaultView input, ClaimsModel? claimsModel)
         {
-            return await _thisRepository.Create(input);
+            var response = await _thisRepository.Create(input);
+            return response;
         }
 
         public ProductModelProductDescriptionDataModel.DefaultView GetDefault()
@@ -96,20 +69,10 @@ namespace AdventureWorksLT2019.Services
             return new ProductModelProductDescriptionDataModel.DefaultView { ItemUIStatus______ = ItemUIStatus.New };
         }
 
-        public async Task<Response> Delete(ProductModelProductDescriptionIdentifier id)
-        {
-            return await _thisRepository.Delete(id);
-        }
-
         public async Task<ListResponse<NameValuePair[]>> GetCodeList(
-            ProductModelProductDescriptionAdvancedQuery query)
+            ProductModelProductDescriptionAdvancedQuery query, ClaimsModel? claimsModel)
         {
             return await _thisRepository.GetCodeList(query);
-        }
-
-        public async Task<Response<ProductModelProductDescriptionDataModel.DefaultView>> CreateComposite(ProductModelProductDescriptionCompositeModel input)
-        {
-            return await _thisRepository.CreateComposite(input);
         }
     }
 }

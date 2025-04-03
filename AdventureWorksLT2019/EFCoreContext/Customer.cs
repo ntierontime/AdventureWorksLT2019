@@ -8,8 +8,8 @@ namespace AdventureWorksLT2019.EFCoreContext
     {
         public Customer()
         {
-            this.CustomerAddress = new HashSet<CustomerAddress>();
-            this.SalesOrderHeader = new HashSet<SalesOrderHeader>();
+            CustomerAddress = new HashSet<CustomerAddress>();
+            SalesOrderHeader = new HashSet<SalesOrderHeader>();
 
         }
         public int CustomerID { get; set; }

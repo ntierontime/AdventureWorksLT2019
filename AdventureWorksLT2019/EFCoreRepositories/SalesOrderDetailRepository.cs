@@ -13,6 +13,10 @@ namespace AdventureWorksLT2019.EFCoreRepositories
     public class SalesOrderDetailRepository
         : ISalesOrderDetailRepository
     {
+        private readonly Dictionary<string, string> _queryOrderBys = new()
+        {
+        };
+
         private readonly ILogger<SalesOrderDetailRepository> _logger;
         private readonly EFDbContext _dbcontext;
 
@@ -25,7 +29,6 @@ namespace AdventureWorksLT2019.EFCoreRepositories
         private IQueryable<SalesOrderDetailDataModel.DefaultView> SearchQuery(
             SalesOrderDetailAdvancedQuery query, bool withPagingAndOrderBy)
         {
-
             var queryable =
                 from t in _dbcontext.SalesOrderDetail
 
@@ -38,7 +41,6 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     join ShipTo_A in _dbcontext.Address on SalesOrderHeader.ShipToAddressID equals ShipTo_A.AddressID into ShipTo_G from ShipTo in ShipTo_G.DefaultIfEmpty()// \SalesOrderID\ShipToAddressID
                     join Customer in _dbcontext.Customer on SalesOrderHeader.CustomerID equals Customer.CustomerID// \SalesOrderID\CustomerID
                 where
-
                     (!query.ProductID.HasValue || Product.ProductID == query.ProductID)
                     &&
                     (!query.ProductCategoryID.HasValue || ProductCategory.ProductCategoryID == query.ProductCategoryID)
@@ -53,37 +55,34 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     &&
                     (!query.ShipToID.HasValue || ShipTo.AddressID == query.ShipToID)
                     &&
-                    (!query.CustomerID.HasValue || Customer.CustomerID == query.CustomerID)
-                    &&
-
+                    (!query.CustomerID.HasValue || Customer.CustomerID == query.CustomerID)&&
                     (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))
 
                 select new SalesOrderDetailDataModel.DefaultView
                 {
-
-                        SalesOrderID = t.SalesOrderID,
-                        SalesOrderDetailID = t.SalesOrderDetailID,
-                        OrderQty = t.OrderQty,
-                        ProductID = t.ProductID,
-                        UnitPrice = t.UnitPrice,
-                        UnitPriceDiscount = t.UnitPriceDiscount,
-                        LineTotal = t.LineTotal,
-                        rowguid = t.rowguid,
-                        ModifiedDate = t.ModifiedDate,
-                        Product_Name = Product.Name,
-                        SalesOrderHeader_Name = SalesOrderHeader.SalesOrderNumber,
+                    SalesOrderID = t.SalesOrderID,
+                    SalesOrderDetailID = t.SalesOrderDetailID,
+                    OrderQty = t.OrderQty,
+                    ProductID = t.ProductID,
+                    UnitPrice = t.UnitPrice,
+                    UnitPriceDiscount = t.UnitPriceDiscount,
+                    LineTotal = t.LineTotal,
+                    rowguid = t.rowguid,
+                    ModifiedDate = t.ModifiedDate,
+                    Product_Name = Product.Name,
+                    SalesOrderHeader_Name = SalesOrderHeader.SalesOrderNumber,
                 };
 
             // 1. Without Paging And OrderBy
             if (!withPagingAndOrderBy)
                 return queryable;
 
-            // 2. With Paging And OrderBy
-            var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
-            if (orderBys.Any())
-            {
-                queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
-            }
+            // // 2. With Paging And OrderBy
+            // var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
+            // if (orderBys.Any())
+            // {
+            //     queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
+            // }
 
             queryable = queryable.Skip((query.PageIndex - 1) * query.PageSize).Take(query.PageSize);
 
@@ -122,43 +121,65 @@ namespace AdventureWorksLT2019.EFCoreRepositories
         {
             var queryable =
                 from t in _dbcontext.SalesOrderDetail
+                    join SalesOrderHeader in _dbcontext.SalesOrderHeader on t.SalesOrderID equals SalesOrderHeader.SalesOrderID// \SalesOrderID
 
                 select t;
 
             return queryable;
         }
 
-        public async Task<Response> BulkDelete(List<SalesOrderDetailIdentifier> ids)
+        public async Task<ListResponse<SalesOrderDetailDataModel.DefaultView[]>> BulkUpdate(
+            BatchActionRequest<SalesOrderDetailIdentifier, SalesOrderDetailDataModel.DefaultView> data)
         {
+            if (data.ActionData == null)
+            {
+                return await Task<ListResponse<SalesOrderDetailDataModel.DefaultView[]>>.FromResult(
+                    new ListResponse<SalesOrderDetailDataModel.DefaultView[]> { Status = HttpStatusCode.BadRequest });
+            }
             try
             {
-                var queryable = GetIQueryableByPrimaryIdentifierList(ids);
-                var result = await queryable.BatchDeleteAsync();
+                var querable = GetIQueryableByPrimaryIdentifierList(data.Ids);
 
-                return await Task<Response>.FromResult(
-                    new Response
-                    {
-                        Status = HttpStatusCode.OK,
-                    });
+                return await Task<ListResponse<SalesOrderDetailDataModel.DefaultView[]>>.FromResult(
+                    new ListResponse<SalesOrderDetailDataModel.DefaultView[]> { Status = HttpStatusCode.BadRequest });
             }
             catch (Exception ex)
             {
-                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+                return await Task<ListResponse<SalesOrderDetailDataModel.DefaultView[]>>.FromResult(
+                    new ListResponse<SalesOrderDetailDataModel.DefaultView[]> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
             }
+        }
+
+        private IQueryable<SalesOrderDetailDataModel.DefaultView> GetIQueryableAsBulkUpdateResponse(
+            List<SalesOrderDetailIdentifier> ids)
+        {
+            var queryable =
+                from t in _dbcontext.SalesOrderDetail
+                    join Product in _dbcontext.Product on t.ProductID equals Product.ProductID// \ProductID
+                    join SalesOrderHeader in _dbcontext.SalesOrderHeader on t.SalesOrderID equals SalesOrderHeader.SalesOrderID// \SalesOrderID
+
+                select new SalesOrderDetailDataModel.DefaultView
+                {
+                    SalesOrderID = t.SalesOrderID,
+                    SalesOrderDetailID = t.SalesOrderDetailID,
+                    OrderQty = t.OrderQty,
+                    ProductID = t.ProductID,
+                    UnitPrice = t.UnitPrice,
+                    UnitPriceDiscount = t.UnitPriceDiscount,
+                    LineTotal = t.LineTotal,
+                    rowguid = t.rowguid,
+                    ModifiedDate = t.ModifiedDate,
+                    Product_Name = Product.Name,
+                    SalesOrderHeader_Name = SalesOrderHeader.SalesOrderNumber,
+                };
+
+            return queryable;
         }
 
         public async Task<Response<MultiItemsCUDRequest<SalesOrderDetailIdentifier, SalesOrderDetailDataModel.DefaultView>>> MultiItemsCUD(
             MultiItemsCUDRequest<SalesOrderDetailIdentifier, SalesOrderDetailDataModel.DefaultView> input)
         {
-            // 1. DeleteItems, return if Failed
-            if (input.DeleteItems != null)
-            {
-                var responseOfDeleteItems = await this.BulkDelete(input.DeleteItems);
-                if (responseOfDeleteItems != null && responseOfDeleteItems.Status != HttpStatusCode.OK)
-                {
-                    return new Response<MultiItemsCUDRequest<SalesOrderDetailIdentifier, SalesOrderDetailDataModel.DefaultView>> { Status = responseOfDeleteItems.Status, StatusMessage = "Deletion Failed. " + responseOfDeleteItems.StatusMessage };
-                }
-            }
+            // 1. BulkDelete is not enabled
 
             // 2. return OK, if no more NewItems and UpdateItems
             if (!(input.NewItems != null && input.NewItems.Count > 0 ||
@@ -171,7 +192,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             try
             {
                 // 3.1.1. NewItems if any
-                List<SalesOrderDetail> newEFItems = new();
+                List<SalesOrderDetail> newEFItems = [];
                 if (input.NewItems != null && input.NewItems.Count > 0)
                 {
                     foreach (var item in input.NewItems)
@@ -204,13 +225,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
 
                         if (existing != null)
                         {
-                            // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
-                            existing.SalesOrderID = item.SalesOrderID;
-                            existing.OrderQty = item.OrderQty;
-                            existing.ProductID = item.ProductID;
-                            existing.UnitPrice = item.UnitPrice;
-                            existing.UnitPriceDiscount = item.UnitPriceDiscount;
-                            existing.ModifiedDate = item.ModifiedDate;
+                            CopyUpdateValues(item, null, existing);
                         }
                     }
                 }
@@ -233,14 +248,14 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                 }
 
                 var responseBodyWithNewAndUpdatedItems =
-                    (from t in _dbcontext.SalesOrderDetail
+                    (
+                    from t in _dbcontext.SalesOrderDetail
                     join Product in _dbcontext.Product on t.ProductID equals Product.ProductID// \ProductID
                     join SalesOrderHeader in _dbcontext.SalesOrderHeader on t.SalesOrderID equals SalesOrderHeader.SalesOrderID// \SalesOrderID
                     where identifierListToloadResponseItems.Contains(t.SalesOrderID)
 
                     select new SalesOrderDetailDataModel.DefaultView
                     {
-
                         SalesOrderID = t.SalesOrderID,
                         SalesOrderDetailID = t.SalesOrderDetailID,
                         OrderQty = t.OrderQty,
@@ -252,7 +267,6 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         ModifiedDate = t.ModifiedDate,
                         Product_Name = Product.Name,
                         SalesOrderHeader_Name = SalesOrderHeader.SalesOrderNumber,
-
                     }).ToList();
 
                 // 3.3. Final Response
@@ -283,7 +297,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
-        public async Task<Response<SalesOrderDetailDataModel.DefaultView>> Update(SalesOrderDetailIdentifier id, SalesOrderDetailDataModel input)
+        public async Task<Response<SalesOrderDetailDataModel.DefaultView>> Update(SalesOrderDetailIdentifier id, SalesOrderDetailDataModel.DefaultView input, string[]? toUpdatePropertyList = null)
         {
             if (input == null)
                 return await Task<Response<SalesOrderDetailDataModel.DefaultView>>.FromResult(new Response<SalesOrderDetailDataModel.DefaultView> { Status = HttpStatusCode.BadRequest });
@@ -291,12 +305,17 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             try
             {
                 var existing =
-                    (from t in _dbcontext.SalesOrderDetail
+                    (
+                    from t in _dbcontext.SalesOrderDetail
+                    join SalesOrderHeader in _dbcontext.SalesOrderHeader on t.SalesOrderID equals SalesOrderHeader.SalesOrderID// \SalesOrderID
                      where
-
-                    t.SalesOrderID == id.SalesOrderID
-                    &&
-                    t.SalesOrderDetailID == id.SalesOrderDetailID
+                         (
+                         id.SalesOrderDetailID.HasValue && t.SalesOrderDetailID == id.SalesOrderDetailID
+                         )
+                         &&
+                         (
+                         id.SalesOrderID.HasValue && t.SalesOrderID == id.SalesOrderID
+                         )
                      select t).SingleOrDefault();
 
                 // TODO: can create a new record here.
@@ -304,50 +323,46 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     return await Task<Response<SalesOrderDetailDataModel.DefaultView>>.FromResult(new Response<SalesOrderDetailDataModel.DefaultView> { Status = HttpStatusCode.NotFound });
 
                 // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
+                CopyUpdateValues(input, toUpdatePropertyList, existing);
+
+                await _dbcontext.SaveChangesAsync();
+                return await Get(id);
+
+            }
+            catch (Exception ex)
+            {
+                return await Task<Response<SalesOrderDetailDataModel.DefaultView>>.FromResult(new Response<SalesOrderDetailDataModel.DefaultView> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
+        private static void CopyUpdateValues(SalesOrderDetailDataModel.DefaultView? input, string[]? toUpdatePropertyList, SalesOrderDetail existing)
+        {
+            if (input == null)
+                return;
+
+            // 1. This Table - SalesOrderDetail
+            if (toUpdatePropertyList == null || toUpdatePropertyList.Length == 0)
+            {
                 existing.SalesOrderID = input.SalesOrderID;
                 existing.OrderQty = input.OrderQty;
                 existing.ProductID = input.ProductID;
                 existing.UnitPrice = input.UnitPrice;
                 existing.UnitPriceDiscount = input.UnitPriceDiscount;
                 existing.ModifiedDate = input.ModifiedDate;
-                await _dbcontext.SaveChangesAsync();
-
-                var responseBody =
-                    (
-                    from t in _dbcontext.SalesOrderDetail
-
-                    join Product in _dbcontext.Product on t.ProductID equals Product.ProductID// \ProductID
-                    join SalesOrderHeader in _dbcontext.SalesOrderHeader on t.SalesOrderID equals SalesOrderHeader.SalesOrderID// \SalesOrderID
-                    where t.SalesOrderID == existing.SalesOrderID && t.SalesOrderDetailID == existing.SalesOrderDetailID
-
-                    select new SalesOrderDetailDataModel.DefaultView
-                    {
-
-                        SalesOrderID = t.SalesOrderID,
-                        SalesOrderDetailID = t.SalesOrderDetailID,
-                        OrderQty = t.OrderQty,
-                        ProductID = t.ProductID,
-                        UnitPrice = t.UnitPrice,
-                        UnitPriceDiscount = t.UnitPriceDiscount,
-                        LineTotal = t.LineTotal,
-                        rowguid = t.rowguid,
-                        ModifiedDate = t.ModifiedDate,
-                        Product_Name = Product.Name,
-                        SalesOrderHeader_Name = SalesOrderHeader.SalesOrderNumber,
-
-                    }).First();
-
-                return await Task<Response<SalesOrderDetailDataModel.DefaultView>>.FromResult(
-                    new Response<SalesOrderDetailDataModel.DefaultView>
-                    {
-                        Status = HttpStatusCode.OK,
-                        ResponseBody = responseBody
-                    });
-
             }
-            catch (Exception ex)
+            else
+            //update Specific Properties if in toUpdatePropertyList
             {
-                return await Task<Response<SalesOrderDetailDataModel.DefaultView>>.FromResult(new Response<SalesOrderDetailDataModel.DefaultView> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+                if(toUpdatePropertyList.Contains(nameof(SalesOrderDetailDataModel.OrderQty)))
+                    existing.OrderQty = input.OrderQty;
+                if(toUpdatePropertyList.Contains(nameof(SalesOrderDetailDataModel.ProductID)))
+                    existing.ProductID = input.ProductID;
+                if(toUpdatePropertyList.Contains(nameof(SalesOrderDetailDataModel.UnitPrice)))
+                    existing.UnitPrice = input.UnitPrice;
+                if(toUpdatePropertyList.Contains(nameof(SalesOrderDetailDataModel.UnitPriceDiscount)))
+                    existing.UnitPriceDiscount = input.UnitPriceDiscount;
+                if(toUpdatePropertyList.Contains(nameof(SalesOrderDetailDataModel.ModifiedDate)))
+                    existing.ModifiedDate = input.ModifiedDate;
             }
         }
 
@@ -366,14 +381,16 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     join Product in _dbcontext.Product on t.ProductID equals Product.ProductID// \ProductID
                     join SalesOrderHeader in _dbcontext.SalesOrderHeader on t.SalesOrderID equals SalesOrderHeader.SalesOrderID// \SalesOrderID
                     where
-
-                    t.SalesOrderID == id.SalesOrderID
-                    &&
-                    t.SalesOrderDetailID == id.SalesOrderDetailID
+                        (
+                        id.SalesOrderDetailID.HasValue && t.SalesOrderDetailID == id.SalesOrderDetailID
+                        )
+                        &&
+                        (
+                        id.SalesOrderID.HasValue && t.SalesOrderID == id.SalesOrderID
+                        )
 
                     select new SalesOrderDetailDataModel.DefaultView
                     {
-
                         SalesOrderID = t.SalesOrderID,
                         SalesOrderDetailID = t.SalesOrderDetailID,
                         OrderQty = t.OrderQty,
@@ -385,7 +402,6 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         ModifiedDate = t.ModifiedDate,
                         Product_Name = Product.Name,
                         SalesOrderHeader_Name = SalesOrderHeader.SalesOrderNumber,
-
                     }).First();
                 if (responseBody == null)
                     return await Task<Response<SalesOrderDetailDataModel.DefaultView>>.FromResult(new Response<SalesOrderDetailDataModel.DefaultView> { Status = HttpStatusCode.NotFound });
@@ -403,7 +419,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
-        public async Task<Response<SalesOrderDetailDataModel.DefaultView>> Create(SalesOrderDetailDataModel input)
+        public async Task<Response<SalesOrderDetailDataModel.DefaultView>> Create(SalesOrderDetailDataModel.DefaultView input)
         {
             if (input == null)
                 return await Task<Response<SalesOrderDetailDataModel.DefaultView>>.FromResult(new Response<SalesOrderDetailDataModel.DefaultView> { Status = HttpStatusCode.BadRequest });
@@ -411,48 +427,17 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             {
                 var toInsert = new SalesOrderDetail
                 {
-                            SalesOrderID = input.SalesOrderID,
-                            OrderQty = input.OrderQty,
-                            ProductID = input.ProductID,
-                            UnitPrice = input.UnitPrice,
-                            UnitPriceDiscount = input.UnitPriceDiscount,
-                            ModifiedDate = input.ModifiedDate,
+                    SalesOrderID = input.SalesOrderID,
+                    OrderQty = input.OrderQty,
+                    ProductID = input.ProductID,
+                    UnitPrice = input.UnitPrice,
+                    UnitPriceDiscount = input.UnitPriceDiscount,
+                    ModifiedDate = input.ModifiedDate,
                 };
+
                 await _dbcontext.SalesOrderDetail.AddAsync(toInsert);
                 await _dbcontext.SaveChangesAsync();
-
-                var responseBody =
-                    (
-                    from t in _dbcontext.SalesOrderDetail
-
-                    join Product in _dbcontext.Product on t.ProductID equals Product.ProductID// \ProductID
-                    join SalesOrderHeader in _dbcontext.SalesOrderHeader on t.SalesOrderID equals SalesOrderHeader.SalesOrderID// \SalesOrderID
-                    where t.SalesOrderID == toInsert.SalesOrderID && t.SalesOrderDetailID == toInsert.SalesOrderDetailID
-
-                    select new SalesOrderDetailDataModel.DefaultView
-                    {
-
-                        SalesOrderID = t.SalesOrderID,
-                        SalesOrderDetailID = t.SalesOrderDetailID,
-                        OrderQty = t.OrderQty,
-                        ProductID = t.ProductID,
-                        UnitPrice = t.UnitPrice,
-                        UnitPriceDiscount = t.UnitPriceDiscount,
-                        LineTotal = t.LineTotal,
-                        rowguid = t.rowguid,
-                        ModifiedDate = t.ModifiedDate,
-                        Product_Name = Product.Name,
-                        SalesOrderHeader_Name = SalesOrderHeader.SalesOrderNumber,
-
-                    }).First();
-
-                return await Task<Response<SalesOrderDetailDataModel.DefaultView>>.FromResult(
-                    new Response<SalesOrderDetailDataModel.DefaultView>
-                    {
-                        Status = HttpStatusCode.OK,
-                        ResponseBody = responseBody
-                    });
-
+                return await Get(new SalesOrderDetailIdentifier { SalesOrderID = toInsert.SalesOrderID, SalesOrderDetailID = toInsert.SalesOrderDetailID });
             }
             catch (Exception ex)
             {
@@ -460,44 +445,9 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
-        public async Task<Response> Delete(SalesOrderDetailIdentifier id)
-        {
-            if (id == null)
-                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.BadRequest });
-
-            try
-            {
-                var existing =
-                    (from t in _dbcontext.SalesOrderDetail
-                     where
-
-                    t.SalesOrderID == id.SalesOrderID
-                    &&
-                    t.SalesOrderDetailID == id.SalesOrderDetailID
-                     select t).SingleOrDefault();
-
-                if (existing == null)
-                    return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.NotFound });
-
-                _dbcontext.SalesOrderDetail.Remove(existing);
-                await _dbcontext.SaveChangesAsync();
-
-                return await Task<Response>.FromResult(
-                    new Response
-                    {
-                        Status = HttpStatusCode.OK,
-                    });
-            }
-            catch (Exception ex)
-            {
-                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
-            }
-        }
-
         private IQueryable<NameValuePair> GetCodeListQuery(
             SalesOrderDetailAdvancedQuery query, bool withPagingAndOrderBy)
         {
-
             var queryable =
                 from t in _dbcontext.SalesOrderDetail
 
@@ -510,7 +460,6 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     join ShipTo_A in _dbcontext.Address on SalesOrderHeader.ShipToAddressID equals ShipTo_A.AddressID into ShipTo_G from ShipTo in ShipTo_G.DefaultIfEmpty()// \SalesOrderID\ShipToAddressID
                     join Customer in _dbcontext.Customer on SalesOrderHeader.CustomerID equals Customer.CustomerID// \SalesOrderID\CustomerID
                 where
-
                     (!query.ProductID.HasValue || Product.ProductID == query.ProductID)
                     &&
                     (!query.ProductCategoryID.HasValue || ProductCategory.ProductCategoryID == query.ProductCategoryID)
@@ -525,28 +474,25 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     &&
                     (!query.ShipToID.HasValue || ShipTo.AddressID == query.ShipToID)
                     &&
-                    (!query.CustomerID.HasValue || Customer.CustomerID == query.CustomerID)
-                    &&
-
+                    (!query.CustomerID.HasValue || Customer.CustomerID == query.CustomerID)&&
                     (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))
                 let _Value = string.Concat(new string[] { t.SalesOrderID.ToString(),"|",t.SalesOrderDetailID.ToString() })
                 select new NameValuePair
                 {
-
-                        Name = t.SalesOrderID.ToString(),
-                        Value = _Value,
+                    Name = t.SalesOrderID.ToString(),
+                    Value = _Value,
                 };
 
             // 1. Without Paging And OrderBy
             if (!withPagingAndOrderBy)
                 return queryable;
 
-            // 2. With Paging And OrderBy
-            var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
-            if (orderBys.Any())
-            {
-                queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
-            }
+            // // 2. With Paging And OrderBy
+            // var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
+            // if (orderBys.Any())
+            // {
+            //     queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
+            // }
 
             queryable = queryable.Skip((query.PageIndex - 1) * query.PageSize).Take(query.PageSize);
 
@@ -577,37 +523,6 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     Status = HttpStatusCode.InternalServerError,
                     StatusMessage = ex.Message
                 });
-            }
-        }
-
-        public async Task<Response<SalesOrderDetailDataModel.DefaultView>> CreateComposite(SalesOrderDetailCompositeModel input)
-        {
-            if (input == null)
-                return await Task<Response<SalesOrderDetailDataModel.DefaultView>>.FromResult(new Response<SalesOrderDetailDataModel.DefaultView> { Status = HttpStatusCode.BadRequest });
-            try
-            {
-                // 1. Master: SalesOrderDetail
-                var master = new SalesOrderDetail
-                {
-                    // Properties.1. Value Type Properties
-                    SalesOrderID = input.__Master__!.SalesOrderID,
-                    OrderQty = input.__Master__!.OrderQty,
-                    ProductID = input.__Master__!.ProductID,
-                    UnitPrice = input.__Master__!.UnitPrice,
-                    UnitPriceDiscount = input.__Master__!.UnitPriceDiscount,
-                    rowguid = input.__Master__!.rowguid,
-                    ModifiedDate = input.__Master__!.ModifiedDate,
-                };
-
-                _dbcontext.SalesOrderDetail.Add(master);
-
-                await _dbcontext.SaveChangesAsync();
-
-                return await Get(new SalesOrderDetailIdentifier { SalesOrderID = master.SalesOrderID, SalesOrderDetailID = master.SalesOrderDetailID, });
-            }
-            catch (Exception ex)
-            {
-                return await Task<Response<SalesOrderDetailDataModel.DefaultView>>.FromResult(new Response<SalesOrderDetailDataModel.DefaultView> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
             }
         }
 

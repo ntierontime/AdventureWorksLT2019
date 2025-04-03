@@ -1,0 +1,23 @@
+CALL _VariableDefinition.bat
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\apiClients\SalesOrderHeaderApi.ts %destRootFolder%ReactTSClientApp\src\generated\apiClients\SalesOrderHeaderApi.ts
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\dataModels\ISalesOrderHeaderDataModel.ts %destRootFolder%ReactTSClientApp\src\dataModels\ISalesOrderHeaderDataModel.ts
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\dataModels\ISalesOrderHeaderQueries.ts %destRootFolder%ReactTSClientApp\src\dataModels\ISalesOrderHeaderQueries.ts
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\routePartials\SalesOrderHeaderRoutesPartial.tsx %destRootFolder%ReactTSClientApp\src\generated\routePartials\SalesOrderHeaderRoutesPartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\slices\SalesOrderHeaderSlice.ts %destRootFolder%ReactTSClientApp\src\generated\slices\SalesOrderHeaderSlice.ts
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\SalesOrderHeader\AdvancedSearchPartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\SalesOrderHeader\AdvancedSearchPartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\SalesOrderHeader\CreatePartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\SalesOrderHeader\CreatePartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\SalesOrderHeader\DetailsPartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\SalesOrderHeader\DetailsPartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\SalesOrderHeader\EditPartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\SalesOrderHeader\EditPartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\SalesOrderHeader\HtmlTablePartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\SalesOrderHeader\HtmlTablePartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\SalesOrderHeader\IndexPage.tsx %destRootFolder%ReactTSClientApp\src\generated\views\SalesOrderHeader\IndexPage.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\SalesOrderHeader\ItemViewsPartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\SalesOrderHeader\ItemViewsPartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\SalesOrderHeader\ListsPartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\SalesOrderHeader\ListsPartial.tsx
+copy /y /v %sourceRootFolder%EFCoreContext\SalesOrderHeader.cs %destRootFolder%EFCoreContext\SalesOrderHeader.cs
+copy /y /v %sourceRootFolder%EFCoreRepositories\SalesOrderHeaderRepository.cs %destRootFolder%EFCoreRepositories\SalesOrderHeaderRepository.cs
+copy /y /v %sourceRootFolder%Models\SalesOrderHeaderDataModel.cs %destRootFolder%Models\SalesOrderHeaderDataModel.cs
+copy /y /v %sourceRootFolder%Models\SalesOrderHeaderQueries.cs %destRootFolder%Models\SalesOrderHeaderQueries.cs
+copy /y /v %sourceRootFolder%RepositoryContracts\ISalesOrderHeaderRepository.cs %destRootFolder%RepositoryContracts\ISalesOrderHeaderRepository.cs
+copy /y /v %sourceRootFolder%ServiceContracts\ISalesOrderHeaderService.cs %destRootFolder%ServiceContracts\ISalesOrderHeaderService.cs
+copy /y /v %sourceRootFolder%Services\SalesOrderHeaderService.cs %destRootFolder%Services\SalesOrderHeaderService.cs
+copy /y /v %sourceRootFolder%WebApiAdminControllers\SalesOrderHeaderApiController.cs %destRootFolder%WebApiAdminControllers\SalesOrderHeaderApiController.cs
+copy /y /v %sourceRootFolder%WebApiClientControllers\SalesOrderHeaderApiController.cs %destRootFolder%WebApiClientControllers\SalesOrderHeaderApiController.cs

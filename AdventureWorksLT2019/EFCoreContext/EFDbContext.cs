@@ -52,8 +52,6 @@ namespace AdventureWorksLT2019.EFCoreContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            #region #1.1 AdventureWorksLT2019Model.BuildVersion
-
             modelBuilder.Entity<BuildVersion>(entity =>
             {
 
@@ -82,10 +80,6 @@ namespace AdventureWorksLT2019.EFCoreContext
                     .ValueGeneratedNever();
 
             });
-
-            #endregion #1.1 AdventureWorksLT2019Model.BuildVersion
-
-            #region #1.2 AdventureWorksLT2019Model.ErrorLog
 
             modelBuilder.Entity<ErrorLog>(entity =>
             {
@@ -130,10 +124,6 @@ namespace AdventureWorksLT2019.EFCoreContext
                     .HasMaxLength(4000);
 
             });
-
-            #endregion #1.2 AdventureWorksLT2019Model.ErrorLog
-
-            #region #1.3 AdventureWorksLT2019Model.Address
 
             modelBuilder.Entity<Address>(entity =>
             {
@@ -185,10 +175,6 @@ namespace AdventureWorksLT2019.EFCoreContext
                     .HasColumnType("DateTime");
 
             });
-
-            #endregion #1.3 AdventureWorksLT2019Model.Address
-
-            #region #1.4 AdventureWorksLT2019Model.Customer
 
             modelBuilder.Entity<Customer>(entity =>
             {
@@ -263,10 +249,6 @@ namespace AdventureWorksLT2019.EFCoreContext
 
             });
 
-            #endregion #1.4 AdventureWorksLT2019Model.Customer
-
-            #region #1.5 AdventureWorksLT2019Model.CustomerAddress
-
             modelBuilder.Entity<CustomerAddress>(entity =>
             {
 
@@ -307,10 +289,6 @@ namespace AdventureWorksLT2019.EFCoreContext
                     .OnDelete(DeleteBehavior.ClientSetNull);
 
             });
-
-            #endregion #1.5 AdventureWorksLT2019Model.CustomerAddress
-
-            #region #1.6 AdventureWorksLT2019Model.Product
 
             modelBuilder.Entity<Product>(entity =>
             {
@@ -398,10 +376,6 @@ namespace AdventureWorksLT2019.EFCoreContext
 
             });
 
-            #endregion #1.6 AdventureWorksLT2019Model.Product
-
-            #region #1.7 AdventureWorksLT2019Model.ProductCategory
-
             modelBuilder.Entity<ProductCategory>(entity =>
             {
 
@@ -437,10 +411,6 @@ namespace AdventureWorksLT2019.EFCoreContext
 
             });
 
-            #endregion #1.7 AdventureWorksLT2019Model.ProductCategory
-
-            #region #1.8 AdventureWorksLT2019Model.ProductDescription
-
             modelBuilder.Entity<ProductDescription>(entity =>
             {
 
@@ -467,10 +437,6 @@ namespace AdventureWorksLT2019.EFCoreContext
                     .HasColumnType("DateTime");
 
             });
-
-            #endregion #1.8 AdventureWorksLT2019Model.ProductDescription
-
-            #region #1.9 AdventureWorksLT2019Model.ProductModel
 
             modelBuilder.Entity<ProductModel>(entity =>
             {
@@ -502,10 +468,6 @@ namespace AdventureWorksLT2019.EFCoreContext
                     .HasColumnType("DateTime");
 
             });
-
-            #endregion #1.9 AdventureWorksLT2019Model.ProductModel
-
-            #region #1.10 AdventureWorksLT2019Model.ProductModelProductDescription
 
             modelBuilder.Entity<ProductModelProductDescription>(entity =>
             {
@@ -548,10 +510,6 @@ namespace AdventureWorksLT2019.EFCoreContext
                     .OnDelete(DeleteBehavior.ClientSetNull);
 
             });
-
-            #endregion #1.10 AdventureWorksLT2019Model.ProductModelProductDescription
-
-            #region #1.11 AdventureWorksLT2019Model.SalesOrderDetail
 
             modelBuilder.Entity<SalesOrderDetail>(entity =>
             {
@@ -606,10 +564,6 @@ namespace AdventureWorksLT2019.EFCoreContext
                     .OnDelete(DeleteBehavior.ClientSetNull);
 
             });
-
-            #endregion #1.11 AdventureWorksLT2019Model.SalesOrderDetail
-
-            #region #1.12 AdventureWorksLT2019Model.SalesOrderHeader
 
             modelBuilder.Entity<SalesOrderHeader>(entity =>
             {
@@ -719,8 +673,6 @@ namespace AdventureWorksLT2019.EFCoreContext
                     .OnDelete(DeleteBehavior.ClientSetNull);
 
             });
-
-            #endregion #1.12 AdventureWorksLT2019Model.SalesOrderHeader
 
         }
 

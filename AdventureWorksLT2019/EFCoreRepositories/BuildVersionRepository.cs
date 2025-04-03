@@ -13,6 +13,10 @@ namespace AdventureWorksLT2019.EFCoreRepositories
     public class BuildVersionRepository
         : IBuildVersionRepository
     {
+        private readonly Dictionary<string, string> _queryOrderBys = new()
+        {
+        };
+
         private readonly ILogger<BuildVersionRepository> _logger;
         private readonly EFDbContext _dbcontext;
 
@@ -25,47 +29,40 @@ namespace AdventureWorksLT2019.EFCoreRepositories
         private IQueryable<BuildVersionDataModel> SearchQuery(
             BuildVersionAdvancedQuery query, bool withPagingAndOrderBy)
         {
-
             var queryable =
                 from t in _dbcontext.BuildVersion
 
                 where
-
                     (string.IsNullOrEmpty(query.TextSearch) ||
-                        query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.Database_Version!, "%" + query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.Database_Version!, query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.Database_Version!, "%" + query.TextSearch)))
-                    &&
-
+                    query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.Database_Version!, "%" + query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.Database_Version!, query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.Database_Version!, "%" + query.TextSearch)))&&
                     (!query.VersionDateRangeLower.HasValue && !query.VersionDateRangeUpper.HasValue || (!query.VersionDateRangeLower.HasValue || t.VersionDate >= query.VersionDateRangeLower) && (!query.VersionDateRangeLower.HasValue || t.VersionDate <= query.VersionDateRangeUpper))
                     &&
-                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))
-                    &&
-
+                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))&&
                     (string.IsNullOrEmpty(query.Database_Version) ||
-                            query.Database_VersionSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Database_Version!, "%" + query.Database_Version + "%") ||
-                            query.Database_VersionSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Database_Version!, query.Database_Version + "%") ||
-                            query.Database_VersionSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Database_Version!, "%" + query.Database_Version))
+                        query.Database_VersionSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Database_Version!, "%" + query.Database_Version + "%") ||
+                        query.Database_VersionSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Database_Version!, query.Database_Version + "%") ||
+                        query.Database_VersionSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Database_Version!, "%" + query.Database_Version))
 
                 select new BuildVersionDataModel
                 {
-
-                        SystemInformationID = t.SystemInformationID,
-                        Database_Version = t.Database_Version,
-                        VersionDate = t.VersionDate,
-                        ModifiedDate = t.ModifiedDate,
+                    SystemInformationID = t.SystemInformationID,
+                    Database_Version = t.Database_Version,
+                    VersionDate = t.VersionDate,
+                    ModifiedDate = t.ModifiedDate,
                 };
 
             // 1. Without Paging And OrderBy
             if (!withPagingAndOrderBy)
                 return queryable;
 
-            // 2. With Paging And OrderBy
-            var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
-            if (orderBys.Any())
-            {
-                queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
-            }
+            // // 2. With Paging And OrderBy
+            // var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
+            // if (orderBys.Any())
+            // {
+            //     queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
+            // }
 
             queryable = queryable.Skip((query.PageIndex - 1) * query.PageSize).Take(query.PageSize);
 
@@ -110,37 +107,49 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             return queryable;
         }
 
-        public async Task<Response> BulkDelete(List<BuildVersionIdentifier> ids)
+        public async Task<ListResponse<BuildVersionDataModel[]>> BulkUpdate(
+            BatchActionRequest<BuildVersionIdentifier, BuildVersionDataModel> data)
         {
+            if (data.ActionData == null)
+            {
+                return await Task<ListResponse<BuildVersionDataModel[]>>.FromResult(
+                    new ListResponse<BuildVersionDataModel[]> { Status = HttpStatusCode.BadRequest });
+            }
             try
             {
-                var queryable = GetIQueryableByPrimaryIdentifierList(ids);
-                var result = await queryable.BatchDeleteAsync();
+                var querable = GetIQueryableByPrimaryIdentifierList(data.Ids);
 
-                return await Task<Response>.FromResult(
-                    new Response
-                    {
-                        Status = HttpStatusCode.OK,
-                    });
+                return await Task<ListResponse<BuildVersionDataModel[]>>.FromResult(
+                    new ListResponse<BuildVersionDataModel[]> { Status = HttpStatusCode.BadRequest });
             }
             catch (Exception ex)
             {
-                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+                return await Task<ListResponse<BuildVersionDataModel[]>>.FromResult(
+                    new ListResponse<BuildVersionDataModel[]> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
             }
+        }
+
+        private IQueryable<BuildVersionDataModel> GetIQueryableAsBulkUpdateResponse(
+            List<BuildVersionIdentifier> ids)
+        {
+            var queryable =
+                from t in _dbcontext.BuildVersion
+
+                select new BuildVersionDataModel
+                {
+                    SystemInformationID = t.SystemInformationID,
+                    Database_Version = t.Database_Version,
+                    VersionDate = t.VersionDate,
+                    ModifiedDate = t.ModifiedDate,
+                };
+
+            return queryable;
         }
 
         public async Task<Response<MultiItemsCUDRequest<BuildVersionIdentifier, BuildVersionDataModel>>> MultiItemsCUD(
             MultiItemsCUDRequest<BuildVersionIdentifier, BuildVersionDataModel> input)
         {
-            // 1. DeleteItems, return if Failed
-            if (input.DeleteItems != null)
-            {
-                var responseOfDeleteItems = await this.BulkDelete(input.DeleteItems);
-                if (responseOfDeleteItems != null && responseOfDeleteItems.Status != HttpStatusCode.OK)
-                {
-                    return new Response<MultiItemsCUDRequest<BuildVersionIdentifier, BuildVersionDataModel>> { Status = responseOfDeleteItems.Status, StatusMessage = "Deletion Failed. " + responseOfDeleteItems.StatusMessage };
-                }
-            }
+            // 1. BulkDelete is not enabled
 
             // 2. return OK, if no more NewItems and UpdateItems
             if (!(input.NewItems != null && input.NewItems.Count > 0 ||
@@ -153,7 +162,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             try
             {
                 // 3.1.1. NewItems if any
-                List<BuildVersion> newEFItems = new();
+                List<BuildVersion> newEFItems = [];
                 if (input.NewItems != null && input.NewItems.Count > 0)
                 {
                     foreach (var item in input.NewItems)
@@ -183,10 +192,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
 
                         if (existing != null)
                         {
-                            // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
-                            existing.Database_Version = item.Database_Version;
-                            existing.VersionDate = item.VersionDate;
-                            existing.ModifiedDate = item.ModifiedDate;
+                            CopyUpdateValues(item, null, existing);
                         }
                     }
                 }
@@ -209,17 +215,16 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                 }
 
                 var responseBodyWithNewAndUpdatedItems =
-                    (from t in _dbcontext.BuildVersion
+                    (
+                    from t in _dbcontext.BuildVersion
                     where identifierListToloadResponseItems.Contains(t.SystemInformationID)
 
                     select new BuildVersionDataModel
                     {
-
                         SystemInformationID = t.SystemInformationID,
                         Database_Version = t.Database_Version,
                         VersionDate = t.VersionDate,
                         ModifiedDate = t.ModifiedDate,
-
                     }).ToList();
 
                 // 3.3. Final Response
@@ -250,7 +255,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
-        public async Task<Response<BuildVersionDataModel>> Update(BuildVersionIdentifier id, BuildVersionDataModel input)
+        public async Task<Response<BuildVersionDataModel>> Update(BuildVersionIdentifier id, BuildVersionDataModel input, string[]? toUpdatePropertyList = null)
         {
             if (input == null)
                 return await Task<Response<BuildVersionDataModel>>.FromResult(new Response<BuildVersionDataModel> { Status = HttpStatusCode.BadRequest });
@@ -258,14 +263,14 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             try
             {
                 var existing =
-                    (from t in _dbcontext.BuildVersion
+                    (
+                    from t in _dbcontext.BuildVersion
                      where
-
-                    t.SystemInformationID == id.SystemInformationID
-                    &&
-                    t.VersionDate == id.VersionDate
-                    &&
-                    t.ModifiedDate == id.ModifiedDate
+                         id.SystemInformationID.HasValue && t.SystemInformationID == id.SystemInformationID
+                         ||
+                         id.VersionDate.HasValue && t.VersionDate == id.VersionDate
+                         ||
+                         id.ModifiedDate.HasValue && t.ModifiedDate == id.ModifiedDate
                      select t).SingleOrDefault();
 
                 // TODO: can create a new record here.
@@ -273,28 +278,35 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     return await Task<Response<BuildVersionDataModel>>.FromResult(new Response<BuildVersionDataModel> { Status = HttpStatusCode.NotFound });
 
                 // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
-                existing.Database_Version = input.Database_Version;
-                existing.VersionDate = input.VersionDate;
-                existing.ModifiedDate = input.ModifiedDate;
-                await _dbcontext.SaveChangesAsync();
+                CopyUpdateValues(input, toUpdatePropertyList, existing);
 
-                return await Task<Response<BuildVersionDataModel>>.FromResult(
-                    new Response<BuildVersionDataModel>
-                    {
-                        Status = HttpStatusCode.OK,
-                        ResponseBody = new BuildVersionDataModel
-                        {
-                    SystemInformationID = existing.SystemInformationID,
-                    Database_Version = existing.Database_Version,
-                    VersionDate = existing.VersionDate,
-                    ModifiedDate = existing.ModifiedDate,
-                        }
-                    });
+                await _dbcontext.SaveChangesAsync();
+                return await Get(id);
 
             }
             catch (Exception ex)
             {
                 return await Task<Response<BuildVersionDataModel>>.FromResult(new Response<BuildVersionDataModel> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
+        private static void CopyUpdateValues(BuildVersionDataModel? input, string[]? toUpdatePropertyList, BuildVersion existing)
+        {
+            if (input == null)
+                return;
+
+            // 1. This Table - BuildVersion
+            if (toUpdatePropertyList == null || toUpdatePropertyList.Length == 0)
+            {
+                existing.Database_Version = input.Database_Version;
+                existing.VersionDate = input.VersionDate;
+                existing.ModifiedDate = input.ModifiedDate;
+            }
+            else
+            //update Specific Properties if in toUpdatePropertyList
+            {
+                if(toUpdatePropertyList.Contains(nameof(BuildVersionDataModel.Database_Version)))
+                    existing.Database_Version = input.Database_Version;
             }
         }
 
@@ -305,14 +317,13 @@ namespace AdventureWorksLT2019.EFCoreRepositories
 
             try
             {
-                var existing = _dbcontext.BuildVersion.SingleOrDefault(
-                    t =>
-
-                    t.SystemInformationID == id.SystemInformationID
-                    &&
-                    t.VersionDate == id.VersionDate
-                    &&
-                    t.ModifiedDate == id.ModifiedDate
+                var existing = _dbcontext.BuildVersion
+                    .SingleOrDefault(t =>
+                        id.SystemInformationID.HasValue && t.SystemInformationID == id.SystemInformationID
+                        ||
+                        id.VersionDate.HasValue && t.VersionDate == id.VersionDate
+                        ||
+                        id.ModifiedDate.HasValue && t.ModifiedDate == id.ModifiedDate
                 );
 
                 if (existing == null)
@@ -324,10 +335,10 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         Status = HttpStatusCode.OK,
                         ResponseBody = new BuildVersionDataModel
                         {
-                    SystemInformationID = existing.SystemInformationID,
-                    Database_Version = existing.Database_Version,
-                    VersionDate = existing.VersionDate,
-                    ModifiedDate = existing.ModifiedDate,
+                            SystemInformationID = existing.SystemInformationID,
+                            Database_Version = existing.Database_Version,
+                            VersionDate = existing.VersionDate,
+                            ModifiedDate = existing.ModifiedDate,
                         }
                     });
 
@@ -346,26 +357,14 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             {
                 var toInsert = new BuildVersion
                 {
-                            Database_Version = input.Database_Version,
-                            VersionDate = input.VersionDate,
-                            ModifiedDate = input.ModifiedDate,
+                    Database_Version = input.Database_Version,
+                    VersionDate = input.VersionDate,
+                    ModifiedDate = input.ModifiedDate,
                 };
+
                 await _dbcontext.BuildVersion.AddAsync(toInsert);
                 await _dbcontext.SaveChangesAsync();
-
-                return await Task<Response<BuildVersionDataModel>>.FromResult(
-                    new Response<BuildVersionDataModel>
-                    {
-                        Status = HttpStatusCode.OK,
-                        ResponseBody = new BuildVersionDataModel
-                        {
-                    SystemInformationID = toInsert.SystemInformationID,
-                    Database_Version = toInsert.Database_Version,
-                    VersionDate = toInsert.VersionDate,
-                    ModifiedDate = toInsert.ModifiedDate,
-                        }
-                    });
-
+                return await Get(new BuildVersionIdentifier { SystemInformationID = toInsert.SystemInformationID, VersionDate = toInsert.VersionDate, ModifiedDate = toInsert.ModifiedDate });
             }
             catch (Exception ex)
             {
@@ -373,84 +372,41 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
-        public async Task<Response> Delete(BuildVersionIdentifier id)
-        {
-            if (id == null)
-                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.BadRequest });
-
-            try
-            {
-                var existing =
-                    (from t in _dbcontext.BuildVersion
-                     where
-
-                    t.SystemInformationID == id.SystemInformationID
-                    &&
-                    t.VersionDate == id.VersionDate
-                    &&
-                    t.ModifiedDate == id.ModifiedDate
-                     select t).SingleOrDefault();
-
-                if (existing == null)
-                    return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.NotFound });
-
-                _dbcontext.BuildVersion.Remove(existing);
-                await _dbcontext.SaveChangesAsync();
-
-                return await Task<Response>.FromResult(
-                    new Response
-                    {
-                        Status = HttpStatusCode.OK,
-                    });
-            }
-            catch (Exception ex)
-            {
-                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
-            }
-        }
-
         private IQueryable<NameValuePair> GetCodeListQuery(
             BuildVersionAdvancedQuery query, bool withPagingAndOrderBy)
         {
-
             var queryable =
                 from t in _dbcontext.BuildVersion
 
                 where
-
                     (string.IsNullOrEmpty(query.TextSearch) ||
-                        query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.Database_Version!, "%" + query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.Database_Version!, query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.Database_Version!, "%" + query.TextSearch)))
-                    &&
-
+                    query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.Database_Version!, "%" + query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.Database_Version!, query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.Database_Version!, "%" + query.TextSearch)))&&
                     (!query.VersionDateRangeLower.HasValue && !query.VersionDateRangeUpper.HasValue || (!query.VersionDateRangeLower.HasValue || t.VersionDate >= query.VersionDateRangeLower) && (!query.VersionDateRangeLower.HasValue || t.VersionDate <= query.VersionDateRangeUpper))
                     &&
-                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))
-                    &&
-
+                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))&&
                     (string.IsNullOrEmpty(query.Database_Version) ||
-                            query.Database_VersionSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Database_Version!, "%" + query.Database_Version + "%") ||
-                            query.Database_VersionSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Database_Version!, query.Database_Version + "%") ||
-                            query.Database_VersionSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Database_Version!, "%" + query.Database_Version))
+                        query.Database_VersionSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Database_Version!, "%" + query.Database_Version + "%") ||
+                        query.Database_VersionSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Database_Version!, query.Database_Version + "%") ||
+                        query.Database_VersionSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Database_Version!, "%" + query.Database_Version))
                 let _Value = string.Concat(new string[] { t.SystemInformationID.ToString(),"|",t.VersionDate.ToString(),"|",t.ModifiedDate.ToString() })
                 select new NameValuePair
                 {
-
-                        Name = t.Database_Version,
-                        Value = _Value,
+                    Name = t.Database_Version,
+                    Value = _Value,
                 };
 
             // 1. Without Paging And OrderBy
             if (!withPagingAndOrderBy)
                 return queryable;
 
-            // 2. With Paging And OrderBy
-            var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
-            if (orderBys.Any())
-            {
-                queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
-            }
+            // // 2. With Paging And OrderBy
+            // var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
+            // if (orderBys.Any())
+            // {
+            //     queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
+            // }
 
             queryable = queryable.Skip((query.PageIndex - 1) * query.PageSize).Take(query.PageSize);
 
@@ -481,33 +437,6 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     Status = HttpStatusCode.InternalServerError,
                     StatusMessage = ex.Message
                 });
-            }
-        }
-
-        public async Task<Response<BuildVersionDataModel>> CreateComposite(BuildVersionCompositeModel input)
-        {
-            if (input == null)
-                return await Task<Response<BuildVersionDataModel>>.FromResult(new Response<BuildVersionDataModel> { Status = HttpStatusCode.BadRequest });
-            try
-            {
-                // 1. Master: BuildVersion
-                var master = new BuildVersion
-                {
-                    // Properties.1. Value Type Properties
-                    Database_Version = input.__Master__!.Database_Version,
-                    VersionDate = input.__Master__!.VersionDate,
-                    ModifiedDate = input.__Master__!.ModifiedDate,
-                };
-
-                _dbcontext.BuildVersion.Add(master);
-
-                await _dbcontext.SaveChangesAsync();
-
-                return await Get(new BuildVersionIdentifier { SystemInformationID = master.SystemInformationID, VersionDate = master.VersionDate, ModifiedDate = master.ModifiedDate, });
-            }
-            catch (Exception ex)
-            {
-                return await Task<Response<BuildVersionDataModel>>.FromResult(new Response<BuildVersionDataModel> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
             }
         }
 

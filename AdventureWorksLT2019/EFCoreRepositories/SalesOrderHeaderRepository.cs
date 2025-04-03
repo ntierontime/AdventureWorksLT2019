@@ -13,6 +13,10 @@ namespace AdventureWorksLT2019.EFCoreRepositories
     public class SalesOrderHeaderRepository
         : ISalesOrderHeaderRepository
     {
+        private readonly Dictionary<string, string> _queryOrderBys = new()
+        {
+        };
+
         private readonly ILogger<SalesOrderHeaderRepository> _logger;
         private readonly EFDbContext _dbcontext;
 
@@ -25,7 +29,6 @@ namespace AdventureWorksLT2019.EFCoreRepositories
         private IQueryable<SalesOrderHeaderDataModel.DefaultView> SearchQuery(
             SalesOrderHeaderAdvancedQuery query, bool withPagingAndOrderBy)
         {
-
             var queryable =
                 from t in _dbcontext.SalesOrderHeader
 
@@ -33,102 +36,92 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     join ShipTo_A in _dbcontext.Address on t.ShipToAddressID equals ShipTo_A.AddressID into ShipTo_G from ShipTo in ShipTo_G.DefaultIfEmpty()// \ShipToAddressID
                     join Customer in _dbcontext.Customer on t.CustomerID equals Customer.CustomerID// \CustomerID
                 where
-
                     (string.IsNullOrEmpty(query.TextSearch) ||
-                        query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.SalesOrderNumber!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.PurchaseOrderNumber!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.AccountNumber!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.ShipMethod!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.CreditCardApprovalCode!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.Comment!, "%" + query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.SalesOrderNumber!, query.TextSearch + "%") || EF.Functions.Like(t.PurchaseOrderNumber!, query.TextSearch + "%") || EF.Functions.Like(t.AccountNumber!, query.TextSearch + "%") || EF.Functions.Like(t.ShipMethod!, query.TextSearch + "%") || EF.Functions.Like(t.CreditCardApprovalCode!, query.TextSearch + "%") || EF.Functions.Like(t.Comment!, query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.SalesOrderNumber!, "%" + query.TextSearch) || EF.Functions.Like(t.PurchaseOrderNumber!, "%" + query.TextSearch) || EF.Functions.Like(t.AccountNumber!, "%" + query.TextSearch) || EF.Functions.Like(t.ShipMethod!, "%" + query.TextSearch) || EF.Functions.Like(t.CreditCardApprovalCode!, "%" + query.TextSearch) || EF.Functions.Like(t.Comment!, "%" + query.TextSearch)))
-                    &&
-
+                    query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.SalesOrderNumber!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.PurchaseOrderNumber!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.AccountNumber!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.ShipMethod!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.CreditCardApprovalCode!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.Comment!, "%" + query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.SalesOrderNumber!, query.TextSearch + "%") || EF.Functions.Like(t.PurchaseOrderNumber!, query.TextSearch + "%") || EF.Functions.Like(t.AccountNumber!, query.TextSearch + "%") || EF.Functions.Like(t.ShipMethod!, query.TextSearch + "%") || EF.Functions.Like(t.CreditCardApprovalCode!, query.TextSearch + "%") || EF.Functions.Like(t.Comment!, query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.SalesOrderNumber!, "%" + query.TextSearch) || EF.Functions.Like(t.PurchaseOrderNumber!, "%" + query.TextSearch) || EF.Functions.Like(t.AccountNumber!, "%" + query.TextSearch) || EF.Functions.Like(t.ShipMethod!, "%" + query.TextSearch) || EF.Functions.Like(t.CreditCardApprovalCode!, "%" + query.TextSearch) || EF.Functions.Like(t.Comment!, "%" + query.TextSearch)))&&
                     (!query.BillToAddressID.HasValue || BillTo.AddressID == query.BillToAddressID)
                     &&
                     (!query.ShipToAddressID.HasValue || ShipTo.AddressID == query.ShipToAddressID)
                     &&
-                    (!query.CustomerID.HasValue || Customer.CustomerID == query.CustomerID)
-                    &&
-
-                    (query.OnlineOrderFlag == BooleanSearchOptions.All || query.OnlineOrderFlag == BooleanSearchOptions.True && t.OnlineOrderFlag == true || query.OnlineOrderFlag == BooleanSearchOptions.False && t.OnlineOrderFlag != true)
-                    &&
-
+                    (!query.CustomerID.HasValue || Customer.CustomerID == query.CustomerID)&&
+                    (!query.OnlineOrderFlag.HasValue || query.OnlineOrderFlag == BooleanSearchOptions.All || query.OnlineOrderFlag == BooleanSearchOptions.True && t.OnlineOrderFlag == true || query.OnlineOrderFlag == BooleanSearchOptions.False && t.OnlineOrderFlag != true)&&
                     (!query.OrderDateRangeLower.HasValue && !query.OrderDateRangeUpper.HasValue || (!query.OrderDateRangeLower.HasValue || t.OrderDate >= query.OrderDateRangeLower) && (!query.OrderDateRangeLower.HasValue || t.OrderDate <= query.OrderDateRangeUpper))
                     &&
                     (!query.DueDateRangeLower.HasValue && !query.DueDateRangeUpper.HasValue || (!query.DueDateRangeLower.HasValue || t.DueDate >= query.DueDateRangeLower) && (!query.DueDateRangeLower.HasValue || t.DueDate <= query.DueDateRangeUpper))
                     &&
                     (!query.ShipDateRangeLower.HasValue && !query.ShipDateRangeUpper.HasValue || (!query.ShipDateRangeLower.HasValue || t.ShipDate >= query.ShipDateRangeLower) && (!query.ShipDateRangeLower.HasValue || t.ShipDate <= query.ShipDateRangeUpper))
                     &&
-                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))
-                    &&
-
+                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))&&
                     (string.IsNullOrEmpty(query.SalesOrderNumber) ||
-                            query.SalesOrderNumberSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.SalesOrderNumber!, "%" + query.SalesOrderNumber + "%") ||
-                            query.SalesOrderNumberSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.SalesOrderNumber!, query.SalesOrderNumber + "%") ||
-                            query.SalesOrderNumberSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.SalesOrderNumber!, "%" + query.SalesOrderNumber))
+                        query.SalesOrderNumberSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.SalesOrderNumber!, "%" + query.SalesOrderNumber + "%") ||
+                        query.SalesOrderNumberSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.SalesOrderNumber!, query.SalesOrderNumber + "%") ||
+                        query.SalesOrderNumberSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.SalesOrderNumber!, "%" + query.SalesOrderNumber))
                     &&
                     (string.IsNullOrEmpty(query.PurchaseOrderNumber) ||
-                            query.PurchaseOrderNumberSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.PurchaseOrderNumber!, "%" + query.PurchaseOrderNumber + "%") ||
-                            query.PurchaseOrderNumberSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.PurchaseOrderNumber!, query.PurchaseOrderNumber + "%") ||
-                            query.PurchaseOrderNumberSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.PurchaseOrderNumber!, "%" + query.PurchaseOrderNumber))
+                        query.PurchaseOrderNumberSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.PurchaseOrderNumber!, "%" + query.PurchaseOrderNumber + "%") ||
+                        query.PurchaseOrderNumberSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.PurchaseOrderNumber!, query.PurchaseOrderNumber + "%") ||
+                        query.PurchaseOrderNumberSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.PurchaseOrderNumber!, "%" + query.PurchaseOrderNumber))
                     &&
                     (string.IsNullOrEmpty(query.AccountNumber) ||
-                            query.AccountNumberSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.AccountNumber!, "%" + query.AccountNumber + "%") ||
-                            query.AccountNumberSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.AccountNumber!, query.AccountNumber + "%") ||
-                            query.AccountNumberSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.AccountNumber!, "%" + query.AccountNumber))
+                        query.AccountNumberSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.AccountNumber!, "%" + query.AccountNumber + "%") ||
+                        query.AccountNumberSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.AccountNumber!, query.AccountNumber + "%") ||
+                        query.AccountNumberSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.AccountNumber!, "%" + query.AccountNumber))
                     &&
                     (string.IsNullOrEmpty(query.ShipMethod) ||
-                            query.ShipMethodSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.ShipMethod!, "%" + query.ShipMethod + "%") ||
-                            query.ShipMethodSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.ShipMethod!, query.ShipMethod + "%") ||
-                            query.ShipMethodSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.ShipMethod!, "%" + query.ShipMethod))
+                        query.ShipMethodSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.ShipMethod!, "%" + query.ShipMethod + "%") ||
+                        query.ShipMethodSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.ShipMethod!, query.ShipMethod + "%") ||
+                        query.ShipMethodSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.ShipMethod!, "%" + query.ShipMethod))
                     &&
                     (string.IsNullOrEmpty(query.CreditCardApprovalCode) ||
-                            query.CreditCardApprovalCodeSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.CreditCardApprovalCode!, "%" + query.CreditCardApprovalCode + "%") ||
-                            query.CreditCardApprovalCodeSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.CreditCardApprovalCode!, query.CreditCardApprovalCode + "%") ||
-                            query.CreditCardApprovalCodeSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.CreditCardApprovalCode!, "%" + query.CreditCardApprovalCode))
+                        query.CreditCardApprovalCodeSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.CreditCardApprovalCode!, "%" + query.CreditCardApprovalCode + "%") ||
+                        query.CreditCardApprovalCodeSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.CreditCardApprovalCode!, query.CreditCardApprovalCode + "%") ||
+                        query.CreditCardApprovalCodeSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.CreditCardApprovalCode!, "%" + query.CreditCardApprovalCode))
                     &&
                     (string.IsNullOrEmpty(query.Comment) ||
-                            query.CommentSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Comment!, "%" + query.Comment + "%") ||
-                            query.CommentSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Comment!, query.Comment + "%") ||
-                            query.CommentSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Comment!, "%" + query.Comment))
+                        query.CommentSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Comment!, "%" + query.Comment + "%") ||
+                        query.CommentSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Comment!, query.Comment + "%") ||
+                        query.CommentSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Comment!, "%" + query.Comment))
 
                 select new SalesOrderHeaderDataModel.DefaultView
                 {
-
-                        SalesOrderID = t.SalesOrderID,
-                        RevisionNumber = t.RevisionNumber,
-                        OrderDate = t.OrderDate,
-                        DueDate = t.DueDate,
-                        ShipDate = t.ShipDate,
-                        Status = t.Status,
-                        OnlineOrderFlag = t.OnlineOrderFlag,
-                        SalesOrderNumber = t.SalesOrderNumber,
-                        PurchaseOrderNumber = t.PurchaseOrderNumber,
-                        AccountNumber = t.AccountNumber,
-                        CustomerID = t.CustomerID,
-                        ShipToAddressID = t.ShipToAddressID,
-                        BillToAddressID = t.BillToAddressID,
-                        ShipMethod = t.ShipMethod,
-                        CreditCardApprovalCode = t.CreditCardApprovalCode,
-                        SubTotal = t.SubTotal,
-                        TaxAmt = t.TaxAmt,
-                        Freight = t.Freight,
-                        TotalDue = t.TotalDue,
-                        Comment = t.Comment,
-                        rowguid = t.rowguid,
-                        ModifiedDate = t.ModifiedDate,
-                        BillTo_Name = BillTo.AddressLine1,
-                        Customer_Name = Customer.Title,
-                        ShipTo_Name = ShipTo.AddressLine1,
+                    SalesOrderID = t.SalesOrderID,
+                    RevisionNumber = t.RevisionNumber,
+                    OrderDate = t.OrderDate,
+                    DueDate = t.DueDate,
+                    ShipDate = t.ShipDate,
+                    Status = t.Status,
+                    OnlineOrderFlag = t.OnlineOrderFlag,
+                    SalesOrderNumber = t.SalesOrderNumber,
+                    PurchaseOrderNumber = t.PurchaseOrderNumber,
+                    AccountNumber = t.AccountNumber,
+                    CustomerID = t.CustomerID,
+                    ShipToAddressID = t.ShipToAddressID,
+                    BillToAddressID = t.BillToAddressID,
+                    ShipMethod = t.ShipMethod,
+                    CreditCardApprovalCode = t.CreditCardApprovalCode,
+                    SubTotal = t.SubTotal,
+                    TaxAmt = t.TaxAmt,
+                    Freight = t.Freight,
+                    TotalDue = t.TotalDue,
+                    Comment = t.Comment,
+                    rowguid = t.rowguid,
+                    ModifiedDate = t.ModifiedDate,
+                    BillTo_Name = BillTo.AddressLine1,
+                    Customer_Name = Customer.Title,
+                    ShipTo_Name = ShipTo.AddressLine1,
                 };
 
             // 1. Without Paging And OrderBy
             if (!withPagingAndOrderBy)
                 return queryable;
 
-            // 2. With Paging And OrderBy
-            var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
-            if (orderBys.Any())
-            {
-                queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
-            }
+            // // 2. With Paging And OrderBy
+            // var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
+            // if (orderBys.Any())
+            // {
+            //     queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
+            // }
 
             queryable = queryable.Skip((query.PageIndex - 1) * query.PageSize).Take(query.PageSize);
 
@@ -162,293 +155,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
-        private IQueryable<SalesOrderHeader> GetIQueryableByPrimaryIdentifierList(
-            List<SalesOrderHeaderIdentifier> ids)
-        {
-            var idList = ids.Select(t => t.SalesOrderID).ToList();
-            var queryable =
-                from t in _dbcontext.SalesOrderHeader
-                where idList.Contains(t.SalesOrderID)
-                select t;
-
-            return queryable;
-        }
-
-        public async Task<Response> BulkDelete(List<SalesOrderHeaderIdentifier> ids)
-        {
-            try
-            {
-                var queryable = GetIQueryableByPrimaryIdentifierList(ids);
-                var result = await queryable.BatchDeleteAsync();
-
-                return await Task<Response>.FromResult(
-                    new Response
-                    {
-                        Status = HttpStatusCode.OK,
-                    });
-            }
-            catch (Exception ex)
-            {
-                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
-            }
-        }
-
-        public async Task<ListResponse<SalesOrderHeaderDataModel.DefaultView[]>> BulkUpdate(
-            BatchActionRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView> data)
-        {
-            if (data.ActionData == null)
-            {
-                return await Task<ListResponse<SalesOrderHeaderDataModel.DefaultView[]>>.FromResult(
-                    new ListResponse<SalesOrderHeaderDataModel.DefaultView[]> { Status = HttpStatusCode.BadRequest });
-            }
-            try
-            {
-                var querable = GetIQueryableByPrimaryIdentifierList(data.Ids);
-
-                if (data.ActionName == "OnlineOrderFlag")
-                {
-                    var result = await querable.BatchUpdateAsync(t =>
-                        new SalesOrderHeader
-                        {
-                            OnlineOrderFlag = data.ActionData.OnlineOrderFlag,
-                        });
-                    var responseBody = GetIQueryableAsBulkUpdateResponse(data.Ids);
-                    return await Task<ListResponse<SalesOrderHeaderDataModel.DefaultView[]>>.FromResult(
-                        new ListResponse<SalesOrderHeaderDataModel.DefaultView[]> {
-                            Status = HttpStatusCode.OK,
-                            ResponseBody = responseBody.ToArray(),
-                        });
-                }
-
-                return await Task<ListResponse<SalesOrderHeaderDataModel.DefaultView[]>>.FromResult(
-                    new ListResponse<SalesOrderHeaderDataModel.DefaultView[]> { Status = HttpStatusCode.BadRequest });
-            }
-            catch (Exception ex)
-            {
-                return await Task<ListResponse<SalesOrderHeaderDataModel.DefaultView[]>>.FromResult(
-                    new ListResponse<SalesOrderHeaderDataModel.DefaultView[]> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
-            }
-        }
-
-private IQueryable<SalesOrderHeaderDataModel.DefaultView> GetIQueryableAsBulkUpdateResponse(
-            List<SalesOrderHeaderIdentifier> ids)
-        {
-            var idList = ids.Select(t => t.SalesOrderID).ToList();
-            var queryable =
-                from t in _dbcontext.SalesOrderHeader
-                    join BillTo_A in _dbcontext.Address on t.BillToAddressID equals BillTo_A.AddressID into BillTo_G from BillTo in BillTo_G.DefaultIfEmpty()// \BillToAddressID
-                    join ShipTo_A in _dbcontext.Address on t.ShipToAddressID equals ShipTo_A.AddressID into ShipTo_G from ShipTo in ShipTo_G.DefaultIfEmpty()// \ShipToAddressID
-                    join Customer in _dbcontext.Customer on t.CustomerID equals Customer.CustomerID// \CustomerID
-                where idList.Contains(t.SalesOrderID)
-
-                select new SalesOrderHeaderDataModel.DefaultView
-                {
-                        SalesOrderID = t.SalesOrderID,
-                        RevisionNumber = t.RevisionNumber,
-                        OrderDate = t.OrderDate,
-                        DueDate = t.DueDate,
-                        ShipDate = t.ShipDate,
-                        Status = t.Status,
-                        OnlineOrderFlag = t.OnlineOrderFlag,
-                        SalesOrderNumber = t.SalesOrderNumber,
-                        PurchaseOrderNumber = t.PurchaseOrderNumber,
-                        AccountNumber = t.AccountNumber,
-                        CustomerID = t.CustomerID,
-                        ShipToAddressID = t.ShipToAddressID,
-                        BillToAddressID = t.BillToAddressID,
-                        ShipMethod = t.ShipMethod,
-                        CreditCardApprovalCode = t.CreditCardApprovalCode,
-                        SubTotal = t.SubTotal,
-                        TaxAmt = t.TaxAmt,
-                        Freight = t.Freight,
-                        TotalDue = t.TotalDue,
-                        Comment = t.Comment,
-                        rowguid = t.rowguid,
-                        ModifiedDate = t.ModifiedDate,
-                        BillTo_Name = BillTo.AddressLine1,
-                        Customer_Name = Customer.Title,
-                        ShipTo_Name = ShipTo.AddressLine1,
-                };
-
-            return queryable;
-        }
-
-        public async Task<Response<MultiItemsCUDRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView>>> MultiItemsCUD(
-            MultiItemsCUDRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView> input)
-        {
-            // 1. DeleteItems, return if Failed
-            if (input.DeleteItems != null)
-            {
-                var responseOfDeleteItems = await this.BulkDelete(input.DeleteItems);
-                if (responseOfDeleteItems != null && responseOfDeleteItems.Status != HttpStatusCode.OK)
-                {
-                    return new Response<MultiItemsCUDRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView>> { Status = responseOfDeleteItems.Status, StatusMessage = "Deletion Failed. " + responseOfDeleteItems.StatusMessage };
-                }
-            }
-
-            // 2. return OK, if no more NewItems and UpdateItems
-            if (!(input.NewItems != null && input.NewItems.Count > 0 ||
-                input.UpdateItems != null && input.UpdateItems.Count > 0))
-            {
-                return new Response<MultiItemsCUDRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView>> { Status = HttpStatusCode.OK };
-            }
-
-            // 3. NewItems and UpdateItems
-            try
-            {
-                // 3.1.1. NewItems if any
-                List<SalesOrderHeader> newEFItems = new();
-                if (input.NewItems != null && input.NewItems.Count > 0)
-                {
-                    foreach (var item in input.NewItems)
-                    {
-                        var toInsert = new SalesOrderHeader
-                        {
-                            RevisionNumber = item.RevisionNumber,
-                            OrderDate = item.OrderDate,
-                            DueDate = item.DueDate,
-                            ShipDate = item.ShipDate,
-                            Status = item.Status,
-                            OnlineOrderFlag = item.OnlineOrderFlag,
-                            PurchaseOrderNumber = item.PurchaseOrderNumber,
-                            AccountNumber = item.AccountNumber,
-                            CustomerID = item.CustomerID,
-                            ShipToAddressID = item.ShipToAddressID,
-                            BillToAddressID = item.BillToAddressID,
-                            ShipMethod = item.ShipMethod,
-                            CreditCardApprovalCode = item.CreditCardApprovalCode,
-                            SubTotal = item.SubTotal,
-                            TaxAmt = item.TaxAmt,
-                            Freight = item.Freight,
-                            Comment = item.Comment,
-                            ModifiedDate = item.ModifiedDate,
-                        };
-                        _dbcontext.SalesOrderHeader.Add(toInsert);
-                        newEFItems.Add(toInsert);
-                    }
-                }
-
-                // 3.1.2. UpdateItems if any
-                if (input.UpdateItems != null && input.UpdateItems.Count > 0)
-                {
-                    foreach (var item in input.UpdateItems)
-                    {
-                        var existing =
-                            (from t in _dbcontext.SalesOrderHeader
-                             where
-
-                             t.SalesOrderID == item.SalesOrderID
-                             select t).SingleOrDefault();
-
-                        if (existing != null)
-                        {
-                            // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
-                            existing.RevisionNumber = item.RevisionNumber;
-                            existing.OrderDate = item.OrderDate;
-                            existing.DueDate = item.DueDate;
-                            existing.ShipDate = item.ShipDate;
-                            existing.Status = item.Status;
-                            existing.OnlineOrderFlag = item.OnlineOrderFlag;
-                            existing.PurchaseOrderNumber = item.PurchaseOrderNumber;
-                            existing.AccountNumber = item.AccountNumber;
-                            existing.CustomerID = item.CustomerID;
-                            existing.ShipToAddressID = item.ShipToAddressID;
-                            existing.BillToAddressID = item.BillToAddressID;
-                            existing.ShipMethod = item.ShipMethod;
-                            existing.CreditCardApprovalCode = item.CreditCardApprovalCode;
-                            existing.SubTotal = item.SubTotal;
-                            existing.TaxAmt = item.TaxAmt;
-                            existing.Freight = item.Freight;
-                            existing.Comment = item.Comment;
-                            existing.ModifiedDate = item.ModifiedDate;
-                        }
-                    }
-                }
-                await _dbcontext.SaveChangesAsync();
-
-                // 3.2 Load Response
-                var identifierListToloadResponseItems = new List<int>();
-
-                if (input.NewItems != null && input.NewItems.Count > 0)
-                {
-                    identifierListToloadResponseItems.AddRange(
-                        from t in newEFItems
-                        select t.SalesOrderID);
-                }
-                if (input.UpdateItems != null && input.UpdateItems.Count > 0)
-                {
-                    identifierListToloadResponseItems.AddRange(
-                        from t in input.UpdateItems
-                        select t.SalesOrderID);
-                }
-
-                var responseBodyWithNewAndUpdatedItems =
-                    (from t in _dbcontext.SalesOrderHeader
-                    join BillTo_A in _dbcontext.Address on t.BillToAddressID equals BillTo_A.AddressID into BillTo_G from BillTo in BillTo_G.DefaultIfEmpty()// \BillToAddressID
-                    join ShipTo_A in _dbcontext.Address on t.ShipToAddressID equals ShipTo_A.AddressID into ShipTo_G from ShipTo in ShipTo_G.DefaultIfEmpty()// \ShipToAddressID
-                    join Customer in _dbcontext.Customer on t.CustomerID equals Customer.CustomerID// \CustomerID
-                    where identifierListToloadResponseItems.Contains(t.SalesOrderID)
-
-                    select new SalesOrderHeaderDataModel.DefaultView
-                    {
-
-                        SalesOrderID = t.SalesOrderID,
-                        RevisionNumber = t.RevisionNumber,
-                        OrderDate = t.OrderDate,
-                        DueDate = t.DueDate,
-                        ShipDate = t.ShipDate,
-                        Status = t.Status,
-                        OnlineOrderFlag = t.OnlineOrderFlag,
-                        SalesOrderNumber = t.SalesOrderNumber,
-                        PurchaseOrderNumber = t.PurchaseOrderNumber,
-                        AccountNumber = t.AccountNumber,
-                        CustomerID = t.CustomerID,
-                        ShipToAddressID = t.ShipToAddressID,
-                        BillToAddressID = t.BillToAddressID,
-                        ShipMethod = t.ShipMethod,
-                        CreditCardApprovalCode = t.CreditCardApprovalCode,
-                        SubTotal = t.SubTotal,
-                        TaxAmt = t.TaxAmt,
-                        Freight = t.Freight,
-                        TotalDue = t.TotalDue,
-                        Comment = t.Comment,
-                        rowguid = t.rowguid,
-                        ModifiedDate = t.ModifiedDate,
-                        BillTo_Name = BillTo.AddressLine1,
-                        Customer_Name = Customer.Title,
-                        ShipTo_Name = ShipTo.AddressLine1,
-
-                    }).ToList();
-
-                // 3.3. Final Response
-                var response = new Response<MultiItemsCUDRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView>>
-                {
-                    Status = HttpStatusCode.OK,
-                    ResponseBody = new MultiItemsCUDRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView>
-                    {
-                        NewItems =
-                            input.NewItems != null && input.NewItems.Count > 0
-                                ? responseBodyWithNewAndUpdatedItems.Where(t => newEFItems.Any(t1 => t1.SalesOrderID == t.SalesOrderID)).ToList()
-                                : null,
-                        UpdateItems =
-                            input.UpdateItems != null && input.UpdateItems.Count > 0
-                                ? responseBodyWithNewAndUpdatedItems.Where(t => input.UpdateItems.Any(t1 => t1.SalesOrderID == t.SalesOrderID)).ToList()
-                                : null,
-                    }
-                };
-                return response;
-            }
-            catch (Exception ex)
-            {
-                return await Task.FromResult(new Response<MultiItemsCUDRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView>>
-                {
-                    Status = HttpStatusCode.InternalServerError,
-                    StatusMessage = "Create And/Or Update Failed. " + ex.Message
-                });
-            }
-        }
-
-        public async Task<Response<SalesOrderHeaderDataModel.DefaultView>> Update(SalesOrderHeaderIdentifier id, SalesOrderHeaderDataModel input)
+        public async Task<Response<SalesOrderHeaderDataModel.DefaultView>> Update(SalesOrderHeaderIdentifier id, SalesOrderHeaderDataModel.DefaultView input, string[]? toUpdatePropertyList = null)
         {
             if (input == null)
                 return await Task<Response<SalesOrderHeaderDataModel.DefaultView>>.FromResult(new Response<SalesOrderHeaderDataModel.DefaultView> { Status = HttpStatusCode.BadRequest });
@@ -456,10 +163,10 @@ private IQueryable<SalesOrderHeaderDataModel.DefaultView> GetIQueryableAsBulkUpd
             try
             {
                 var existing =
-                    (from t in _dbcontext.SalesOrderHeader
+                    (
+                    from t in _dbcontext.SalesOrderHeader
                      where
-
-                    t.SalesOrderID == id.SalesOrderID
+                         id.SalesOrderID.HasValue && t.SalesOrderID == id.SalesOrderID
                      select t).SingleOrDefault();
 
                 // TODO: can create a new record here.
@@ -467,6 +174,26 @@ private IQueryable<SalesOrderHeaderDataModel.DefaultView> GetIQueryableAsBulkUpd
                     return await Task<Response<SalesOrderHeaderDataModel.DefaultView>>.FromResult(new Response<SalesOrderHeaderDataModel.DefaultView> { Status = HttpStatusCode.NotFound });
 
                 // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
+                CopyUpdateValues(input, toUpdatePropertyList, existing);
+
+                await _dbcontext.SaveChangesAsync();
+                return await Get(id);
+
+            }
+            catch (Exception ex)
+            {
+                return await Task<Response<SalesOrderHeaderDataModel.DefaultView>>.FromResult(new Response<SalesOrderHeaderDataModel.DefaultView> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
+        private static void CopyUpdateValues(SalesOrderHeaderDataModel.DefaultView? input, string[]? toUpdatePropertyList, SalesOrderHeader existing)
+        {
+            if (input == null)
+                return;
+
+            // 1. This Table - SalesOrderHeader
+            if (toUpdatePropertyList == null || toUpdatePropertyList.Length == 0)
+            {
                 existing.RevisionNumber = input.RevisionNumber;
                 existing.OrderDate = input.OrderDate;
                 existing.DueDate = input.DueDate;
@@ -485,59 +212,46 @@ private IQueryable<SalesOrderHeaderDataModel.DefaultView> GetIQueryableAsBulkUpd
                 existing.Freight = input.Freight;
                 existing.Comment = input.Comment;
                 existing.ModifiedDate = input.ModifiedDate;
-                await _dbcontext.SaveChangesAsync();
-
-                var responseBody =
-                    (
-                    from t in _dbcontext.SalesOrderHeader
-
-                    join BillTo_A in _dbcontext.Address on t.BillToAddressID equals BillTo_A.AddressID into BillTo_G from BillTo in BillTo_G.DefaultIfEmpty()// \BillToAddressID
-                    join ShipTo_A in _dbcontext.Address on t.ShipToAddressID equals ShipTo_A.AddressID into ShipTo_G from ShipTo in ShipTo_G.DefaultIfEmpty()// \ShipToAddressID
-                    join Customer in _dbcontext.Customer on t.CustomerID equals Customer.CustomerID// \CustomerID
-                    where t.SalesOrderID == existing.SalesOrderID
-
-                    select new SalesOrderHeaderDataModel.DefaultView
-                    {
-
-                        SalesOrderID = t.SalesOrderID,
-                        RevisionNumber = t.RevisionNumber,
-                        OrderDate = t.OrderDate,
-                        DueDate = t.DueDate,
-                        ShipDate = t.ShipDate,
-                        Status = t.Status,
-                        OnlineOrderFlag = t.OnlineOrderFlag,
-                        SalesOrderNumber = t.SalesOrderNumber,
-                        PurchaseOrderNumber = t.PurchaseOrderNumber,
-                        AccountNumber = t.AccountNumber,
-                        CustomerID = t.CustomerID,
-                        ShipToAddressID = t.ShipToAddressID,
-                        BillToAddressID = t.BillToAddressID,
-                        ShipMethod = t.ShipMethod,
-                        CreditCardApprovalCode = t.CreditCardApprovalCode,
-                        SubTotal = t.SubTotal,
-                        TaxAmt = t.TaxAmt,
-                        Freight = t.Freight,
-                        TotalDue = t.TotalDue,
-                        Comment = t.Comment,
-                        rowguid = t.rowguid,
-                        ModifiedDate = t.ModifiedDate,
-                        BillTo_Name = BillTo.AddressLine1,
-                        Customer_Name = Customer.Title,
-                        ShipTo_Name = ShipTo.AddressLine1,
-
-                    }).First();
-
-                return await Task<Response<SalesOrderHeaderDataModel.DefaultView>>.FromResult(
-                    new Response<SalesOrderHeaderDataModel.DefaultView>
-                    {
-                        Status = HttpStatusCode.OK,
-                        ResponseBody = responseBody
-                    });
-
             }
-            catch (Exception ex)
+            else
+            //update Specific Properties if in toUpdatePropertyList
             {
-                return await Task<Response<SalesOrderHeaderDataModel.DefaultView>>.FromResult(new Response<SalesOrderHeaderDataModel.DefaultView> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+                if(toUpdatePropertyList.Contains(nameof(SalesOrderHeaderDataModel.RevisionNumber)))
+                    existing.RevisionNumber = input.RevisionNumber;
+                if(toUpdatePropertyList.Contains(nameof(SalesOrderHeaderDataModel.OrderDate)))
+                    existing.OrderDate = input.OrderDate;
+                if(toUpdatePropertyList.Contains(nameof(SalesOrderHeaderDataModel.DueDate)))
+                    existing.DueDate = input.DueDate;
+                if(toUpdatePropertyList.Contains(nameof(SalesOrderHeaderDataModel.ShipDate)))
+                    existing.ShipDate = input.ShipDate;
+                if(toUpdatePropertyList.Contains(nameof(SalesOrderHeaderDataModel.Status)))
+                    existing.Status = input.Status;
+                if(toUpdatePropertyList.Contains(nameof(SalesOrderHeaderDataModel.OnlineOrderFlag)))
+                    existing.OnlineOrderFlag = input.OnlineOrderFlag;
+                if(toUpdatePropertyList.Contains(nameof(SalesOrderHeaderDataModel.PurchaseOrderNumber)))
+                    existing.PurchaseOrderNumber = input.PurchaseOrderNumber;
+                if(toUpdatePropertyList.Contains(nameof(SalesOrderHeaderDataModel.AccountNumber)))
+                    existing.AccountNumber = input.AccountNumber;
+                if(toUpdatePropertyList.Contains(nameof(SalesOrderHeaderDataModel.CustomerID)))
+                    existing.CustomerID = input.CustomerID;
+                if(toUpdatePropertyList.Contains(nameof(SalesOrderHeaderDataModel.ShipToAddressID)))
+                    existing.ShipToAddressID = input.ShipToAddressID;
+                if(toUpdatePropertyList.Contains(nameof(SalesOrderHeaderDataModel.BillToAddressID)))
+                    existing.BillToAddressID = input.BillToAddressID;
+                if(toUpdatePropertyList.Contains(nameof(SalesOrderHeaderDataModel.ShipMethod)))
+                    existing.ShipMethod = input.ShipMethod;
+                if(toUpdatePropertyList.Contains(nameof(SalesOrderHeaderDataModel.CreditCardApprovalCode)))
+                    existing.CreditCardApprovalCode = input.CreditCardApprovalCode;
+                if(toUpdatePropertyList.Contains(nameof(SalesOrderHeaderDataModel.SubTotal)))
+                    existing.SubTotal = input.SubTotal;
+                if(toUpdatePropertyList.Contains(nameof(SalesOrderHeaderDataModel.TaxAmt)))
+                    existing.TaxAmt = input.TaxAmt;
+                if(toUpdatePropertyList.Contains(nameof(SalesOrderHeaderDataModel.Freight)))
+                    existing.Freight = input.Freight;
+                if(toUpdatePropertyList.Contains(nameof(SalesOrderHeaderDataModel.Comment)))
+                    existing.Comment = input.Comment;
+                if(toUpdatePropertyList.Contains(nameof(SalesOrderHeaderDataModel.ModifiedDate)))
+                    existing.ModifiedDate = input.ModifiedDate;
             }
         }
 
@@ -557,12 +271,10 @@ private IQueryable<SalesOrderHeaderDataModel.DefaultView> GetIQueryableAsBulkUpd
                     join ShipTo_A in _dbcontext.Address on t.ShipToAddressID equals ShipTo_A.AddressID into ShipTo_G from ShipTo in ShipTo_G.DefaultIfEmpty()// \ShipToAddressID
                     join Customer in _dbcontext.Customer on t.CustomerID equals Customer.CustomerID// \CustomerID
                     where
-
-                    t.SalesOrderID == id.SalesOrderID
+                        id.SalesOrderID.HasValue && t.SalesOrderID == id.SalesOrderID
 
                     select new SalesOrderHeaderDataModel.DefaultView
                     {
-
                         SalesOrderID = t.SalesOrderID,
                         RevisionNumber = t.RevisionNumber,
                         OrderDate = t.OrderDate,
@@ -588,7 +300,6 @@ private IQueryable<SalesOrderHeaderDataModel.DefaultView> GetIQueryableAsBulkUpd
                         BillTo_Name = BillTo.AddressLine1,
                         Customer_Name = Customer.Title,
                         ShipTo_Name = ShipTo.AddressLine1,
-
                     }).First();
                 if (responseBody == null)
                     return await Task<Response<SalesOrderHeaderDataModel.DefaultView>>.FromResult(new Response<SalesOrderHeaderDataModel.DefaultView> { Status = HttpStatusCode.NotFound });
@@ -606,7 +317,7 @@ private IQueryable<SalesOrderHeaderDataModel.DefaultView> GetIQueryableAsBulkUpd
             }
         }
 
-        public async Task<Response<SalesOrderHeaderDataModel.DefaultView>> Create(SalesOrderHeaderDataModel input)
+        public async Task<Response<SalesOrderHeaderDataModel.DefaultView>> Create(SalesOrderHeaderDataModel.DefaultView input)
         {
             if (input == null)
                 return await Task<Response<SalesOrderHeaderDataModel.DefaultView>>.FromResult(new Response<SalesOrderHeaderDataModel.DefaultView> { Status = HttpStatusCode.BadRequest });
@@ -614,75 +325,29 @@ private IQueryable<SalesOrderHeaderDataModel.DefaultView> GetIQueryableAsBulkUpd
             {
                 var toInsert = new SalesOrderHeader
                 {
-                            RevisionNumber = input.RevisionNumber,
-                            OrderDate = input.OrderDate,
-                            DueDate = input.DueDate,
-                            ShipDate = input.ShipDate,
-                            Status = input.Status,
-                            OnlineOrderFlag = input.OnlineOrderFlag,
-                            PurchaseOrderNumber = input.PurchaseOrderNumber,
-                            AccountNumber = input.AccountNumber,
-                            CustomerID = input.CustomerID,
-                            ShipToAddressID = input.ShipToAddressID,
-                            BillToAddressID = input.BillToAddressID,
-                            ShipMethod = input.ShipMethod,
-                            CreditCardApprovalCode = input.CreditCardApprovalCode,
-                            SubTotal = input.SubTotal,
-                            TaxAmt = input.TaxAmt,
-                            Freight = input.Freight,
-                            Comment = input.Comment,
-                            ModifiedDate = input.ModifiedDate,
+                    RevisionNumber = input.RevisionNumber,
+                    OrderDate = input.OrderDate,
+                    DueDate = input.DueDate,
+                    ShipDate = input.ShipDate,
+                    Status = input.Status,
+                    OnlineOrderFlag = input.OnlineOrderFlag,
+                    PurchaseOrderNumber = input.PurchaseOrderNumber,
+                    AccountNumber = input.AccountNumber,
+                    CustomerID = input.CustomerID,
+                    ShipToAddressID = input.ShipToAddressID,
+                    BillToAddressID = input.BillToAddressID,
+                    ShipMethod = input.ShipMethod,
+                    CreditCardApprovalCode = input.CreditCardApprovalCode,
+                    SubTotal = input.SubTotal,
+                    TaxAmt = input.TaxAmt,
+                    Freight = input.Freight,
+                    Comment = input.Comment,
+                    ModifiedDate = input.ModifiedDate,
                 };
+
                 await _dbcontext.SalesOrderHeader.AddAsync(toInsert);
                 await _dbcontext.SaveChangesAsync();
-
-                var responseBody =
-                    (
-                    from t in _dbcontext.SalesOrderHeader
-
-                    join BillTo_A in _dbcontext.Address on t.BillToAddressID equals BillTo_A.AddressID into BillTo_G from BillTo in BillTo_G.DefaultIfEmpty()// \BillToAddressID
-                    join ShipTo_A in _dbcontext.Address on t.ShipToAddressID equals ShipTo_A.AddressID into ShipTo_G from ShipTo in ShipTo_G.DefaultIfEmpty()// \ShipToAddressID
-                    join Customer in _dbcontext.Customer on t.CustomerID equals Customer.CustomerID// \CustomerID
-                    where t.SalesOrderID == toInsert.SalesOrderID
-
-                    select new SalesOrderHeaderDataModel.DefaultView
-                    {
-
-                        SalesOrderID = t.SalesOrderID,
-                        RevisionNumber = t.RevisionNumber,
-                        OrderDate = t.OrderDate,
-                        DueDate = t.DueDate,
-                        ShipDate = t.ShipDate,
-                        Status = t.Status,
-                        OnlineOrderFlag = t.OnlineOrderFlag,
-                        SalesOrderNumber = t.SalesOrderNumber,
-                        PurchaseOrderNumber = t.PurchaseOrderNumber,
-                        AccountNumber = t.AccountNumber,
-                        CustomerID = t.CustomerID,
-                        ShipToAddressID = t.ShipToAddressID,
-                        BillToAddressID = t.BillToAddressID,
-                        ShipMethod = t.ShipMethod,
-                        CreditCardApprovalCode = t.CreditCardApprovalCode,
-                        SubTotal = t.SubTotal,
-                        TaxAmt = t.TaxAmt,
-                        Freight = t.Freight,
-                        TotalDue = t.TotalDue,
-                        Comment = t.Comment,
-                        rowguid = t.rowguid,
-                        ModifiedDate = t.ModifiedDate,
-                        BillTo_Name = BillTo.AddressLine1,
-                        Customer_Name = Customer.Title,
-                        ShipTo_Name = ShipTo.AddressLine1,
-
-                    }).First();
-
-                return await Task<Response<SalesOrderHeaderDataModel.DefaultView>>.FromResult(
-                    new Response<SalesOrderHeaderDataModel.DefaultView>
-                    {
-                        Status = HttpStatusCode.OK,
-                        ResponseBody = responseBody
-                    });
-
+                return await Get(new SalesOrderHeaderIdentifier { SalesOrderID = toInsert.SalesOrderID });
             }
             catch (Exception ex)
             {
@@ -690,42 +355,9 @@ private IQueryable<SalesOrderHeaderDataModel.DefaultView> GetIQueryableAsBulkUpd
             }
         }
 
-        public async Task<Response> Delete(SalesOrderHeaderIdentifier id)
-        {
-            if (id == null)
-                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.BadRequest });
-
-            try
-            {
-                var existing =
-                    (from t in _dbcontext.SalesOrderHeader
-                     where
-
-                    t.SalesOrderID == id.SalesOrderID
-                     select t).SingleOrDefault();
-
-                if (existing == null)
-                    return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.NotFound });
-
-                _dbcontext.SalesOrderHeader.Remove(existing);
-                await _dbcontext.SaveChangesAsync();
-
-                return await Task<Response>.FromResult(
-                    new Response
-                    {
-                        Status = HttpStatusCode.OK,
-                    });
-            }
-            catch (Exception ex)
-            {
-                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
-            }
-        }
-
         private IQueryable<NameValuePair> GetCodeListQuery(
             SalesOrderHeaderAdvancedQuery query, bool withPagingAndOrderBy)
         {
-
             var queryable =
                 from t in _dbcontext.SalesOrderHeader
 
@@ -733,79 +365,69 @@ private IQueryable<SalesOrderHeaderDataModel.DefaultView> GetIQueryableAsBulkUpd
                     join ShipTo_A in _dbcontext.Address on t.ShipToAddressID equals ShipTo_A.AddressID into ShipTo_G from ShipTo in ShipTo_G.DefaultIfEmpty()// \ShipToAddressID
                     join Customer in _dbcontext.Customer on t.CustomerID equals Customer.CustomerID// \CustomerID
                 where
-
                     (string.IsNullOrEmpty(query.TextSearch) ||
-                        query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.SalesOrderNumber!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.PurchaseOrderNumber!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.AccountNumber!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.ShipMethod!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.CreditCardApprovalCode!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.Comment!, "%" + query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.SalesOrderNumber!, query.TextSearch + "%") || EF.Functions.Like(t.PurchaseOrderNumber!, query.TextSearch + "%") || EF.Functions.Like(t.AccountNumber!, query.TextSearch + "%") || EF.Functions.Like(t.ShipMethod!, query.TextSearch + "%") || EF.Functions.Like(t.CreditCardApprovalCode!, query.TextSearch + "%") || EF.Functions.Like(t.Comment!, query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.SalesOrderNumber!, "%" + query.TextSearch) || EF.Functions.Like(t.PurchaseOrderNumber!, "%" + query.TextSearch) || EF.Functions.Like(t.AccountNumber!, "%" + query.TextSearch) || EF.Functions.Like(t.ShipMethod!, "%" + query.TextSearch) || EF.Functions.Like(t.CreditCardApprovalCode!, "%" + query.TextSearch) || EF.Functions.Like(t.Comment!, "%" + query.TextSearch)))
-                    &&
-
+                    query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.SalesOrderNumber!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.PurchaseOrderNumber!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.AccountNumber!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.ShipMethod!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.CreditCardApprovalCode!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.Comment!, "%" + query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.SalesOrderNumber!, query.TextSearch + "%") || EF.Functions.Like(t.PurchaseOrderNumber!, query.TextSearch + "%") || EF.Functions.Like(t.AccountNumber!, query.TextSearch + "%") || EF.Functions.Like(t.ShipMethod!, query.TextSearch + "%") || EF.Functions.Like(t.CreditCardApprovalCode!, query.TextSearch + "%") || EF.Functions.Like(t.Comment!, query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.SalesOrderNumber!, "%" + query.TextSearch) || EF.Functions.Like(t.PurchaseOrderNumber!, "%" + query.TextSearch) || EF.Functions.Like(t.AccountNumber!, "%" + query.TextSearch) || EF.Functions.Like(t.ShipMethod!, "%" + query.TextSearch) || EF.Functions.Like(t.CreditCardApprovalCode!, "%" + query.TextSearch) || EF.Functions.Like(t.Comment!, "%" + query.TextSearch)))&&
                     (!query.BillToAddressID.HasValue || BillTo.AddressID == query.BillToAddressID)
                     &&
                     (!query.ShipToAddressID.HasValue || ShipTo.AddressID == query.ShipToAddressID)
                     &&
-                    (!query.CustomerID.HasValue || Customer.CustomerID == query.CustomerID)
-                    &&
-
-                    (query.OnlineOrderFlag == BooleanSearchOptions.All || query.OnlineOrderFlag == BooleanSearchOptions.True && t.OnlineOrderFlag == true || query.OnlineOrderFlag == BooleanSearchOptions.False && t.OnlineOrderFlag != true)
-                    &&
-
+                    (!query.CustomerID.HasValue || Customer.CustomerID == query.CustomerID)&&
+                    (!query.OnlineOrderFlag.HasValue || query.OnlineOrderFlag == BooleanSearchOptions.All || query.OnlineOrderFlag == BooleanSearchOptions.True && t.OnlineOrderFlag == true || query.OnlineOrderFlag == BooleanSearchOptions.False && t.OnlineOrderFlag != true)&&
                     (!query.OrderDateRangeLower.HasValue && !query.OrderDateRangeUpper.HasValue || (!query.OrderDateRangeLower.HasValue || t.OrderDate >= query.OrderDateRangeLower) && (!query.OrderDateRangeLower.HasValue || t.OrderDate <= query.OrderDateRangeUpper))
                     &&
                     (!query.DueDateRangeLower.HasValue && !query.DueDateRangeUpper.HasValue || (!query.DueDateRangeLower.HasValue || t.DueDate >= query.DueDateRangeLower) && (!query.DueDateRangeLower.HasValue || t.DueDate <= query.DueDateRangeUpper))
                     &&
                     (!query.ShipDateRangeLower.HasValue && !query.ShipDateRangeUpper.HasValue || (!query.ShipDateRangeLower.HasValue || t.ShipDate >= query.ShipDateRangeLower) && (!query.ShipDateRangeLower.HasValue || t.ShipDate <= query.ShipDateRangeUpper))
                     &&
-                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))
-                    &&
-
+                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))&&
                     (string.IsNullOrEmpty(query.SalesOrderNumber) ||
-                            query.SalesOrderNumberSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.SalesOrderNumber!, "%" + query.SalesOrderNumber + "%") ||
-                            query.SalesOrderNumberSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.SalesOrderNumber!, query.SalesOrderNumber + "%") ||
-                            query.SalesOrderNumberSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.SalesOrderNumber!, "%" + query.SalesOrderNumber))
+                        query.SalesOrderNumberSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.SalesOrderNumber!, "%" + query.SalesOrderNumber + "%") ||
+                        query.SalesOrderNumberSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.SalesOrderNumber!, query.SalesOrderNumber + "%") ||
+                        query.SalesOrderNumberSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.SalesOrderNumber!, "%" + query.SalesOrderNumber))
                     &&
                     (string.IsNullOrEmpty(query.PurchaseOrderNumber) ||
-                            query.PurchaseOrderNumberSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.PurchaseOrderNumber!, "%" + query.PurchaseOrderNumber + "%") ||
-                            query.PurchaseOrderNumberSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.PurchaseOrderNumber!, query.PurchaseOrderNumber + "%") ||
-                            query.PurchaseOrderNumberSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.PurchaseOrderNumber!, "%" + query.PurchaseOrderNumber))
+                        query.PurchaseOrderNumberSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.PurchaseOrderNumber!, "%" + query.PurchaseOrderNumber + "%") ||
+                        query.PurchaseOrderNumberSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.PurchaseOrderNumber!, query.PurchaseOrderNumber + "%") ||
+                        query.PurchaseOrderNumberSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.PurchaseOrderNumber!, "%" + query.PurchaseOrderNumber))
                     &&
                     (string.IsNullOrEmpty(query.AccountNumber) ||
-                            query.AccountNumberSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.AccountNumber!, "%" + query.AccountNumber + "%") ||
-                            query.AccountNumberSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.AccountNumber!, query.AccountNumber + "%") ||
-                            query.AccountNumberSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.AccountNumber!, "%" + query.AccountNumber))
+                        query.AccountNumberSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.AccountNumber!, "%" + query.AccountNumber + "%") ||
+                        query.AccountNumberSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.AccountNumber!, query.AccountNumber + "%") ||
+                        query.AccountNumberSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.AccountNumber!, "%" + query.AccountNumber))
                     &&
                     (string.IsNullOrEmpty(query.ShipMethod) ||
-                            query.ShipMethodSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.ShipMethod!, "%" + query.ShipMethod + "%") ||
-                            query.ShipMethodSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.ShipMethod!, query.ShipMethod + "%") ||
-                            query.ShipMethodSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.ShipMethod!, "%" + query.ShipMethod))
+                        query.ShipMethodSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.ShipMethod!, "%" + query.ShipMethod + "%") ||
+                        query.ShipMethodSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.ShipMethod!, query.ShipMethod + "%") ||
+                        query.ShipMethodSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.ShipMethod!, "%" + query.ShipMethod))
                     &&
                     (string.IsNullOrEmpty(query.CreditCardApprovalCode) ||
-                            query.CreditCardApprovalCodeSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.CreditCardApprovalCode!, "%" + query.CreditCardApprovalCode + "%") ||
-                            query.CreditCardApprovalCodeSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.CreditCardApprovalCode!, query.CreditCardApprovalCode + "%") ||
-                            query.CreditCardApprovalCodeSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.CreditCardApprovalCode!, "%" + query.CreditCardApprovalCode))
+                        query.CreditCardApprovalCodeSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.CreditCardApprovalCode!, "%" + query.CreditCardApprovalCode + "%") ||
+                        query.CreditCardApprovalCodeSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.CreditCardApprovalCode!, query.CreditCardApprovalCode + "%") ||
+                        query.CreditCardApprovalCodeSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.CreditCardApprovalCode!, "%" + query.CreditCardApprovalCode))
                     &&
                     (string.IsNullOrEmpty(query.Comment) ||
-                            query.CommentSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Comment!, "%" + query.Comment + "%") ||
-                            query.CommentSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Comment!, query.Comment + "%") ||
-                            query.CommentSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Comment!, "%" + query.Comment))
+                        query.CommentSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Comment!, "%" + query.Comment + "%") ||
+                        query.CommentSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Comment!, query.Comment + "%") ||
+                        query.CommentSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Comment!, "%" + query.Comment))
 
                 select new NameValuePair
                 {
-
-                        Value = t.SalesOrderID.ToString(),
-                        Name = t.SalesOrderNumber,
+                    Value = t.SalesOrderID.ToString(),
+                    Name = t.SalesOrderNumber,
                 };
 
             // 1. Without Paging And OrderBy
             if (!withPagingAndOrderBy)
                 return queryable;
 
-            // 2. With Paging And OrderBy
-            var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
-            if (orderBys.Any())
-            {
-                queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
-            }
+            // // 2. With Paging And OrderBy
+            // var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
+            // if (orderBys.Any())
+            // {
+            //     queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
+            // }
 
             queryable = queryable.Skip((query.PageIndex - 1) * query.PageSize).Take(query.PageSize);
 
@@ -836,65 +458,6 @@ private IQueryable<SalesOrderHeaderDataModel.DefaultView> GetIQueryableAsBulkUpd
                     Status = HttpStatusCode.InternalServerError,
                     StatusMessage = ex.Message
                 });
-            }
-        }
-
-        public async Task<Response<SalesOrderHeaderDataModel.DefaultView>> CreateComposite(SalesOrderHeaderCompositeModel input)
-        {
-            if (input == null)
-                return await Task<Response<SalesOrderHeaderDataModel.DefaultView>>.FromResult(new Response<SalesOrderHeaderDataModel.DefaultView> { Status = HttpStatusCode.BadRequest });
-            try
-            {
-                // 1. Master: SalesOrderHeader
-                var master = new SalesOrderHeader
-                {
-                    // Properties.1. Value Type Properties
-                    RevisionNumber = input.__Master__!.RevisionNumber,
-                    OrderDate = input.__Master__!.OrderDate,
-                    DueDate = input.__Master__!.DueDate,
-                    ShipDate = input.__Master__!.ShipDate,
-                    Status = input.__Master__!.Status,
-                    OnlineOrderFlag = input.__Master__!.OnlineOrderFlag,
-                    PurchaseOrderNumber = input.__Master__!.PurchaseOrderNumber,
-                    AccountNumber = input.__Master__!.AccountNumber,
-                    CustomerID = input.__Master__!.CustomerID,
-                    ShipToAddressID = input.__Master__!.ShipToAddressID,
-                    BillToAddressID = input.__Master__!.BillToAddressID,
-                    ShipMethod = input.__Master__!.ShipMethod,
-                    CreditCardApprovalCode = input.__Master__!.CreditCardApprovalCode,
-                    SubTotal = input.__Master__!.SubTotal,
-                    TaxAmt = input.__Master__!.TaxAmt,
-                    Freight = input.__Master__!.Freight,
-                    Comment = input.__Master__!.Comment,
-                    rowguid = input.__Master__!.rowguid,
-                    ModifiedDate = input.__Master__!.ModifiedDate,
-                };
-                // 2.1.1. ListTable SalesOrderHeader.SalesOrderDetail
-                if(input.SalesOrderDetails_Via_SalesOrderID != null)
-                {
-                    foreach(var item in input.SalesOrderDetails_Via_SalesOrderID)
-                    {
-                        master.SalesOrderDetail.Add(new SalesOrderDetail
-                        {
-                                OrderQty = item.OrderQty,
-                                ProductID = item.ProductID,
-                                UnitPrice = item.UnitPrice,
-                                UnitPriceDiscount = item.UnitPriceDiscount,
-                                rowguid = item.rowguid,
-                                ModifiedDate = item.ModifiedDate,
-                        });
-                    }
-                }
-
-                _dbcontext.SalesOrderHeader.Add(master);
-
-                await _dbcontext.SaveChangesAsync();
-
-                return await Get(new SalesOrderHeaderIdentifier { SalesOrderID = master.SalesOrderID, });
-            }
-            catch (Exception ex)
-            {
-                return await Task<Response<SalesOrderHeaderDataModel.DefaultView>>.FromResult(new Response<SalesOrderHeaderDataModel.DefaultView> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
             }
         }
 

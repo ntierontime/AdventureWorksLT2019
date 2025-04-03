@@ -6,31 +6,22 @@ namespace AdventureWorksLT2019.ServiceContracts
     {
 
         Task<ListResponse<CustomerAddressDataModel.DefaultView[]>> Search(
-            CustomerAddressAdvancedQuery query);
+            CustomerAddressAdvancedQuery query, ClaimsModel? claimsModel);
 
-        Task<CustomerAddressCompositeModel> GetCompositeModel(
-            CustomerAddressIdentifier id,
-            Dictionary<CustomerAddressCompositeModel.__DataOptions__, CompositeListItemRequest> listItemRequest,
-            CustomerAddressCompositeModel.__DataOptions__[]? dataOptions = null);
-
-        Task<Response> BulkDelete(List<CustomerAddressIdentifier> ids);
+        Task<ListResponse<CustomerAddressDataModel.DefaultView[]>> BulkUpdate(BatchActionRequest<CustomerAddressIdentifier, CustomerAddressDataModel.DefaultView> data, ClaimsModel? claimsModel);
 
         Task<Response<MultiItemsCUDRequest<CustomerAddressIdentifier, CustomerAddressDataModel.DefaultView>>> MultiItemsCUD(
-            MultiItemsCUDRequest<CustomerAddressIdentifier, CustomerAddressDataModel.DefaultView> input);
+            MultiItemsCUDRequest<CustomerAddressIdentifier, CustomerAddressDataModel.DefaultView> input, ClaimsModel? claimsModel);
 
-        Task<Response<CustomerAddressDataModel.DefaultView>> Update(CustomerAddressIdentifier id, CustomerAddressDataModel input);
+        Task<Response<CustomerAddressDataModel.DefaultView>> Update(CustomerAddressIdentifier id, CustomerAddressDataModel.DefaultView input, ClaimsModel? claimsModel, string[]? toUpdatePropertyList = null);
 
-        Task<Response<CustomerAddressDataModel.DefaultView>> Get(CustomerAddressIdentifier id);
+        Task<Response<CustomerAddressDataModel.DefaultView>> Get(CustomerAddressIdentifier id, ClaimsModel? claimsModel);
 
-        Task<Response<CustomerAddressDataModel.DefaultView>> Create(CustomerAddressDataModel input);
+        Task<Response<CustomerAddressDataModel.DefaultView>> Create(CustomerAddressDataModel.DefaultView input, ClaimsModel? claimsModel);
         CustomerAddressDataModel.DefaultView GetDefault();
 
-        Task<Response> Delete(CustomerAddressIdentifier id);
-
         Task<ListResponse<NameValuePair[]>> GetCodeList(
-            CustomerAddressAdvancedQuery query);
-
-        Task<Response<CustomerAddressDataModel.DefaultView>> CreateComposite(CustomerAddressCompositeModel input);
+            CustomerAddressAdvancedQuery query, ClaimsModel? claimsModel);
     }
 }
 

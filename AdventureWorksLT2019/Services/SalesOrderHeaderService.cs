@@ -13,113 +13,41 @@ namespace AdventureWorksLT2019.Services
         : ISalesOrderHeaderService
     {
         private readonly ISalesOrderHeaderRepository _thisRepository;
-        private readonly IServiceScopeFactory _serviceScopeFactor;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly ILogger<SalesOrderHeaderService> _logger;
 
         public SalesOrderHeaderService(
             ISalesOrderHeaderRepository thisRepository,
-            IServiceScopeFactory serviceScopeFactor,
+            IServiceScopeFactory serviceScopeFactory,
             ILogger<SalesOrderHeaderService> logger)
         {
             _thisRepository = thisRepository;
-            _serviceScopeFactor = serviceScopeFactor;
+            _serviceScopeFactory = serviceScopeFactory;
             _logger = logger;
         }
 
         public async Task<ListResponse<SalesOrderHeaderDataModel.DefaultView[]>> Search(
-            SalesOrderHeaderAdvancedQuery query)
+            SalesOrderHeaderAdvancedQuery query, ClaimsModel? claimsModel)
         {
             return await _thisRepository.Search(query);
         }
 
-        public async Task<SalesOrderHeaderCompositeModel> GetCompositeModel(
-            SalesOrderHeaderIdentifier id,
-            Dictionary<SalesOrderHeaderCompositeModel.__DataOptions__, CompositeListItemRequest> listItemRequest,
-            SalesOrderHeaderCompositeModel.__DataOptions__[]? dataOptions = null)
+        public async Task<Response<SalesOrderHeaderDataModel.DefaultView>> Update(SalesOrderHeaderIdentifier id, SalesOrderHeaderDataModel.DefaultView input, ClaimsModel? claimsModel, string[]? toUpdatePropertyList = null)
         {
-            var masterResponse = await this._thisRepository.Get(id);
-            if (masterResponse.Status != HttpStatusCode.OK || masterResponse.ResponseBody == null)
-            {
-                var failedResponse = new SalesOrderHeaderCompositeModel();
-                failedResponse.Responses.Add(SalesOrderHeaderCompositeModel.__DataOptions__.__Master__, new Response<PaginationResponse> { Status = masterResponse.Status, StatusMessage = masterResponse.StatusMessage });
-                return failedResponse;
-            }
-
-            var successResponse = new SalesOrderHeaderCompositeModel { __Master__ = masterResponse.ResponseBody };
-            var responses = new ConcurrentDictionary<SalesOrderHeaderCompositeModel.__DataOptions__, Response<PaginationResponse>>();
-            responses.TryAdd(SalesOrderHeaderCompositeModel.__DataOptions__.__Master__, new Response<PaginationResponse> { Status = HttpStatusCode.OK });
-
-            var tasks = new List<Task>();
-
-            // 4. ListTable = 4,
-
-            if (dataOptions == null || dataOptions.Contains(SalesOrderHeaderCompositeModel.__DataOptions__.SalesOrderDetails_Via_SalesOrderID))
-            {
-                tasks.Add(Task.Run(async () =>
-                {
-                    using (var scope = _serviceScopeFactor.CreateScope())
-                    {
-                        var _salesOrderDetailRepository = scope.ServiceProvider.GetRequiredService<ISalesOrderDetailRepository>();
-                        var query = new SalesOrderDetailAdvancedQuery
-                        {
-                            SalesOrderID = id.SalesOrderID,
-                            PageIndex = 1,
-                            PageSize = listItemRequest[SalesOrderHeaderCompositeModel.__DataOptions__.SalesOrderDetails_Via_SalesOrderID].PageSize,
-                            OrderBys= listItemRequest[SalesOrderHeaderCompositeModel.__DataOptions__.SalesOrderDetails_Via_SalesOrderID].OrderBys,
-                            PaginationOption = listItemRequest[SalesOrderHeaderCompositeModel.__DataOptions__.SalesOrderDetails_Via_SalesOrderID].PaginationOption,
-                        };
-                        var response = await _salesOrderDetailRepository.Search(query);
-                        responses.TryAdd(SalesOrderHeaderCompositeModel.__DataOptions__.SalesOrderDetails_Via_SalesOrderID, new Response<PaginationResponse> { Status = response.Status, StatusMessage = response.StatusMessage, ResponseBody = response.Pagination });
-                        if (response.Status == HttpStatusCode.OK)
-                        {
-                            successResponse.SalesOrderDetails_Via_SalesOrderID = response.ResponseBody;
-                        }
-                    }
-                }));
-            }
-
-            if (tasks.Count > 0)
-            {
-                Task t = Task.WhenAll(tasks.ToArray());
-                try
-                {
-                    await t;
-                }
-                catch { }
-            }
-            successResponse.Responses = new Dictionary<SalesOrderHeaderCompositeModel.__DataOptions__, Response<PaginationResponse>>(responses);
-            return successResponse;
+            var response = await _thisRepository.Update(id, input, toUpdatePropertyList);
+            return response;
         }
 
-        public async Task<Response> BulkDelete(List<SalesOrderHeaderIdentifier> ids)
+        public async Task<Response<SalesOrderHeaderDataModel.DefaultView>> Get(SalesOrderHeaderIdentifier id, ClaimsModel? claimsModel)
         {
-            return await _thisRepository.BulkDelete(ids);
+            var response = await _thisRepository.Get(id);
+            return response;
         }
 
-        public async Task<ListResponse<SalesOrderHeaderDataModel.DefaultView[]>> BulkUpdate(BatchActionRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView> data)
+        public async Task<Response<SalesOrderHeaderDataModel.DefaultView>> Create(SalesOrderHeaderDataModel.DefaultView input, ClaimsModel? claimsModel)
         {
-            return await _thisRepository.BulkUpdate(data);
-        }
-
-        public async Task<Response<MultiItemsCUDRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView>>> MultiItemsCUD(
-            MultiItemsCUDRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView> input)
-        {
-            return await _thisRepository.MultiItemsCUD(input);
-        }
-
-        public async Task<Response<SalesOrderHeaderDataModel.DefaultView>> Update(SalesOrderHeaderIdentifier id, SalesOrderHeaderDataModel input)
-        {
-            return await _thisRepository.Update(id, input);
-        }
-
-        public async Task<Response<SalesOrderHeaderDataModel.DefaultView>> Get(SalesOrderHeaderIdentifier id)
-        {
-            return await _thisRepository.Get(id);
-        }
-
-        public async Task<Response<SalesOrderHeaderDataModel.DefaultView>> Create(SalesOrderHeaderDataModel input)
-        {
-            return await _thisRepository.Create(input);
+            var response = await _thisRepository.Create(input);
+            return response;
         }
 
         public SalesOrderHeaderDataModel.DefaultView GetDefault()
@@ -128,20 +56,10 @@ namespace AdventureWorksLT2019.Services
             return new SalesOrderHeaderDataModel.DefaultView { ItemUIStatus______ = ItemUIStatus.New };
         }
 
-        public async Task<Response> Delete(SalesOrderHeaderIdentifier id)
-        {
-            return await _thisRepository.Delete(id);
-        }
-
         public async Task<ListResponse<NameValuePair[]>> GetCodeList(
-            SalesOrderHeaderAdvancedQuery query)
+            SalesOrderHeaderAdvancedQuery query, ClaimsModel? claimsModel)
         {
             return await _thisRepository.GetCodeList(query);
-        }
-
-        public async Task<Response<SalesOrderHeaderDataModel.DefaultView>> CreateComposite(SalesOrderHeaderCompositeModel input)
-        {
-            return await _thisRepository.CreateComposite(input);
         }
     }
 }

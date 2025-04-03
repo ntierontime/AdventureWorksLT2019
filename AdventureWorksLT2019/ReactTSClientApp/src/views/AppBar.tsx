@@ -1,0 +1,326 @@
+import * as React from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { styled } from '@mui/material/styles';
+import { Avatar, Badge, Box, Button, Container, Grid, Menu, MenuItem, PaletteMode, Popover, Tooltip } from '@mui/material';
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import { AccountCircle, Logout } from '@mui/icons-material';
+
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
+
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+import dayjs from 'dayjs';
+
+import { getDateTimeDiff, getIntlRelativeTimeFormat, i18nFormats, supportedLngs } from 'src/i18n';
+
+import { drawerWidth } from 'src/shared/constants';
+import { Item } from 'src/shared/views/Item';
+import { logout } from 'src/slices/msIdentityFrameworkSlice';
+import { AppDispatch } from 'src/store/Store';
+import { useNavigate } from 'react-router-dom';
+import { Stack } from '@mui/system';
+import { RootState } from 'src/store/CombinedReducers';
+import { setLanguage, setTheme } from 'src/slices/userPreferenceDataSlice';
+
+
+
+interface AppBarProps extends MuiAppBarProps {
+    open?: boolean;
+    title?: string;
+    openDrawerHandler?: () => void;
+}
+
+const StyledAppBar = styled(MuiAppBar, {
+    shouldForwardProp: (prop) => prop !== 'open',
+})<AppBarProps>(({ theme, open }) => ({
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+    }),
+    ...(open && {
+        marginLeft: drawerWidth,
+        width: `calc(100% - ${drawerWidth}px)`,
+        transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    }),
+}));
+
+export default function AppBar(props: AppBarProps) {
+    const app = useSelector((state: RootState) => state.app);
+    const auth = useSelector((state: RootState) => state.auth);
+    const userPreference = useSelector((state: RootState) => state.userPreference);
+    const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
+    
+    // 1.start Open Profile
+    const [anchorProfileEl, setProfileAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+    const handleProfileClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setProfileAnchorEl(event.currentTarget);
+    };
+
+    const handleProfileClose = () => {
+        setProfileAnchorEl(null);
+    };
+    const openProfile = Boolean(anchorProfileEl);
+    const id = openProfile ? 'simple-popover' : undefined;
+
+    // 1.End Open Profile
+
+    // 1.1.Start Change Language
+    const [anchorElLanguage, setAnchorLanguage] = useState()
+    const { t, i18n } = useTranslation();
+    const openLanguage = Boolean(anchorElLanguage);
+    const [languages, setLanguages] = useState([])
+    const changeLanguage = (language: string) => {
+        i18n.changeLanguage(language);
+        dispatch(setLanguage(i18next.language));
+        setAnchorLanguage(null);
+    }
+    const handleLanguageOpen = (event: any) => {
+        setAnchorLanguage(event.currentTarget);
+    };
+
+    const handleLanguageClose = (lang?: string) => {
+        setAnchorLanguage(null);
+    };
+    // 1.1.End Change Language
+
+    // 1.2.Start Change Language
+    const [anchorElTheme, setAnchorTheme] = useState()
+    const openTheme = Boolean(anchorElTheme);
+    const [themes, setThemes] = useState([])
+    const handleChangeTheme = (theme1: PaletteMode) => {
+        dispatch(setTheme(theme1));
+        setAnchorTheme(null);
+        //window.location.reload();
+    }
+    const handleThemeOpen = (event: any) => {
+        setAnchorTheme(event.currentTarget);
+    };
+
+    const handleThemeClose = (lang?: string) => {
+        setAnchorTheme(null);
+    };
+    // 1.2.End Change Theme
+
+    // 1.3.Start Logout
+    const handleLogout = () => {
+        dispatch(logout());
+        navigate("/");
+    };
+
+
+
+    // 2. Notification
+	// please implement your notification logic here
+    const hasOutstandingNotification = true;
+    const outstandingNotificationCount = 10;
+
+    useEffect(() => {
+        // you can do async server request and fill up form
+        // 1.1. Language
+        setLanguages(supportedLngs);
+
+        // 1.2. Theme
+        setThemes(['light', 'dark']);
+    }, [i18n]);
+
+    return (
+        <StyledAppBar position="fixed" open={props.open}>
+            <Toolbar>
+                {(auth && auth.isAuthenticated && (!!userPreference?.currentAppDrawer && userPreference?.currentAppDrawer.option !== AppDrawerOptions.None)) &&
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={props.openDrawerHandler}
+                        edge="start"
+                        sx={{
+                            marginRight: 5,
+                            ...(props.open && { display: 'none' }),
+                        }}
+                    >
+                        <MenuIcon />
+                    </IconButton>}
+                <Box
+                    component="img"
+                    sx={{
+                        display: { xs: 'none', md: 'flex' },
+                        mr: 1,
+                        height: 30,
+                        width: 30,
+                        maxHeight: { xs: 30, md: 30 },
+                        maxWidth: { xs: 30, md: 30 },
+                    }}
+                    alt="The house from the offer."
+                    src="/logo192.png"
+                />
+                {/* <AccountCircle sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
+                <Typography
+                    variant="h6"
+                    noWrap
+                    component="a"
+                    href="/"
+                    sx={{
+                        mr: 2,
+                        display: { xs: 'none', md: 'flex' },
+                        fontFamily: 'monospace',
+                        fontWeight: 700,
+                        letterSpacing: '.0rem',
+                        color: 'inherit',
+                        textDecoration: 'none',
+                    }}
+                >
+                    {props.title}
+                </Typography>
+                <Box sx={{ flexGrow: 1 }}>
+
+                </Box>
+
+                {(!!!auth || !auth.isAuthenticated) &&
+                    <>
+                        <Button color="inherit" href='/login'>Login</Button>
+                        <Button variant="contained" href='/register'>Register</Button>
+                    </>}
+                {(auth && auth.isAuthenticated) && <IconButton aria-label="cart" href="/Notification">
+                    {!!!hasOutstandingNotification && <Badge color="secondary">
+                        <NotificationsNoneIcon />
+                    </Badge>}
+                    {!!hasOutstandingNotification && <Badge color="secondary" badgeContent={outstandingNotificationCount}>
+                        <CircleNotificationsIcon />
+                    </Badge>}
+                </IconButton>}
+                {(auth && auth.isAuthenticated) &&
+                    <>
+                        <IconButton aria-label="{id}" size="large" onClick={handleProfileClick}>
+                            <AccountCircle fontSize="inherit" />
+                        </IconButton>
+                        <Popover
+                            id={id}
+                            open={openProfile}
+                            anchorEl={anchorProfileEl}
+                            onClose={handleProfileClose}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left',
+                            }}
+                        >
+                            <Grid container spacing={0} padding={2} sx={{maxWidth: "400px"}}>
+                                <Grid item xs={12}>
+                                    <Stack
+                                        direction="column"
+                                        justifyContent="space-around"
+                                        alignItems="center"
+                                        spacing={0}
+                                    >
+                                        <Typography variant='h6'>{auth?.email}</Typography>
+                                        <Typography>{t("LoginAt")}: <Typography variant='button'>{t(getIntlRelativeTimeFormat(dayjs(auth.logInDateTime).toString(), dayjs().toString()), { val: getDateTimeDiff(dayjs(auth.logInDateTime).toString(), dayjs().toString()) })}</Typography> {t(i18nFormats.dateTime.format, { val: dayjs(auth.logInDateTime), formatParams: { val: i18nFormats.dateTime.dateShort, } })}</Typography>
+                                        <Typography>{t("ExpiringAt")}: <Typography variant='button'>{t(getIntlRelativeTimeFormat(dayjs(auth.expiringAt).toString(), dayjs().toString()), { val: getDateTimeDiff(dayjs(auth.expiringAt).toString(), dayjs().toString()) })}</Typography> {t(i18nFormats.dateTime.format, { val: dayjs(auth.expiringAt), formatParams: { val: i18nFormats.dateTime.dateShort, } })}</Typography>
+                                        <Typography>{t("Roles")}: {!!auth.roles && auth.roles.map((item) => item + ", ")}
+                                        </Typography>
+                                    </Stack>
+                                </Grid>
+                                {/* 1.1. Languages */}
+                                <Grid item xs={12}>
+                                    <Item spacing={0}>
+                                        <Stack
+                                            direction="row"
+                                            justifyContent="space-between"
+                                            alignItems="baseline"
+                                            spacing={0}
+                                        >
+                                            <Typography variant='h6'>{t('Language')}</Typography>
+                                            <Button
+                                                aria-owns={openLanguage ? 'menu-appbar' : null}
+                                                aria-haspopup="true"
+                                                onClick={handleLanguageOpen}
+                                                size="small"
+                                                color="inherit">
+                                                {userPreference.language}
+                                            </Button>
+                                            <Menu
+                                                id="language-appbar"
+                                                anchorEl={anchorElLanguage}
+                                                anchorOrigin={{
+                                                    vertical: 'top',
+                                                    horizontal: 'right',
+                                                }}
+                                                transformOrigin={{
+                                                    vertical: 'top',
+                                                    horizontal: 'right',
+                                                }}
+                                                open={openLanguage}
+                                                onClose={(e) => handleLanguageClose(null)}
+                                            >
+                                                {languages.map((lang: string) => {
+                                                    return (
+                                                        <MenuItem key={lang} onClick={(e) => changeLanguage(lang)}>{lang}</MenuItem>
+                                                    );
+                                                })}
+                                            </Menu>
+                                        </Stack>
+                                    </Item>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Item>
+                                        <Stack
+                                            direction="row"
+                                            justifyContent="space-between"
+                                            alignItems="baseline"
+                                            spacing={2}
+                                        >
+                                            <Typography variant='h6'>{t('Theme')}</Typography>
+                                            <Button
+                                                aria-owns={openTheme ? 'menu-appbar' : null}
+                                                aria-haspopup="true"
+                                                onClick={handleThemeOpen}
+                                                color="inherit"
+                                                size="small"
+                                            >
+                                                {userPreference.theme}
+                                            </Button>
+                                            <Menu
+                                                id="language-appbar"
+                                                anchorEl={anchorElTheme}
+                                                anchorOrigin={{
+                                                    vertical: 'top',
+                                                    horizontal: 'right',
+                                                }}
+                                                transformOrigin={{
+                                                    vertical: 'top',
+                                                    horizontal: 'right',
+                                                }}
+                                                open={openTheme}
+                                                onClose={(e) => handleThemeClose(null)}
+                                            >
+                                                {themes.map((theme1: PaletteMode) => {
+                                                    return (
+                                                        <MenuItem key={theme1} onClick={(e) => handleChangeTheme(theme1)}>{theme1}</MenuItem>
+                                                    );
+                                                })}
+                                            </Menu>
+                                        </Stack>
+                                    </Item>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Item><Button variant="text" startIcon={<Logout />} onClick={(e) => handleLogout()}>
+                                        {t('LogOut')}
+                                    </Button></Item>
+                                </Grid>
+                            </Grid>
+                        </Popover>
+                    </>}
+            </Toolbar>
+        </StyledAppBar>
+    );
+}
+

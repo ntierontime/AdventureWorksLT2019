@@ -13,6 +13,10 @@ namespace AdventureWorksLT2019.EFCoreRepositories
     public class CustomerAddressRepository
         : ICustomerAddressRepository
     {
+        private readonly Dictionary<string, string> _queryOrderBys = new()
+        {
+        };
+
         private readonly ILogger<CustomerAddressRepository> _logger;
         private readonly EFDbContext _dbcontext;
 
@@ -25,55 +29,46 @@ namespace AdventureWorksLT2019.EFCoreRepositories
         private IQueryable<CustomerAddressDataModel.DefaultView> SearchQuery(
             CustomerAddressAdvancedQuery query, bool withPagingAndOrderBy)
         {
-
             var queryable =
                 from t in _dbcontext.CustomerAddress
 
                     join Address in _dbcontext.Address on t.AddressID equals Address.AddressID// \AddressID
                     join Customer in _dbcontext.Customer on t.CustomerID equals Customer.CustomerID// \CustomerID
                 where
-
                     (string.IsNullOrEmpty(query.TextSearch) ||
-                        query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.AddressType!, "%" + query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.AddressType!, query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.AddressType!, "%" + query.TextSearch)))
-                    &&
-
+                    query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.AddressType!, "%" + query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.AddressType!, query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.AddressType!, "%" + query.TextSearch)))&&
                     (!query.AddressID.HasValue || Address.AddressID == query.AddressID)
                     &&
-                    (!query.CustomerID.HasValue || Customer.CustomerID == query.CustomerID)
-                    &&
-
-                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))
-                    &&
-
+                    (!query.CustomerID.HasValue || Customer.CustomerID == query.CustomerID)&&
+                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))&&
                     (string.IsNullOrEmpty(query.AddressType) ||
-                            query.AddressTypeSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.AddressType!, "%" + query.AddressType + "%") ||
-                            query.AddressTypeSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.AddressType!, query.AddressType + "%") ||
-                            query.AddressTypeSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.AddressType!, "%" + query.AddressType))
+                        query.AddressTypeSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.AddressType!, "%" + query.AddressType + "%") ||
+                        query.AddressTypeSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.AddressType!, query.AddressType + "%") ||
+                        query.AddressTypeSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.AddressType!, "%" + query.AddressType))
 
                 select new CustomerAddressDataModel.DefaultView
                 {
-
-                        CustomerID = t.CustomerID,
-                        AddressID = t.AddressID,
-                        AddressType = t.AddressType,
-                        rowguid = t.rowguid,
-                        ModifiedDate = t.ModifiedDate,
-                        Address_Name = Address.AddressLine1,
-                        Customer_Name = Customer.Title,
+                    CustomerID = t.CustomerID,
+                    AddressID = t.AddressID,
+                    AddressType = t.AddressType,
+                    rowguid = t.rowguid,
+                    ModifiedDate = t.ModifiedDate,
+                    Address_Name = Address.AddressLine1,
+                    Customer_Name = Customer.Title,
                 };
 
             // 1. Without Paging And OrderBy
             if (!withPagingAndOrderBy)
                 return queryable;
 
-            // 2. With Paging And OrderBy
-            var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
-            if (orderBys.Any())
-            {
-                queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
-            }
+            // // 2. With Paging And OrderBy
+            // var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
+            // if (orderBys.Any())
+            // {
+            //     queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
+            // }
 
             queryable = queryable.Skip((query.PageIndex - 1) * query.PageSize).Take(query.PageSize);
 
@@ -112,43 +107,62 @@ namespace AdventureWorksLT2019.EFCoreRepositories
         {
             var queryable =
                 from t in _dbcontext.CustomerAddress
+                    join Address in _dbcontext.Address on t.AddressID equals Address.AddressID// \AddressID
+                    join Customer in _dbcontext.Customer on t.CustomerID equals Customer.CustomerID// \CustomerID
 
                 select t;
 
             return queryable;
         }
 
-        public async Task<Response> BulkDelete(List<CustomerAddressIdentifier> ids)
+        public async Task<ListResponse<CustomerAddressDataModel.DefaultView[]>> BulkUpdate(
+            BatchActionRequest<CustomerAddressIdentifier, CustomerAddressDataModel.DefaultView> data)
         {
+            if (data.ActionData == null)
+            {
+                return await Task<ListResponse<CustomerAddressDataModel.DefaultView[]>>.FromResult(
+                    new ListResponse<CustomerAddressDataModel.DefaultView[]> { Status = HttpStatusCode.BadRequest });
+            }
             try
             {
-                var queryable = GetIQueryableByPrimaryIdentifierList(ids);
-                var result = await queryable.BatchDeleteAsync();
+                var querable = GetIQueryableByPrimaryIdentifierList(data.Ids);
 
-                return await Task<Response>.FromResult(
-                    new Response
-                    {
-                        Status = HttpStatusCode.OK,
-                    });
+                return await Task<ListResponse<CustomerAddressDataModel.DefaultView[]>>.FromResult(
+                    new ListResponse<CustomerAddressDataModel.DefaultView[]> { Status = HttpStatusCode.BadRequest });
             }
             catch (Exception ex)
             {
-                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+                return await Task<ListResponse<CustomerAddressDataModel.DefaultView[]>>.FromResult(
+                    new ListResponse<CustomerAddressDataModel.DefaultView[]> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
             }
+        }
+
+        private IQueryable<CustomerAddressDataModel.DefaultView> GetIQueryableAsBulkUpdateResponse(
+            List<CustomerAddressIdentifier> ids)
+        {
+            var queryable =
+                from t in _dbcontext.CustomerAddress
+                    join Address in _dbcontext.Address on t.AddressID equals Address.AddressID// \AddressID
+                    join Customer in _dbcontext.Customer on t.CustomerID equals Customer.CustomerID// \CustomerID
+
+                select new CustomerAddressDataModel.DefaultView
+                {
+                    CustomerID = t.CustomerID,
+                    AddressID = t.AddressID,
+                    AddressType = t.AddressType,
+                    rowguid = t.rowguid,
+                    ModifiedDate = t.ModifiedDate,
+                    Address_Name = Address.AddressLine1,
+                    Customer_Name = Customer.Title,
+                };
+
+            return queryable;
         }
 
         public async Task<Response<MultiItemsCUDRequest<CustomerAddressIdentifier, CustomerAddressDataModel.DefaultView>>> MultiItemsCUD(
             MultiItemsCUDRequest<CustomerAddressIdentifier, CustomerAddressDataModel.DefaultView> input)
         {
-            // 1. DeleteItems, return if Failed
-            if (input.DeleteItems != null)
-            {
-                var responseOfDeleteItems = await this.BulkDelete(input.DeleteItems);
-                if (responseOfDeleteItems != null && responseOfDeleteItems.Status != HttpStatusCode.OK)
-                {
-                    return new Response<MultiItemsCUDRequest<CustomerAddressIdentifier, CustomerAddressDataModel.DefaultView>> { Status = responseOfDeleteItems.Status, StatusMessage = "Deletion Failed. " + responseOfDeleteItems.StatusMessage };
-                }
-            }
+            // 1. BulkDelete is not enabled
 
             // 2. return OK, if no more NewItems and UpdateItems
             if (!(input.NewItems != null && input.NewItems.Count > 0 ||
@@ -161,7 +175,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             try
             {
                 // 3.1.1. NewItems if any
-                List<CustomerAddress> newEFItems = new();
+                List<CustomerAddress> newEFItems = [];
                 if (input.NewItems != null && input.NewItems.Count > 0)
                 {
                     foreach (var item in input.NewItems)
@@ -192,11 +206,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
 
                         if (existing != null)
                         {
-                            // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
-                            existing.CustomerID = item.CustomerID;
-                            existing.AddressID = item.AddressID;
-                            existing.AddressType = item.AddressType;
-                            existing.ModifiedDate = item.ModifiedDate;
+                            CopyUpdateValues(item, null, existing);
                         }
                     }
                 }
@@ -219,14 +229,14 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                 }
 
                 var responseBodyWithNewAndUpdatedItems =
-                    (from t in _dbcontext.CustomerAddress
+                    (
+                    from t in _dbcontext.CustomerAddress
                     join Address in _dbcontext.Address on t.AddressID equals Address.AddressID// \AddressID
                     join Customer in _dbcontext.Customer on t.CustomerID equals Customer.CustomerID// \CustomerID
                     where identifierListToloadResponseItems.Contains(t.CustomerID)
 
                     select new CustomerAddressDataModel.DefaultView
                     {
-
                         CustomerID = t.CustomerID,
                         AddressID = t.AddressID,
                         AddressType = t.AddressType,
@@ -234,7 +244,6 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         ModifiedDate = t.ModifiedDate,
                         Address_Name = Address.AddressLine1,
                         Customer_Name = Customer.Title,
-
                     }).ToList();
 
                 // 3.3. Final Response
@@ -265,7 +274,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
-        public async Task<Response<CustomerAddressDataModel.DefaultView>> Update(CustomerAddressIdentifier id, CustomerAddressDataModel input)
+        public async Task<Response<CustomerAddressDataModel.DefaultView>> Update(CustomerAddressIdentifier id, CustomerAddressDataModel.DefaultView input, string[]? toUpdatePropertyList = null)
         {
             if (input == null)
                 return await Task<Response<CustomerAddressDataModel.DefaultView>>.FromResult(new Response<CustomerAddressDataModel.DefaultView> { Status = HttpStatusCode.BadRequest });
@@ -273,12 +282,18 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             try
             {
                 var existing =
-                    (from t in _dbcontext.CustomerAddress
+                    (
+                    from t in _dbcontext.CustomerAddress
+                    join Address in _dbcontext.Address on t.AddressID equals Address.AddressID// \AddressID
+                    join Customer in _dbcontext.Customer on t.CustomerID equals Customer.CustomerID// \CustomerID
                      where
-
-                    t.CustomerID == id.CustomerID
-                    &&
-                    t.AddressID == id.AddressID
+                         (
+                         id.AddressID.HasValue && t.AddressID == id.AddressID
+                         )
+                         &&
+                         (
+                         id.CustomerID.HasValue && t.CustomerID == id.CustomerID
+                         )
                      select t).SingleOrDefault();
 
                 // TODO: can create a new record here.
@@ -286,44 +301,38 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     return await Task<Response<CustomerAddressDataModel.DefaultView>>.FromResult(new Response<CustomerAddressDataModel.DefaultView> { Status = HttpStatusCode.NotFound });
 
                 // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
-                existing.CustomerID = input.CustomerID;
-                existing.AddressID = input.AddressID;
-                existing.AddressType = input.AddressType;
-                existing.ModifiedDate = input.ModifiedDate;
+                CopyUpdateValues(input, toUpdatePropertyList, existing);
+
                 await _dbcontext.SaveChangesAsync();
-
-                var responseBody =
-                    (
-                    from t in _dbcontext.CustomerAddress
-
-                    join Address in _dbcontext.Address on t.AddressID equals Address.AddressID// \AddressID
-                    join Customer in _dbcontext.Customer on t.CustomerID equals Customer.CustomerID// \CustomerID
-                    where t.CustomerID == existing.CustomerID && t.AddressID == existing.AddressID
-
-                    select new CustomerAddressDataModel.DefaultView
-                    {
-
-                        CustomerID = t.CustomerID,
-                        AddressID = t.AddressID,
-                        AddressType = t.AddressType,
-                        rowguid = t.rowguid,
-                        ModifiedDate = t.ModifiedDate,
-                        Address_Name = Address.AddressLine1,
-                        Customer_Name = Customer.Title,
-
-                    }).First();
-
-                return await Task<Response<CustomerAddressDataModel.DefaultView>>.FromResult(
-                    new Response<CustomerAddressDataModel.DefaultView>
-                    {
-                        Status = HttpStatusCode.OK,
-                        ResponseBody = responseBody
-                    });
+                return await Get(id);
 
             }
             catch (Exception ex)
             {
                 return await Task<Response<CustomerAddressDataModel.DefaultView>>.FromResult(new Response<CustomerAddressDataModel.DefaultView> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
+        private static void CopyUpdateValues(CustomerAddressDataModel.DefaultView? input, string[]? toUpdatePropertyList, CustomerAddress existing)
+        {
+            if (input == null)
+                return;
+
+            // 1. This Table - CustomerAddress
+            if (toUpdatePropertyList == null || toUpdatePropertyList.Length == 0)
+            {
+                existing.CustomerID = input.CustomerID;
+                existing.AddressID = input.AddressID;
+                existing.AddressType = input.AddressType;
+                existing.ModifiedDate = input.ModifiedDate;
+            }
+            else
+            //update Specific Properties if in toUpdatePropertyList
+            {
+                if(toUpdatePropertyList.Contains(nameof(CustomerAddressDataModel.AddressType)))
+                    existing.AddressType = input.AddressType;
+                if(toUpdatePropertyList.Contains(nameof(CustomerAddressDataModel.ModifiedDate)))
+                    existing.ModifiedDate = input.ModifiedDate;
             }
         }
 
@@ -342,14 +351,16 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     join Address in _dbcontext.Address on t.AddressID equals Address.AddressID// \AddressID
                     join Customer in _dbcontext.Customer on t.CustomerID equals Customer.CustomerID// \CustomerID
                     where
-
-                    t.CustomerID == id.CustomerID
-                    &&
-                    t.AddressID == id.AddressID
+                        (
+                        id.AddressID.HasValue && t.AddressID == id.AddressID
+                        )
+                        &&
+                        (
+                        id.CustomerID.HasValue && t.CustomerID == id.CustomerID
+                        )
 
                     select new CustomerAddressDataModel.DefaultView
                     {
-
                         CustomerID = t.CustomerID,
                         AddressID = t.AddressID,
                         AddressType = t.AddressType,
@@ -357,7 +368,6 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         ModifiedDate = t.ModifiedDate,
                         Address_Name = Address.AddressLine1,
                         Customer_Name = Customer.Title,
-
                     }).First();
                 if (responseBody == null)
                     return await Task<Response<CustomerAddressDataModel.DefaultView>>.FromResult(new Response<CustomerAddressDataModel.DefaultView> { Status = HttpStatusCode.NotFound });
@@ -375,7 +385,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
-        public async Task<Response<CustomerAddressDataModel.DefaultView>> Create(CustomerAddressDataModel input)
+        public async Task<Response<CustomerAddressDataModel.DefaultView>> Create(CustomerAddressDataModel.DefaultView input)
         {
             if (input == null)
                 return await Task<Response<CustomerAddressDataModel.DefaultView>>.FromResult(new Response<CustomerAddressDataModel.DefaultView> { Status = HttpStatusCode.BadRequest });
@@ -383,42 +393,15 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             {
                 var toInsert = new CustomerAddress
                 {
-                            CustomerID = input.CustomerID,
-                            AddressID = input.AddressID,
-                            AddressType = input.AddressType,
-                            ModifiedDate = input.ModifiedDate,
+                    CustomerID = input.CustomerID,
+                    AddressID = input.AddressID,
+                    AddressType = input.AddressType,
+                    ModifiedDate = input.ModifiedDate,
                 };
+
                 await _dbcontext.CustomerAddress.AddAsync(toInsert);
                 await _dbcontext.SaveChangesAsync();
-
-                var responseBody =
-                    (
-                    from t in _dbcontext.CustomerAddress
-
-                    join Address in _dbcontext.Address on t.AddressID equals Address.AddressID// \AddressID
-                    join Customer in _dbcontext.Customer on t.CustomerID equals Customer.CustomerID// \CustomerID
-                    where t.CustomerID == toInsert.CustomerID && t.AddressID == toInsert.AddressID
-
-                    select new CustomerAddressDataModel.DefaultView
-                    {
-
-                        CustomerID = t.CustomerID,
-                        AddressID = t.AddressID,
-                        AddressType = t.AddressType,
-                        rowguid = t.rowguid,
-                        ModifiedDate = t.ModifiedDate,
-                        Address_Name = Address.AddressLine1,
-                        Customer_Name = Customer.Title,
-
-                    }).First();
-
-                return await Task<Response<CustomerAddressDataModel.DefaultView>>.FromResult(
-                    new Response<CustomerAddressDataModel.DefaultView>
-                    {
-                        Status = HttpStatusCode.OK,
-                        ResponseBody = responseBody
-                    });
-
+                return await Get(new CustomerAddressIdentifier { CustomerID = toInsert.CustomerID, AddressID = toInsert.AddressID });
             }
             catch (Exception ex)
             {
@@ -426,87 +409,44 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
-        public async Task<Response> Delete(CustomerAddressIdentifier id)
-        {
-            if (id == null)
-                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.BadRequest });
-
-            try
-            {
-                var existing =
-                    (from t in _dbcontext.CustomerAddress
-                     where
-
-                    t.CustomerID == id.CustomerID
-                    &&
-                    t.AddressID == id.AddressID
-                     select t).SingleOrDefault();
-
-                if (existing == null)
-                    return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.NotFound });
-
-                _dbcontext.CustomerAddress.Remove(existing);
-                await _dbcontext.SaveChangesAsync();
-
-                return await Task<Response>.FromResult(
-                    new Response
-                    {
-                        Status = HttpStatusCode.OK,
-                    });
-            }
-            catch (Exception ex)
-            {
-                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
-            }
-        }
-
         private IQueryable<NameValuePair> GetCodeListQuery(
             CustomerAddressAdvancedQuery query, bool withPagingAndOrderBy)
         {
-
             var queryable =
                 from t in _dbcontext.CustomerAddress
 
                     join Address in _dbcontext.Address on t.AddressID equals Address.AddressID// \AddressID
                     join Customer in _dbcontext.Customer on t.CustomerID equals Customer.CustomerID// \CustomerID
                 where
-
                     (string.IsNullOrEmpty(query.TextSearch) ||
-                        query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.AddressType!, "%" + query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.AddressType!, query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.AddressType!, "%" + query.TextSearch)))
-                    &&
-
+                    query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.AddressType!, "%" + query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.AddressType!, query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.AddressType!, "%" + query.TextSearch)))&&
                     (!query.AddressID.HasValue || Address.AddressID == query.AddressID)
                     &&
-                    (!query.CustomerID.HasValue || Customer.CustomerID == query.CustomerID)
-                    &&
-
-                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))
-                    &&
-
+                    (!query.CustomerID.HasValue || Customer.CustomerID == query.CustomerID)&&
+                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))&&
                     (string.IsNullOrEmpty(query.AddressType) ||
-                            query.AddressTypeSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.AddressType!, "%" + query.AddressType + "%") ||
-                            query.AddressTypeSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.AddressType!, query.AddressType + "%") ||
-                            query.AddressTypeSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.AddressType!, "%" + query.AddressType))
+                        query.AddressTypeSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.AddressType!, "%" + query.AddressType + "%") ||
+                        query.AddressTypeSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.AddressType!, query.AddressType + "%") ||
+                        query.AddressTypeSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.AddressType!, "%" + query.AddressType))
                 let _Value = string.Concat(new string[] { t.CustomerID.ToString(),"|",t.AddressID.ToString() })
                 select new NameValuePair
                 {
-
-                        Name = t.AddressType,
-                        Value = _Value,
+                    Name = t.AddressType,
+                    Value = _Value,
                 };
 
             // 1. Without Paging And OrderBy
             if (!withPagingAndOrderBy)
                 return queryable;
 
-            // 2. With Paging And OrderBy
-            var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
-            if (orderBys.Any())
-            {
-                queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
-            }
+            // // 2. With Paging And OrderBy
+            // var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
+            // if (orderBys.Any())
+            // {
+            //     queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
+            // }
 
             queryable = queryable.Skip((query.PageIndex - 1) * query.PageSize).Take(query.PageSize);
 
@@ -537,35 +477,6 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     Status = HttpStatusCode.InternalServerError,
                     StatusMessage = ex.Message
                 });
-            }
-        }
-
-        public async Task<Response<CustomerAddressDataModel.DefaultView>> CreateComposite(CustomerAddressCompositeModel input)
-        {
-            if (input == null)
-                return await Task<Response<CustomerAddressDataModel.DefaultView>>.FromResult(new Response<CustomerAddressDataModel.DefaultView> { Status = HttpStatusCode.BadRequest });
-            try
-            {
-                // 1. Master: CustomerAddress
-                var master = new CustomerAddress
-                {
-                    // Properties.1. Value Type Properties
-                    CustomerID = input.__Master__!.CustomerID,
-                    AddressID = input.__Master__!.AddressID,
-                    AddressType = input.__Master__!.AddressType,
-                    rowguid = input.__Master__!.rowguid,
-                    ModifiedDate = input.__Master__!.ModifiedDate,
-                };
-
-                _dbcontext.CustomerAddress.Add(master);
-
-                await _dbcontext.SaveChangesAsync();
-
-                return await Get(new CustomerAddressIdentifier { CustomerID = master.CustomerID, AddressID = master.AddressID, });
-            }
-            catch (Exception ex)
-            {
-                return await Task<Response<CustomerAddressDataModel.DefaultView>>.FromResult(new Response<CustomerAddressDataModel.DefaultView> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
             }
         }
 

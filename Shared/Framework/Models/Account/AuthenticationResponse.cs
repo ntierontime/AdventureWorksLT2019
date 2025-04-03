@@ -1,6 +1,6 @@
 namespace Framework.Models.Account
 {
-    public class AuthenticationResponse
+    public class AuthenticationResponse<TPerson, TNotification>
     {
         public bool Succeeded { get; set; }
         public bool IsLockedOut { get; set; }
@@ -10,7 +10,10 @@ namespace Framework.Models.Account
         public string? Token { get; set; }
         public int ExpiresIn { get; set; }
         public string RefreshToken { get; set; } = null!;
-        public IList<string> Roles { get; set; } = null!;
+        public string? Message { get; set; }
+        public IList<string>? Roles { get; set; }
+        public TPerson? Person { get; set; }
+        public TNotification[]? Notifications { get; set; }
     }
 }
 

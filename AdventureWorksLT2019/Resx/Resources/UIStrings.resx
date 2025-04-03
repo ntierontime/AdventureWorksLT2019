@@ -214,6 +214,9 @@
   <data name="ConfirmPasswordRequired" xml:space="preserve">
     <value>(en)Confirm Password Required</value>
   </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>(en)Contact Us</value>
+  </data>
   <data name="Contains" xml:space="preserve">
     <value>(en)Contains</value>
   </data>
@@ -226,8 +229,44 @@
   <data name="Create_New" xml:space="preserve">
     <value>(en)Create New</value>
   </data>
+  <data name="CreateAddressWizard" xml:space="preserve">
+    <value>(en)Create Address Wizard</value>
+  </data>
   <data name="CreateAnotherOne" xml:space="preserve">
     <value>(en)Create Another One</value>
+  </data>
+  <data name="CreateBuildVersionWizard" xml:space="preserve">
+    <value>(en)Create Build Version Wizard</value>
+  </data>
+  <data name="CreateCustomerAddressWizard" xml:space="preserve">
+    <value>(en)Create Customer Address Wizard</value>
+  </data>
+  <data name="CreateCustomerWizard" xml:space="preserve">
+    <value>(en)Create Customer Wizard</value>
+  </data>
+  <data name="CreateErrorLogWizard" xml:space="preserve">
+    <value>(en)Create Error Log Wizard</value>
+  </data>
+  <data name="CreateProductCategoryWizard" xml:space="preserve">
+    <value>(en)Create Product Category Wizard</value>
+  </data>
+  <data name="CreateProductDescriptionWizard" xml:space="preserve">
+    <value>(en)Create Product Description Wizard</value>
+  </data>
+  <data name="CreateProductModelProductDescriptionWizard" xml:space="preserve">
+    <value>(en)Create Product Model Product Description Wizard</value>
+  </data>
+  <data name="CreateProductModelWizard" xml:space="preserve">
+    <value>(en)Create Product Model Wizard</value>
+  </data>
+  <data name="CreateProductWizard" xml:space="preserve">
+    <value>(en)Create Product Wizard</value>
+  </data>
+  <data name="CreateSalesOrderDetailWizard" xml:space="preserve">
+    <value>(en)Create Sales Order Detail Wizard</value>
+  </data>
+  <data name="CreateSalesOrderHeaderWizard" xml:space="preserve">
+    <value>(en)Create Sales Order Header Wizard</value>
   </data>
   <data name="CreditCardApprovalCode" xml:space="preserve">
     <value>(en)Credit Card Approval Code</value>
@@ -589,6 +628,12 @@
   <data name="Previous" xml:space="preserve">
     <value>(en)Previous</value>
   </data>
+  <data name="Pricing" xml:space="preserve">
+    <value>(en)Pricing</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>(en)Privacy Policy</value>
+  </data>
   <data name="Product" xml:space="preserve">
     <value>(en)Product</value>
   </data>
@@ -697,9 +742,6 @@
   <data name="Section_CustomerAddresses_Via_CustomerID" xml:space="preserve">
     <value>(en)Customer Addresses  Via  Customer ID</value>
   </data>
-  <data name="Section_Product" xml:space="preserve">
-    <value>(en)Product</value>
-  </data>
   <data name="Section_ProductCategories_Via_ParentProductCategoryID" xml:space="preserve">
     <value>(en)Product Categories  Via  Parent Product Category ID</value>
   </data>
@@ -720,9 +762,6 @@
   </data>
   <data name="Section_SalesOrderDetails_Via_SalesOrderID" xml:space="preserve">
     <value>(en)Sales Order Details  Via  Sales Order ID</value>
-  </data>
-  <data name="Section_SalesOrderHeader" xml:space="preserve">
-    <value>(en)Sales Order Header</value>
   </data>
   <data name="Section_SalesOrderHeaders_Via_BillToAddressID" xml:space="preserve">
     <value>(en)Sales Order Headers  Via  Bill To Address ID</value>
@@ -808,14 +847,26 @@
   <data name="SystemInformationID" xml:space="preserve">
     <value>(en)System Information ID</value>
   </data>
+  <data name="t_AddressID" xml:space="preserve">
+    <value>(en)Customer Address Address ID</value>
+  </data>
+  <data name="t_CustomerID" xml:space="preserve">
+    <value>(en)Customer Address Customer ID</value>
+  </data>
+  <data name="t_ProductDescriptionID" xml:space="preserve">
+    <value>(en)Product Model Product Description Product Description ID</value>
+  </data>
+  <data name="t_ProductModelID" xml:space="preserve">
+    <value>(en)Product Model Product Description Product Model ID</value>
+  </data>
+  <data name="t_SalesOrderID" xml:space="preserve">
+    <value>(en)Sales Order Detail Sales Order ID</value>
+  </data>
   <data name="Tab_AlsoA" xml:space="preserve">
     <value>(en)Also a ...</value>
   </data>
   <data name="Tab_Lists" xml:space="preserve">
     <value>(en)Lists</value>
-  </data>
-  <data name="Tab_MoreDetails" xml:space="preserve">
-    <value>(en)More Details</value>
   </data>
   <data name="TaxAmt" xml:space="preserve">
     <value>(en)Tax Amt</value>
@@ -959,7 +1010,7 @@
     <value>(en)UnitPriceDiscount is required</value>
   </data>
   <data name="UserAgreement" xml:space="preserve">
-    <value>(en)Privacy Policy</value>
+    <value>(en)User Agreement</value>
   </data>
   <data name="UserName" xml:space="preserve">
     <value>(en)User Name</value>

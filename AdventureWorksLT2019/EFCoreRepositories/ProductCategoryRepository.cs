@@ -13,6 +13,10 @@ namespace AdventureWorksLT2019.EFCoreRepositories
     public class ProductCategoryRepository
         : IProductCategoryRepository
     {
+        private readonly Dictionary<string, string> _queryOrderBys = new()
+        {
+        };
+
         private readonly ILogger<ProductCategoryRepository> _logger;
         private readonly EFDbContext _dbcontext;
 
@@ -25,51 +29,42 @@ namespace AdventureWorksLT2019.EFCoreRepositories
         private IQueryable<ProductCategoryDataModel.DefaultView> SearchQuery(
             ProductCategoryAdvancedQuery query, bool withPagingAndOrderBy)
         {
-
             var queryable =
                 from t in _dbcontext.ProductCategory
 
                     join Parent_A in _dbcontext.ProductCategory on t.ParentProductCategoryID equals Parent_A.ProductCategoryID into Parent_G from Parent in Parent_G.DefaultIfEmpty()// \ParentProductCategoryID
                 where
-
                     (string.IsNullOrEmpty(query.TextSearch) ||
-                        query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.Name!, "%" + query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.Name!, query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.Name!, "%" + query.TextSearch)))
-                    &&
-
-                    (!query.ParentProductCategoryID.HasValue || Parent.ProductCategoryID == query.ParentProductCategoryID)
-                    &&
-
-                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))
-                    &&
-
+                    query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.Name!, "%" + query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.Name!, query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.Name!, "%" + query.TextSearch)))&&
+                    (!query.ParentProductCategoryID.HasValue || Parent.ProductCategoryID == query.ParentProductCategoryID)&&
+                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))&&
                     (string.IsNullOrEmpty(query.Name) ||
-                            query.NameSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Name!, "%" + query.Name + "%") ||
-                            query.NameSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Name!, query.Name + "%") ||
-                            query.NameSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Name!, "%" + query.Name))
+                        query.NameSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Name!, "%" + query.Name + "%") ||
+                        query.NameSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Name!, query.Name + "%") ||
+                        query.NameSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Name!, "%" + query.Name))
 
                 select new ProductCategoryDataModel.DefaultView
                 {
-
-                        ProductCategoryID = t.ProductCategoryID,
-                        ParentProductCategoryID = t.ParentProductCategoryID,
-                        Name = t.Name,
-                        rowguid = t.rowguid,
-                        ModifiedDate = t.ModifiedDate,
-                        Parent_Name = Parent.Name,
+                    ProductCategoryID = t.ProductCategoryID,
+                    ParentProductCategoryID = t.ParentProductCategoryID,
+                    Name = t.Name,
+                    rowguid = t.rowguid,
+                    ModifiedDate = t.ModifiedDate,
+                    Parent_Name = Parent.Name,
                 };
 
             // 1. Without Paging And OrderBy
             if (!withPagingAndOrderBy)
                 return queryable;
 
-            // 2. With Paging And OrderBy
-            var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
-            if (orderBys.Any())
-            {
-                queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
-            }
+            // // 2. With Paging And OrderBy
+            // var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
+            // if (orderBys.Any())
+            // {
+            //     queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
+            // }
 
             queryable = queryable.Skip((query.PageIndex - 1) * query.PageSize).Take(query.PageSize);
 
@@ -103,162 +98,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
-        private IQueryable<ProductCategory> GetIQueryableByPrimaryIdentifierList(
-            List<ProductCategoryIdentifier> ids)
-        {
-            var idList = ids.Select(t => t.ProductCategoryID).ToList();
-            var queryable =
-                from t in _dbcontext.ProductCategory
-                where idList.Contains(t.ProductCategoryID)
-                select t;
-
-            return queryable;
-        }
-
-        public async Task<Response> BulkDelete(List<ProductCategoryIdentifier> ids)
-        {
-            try
-            {
-                var queryable = GetIQueryableByPrimaryIdentifierList(ids);
-                var result = await queryable.BatchDeleteAsync();
-
-                return await Task<Response>.FromResult(
-                    new Response
-                    {
-                        Status = HttpStatusCode.OK,
-                    });
-            }
-            catch (Exception ex)
-            {
-                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
-            }
-        }
-
-        public async Task<Response<MultiItemsCUDRequest<ProductCategoryIdentifier, ProductCategoryDataModel.DefaultView>>> MultiItemsCUD(
-            MultiItemsCUDRequest<ProductCategoryIdentifier, ProductCategoryDataModel.DefaultView> input)
-        {
-            // 1. DeleteItems, return if Failed
-            if (input.DeleteItems != null)
-            {
-                var responseOfDeleteItems = await this.BulkDelete(input.DeleteItems);
-                if (responseOfDeleteItems != null && responseOfDeleteItems.Status != HttpStatusCode.OK)
-                {
-                    return new Response<MultiItemsCUDRequest<ProductCategoryIdentifier, ProductCategoryDataModel.DefaultView>> { Status = responseOfDeleteItems.Status, StatusMessage = "Deletion Failed. " + responseOfDeleteItems.StatusMessage };
-                }
-            }
-
-            // 2. return OK, if no more NewItems and UpdateItems
-            if (!(input.NewItems != null && input.NewItems.Count > 0 ||
-                input.UpdateItems != null && input.UpdateItems.Count > 0))
-            {
-                return new Response<MultiItemsCUDRequest<ProductCategoryIdentifier, ProductCategoryDataModel.DefaultView>> { Status = HttpStatusCode.OK };
-            }
-
-            // 3. NewItems and UpdateItems
-            try
-            {
-                // 3.1.1. NewItems if any
-                List<ProductCategory> newEFItems = new();
-                if (input.NewItems != null && input.NewItems.Count > 0)
-                {
-                    foreach (var item in input.NewItems)
-                    {
-                        var toInsert = new ProductCategory
-                        {
-                            ParentProductCategoryID = item.ParentProductCategoryID,
-                            Name = item.Name,
-                            ModifiedDate = item.ModifiedDate,
-                        };
-                        _dbcontext.ProductCategory.Add(toInsert);
-                        newEFItems.Add(toInsert);
-                    }
-                }
-
-                // 3.1.2. UpdateItems if any
-                if (input.UpdateItems != null && input.UpdateItems.Count > 0)
-                {
-                    foreach (var item in input.UpdateItems)
-                    {
-                        var existing =
-                            (from t in _dbcontext.ProductCategory
-                             where
-
-                             t.ProductCategoryID == item.ProductCategoryID
-                             select t).SingleOrDefault();
-
-                        if (existing != null)
-                        {
-                            // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
-                            existing.ParentProductCategoryID = item.ParentProductCategoryID;
-                            existing.Name = item.Name;
-                            existing.ModifiedDate = item.ModifiedDate;
-                        }
-                    }
-                }
-                await _dbcontext.SaveChangesAsync();
-
-                // 3.2 Load Response
-                var identifierListToloadResponseItems = new List<int>();
-
-                if (input.NewItems != null && input.NewItems.Count > 0)
-                {
-                    identifierListToloadResponseItems.AddRange(
-                        from t in newEFItems
-                        select t.ProductCategoryID);
-                }
-                if (input.UpdateItems != null && input.UpdateItems.Count > 0)
-                {
-                    identifierListToloadResponseItems.AddRange(
-                        from t in input.UpdateItems
-                        select t.ProductCategoryID);
-                }
-
-                var responseBodyWithNewAndUpdatedItems =
-                    (from t in _dbcontext.ProductCategory
-                    join Parent_A in _dbcontext.ProductCategory on t.ParentProductCategoryID equals Parent_A.ProductCategoryID into Parent_G from Parent in Parent_G.DefaultIfEmpty()// \ParentProductCategoryID
-                    where identifierListToloadResponseItems.Contains(t.ProductCategoryID)
-
-                    select new ProductCategoryDataModel.DefaultView
-                    {
-
-                        ProductCategoryID = t.ProductCategoryID,
-                        ParentProductCategoryID = t.ParentProductCategoryID,
-                        Name = t.Name,
-                        rowguid = t.rowguid,
-                        ModifiedDate = t.ModifiedDate,
-                        Parent_Name = Parent.Name,
-
-                    }).ToList();
-
-                // 3.3. Final Response
-                var response = new Response<MultiItemsCUDRequest<ProductCategoryIdentifier, ProductCategoryDataModel.DefaultView>>
-                {
-                    Status = HttpStatusCode.OK,
-                    ResponseBody = new MultiItemsCUDRequest<ProductCategoryIdentifier, ProductCategoryDataModel.DefaultView>
-                    {
-                        NewItems =
-                            input.NewItems != null && input.NewItems.Count > 0
-                                ? responseBodyWithNewAndUpdatedItems.Where(t => newEFItems.Any(t1 => t1.ProductCategoryID == t.ProductCategoryID)).ToList()
-                                : null,
-                        UpdateItems =
-                            input.UpdateItems != null && input.UpdateItems.Count > 0
-                                ? responseBodyWithNewAndUpdatedItems.Where(t => input.UpdateItems.Any(t1 => t1.ProductCategoryID == t.ProductCategoryID)).ToList()
-                                : null,
-                    }
-                };
-                return response;
-            }
-            catch (Exception ex)
-            {
-                return await Task.FromResult(new Response<MultiItemsCUDRequest<ProductCategoryIdentifier, ProductCategoryDataModel.DefaultView>>
-                {
-                    Status = HttpStatusCode.InternalServerError,
-                    StatusMessage = "Create And/Or Update Failed. " + ex.Message
-                });
-            }
-        }
-
-        public async Task<Response<ProductCategoryDataModel.DefaultView>> Update(ProductCategoryIdentifier id, ProductCategoryDataModel input)
+        public async Task<Response<ProductCategoryDataModel.DefaultView>> Update(ProductCategoryIdentifier id, ProductCategoryDataModel.DefaultView input, string[]? toUpdatePropertyList = null)
         {
             if (input == null)
                 return await Task<Response<ProductCategoryDataModel.DefaultView>>.FromResult(new Response<ProductCategoryDataModel.DefaultView> { Status = HttpStatusCode.BadRequest });
@@ -266,10 +106,10 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             try
             {
                 var existing =
-                    (from t in _dbcontext.ProductCategory
+                    (
+                    from t in _dbcontext.ProductCategory
                      where
-
-                    t.ProductCategoryID == id.ProductCategoryID
+                         id.ProductCategoryID.HasValue && t.ProductCategoryID == id.ProductCategoryID
                      select t).SingleOrDefault();
 
                 // TODO: can create a new record here.
@@ -277,41 +117,39 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     return await Task<Response<ProductCategoryDataModel.DefaultView>>.FromResult(new Response<ProductCategoryDataModel.DefaultView> { Status = HttpStatusCode.NotFound });
 
                 // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
-                existing.ParentProductCategoryID = input.ParentProductCategoryID;
-                existing.Name = input.Name;
-                existing.ModifiedDate = input.ModifiedDate;
+                CopyUpdateValues(input, toUpdatePropertyList, existing);
+
                 await _dbcontext.SaveChangesAsync();
-
-                var responseBody =
-                    (
-                    from t in _dbcontext.ProductCategory
-
-                    join Parent_A in _dbcontext.ProductCategory on t.ParentProductCategoryID equals Parent_A.ProductCategoryID into Parent_G from Parent in Parent_G.DefaultIfEmpty()// \ParentProductCategoryID
-                    where t.ProductCategoryID == existing.ProductCategoryID
-
-                    select new ProductCategoryDataModel.DefaultView
-                    {
-
-                        ProductCategoryID = t.ProductCategoryID,
-                        ParentProductCategoryID = t.ParentProductCategoryID,
-                        Name = t.Name,
-                        rowguid = t.rowguid,
-                        ModifiedDate = t.ModifiedDate,
-                        Parent_Name = Parent.Name,
-
-                    }).First();
-
-                return await Task<Response<ProductCategoryDataModel.DefaultView>>.FromResult(
-                    new Response<ProductCategoryDataModel.DefaultView>
-                    {
-                        Status = HttpStatusCode.OK,
-                        ResponseBody = responseBody
-                    });
+                return await Get(id);
 
             }
             catch (Exception ex)
             {
                 return await Task<Response<ProductCategoryDataModel.DefaultView>>.FromResult(new Response<ProductCategoryDataModel.DefaultView> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
+        private static void CopyUpdateValues(ProductCategoryDataModel.DefaultView? input, string[]? toUpdatePropertyList, ProductCategory existing)
+        {
+            if (input == null)
+                return;
+
+            // 1. This Table - ProductCategory
+            if (toUpdatePropertyList == null || toUpdatePropertyList.Length == 0)
+            {
+                existing.ParentProductCategoryID = input.ParentProductCategoryID;
+                existing.Name = input.Name;
+                existing.ModifiedDate = input.ModifiedDate;
+            }
+            else
+            //update Specific Properties if in toUpdatePropertyList
+            {
+                if(toUpdatePropertyList.Contains(nameof(ProductCategoryDataModel.ParentProductCategoryID)))
+                    existing.ParentProductCategoryID = input.ParentProductCategoryID;
+                if(toUpdatePropertyList.Contains(nameof(ProductCategoryDataModel.Name)))
+                    existing.Name = input.Name;
+                if(toUpdatePropertyList.Contains(nameof(ProductCategoryDataModel.ModifiedDate)))
+                    existing.ModifiedDate = input.ModifiedDate;
             }
         }
 
@@ -329,19 +167,16 @@ namespace AdventureWorksLT2019.EFCoreRepositories
 
                     join Parent_A in _dbcontext.ProductCategory on t.ParentProductCategoryID equals Parent_A.ProductCategoryID into Parent_G from Parent in Parent_G.DefaultIfEmpty()// \ParentProductCategoryID
                     where
-
-                    t.ProductCategoryID == id.ProductCategoryID
+                        id.ProductCategoryID.HasValue && t.ProductCategoryID == id.ProductCategoryID
 
                     select new ProductCategoryDataModel.DefaultView
                     {
-
                         ProductCategoryID = t.ProductCategoryID,
                         ParentProductCategoryID = t.ParentProductCategoryID,
                         Name = t.Name,
                         rowguid = t.rowguid,
                         ModifiedDate = t.ModifiedDate,
                         Parent_Name = Parent.Name,
-
                     }).First();
                 if (responseBody == null)
                     return await Task<Response<ProductCategoryDataModel.DefaultView>>.FromResult(new Response<ProductCategoryDataModel.DefaultView> { Status = HttpStatusCode.NotFound });
@@ -359,7 +194,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
-        public async Task<Response<ProductCategoryDataModel.DefaultView>> Create(ProductCategoryDataModel input)
+        public async Task<Response<ProductCategoryDataModel.DefaultView>> Create(ProductCategoryDataModel.DefaultView input)
         {
             if (input == null)
                 return await Task<Response<ProductCategoryDataModel.DefaultView>>.FromResult(new Response<ProductCategoryDataModel.DefaultView> { Status = HttpStatusCode.BadRequest });
@@ -367,39 +202,14 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             {
                 var toInsert = new ProductCategory
                 {
-                            ParentProductCategoryID = input.ParentProductCategoryID,
-                            Name = input.Name,
-                            ModifiedDate = input.ModifiedDate,
+                    ParentProductCategoryID = input.ParentProductCategoryID,
+                    Name = input.Name,
+                    ModifiedDate = input.ModifiedDate,
                 };
+
                 await _dbcontext.ProductCategory.AddAsync(toInsert);
                 await _dbcontext.SaveChangesAsync();
-
-                var responseBody =
-                    (
-                    from t in _dbcontext.ProductCategory
-
-                    join Parent_A in _dbcontext.ProductCategory on t.ParentProductCategoryID equals Parent_A.ProductCategoryID into Parent_G from Parent in Parent_G.DefaultIfEmpty()// \ParentProductCategoryID
-                    where t.ProductCategoryID == toInsert.ProductCategoryID
-
-                    select new ProductCategoryDataModel.DefaultView
-                    {
-
-                        ProductCategoryID = t.ProductCategoryID,
-                        ParentProductCategoryID = t.ParentProductCategoryID,
-                        Name = t.Name,
-                        rowguid = t.rowguid,
-                        ModifiedDate = t.ModifiedDate,
-                        Parent_Name = Parent.Name,
-
-                    }).First();
-
-                return await Task<Response<ProductCategoryDataModel.DefaultView>>.FromResult(
-                    new Response<ProductCategoryDataModel.DefaultView>
-                    {
-                        Status = HttpStatusCode.OK,
-                        ResponseBody = responseBody
-                    });
-
+                return await Get(new ProductCategoryIdentifier { ProductCategoryID = toInsert.ProductCategoryID });
             }
             catch (Exception ex)
             {
@@ -407,82 +217,41 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
-        public async Task<Response> Delete(ProductCategoryIdentifier id)
-        {
-            if (id == null)
-                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.BadRequest });
-
-            try
-            {
-                var existing =
-                    (from t in _dbcontext.ProductCategory
-                     where
-
-                    t.ProductCategoryID == id.ProductCategoryID
-                     select t).SingleOrDefault();
-
-                if (existing == null)
-                    return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.NotFound });
-
-                _dbcontext.ProductCategory.Remove(existing);
-                await _dbcontext.SaveChangesAsync();
-
-                return await Task<Response>.FromResult(
-                    new Response
-                    {
-                        Status = HttpStatusCode.OK,
-                    });
-            }
-            catch (Exception ex)
-            {
-                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
-            }
-        }
-
         private IQueryable<NameValuePair> GetCodeListQuery(
             ProductCategoryAdvancedQuery query, bool withPagingAndOrderBy)
         {
-
             var queryable =
                 from t in _dbcontext.ProductCategory
 
                     join Parent_A in _dbcontext.ProductCategory on t.ParentProductCategoryID equals Parent_A.ProductCategoryID into Parent_G from Parent in Parent_G.DefaultIfEmpty()// \ParentProductCategoryID
                 where
-
                     (string.IsNullOrEmpty(query.TextSearch) ||
-                        query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.Name!, "%" + query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.Name!, query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.Name!, "%" + query.TextSearch)))
-                    &&
-
-                    (!query.ParentProductCategoryID.HasValue || Parent.ProductCategoryID == query.ParentProductCategoryID)
-                    &&
-
-                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))
-                    &&
-
+                    query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.Name!, "%" + query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.Name!, query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.Name!, "%" + query.TextSearch)))&&
+                    (!query.ParentProductCategoryID.HasValue || Parent.ProductCategoryID == query.ParentProductCategoryID)&&
+                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))&&
                     (string.IsNullOrEmpty(query.Name) ||
-                            query.NameSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Name!, "%" + query.Name + "%") ||
-                            query.NameSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Name!, query.Name + "%") ||
-                            query.NameSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Name!, "%" + query.Name))
+                        query.NameSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Name!, "%" + query.Name + "%") ||
+                        query.NameSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Name!, query.Name + "%") ||
+                        query.NameSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Name!, "%" + query.Name))
 
                 select new NameValuePair
                 {
-
-                        Name = t.Name,
-                        Value = t.ProductCategoryID.ToString(),
+                    Name = t.Name,
+                    Value = t.ProductCategoryID.ToString(),
                 };
 
             // 1. Without Paging And OrderBy
             if (!withPagingAndOrderBy)
                 return queryable;
 
-            // 2. With Paging And OrderBy
-            var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
-            if (orderBys.Any())
-            {
-                queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
-            }
+            // // 2. With Paging And OrderBy
+            // var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
+            // if (orderBys.Any())
+            // {
+            //     queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
+            // }
 
             queryable = queryable.Skip((query.PageIndex - 1) * query.PageSize).Take(query.PageSize);
 
@@ -513,74 +282,6 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     Status = HttpStatusCode.InternalServerError,
                     StatusMessage = ex.Message
                 });
-            }
-        }
-
-        public async Task<Response<ProductCategoryDataModel.DefaultView>> CreateComposite(ProductCategoryCompositeModel input)
-        {
-            if (input == null)
-                return await Task<Response<ProductCategoryDataModel.DefaultView>>.FromResult(new Response<ProductCategoryDataModel.DefaultView> { Status = HttpStatusCode.BadRequest });
-            try
-            {
-                // 1. Master: ProductCategory
-                var master = new ProductCategory
-                {
-                    // Properties.1. Value Type Properties
-                    ParentProductCategoryID = input.__Master__!.ParentProductCategoryID,
-                    Name = input.__Master__!.Name,
-                    rowguid = input.__Master__!.rowguid,
-                    ModifiedDate = input.__Master__!.ModifiedDate,
-                };
-                // 2.1.1. ListTable ProductCategory.Product
-                if(input.Products_Via_ProductCategoryID != null)
-                {
-                    foreach(var item in input.Products_Via_ProductCategoryID)
-                    {
-                        master.Product.Add(new Product
-                        {
-                                Name = item.Name,
-                                ProductNumber = item.ProductNumber,
-                                Color = item.Color,
-                                StandardCost = item.StandardCost,
-                                ListPrice = item.ListPrice,
-                                Size = item.Size,
-                                Weight = item.Weight,
-                                ProductCategoryID = item.ProductCategoryID,
-                                ProductModelID = item.ProductModelID,
-                                SellStartDate = item.SellStartDate,
-                                SellEndDate = item.SellEndDate,
-                                DiscontinuedDate = item.DiscontinuedDate,
-                                ThumbNailPhoto = item.ThumbNailPhoto,
-                                ThumbnailPhotoFileName = item.ThumbnailPhotoFileName,
-                                rowguid = item.rowguid,
-                                ModifiedDate = item.ModifiedDate,
-                        });
-                    }
-                }
-                // 2.1.2. ListTable ProductCategory.ProductCategory1
-                if(input.ProductCategories_Via_ParentProductCategoryID != null)
-                {
-                    foreach(var item in input.ProductCategories_Via_ParentProductCategoryID)
-                    {
-                        master.ProductCategory1.Add(new ProductCategory
-                        {
-                                ParentProductCategoryID = item.ParentProductCategoryID,
-                                Name = item.Name,
-                                rowguid = item.rowguid,
-                                ModifiedDate = item.ModifiedDate,
-                        });
-                    }
-                }
-
-                _dbcontext.ProductCategory.Add(master);
-
-                await _dbcontext.SaveChangesAsync();
-
-                return await Get(new ProductCategoryIdentifier { ProductCategoryID = master.ProductCategoryID, });
-            }
-            catch (Exception ex)
-            {
-                return await Task<Response<ProductCategoryDataModel.DefaultView>>.FromResult(new Response<ProductCategoryDataModel.DefaultView> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
             }
         }
 

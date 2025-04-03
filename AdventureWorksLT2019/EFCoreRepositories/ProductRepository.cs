@@ -13,6 +13,10 @@ namespace AdventureWorksLT2019.EFCoreRepositories
     public class ProductRepository
         : IProductRepository
     {
+        private readonly Dictionary<string, string> _queryOrderBys = new()
+        {
+        };
+
         private readonly ILogger<ProductRepository> _logger;
         private readonly EFDbContext _dbcontext;
 
@@ -25,7 +29,6 @@ namespace AdventureWorksLT2019.EFCoreRepositories
         private IQueryable<ProductDataModel.DefaultView> SearchQuery(
             ProductAdvancedQuery query, bool withPagingAndOrderBy)
         {
-
             var queryable =
                 from t in _dbcontext.Product
 
@@ -33,90 +36,80 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     join Parent_A in _dbcontext.ProductCategory on ProductCategory.ParentProductCategoryID equals Parent_A.ProductCategoryID into Parent_G from Parent in Parent_G.DefaultIfEmpty()// \ProductCategoryID\ParentProductCategoryID
                     join ProductModel_A in _dbcontext.ProductModel on t.ProductModelID equals ProductModel_A.ProductModelID into ProductModel_G from ProductModel in ProductModel_G.DefaultIfEmpty()// \ProductModelID
                 where
-
                     (string.IsNullOrEmpty(query.TextSearch) ||
-                        query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.Name!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.ProductNumber!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.Color!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.Size!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.ThumbnailPhotoFileName!, "%" + query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.Name!, query.TextSearch + "%") || EF.Functions.Like(t.ProductNumber!, query.TextSearch + "%") || EF.Functions.Like(t.Color!, query.TextSearch + "%") || EF.Functions.Like(t.Size!, query.TextSearch + "%") || EF.Functions.Like(t.ThumbnailPhotoFileName!, query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.Name!, "%" + query.TextSearch) || EF.Functions.Like(t.ProductNumber!, "%" + query.TextSearch) || EF.Functions.Like(t.Color!, "%" + query.TextSearch) || EF.Functions.Like(t.Size!, "%" + query.TextSearch) || EF.Functions.Like(t.ThumbnailPhotoFileName!, "%" + query.TextSearch)))
-                    &&
-
+                    query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.Name!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.ProductNumber!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.Color!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.Size!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.ThumbnailPhotoFileName!, "%" + query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.Name!, query.TextSearch + "%") || EF.Functions.Like(t.ProductNumber!, query.TextSearch + "%") || EF.Functions.Like(t.Color!, query.TextSearch + "%") || EF.Functions.Like(t.Size!, query.TextSearch + "%") || EF.Functions.Like(t.ThumbnailPhotoFileName!, query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.Name!, "%" + query.TextSearch) || EF.Functions.Like(t.ProductNumber!, "%" + query.TextSearch) || EF.Functions.Like(t.Color!, "%" + query.TextSearch) || EF.Functions.Like(t.Size!, "%" + query.TextSearch) || EF.Functions.Like(t.ThumbnailPhotoFileName!, "%" + query.TextSearch)))&&
                     (!query.ProductCategoryID.HasValue || ProductCategory.ProductCategoryID == query.ProductCategoryID)
                     &&
                     (!query.ParentID.HasValue || Parent.ProductCategoryID == query.ParentID)
                     &&
-                    (!query.ProductModelID.HasValue || ProductModel.ProductModelID == query.ProductModelID)
-                    &&
-
+                    (!query.ProductModelID.HasValue || ProductModel.ProductModelID == query.ProductModelID)&&
                     (!query.SellStartDateRangeLower.HasValue && !query.SellStartDateRangeUpper.HasValue || (!query.SellStartDateRangeLower.HasValue || t.SellStartDate >= query.SellStartDateRangeLower) && (!query.SellStartDateRangeLower.HasValue || t.SellStartDate <= query.SellStartDateRangeUpper))
                     &&
                     (!query.SellEndDateRangeLower.HasValue && !query.SellEndDateRangeUpper.HasValue || (!query.SellEndDateRangeLower.HasValue || t.SellEndDate >= query.SellEndDateRangeLower) && (!query.SellEndDateRangeLower.HasValue || t.SellEndDate <= query.SellEndDateRangeUpper))
                     &&
                     (!query.DiscontinuedDateRangeLower.HasValue && !query.DiscontinuedDateRangeUpper.HasValue || (!query.DiscontinuedDateRangeLower.HasValue || t.DiscontinuedDate >= query.DiscontinuedDateRangeLower) && (!query.DiscontinuedDateRangeLower.HasValue || t.DiscontinuedDate <= query.DiscontinuedDateRangeUpper))
                     &&
-                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))
-                    &&
-
+                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))&&
                     (string.IsNullOrEmpty(query.Name) ||
-                            query.NameSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Name!, "%" + query.Name + "%") ||
-                            query.NameSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Name!, query.Name + "%") ||
-                            query.NameSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Name!, "%" + query.Name))
+                        query.NameSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Name!, "%" + query.Name + "%") ||
+                        query.NameSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Name!, query.Name + "%") ||
+                        query.NameSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Name!, "%" + query.Name))
                     &&
                     (string.IsNullOrEmpty(query.ProductNumber) ||
-                            query.ProductNumberSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.ProductNumber!, "%" + query.ProductNumber + "%") ||
-                            query.ProductNumberSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.ProductNumber!, query.ProductNumber + "%") ||
-                            query.ProductNumberSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.ProductNumber!, "%" + query.ProductNumber))
+                        query.ProductNumberSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.ProductNumber!, "%" + query.ProductNumber + "%") ||
+                        query.ProductNumberSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.ProductNumber!, query.ProductNumber + "%") ||
+                        query.ProductNumberSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.ProductNumber!, "%" + query.ProductNumber))
                     &&
                     (string.IsNullOrEmpty(query.Color) ||
-                            query.ColorSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Color!, "%" + query.Color + "%") ||
-                            query.ColorSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Color!, query.Color + "%") ||
-                            query.ColorSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Color!, "%" + query.Color))
+                        query.ColorSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Color!, "%" + query.Color + "%") ||
+                        query.ColorSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Color!, query.Color + "%") ||
+                        query.ColorSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Color!, "%" + query.Color))
                     &&
                     (string.IsNullOrEmpty(query.Size) ||
-                            query.SizeSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Size!, "%" + query.Size + "%") ||
-                            query.SizeSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Size!, query.Size + "%") ||
-                            query.SizeSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Size!, "%" + query.Size))
+                        query.SizeSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Size!, "%" + query.Size + "%") ||
+                        query.SizeSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Size!, query.Size + "%") ||
+                        query.SizeSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Size!, "%" + query.Size))
                     &&
                     (string.IsNullOrEmpty(query.ThumbnailPhotoFileName) ||
-                            query.ThumbnailPhotoFileNameSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.ThumbnailPhotoFileName!, "%" + query.ThumbnailPhotoFileName + "%") ||
-                            query.ThumbnailPhotoFileNameSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.ThumbnailPhotoFileName!, query.ThumbnailPhotoFileName + "%") ||
-                            query.ThumbnailPhotoFileNameSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.ThumbnailPhotoFileName!, "%" + query.ThumbnailPhotoFileName))
+                        query.ThumbnailPhotoFileNameSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.ThumbnailPhotoFileName!, "%" + query.ThumbnailPhotoFileName + "%") ||
+                        query.ThumbnailPhotoFileNameSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.ThumbnailPhotoFileName!, query.ThumbnailPhotoFileName + "%") ||
+                        query.ThumbnailPhotoFileNameSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.ThumbnailPhotoFileName!, "%" + query.ThumbnailPhotoFileName))
 
                 select new ProductDataModel.DefaultView
                 {
-
-                        ProductID = t.ProductID,
-                        Name = t.Name,
-                        ProductNumber = t.ProductNumber,
-                        Color = t.Color,
-                        StandardCost = t.StandardCost,
-                        ListPrice = t.ListPrice,
-                        Size = t.Size,
-                        Weight = t.Weight,
-                        ProductCategoryID = t.ProductCategoryID,
-                        ProductModelID = t.ProductModelID,
-                        SellStartDate = t.SellStartDate,
-                        SellEndDate = t.SellEndDate,
-                        DiscontinuedDate = t.DiscontinuedDate,
-                        ThumbNailPhoto = t.ThumbNailPhoto,
-                        ThumbnailPhotoFileName = t.ThumbnailPhotoFileName,
-                        rowguid = t.rowguid,
-                        ModifiedDate = t.ModifiedDate,
-                        ProductCategory_Name = ProductCategory.Name,
-                        ParentID = Parent.ProductCategoryID,
-                        Parent_Name = Parent.Name,
-                        ProductModel_Name = ProductModel.Name,
+                    ProductID = t.ProductID,
+                    Name = t.Name,
+                    ProductNumber = t.ProductNumber,
+                    Color = t.Color,
+                    StandardCost = t.StandardCost,
+                    ListPrice = t.ListPrice,
+                    Size = t.Size,
+                    Weight = t.Weight,
+                    ProductCategoryID = t.ProductCategoryID,
+                    ProductModelID = t.ProductModelID,
+                    SellStartDate = t.SellStartDate,
+                    SellEndDate = t.SellEndDate,
+                    DiscontinuedDate = t.DiscontinuedDate,
+                    ThumbNailPhoto = t.ThumbNailPhoto,
+                    ThumbnailPhotoFileName = t.ThumbnailPhotoFileName,
+                    rowguid = t.rowguid,
+                    ModifiedDate = t.ModifiedDate,
+                    ProductCategory_Name = ProductCategory.Name,
+                    ProductModel_Name = ProductModel.Name,
                 };
 
             // 1. Without Paging And OrderBy
             if (!withPagingAndOrderBy)
                 return queryable;
 
-            // 2. With Paging And OrderBy
-            var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
-            if (orderBys.Any())
-            {
-                queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
-            }
+            // // 2. With Paging And OrderBy
+            // var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
+            // if (orderBys.Any())
+            // {
+            //     queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
+            // }
 
             queryable = queryable.Skip((query.PageIndex - 1) * query.PageSize).Take(query.PageSize);
 
@@ -150,203 +143,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
-        private IQueryable<Product> GetIQueryableByPrimaryIdentifierList(
-            List<ProductIdentifier> ids)
-        {
-            var idList = ids.Select(t => t.ProductID).ToList();
-            var queryable =
-                from t in _dbcontext.Product
-                where idList.Contains(t.ProductID)
-                select t;
-
-            return queryable;
-        }
-
-        public async Task<Response> BulkDelete(List<ProductIdentifier> ids)
-        {
-            try
-            {
-                var queryable = GetIQueryableByPrimaryIdentifierList(ids);
-                var result = await queryable.BatchDeleteAsync();
-
-                return await Task<Response>.FromResult(
-                    new Response
-                    {
-                        Status = HttpStatusCode.OK,
-                    });
-            }
-            catch (Exception ex)
-            {
-                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
-            }
-        }
-
-        public async Task<Response<MultiItemsCUDRequest<ProductIdentifier, ProductDataModel.DefaultView>>> MultiItemsCUD(
-            MultiItemsCUDRequest<ProductIdentifier, ProductDataModel.DefaultView> input)
-        {
-            // 1. DeleteItems, return if Failed
-            if (input.DeleteItems != null)
-            {
-                var responseOfDeleteItems = await this.BulkDelete(input.DeleteItems);
-                if (responseOfDeleteItems != null && responseOfDeleteItems.Status != HttpStatusCode.OK)
-                {
-                    return new Response<MultiItemsCUDRequest<ProductIdentifier, ProductDataModel.DefaultView>> { Status = responseOfDeleteItems.Status, StatusMessage = "Deletion Failed. " + responseOfDeleteItems.StatusMessage };
-                }
-            }
-
-            // 2. return OK, if no more NewItems and UpdateItems
-            if (!(input.NewItems != null && input.NewItems.Count > 0 ||
-                input.UpdateItems != null && input.UpdateItems.Count > 0))
-            {
-                return new Response<MultiItemsCUDRequest<ProductIdentifier, ProductDataModel.DefaultView>> { Status = HttpStatusCode.OK };
-            }
-
-            // 3. NewItems and UpdateItems
-            try
-            {
-                // 3.1.1. NewItems if any
-                List<Product> newEFItems = new();
-                if (input.NewItems != null && input.NewItems.Count > 0)
-                {
-                    foreach (var item in input.NewItems)
-                    {
-                        var toInsert = new Product
-                        {
-                            Name = item.Name,
-                            ProductNumber = item.ProductNumber,
-                            Color = item.Color,
-                            StandardCost = item.StandardCost,
-                            ListPrice = item.ListPrice,
-                            Size = item.Size,
-                            Weight = item.Weight,
-                            ProductCategoryID = item.ProductCategoryID,
-                            ProductModelID = item.ProductModelID,
-                            SellStartDate = item.SellStartDate,
-                            SellEndDate = item.SellEndDate,
-                            DiscontinuedDate = item.DiscontinuedDate,
-                            ThumbNailPhoto = item.ThumbNailPhoto,
-                            ThumbnailPhotoFileName = item.ThumbnailPhotoFileName,
-                            ModifiedDate = item.ModifiedDate,
-                        };
-                        _dbcontext.Product.Add(toInsert);
-                        newEFItems.Add(toInsert);
-                    }
-                }
-
-                // 3.1.2. UpdateItems if any
-                if (input.UpdateItems != null && input.UpdateItems.Count > 0)
-                {
-                    foreach (var item in input.UpdateItems)
-                    {
-                        var existing =
-                            (from t in _dbcontext.Product
-                             where
-
-                             t.ProductID == item.ProductID
-                             select t).SingleOrDefault();
-
-                        if (existing != null)
-                        {
-                            // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
-                            existing.Name = item.Name;
-                            existing.ProductNumber = item.ProductNumber;
-                            existing.Color = item.Color;
-                            existing.StandardCost = item.StandardCost;
-                            existing.ListPrice = item.ListPrice;
-                            existing.Size = item.Size;
-                            existing.Weight = item.Weight;
-                            existing.ProductCategoryID = item.ProductCategoryID;
-                            existing.ProductModelID = item.ProductModelID;
-                            existing.SellStartDate = item.SellStartDate;
-                            existing.SellEndDate = item.SellEndDate;
-                            existing.DiscontinuedDate = item.DiscontinuedDate;
-                            existing.ThumbNailPhoto = item.ThumbNailPhoto;
-                            existing.ThumbnailPhotoFileName = item.ThumbnailPhotoFileName;
-                            existing.ModifiedDate = item.ModifiedDate;
-                        }
-                    }
-                }
-                await _dbcontext.SaveChangesAsync();
-
-                // 3.2 Load Response
-                var identifierListToloadResponseItems = new List<int>();
-
-                if (input.NewItems != null && input.NewItems.Count > 0)
-                {
-                    identifierListToloadResponseItems.AddRange(
-                        from t in newEFItems
-                        select t.ProductID);
-                }
-                if (input.UpdateItems != null && input.UpdateItems.Count > 0)
-                {
-                    identifierListToloadResponseItems.AddRange(
-                        from t in input.UpdateItems
-                        select t.ProductID);
-                }
-
-                var responseBodyWithNewAndUpdatedItems =
-                    (from t in _dbcontext.Product
-                    join ProductCategory_A in _dbcontext.ProductCategory on t.ProductCategoryID equals ProductCategory_A.ProductCategoryID into ProductCategory_G from ProductCategory in ProductCategory_G.DefaultIfEmpty()// \ProductCategoryID
-                    join Parent_A in _dbcontext.ProductCategory on ProductCategory.ParentProductCategoryID equals Parent_A.ProductCategoryID into Parent_G from Parent in Parent_G.DefaultIfEmpty()// \ProductCategoryID\ParentProductCategoryID
-                    join ProductModel_A in _dbcontext.ProductModel on t.ProductModelID equals ProductModel_A.ProductModelID into ProductModel_G from ProductModel in ProductModel_G.DefaultIfEmpty()// \ProductModelID
-                    where identifierListToloadResponseItems.Contains(t.ProductID)
-
-                    select new ProductDataModel.DefaultView
-                    {
-
-                        ProductID = t.ProductID,
-                        Name = t.Name,
-                        ProductNumber = t.ProductNumber,
-                        Color = t.Color,
-                        StandardCost = t.StandardCost,
-                        ListPrice = t.ListPrice,
-                        Size = t.Size,
-                        Weight = t.Weight,
-                        ProductCategoryID = t.ProductCategoryID,
-                        ProductModelID = t.ProductModelID,
-                        SellStartDate = t.SellStartDate,
-                        SellEndDate = t.SellEndDate,
-                        DiscontinuedDate = t.DiscontinuedDate,
-                        ThumbNailPhoto = t.ThumbNailPhoto,
-                        ThumbnailPhotoFileName = t.ThumbnailPhotoFileName,
-                        rowguid = t.rowguid,
-                        ModifiedDate = t.ModifiedDate,
-                        ProductCategory_Name = ProductCategory.Name,
-                        ParentID = Parent.ProductCategoryID,
-                        Parent_Name = Parent.Name,
-                        ProductModel_Name = ProductModel.Name,
-
-                    }).ToList();
-
-                // 3.3. Final Response
-                var response = new Response<MultiItemsCUDRequest<ProductIdentifier, ProductDataModel.DefaultView>>
-                {
-                    Status = HttpStatusCode.OK,
-                    ResponseBody = new MultiItemsCUDRequest<ProductIdentifier, ProductDataModel.DefaultView>
-                    {
-                        NewItems =
-                            input.NewItems != null && input.NewItems.Count > 0
-                                ? responseBodyWithNewAndUpdatedItems.Where(t => newEFItems.Any(t1 => t1.ProductID == t.ProductID)).ToList()
-                                : null,
-                        UpdateItems =
-                            input.UpdateItems != null && input.UpdateItems.Count > 0
-                                ? responseBodyWithNewAndUpdatedItems.Where(t => input.UpdateItems.Any(t1 => t1.ProductID == t.ProductID)).ToList()
-                                : null,
-                    }
-                };
-                return response;
-            }
-            catch (Exception ex)
-            {
-                return await Task.FromResult(new Response<MultiItemsCUDRequest<ProductIdentifier, ProductDataModel.DefaultView>>
-                {
-                    Status = HttpStatusCode.InternalServerError,
-                    StatusMessage = "Create And/Or Update Failed. " + ex.Message
-                });
-            }
-        }
-
-        public async Task<Response<ProductDataModel.DefaultView>> Update(ProductIdentifier id, ProductDataModel input)
+        public async Task<Response<ProductDataModel.DefaultView>> Update(ProductIdentifier id, ProductDataModel.DefaultView input, string[]? toUpdatePropertyList = null)
         {
             if (input == null)
                 return await Task<Response<ProductDataModel.DefaultView>>.FromResult(new Response<ProductDataModel.DefaultView> { Status = HttpStatusCode.BadRequest });
@@ -354,10 +151,10 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             try
             {
                 var existing =
-                    (from t in _dbcontext.Product
+                    (
+                    from t in _dbcontext.Product
                      where
-
-                    t.ProductID == id.ProductID
+                         id.ProductID.HasValue && t.ProductID == id.ProductID
                      select t).SingleOrDefault();
 
                 // TODO: can create a new record here.
@@ -365,6 +162,26 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     return await Task<Response<ProductDataModel.DefaultView>>.FromResult(new Response<ProductDataModel.DefaultView> { Status = HttpStatusCode.NotFound });
 
                 // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
+                CopyUpdateValues(input, toUpdatePropertyList, existing);
+
+                await _dbcontext.SaveChangesAsync();
+                return await Get(id);
+
+            }
+            catch (Exception ex)
+            {
+                return await Task<Response<ProductDataModel.DefaultView>>.FromResult(new Response<ProductDataModel.DefaultView> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
+        private static void CopyUpdateValues(ProductDataModel.DefaultView? input, string[]? toUpdatePropertyList, Product existing)
+        {
+            if (input == null)
+                return;
+
+            // 1. This Table - Product
+            if (toUpdatePropertyList == null || toUpdatePropertyList.Length == 0)
+            {
                 existing.Name = input.Name;
                 existing.ProductNumber = input.ProductNumber;
                 existing.Color = input.Color;
@@ -380,55 +197,40 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                 existing.ThumbNailPhoto = input.ThumbNailPhoto;
                 existing.ThumbnailPhotoFileName = input.ThumbnailPhotoFileName;
                 existing.ModifiedDate = input.ModifiedDate;
-                await _dbcontext.SaveChangesAsync();
-
-                var responseBody =
-                    (
-                    from t in _dbcontext.Product
-
-                    join ProductCategory_A in _dbcontext.ProductCategory on t.ProductCategoryID equals ProductCategory_A.ProductCategoryID into ProductCategory_G from ProductCategory in ProductCategory_G.DefaultIfEmpty()// \ProductCategoryID
-                    join Parent_A in _dbcontext.ProductCategory on ProductCategory.ParentProductCategoryID equals Parent_A.ProductCategoryID into Parent_G from Parent in Parent_G.DefaultIfEmpty()// \ProductCategoryID\ParentProductCategoryID
-                    join ProductModel_A in _dbcontext.ProductModel on t.ProductModelID equals ProductModel_A.ProductModelID into ProductModel_G from ProductModel in ProductModel_G.DefaultIfEmpty()// \ProductModelID
-                    where t.ProductID == existing.ProductID
-
-                    select new ProductDataModel.DefaultView
-                    {
-
-                        ProductID = t.ProductID,
-                        Name = t.Name,
-                        ProductNumber = t.ProductNumber,
-                        Color = t.Color,
-                        StandardCost = t.StandardCost,
-                        ListPrice = t.ListPrice,
-                        Size = t.Size,
-                        Weight = t.Weight,
-                        ProductCategoryID = t.ProductCategoryID,
-                        ProductModelID = t.ProductModelID,
-                        SellStartDate = t.SellStartDate,
-                        SellEndDate = t.SellEndDate,
-                        DiscontinuedDate = t.DiscontinuedDate,
-                        ThumbNailPhoto = t.ThumbNailPhoto,
-                        ThumbnailPhotoFileName = t.ThumbnailPhotoFileName,
-                        rowguid = t.rowguid,
-                        ModifiedDate = t.ModifiedDate,
-                        ProductCategory_Name = ProductCategory.Name,
-                        ParentID = Parent.ProductCategoryID,
-                        Parent_Name = Parent.Name,
-                        ProductModel_Name = ProductModel.Name,
-
-                    }).First();
-
-                return await Task<Response<ProductDataModel.DefaultView>>.FromResult(
-                    new Response<ProductDataModel.DefaultView>
-                    {
-                        Status = HttpStatusCode.OK,
-                        ResponseBody = responseBody
-                    });
-
             }
-            catch (Exception ex)
+            else
+            //update Specific Properties if in toUpdatePropertyList
             {
-                return await Task<Response<ProductDataModel.DefaultView>>.FromResult(new Response<ProductDataModel.DefaultView> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+                if(toUpdatePropertyList.Contains(nameof(ProductDataModel.Name)))
+                    existing.Name = input.Name;
+                if(toUpdatePropertyList.Contains(nameof(ProductDataModel.ProductNumber)))
+                    existing.ProductNumber = input.ProductNumber;
+                if(toUpdatePropertyList.Contains(nameof(ProductDataModel.Color)))
+                    existing.Color = input.Color;
+                if(toUpdatePropertyList.Contains(nameof(ProductDataModel.StandardCost)))
+                    existing.StandardCost = input.StandardCost;
+                if(toUpdatePropertyList.Contains(nameof(ProductDataModel.ListPrice)))
+                    existing.ListPrice = input.ListPrice;
+                if(toUpdatePropertyList.Contains(nameof(ProductDataModel.Size)))
+                    existing.Size = input.Size;
+                if(toUpdatePropertyList.Contains(nameof(ProductDataModel.Weight)))
+                    existing.Weight = input.Weight;
+                if(toUpdatePropertyList.Contains(nameof(ProductDataModel.ProductCategoryID)))
+                    existing.ProductCategoryID = input.ProductCategoryID;
+                if(toUpdatePropertyList.Contains(nameof(ProductDataModel.ProductModelID)))
+                    existing.ProductModelID = input.ProductModelID;
+                if(toUpdatePropertyList.Contains(nameof(ProductDataModel.SellStartDate)))
+                    existing.SellStartDate = input.SellStartDate;
+                if(toUpdatePropertyList.Contains(nameof(ProductDataModel.SellEndDate)))
+                    existing.SellEndDate = input.SellEndDate;
+                if(toUpdatePropertyList.Contains(nameof(ProductDataModel.DiscontinuedDate)))
+                    existing.DiscontinuedDate = input.DiscontinuedDate;
+                if(toUpdatePropertyList.Contains(nameof(ProductDataModel.ThumbNailPhoto)))
+                    existing.ThumbNailPhoto = input.ThumbNailPhoto;
+                if(toUpdatePropertyList.Contains(nameof(ProductDataModel.ThumbnailPhotoFileName)))
+                    existing.ThumbnailPhotoFileName = input.ThumbnailPhotoFileName;
+                if(toUpdatePropertyList.Contains(nameof(ProductDataModel.ModifiedDate)))
+                    existing.ModifiedDate = input.ModifiedDate;
             }
         }
 
@@ -445,15 +247,12 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     from t in _dbcontext.Product
 
                     join ProductCategory_A in _dbcontext.ProductCategory on t.ProductCategoryID equals ProductCategory_A.ProductCategoryID into ProductCategory_G from ProductCategory in ProductCategory_G.DefaultIfEmpty()// \ProductCategoryID
-                    join Parent_A in _dbcontext.ProductCategory on ProductCategory.ParentProductCategoryID equals Parent_A.ProductCategoryID into Parent_G from Parent in Parent_G.DefaultIfEmpty()// \ProductCategoryID\ParentProductCategoryID
                     join ProductModel_A in _dbcontext.ProductModel on t.ProductModelID equals ProductModel_A.ProductModelID into ProductModel_G from ProductModel in ProductModel_G.DefaultIfEmpty()// \ProductModelID
                     where
-
-                    t.ProductID == id.ProductID
+                        id.ProductID.HasValue && t.ProductID == id.ProductID
 
                     select new ProductDataModel.DefaultView
                     {
-
                         ProductID = t.ProductID,
                         Name = t.Name,
                         ProductNumber = t.ProductNumber,
@@ -472,10 +271,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         rowguid = t.rowguid,
                         ModifiedDate = t.ModifiedDate,
                         ProductCategory_Name = ProductCategory.Name,
-                        ParentID = Parent.ProductCategoryID,
-                        Parent_Name = Parent.Name,
                         ProductModel_Name = ProductModel.Name,
-
                     }).First();
                 if (responseBody == null)
                     return await Task<Response<ProductDataModel.DefaultView>>.FromResult(new Response<ProductDataModel.DefaultView> { Status = HttpStatusCode.NotFound });
@@ -493,7 +289,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
-        public async Task<Response<ProductDataModel.DefaultView>> Create(ProductDataModel input)
+        public async Task<Response<ProductDataModel.DefaultView>> Create(ProductDataModel.DefaultView input)
         {
             if (input == null)
                 return await Task<Response<ProductDataModel.DefaultView>>.FromResult(new Response<ProductDataModel.DefaultView> { Status = HttpStatusCode.BadRequest });
@@ -501,68 +297,26 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             {
                 var toInsert = new Product
                 {
-                            Name = input.Name,
-                            ProductNumber = input.ProductNumber,
-                            Color = input.Color,
-                            StandardCost = input.StandardCost,
-                            ListPrice = input.ListPrice,
-                            Size = input.Size,
-                            Weight = input.Weight,
-                            ProductCategoryID = input.ProductCategoryID,
-                            ProductModelID = input.ProductModelID,
-                            SellStartDate = input.SellStartDate,
-                            SellEndDate = input.SellEndDate,
-                            DiscontinuedDate = input.DiscontinuedDate,
-                            ThumbNailPhoto = input.ThumbNailPhoto,
-                            ThumbnailPhotoFileName = input.ThumbnailPhotoFileName,
-                            ModifiedDate = input.ModifiedDate,
+                    Name = input.Name,
+                    ProductNumber = input.ProductNumber,
+                    Color = input.Color,
+                    StandardCost = input.StandardCost,
+                    ListPrice = input.ListPrice,
+                    Size = input.Size,
+                    Weight = input.Weight,
+                    ProductCategoryID = input.ProductCategoryID,
+                    ProductModelID = input.ProductModelID,
+                    SellStartDate = input.SellStartDate,
+                    SellEndDate = input.SellEndDate,
+                    DiscontinuedDate = input.DiscontinuedDate,
+                    ThumbNailPhoto = input.ThumbNailPhoto,
+                    ThumbnailPhotoFileName = input.ThumbnailPhotoFileName,
+                    ModifiedDate = input.ModifiedDate,
                 };
+
                 await _dbcontext.Product.AddAsync(toInsert);
                 await _dbcontext.SaveChangesAsync();
-
-                var responseBody =
-                    (
-                    from t in _dbcontext.Product
-
-                    join ProductCategory_A in _dbcontext.ProductCategory on t.ProductCategoryID equals ProductCategory_A.ProductCategoryID into ProductCategory_G from ProductCategory in ProductCategory_G.DefaultIfEmpty()// \ProductCategoryID
-                    join Parent_A in _dbcontext.ProductCategory on ProductCategory.ParentProductCategoryID equals Parent_A.ProductCategoryID into Parent_G from Parent in Parent_G.DefaultIfEmpty()// \ProductCategoryID\ParentProductCategoryID
-                    join ProductModel_A in _dbcontext.ProductModel on t.ProductModelID equals ProductModel_A.ProductModelID into ProductModel_G from ProductModel in ProductModel_G.DefaultIfEmpty()// \ProductModelID
-                    where t.ProductID == toInsert.ProductID
-
-                    select new ProductDataModel.DefaultView
-                    {
-
-                        ProductID = t.ProductID,
-                        Name = t.Name,
-                        ProductNumber = t.ProductNumber,
-                        Color = t.Color,
-                        StandardCost = t.StandardCost,
-                        ListPrice = t.ListPrice,
-                        Size = t.Size,
-                        Weight = t.Weight,
-                        ProductCategoryID = t.ProductCategoryID,
-                        ProductModelID = t.ProductModelID,
-                        SellStartDate = t.SellStartDate,
-                        SellEndDate = t.SellEndDate,
-                        DiscontinuedDate = t.DiscontinuedDate,
-                        ThumbNailPhoto = t.ThumbNailPhoto,
-                        ThumbnailPhotoFileName = t.ThumbnailPhotoFileName,
-                        rowguid = t.rowguid,
-                        ModifiedDate = t.ModifiedDate,
-                        ProductCategory_Name = ProductCategory.Name,
-                        ParentID = Parent.ProductCategoryID,
-                        Parent_Name = Parent.Name,
-                        ProductModel_Name = ProductModel.Name,
-
-                    }).First();
-
-                return await Task<Response<ProductDataModel.DefaultView>>.FromResult(
-                    new Response<ProductDataModel.DefaultView>
-                    {
-                        Status = HttpStatusCode.OK,
-                        ResponseBody = responseBody
-                    });
-
+                return await Get(new ProductIdentifier { ProductID = toInsert.ProductID });
             }
             catch (Exception ex)
             {
@@ -570,42 +324,9 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
-        public async Task<Response> Delete(ProductIdentifier id)
-        {
-            if (id == null)
-                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.BadRequest });
-
-            try
-            {
-                var existing =
-                    (from t in _dbcontext.Product
-                     where
-
-                    t.ProductID == id.ProductID
-                     select t).SingleOrDefault();
-
-                if (existing == null)
-                    return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.NotFound });
-
-                _dbcontext.Product.Remove(existing);
-                await _dbcontext.SaveChangesAsync();
-
-                return await Task<Response>.FromResult(
-                    new Response
-                    {
-                        Status = HttpStatusCode.OK,
-                    });
-            }
-            catch (Exception ex)
-            {
-                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
-            }
-        }
-
         private IQueryable<NameValuePair> GetCodeListQuery(
             ProductAdvancedQuery query, bool withPagingAndOrderBy)
         {
-
             var queryable =
                 from t in _dbcontext.Product
 
@@ -613,71 +334,63 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     join Parent_A in _dbcontext.ProductCategory on ProductCategory.ParentProductCategoryID equals Parent_A.ProductCategoryID into Parent_G from Parent in Parent_G.DefaultIfEmpty()// \ProductCategoryID\ParentProductCategoryID
                     join ProductModel_A in _dbcontext.ProductModel on t.ProductModelID equals ProductModel_A.ProductModelID into ProductModel_G from ProductModel in ProductModel_G.DefaultIfEmpty()// \ProductModelID
                 where
-
                     (string.IsNullOrEmpty(query.TextSearch) ||
-                        query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.Name!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.ProductNumber!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.Color!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.Size!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.ThumbnailPhotoFileName!, "%" + query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.Name!, query.TextSearch + "%") || EF.Functions.Like(t.ProductNumber!, query.TextSearch + "%") || EF.Functions.Like(t.Color!, query.TextSearch + "%") || EF.Functions.Like(t.Size!, query.TextSearch + "%") || EF.Functions.Like(t.ThumbnailPhotoFileName!, query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.Name!, "%" + query.TextSearch) || EF.Functions.Like(t.ProductNumber!, "%" + query.TextSearch) || EF.Functions.Like(t.Color!, "%" + query.TextSearch) || EF.Functions.Like(t.Size!, "%" + query.TextSearch) || EF.Functions.Like(t.ThumbnailPhotoFileName!, "%" + query.TextSearch)))
-                    &&
-
+                    query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.Name!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.ProductNumber!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.Color!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.Size!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.ThumbnailPhotoFileName!, "%" + query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.Name!, query.TextSearch + "%") || EF.Functions.Like(t.ProductNumber!, query.TextSearch + "%") || EF.Functions.Like(t.Color!, query.TextSearch + "%") || EF.Functions.Like(t.Size!, query.TextSearch + "%") || EF.Functions.Like(t.ThumbnailPhotoFileName!, query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.Name!, "%" + query.TextSearch) || EF.Functions.Like(t.ProductNumber!, "%" + query.TextSearch) || EF.Functions.Like(t.Color!, "%" + query.TextSearch) || EF.Functions.Like(t.Size!, "%" + query.TextSearch) || EF.Functions.Like(t.ThumbnailPhotoFileName!, "%" + query.TextSearch)))&&
                     (!query.ProductCategoryID.HasValue || ProductCategory.ProductCategoryID == query.ProductCategoryID)
                     &&
                     (!query.ParentID.HasValue || Parent.ProductCategoryID == query.ParentID)
                     &&
-                    (!query.ProductModelID.HasValue || ProductModel.ProductModelID == query.ProductModelID)
-                    &&
-
+                    (!query.ProductModelID.HasValue || ProductModel.ProductModelID == query.ProductModelID)&&
                     (!query.SellStartDateRangeLower.HasValue && !query.SellStartDateRangeUpper.HasValue || (!query.SellStartDateRangeLower.HasValue || t.SellStartDate >= query.SellStartDateRangeLower) && (!query.SellStartDateRangeLower.HasValue || t.SellStartDate <= query.SellStartDateRangeUpper))
                     &&
                     (!query.SellEndDateRangeLower.HasValue && !query.SellEndDateRangeUpper.HasValue || (!query.SellEndDateRangeLower.HasValue || t.SellEndDate >= query.SellEndDateRangeLower) && (!query.SellEndDateRangeLower.HasValue || t.SellEndDate <= query.SellEndDateRangeUpper))
                     &&
                     (!query.DiscontinuedDateRangeLower.HasValue && !query.DiscontinuedDateRangeUpper.HasValue || (!query.DiscontinuedDateRangeLower.HasValue || t.DiscontinuedDate >= query.DiscontinuedDateRangeLower) && (!query.DiscontinuedDateRangeLower.HasValue || t.DiscontinuedDate <= query.DiscontinuedDateRangeUpper))
                     &&
-                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))
-                    &&
-
+                    (!query.ModifiedDateRangeLower.HasValue && !query.ModifiedDateRangeUpper.HasValue || (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate >= query.ModifiedDateRangeLower) && (!query.ModifiedDateRangeLower.HasValue || t.ModifiedDate <= query.ModifiedDateRangeUpper))&&
                     (string.IsNullOrEmpty(query.Name) ||
-                            query.NameSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Name!, "%" + query.Name + "%") ||
-                            query.NameSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Name!, query.Name + "%") ||
-                            query.NameSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Name!, "%" + query.Name))
+                        query.NameSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Name!, "%" + query.Name + "%") ||
+                        query.NameSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Name!, query.Name + "%") ||
+                        query.NameSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Name!, "%" + query.Name))
                     &&
                     (string.IsNullOrEmpty(query.ProductNumber) ||
-                            query.ProductNumberSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.ProductNumber!, "%" + query.ProductNumber + "%") ||
-                            query.ProductNumberSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.ProductNumber!, query.ProductNumber + "%") ||
-                            query.ProductNumberSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.ProductNumber!, "%" + query.ProductNumber))
+                        query.ProductNumberSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.ProductNumber!, "%" + query.ProductNumber + "%") ||
+                        query.ProductNumberSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.ProductNumber!, query.ProductNumber + "%") ||
+                        query.ProductNumberSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.ProductNumber!, "%" + query.ProductNumber))
                     &&
                     (string.IsNullOrEmpty(query.Color) ||
-                            query.ColorSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Color!, "%" + query.Color + "%") ||
-                            query.ColorSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Color!, query.Color + "%") ||
-                            query.ColorSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Color!, "%" + query.Color))
+                        query.ColorSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Color!, "%" + query.Color + "%") ||
+                        query.ColorSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Color!, query.Color + "%") ||
+                        query.ColorSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Color!, "%" + query.Color))
                     &&
                     (string.IsNullOrEmpty(query.Size) ||
-                            query.SizeSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Size!, "%" + query.Size + "%") ||
-                            query.SizeSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Size!, query.Size + "%") ||
-                            query.SizeSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Size!, "%" + query.Size))
+                        query.SizeSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.Size!, "%" + query.Size + "%") ||
+                        query.SizeSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.Size!, query.Size + "%") ||
+                        query.SizeSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.Size!, "%" + query.Size))
                     &&
                     (string.IsNullOrEmpty(query.ThumbnailPhotoFileName) ||
-                            query.ThumbnailPhotoFileNameSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.ThumbnailPhotoFileName!, "%" + query.ThumbnailPhotoFileName + "%") ||
-                            query.ThumbnailPhotoFileNameSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.ThumbnailPhotoFileName!, query.ThumbnailPhotoFileName + "%") ||
-                            query.ThumbnailPhotoFileNameSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.ThumbnailPhotoFileName!, "%" + query.ThumbnailPhotoFileName))
+                        query.ThumbnailPhotoFileNameSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.ThumbnailPhotoFileName!, "%" + query.ThumbnailPhotoFileName + "%") ||
+                        query.ThumbnailPhotoFileNameSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.ThumbnailPhotoFileName!, query.ThumbnailPhotoFileName + "%") ||
+                        query.ThumbnailPhotoFileNameSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.ThumbnailPhotoFileName!, "%" + query.ThumbnailPhotoFileName))
 
                 select new NameValuePair
                 {
-
-                        Name = t.Name,
-                        Value = t.ProductID.ToString(),
+                    Name = t.Name,
+                    Value = t.ProductID.ToString(),
                 };
 
             // 1. Without Paging And OrderBy
             if (!withPagingAndOrderBy)
                 return queryable;
 
-            // 2. With Paging And OrderBy
-            var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
-            if (orderBys.Any())
-            {
-                queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
-            }
+            // // 2. With Paging And OrderBy
+            // var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
+            // if (orderBys.Any())
+            // {
+            //     queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
+            // }
 
             queryable = queryable.Skip((query.PageIndex - 1) * query.PageSize).Take(query.PageSize);
 
@@ -708,62 +421,6 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     Status = HttpStatusCode.InternalServerError,
                     StatusMessage = ex.Message
                 });
-            }
-        }
-
-        public async Task<Response<ProductDataModel.DefaultView>> CreateComposite(ProductCompositeModel input)
-        {
-            if (input == null)
-                return await Task<Response<ProductDataModel.DefaultView>>.FromResult(new Response<ProductDataModel.DefaultView> { Status = HttpStatusCode.BadRequest });
-            try
-            {
-                // 1. Master: Product
-                var master = new Product
-                {
-                    // Properties.1. Value Type Properties
-                    Name = input.__Master__!.Name,
-                    ProductNumber = input.__Master__!.ProductNumber,
-                    Color = input.__Master__!.Color,
-                    StandardCost = input.__Master__!.StandardCost,
-                    ListPrice = input.__Master__!.ListPrice,
-                    Size = input.__Master__!.Size,
-                    Weight = input.__Master__!.Weight,
-                    ProductCategoryID = input.__Master__!.ProductCategoryID,
-                    ProductModelID = input.__Master__!.ProductModelID,
-                    SellStartDate = input.__Master__!.SellStartDate,
-                    SellEndDate = input.__Master__!.SellEndDate,
-                    DiscontinuedDate = input.__Master__!.DiscontinuedDate,
-                    ThumbNailPhoto = input.__Master__!.ThumbNailPhoto,
-                    ThumbnailPhotoFileName = input.__Master__!.ThumbnailPhotoFileName,
-                    rowguid = input.__Master__!.rowguid,
-                    ModifiedDate = input.__Master__!.ModifiedDate,
-                };
-                // 2.1.1. ListTable Product.SalesOrderDetail
-                if(input.SalesOrderDetails_Via_ProductID != null)
-                {
-                    foreach(var item in input.SalesOrderDetails_Via_ProductID)
-                    {
-                        master.SalesOrderDetail.Add(new SalesOrderDetail
-                        {
-                                OrderQty = item.OrderQty,
-                                ProductID = item.ProductID,
-                                UnitPrice = item.UnitPrice,
-                                UnitPriceDiscount = item.UnitPriceDiscount,
-                                rowguid = item.rowguid,
-                                ModifiedDate = item.ModifiedDate,
-                        });
-                    }
-                }
-
-                _dbcontext.Product.Add(master);
-
-                await _dbcontext.SaveChangesAsync();
-
-                return await Get(new ProductIdentifier { ProductID = master.ProductID, });
-            }
-            catch (Exception ex)
-            {
-                return await Task<Response<ProductDataModel.DefaultView>>.FromResult(new Response<ProductDataModel.DefaultView> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
             }
         }
 

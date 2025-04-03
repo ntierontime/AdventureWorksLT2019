@@ -1,0 +1,23 @@
+CALL _VariableDefinition.bat
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\apiClients\AddressApi.ts %destRootFolder%ReactTSClientApp\src\generated\apiClients\AddressApi.ts
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\dataModels\IAddressDataModel.ts %destRootFolder%ReactTSClientApp\src\dataModels\IAddressDataModel.ts
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\dataModels\IAddressQueries.ts %destRootFolder%ReactTSClientApp\src\dataModels\IAddressQueries.ts
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\routePartials\AddressRoutesPartial.tsx %destRootFolder%ReactTSClientApp\src\generated\routePartials\AddressRoutesPartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\slices\AddressSlice.ts %destRootFolder%ReactTSClientApp\src\generated\slices\AddressSlice.ts
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\Address\AdvancedSearchPartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\Address\AdvancedSearchPartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\Address\CreatePartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\Address\CreatePartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\Address\DetailsPartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\Address\DetailsPartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\Address\EditPartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\Address\EditPartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\Address\HtmlTablePartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\Address\HtmlTablePartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\Address\IndexPage.tsx %destRootFolder%ReactTSClientApp\src\generated\views\Address\IndexPage.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\Address\ItemViewsPartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\Address\ItemViewsPartial.tsx
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\views\Address\ListsPartial.tsx %destRootFolder%ReactTSClientApp\src\generated\views\Address\ListsPartial.tsx
+copy /y /v %sourceRootFolder%EFCoreContext\Address.cs %destRootFolder%EFCoreContext\Address.cs
+copy /y /v %sourceRootFolder%EFCoreRepositories\AddressRepository.cs %destRootFolder%EFCoreRepositories\AddressRepository.cs
+copy /y /v %sourceRootFolder%Models\AddressDataModel.cs %destRootFolder%Models\AddressDataModel.cs
+copy /y /v %sourceRootFolder%Models\AddressQueries.cs %destRootFolder%Models\AddressQueries.cs
+copy /y /v %sourceRootFolder%RepositoryContracts\IAddressRepository.cs %destRootFolder%RepositoryContracts\IAddressRepository.cs
+copy /y /v %sourceRootFolder%ServiceContracts\IAddressService.cs %destRootFolder%ServiceContracts\IAddressService.cs
+copy /y /v %sourceRootFolder%Services\AddressService.cs %destRootFolder%Services\AddressService.cs
+copy /y /v %sourceRootFolder%WebApiAdminControllers\AddressApiController.cs %destRootFolder%WebApiAdminControllers\AddressApiController.cs
+copy /y /v %sourceRootFolder%WebApiClientControllers\AddressApiController.cs %destRootFolder%WebApiClientControllers\AddressApiController.cs

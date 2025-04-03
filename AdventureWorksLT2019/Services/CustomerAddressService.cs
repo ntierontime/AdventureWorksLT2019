@@ -13,81 +13,54 @@ namespace AdventureWorksLT2019.Services
         : ICustomerAddressService
     {
         private readonly ICustomerAddressRepository _thisRepository;
-        private readonly IServiceScopeFactory _serviceScopeFactor;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly ILogger<CustomerAddressService> _logger;
 
         public CustomerAddressService(
             ICustomerAddressRepository thisRepository,
-            IServiceScopeFactory serviceScopeFactor,
+            IServiceScopeFactory serviceScopeFactory,
             ILogger<CustomerAddressService> logger)
         {
             _thisRepository = thisRepository;
-            _serviceScopeFactor = serviceScopeFactor;
+            _serviceScopeFactory = serviceScopeFactory;
             _logger = logger;
         }
 
         public async Task<ListResponse<CustomerAddressDataModel.DefaultView[]>> Search(
-            CustomerAddressAdvancedQuery query)
+            CustomerAddressAdvancedQuery query, ClaimsModel? claimsModel)
         {
             return await _thisRepository.Search(query);
         }
 
-        public async Task<CustomerAddressCompositeModel> GetCompositeModel(
-            CustomerAddressIdentifier id,
-            Dictionary<CustomerAddressCompositeModel.__DataOptions__, CompositeListItemRequest> listItemRequest,
-            CustomerAddressCompositeModel.__DataOptions__[]? dataOptions = null)
+        public async Task<ListResponse<CustomerAddressDataModel.DefaultView[]>> BulkUpdate(BatchActionRequest<CustomerAddressIdentifier, CustomerAddressDataModel.DefaultView> data, ClaimsModel? claimsModel)
         {
-            var masterResponse = await this._thisRepository.Get(id);
-            if (masterResponse.Status != HttpStatusCode.OK || masterResponse.ResponseBody == null)
-            {
-                var failedResponse = new CustomerAddressCompositeModel();
-                failedResponse.Responses.Add(CustomerAddressCompositeModel.__DataOptions__.__Master__, new Response<PaginationResponse> { Status = masterResponse.Status, StatusMessage = masterResponse.StatusMessage });
-                return failedResponse;
-            }
-
-            var successResponse = new CustomerAddressCompositeModel { __Master__ = masterResponse.ResponseBody };
-            var responses = new ConcurrentDictionary<CustomerAddressCompositeModel.__DataOptions__, Response<PaginationResponse>>();
-            responses.TryAdd(CustomerAddressCompositeModel.__DataOptions__.__Master__, new Response<PaginationResponse> { Status = HttpStatusCode.OK });
-
-            var tasks = new List<Task>();
-
-            if (tasks.Count > 0)
-            {
-                Task t = Task.WhenAll(tasks.ToArray());
-                try
-                {
-                    await t;
-                }
-                catch { }
-            }
-            successResponse.Responses = new Dictionary<CustomerAddressCompositeModel.__DataOptions__, Response<PaginationResponse>>(responses);
-            return successResponse;
-        }
-
-        public async Task<Response> BulkDelete(List<CustomerAddressIdentifier> ids)
-        {
-            return await _thisRepository.BulkDelete(ids);
+            var response = await _thisRepository.BulkUpdate(data);
+            return response;
         }
 
         public async Task<Response<MultiItemsCUDRequest<CustomerAddressIdentifier, CustomerAddressDataModel.DefaultView>>> MultiItemsCUD(
-            MultiItemsCUDRequest<CustomerAddressIdentifier, CustomerAddressDataModel.DefaultView> input)
+            MultiItemsCUDRequest<CustomerAddressIdentifier, CustomerAddressDataModel.DefaultView> input, ClaimsModel? claimsModel)
         {
-            return await _thisRepository.MultiItemsCUD(input);
+            var response = await _thisRepository.MultiItemsCUD(input);
+            return response;
         }
 
-        public async Task<Response<CustomerAddressDataModel.DefaultView>> Update(CustomerAddressIdentifier id, CustomerAddressDataModel input)
+        public async Task<Response<CustomerAddressDataModel.DefaultView>> Update(CustomerAddressIdentifier id, CustomerAddressDataModel.DefaultView input, ClaimsModel? claimsModel, string[]? toUpdatePropertyList = null)
         {
-            return await _thisRepository.Update(id, input);
+            var response = await _thisRepository.Update(id, input, toUpdatePropertyList);
+            return response;
         }
 
-        public async Task<Response<CustomerAddressDataModel.DefaultView>> Get(CustomerAddressIdentifier id)
+        public async Task<Response<CustomerAddressDataModel.DefaultView>> Get(CustomerAddressIdentifier id, ClaimsModel? claimsModel)
         {
-            return await _thisRepository.Get(id);
+            var response = await _thisRepository.Get(id);
+            return response;
         }
 
-        public async Task<Response<CustomerAddressDataModel.DefaultView>> Create(CustomerAddressDataModel input)
+        public async Task<Response<CustomerAddressDataModel.DefaultView>> Create(CustomerAddressDataModel.DefaultView input, ClaimsModel? claimsModel)
         {
-            return await _thisRepository.Create(input);
+            var response = await _thisRepository.Create(input);
+            return response;
         }
 
         public CustomerAddressDataModel.DefaultView GetDefault()
@@ -96,20 +69,10 @@ namespace AdventureWorksLT2019.Services
             return new CustomerAddressDataModel.DefaultView { ItemUIStatus______ = ItemUIStatus.New };
         }
 
-        public async Task<Response> Delete(CustomerAddressIdentifier id)
-        {
-            return await _thisRepository.Delete(id);
-        }
-
         public async Task<ListResponse<NameValuePair[]>> GetCodeList(
-            CustomerAddressAdvancedQuery query)
+            CustomerAddressAdvancedQuery query, ClaimsModel? claimsModel)
         {
             return await _thisRepository.GetCodeList(query);
-        }
-
-        public async Task<Response<CustomerAddressDataModel.DefaultView>> CreateComposite(CustomerAddressCompositeModel input)
-        {
-            return await _thisRepository.CreateComposite(input);
         }
     }
 }

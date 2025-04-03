@@ -1,2 +1,0 @@
-﻿TypeDeclarationContextName,Name,Enabled,DataOperationType,DataOperationUIOption,DataOperationTarget,ExposedLayer,TargetPropertyList,DefaultOrder
-SalesOrderHeader,OnlineOrderFlag,True,Update,ImmediateServerSideUpdate,BooleanProperty,All,OnlineOrderFlag,0

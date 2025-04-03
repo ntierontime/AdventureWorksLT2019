@@ -13,81 +13,41 @@ namespace AdventureWorksLT2019.Services
         : IErrorLogService
     {
         private readonly IErrorLogRepository _thisRepository;
-        private readonly IServiceScopeFactory _serviceScopeFactor;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly ILogger<ErrorLogService> _logger;
 
         public ErrorLogService(
             IErrorLogRepository thisRepository,
-            IServiceScopeFactory serviceScopeFactor,
+            IServiceScopeFactory serviceScopeFactory,
             ILogger<ErrorLogService> logger)
         {
             _thisRepository = thisRepository;
-            _serviceScopeFactor = serviceScopeFactor;
+            _serviceScopeFactory = serviceScopeFactory;
             _logger = logger;
         }
 
         public async Task<ListResponse<ErrorLogDataModel[]>> Search(
-            ErrorLogAdvancedQuery query)
+            ErrorLogAdvancedQuery query, ClaimsModel? claimsModel)
         {
             return await _thisRepository.Search(query);
         }
 
-        public async Task<ErrorLogCompositeModel> GetCompositeModel(
-            ErrorLogIdentifier id,
-            Dictionary<ErrorLogCompositeModel.__DataOptions__, CompositeListItemRequest> listItemRequest,
-            ErrorLogCompositeModel.__DataOptions__[]? dataOptions = null)
+        public async Task<Response<ErrorLogDataModel>> Update(ErrorLogIdentifier id, ErrorLogDataModel input, ClaimsModel? claimsModel, string[]? toUpdatePropertyList = null)
         {
-            var masterResponse = await this._thisRepository.Get(id);
-            if (masterResponse.Status != HttpStatusCode.OK || masterResponse.ResponseBody == null)
-            {
-                var failedResponse = new ErrorLogCompositeModel();
-                failedResponse.Responses.Add(ErrorLogCompositeModel.__DataOptions__.__Master__, new Response<PaginationResponse> { Status = masterResponse.Status, StatusMessage = masterResponse.StatusMessage });
-                return failedResponse;
-            }
-
-            var successResponse = new ErrorLogCompositeModel { __Master__ = masterResponse.ResponseBody };
-            var responses = new ConcurrentDictionary<ErrorLogCompositeModel.__DataOptions__, Response<PaginationResponse>>();
-            responses.TryAdd(ErrorLogCompositeModel.__DataOptions__.__Master__, new Response<PaginationResponse> { Status = HttpStatusCode.OK });
-
-            var tasks = new List<Task>();
-
-            if (tasks.Count > 0)
-            {
-                Task t = Task.WhenAll(tasks.ToArray());
-                try
-                {
-                    await t;
-                }
-                catch { }
-            }
-            successResponse.Responses = new Dictionary<ErrorLogCompositeModel.__DataOptions__, Response<PaginationResponse>>(responses);
-            return successResponse;
+            var response = await _thisRepository.Update(id, input, toUpdatePropertyList);
+            return response;
         }
 
-        public async Task<Response> BulkDelete(List<ErrorLogIdentifier> ids)
+        public async Task<Response<ErrorLogDataModel>> Get(ErrorLogIdentifier id, ClaimsModel? claimsModel)
         {
-            return await _thisRepository.BulkDelete(ids);
+            var response = await _thisRepository.Get(id);
+            return response;
         }
 
-        public async Task<Response<MultiItemsCUDRequest<ErrorLogIdentifier, ErrorLogDataModel>>> MultiItemsCUD(
-            MultiItemsCUDRequest<ErrorLogIdentifier, ErrorLogDataModel> input)
+        public async Task<Response<ErrorLogDataModel>> Create(ErrorLogDataModel input, ClaimsModel? claimsModel)
         {
-            return await _thisRepository.MultiItemsCUD(input);
-        }
-
-        public async Task<Response<ErrorLogDataModel>> Update(ErrorLogIdentifier id, ErrorLogDataModel input)
-        {
-            return await _thisRepository.Update(id, input);
-        }
-
-        public async Task<Response<ErrorLogDataModel>> Get(ErrorLogIdentifier id)
-        {
-            return await _thisRepository.Get(id);
-        }
-
-        public async Task<Response<ErrorLogDataModel>> Create(ErrorLogDataModel input)
-        {
-            return await _thisRepository.Create(input);
+            var response = await _thisRepository.Create(input);
+            return response;
         }
 
         public ErrorLogDataModel GetDefault()
@@ -96,20 +56,10 @@ namespace AdventureWorksLT2019.Services
             return new ErrorLogDataModel { ItemUIStatus______ = ItemUIStatus.New };
         }
 
-        public async Task<Response> Delete(ErrorLogIdentifier id)
-        {
-            return await _thisRepository.Delete(id);
-        }
-
         public async Task<ListResponse<NameValuePair[]>> GetCodeList(
-            ErrorLogAdvancedQuery query)
+            ErrorLogAdvancedQuery query, ClaimsModel? claimsModel)
         {
             return await _thisRepository.GetCodeList(query);
-        }
-
-        public async Task<Response<ErrorLogDataModel>> CreateComposite(ErrorLogCompositeModel input)
-        {
-            return await _thisRepository.CreateComposite(input);
         }
     }
 }

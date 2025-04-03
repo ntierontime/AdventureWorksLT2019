@@ -6,33 +6,17 @@ namespace AdventureWorksLT2019.ServiceContracts
     {
 
         Task<ListResponse<SalesOrderHeaderDataModel.DefaultView[]>> Search(
-            SalesOrderHeaderAdvancedQuery query);
+            SalesOrderHeaderAdvancedQuery query, ClaimsModel? claimsModel);
 
-        Task<SalesOrderHeaderCompositeModel> GetCompositeModel(
-            SalesOrderHeaderIdentifier id,
-            Dictionary<SalesOrderHeaderCompositeModel.__DataOptions__, CompositeListItemRequest> listItemRequest,
-            SalesOrderHeaderCompositeModel.__DataOptions__[]? dataOptions = null);
+        Task<Response<SalesOrderHeaderDataModel.DefaultView>> Update(SalesOrderHeaderIdentifier id, SalesOrderHeaderDataModel.DefaultView input, ClaimsModel? claimsModel, string[]? toUpdatePropertyList = null);
 
-        Task<Response> BulkDelete(List<SalesOrderHeaderIdentifier> ids);
+        Task<Response<SalesOrderHeaderDataModel.DefaultView>> Get(SalesOrderHeaderIdentifier id, ClaimsModel? claimsModel);
 
-        Task<ListResponse<SalesOrderHeaderDataModel.DefaultView[]>> BulkUpdate(BatchActionRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView> data);
-
-        Task<Response<MultiItemsCUDRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView>>> MultiItemsCUD(
-            MultiItemsCUDRequest<SalesOrderHeaderIdentifier, SalesOrderHeaderDataModel.DefaultView> input);
-
-        Task<Response<SalesOrderHeaderDataModel.DefaultView>> Update(SalesOrderHeaderIdentifier id, SalesOrderHeaderDataModel input);
-
-        Task<Response<SalesOrderHeaderDataModel.DefaultView>> Get(SalesOrderHeaderIdentifier id);
-
-        Task<Response<SalesOrderHeaderDataModel.DefaultView>> Create(SalesOrderHeaderDataModel input);
+        Task<Response<SalesOrderHeaderDataModel.DefaultView>> Create(SalesOrderHeaderDataModel.DefaultView input, ClaimsModel? claimsModel);
         SalesOrderHeaderDataModel.DefaultView GetDefault();
 
-        Task<Response> Delete(SalesOrderHeaderIdentifier id);
-
         Task<ListResponse<NameValuePair[]>> GetCodeList(
-            SalesOrderHeaderAdvancedQuery query);
-
-        Task<Response<SalesOrderHeaderDataModel.DefaultView>> CreateComposite(SalesOrderHeaderCompositeModel input);
+            SalesOrderHeaderAdvancedQuery query, ClaimsModel? claimsModel);
     }
 }
 

@@ -6,33 +6,17 @@ namespace AdventureWorksLT2019.ServiceContracts
     {
 
         Task<ListResponse<CustomerDataModel[]>> Search(
-            CustomerAdvancedQuery query);
+            CustomerAdvancedQuery query, ClaimsModel? claimsModel);
 
-        Task<CustomerCompositeModel> GetCompositeModel(
-            CustomerIdentifier id,
-            Dictionary<CustomerCompositeModel.__DataOptions__, CompositeListItemRequest> listItemRequest,
-            CustomerCompositeModel.__DataOptions__[]? dataOptions = null);
+        Task<Response<CustomerDataModel>> Update(CustomerIdentifier id, CustomerDataModel input, ClaimsModel? claimsModel, string[]? toUpdatePropertyList = null);
 
-        Task<Response> BulkDelete(List<CustomerIdentifier> ids);
+        Task<Response<CustomerDataModel>> Get(CustomerIdentifier id, ClaimsModel? claimsModel);
 
-        Task<ListResponse<CustomerDataModel[]>> BulkUpdate(BatchActionRequest<CustomerIdentifier, CustomerDataModel> data);
-
-        Task<Response<MultiItemsCUDRequest<CustomerIdentifier, CustomerDataModel>>> MultiItemsCUD(
-            MultiItemsCUDRequest<CustomerIdentifier, CustomerDataModel> input);
-
-        Task<Response<CustomerDataModel>> Update(CustomerIdentifier id, CustomerDataModel input);
-
-        Task<Response<CustomerDataModel>> Get(CustomerIdentifier id);
-
-        Task<Response<CustomerDataModel>> Create(CustomerDataModel input);
+        Task<Response<CustomerDataModel>> Create(CustomerDataModel input, ClaimsModel? claimsModel);
         CustomerDataModel GetDefault();
 
-        Task<Response> Delete(CustomerIdentifier id);
-
         Task<ListResponse<NameValuePair[]>> GetCodeList(
-            CustomerAdvancedQuery query);
-
-        Task<Response<CustomerDataModel>> CreateComposite(CustomerCompositeModel input);
+            CustomerAdvancedQuery query, ClaimsModel? claimsModel);
     }
 }
 

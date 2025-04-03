@@ -8,23 +8,19 @@ namespace AdventureWorksLT2019.RepositoryContracts
         Task<ListResponse<BuildVersionDataModel[]>> Search(
             BuildVersionAdvancedQuery query);
 
-        Task<Response> BulkDelete(List<BuildVersionIdentifier> ids);
+        Task<ListResponse<BuildVersionDataModel[]>> BulkUpdate(BatchActionRequest<BuildVersionIdentifier, BuildVersionDataModel> data);
 
         Task<Response<MultiItemsCUDRequest<BuildVersionIdentifier, BuildVersionDataModel>>> MultiItemsCUD(
             MultiItemsCUDRequest<BuildVersionIdentifier, BuildVersionDataModel> input);
 
-        Task<Response<BuildVersionDataModel>> Update(BuildVersionIdentifier id, BuildVersionDataModel input);
+        Task<Response<BuildVersionDataModel>> Update(BuildVersionIdentifier id, BuildVersionDataModel input, string[]? toUpdatePropertyList = null);
 
         Task<Response<BuildVersionDataModel>> Get(BuildVersionIdentifier id);
 
         Task<Response<BuildVersionDataModel>> Create(BuildVersionDataModel input);
 
-        Task<Response> Delete(BuildVersionIdentifier id);
-
         Task<ListResponse<NameValuePair[]>> GetCodeList(
             BuildVersionAdvancedQuery query);
-
-        Task<Response<BuildVersionDataModel>> CreateComposite(BuildVersionCompositeModel input);
     }
 }
 

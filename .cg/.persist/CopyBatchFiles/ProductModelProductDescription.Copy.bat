@@ -1,0 +1,13 @@
+CALL _VariableDefinition.bat
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\apiClients\ProductModelProductDescriptionApi.ts %destRootFolder%ReactTSClientApp\src\generated\apiClients\ProductModelProductDescriptionApi.ts
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\dataModels\IProductModelProductDescriptionDataModel.ts %destRootFolder%ReactTSClientApp\src\dataModels\IProductModelProductDescriptionDataModel.ts
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\dataModels\IProductModelProductDescriptionQueries.ts %destRootFolder%ReactTSClientApp\src\dataModels\IProductModelProductDescriptionQueries.ts
+copy /y /v %sourceRootFolder%ReactTSClientApp\src\generated\slices\ProductModelProductDescriptionSlice.ts %destRootFolder%ReactTSClientApp\src\generated\slices\ProductModelProductDescriptionSlice.ts
+copy /y /v %sourceRootFolder%EFCoreContext\ProductModelProductDescription.cs %destRootFolder%EFCoreContext\ProductModelProductDescription.cs
+copy /y /v %sourceRootFolder%EFCoreRepositories\ProductModelProductDescriptionRepository.cs %destRootFolder%EFCoreRepositories\ProductModelProductDescriptionRepository.cs
+copy /y /v %sourceRootFolder%Models\ProductModelProductDescriptionDataModel.cs %destRootFolder%Models\ProductModelProductDescriptionDataModel.cs
+copy /y /v %sourceRootFolder%Models\ProductModelProductDescriptionQueries.cs %destRootFolder%Models\ProductModelProductDescriptionQueries.cs
+copy /y /v %sourceRootFolder%RepositoryContracts\IProductModelProductDescriptionRepository.cs %destRootFolder%RepositoryContracts\IProductModelProductDescriptionRepository.cs
+copy /y /v %sourceRootFolder%ServiceContracts\IProductModelProductDescriptionService.cs %destRootFolder%ServiceContracts\IProductModelProductDescriptionService.cs
+copy /y /v %sourceRootFolder%Services\ProductModelProductDescriptionService.cs %destRootFolder%Services\ProductModelProductDescriptionService.cs
+copy /y /v %sourceRootFolder%WebApiAdminControllers\ProductModelProductDescriptionApiController.cs %destRootFolder%WebApiAdminControllers\ProductModelProductDescriptionApiController.cs

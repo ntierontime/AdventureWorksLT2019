@@ -8,23 +8,14 @@ namespace AdventureWorksLT2019.RepositoryContracts
         Task<ListResponse<ProductModelDataModel[]>> Search(
             ProductModelAdvancedQuery query);
 
-        Task<Response> BulkDelete(List<ProductModelIdentifier> ids);
-
-        Task<Response<MultiItemsCUDRequest<ProductModelIdentifier, ProductModelDataModel>>> MultiItemsCUD(
-            MultiItemsCUDRequest<ProductModelIdentifier, ProductModelDataModel> input);
-
-        Task<Response<ProductModelDataModel>> Update(ProductModelIdentifier id, ProductModelDataModel input);
+        Task<Response<ProductModelDataModel>> Update(ProductModelIdentifier id, ProductModelDataModel input, string[]? toUpdatePropertyList = null);
 
         Task<Response<ProductModelDataModel>> Get(ProductModelIdentifier id);
 
         Task<Response<ProductModelDataModel>> Create(ProductModelDataModel input);
 
-        Task<Response> Delete(ProductModelIdentifier id);
-
         Task<ListResponse<NameValuePair[]>> GetCodeList(
             ProductModelAdvancedQuery query);
-
-        Task<Response<ProductModelDataModel>> CreateComposite(ProductModelCompositeModel input);
     }
 }
 

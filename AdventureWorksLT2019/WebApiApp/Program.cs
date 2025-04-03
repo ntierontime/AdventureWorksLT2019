@@ -22,6 +22,8 @@ using Microsoft.AspNetCore.Identity;
 using System.Text;
 using System.Text.Json.Serialization;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Text.Json;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,15 +57,18 @@ builder.Services.AddCors(options =>
         });
 });
 
-builder.Services.AddSingleton<AdventureWorksLT2019.Resx.IUIStrings, AdventureWorksLT2019.Resx.UIStrings>();
+// builder.Services.AddSingleton<AdventureWorksLT2019.Resx.IUIStrings, AdventureWorksLT2019.Resx.UIStrings>();
 
 builder.Services
     // TODO: should have a solution, e.g. an attribute on a controller class/method to Suppress ModalState validation
     .AddControllers(options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true)
     //.AddControllers()
     .AddJsonOptions(options => {
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        options.JsonSerializerOptions.NumberHandling = JsonNumberHandling.AllowReadingFromString;
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
         options.JsonSerializerOptions.Converters.Add(new NetTopologySuite.IO.Converters.GeoJsonConverterFactory());
+        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault;
     });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -73,7 +78,7 @@ builder.Services.ConfigureSwaggerGen((Action<SwaggerGenOptions>)(options =>
 {
     options.CustomSchemaIds((Func<Type, string>)(x =>
     {
-        return GetSwaggerCustomizedSchemaId(x);
+        return SwaggerExtension.GetSwaggerCustomizedSchemaId(x);
     }));
 }));
 builder.Services.AddSwaggerGen();
@@ -107,21 +112,24 @@ builder.Services.AddScoped<ISalesOrderDetailService, SalesOrderDetailService>();
 builder.Services.AddScoped<ISalesOrderHeaderService, SalesOrderHeaderService>();
 
 // 1.3. Other Services
-builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<ClaimService>();
+builder.Services.AddScoped<TokenService>();
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.AddTransient<IEmailSender<ApplicationUser>, NoOpIdentityEmailSender>();
+builder.Services.AddScoped<IFileStorageService, TestCopyToMemoryStreamFileStorageService>();
 
 // 2. Database
 builder.Services.AddDbContext<EFDbContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("AdventureWorksLT2019"), x => { x.UseNetTopologySuite(); x.UseBulk(); }),  ServiceLifetime.Scoped);
+        options.UseSqlServer(builder.Configuration.GetConnectionString("AdventureWorksLT2019"), x => { x.UseNetTopologySuite(); x.EnableRetryOnFailure(); }),  ServiceLifetime.Scoped);
 
 // 3. Identity Authentication
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("Identity")));
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+
 var identitySecretSection = builder.Configuration.GetSection(nameof(IdentitySecret));
 var identitySecret = identitySecretSection.Get<IdentitySecret>();
 builder.Services.Configure<IdentitySecret>(identitySecretSection);
-var key = Encoding.ASCII.GetBytes(identitySecret.Secret);
+var key = Encoding.ASCII.GetBytes(identitySecret!.Secret);
 builder.Services.AddAuthentication()
     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, cfg => cfg.SlidingExpiration = true)
     .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, x =>
@@ -136,6 +144,13 @@ builder.Services.AddAuthentication()
             ValidateAudience = false
         };
     });
+
+builder.Services
+    .AddIdentityApiEndpoints<ApplicationUser>(options => {
+        options.SignIn.RequireConfirmedEmail = true;
+    })
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
 
 var app = builder.Build();
 
@@ -157,50 +172,9 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// Authentication
+app.MapIdentityApi<ApplicationUser>();
+app.AddCustomAuthenticationApiEndpoints();
+
 app.Run();
-
-static string GetSwaggerCustomizedSchemaId(Type x)
-{
-    if (x == null || string.IsNullOrEmpty(x.FullName))
-        return String.Empty;
-
-    if (!x.IsGenericType)
-    {
-        return x.FullName.Replace("+", "");
-    }
-
-    if(x.Namespace == typeof(Response<int>).Namespace) // same namespace
-    {
-        if(x.Name == typeof(Response<int>).Name) // Response'1
-        {
-            if (x.GenericTypeArguments != null && x.GenericTypeArguments.Length == 1 && !string.IsNullOrEmpty(x.GenericTypeArguments[0].FullName))
-            {
-                return x.GenericTypeArguments[0].FullName!.Replace("+", "") + "Response";
-            }
-        }
-        if (x.Name == typeof(ListResponse<int>).Name) // ListResponse'1
-        {
-            if (x.GenericTypeArguments != null && x.GenericTypeArguments.Length == 1 && !string.IsNullOrEmpty(x.GenericTypeArguments[0].FullName))
-            {
-                return x.GenericTypeArguments[0].FullName!.Replace("+", "").Replace("[]", "") + "ListResponse";
-            }
-        }
-        //if (x.Name == typeof(BatchActionRequest<int>).Name) // BatchActionRequest'1
-        //{
-        //    if (x.GenericTypeArguments != null && x.GenericTypeArguments.Length == 1 && !string.IsNullOrEmpty(x.GenericTypeArguments[0].FullName))
-        //    {
-        //        return x.GenericTypeArguments[0].FullName!.Replace("+", "").Replace("Identifier", "") + "BatchActionRequest";
-        //    }
-        //}
-        if (x.Name == typeof(BatchActionRequest<int, int>).Name) // BatchActionRequest'2
-        {
-            if (x.GenericTypeArguments != null && x.GenericTypeArguments.Length == 2 && !string.IsNullOrEmpty(x.GenericTypeArguments[1].FullName))
-            {
-                return x.GenericTypeArguments[1].FullName!.Replace("+", "") + "BatchUpdateRequest";
-            }
-        }
-    }
-
-    return x.FullName!;
-}
 

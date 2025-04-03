@@ -102,23 +102,10 @@
   ],
   "entityReferenceResultForPersistAliasCollection": [
     {
-      "foreignKeySetting": {
-        "tablE_SCHEMA": "SalesLT",
-        "tablE_NAME": "CustomerAddress",
-        "entityReferenceSimpleFullPath": "\\AddressID",
-        "pkTypeDeclarationContextName": "Address",
-        "duplicateIDPropertyFullPath": null,
-        "isLeftJoin": false,
-        "inLinqJoin": true,
-        "idInCriteria": true,
-        "idInDefaultDataView": true,
-        "uniqueConstraintInDefaultDataView": true,
-        "propertiesInDefaultDataView": null,
-        "createdDate": "2023-03-01T00:00:00"
-      },
       "tablE_SCHEMA": "SalesLT",
       "tablE_NAME": "CustomerAddress",
       "entityReferenceSimpleFullPath": "\\AddressID",
+      "linqQueryPath": "Address",
       "result": "Address",
       "isTop": true,
       "pkTypeFullName": "AdventureWorksLT2019Model.Address",
@@ -131,32 +118,14 @@
       "childEntityReferenceSimpleFullPath": null,
       "bottomChildTypeName": "Address",
       "bottomChildEntityReferenceSimpleFullPath": "\\AddressID",
-      "entityReferenceFullPath": "\\AdventureWorksLT2019Model.CustomerAddress.AddressID",
-      "entityReferenceForeignKeyPath": "\\FK_CustomerAddress_Address_AddressID",
-      "entityReferenceResultType": "DownTree",
-      "isJoinFromPKToFK": false,
       "defaultOrder": 1,
-      "fkTypeFullNameOnTheOtherSide": null,
-      "createdDate": "0001-01-01T00:00:00"
+      "fkTypeFullNameOnTheOtherSide": null
     },
     {
-      "foreignKeySetting": {
-        "tablE_SCHEMA": "SalesLT",
-        "tablE_NAME": "CustomerAddress",
-        "entityReferenceSimpleFullPath": "\\CustomerID",
-        "pkTypeDeclarationContextName": "Customer",
-        "duplicateIDPropertyFullPath": null,
-        "isLeftJoin": false,
-        "inLinqJoin": true,
-        "idInCriteria": true,
-        "idInDefaultDataView": true,
-        "uniqueConstraintInDefaultDataView": true,
-        "propertiesInDefaultDataView": null,
-        "createdDate": "2023-03-01T00:00:00"
-      },
       "tablE_SCHEMA": "SalesLT",
       "tablE_NAME": "CustomerAddress",
       "entityReferenceSimpleFullPath": "\\CustomerID",
+      "linqQueryPath": "Customer",
       "result": "Customer",
       "isTop": true,
       "pkTypeFullName": "AdventureWorksLT2019Model.Customer",
@@ -169,13 +138,8 @@
       "childEntityReferenceSimpleFullPath": null,
       "bottomChildTypeName": "Customer",
       "bottomChildEntityReferenceSimpleFullPath": "\\CustomerID",
-      "entityReferenceFullPath": "\\AdventureWorksLT2019Model.CustomerAddress.CustomerID",
-      "entityReferenceForeignKeyPath": "\\FK_CustomerAddress_Customer_CustomerID",
-      "entityReferenceResultType": "DownTree",
-      "isJoinFromPKToFK": false,
       "defaultOrder": 1,
-      "fkTypeFullNameOnTheOtherSide": null,
-      "createdDate": "0001-01-01T00:00:00"
+      "fkTypeFullNameOnTheOtherSide": null
     }
   ],
   "entityReferenceResultForPersistAliasCollectionOfBridged": null,

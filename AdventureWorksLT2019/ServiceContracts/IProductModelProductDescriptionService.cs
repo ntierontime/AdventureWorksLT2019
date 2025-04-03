@@ -6,31 +6,22 @@ namespace AdventureWorksLT2019.ServiceContracts
     {
 
         Task<ListResponse<ProductModelProductDescriptionDataModel.DefaultView[]>> Search(
-            ProductModelProductDescriptionAdvancedQuery query);
+            ProductModelProductDescriptionAdvancedQuery query, ClaimsModel? claimsModel);
 
-        Task<ProductModelProductDescriptionCompositeModel> GetCompositeModel(
-            ProductModelProductDescriptionIdentifier id,
-            Dictionary<ProductModelProductDescriptionCompositeModel.__DataOptions__, CompositeListItemRequest> listItemRequest,
-            ProductModelProductDescriptionCompositeModel.__DataOptions__[]? dataOptions = null);
-
-        Task<Response> BulkDelete(List<ProductModelProductDescriptionIdentifier> ids);
+        Task<ListResponse<ProductModelProductDescriptionDataModel.DefaultView[]>> BulkUpdate(BatchActionRequest<ProductModelProductDescriptionIdentifier, ProductModelProductDescriptionDataModel.DefaultView> data, ClaimsModel? claimsModel);
 
         Task<Response<MultiItemsCUDRequest<ProductModelProductDescriptionIdentifier, ProductModelProductDescriptionDataModel.DefaultView>>> MultiItemsCUD(
-            MultiItemsCUDRequest<ProductModelProductDescriptionIdentifier, ProductModelProductDescriptionDataModel.DefaultView> input);
+            MultiItemsCUDRequest<ProductModelProductDescriptionIdentifier, ProductModelProductDescriptionDataModel.DefaultView> input, ClaimsModel? claimsModel);
 
-        Task<Response<ProductModelProductDescriptionDataModel.DefaultView>> Update(ProductModelProductDescriptionIdentifier id, ProductModelProductDescriptionDataModel input);
+        Task<Response<ProductModelProductDescriptionDataModel.DefaultView>> Update(ProductModelProductDescriptionIdentifier id, ProductModelProductDescriptionDataModel.DefaultView input, ClaimsModel? claimsModel, string[]? toUpdatePropertyList = null);
 
-        Task<Response<ProductModelProductDescriptionDataModel.DefaultView>> Get(ProductModelProductDescriptionIdentifier id);
+        Task<Response<ProductModelProductDescriptionDataModel.DefaultView>> Get(ProductModelProductDescriptionIdentifier id, ClaimsModel? claimsModel);
 
-        Task<Response<ProductModelProductDescriptionDataModel.DefaultView>> Create(ProductModelProductDescriptionDataModel input);
+        Task<Response<ProductModelProductDescriptionDataModel.DefaultView>> Create(ProductModelProductDescriptionDataModel.DefaultView input, ClaimsModel? claimsModel);
         ProductModelProductDescriptionDataModel.DefaultView GetDefault();
 
-        Task<Response> Delete(ProductModelProductDescriptionIdentifier id);
-
         Task<ListResponse<NameValuePair[]>> GetCodeList(
-            ProductModelProductDescriptionAdvancedQuery query);
-
-        Task<Response<ProductModelProductDescriptionDataModel.DefaultView>> CreateComposite(ProductModelProductDescriptionCompositeModel input);
+            ProductModelProductDescriptionAdvancedQuery query, ClaimsModel? claimsModel);
     }
 }
 

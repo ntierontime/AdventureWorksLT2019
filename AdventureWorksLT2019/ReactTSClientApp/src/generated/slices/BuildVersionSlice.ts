@@ -1,0 +1,106 @@
+import { createAsyncThunk, createEntityAdapter, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IListResponse } from "src/shared/apis/IListResponse";
+import { IBulkUpdateRequest } from "src/shared/apis/IBulkUpdateRequest";
+import { IMultiItemsCUDRequest } from "src/shared/apis/IMultiItemsCUDRequest";
+import { ItemUIStatus } from "src/shared/dataModels/ItemUIStatus";
+import { defaultPaginationResponse } from "src/shared/dataModels/IPaginationResponse";
+import { PaginationOptions } from "src/shared/dataModels/PaginationOptions";
+import { RootState } from "src/store/CombinedReducers";
+
+import { IBuildVersionDataModel } from 'src/dataModels/IBuildVersionDataModel';
+import { defaultIBuildVersionAdvancedQuery, getRouteParamsOfIBuildVersionIdentifier, IBuildVersionAdvancedQuery, IBuildVersionIdentifier } from 'src/dataModels/IBuildVersionQueries';
+import { buildVersionApi } from "src/generated/apiClients/BuildVersionApi";
+
+const entityAdapter = createEntityAdapter<IBuildVersionDataModel>({
+    selectId: (item: IBuildVersionDataModel) => getRouteParamsOfIBuildVersionIdentifier(item),
+    // Keep the "all IDs" array sorted based on book titles
+    // sortComparer: (a, b) => a.text.localeCompare(b.text), 
+})
+
+export const upsertMany = createAsyncThunk(
+    'upsertManyBuildVersion',
+    async (listResponse: IListResponse<IBuildVersionDataModel[]>, { dispatch }) => {
+        return listResponse;
+    }
+)
+
+
+export const search = createAsyncThunk(
+    'searchBuildVersion',
+    async (advancedQuery: IBuildVersionAdvancedQuery, { dispatch }) => {
+        const response = await buildVersionApi.Search(advancedQuery);
+        // console.log(response);
+        return response;
+    }
+)
+
+const BuildVersionSlice = createSlice({
+    name: "buildVersionSlice",
+    initialState: entityAdapter.getInitialState({
+        pagination: defaultPaginationResponse(),
+        advancedQuery: defaultIBuildVersionAdvancedQuery(),
+	}),
+    reducers: {
+        /* any other state updates here */
+        setIBuildVersionAdvancedQuery: (state, action: PayloadAction<IBuildVersionAdvancedQuery>) =>{
+            state.advancedQuery = action.payload;
+            // console.log(state.advancedQuery);
+            // console.log(action.payload);
+        },
+    },
+    extraReducers: builder => {
+        builder.addCase(upsertMany.pending, (state) => {
+            // console.log("upsertMany.pending");
+        });
+        builder.addCase(upsertMany.fulfilled, (state, { payload }) => {
+            if (!!payload && payload.status === 'OK') {
+                if (payload.pagination.pageIndex === 1 ||
+                    payload.pagination.paginationOption !== PaginationOptions.LoadMore) {
+                    // TODO: update pagination
+                    entityAdapter.removeAll(state);
+                }
+                entityAdapter.upsertMany(state, payload.responseBody);
+                state.pagination = payload.pagination;
+            }
+            else {
+
+            }
+            // console.log("upsertMany.fulfilled");
+        });
+        builder.addCase(upsertMany.rejected, (state, action) => {
+            // console.log("upsertMany.rejected");
+        });
+
+
+        builder.addCase(search.pending, (state) => {
+            // console.log("search.pending");
+        });
+        builder.addCase(search.fulfilled, (state, { payload }) => {
+            if (!!payload && payload.status === 'OK') {
+                if (payload.pagination.pageIndex === 1 ||
+                    payload.pagination.paginationOption !== PaginationOptions.LoadMore) {
+                    // TODO: update pagination
+                    entityAdapter.removeAll(state);
+                }
+                entityAdapter.upsertMany(state, payload.responseBody);
+                state.pagination = payload.pagination;
+            }
+            else {
+
+            }
+            // console.log("search.fulfilled");
+        });
+        builder.addCase(search.rejected, (state, action) => {
+            // console.log("search.rejected");
+        });
+    }
+});
+
+export const buildVersionSelectors = entityAdapter.getSelectors<RootState>(
+    state => state.buildVersionList
+)
+
+export const { setIBuildVersionAdvancedQuery } = BuildVersionSlice.actions;
+
+export default BuildVersionSlice.reducer; // should import as buildVersionSlice
+

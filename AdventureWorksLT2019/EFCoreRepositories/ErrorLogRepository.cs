@@ -13,6 +13,10 @@ namespace AdventureWorksLT2019.EFCoreRepositories
     public class ErrorLogRepository
         : IErrorLogRepository
     {
+        private readonly Dictionary<string, string> _queryOrderBys = new()
+        {
+        };
+
         private readonly ILogger<ErrorLogRepository> _logger;
         private readonly EFDbContext _dbcontext;
 
@@ -25,60 +29,53 @@ namespace AdventureWorksLT2019.EFCoreRepositories
         private IQueryable<ErrorLogDataModel> SearchQuery(
             ErrorLogAdvancedQuery query, bool withPagingAndOrderBy)
         {
-
             var queryable =
                 from t in _dbcontext.ErrorLog
 
                 where
-
                     (string.IsNullOrEmpty(query.TextSearch) ||
-                        query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.UserName!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.ErrorProcedure!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.ErrorMessage!, "%" + query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.UserName!, query.TextSearch + "%") || EF.Functions.Like(t.ErrorProcedure!, query.TextSearch + "%") || EF.Functions.Like(t.ErrorMessage!, query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.UserName!, "%" + query.TextSearch) || EF.Functions.Like(t.ErrorProcedure!, "%" + query.TextSearch) || EF.Functions.Like(t.ErrorMessage!, "%" + query.TextSearch)))
-                    &&
-
-                    (!query.ErrorTimeRangeLower.HasValue && !query.ErrorTimeRangeUpper.HasValue || (!query.ErrorTimeRangeLower.HasValue || t.ErrorTime >= query.ErrorTimeRangeLower) && (!query.ErrorTimeRangeLower.HasValue || t.ErrorTime <= query.ErrorTimeRangeUpper))
-                    &&
-
+                    query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.UserName!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.ErrorProcedure!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.ErrorMessage!, "%" + query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.UserName!, query.TextSearch + "%") || EF.Functions.Like(t.ErrorProcedure!, query.TextSearch + "%") || EF.Functions.Like(t.ErrorMessage!, query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.UserName!, "%" + query.TextSearch) || EF.Functions.Like(t.ErrorProcedure!, "%" + query.TextSearch) || EF.Functions.Like(t.ErrorMessage!, "%" + query.TextSearch)))&&
+                    (!query.ErrorTimeRangeLower.HasValue && !query.ErrorTimeRangeUpper.HasValue || (!query.ErrorTimeRangeLower.HasValue || t.ErrorTime >= query.ErrorTimeRangeLower) && (!query.ErrorTimeRangeLower.HasValue || t.ErrorTime <= query.ErrorTimeRangeUpper))&&
                     (string.IsNullOrEmpty(query.UserName) ||
-                            query.UserNameSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.UserName!, "%" + query.UserName + "%") ||
-                            query.UserNameSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.UserName!, query.UserName + "%") ||
-                            query.UserNameSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.UserName!, "%" + query.UserName))
+                        query.UserNameSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.UserName!, "%" + query.UserName + "%") ||
+                        query.UserNameSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.UserName!, query.UserName + "%") ||
+                        query.UserNameSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.UserName!, "%" + query.UserName))
                     &&
                     (string.IsNullOrEmpty(query.ErrorProcedure) ||
-                            query.ErrorProcedureSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.ErrorProcedure!, "%" + query.ErrorProcedure + "%") ||
-                            query.ErrorProcedureSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.ErrorProcedure!, query.ErrorProcedure + "%") ||
-                            query.ErrorProcedureSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.ErrorProcedure!, "%" + query.ErrorProcedure))
+                        query.ErrorProcedureSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.ErrorProcedure!, "%" + query.ErrorProcedure + "%") ||
+                        query.ErrorProcedureSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.ErrorProcedure!, query.ErrorProcedure + "%") ||
+                        query.ErrorProcedureSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.ErrorProcedure!, "%" + query.ErrorProcedure))
                     &&
                     (string.IsNullOrEmpty(query.ErrorMessage) ||
-                            query.ErrorMessageSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.ErrorMessage!, "%" + query.ErrorMessage + "%") ||
-                            query.ErrorMessageSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.ErrorMessage!, query.ErrorMessage + "%") ||
-                            query.ErrorMessageSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.ErrorMessage!, "%" + query.ErrorMessage))
+                        query.ErrorMessageSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.ErrorMessage!, "%" + query.ErrorMessage + "%") ||
+                        query.ErrorMessageSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.ErrorMessage!, query.ErrorMessage + "%") ||
+                        query.ErrorMessageSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.ErrorMessage!, "%" + query.ErrorMessage))
 
                 select new ErrorLogDataModel
                 {
-
-                        ErrorLogID = t.ErrorLogID,
-                        ErrorTime = t.ErrorTime,
-                        UserName = t.UserName,
-                        ErrorNumber = t.ErrorNumber,
-                        ErrorSeverity = t.ErrorSeverity,
-                        ErrorState = t.ErrorState,
-                        ErrorProcedure = t.ErrorProcedure,
-                        ErrorLine = t.ErrorLine,
-                        ErrorMessage = t.ErrorMessage,
+                    ErrorLogID = t.ErrorLogID,
+                    ErrorTime = t.ErrorTime,
+                    UserName = t.UserName,
+                    ErrorNumber = t.ErrorNumber,
+                    ErrorSeverity = t.ErrorSeverity,
+                    ErrorState = t.ErrorState,
+                    ErrorProcedure = t.ErrorProcedure,
+                    ErrorLine = t.ErrorLine,
+                    ErrorMessage = t.ErrorMessage,
                 };
 
             // 1. Without Paging And OrderBy
             if (!withPagingAndOrderBy)
                 return queryable;
 
-            // 2. With Paging And OrderBy
-            var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
-            if (orderBys.Any())
-            {
-                queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
-            }
+            // // 2. With Paging And OrderBy
+            // var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
+            // if (orderBys.Any())
+            // {
+            //     queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
+            // }
 
             queryable = queryable.Skip((query.PageIndex - 1) * query.PageSize).Take(query.PageSize);
 
@@ -112,174 +109,7 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
-        private IQueryable<ErrorLog> GetIQueryableByPrimaryIdentifierList(
-            List<ErrorLogIdentifier> ids)
-        {
-            var idList = ids.Select(t => t.ErrorLogID).ToList();
-            var queryable =
-                from t in _dbcontext.ErrorLog
-                where idList.Contains(t.ErrorLogID)
-                select t;
-
-            return queryable;
-        }
-
-        public async Task<Response> BulkDelete(List<ErrorLogIdentifier> ids)
-        {
-            try
-            {
-                var queryable = GetIQueryableByPrimaryIdentifierList(ids);
-                var result = await queryable.BatchDeleteAsync();
-
-                return await Task<Response>.FromResult(
-                    new Response
-                    {
-                        Status = HttpStatusCode.OK,
-                    });
-            }
-            catch (Exception ex)
-            {
-                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
-            }
-        }
-
-        public async Task<Response<MultiItemsCUDRequest<ErrorLogIdentifier, ErrorLogDataModel>>> MultiItemsCUD(
-            MultiItemsCUDRequest<ErrorLogIdentifier, ErrorLogDataModel> input)
-        {
-            // 1. DeleteItems, return if Failed
-            if (input.DeleteItems != null)
-            {
-                var responseOfDeleteItems = await this.BulkDelete(input.DeleteItems);
-                if (responseOfDeleteItems != null && responseOfDeleteItems.Status != HttpStatusCode.OK)
-                {
-                    return new Response<MultiItemsCUDRequest<ErrorLogIdentifier, ErrorLogDataModel>> { Status = responseOfDeleteItems.Status, StatusMessage = "Deletion Failed. " + responseOfDeleteItems.StatusMessage };
-                }
-            }
-
-            // 2. return OK, if no more NewItems and UpdateItems
-            if (!(input.NewItems != null && input.NewItems.Count > 0 ||
-                input.UpdateItems != null && input.UpdateItems.Count > 0))
-            {
-                return new Response<MultiItemsCUDRequest<ErrorLogIdentifier, ErrorLogDataModel>> { Status = HttpStatusCode.OK };
-            }
-
-            // 3. NewItems and UpdateItems
-            try
-            {
-                // 3.1.1. NewItems if any
-                List<ErrorLog> newEFItems = new();
-                if (input.NewItems != null && input.NewItems.Count > 0)
-                {
-                    foreach (var item in input.NewItems)
-                    {
-                        var toInsert = new ErrorLog
-                        {
-                            ErrorTime = item.ErrorTime,
-                            UserName = item.UserName,
-                            ErrorNumber = item.ErrorNumber,
-                            ErrorSeverity = item.ErrorSeverity,
-                            ErrorState = item.ErrorState,
-                            ErrorProcedure = item.ErrorProcedure,
-                            ErrorLine = item.ErrorLine,
-                            ErrorMessage = item.ErrorMessage,
-                        };
-                        _dbcontext.ErrorLog.Add(toInsert);
-                        newEFItems.Add(toInsert);
-                    }
-                }
-
-                // 3.1.2. UpdateItems if any
-                if (input.UpdateItems != null && input.UpdateItems.Count > 0)
-                {
-                    foreach (var item in input.UpdateItems)
-                    {
-                        var existing =
-                            (from t in _dbcontext.ErrorLog
-                             where
-
-                             t.ErrorLogID == item.ErrorLogID
-                             select t).SingleOrDefault();
-
-                        if (existing != null)
-                        {
-                            // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
-                            existing.ErrorTime = item.ErrorTime;
-                            existing.UserName = item.UserName;
-                            existing.ErrorNumber = item.ErrorNumber;
-                            existing.ErrorSeverity = item.ErrorSeverity;
-                            existing.ErrorState = item.ErrorState;
-                            existing.ErrorProcedure = item.ErrorProcedure;
-                            existing.ErrorLine = item.ErrorLine;
-                            existing.ErrorMessage = item.ErrorMessage;
-                        }
-                    }
-                }
-                await _dbcontext.SaveChangesAsync();
-
-                // 3.2 Load Response
-                var identifierListToloadResponseItems = new List<int>();
-
-                if (input.NewItems != null && input.NewItems.Count > 0)
-                {
-                    identifierListToloadResponseItems.AddRange(
-                        from t in newEFItems
-                        select t.ErrorLogID);
-                }
-                if (input.UpdateItems != null && input.UpdateItems.Count > 0)
-                {
-                    identifierListToloadResponseItems.AddRange(
-                        from t in input.UpdateItems
-                        select t.ErrorLogID);
-                }
-
-                var responseBodyWithNewAndUpdatedItems =
-                    (from t in _dbcontext.ErrorLog
-                    where identifierListToloadResponseItems.Contains(t.ErrorLogID)
-
-                    select new ErrorLogDataModel
-                    {
-
-                        ErrorLogID = t.ErrorLogID,
-                        ErrorTime = t.ErrorTime,
-                        UserName = t.UserName,
-                        ErrorNumber = t.ErrorNumber,
-                        ErrorSeverity = t.ErrorSeverity,
-                        ErrorState = t.ErrorState,
-                        ErrorProcedure = t.ErrorProcedure,
-                        ErrorLine = t.ErrorLine,
-                        ErrorMessage = t.ErrorMessage,
-
-                    }).ToList();
-
-                // 3.3. Final Response
-                var response = new Response<MultiItemsCUDRequest<ErrorLogIdentifier, ErrorLogDataModel>>
-                {
-                    Status = HttpStatusCode.OK,
-                    ResponseBody = new MultiItemsCUDRequest<ErrorLogIdentifier, ErrorLogDataModel>
-                    {
-                        NewItems =
-                            input.NewItems != null && input.NewItems.Count > 0
-                                ? responseBodyWithNewAndUpdatedItems.Where(t => newEFItems.Any(t1 => t1.ErrorLogID == t.ErrorLogID)).ToList()
-                                : null,
-                        UpdateItems =
-                            input.UpdateItems != null && input.UpdateItems.Count > 0
-                                ? responseBodyWithNewAndUpdatedItems.Where(t => input.UpdateItems.Any(t1 => t1.ErrorLogID == t.ErrorLogID)).ToList()
-                                : null,
-                    }
-                };
-                return response;
-            }
-            catch (Exception ex)
-            {
-                return await Task.FromResult(new Response<MultiItemsCUDRequest<ErrorLogIdentifier, ErrorLogDataModel>>
-                {
-                    Status = HttpStatusCode.InternalServerError,
-                    StatusMessage = "Create And/Or Update Failed. " + ex.Message
-                });
-            }
-        }
-
-        public async Task<Response<ErrorLogDataModel>> Update(ErrorLogIdentifier id, ErrorLogDataModel input)
+        public async Task<Response<ErrorLogDataModel>> Update(ErrorLogIdentifier id, ErrorLogDataModel input, string[]? toUpdatePropertyList = null)
         {
             if (input == null)
                 return await Task<Response<ErrorLogDataModel>>.FromResult(new Response<ErrorLogDataModel> { Status = HttpStatusCode.BadRequest });
@@ -287,10 +117,10 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             try
             {
                 var existing =
-                    (from t in _dbcontext.ErrorLog
+                    (
+                    from t in _dbcontext.ErrorLog
                      where
-
-                    t.ErrorLogID == id.ErrorLogID
+                         id.ErrorLogID.HasValue && t.ErrorLogID == id.ErrorLogID
                      select t).SingleOrDefault();
 
                 // TODO: can create a new record here.
@@ -298,6 +128,26 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     return await Task<Response<ErrorLogDataModel>>.FromResult(new Response<ErrorLogDataModel> { Status = HttpStatusCode.NotFound });
 
                 // TODO: the .CopyTo<> method may modified because some properties may should not be copied.
+                CopyUpdateValues(input, toUpdatePropertyList, existing);
+
+                await _dbcontext.SaveChangesAsync();
+                return await Get(id);
+
+            }
+            catch (Exception ex)
+            {
+                return await Task<Response<ErrorLogDataModel>>.FromResult(new Response<ErrorLogDataModel> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+            }
+        }
+
+        private static void CopyUpdateValues(ErrorLogDataModel? input, string[]? toUpdatePropertyList, ErrorLog existing)
+        {
+            if (input == null)
+                return;
+
+            // 1. This Table - ErrorLog
+            if (toUpdatePropertyList == null || toUpdatePropertyList.Length == 0)
+            {
                 existing.ErrorTime = input.ErrorTime;
                 existing.UserName = input.UserName;
                 existing.ErrorNumber = input.ErrorNumber;
@@ -306,30 +156,26 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                 existing.ErrorProcedure = input.ErrorProcedure;
                 existing.ErrorLine = input.ErrorLine;
                 existing.ErrorMessage = input.ErrorMessage;
-                await _dbcontext.SaveChangesAsync();
-
-                return await Task<Response<ErrorLogDataModel>>.FromResult(
-                    new Response<ErrorLogDataModel>
-                    {
-                        Status = HttpStatusCode.OK,
-                        ResponseBody = new ErrorLogDataModel
-                        {
-                    ErrorLogID = existing.ErrorLogID,
-                    ErrorTime = existing.ErrorTime,
-                    UserName = existing.UserName,
-                    ErrorNumber = existing.ErrorNumber,
-                    ErrorSeverity = existing.ErrorSeverity,
-                    ErrorState = existing.ErrorState,
-                    ErrorProcedure = existing.ErrorProcedure,
-                    ErrorLine = existing.ErrorLine,
-                    ErrorMessage = existing.ErrorMessage,
-                        }
-                    });
-
             }
-            catch (Exception ex)
+            else
+            //update Specific Properties if in toUpdatePropertyList
             {
-                return await Task<Response<ErrorLogDataModel>>.FromResult(new Response<ErrorLogDataModel> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
+                if(toUpdatePropertyList.Contains(nameof(ErrorLogDataModel.ErrorTime)))
+                    existing.ErrorTime = input.ErrorTime;
+                if(toUpdatePropertyList.Contains(nameof(ErrorLogDataModel.UserName)))
+                    existing.UserName = input.UserName;
+                if(toUpdatePropertyList.Contains(nameof(ErrorLogDataModel.ErrorNumber)))
+                    existing.ErrorNumber = input.ErrorNumber;
+                if(toUpdatePropertyList.Contains(nameof(ErrorLogDataModel.ErrorSeverity)))
+                    existing.ErrorSeverity = input.ErrorSeverity;
+                if(toUpdatePropertyList.Contains(nameof(ErrorLogDataModel.ErrorState)))
+                    existing.ErrorState = input.ErrorState;
+                if(toUpdatePropertyList.Contains(nameof(ErrorLogDataModel.ErrorProcedure)))
+                    existing.ErrorProcedure = input.ErrorProcedure;
+                if(toUpdatePropertyList.Contains(nameof(ErrorLogDataModel.ErrorLine)))
+                    existing.ErrorLine = input.ErrorLine;
+                if(toUpdatePropertyList.Contains(nameof(ErrorLogDataModel.ErrorMessage)))
+                    existing.ErrorMessage = input.ErrorMessage;
             }
         }
 
@@ -340,10 +186,9 @@ namespace AdventureWorksLT2019.EFCoreRepositories
 
             try
             {
-                var existing = _dbcontext.ErrorLog.SingleOrDefault(
-                    t =>
-
-                    t.ErrorLogID == id.ErrorLogID
+                var existing = _dbcontext.ErrorLog
+                    .SingleOrDefault(t =>
+                        id.ErrorLogID.HasValue && t.ErrorLogID == id.ErrorLogID
                 );
 
                 if (existing == null)
@@ -355,15 +200,15 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                         Status = HttpStatusCode.OK,
                         ResponseBody = new ErrorLogDataModel
                         {
-                    ErrorLogID = existing.ErrorLogID,
-                    ErrorTime = existing.ErrorTime,
-                    UserName = existing.UserName,
-                    ErrorNumber = existing.ErrorNumber,
-                    ErrorSeverity = existing.ErrorSeverity,
-                    ErrorState = existing.ErrorState,
-                    ErrorProcedure = existing.ErrorProcedure,
-                    ErrorLine = existing.ErrorLine,
-                    ErrorMessage = existing.ErrorMessage,
+                            ErrorLogID = existing.ErrorLogID,
+                            ErrorTime = existing.ErrorTime,
+                            UserName = existing.UserName,
+                            ErrorNumber = existing.ErrorNumber,
+                            ErrorSeverity = existing.ErrorSeverity,
+                            ErrorState = existing.ErrorState,
+                            ErrorProcedure = existing.ErrorProcedure,
+                            ErrorLine = existing.ErrorLine,
+                            ErrorMessage = existing.ErrorMessage,
                         }
                     });
 
@@ -382,36 +227,19 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             {
                 var toInsert = new ErrorLog
                 {
-                            ErrorTime = input.ErrorTime,
-                            UserName = input.UserName,
-                            ErrorNumber = input.ErrorNumber,
-                            ErrorSeverity = input.ErrorSeverity,
-                            ErrorState = input.ErrorState,
-                            ErrorProcedure = input.ErrorProcedure,
-                            ErrorLine = input.ErrorLine,
-                            ErrorMessage = input.ErrorMessage,
+                    ErrorTime = input.ErrorTime,
+                    UserName = input.UserName,
+                    ErrorNumber = input.ErrorNumber,
+                    ErrorSeverity = input.ErrorSeverity,
+                    ErrorState = input.ErrorState,
+                    ErrorProcedure = input.ErrorProcedure,
+                    ErrorLine = input.ErrorLine,
+                    ErrorMessage = input.ErrorMessage,
                 };
+
                 await _dbcontext.ErrorLog.AddAsync(toInsert);
                 await _dbcontext.SaveChangesAsync();
-
-                return await Task<Response<ErrorLogDataModel>>.FromResult(
-                    new Response<ErrorLogDataModel>
-                    {
-                        Status = HttpStatusCode.OK,
-                        ResponseBody = new ErrorLogDataModel
-                        {
-                    ErrorLogID = toInsert.ErrorLogID,
-                    ErrorTime = toInsert.ErrorTime,
-                    UserName = toInsert.UserName,
-                    ErrorNumber = toInsert.ErrorNumber,
-                    ErrorSeverity = toInsert.ErrorSeverity,
-                    ErrorState = toInsert.ErrorState,
-                    ErrorProcedure = toInsert.ErrorProcedure,
-                    ErrorLine = toInsert.ErrorLine,
-                    ErrorMessage = toInsert.ErrorMessage,
-                        }
-                    });
-
+                return await Get(new ErrorLogIdentifier { ErrorLogID = toInsert.ErrorLogID });
             }
             catch (Exception ex)
             {
@@ -419,88 +247,49 @@ namespace AdventureWorksLT2019.EFCoreRepositories
             }
         }
 
-        public async Task<Response> Delete(ErrorLogIdentifier id)
-        {
-            if (id == null)
-                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.BadRequest });
-
-            try
-            {
-                var existing =
-                    (from t in _dbcontext.ErrorLog
-                     where
-
-                    t.ErrorLogID == id.ErrorLogID
-                     select t).SingleOrDefault();
-
-                if (existing == null)
-                    return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.NotFound });
-
-                _dbcontext.ErrorLog.Remove(existing);
-                await _dbcontext.SaveChangesAsync();
-
-                return await Task<Response>.FromResult(
-                    new Response
-                    {
-                        Status = HttpStatusCode.OK,
-                    });
-            }
-            catch (Exception ex)
-            {
-                return await Task<Response>.FromResult(new Response { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
-            }
-        }
-
         private IQueryable<NameValuePair> GetCodeListQuery(
             ErrorLogAdvancedQuery query, bool withPagingAndOrderBy)
         {
-
             var queryable =
                 from t in _dbcontext.ErrorLog
 
                 where
-
                     (string.IsNullOrEmpty(query.TextSearch) ||
-                        query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.UserName!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.ErrorProcedure!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.ErrorMessage!, "%" + query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.UserName!, query.TextSearch + "%") || EF.Functions.Like(t.ErrorProcedure!, query.TextSearch + "%") || EF.Functions.Like(t.ErrorMessage!, query.TextSearch + "%")) ||
-                        query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.UserName!, "%" + query.TextSearch) || EF.Functions.Like(t.ErrorProcedure!, "%" + query.TextSearch) || EF.Functions.Like(t.ErrorMessage!, "%" + query.TextSearch)))
-                    &&
-
-                    (!query.ErrorTimeRangeLower.HasValue && !query.ErrorTimeRangeUpper.HasValue || (!query.ErrorTimeRangeLower.HasValue || t.ErrorTime >= query.ErrorTimeRangeLower) && (!query.ErrorTimeRangeLower.HasValue || t.ErrorTime <= query.ErrorTimeRangeUpper))
-                    &&
-
+                    query.TextSearchType == TextSearchTypes.Contains && (EF.Functions.Like(t.UserName!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.ErrorProcedure!, "%" + query.TextSearch + "%") || EF.Functions.Like(t.ErrorMessage!, "%" + query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.StartsWith && (EF.Functions.Like(t.UserName!, query.TextSearch + "%") || EF.Functions.Like(t.ErrorProcedure!, query.TextSearch + "%") || EF.Functions.Like(t.ErrorMessage!, query.TextSearch + "%")) ||
+                    query.TextSearchType == TextSearchTypes.EndsWith && (EF.Functions.Like(t.UserName!, "%" + query.TextSearch) || EF.Functions.Like(t.ErrorProcedure!, "%" + query.TextSearch) || EF.Functions.Like(t.ErrorMessage!, "%" + query.TextSearch)))&&
+                    (!query.ErrorTimeRangeLower.HasValue && !query.ErrorTimeRangeUpper.HasValue || (!query.ErrorTimeRangeLower.HasValue || t.ErrorTime >= query.ErrorTimeRangeLower) && (!query.ErrorTimeRangeLower.HasValue || t.ErrorTime <= query.ErrorTimeRangeUpper))&&
                     (string.IsNullOrEmpty(query.UserName) ||
-                            query.UserNameSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.UserName!, "%" + query.UserName + "%") ||
-                            query.UserNameSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.UserName!, query.UserName + "%") ||
-                            query.UserNameSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.UserName!, "%" + query.UserName))
+                        query.UserNameSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.UserName!, "%" + query.UserName + "%") ||
+                        query.UserNameSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.UserName!, query.UserName + "%") ||
+                        query.UserNameSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.UserName!, "%" + query.UserName))
                     &&
                     (string.IsNullOrEmpty(query.ErrorProcedure) ||
-                            query.ErrorProcedureSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.ErrorProcedure!, "%" + query.ErrorProcedure + "%") ||
-                            query.ErrorProcedureSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.ErrorProcedure!, query.ErrorProcedure + "%") ||
-                            query.ErrorProcedureSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.ErrorProcedure!, "%" + query.ErrorProcedure))
+                        query.ErrorProcedureSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.ErrorProcedure!, "%" + query.ErrorProcedure + "%") ||
+                        query.ErrorProcedureSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.ErrorProcedure!, query.ErrorProcedure + "%") ||
+                        query.ErrorProcedureSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.ErrorProcedure!, "%" + query.ErrorProcedure))
                     &&
                     (string.IsNullOrEmpty(query.ErrorMessage) ||
-                            query.ErrorMessageSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.ErrorMessage!, "%" + query.ErrorMessage + "%") ||
-                            query.ErrorMessageSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.ErrorMessage!, query.ErrorMessage + "%") ||
-                            query.ErrorMessageSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.ErrorMessage!, "%" + query.ErrorMessage))
+                        query.ErrorMessageSearchType == TextSearchTypes.Contains && EF.Functions.Like(t.ErrorMessage!, "%" + query.ErrorMessage + "%") ||
+                        query.ErrorMessageSearchType == TextSearchTypes.StartsWith && EF.Functions.Like(t.ErrorMessage!, query.ErrorMessage + "%") ||
+                        query.ErrorMessageSearchType == TextSearchTypes.EndsWith && EF.Functions.Like(t.ErrorMessage!, "%" + query.ErrorMessage))
 
                 select new NameValuePair
                 {
-
-                        Value = t.ErrorLogID.ToString(),
-                        Name = t.UserName,
+                    Value = t.ErrorLogID.ToString(),
+                    Name = t.UserName,
                 };
 
             // 1. Without Paging And OrderBy
             if (!withPagingAndOrderBy)
                 return queryable;
 
-            // 2. With Paging And OrderBy
-            var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
-            if (orderBys.Any())
-            {
-                queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
-            }
+            // // 2. With Paging And OrderBy
+            // var orderBys = QueryOrderBySetting.Parse(query.OrderBys);
+            // if (orderBys.Any())
+            // {
+            //     queryable = queryable.OrderBy(QueryOrderBySetting.GetOrderByExpression(orderBys));
+            // }
 
             queryable = queryable.Skip((query.PageIndex - 1) * query.PageSize).Take(query.PageSize);
 
@@ -531,38 +320,6 @@ namespace AdventureWorksLT2019.EFCoreRepositories
                     Status = HttpStatusCode.InternalServerError,
                     StatusMessage = ex.Message
                 });
-            }
-        }
-
-        public async Task<Response<ErrorLogDataModel>> CreateComposite(ErrorLogCompositeModel input)
-        {
-            if (input == null)
-                return await Task<Response<ErrorLogDataModel>>.FromResult(new Response<ErrorLogDataModel> { Status = HttpStatusCode.BadRequest });
-            try
-            {
-                // 1. Master: ErrorLog
-                var master = new ErrorLog
-                {
-                    // Properties.1. Value Type Properties
-                    ErrorTime = input.__Master__!.ErrorTime,
-                    UserName = input.__Master__!.UserName,
-                    ErrorNumber = input.__Master__!.ErrorNumber,
-                    ErrorSeverity = input.__Master__!.ErrorSeverity,
-                    ErrorState = input.__Master__!.ErrorState,
-                    ErrorProcedure = input.__Master__!.ErrorProcedure,
-                    ErrorLine = input.__Master__!.ErrorLine,
-                    ErrorMessage = input.__Master__!.ErrorMessage,
-                };
-
-                _dbcontext.ErrorLog.Add(master);
-
-                await _dbcontext.SaveChangesAsync();
-
-                return await Get(new ErrorLogIdentifier { ErrorLogID = master.ErrorLogID, });
-            }
-            catch (Exception ex)
-            {
-                return await Task<Response<ErrorLogDataModel>>.FromResult(new Response<ErrorLogDataModel> { Status = HttpStatusCode.InternalServerError, StatusMessage = ex.Message });
             }
         }
 

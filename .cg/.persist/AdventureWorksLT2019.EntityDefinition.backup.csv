@@ -1,0 +1,13 @@
+﻿TABLE_SCHEMA,TABLE_NAME,Enabled,Table_Category,TableKnownName,UniqueConstraint,EnumDefinition,NameDefinition,AbstractTable,BaseTables,AddressProperties,UIPrimaryRouteId,CompositeQueryIdentifiers,CreatedDate,DownwardListTableOfListTable,CacheInClientApp,IsUserData,ListInWizardOptions,DetailsSetting,DefaultForeignKeyPropertyUIEditor,DefaultForeignKeyPropertyUIDisplay
+dbo,BuildVersion,TRUE,CrossReferenceTable,Unknown,,,,FALSE,,,,,8/23/2022 15:21,,FALSE,FALSE,FirstInList,,Default,Default
+dbo,ErrorLog,TRUE,DetailsTable,Unknown,,,,FALSE,,,,,8/23/2022 15:21,,FALSE,FALSE,FirstInList,,Default,Default
+SalesLT,Address,TRUE,DetailsTable,Unknown,,,,FALSE,,,,,8/23/2022 15:21,,FALSE,TRUE,FirstInList,,Default,Default
+SalesLT,Customer,TRUE,CoreTable,Unknown,,,,FALSE,,,,,8/23/2022 15:21,,FALSE,TRUE,FirstInList,,Default,Default
+SalesLT,CustomerAddress,TRUE,CrossReferenceTable,Unknown,,,,FALSE,,,,,8/23/2022 15:21,,FALSE,TRUE,FirstInList,,Default,Default
+SalesLT,Product,TRUE,CoreTable,Unknown,,,Name,FALSE,,,,,8/23/2022 15:21,,FALSE,TRUE,FirstInList,,Default,Default
+SalesLT,ProductCategory,TRUE,LookupTable,Unknown,,,Name,FALSE,,,,,8/23/2022 15:21,,FALSE,TRUE,FirstInList,,Default,Default
+SalesLT,ProductDescription,TRUE,DetailsTable,Unknown,,,,FALSE,,,,,8/23/2022 15:21,,FALSE,TRUE,FirstInList,,Default,Default
+SalesLT,ProductModel,TRUE,LookupTable,Unknown,,,Name,FALSE,,,,,8/23/2022 15:21,,FALSE,TRUE,FirstInList,,Default,Default
+SalesLT,ProductModelProductDescription,TRUE,CrossReferenceTable,Unknown,,,,FALSE,,,,,8/23/2022 15:21,,FALSE,TRUE,FirstInList,,Default,Default
+SalesLT,SalesOrderDetail,TRUE,CrossReferenceTable,Unknown,,,,FALSE,,,,,8/23/2022 15:21,,FALSE,TRUE,FirstInList,,Default,Default
+SalesLT,SalesOrderHeader,TRUE,CoreTable,Unknown,,,,FALSE,,,,,8/23/2022 15:21,,FALSE,TRUE,FirstInList,,Default,Default

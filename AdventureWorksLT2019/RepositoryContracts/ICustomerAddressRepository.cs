@@ -8,23 +8,19 @@ namespace AdventureWorksLT2019.RepositoryContracts
         Task<ListResponse<CustomerAddressDataModel.DefaultView[]>> Search(
             CustomerAddressAdvancedQuery query);
 
-        Task<Response> BulkDelete(List<CustomerAddressIdentifier> ids);
+        Task<ListResponse<CustomerAddressDataModel.DefaultView[]>> BulkUpdate(BatchActionRequest<CustomerAddressIdentifier, CustomerAddressDataModel.DefaultView> data);
 
         Task<Response<MultiItemsCUDRequest<CustomerAddressIdentifier, CustomerAddressDataModel.DefaultView>>> MultiItemsCUD(
             MultiItemsCUDRequest<CustomerAddressIdentifier, CustomerAddressDataModel.DefaultView> input);
 
-        Task<Response<CustomerAddressDataModel.DefaultView>> Update(CustomerAddressIdentifier id, CustomerAddressDataModel input);
+        Task<Response<CustomerAddressDataModel.DefaultView>> Update(CustomerAddressIdentifier id, CustomerAddressDataModel.DefaultView input, string[]? toUpdatePropertyList = null);
 
         Task<Response<CustomerAddressDataModel.DefaultView>> Get(CustomerAddressIdentifier id);
 
-        Task<Response<CustomerAddressDataModel.DefaultView>> Create(CustomerAddressDataModel input);
-
-        Task<Response> Delete(CustomerAddressIdentifier id);
+        Task<Response<CustomerAddressDataModel.DefaultView>> Create(CustomerAddressDataModel.DefaultView input);
 
         Task<ListResponse<NameValuePair[]>> GetCodeList(
             CustomerAddressAdvancedQuery query);
-
-        Task<Response<CustomerAddressDataModel.DefaultView>> CreateComposite(CustomerAddressCompositeModel input);
     }
 }
 

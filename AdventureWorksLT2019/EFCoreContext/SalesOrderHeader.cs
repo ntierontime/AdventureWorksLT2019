@@ -8,7 +8,7 @@ namespace AdventureWorksLT2019.EFCoreContext
     {
         public SalesOrderHeader()
         {
-            this.SalesOrderDetail = new HashSet<SalesOrderDetail>();
+            SalesOrderDetail = new HashSet<SalesOrderDetail>();
 
         }
         public int SalesOrderID { get; set; }

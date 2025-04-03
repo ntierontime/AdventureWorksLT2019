@@ -6,31 +6,17 @@ namespace AdventureWorksLT2019.ServiceContracts
     {
 
         Task<ListResponse<ProductDescriptionDataModel[]>> Search(
-            ProductDescriptionAdvancedQuery query);
+            ProductDescriptionAdvancedQuery query, ClaimsModel? claimsModel);
 
-        Task<ProductDescriptionCompositeModel> GetCompositeModel(
-            ProductDescriptionIdentifier id,
-            Dictionary<ProductDescriptionCompositeModel.__DataOptions__, CompositeListItemRequest> listItemRequest,
-            ProductDescriptionCompositeModel.__DataOptions__[]? dataOptions = null);
+        Task<Response<ProductDescriptionDataModel>> Update(ProductDescriptionIdentifier id, ProductDescriptionDataModel input, ClaimsModel? claimsModel, string[]? toUpdatePropertyList = null);
 
-        Task<Response> BulkDelete(List<ProductDescriptionIdentifier> ids);
+        Task<Response<ProductDescriptionDataModel>> Get(ProductDescriptionIdentifier id, ClaimsModel? claimsModel);
 
-        Task<Response<MultiItemsCUDRequest<ProductDescriptionIdentifier, ProductDescriptionDataModel>>> MultiItemsCUD(
-            MultiItemsCUDRequest<ProductDescriptionIdentifier, ProductDescriptionDataModel> input);
-
-        Task<Response<ProductDescriptionDataModel>> Update(ProductDescriptionIdentifier id, ProductDescriptionDataModel input);
-
-        Task<Response<ProductDescriptionDataModel>> Get(ProductDescriptionIdentifier id);
-
-        Task<Response<ProductDescriptionDataModel>> Create(ProductDescriptionDataModel input);
+        Task<Response<ProductDescriptionDataModel>> Create(ProductDescriptionDataModel input, ClaimsModel? claimsModel);
         ProductDescriptionDataModel GetDefault();
 
-        Task<Response> Delete(ProductDescriptionIdentifier id);
-
         Task<ListResponse<NameValuePair[]>> GetCodeList(
-            ProductDescriptionAdvancedQuery query);
-
-        Task<Response<ProductDescriptionDataModel>> CreateComposite(ProductDescriptionCompositeModel input);
+            ProductDescriptionAdvancedQuery query, ClaimsModel? claimsModel);
     }
 }
 
