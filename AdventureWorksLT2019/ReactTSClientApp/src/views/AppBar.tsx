@@ -21,12 +21,12 @@ import { getDateTimeDiff, getIntlRelativeTimeFormat, i18nFormats, supportedLngs 
 
 import { drawerWidth } from 'src/shared/constants';
 import { Item } from 'src/shared/views/Item';
-import { logout } from 'src/slices/msIdentityFrameworkSlice';
+//import { logout } from 'src/slices/msIdentityFrameworkSlice';
 import { AppDispatch } from 'src/store/Store';
 import { useNavigate } from 'react-router-dom';
 import { Stack } from '@mui/system';
 import { RootState } from 'src/store/CombinedReducers';
-import { setLanguage, setTheme } from 'src/slices/userPreferenceDataSlice';
+import { AppDrawerOptions, setLanguage, setTheme } from 'src/slices/userPreferenceDataSlice';
 
 
 
@@ -115,7 +115,7 @@ export default function AppBar(props: AppBarProps) {
 
     // 1.3.Start Logout
     const handleLogout = () => {
-        dispatch(logout());
+        // dispatch(logout());
         navigate("/");
     };
 

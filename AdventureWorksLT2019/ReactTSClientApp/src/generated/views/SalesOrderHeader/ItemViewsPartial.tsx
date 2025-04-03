@@ -3,7 +3,7 @@ import { ButtonGroup, Checkbox, IconButton } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
+import { DatePicker } from '@mui/x-date-pickers';
 // Import all icons for now, for DetailsPartial only
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
